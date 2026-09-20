@@ -1,0 +1,71 @@
+{
+  "kind": "gomyway-oracle-basic-pitch-preregistration",
+  "version": 1,
+  "frozenBeforeOracleInference": true,
+  "predictionsRead": false,
+  "customerDeliveryEligible": false,
+  "oracleInput": {
+    "sourceM4aSha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+    "first30WavSha256": "e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6",
+    "durationSeconds": 30,
+    "provenance": "existing user-provided guitar-only development oracle; generic guitar, not rhythm-role truth"
+  },
+  "canonicalSource": {
+    "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb"
+  },
+  "timeTransform": {
+    "equation": "isolatedSeconds = offsetSeconds + scale * sourceSeconds",
+    "offsetSeconds": 0.5229997583867022,
+    "scale": 1.010758763429986,
+    "fitRmsResidualSeconds": 0.007318595707234717,
+    "fitMaxResidualSeconds": 0.01527986600922393,
+    "fitMeasures": [
+      2,
+      15
+    ],
+    "evidencePath": "docs/astra/GOMYWAY_ISOLATION_SALIENCE_V1.json",
+    "evidenceGitBlob": "dbd9a65c3927dd37b6749a4d0057c3dc2e69ff25"
+  },
+  "runtime": {
+    "pythonVersion": "3.10.21",
+    "requirementsLockSha256": "a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7",
+    "basicPitchVersion": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "runnerPath": "astra_backend/evaluation/run_basic_pitch_development.py",
+    "runnerGitBlob": "95950c50e00777ba3c0398b917f95dcece70065c",
+    "settings": {
+      "onset_threshold": 0.5,
+      "frame_threshold": 0.3,
+      "minimum_note_length": 127.7,
+      "minimum_frequency": 82.4068892282175,
+      "maximum_frequency": 1318.5102276514797,
+      "multiple_pitch_bends": false,
+      "melodia_trick": true,
+      "midi_tempo": 120
+    }
+  },
+  "scoring": {
+    "scope": "whole-mix-to-rhythm",
+    "windowSeconds": [
+      0.09868480725623582,
+      28.299319727891156
+    ],
+    "onsetToleranceSeconds": 0.05,
+    "labelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+    "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+    "wholeMixBaseline": {
+      "tp": 26,
+      "fp": 57,
+      "fn": 100,
+      "f1": 0.24880382775119617
+    }
+  },
+  "projectionPolicy": {
+    "formula": "sourceSeconds = (isolatedSeconds - offsetSeconds) / scale",
+    "midiMutationAllowed": false,
+    "alignmentRetuningAfterInferenceAllowed": false,
+    "dropEventsWithProjectedOnsetBeforeSourceZero": true
+  },
+  "executionStatus": "blocked-until-exact-frozen-runtime-restored",
+  "currentBlocker": "active workspace cannot download the frozen Python/runtime packages because package-download DNS is unavailable; no unpinned substitute is authorized"
+}

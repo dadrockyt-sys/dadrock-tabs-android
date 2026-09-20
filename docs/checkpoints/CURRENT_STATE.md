@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **REVIEWED M1–15 SCORE + GUITAR-ISOLATION ORACLE COMPLETE — ISOLATION IS HIGH-VALUE; LOCKED TRANSCRIPTION-ON-ORACLE RUN STILL NEEDED**
+Status: **ORACLE TRANSCRIPTION PREREGISTRATION + CLOCK PROJECTION FROZEN — EXACT LOCKED BASIC PITCH RUNTIME RESTORE BLOCKS THE ORACLE SCORE**
 
 ## Product outcome
 
@@ -381,12 +381,21 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Public aggregate: `docs/astra/GOMYWAY_ISOLATION_SALIENCE_V1.json`. This is NOT transcription accuracy and does not imply an approved separator can reproduce the oracle. It is concrete evidence that source isolation is a high-value next component rather than a renderer/fingering problem.
 - The exact locked Basic Pitch/TFLite runtime is absent from the active container. No unpinned replacement was installed and no isolated-audio model inference was claimed. Existing model/runtime identity gates remain intact.
 
+## Oracle transcription preregistration and clock projection — 2026-09-20
+
+- Froze `docs/astra/GOMYWAY_ORACLE_TRANSCRIPTION_PREREGISTRATION_V1.json` **before any oracle Basic Pitch predictions exist**, SHA256 `cf78dff6ea5935dfcd3698b3b29e2a55f3772f249bb4d526e5b6cb3ffd0b2c03`. It pins the guitar-only first30 WAV `e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6`, source M4A `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`, canonical source audio `60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb`, reviewed-label/alignment hashes, fixed 50ms tolerance and the already-independent affine time relation.
+- The inference contract is now immutable: Python `3.10.21`, requirements lock SHA256 `a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7`, Basic Pitch `0.4.0`, model SHA256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`, runner Git blob `95950c50e00777ba3c0398b917f95dcece70065c`, and the exact first30 thresholds/settings already used by the whole-mix baseline. Alignment/tolerance/MIDI mutation after seeing oracle predictions is forbidden.
+- Added `astra_backend/evaluation/project_oracle_predictions.py`. It accepts only the preregistered Basic Pitch result identity, validates runtime/model/settings and oracle audio identity, maps `sourceSeconds=(isolatedSeconds-offset)/scale`, preserves MIDI unchanged, rejects role/delivery/accuracy claims, drops rather than clips events whose projected onset is before source time zero, and emits a canonical-source-clock prediction document suitable for the existing scorer.
+- Six focused standard-library tests pass locally: exact inverse-clock mapping/MIDI preservation, pre-zero exclusion, oracle identity/role fail-closed behavior, frozen runtime/model/settings/transform/tolerance, invalid event/order rejection and exclusive CLI output. The branch CI suite now includes these tests; no model dependency is needed to verify projection semantics.
+- Runtime restoration was checked before save. No cached Basic Pitch, TFLite model/runtime or Python3.10 environment exists under the active persistent cache/workspace paths. Earlier `uv` restoration attempts could not obtain the required runtime/packages because package-download DNS/network access failed; no unpinned substitute was installed. No oracle model inference or new score is claimed.
+- The reviewed M1–15 bundle, revision6 labels, timing map, 87-event whole-mix candidate and 24.88% bounded baseline remain unchanged. No main/Production change.
+
 ## Exact next step — Measure the oracle transcription lift, then select the isolation path
 
-1. Keep the reviewed M1–15 bundle, revision6 labels, timing map and frozen87-event whole-mix candidate immutable. Do not tune labels/alignment/tolerance against any future run.
-2. Restore the exact frozen Basic Pitch runtime in a stable workspace cache using the committed hashed lock and verified packaged model identity. Do not use an unpinned substitute. Then run the SAME preregistered first30 settings on the verified guitar-only oracle and project its events onto the oracle's independently established affine timing relation.
-3. Score that oracle transcription against the SAME private M1–15 rhythm labels. Report TP/FP/FN and compare with the whole-mix baseline. A material recall lift isolates separation as the dominant failure; little lift means Basic Pitch/event inference remains inadequate even with cleaner guitar signal.
-4. Generic guitar isolation is not rhythm/lead separation. In parallel, preserve the existing model-rights gate: only pursue a product separator whose artifact rights and CPU/runtime constraints are actually cleared. Do not modify main/Production.
+1. Keep the reviewed M1–15 bundle, revision6 labels, timing map, frozen87-event whole-mix candidate and `GOMYWAY_ORACLE_TRANSCRIPTION_PREREGISTRATION_V1.json` immutable. Do not tune labels, affine transform, tolerance or inference settings after seeing oracle predictions.
+2. Restore the exact frozen Python3.10.21 / hashed Basic Pitch runtime in a stable workspace cache. Verify the installed-distribution snapshot and packaged model SHA before inference. Do not use an unpinned substitute if network/runtime restoration remains unavailable.
+3. Run `run_basic_pitch_development.py` once on the exact preregistered guitar-only first30 WAV, then pass that untouched result through `project_oracle_predictions.py`. Hash the native result and source-clock projection; do not hand-edit either.
+4. Score the projected oracle transcription against the SAME private M1–15 rhythm labels/alignment and report TP/FP/FN versus the whole-mix 26/57/100 baseline. Generic guitar isolation is not rhythm/lead separation; preserve model-rights, CPU/resource and customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
