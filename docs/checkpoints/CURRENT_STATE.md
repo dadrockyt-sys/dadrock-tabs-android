@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **CONTEXTUAL OCTAVE REPAIR LIFTS ORACLE F1 TO 32.49% WITH ZERO MATCH REGRESSIONS — BEND-START DECODER IS NEXT**
+Status: **DUAL-ROLE BENCHMARK CORRECTS THE OCTAVE DIAGNOSIS — GENERIC GUITAR CONTAINS BOTH RHYTHM + LEAD; ROLE ASSIGNMENT IS NOW THE PRIMARY BOTTLENECK**
 
 ## Product outcome
 
@@ -430,12 +430,32 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Recovery audit: four D3/MIDI50 targets are corrected (0/15 ->4/15 exact matches) plus one G3/MIDI55 target. MIDI57 bend-start remains0/14. This confirms local octave ambiguity and attacked-bend omission are separable backend failures.
 - Public aggregate: `docs/astra/GOMYWAY_CONTEXTUAL_OCTAVE_SCORE_V1.json`. This rule was evaluated on development material and requires prospective cross-song validation before product use; it is not a fixed-register gate and does not establish rhythm/lead role truth.
 
-## Exact next step — Freeze a general raw-activation bend-start decoder
+## Raw bend-start detector + octave-supported refinement — 2026-09-20
 
-1. Keep the reviewed bundle, native oracle prediction, source-clock projection and contextual-octave output immutable. Do not retune the50ms scorer or the octave rule against further results.
-2. Implement a prediction-blind bend-start candidate extractor from raw Basic Pitch onset+contour tensors. Freeze thresholds from model semantics before scoring: onset evidence, early contour agreement, sustained upward contour movement and no already-decoded onset at the same attack. Do not hard-code Gomyway MIDI values, measure numbers or timestamps.
-3. Emit bend candidates as a separate diagnostic layer first. Evaluate candidate precision/recall against reviewed attacks only after the detector output is hashed. If generic-guitar lead bends create role false positives, record that as role-separation evidence instead of tuning them away with rhythm labels.
-4. Only if the frozen detector shows useful general recovery, test a merged development prediction and report TP/FP/FN/regressions. Preserve model-rights, CPU/resource, role-separation and customer-delivery gates; do not modify main/Production.
+- Added `astra_backend/evaluation/extract_raw_bend_starts.py`, a reference-blind technique candidate extractor over the frozen Basic Pitch raw onset/contour tensors. It uses Basic Pitch's own 0.5 onset and 0.3 frame-salience thresholds, requires an early contour within 1 semitone of the candidate and a 1–3-semitone rise over roughly 35–240ms, suppresses only an already-decoded same-pitch onset, and locally deduplicates neighboring raw bins. No rhythm labels, target MIDI values, measure numbers or score are read.
+- Private V1 bend output SHA256 `201534080ea02a21ac5104dc7b771a96f05eecb75b344c74186008268802d71b`:57 candidates. Seven synthetic detector tests pass locally.
+- Added `astra_backend/evaluation/refine_bend_octave_support.py`. V2 may move an upper-octave bend candidate down exactly12 semitones only when the lower octave independently has >=0.3 onset support within one model frame and independently satisfies the same contour-rise semantics. Six synthetic refinement tests pass locally.
+- Private V2 output SHA256 `3a463dd3ae737135827b4f33730969436e91305c0a5f37362ac71ef6489ae4b1`:49 candidates after11 octave-supported changes/deduplication. Against rhythm bend starts alone, V2 improves exact recovery from4/14 to6/14 and timing-only remains8/14, but48 in-window candidates leave precision too low for direct note insertion.
+- Public aggregate `docs/astra/GOMYWAY_BEND_CANDIDATE_EVAL_V1.json` records the deliberate **do-not-merge** decision. Candidate output, code snapshot and detailed evaluation are durably stored in Library. This negative/partial result redirected work toward role separation instead of threshold tuning.
+
+## Lead reference recovery + dual-role benchmark correction — 2026-09-20
+
+- Recovered the professional lead reference from `main/public/Gomywayleadreference.pdf` through a branch-only read-only artifact export. Local PDF SHA256 `a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56`. Render-first visual review shows a four-bar multimeasure rest in measures1–4 and the repeated lead riff in measures5–16.
+- Normalized only bounded measures1–15 privately. Lead label SHA256 `f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb`:77 attacked lead targets in measures5–15; measures1–4 are source-verified silence. Times use the already-frozen independent M1–15 alignment; no prediction was used to derive them. Private dual-role benchmark SHA256 `adaf89eca6b87096120009b550a2b6e598e2fd91ba6f39525ae60e4895a8da56`.
+- There are **zero same-MIDI cross-role target collisions within the frozen50ms tolerance**, so one-to-one joint scoring can attribute exact matches to rhythm versus lead without double-counting a prediction.
+- Frozen generic-guitar oracle:151 in-window predictions against203 combined rhythm+lead targets -> **75 TP / 76 FP / 128 FN; precision49.67%, recall36.95%, F1 42.37%**. Of the75 joint matches,40 are rhythm and35 are lead. Separate diagnostic recall: rhythm31.75%, lead45.45%.
+- Critical correction: the contextual octave transform changes the role allocation to45 rhythm +30 lead matches but leaves the **joint result exactly unchanged at75 TP / 76 FP / 128 FN, F1 42.37%**. The apparent five-note rhythm improvement was a five-note loss from the lead role, not a net transcription gain.
+- Therefore octave-high detections on this generic guitar oracle cannot be called Basic Pitch octave mistakes solely from rhythm scoring. Many are valid lead-guitar events. `docs/astra/GOMYWAY_CONTEXTUAL_OCTAVE_SCORE_V1.json` now carries this correction, and `docs/astra/GOMYWAY_DUAL_ROLE_GUITAR_BENCHMARK_V1.json` is the authoritative aggregate.
+- Added `astra_backend/evaluation/score_role_aware_note_onsets.py`: one shared prediction inventory is matched jointly across role target sets, so one prediction cannot score twice. It fails closed on same-MIDI cross-role target collisions. Five synthetic tests pass locally, including explicit role-transfer-with-unchanged-joint-score behavior; branch CI now includes them.
+- This supersedes the prior interpretation that contextual octave repair established a transcription-accuracy breakthrough. The transform remains useful research evidence about local role ambiguity, but is **not** a product correction rule.
+- No main/Production change. Private normalized lead labels remain outside public Git.
+
+## Exact next step — Build reference-blind rhythm/lead role evidence
+
+1. Keep the rhythm labels, lead labels, M1–15 alignment, native oracle prediction and dual-role benchmark immutable. Do not optimize a role rule against one role while ignoring the other.
+2. Build a **reference-blind role-evidence layer** over generic-guitar events using phrase continuity, simultaneous/chord context, repeated-pattern identity, technique evidence and fretboard-path consistency. Fixed MIDI-register filtering remains prohibited as role truth.
+3. Freeze role assignments/abstentions before reading dual-role scores. Score rhythm and lead jointly with `score_role_aware_note_onsets.py`, reporting correct-role matches, unassigned/ambiguous events and role swaps. A role transform must improve joint correctness or calibrated abstention—not merely move matches between roles.
+4. Re-evaluate bend V2 only after role evidence exists: lead bends that are valid lead events must not count as rhythm false positives, and rhythm bend candidates may be merged only when the role layer supports rhythm. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
