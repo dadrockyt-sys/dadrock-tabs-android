@@ -1,13 +1,13 @@
 {
   "dateUtc": "2026-09-20",
-  "status": "fresh-private-visual-draft-created-not-approved",
+  "status": "private-pitch-and-source-rhythm-review-complete-timing-pending",
   "sourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
   "privateArtifact": {
-    "filename": "Gomyway-Reference-Draft-M1-16.json",
-    "sha256": "a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9",
+    "filename": "Gomyway-Reference-Draft-M1-16-r6.json",
+    "sha256": "5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977",
     "storedOutsidePublicGit": true,
-    "previousSha256": "7b720cad92b5b3d6e414f88923094e4f4997bca7668bfddcce4b3bb58287f004",
-    "revision": 5,
+    "previousSha256": "a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9",
+    "revision": 6,
     "intermediateRhythmRevisionSha256": "b669007b558bd80a04dafc02d60929552919b6845c830abd9a3c4b9fc3118f1c"
   },
   "coverage": {
@@ -33,18 +33,20 @@
     "candidatePitchedEntries": 136,
     "candidateContinuationEntries": 16,
     "candidatePitchesFromConfirmedTuning": 136,
-    "unresolvedBendAttackPitches": 15,
-    "bendCandidatesAudioVerified": false,
+    "unresolvedBendAttackPitches": 0,
+    "bendCandidatesAudioVerified": true,
     "sourceRhythmMeasuresReviewed": 16,
     "sourceRhythmQuarterBeats": 64,
     "sourceRhythmicPositions": 136,
-    "userConfirmedOpeningPreBend": true
+    "userConfirmedOpeningPreBend": true,
+    "reviewedSoundingAttackPitches": 136,
+    "laterBendStartsAudioReviewed": 15,
+    "pitchReviewComplete": true
   },
   "method": "Cropped/enlarged exact source pixels for inspection; no generated image, model prediction matching or historical fixture copying. Repeated readings populated only after each visible measure was inspected. Enlargement adds no source detail.",
   "newFinding": "Panel 2 starts with measures13-14, repeating panel1 content obscured by player controls. Its second row is15-16. Screenshot boundaries are not measure boundaries.",
-  "draftContents": "Private draft now includes explicit notated symbol spans, source-onset versus tie classification, and opening pre-bend correction from user. All16 source measures visually reviewed with rational span checks. All scoring entries remain draft; audio timestamps and15 later bend starts unresolved.",
+  "draftContents": "Private revision6 has complete source rhythm/tie reading and 136 reviewed sounding-at-attack pitches. Measure1 keeps the user-confirmed pre-bend; measures2-16 use the source-read printed-fret attack with audio corroboration from the repeated-opening diagnostic. Absolute audio timing remains draft.",
   "remaining": [
-    "Remaining15 bend-start interpretations",
     "Independent exact recording timestamps and piecewise timing map",
     "Clip-window filtering and final reviewed-bundle assembly"
   ],
@@ -55,7 +57,10 @@
     "sourceHashVerified": true,
     "newTestSuiteRun": false,
     "focusedPythonTests": 21,
-    "sourceRhythmRationalCoverageCheck": "All16 measures cover four quarter notes exactly; simultaneous notes counted once per rhythmic position; symbol spans are not measured acoustic durations."
+    "sourceRhythmRationalCoverageCheck": "All16 measures cover four quarter notes exactly; simultaneous notes counted once per rhythmic position; symbol spans are not measured acoustic durations.",
+    "repeatedOpeningDiagnosticTests": 3,
+    "repeatedOpeningDiagnosticSha256": "775e1a9264fed4237bdb6f11b72a0f568254ddb6b57037cdae65d685105d0c06",
+    "pitchReviewReceiptSha256": "20668066440f3f2f2680156ce2c132390f48714cb6751b26ec7599721449db69"
   },
   "modelRerun": false,
   "predictionsChanged": false,
@@ -69,5 +74,11 @@
     "evidence": "Direct user answers in current conversation; no exact timestamp supplied",
     "openingBend": "User replied Bent first to the opening picked-versus-pre-bent question; interpreted as pre-bent before picking. Full amount read from source marking; not extended to later bends."
   },
-  "openingDiagnostic": "GOMYWAY_OPENING_ATTACK_EVIDENCE_V1.json"
+  "openingDiagnostic": "GOMYWAY_OPENING_ATTACK_EVIDENCE_V1.json",
+  "repeatedOpeningDiagnostic": {
+    "publicScript": "astra_backend/evaluation/inspect_repeated_openings.py",
+    "privateDiagnosticSha256": "775e1a9264fed4237bdb6f11b72a0f568254ddb6b57037cdae65d685105d0c06",
+    "directLowHighLowLaterMeasures": 13,
+    "laterClusterCloserToItselfThanOpening": 15
+  }
 }
