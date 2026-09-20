@@ -1,0 +1,83 @@
+{
+  "kind": "gomyway-dual-role-guitar-development-benchmark",
+  "version": 1,
+  "sourceAudioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "oracleAudioSha256": "e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6",
+  "leadReferencePdfSha256": "a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56",
+  "rhythmLabelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "leadLabelsSha256": "f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb",
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+  "privateBenchmarkSha256": "adaf89eca6b87096120009b550a2b6e598e2fd91ba6f39525ae60e4895a8da56",
+  "leadCoverage": {
+    "measures1to4": "four-bar multimeasure rest",
+    "measures5to15": "source-verified repeated lead riff",
+    "attackTargets": 77
+  },
+  "crossRoleExactMidiTimingCollisions": 0,
+  "oracle": {
+    "predictions": 151,
+    "rhythm": {
+      "targets": 126,
+      "tp": 40,
+      "fn": 86,
+      "recall": 0.31746031746031744
+    },
+    "lead": {
+      "targets": 77,
+      "tp": 35,
+      "fn": 42,
+      "recall": 0.45454545454545453
+    },
+    "joint": {
+      "targets": 203,
+      "tp": 75,
+      "fp": 76,
+      "fn": 128,
+      "precision": 0.4966887417218543,
+      "recall": 0.3694581280788177,
+      "f1": 0.423728813559322
+    },
+    "jointMatchRoleCounts": {
+      "rhythm": 40,
+      "lead": 35
+    }
+  },
+  "contextualOctaveRepair": {
+    "predictions": 151,
+    "rhythm": {
+      "targets": 126,
+      "tp": 45,
+      "fn": 81,
+      "recall": 0.35714285714285715
+    },
+    "lead": {
+      "targets": 77,
+      "tp": 30,
+      "fn": 47,
+      "recall": 0.38961038961038963
+    },
+    "joint": {
+      "targets": 203,
+      "tp": 75,
+      "fp": 76,
+      "fn": 128,
+      "precision": 0.4966887417218543,
+      "recall": 0.3694581280788177,
+      "f1": 0.423728813559322
+    },
+    "jointMatchRoleCounts": {
+      "rhythm": 45,
+      "lead": 30
+    },
+    "correction": "The five rhythm-only gains are exactly offset by five lost lead matches. Joint transcription accuracy is unchanged."
+  },
+  "interpretation": "The generic guitar oracle contains both rhythm and lead information. Octave-high events cannot be labeled transcription errors solely from rhythm scoring. Requested-role assignment/separation is the primary missing layer for these events.",
+  "supersedesInterpretation": "Treating the contextual octave repair's rhythm-only F1 lift as a net transcription-accuracy improvement.",
+  "customerDeliveryEligible": false,
+  "roleAccuracy": null,
+  "limitations": [
+    "This is development material and not a locked final evaluation.",
+    "Lead targets cover the source-verified opening measures only; bass is not part of this dual-guitar benchmark.",
+    "The benchmark evaluates a generic guitar oracle, not an approved production separator."
+  ]
+}
