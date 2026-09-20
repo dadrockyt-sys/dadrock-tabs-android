@@ -1,0 +1,65 @@
+{
+  "kind": "contextual-octave-repair-reviewed-development-score",
+  "version": 1,
+  "sourceProjectionSha256": "d305a86f543900a7ed6984b8c020b1cc13b99d8c0fcbcff0d2bad8e17c4690ce",
+  "repairedProjectionSha256": "bf7b5ed4f03614095b4ef7fa494335b110d7a009e2c559215a8b46c28a079763",
+  "privateSpecSha256": "c7f91a492e2ea473635bcf0f4e80dab1e0426d0cbe580b6e887768244c9a400b",
+  "privateScoreSha256": "7a947236019e9eb366f0fcd471a3f494ea80b656cadc68ad68037cf4b37b2a8f",
+  "policy": {
+    "referenceBlind": true,
+    "eventCountChanged": false,
+    "timingChanged": false,
+    "octaveRepairCount": 7,
+    "rule": "singleton note may move exactly one octave down only when both immediate neighboring onset groups support the lower voice and local voice-leading cost improves by at least eight semitones",
+    "constants": {
+      "onsetGroupSeconds": 0.035,
+      "contextHorizonSeconds": 0.75,
+      "octaveSemitones": 12,
+      "minGuitarMidi": 40,
+      "maxLowerNeighborDistance": 4,
+      "maxLowerContextCost": 8,
+      "minContextImprovement": 8
+    }
+  },
+  "baseline": {
+    "predictions": 151,
+    "targets": 126,
+    "tp": 40,
+    "fp": 111,
+    "fn": 86,
+    "precision": 0.26490066225165565,
+    "recall": 0.31746031746031744,
+    "f1": 0.2888086642599278
+  },
+  "repaired": {
+    "predictions": 151,
+    "targets": 126,
+    "tp": 45,
+    "fp": 106,
+    "fn": 81,
+    "precision": 0.2980132450331126,
+    "recall": 0.35714285714285715,
+    "f1": 0.3249097472924188,
+    "meanAbsoluteOnsetErrorSeconds": 0.021376538213641414
+  },
+  "regressionAudit": {
+    "newlyMatchedTargets": 5,
+    "previouslyMatchedTargetsLost": 0,
+    "newlyMatchedByMidi": {
+      "50": 4,
+      "55": 1
+    },
+    "midi50ExactMatchesBefore": 0,
+    "midi50ExactMatchesAfter": 4,
+    "midi57ExactMatchesBefore": 0,
+    "midi57ExactMatchesAfter": 0
+  },
+  "interpretation": "Local voice continuity can safely recover some Basic Pitch octave errors without adding events or reading the reference. Bend-start omission remains independent and unresolved.",
+  "roleAccuracy": null,
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This is development evidence on the generic guitar oracle and reviewed rhythm reference; it is not final customer accuracy.",
+    "The rule was evaluated on already reviewed development material and requires prospective validation on other songs before product use.",
+    "Generic guitar isolation still does not establish rhythm-versus-lead separation."
+  ]
+}
