@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **DUAL-ROLE BENCHMARK CORRECTS THE OCTAVE DIAGNOSIS — GENERIC GUITAR CONTAINS BOTH RHYTHM + LEAD; ROLE ASSIGNMENT IS NOW THE PRIMARY BOTTLENECK**
+Status: **STEREO ROLE EVIDENCE BREAKTHROUGH — REFERENCE-BLIND L→RHYTHM / R→LEAD MAPPING RECOVERS 84 CORRECT-ROLE TPs; PRECISION TUNING + FALLBACK PATH NEXT**
 
 ## Product outcome
 
@@ -450,12 +450,25 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - This supersedes the prior interpretation that contextual octave repair established a transcription-accuracy breakthrough. The transform remains useful research evidence about local role ambiguity, but is **not** a product correction rule.
 - No main/Production change. Private normalized lead labels remain outside public Git.
 
-## Exact next step — Build reference-blind rhythm/lead role evidence
+## Stereo spatial role-evidence breakthrough — 2026-09-20
 
-1. Keep the rhythm labels, lead labels, M1–15 alignment, native oracle prediction and dual-role benchmark immutable. Do not optimize a role rule against one role while ignoring the other.
-2. Build a **reference-blind role-evidence layer** over generic-guitar events using phrase continuity, simultaneous/chord context, repeated-pattern identity, technique evidence and fretboard-path consistency. Fixed MIDI-register filtering remains prohibited as role truth.
-3. Freeze role assignments/abstentions before reading dual-role scores. Score rhythm and lead jointly with `score_role_aware_note_onsets.py`, reporting correct-role matches, unassigned/ambiguous events and role swaps. A role transform must improve joint correctness or calibrated abstention—not merely move matches between roles.
-4. Re-evaluate bend V2 only after role evidence exists: lead bends that are valid lead events must not count as rhythm false positives, and rhythm bend candidates may be merged only when the role layer supports rhythm. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
+- The existing user-provided isolated guitar source is true stereo. A first30 PCM decode has SHA256 `b5e18d67397463c5de1bdb0644cc50ba4ac90c9357936c77e81bb563fbefe2c6`; left/right mono channel hashes are `2bb45aabaa9d09ed8a8a044480d9d2fc4398b0c10dfb5abcfd2ba9d53b262f65` and `e98ba1290c53010f65537fac232170ea4715cbdb25393bf4667e8a0ef2034fae`. L/R waveform correlation is only **0.05325**, demonstrating materially distinct channel content before any model inference.
+- Froze private stereo-channel preregistration before channel inference, SHA256 `dce9a009789cb96bb40c0495cb91456f6852ff7abd9fae4cba9635dcf8ef2a09`. It pins the exact Python3.10.21 / Basic Pitch0.4.0 / model / runner / threshold identities and requires both channels to use the already-frozen isolated→source affine clock. It predeclares a full2x2 channel-by-role evaluation and forbids post-score threshold/audio swapping.
+- Ran exact locked Basic Pitch once per channel. Left native SHA256 `d701c904c263e6402e7cced7b8206bf51bb81864dcf8bea5314ed806f5e28f6a`:166 events,2.027s model wall,261088KiB peak RSS. Right SHA256 `28ab54e0caacf98765daba3befb0c01efdbad19df9cf45b596efe07167207dd2`:128 events,1.997s model wall,260532KiB peak RSS. No runtime/model/settings substitutions.
+- Channel-role matrix is strongly asymmetric: left→rhythm scores45 TP versus left→lead17 TP; right→lead42 TP versus right→rhythm16 TP. The opposite role mapping is therefore poor. Raw L→rhythm + R→lead gives87 correct-role TPs before cross-channel duplicate cleanup.
+- Added `astra_backend/evaluation/stereo_role_evidence.py`. It is reference-blind and uses **relative** channel evidence only: low inter-channel correlation, onset-group chordality and relative median pitch. It has no fixed MIDI cutoff. It abstains if channels are too correlated or chordality/register evidence does not agree. Eight synthetic tests pass locally and branch CI now includes them.
+- On the real predictions, the frozen classifier completes with **left→rhythm, right→lead**: left chord-like rate11.90% / median MIDI52; right0.92% / median MIDI63; chordality ratio12.98x and relative median gap11 semitones. Private role-evidence report SHA256 `544398724e736243e469180e38df851cafcadbb70ac3f0998564a23306fd2bf3`.
+- Cross-channel same-MIDI/time duplicates are removed only when one channel has higher model amplitude; exact amplitude ties remain duplicated to avoid role bias. In the bounded M1–15 score this produces rhythm139 predictions /43 TP /96 FP /83 FN (F132.45%) and lead106 /41 TP /65 FP /36 FN (F144.81%). Aggregate **84 TP /161 FP /119 FN; precision34.29%, recall41.38%, F137.50%**.
+- A conservative mode keeps the original mono inventory and uses stereo only as role evidence. In-window it assigns57 events to rhythm and55 to lead, while abstaining on11 ambiguous and28 unmatched events. Aggregate assigned precision is **49.11%**, recall27.09%, F134.92%; lead precision is52.73%. This gives a useful fail-closed option while the high-recall stereo streams remain development-only.
+- Public aggregate: `docs/astra/GOMYWAY_STEREO_ROLE_EVIDENCE_V1.json`. Private preregistration, native outputs, source-clock projections, role evidence and detailed score are durably stored in Library.
+- Architectural consequence: **do not fold stereo to mono before role analysis**. Stereo spatial evidence should be attempted first and may cheaply resolve rhythm/lead roles; mono/high-correlation inputs must fall back to a general separator/role-inference path. Customer delivery remains false and main/Production are unchanged.
+
+## Exact next step — Integrate stereo-first role evidence and improve precision safely
+
+1. Preserve stereo through the analyzer input boundary. Add a lightweight stereo-evidence preflight before any mono fold-down: channel correlation plus reference-blind note-event chordality/register evidence. If evidence is weak or the input is mono, abstain and route to the existing general separation research path.
+2. Treat `stereo_role_evidence.py` as a development candidate, not production truth. Build a deterministic integration adapter that exposes `rhythm`, `lead`, `ambiguous` and `unassigned` evidence states to Astra's note-evidence contract without granting customer delivery.
+3. Improve **precision without role-label tuning**. First candidates: cross-channel same-MIDI amplitude deduplication (already positive), structure-grid consistency, repeated-phrase support and calibrated confidence/abstention. Any filter must be frozen before the dual-role score and must report TP gains/losses by both roles.
+4. Re-run bend-start extraction on the role-resolved channel streams. A bend candidate may enter a rhythm or lead stream only when stereo/role evidence supports that role; otherwise keep it as technique-only evidence. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
