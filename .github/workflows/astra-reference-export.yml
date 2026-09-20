@@ -1,0 +1,38 @@
+name: Astra reference PDF export
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/astra-reference-export.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout main reference assets
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify expected reference files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f public/Gomywayleadreference.pdf
+          test -f public/Gomywaybassreference.pdf
+          sha256sum public/Gomywayleadreference.pdf public/Gomywaybassreference.pdf
+      - name: Upload reference PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-gomyway-reference-pdfs
+          path: |
+            public/Gomywayleadreference.pdf
+            public/Gomywaybassreference.pdf
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
