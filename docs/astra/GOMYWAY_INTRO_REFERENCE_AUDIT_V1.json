@@ -1,0 +1,35 @@
+{
+  "status": "historical-intro-fixture-not-qualified-for-validated-scoring",
+  "dateUtc": "2026-09-20",
+  "professionalImage": {
+    "path": "public/Professionalexample.jpg",
+    "gitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+    "sha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "review": "Original-resolution opening two measures and repeated intro rows visually inspected."
+  },
+  "historicalFixtureGitBlob": "0ca4791471dc7834465fe746af8df185672d9c62",
+  "findings": [
+    {
+      "kind": "omission",
+      "detail": "Visible open-string event between the low-string note and following fretted event is absent from the historical two-bar fixture."
+    },
+    {
+      "kind": "string-assignment",
+      "detail": "At least one low open-string event appears on a different string line from the fixture assignment; fret numbers alone are insufficient."
+    },
+    {
+      "kind": "ending-repetitions",
+      "detail": "The even-measure ending visibly contains two double-stop attacks; historical fixture encodes one ending double stop."
+    },
+    {
+      "kind": "timing",
+      "detail": "Historical sixteenth-slot values are not established by a direct rhythm-stem audit. Bend/release transitions must be distinguished from fresh attacks."
+    }
+  ],
+  "consequence": "The 104-target count and provisional 5-match score are conditional on an incomplete historical template, not a validated transcription of the user reference. Do not treat them as model accuracy.",
+  "newLabelsValidated": false,
+  "firstMeasureAnchorVerified": false,
+  "predictionsChanged": false,
+  "inferenceRerun": false,
+  "next": "Build a fresh scoring-only event/technique/rest table for the opening two measures, verify strings and rhythmic stems, then inspect measures3-16 for variations before expanding. Bind audio downbeat independently. No blind template repetition."
+}

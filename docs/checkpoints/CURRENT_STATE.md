@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **AUDIO-ONLY TIMING MISMATCH DETECTED — EARLY PULSES ~126.65 BPM; MEASURE-1 ANCHOR STILL UNVERIFIED**
+Status: **HISTORICAL RHYTHM FIXTURE FAILS IMAGE AUDIT — REBUILD SCORING LABELS BEFORE ACCURACY CLAIMS; PREDICTIONS FROZEN**
 
 ## Product outcome
 
@@ -291,10 +291,17 @@ User requests lower overhead: batch focused reads/checks, concise updates, no un
 - Archived midterm source manifest blob83d57a9c4b6b70c800e4076e1394fefba3318bde confirms exact source audio hash but provides no independently verified measure-start anchor. Historical champion scores do not belong to Astra. No new accuracy score, model change or promotion.
 - Honor user's usage preference: short updates, batched focused work, no unnecessary repeated full-suite/model runs. Restore a needed runtime in a stable workspace cache rather than /tmp where feasible; verify locked identities after restoration. Do not claim control over GPT quota settings.
 
+## Direct professional-image audit — 2026-09-20
+
+- Recovered exact source audio/image into `/workspace/scratch/3a241f38aa8b/astra-eval-cache` with frozen SHA256 checks, avoiding another model/runtime installation. Decoded opening16s with installed ffmpeg for inspection. Workspace cache is reusable while present, not guaranteed durable; Git source identities remain authoritative.
+- Original-resolution rhythm image review found concrete discrepancies in the historical two-bar fixture: an omitted visible open-string event, apparent string-line mismatch for a low open-string event, and two visible ending double-stop attacks where the fixture encodes one. Rhythmic stems and bend/release transitions require fresh audit. `GOMYWAY_INTRO_REFERENCE_AUDIT_V1.json` records the source identities and findings without publishing normalized labels.
+- Therefore the historical104-target/5-match result must not be rehabilitated solely by tempo/offset correction. Keep it historical and conditional; the fixture is not qualified for validated scoring. No predictions or scores were regenerated.
+- An exploratory short-time Fourier peak inspection of the opening audio produced multiple peaks per frame; those peaks are not reliable note identities or a verified first-measure anchor. No spectral peak was promoted to scoring ground truth. Source first16s decode succeeded; no model was run.
+
 ## Exact next step — Independently align and validate scoring labels
 
 1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
-2. Visually check the scored excerpt against the recovered rhythm image and bass/lead PDFs, preserving rests, ties/bends and uncertainty. The historical rhythm fixture repeats a two-bar template; verify its onset and pitch semantics before adopting it as definitive labels. Store normalized labels privately, outside public Git.
+2. Rebuild the opening two-measure scoring table directly from the original-resolution professional image, preserving attack versus bend/release, string lines, rhythmic stems and repeated double stops. The old fixture failed audit; do not use it or blindly repeat it. Verify measures3-16 individually for variations and store normalized labels privately, outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, then use the tested scorer once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 
