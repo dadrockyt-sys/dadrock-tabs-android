@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **AUDIO-ONLY PULSE TIMING PRIOR FROZEN — EXACT MEASURE-1 ANCHOR / 15 LATER BENDS STILL OPEN**
+Status: **SOURCE RHYTHM + SOUNDING-ATTACK PITCH REVIEW COMPLETE FOR M1–16 — INDEPENDENT AUDIO TIMING MAP STILL OPEN**
 
 ## Product outcome
 
@@ -353,10 +353,19 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Added six focused tests for regular/glitched pulse trains, prediction/label contamination, invalid pulses, frame-quantization tolerance and exclusive CLI output. Local focused verification against the current scorer/bundle code: **23 tests passed** (7 onset scorer + 10 reviewed-bundle + 6 pulse-prior). The existing four alignment-builder tests and 189-test Node backend result were not rerun locally in this step.
 - Updated the branch-only CI workflow to run the 27 standard-library Python evaluation tests plus the existing browser-script syntax check after the complete Node backend suite. It installs no audio/model packages and runs no inference. This save itself decoded no audio and reran no model/predictions.
 
+## Repeated-opening bend review and private revision 6 — 2026-09-20
+
+- Recovered the exact private revision5 label draft from Library and the exact embedded 30-second review WAV (SHA256 `60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb`). No candidate predictions were read.
+- Added `astra_backend/evaluation/inspect_repeated_openings.py`, an audio-only NumPy diagnostic driven by the already-frozen 1.8946567921s four-pulse measure-period prior. It finds a bounded opening attack, sequentially matches the repeated opening within ±0.10s, and compares short-time harmonic contours/clusters. It remains diagnostic-only and cannot approve timing, labels, scoring or delivery.
+- Real repeated-opening evidence: measures2–16 stacked ridge is low→high→low (222.061→247.632→220.715Hz). 13/15 later measures pass the direct contour rule; all15/15 are spectrally closer to the later-opening cluster than to the user-confirmed pre-bent measure1. This corroborates the already-completed source reading: measures2–16 attack at the printed/fretted pitch then bend upward/release; measure1 remains pre-bent.
+- Corrected reproducibility before save: removed wall-clock runtime from the diagnostic output. Deterministic diagnostic SHA256 is `775e1a9264fed4237bdb6f11b72a0f568254ddb6b57037cdae65d685105d0c06`. Three focused synthetic NumPy tests pass (cluster/contour, hash fail-closed, timing-prior fail-closed).
+- Private `Gomyway-Reference-Draft-M1-16-r6.json` is now durably stored outside public Git, SHA256 `5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977`. It contains 136 reviewed sounding-at-attack pitches:120 ordinary source-fret/tuning readings,1 user-confirmed opening pre-bend and15 later bend-start reviews. Its top-level state remains draft only because absolute audio timing is unresolved.
+- Public `GOMYWAY_PITCH_REVIEW_RECEIPT_V1.json` exposes hashes/counts only; normalized note targets remain private. No model rerun, separator, candidate change, new score, main or Production change.
+
 ## Exact next step — Independently align and validate scoring labels
 
-1. Keep the 87-event candidate frozen. Use `GOMYWAY_PULSE_TIMING_PRIOR_V1.json` only as a phase/rate diagnostic: pulse1–29 is stable near126.67 BPM, while the first interval is flagged. Independently resolve the exact measure1 audio timestamp by listening/provenance; do not snap it automatically to RMS activity, first onset or first pulse, do not re-ask the already-confirmed starting-measure identity, and do not reuse archived prediction-match alignment. If the anchor remains uncertain, withhold a validated score.
-2. Continue the saved private Gomyway-Reference-Draft-M1-16.json revision5 (`a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9`). Tuning/no capo, opening pre-bend and source rhythm/tie reading are already resolved. Verify the 15 remaining bend starts and map the reviewed source beats onto the independently confirmed audio anchors. Do not redo completed rhythm reading, restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
+1. Keep the 87-event candidate frozen. Pitch/rhythm source review is now complete in private revision6; do not reopen the15 later bends. Build the independent timing map from the exact recording and professional-source beat positions, never from prediction matching. The repeated-opening attack observations may be used as audio evidence but are not automatically approved anchors.
+2. Use private `Gomyway-Reference-Draft-M1-16-r6.json` SHA256 `5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977` as the frozen musical-side source. Its only unresolved items are timing/alignment. Map its reviewed beat positions onto independently confirmed audio anchors; keep normalized labels outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 
