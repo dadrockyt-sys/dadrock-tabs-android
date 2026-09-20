@@ -61,5 +61,16 @@
     "This is development evidence on the generic guitar oracle and reviewed rhythm reference; it is not final customer accuracy.",
     "The rule was evaluated on already reviewed development material and requires prospective validation on other songs before product use.",
     "Generic guitar isolation still does not establish rhythm-versus-lead separation."
-  ]
+  ],
+  "roleAwareCorrection": {
+    "status": "rhythm-only-lift-is-role-transfer-not-net-transcription-gain",
+    "dualRoleBenchmarkPath": "docs/astra/GOMYWAY_DUAL_ROLE_GUITAR_BENCHMARK_V1.json",
+    "jointTpBefore": 75,
+    "jointTpAfter": 75,
+    "leadTpBefore": 35,
+    "leadTpAfter": 30,
+    "rhythmTpBefore": 40,
+    "rhythmTpAfter": 45,
+    "note": "Preserve this artifact as the rhythm-only score, but do not interpret its F1 lift as improved joint guitar transcription."
+  }
 }
