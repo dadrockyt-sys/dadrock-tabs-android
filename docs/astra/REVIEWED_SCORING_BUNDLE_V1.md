@@ -28,12 +28,20 @@ reviewStatus `complete`, unresolvedItems `[]`, coverageReviewed `true`, exact
 windowSeconds and roles. Each event has a unique id, role, reviewStatus `complete`,
 beat (cumulative quarter-note units), and kind: attack, rest, tie-continuation or
 bend-continuation. Only an attack has MIDI; non-attacks cannot carry a MIDI target.
+Here `attack` means the onset of a distinct note event, not necessarily a pick
+stroke. A reviewed hammer-on or pull-off that begins another note is an attack
+for this onset metric; an optional articulation field is descriptive and not
+scored. A slur alone must not be used to discard its destination note. A tie
+continuation or pitch motion within one sustained bend adds no new target.
+Do not add a second attack simply because a bend reaches another semitone.
+A rearticulated note remains a new attack, including at the same MIDI pitch.
+
 The reviewer must resolve sounding pitch at attack and distinguish a new attack
 from a continuing bend/tie. Unresolved notation blocks approval. Rests and blank
 measures must be explicitly reviewed; a coverage flag is a reviewer declaration,
 not automatic completeness detection.
 
-Alignment requires matching audioSha256, reviewStatus `complete`,
+Alignment requires matching audioSha256, reviewStatus `complete`, unresolvedItems `[]`,
 independentOfPredictions `true`, evidenceId and ordered segments. Every segment
 has beatStart/beatEnd and timeStart/timeEnd. Beats and times increase; adjacent
 segments meet exactly and cover the scoring window. Times interpolate linearly
@@ -54,6 +62,6 @@ and rendering accuracy are not scored by this runner.
 ## Current Gomyway readiness
 
 All source images/PDFs and the frozen prediction exist. The old rhythm fixture
-failed visual audit. Fresh private labels and a verified first-measure timing
-anchor are not yet available; therefore no reviewed bundle is approved and no
+failed visual audit. A fresh private measures1–16 draft exists, but approved sounding-pitch labels
+and a verified first-measure timing anchor are not yet available; therefore no reviewed bundle is approved and no
 replacement real score has been generated. See GOMYWAY_SCORING_BUNDLE_STATUS_V1.json.

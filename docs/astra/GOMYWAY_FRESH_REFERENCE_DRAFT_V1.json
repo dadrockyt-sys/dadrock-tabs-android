@@ -4,8 +4,10 @@
   "sourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
   "privateArtifact": {
     "filename": "Gomyway-Reference-Draft-M1-16.json",
-    "sha256": "482e18ec5d06087912bc4f172db7f2ea9a4d85d93e9b4db06a23223eb29f72ca",
-    "storedOutsidePublicGit": true
+    "sha256": "021a225cf1daa518689b0c55b86f9cfba71463a4e1d78d2525da80207db0b8fe",
+    "storedOutsidePublicGit": true,
+    "previousSha256": "482e18ec5d06087912bc4f172db7f2ea9a4d85d93e9b4db06a23223eb29f72ca",
+    "revision": 2
   },
   "coverage": {
     "measuresIndividuallyInspected": [
@@ -28,27 +30,35 @@
     ],
     "approvedMeasures": [],
     "candidatePitchedEntries": 136,
-    "candidateContinuationEntries": 16
+    "candidateContinuationEntries": 16,
+    "candidatePitchesFromConfirmedTuning": 120,
+    "unresolvedBendAttackPitches": 16
   },
   "method": "Cropped/enlarged exact source pixels for inspection; no generated image, model prediction matching or historical fixture copying. Repeated readings populated only after each visible measure was inspected. Enlargement adds no source detail.",
   "newFinding": "Panel 2 starts with measures13-14, repeating panel1 content obscured by player controls. Its second row is15-16. Screenshot boundaries are not measure boundaries.",
-  "draftContents": "Per-measure source bounds, string/fret readings, candidate quarter-note positions, unresolved gesture and continuation notes. No MIDI conversion, audio timestamps or complete-review assertions.",
+  "draftContents": "Source bounds, string/fret readings and provisional quarter-note positions;120 candidate MIDI pitches computed with user-confirmed tuning.16 bend-attack sounding pitches unresolved. No approved timing or labels.",
   "remaining": [
-    "Tuning/capo confirmation",
     "Sounding pitch at bend attack and continuation interpretation",
-    "Slurred-note onset policy",
-    "Rhythm subdivision confirmation",
-    "Independent first-measure audio anchor and piecewise timing map"
+    "Rhythm and slurred-note onset timing confirmation",
+    "Exact first-measure audio timestamp and piecewise timing map"
   ],
   "validation": {
     "jsonRoundTrip": true,
     "uniqueEntryIds": 152,
     "allCandidatePositionsWithinFourQuarterNotes": true,
     "sourceHashVerified": true,
-    "newTestSuiteRun": false
+    "newTestSuiteRun": false,
+    "focusedPythonTests": 21
   },
   "modelRerun": false,
   "predictionsChanged": false,
   "newScore": null,
-  "customerDeliveryEligible": false
+  "customerDeliveryEligible": false,
+  "userConfirmations": {
+    "tuning": "standard E A D G B E",
+    "capo": 0,
+    "firstAudibleRiffMeasure": 1,
+    "dateUtc": "2026-09-20",
+    "evidence": "Direct user answers in current conversation; no exact timestamp supplied"
+  }
 }

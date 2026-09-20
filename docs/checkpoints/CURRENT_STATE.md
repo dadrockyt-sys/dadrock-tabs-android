@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **FRESH MEASURES 1–16 PRIVATE REFERENCE DRAFT SAVED — MUSICAL REVIEW / AUDIO ANCHOR STILL REQUIRED**
+Status: **TUNING / STARTING MEASURE USER-CONFIRMED — CANDIDATE PITCHES ADDED; EXACT TIMING / BENDS STILL UNRESOLVED**
 
 ## Product outcome
 
@@ -320,10 +320,17 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - All16 measures remain draft: confirm tuning/capo, full-bend attack/continuation semantics, slurred open-note onset policy, and rhythmic subdivisions. First-measure audio anchor remains unverified. No candidate score/prediction changes, model run or new test-suite run. JSON/unique IDs/position bounds/source hash checked. Prior test results retained.
 - Public receipt `GOMYWAY_FRESH_REFERENCE_DRAFT_V1.json` records the artifact hash and aggregate findings without publishing the note table. Retrieve the private filename and verify its hash if the workspace copy disappears. Continue reviewing this draft; do not recreate the old incomplete template or restart initial image recovery.
 
+## User confirmations and scoring review fix — 2026-09-20
+
+- User explicitly confirmed standard guitar tuning E A D G B E with no capo, and that the first audible guitar riff begins at measure1 of the professional reference. Treat both as resolved identity facts; do not ask again. No exact onset timestamp was supplied, so measure1 time remains unverified.
+- Updated the same private `Gomyway-Reference-Draft-M1-16.json` to revision2, SHA256 `021a225cf1daa518689b0c55b86f9cfba71463a4e1d78d2525da80207db0b8fe` (supersedes482e18ec…). Added120 candidate sounding MIDI values using confirmed tuning;16 bend-attack pitches remain null, with separate fretted MIDI recorded. All labels remain draft and have no approved audio alignment.
+- Clarified onset policy: a distinct hammer-on/pull-off note counts as an onset despite no new pick stroke; continuous bend/tie motion alone does not add a target. This settles the metric definition, not all source-event timing or bend interpretation.
+- Fixed a concrete scoring admission gap: alignment reviewStatus complete no longer passes with unresolvedItems present, missing or malformed. It now requires explicit empty unresolvedItems, just like label review.21 focused Python tests pass, including contradictory alignment review declarations and synthetic legato/bend behavior. No model rerun, new accuracy score, main or Production change.
+
 ## Exact next step — Independently align and validate scoring labels
 
-1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
-2. Continue the saved private Gomyway-Reference-Draft-M1-16.json (hash above), already freshly read from each measure. Resolve its explicit tuning, bend/continuation, slurred-onset and rhythmic-subdivision uncertainties directly against source and audio. Convert to reviewed sounding MIDI only after those are resolved. Do not restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
+1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. The user confirmed the opening riff is measure1. Resolve its exact audio timestamp and tempo map from recording/provenance, independently of candidate matching; do not re-ask the starting-measure identity. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
+2. Continue the saved private Gomyway-Reference-Draft-M1-16.json (hash above), already freshly read from each measure. Use revision2 and its latest hash: tuning/no capo is user-confirmed and120 candidate pitches are present. Resolve the16 bend-attack pitches, continuation classification and rhythm/legato timing directly against source and audio. Approve sounding MIDI only after those are resolved. Do not restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 

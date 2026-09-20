@@ -40,7 +40,8 @@ def score_bundle(spec, *, predictions_path, labels_path, alignment_path):
     require(isinstance(audio, str) and len(audio) == 64 and all(c in '0123456789abcdef' for c in audio), 'Invalid audio identity')
     require(all(doc.get('audioSha256') == audio for doc in [prediction, labels, alignment]), 'Audio identity mismatch')
     require(labels.get('reviewStatus') == 'complete' and labels.get('unresolvedItems') == [], 'Label review incomplete')
-    require(alignment.get('reviewStatus') == 'complete' and alignment.get('independentOfPredictions') is True,
+    require(alignment.get('reviewStatus') == 'complete' and alignment.get('unresolvedItems') == []
+            and alignment.get('independentOfPredictions') is True,
             'Independent alignment review incomplete')
     require(isinstance(alignment.get('evidenceId'), str) and alignment['evidenceId'].strip(), 'Alignment evidence identity missing')
     require(labels.get('pitchPolicy') == spec['pitchPolicy'], 'Label pitch policy mismatch')

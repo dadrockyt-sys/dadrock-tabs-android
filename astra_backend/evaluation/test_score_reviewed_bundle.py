@@ -19,7 +19,7 @@ class BundleTests(unittest.TestCase):
                        'coverageReviewed': True, 'windowSeconds': [0,2], 'events': [
                            {'id': 'private-note-id', 'role': 'rhythm', 'reviewStatus': 'complete', 'kind': 'attack', 'beat': 1, 'midi': 60},
                            {'id': 'rest', 'role': 'rhythm', 'reviewStatus': 'complete', 'kind': 'rest', 'beat': 2}]},
-            'alignment': {'audioSha256': 'a'*64, 'reviewStatus': 'complete', 'independentOfPredictions': True,
+            'alignment': {'audioSha256': 'a'*64, 'reviewStatus': 'complete', 'unresolvedItems': [], 'independentOfPredictions': True,
                           'evidenceId': 'synthetic-landmarks', 'segments': [
                               {'beatStart': 0, 'beatEnd': 4, 'timeStart': 0, 'timeEnd': 2}]} }
         self.spec = {'version': 1, 'scope': 'whole-mix-to-rhythm', 'audioSha256': 'a'*64,
@@ -84,6 +84,27 @@ class BundleTests(unittest.TestCase):
             '--alignment',str(self.root/'alignment'),'--output',str(out)],capture_output=True)
         self.assertNotEqual(proc.returncode,0)
         self.assertFalse(out.exists())
+    def test_complete_alignment_with_unresolved_or_missing_review_items_is_rejected(self):
+        for value in [['downbeat unverified'], None, False, '']:
+            self.docs['alignment']['unresolvedItems'] = value
+            self.write()
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'alignment review incomplete'):
+                self.run_score()
+        del self.docs['alignment']['unresolvedItems']
+        self.write()
+        with self.assertRaisesRegex(ValueError, 'alignment review incomplete'):
+            self.run_score()
+
+    def test_legato_note_onset_counts_but_bend_continuation_does_not(self):
+        self.docs['labels']['events'] = [
+            {'id': 'picked', 'role': 'rhythm', 'reviewStatus': 'complete', 'kind': 'attack', 'beat': 1, 'midi': 60},
+            {'id': 'legato', 'role': 'rhythm', 'reviewStatus': 'complete', 'kind': 'attack', 'beat': 2.2, 'midi': 64,
+             'articulation': 'hammer-on'},
+            {'id': 'bend', 'role': 'rhythm', 'reviewStatus': 'complete', 'kind': 'bend-continuation', 'beat': 2.5}]
+        self.write()
+        result = self.run_score()
+        self.assertEqual((result['metrics']['targets'], result['metrics']['tp']), (2, 2))
+
     def test_piecewise_timing_interpolates_each_segment(self):
         self.docs['alignment']['segments'] = [
             {'beatStart':0,'beatEnd':2,'timeStart':0,'timeEnd':1},
