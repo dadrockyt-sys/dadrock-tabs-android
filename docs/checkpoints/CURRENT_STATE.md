@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **REVIEWED SCORING RUNNER WIRED AND TESTED — PRIVATE LABELS / INDEPENDENT ALIGNMENT STILL REQUIRED; NO NEW REAL SCORE**
+Status: **AUDIO-ONLY ALIGNMENT REVIEW PAGE BUILT — MUSICAL ANCHOR / LABEL REVIEW STILL REQUIRED; NO NEW REAL SCORE**
 
 ## Product outcome
 
@@ -305,6 +305,13 @@ User requests lower overhead: batch focused reads/checks, concise updates, no un
 `docs/astra/REVIEWED_SCORING_BUNDLE_V1.md` documents the CLI and full contract, including the limitation that review assertions/hashes cannot independently prove musical truth or prospective freezing. `GOMYWAY_SCORING_BUNDLE_STATUS_V1.json` binds current source/prediction identities but leaves label/alignment hashes null, explicitly blocked. No reviewer approvals or scoring targets invented.
 
 Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new integration tests covering tampering, scope/source identity, unresolved evidence, gaps, non-attacks, coincident roles, CLI failure/no output and piecewise timing). No model/full-backend rerun or installation. Previous189-test backend result remains historical, not a new run. No actual replacement Gomyway score, archived changes, main or Production changes.
+
+## Audio-only alignment review aid — 2026-09-20
+
+- Added `build_alignment_review.py` and `alignment_review.html`: exact WAV/evidence hash and rate checks, embedded audio/waveform, 33 diagnostic pulse markers, slower playback, seek/capture controls and explicit quarter-note anchors. No predictions or reference labels loaded. Anchor exports are always draft with unresolved review items; scorer admission remains blocked.
+- Recovered first30 WAV from the existing pinned source via ffmpeg; SHA256 matches the frozen baseline exactly. Generated the private `Gomyway-Audio-Review.html` without another model run or package install. This is a review aid, not completed alignment or fresh normalized labels.
+- 19 focused Python tests pass (15 scoring + 4 builder). Actual JavaScript syntax/export logic checks pass, including invalid anchor rejection. Browser end-to-end attempt failed before navigation: Playwright Chromium executable absent; agent-browser CLI also absent. Playback, layout and browser download still need a real browser check. No browser download was attempted.
+- Contract/reproduction and limitations: `docs/astra/AUDIO_ALIGNMENT_REVIEW_V1.md`. Continue by using the review page to identify independent musical anchors and auditing the first two measures directly. Do not spend another turn rediscovering broad tempo or rebuilding this helper. Preserve draft status until musical evidence is actually verified.
 
 ## Exact next step — Independently align and validate scoring labels
 
