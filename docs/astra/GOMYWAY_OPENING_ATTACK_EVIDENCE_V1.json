@@ -1,0 +1,185 @@
+{
+  "kind": "opening-attack-audio-diagnostic",
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "numpyVersion": "2.3.5",
+  "sampleRate": 22050,
+  "analyzedSeconds": 1,
+  "energyBinSamples": 22,
+  "energyBinSeconds": 0.000997732426303855,
+  "energyThresholdObservations": [
+    {
+      "rmsThreshold": 0.001,
+      "consecutiveBins": 1,
+      "firstTimeSeconds": 0.06984126984126984
+    },
+    {
+      "rmsThreshold": 0.001,
+      "consecutiveBins": 10,
+      "firstTimeSeconds": 0.06984126984126984
+    },
+    {
+      "rmsThreshold": 0.005,
+      "consecutiveBins": 1,
+      "firstTimeSeconds": 0.0708390022675737
+    },
+    {
+      "rmsThreshold": 0.005,
+      "consecutiveBins": 10,
+      "firstTimeSeconds": 0.0708390022675737
+    },
+    {
+      "rmsThreshold": 0.01,
+      "consecutiveBins": 1,
+      "firstTimeSeconds": 0.0708390022675737
+    },
+    {
+      "rmsThreshold": 0.01,
+      "consecutiveBins": 10,
+      "firstTimeSeconds": 0.0708390022675737
+    },
+    {
+      "rmsThreshold": 0.02,
+      "consecutiveBins": 1,
+      "firstTimeSeconds": 0.0728344671201814
+    },
+    {
+      "rmsThreshold": 0.02,
+      "consecutiveBins": 10,
+      "firstTimeSeconds": 0.09777777777777778
+    },
+    {
+      "rmsThreshold": 0.05,
+      "consecutiveBins": 1,
+      "firstTimeSeconds": 0.1017687074829932
+    },
+    {
+      "rmsThreshold": 0.05,
+      "consecutiveBins": 10,
+      "firstTimeSeconds": 0.1017687074829932
+    }
+  ],
+  "harmonicSearchHz": [
+    180,
+    280.75
+  ],
+  "harmonicSearchStepHz": 0.25,
+  "fftSize": 32768,
+  "harmonicObservations": [
+    {
+      "windowStartSeconds": 0.08,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 247.0,
+      "harmonics3456Hz": 239.25
+    },
+    {
+      "windowStartSeconds": 0.1,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 224.0,
+      "harmonics3456Hz": 225.25
+    },
+    {
+      "windowStartSeconds": 0.12,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 247.75,
+      "harmonics3456Hz": 183.0
+    },
+    {
+      "windowStartSeconds": 0.14,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 182.25,
+      "harmonics3456Hz": 184.25
+    },
+    {
+      "windowStartSeconds": 0.16,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 222.0,
+      "harmonics3456Hz": 199.25
+    },
+    {
+      "windowStartSeconds": 0.18,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 221.0,
+      "harmonics3456Hz": 224.5
+    },
+    {
+      "windowStartSeconds": 0.2,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 227.25,
+      "harmonics3456Hz": 225.5
+    },
+    {
+      "windowStartSeconds": 0.22,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 180.0,
+      "harmonics3456Hz": 234.75
+    },
+    {
+      "windowStartSeconds": 0.24,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 242.25,
+      "harmonics3456Hz": 242.5
+    },
+    {
+      "windowStartSeconds": 0.26,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 242.0,
+      "harmonics3456Hz": 242.75
+    },
+    {
+      "windowStartSeconds": 0.28,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 241.75,
+      "harmonics3456Hz": 241.75
+    },
+    {
+      "windowStartSeconds": 0.3,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 240.75,
+      "harmonics3456Hz": 241.5
+    },
+    {
+      "windowStartSeconds": 0.32,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 238.5,
+      "harmonics3456Hz": 239.75
+    },
+    {
+      "windowStartSeconds": 0.34,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 232.0,
+      "harmonics3456Hz": 233.25
+    },
+    {
+      "windowStartSeconds": 0.36,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 222.75,
+      "harmonics3456Hz": 222.75
+    },
+    {
+      "windowStartSeconds": 0.38,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 221.5,
+      "harmonics3456Hz": 221.0
+    },
+    {
+      "windowStartSeconds": 0.4,
+      "windowDurationSeconds": 0.06,
+      "harmonics234Hz": 219.0,
+      "harmonics3456Hz": 219.5
+    }
+  ],
+  "runtimeSeconds": 0.022968020000007527,
+  "measureOneTimeSeconds": null,
+  "bendAttackMidi": null,
+  "reviewStatus": "diagnostic-only",
+  "predictionsRead": false,
+  "labelsRead": false,
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "Energy thresholds locate signal activity, not a verified guitar onset.",
+    "Harmonic search is restricted to 180-280.75 Hz; it cannot identify arbitrary pitches.",
+    "The two harmonic subsets overlap and are not independent estimators.",
+    "Windows mix 60 ms of changing sound; zero padding does not improve physical resolution.",
+    "Mixed instruments and transient noise can dominate; no confidence or note truth is assigned."
+  ]
+}
