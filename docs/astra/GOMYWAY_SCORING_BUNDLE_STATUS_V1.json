@@ -1,16 +1,26 @@
 {
-  "status": "blocked-pending-reviewed-labels-and-independent-alignment",
+  "status": "reviewed-bounded-score-complete-m1-15",
   "predictionPath": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json",
   "predictionSha256": "6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659",
   "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
-  "labelsSha256": null,
-  "alignmentSha256": null,
+  "labelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
   "sourceSha256ByRole": {
     "rhythm": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
     "bass": "18e6822394980d22a960a1bd4d923aaddf677f3341b8cc1a2dbb29ea1e8771d0",
     "lead": "a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56"
   },
-  "score": null,
+  "score": {
+    "predictions": 83,
+    "targets": 126,
+    "tp": 26,
+    "fp": 57,
+    "fn": 100,
+    "precision": 0.3132530120481928,
+    "recall": 0.20634920634920634,
+    "f1": 0.24880382775119617,
+    "meanAbsoluteOnsetErrorSeconds": 0.022989586603872497
+  },
   "modelRerun": false,
   "customerDeliveryEligible": false,
   "focusedTests": {
@@ -18,5 +28,31 @@
     "passed": 15,
     "failed": 0,
     "outputSha256": "138be6c28b7ac345ad5e358601bf14e9f604f3d3e1091145731fdfedb4eb64d4"
-  }
+  },
+  "predictionProjectionPath": "docs/astra/evaluations/GOMYWAY_FIRST30_SCORING_PROJECTION_V1.json",
+  "predictionProjectionSha256": "1f3298efa446b36e7679a0eb3753d1aa03675732cbfd119a236c7c3b78bd13d7",
+  "reviewedWindowSeconds": [
+    0.09868480725623582,
+    28.299319727891156
+  ],
+  "reviewedBeatWindow": [
+    0,
+    60
+  ],
+  "reviewedMeasures": [
+    1,
+    15
+  ],
+  "measure16Excluded": true,
+  "onsetOnlyOneToOneUpperBound": {
+    "tp": 46,
+    "precision": 0.5542168674698795,
+    "recall": 0.36507936507936506,
+    "f1": 0.44019138755980863,
+    "meanAbsoluteOnsetErrorSeconds": 0.01818160307601343
+  },
+  "scorePath": "docs/astra/GOMYWAY_REVIEWED_M1_15_SCORE_V1.json",
+  "privateRevision6Sha256": "5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977",
+  "roleAccuracy": null,
+  "note": "Measures1-15 only: 16 observed measure-opening attacks bound all15 timing segments; no closing-bar extrapolation. Whole-mix baseline versus rhythm labels is not requested-role separation accuracy."
 }
