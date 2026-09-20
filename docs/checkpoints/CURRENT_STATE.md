@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ORACLE TRANSCRIPTION PREREGISTRATION + CLOCK PROJECTION FROZEN — EXACT LOCKED BASIC PITCH RUNTIME RESTORE BLOCKS THE ORACLE SCORE**
+Status: **ORACLE TRANSCRIPTION PREREGISTERED — EXACT PYTHON 3.10.21 RUNTIME EXPORT BUILD TRIGGERED ON ASTRA-WORK**
 
 ## Product outcome
 
@@ -389,6 +389,12 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Six focused standard-library tests pass locally: exact inverse-clock mapping/MIDI preservation, pre-zero exclusion, oracle identity/role fail-closed behavior, frozen runtime/model/settings/transform/tolerance, invalid event/order rejection and exclusive CLI output. The branch CI suite now includes these tests; no model dependency is needed to verify projection semantics.
 - Runtime restoration was checked before save. No cached Basic Pitch, TFLite model/runtime or Python3.10 environment exists under the active persistent cache/workspace paths. Earlier `uv` restoration attempts could not obtain the required runtime/packages because package-download DNS/network access failed; no unpinned substitute was installed. No oracle model inference or new score is claimed.
 - The reviewed M1–15 bundle, revision6 labels, timing map, 87-event whole-mix candidate and 24.88% bounded baseline remain unchanged. No main/Production change.
+
+## Frozen runtime export attempt — 2026-09-20
+
+- Added a branch-only GitHub Actions runtime exporter. It receives **no audio, labels, predictions or credentials**. Its sole job is to reproduce the previously verified Python3.10.21 + 57-package hashed environment from `astra_backend/engine/requirements.lock`, compare installed name/version metadata byte-for-byte in meaning with `installed-distributions.json`, verify the packaged Basic Pitch model SHA256 and archive the resulting Python prefix as a workflow artifact.
+- The workflow is triggered only when its own file changes on `astra-work`. It has read-only repository permissions and performs no deployment, production action, Demucs weight download, audio access or model inference.
+- This is an execution-recovery step for the private oracle test. Success would let the exact runtime be transferred back to the active workspace without placing private development audio in GitHub. Failure must be recorded as a blocker rather than weakening the preregistered runtime identity.
 
 ## Exact next step — Measure the oracle transcription lift, then select the isolation path
 
