@@ -1,0 +1,90 @@
+{
+  "kind": "basic-pitch-raw-activation-development-receipt",
+  "version": 1,
+  "oracleAudioSha256": "e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6",
+  "rawActivationNpzSha256": "0cd4d4365763d249bef32236bee188b038b11275852d620995a6029fe7d9d2a6",
+  "rawActivationMetadataSha256": "01440b6ed664a28992e2b9a6fc56a7fb111bc5f6f16753f93c60fb47e2f65012",
+  "runtime": {
+    "pythonVersion": "3.10.21",
+    "basicPitchVersion": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
+  },
+  "arrays": {
+    "note": {
+      "shape": [
+        2580,
+        88
+      ],
+      "dtype": "float32",
+      "max": 0.8686520457267761
+    },
+    "onset": {
+      "shape": [
+        2580,
+        88
+      ],
+      "dtype": "float32",
+      "max": 0.9321146607398987
+    },
+    "contour": {
+      "shape": [
+        2580,
+        264
+      ],
+      "dtype": "float32",
+      "max": 0.795071005821228
+    }
+  },
+  "postprocessedEventCount": 156,
+  "referenceLabelsReadDuringCapture": false,
+  "reviewedPostCaptureDiagnostics": {
+    "midi50Targets": 15,
+    "targetMidi50OnsetMaxMedian": 0.3205,
+    "octaveUpMidi62OnsetMaxMedian": 0.7715,
+    "targetMidi50FrameMaxMedian": 0.1186,
+    "octaveUpMidi62FrameMaxMedian": 0.5624,
+    "interpretation": "The D3-to-D4 octave error is present in the neural activations themselves; lowering the standard postprocessor threshold alone cannot recover the missing D3 voice reliably."
+  },
+  "bendPostCaptureDiagnostics": {
+    "reviewedBendStartTargets": 14,
+    "targetMidi57OnsetMaxMedian": 0.419,
+    "targetMidi57FrameMaxMedian": 0.1442,
+    "contourMedianApproxMidiByOffsetMs": [
+      [
+        46,
+        57.67
+      ],
+      [
+        69,
+        57.67
+      ],
+      [
+        92,
+        58
+      ],
+      [
+        115,
+        58.33
+      ],
+      [
+        138,
+        59
+      ],
+      [
+        161,
+        59.33
+      ],
+      [
+        230,
+        59.33
+      ]
+    ],
+    "interpretation": "The onset/contour heads retain attacked upward-glide evidence even when the sustained-note decoder omits the bend-start note."
+  },
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "Raw activations are development evidence on previously reviewed material, not a locked final evaluation.",
+    "Reviewed target diagnostics were computed only after the prediction-blind raw activation capture was frozen.",
+    "This receipt does not publish the activation tensors or private reviewed labels."
+  ]
+}
