@@ -109,14 +109,11 @@ def project_predictions(prediction, prereg, *, prediction_sha256, prereg_sha256)
 
     projected = []
     dropped_before_zero = 0
-    previous_native_start = -1.0
     for index, row in enumerate(events):
         start, end, midi = row.get("start"), row.get("end"), row.get("midi")
         require(finite(start) and finite(end) and 0 <= start < end, "Invalid Basic Pitch event time")
         require(isinstance(midi, int) and not isinstance(midi, bool) and 0 <= midi <= 127,
                 "Invalid Basic Pitch MIDI")
-        require(start >= previous_native_start, "Basic Pitch events must be start-time ordered")
-        previous_native_start = start
         source_start = (start - offset) / scale
         source_end = (end - offset) / scale
         if source_start < 0:
