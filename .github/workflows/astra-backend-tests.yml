@@ -25,11 +25,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Record runtime
-        run: node --version
+      - name: Record runtimes
+        run: |
+          node --version
+          python3 --version
       - name: Run complete Astra backend suite
         shell: bash
         run: |
           set -o pipefail
           npm --prefix astra_backend test 2>&1 | tee /tmp/astra-test-output.txt
           echo "ASTRA_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-test-output.txt | awk '{print $1}')"
+      - name: Run focused evaluation suite
+        shell: bash
+        run: |
+          set -o pipefail
+          cd astra_backend/evaluation
+          python3 -m unittest -v \
+            test_score_note_onsets.py \
+            test_score_reviewed_bundle.py \
+            test_build_alignment_review.py \
+            test_build_pulse_timing_prior.py 2>&1 | tee /tmp/astra-evaluation-test-output.txt
+          node test_alignment_review.cjs 2>&1 | tee -a /tmp/astra-evaluation-test-output.txt
+          echo "ASTRA_EVALUATION_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-evaluation-test-output.txt | awk '{print $1}')"

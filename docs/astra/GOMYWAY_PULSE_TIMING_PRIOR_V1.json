@@ -1,0 +1,79 @@
+{
+  "kind": "audio-only-pulse-timing-prior",
+  "version": 1,
+  "sourceEvidenceSha256": "cf9d2811fe911394fc8cd6396551071e191f9bc733b8c41cb23e73f5936acca4",
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "pulseCount": 33,
+  "frameResolutionSeconds": 0.005804988662131519,
+  "medianIntervalSeconds": 0.47600907029478456,
+  "medianPulseRateBpm": 126.04801829268293,
+  "medianAbsoluteDeviationSeconds": 0.005804988662131638,
+  "robustSigmaSeconds": 0.008606476190476366,
+  "outlierToleranceSeconds": 0.025819428571429097,
+  "intervalAnomalies": [
+    {
+      "leftPulseIndex": 0,
+      "rightPulseIndex": 1,
+      "timeStart": 0.1219047619047619,
+      "timeEnd": 0.626938775510204,
+      "intervalSeconds": 0.5050340136054421,
+      "deviationFromMedianSeconds": 0.029024943310657525
+    },
+    {
+      "leftPulseIndex": 29,
+      "rightPulseIndex": 30,
+      "timeStart": 13.908752834467121,
+      "timeEnd": 14.286077097505668,
+      "intervalSeconds": 0.37732426303854716,
+      "deviationFromMedianSeconds": 0.0986848072562374
+    },
+    {
+      "leftPulseIndex": 30,
+      "rightPulseIndex": 31,
+      "timeStart": 14.286077097505668,
+      "timeEnd": 14.831746031746032,
+      "intervalSeconds": 0.5456689342403642,
+      "deviationFromMedianSeconds": 0.06965986394557966
+    }
+  ],
+  "stablePulseRuns": [
+    {
+      "pulseStartIndex": 1,
+      "pulseEndIndex": 29,
+      "pulseCount": 29,
+      "beatIntervals": 28,
+      "timeStart": 0.626938775510204,
+      "timeEnd": 13.908752834467121,
+      "fittedPeriodSeconds": 0.4736641980273226,
+      "fittedBpm": 126.67201838324075,
+      "fittedFirstPulseSeconds": 0.6431527093596054,
+      "rmsResidualSeconds": 0.006305532194394071,
+      "maxAbsoluteResidualSeconds": 0.016213933849401396
+    }
+  ],
+  "preservedEarlyPulseFit": {
+    "periodSeconds": 0.4737602681652371,
+    "bpm": 126.64633155575919,
+    "rmsResidualSeconds": 0.006637295186855291,
+    "maxAbsoluteResidualSeconds": 0.015460619803476572
+  },
+  "openingSignalContext": {
+    "firstRmsAbove001Seconds": 0.058049886621315196,
+    "firstDetectedOnsetSeconds": 0.11029478458049886,
+    "firstObservedPulseSeconds": 0.1219047619047619
+  },
+  "candidateDownbeats": [],
+  "measureOneStartVerified": false,
+  "tempoMapVerified": false,
+  "reviewStatus": "diagnostic-only",
+  "predictionsRead": false,
+  "referenceLabelsRead": false,
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "Observed pulses are audio-only diagnostics and do not identify measure 1, beat number or note ground truth.",
+    "Stable-run fits describe tracker phase/rate only; they are not approved timing-map segments for scoring.",
+    "Interval anomalies may be tracker errors, expressive timing or real tempo change; this utility does not decide which.",
+    "Opening RMS/onset/pulse times are preserved as separate observations and are not collapsed into an invented anchor.",
+    "No prediction, professional reference label or score is consulted or produced."
+  ]
+}
