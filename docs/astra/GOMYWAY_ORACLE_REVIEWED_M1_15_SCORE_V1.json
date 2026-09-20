@@ -1,0 +1,92 @@
+{
+  "kind": "oracle-guitar-basic-pitch-reviewed-score",
+  "version": 1,
+  "scope": "measures1-15-bounded-no-extrapolation",
+  "sourceAudioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "oracleAudioSha256": "e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6",
+  "oracleSourceM4aSha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+  "preregistrationSha256": "cf78dff6ea5935dfcd3698b3b29e2a55f3772f249bb4d526e5b6cb3ffd0b2c03",
+  "nativePredictionSha256": "0e107ea954ab34b7701a31bd9ca0cccac1f01283528d070d5a5c6b15f2c42e68",
+  "sourceClockProjectionSha256": "d305a86f543900a7ed6984b8c020b1cc13b99d8c0fcbcff0d2bad8e17c4690ce",
+  "privateScoreSpecSha256": "9acc13ee888d939ea0a1a120a84289806f8a7e0a4b7ccfd7538943bb1ee4e572",
+  "privateScoreResultSha256": "36ae31bc186d9aeb9154d0c674110fa91e9d840833d78cd0a6441ee6a848dfc3",
+  "diagnosticsSha256": "e31994c44107688bb11a10ac259c989450ea93be31485f5743929fb33352effc",
+  "runtime": {
+    "pythonVersion": "3.10.21",
+    "basicPitchVersion": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "requirementsLockSha256": "a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7",
+    "runtimeArtifactZipSha256": "47a6ad49740721d83b1589c897c48efd0c4d0ddbc8e0c0919dc38feaab6c9def",
+    "runtimeArchiveSha256": "8113897ae9412d921c5011570577d5a6ef00fb73ec59a1a57c8769880d914edb"
+  },
+  "inference": {
+    "eventCount": 156,
+    "modelWallSeconds": 18.628098441000475,
+    "peakRssKiB": 372304
+  },
+  "reviewedScore": {
+    "predictions": 151,
+    "targets": 126,
+    "tp": 40,
+    "fp": 111,
+    "fn": 86,
+    "precision": 0.26490066225165565,
+    "recall": 0.31746031746031744,
+    "f1": 0.2888086642599278,
+    "meanAbsoluteOnsetErrorSeconds": 0.021783429583182547
+  },
+  "wholeMixBaseline": {
+    "predictions": 83,
+    "targets": 126,
+    "tp": 26,
+    "fp": 57,
+    "fn": 100,
+    "precision": 0.3132530120481928,
+    "recall": 0.20634920634920634,
+    "f1": 0.24880382775119617,
+    "meanAbsoluteOnsetErrorSeconds": 0.022989586603872497
+  },
+  "onsetOnlyDiagnostic": {
+    "wholeMix": {
+      "tp": 46,
+      "predictions": 83,
+      "targets": 126,
+      "precision": 0.5542168674698795,
+      "recall": 0.36507936507936506,
+      "f1": 0.44019138755980863,
+      "meanAbsoluteOnsetErrorSeconds": 0.01818160307601343
+    },
+    "oracle": {
+      "tp": 70,
+      "predictions": 151,
+      "targets": 126,
+      "precision": 0.46357615894039733,
+      "recall": 0.5555555555555556,
+      "f1": 0.5054151624548736,
+      "meanAbsoluteOnsetErrorSeconds": 0.018122487840616586
+    }
+  },
+  "failureDiagnostics": {
+    "midi50": {
+      "targets": 15,
+      "exactMatches": 0,
+      "onsetAlignedOctaveUpMidi62Targets": 11,
+      "interpretation": "D3 targets are frequently detected at the correct onset as D4 (+12 semitones)."
+    },
+    "midi57": {
+      "targets": 14,
+      "exactMatches": 0,
+      "targetsWithAnyPredictionWithin50ms": 1,
+      "interpretation": "A3 bend-start attacks are largely absent even after guitar isolation."
+    }
+  },
+  "interpretation": "Guitar isolation materially improves onset coverage and exact-match recall but does not solve pitch inference. Basic Pitch still shows a systematic octave error on repeated D3 attacks and largely misses the recurring A3 bend attack, so both isolation and a stronger/bend-aware pitch-event inference stage are needed.",
+  "roleAccuracy": null,
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This uses a user-provided generic guitar-only development oracle, not an approved production separator.",
+    "Generic guitar isolation does not distinguish rhythm from lead.",
+    "This is development evidence on previously reviewed material, not a locked final evaluation.",
+    "No duration, technique, fingering or PDF-render quality is scored."
+  ]
+}
