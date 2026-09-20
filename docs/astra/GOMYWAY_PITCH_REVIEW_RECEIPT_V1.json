@@ -1,0 +1,22 @@
+{
+  "kind": "private-pitch-review-receipt",
+  "version": 1,
+  "priorPrivateDraftRevision": 5,
+  "priorPrivateDraftSha256": "a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9",
+  "reviewedPrivateDraftRevision": 6,
+  "reviewedPrivateDraftSha256": "5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977",
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "repeatedOpeningDiagnosticSha256": "775e1a9264fed4237bdb6f11b72a0f568254ddb6b57037cdae65d685105d0c06",
+  "reviewedOnsetCount": 136,
+  "sourceFretConfirmedTuningCount": 120,
+  "openingPreBendUserConfirmedCount": 1,
+  "laterBendStartsAudioReviewedCount": 15,
+  "directLowHighLowContourCountLaterMeasures": 13,
+  "laterClusterCloserToItselfThanOpeningCount": 15,
+  "pitchPolicy": "reviewed-sounding-midi-at-attack",
+  "detailedLabelsPublished": false,
+  "alignmentReviewed": false,
+  "measureOneTimeVerified": false,
+  "scoringEligible": false,
+  "customerDeliveryEligible": false
+}
