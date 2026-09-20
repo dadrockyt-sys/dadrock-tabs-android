@@ -106,17 +106,19 @@ class OracleProjectionTests(unittest.TestCase):
             with self.subTest(spec=spec), self.assertRaises(ValueError):
                 self.project(spec=spec)
 
-    def test_invalid_events_or_order_fail_closed(self):
+    def test_invalid_events_fail_closed_and_unordered_events_are_allowed(self):
         bad_rows = [
             [{"start": 1, "end": 1, "midi": 60}],
             [{"start": 1, "end": 2, "midi": True}],
             [{"start": 1, "end": 2, "midi": 128}],
-            [{"start": 2, "end": 3, "midi": 60}, {"start": 1, "end": 2, "midi": 61}],
         ]
         for rows in bad_rows:
             pred = self.prediction(); pred["events"] = rows
             with self.subTest(rows=rows), self.assertRaises(ValueError):
                 self.project(prediction=pred)
+        pred = self.prediction(); pred["events"] = list(reversed(pred["events"]))
+        result = self.project(prediction=pred)
+        self.assertEqual([e["midi"] for e in result["events"]], [50, 57])
 
     def test_cli_refuses_overwrite(self):
         with tempfile.TemporaryDirectory() as temp:
