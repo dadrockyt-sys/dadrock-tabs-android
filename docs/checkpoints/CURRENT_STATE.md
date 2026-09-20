@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ORACLE TRANSCRIPTION PREREGISTERED — EXACT RUNTIME INSTALL PASSED; EXPORT RETRY REMOVES ONLY RUNNER-SEEDED PIP**
+Status: **ORACLE TRANSCRIPTION SCORED — ISOLATION LIFTS RECALL, BUT OCTAVE + BEND-AWARE PITCH INFERENCE ARE NOW THE PRIMARY BOTTLENECKS**
 
 ## Product outcome
 
@@ -402,12 +402,23 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Identity verification found **zero missing frozen distributions**. The only extra distribution was `pip==26.2.1`, pre-seeded by `actions/setup-python`; it is not present in the historical uv-created 57-package snapshot. The archive step therefore correctly failed closed and no runtime artifact was emitted.
 - The retry removes only that runner-seeded pip distribution *after* hash-locked sync/check, using external `uv`, then repeats the exact 57-distribution + Basic Pitch model-byte verification. No locked package version, preregistered inference setting or model identity changes.
 
-## Exact next step — Measure the oracle transcription lift, then select the isolation path
+## Oracle guitar transcription score — 2026-09-20
 
-1. Keep the reviewed M1–15 bundle, revision6 labels, timing map, frozen87-event whole-mix candidate and `GOMYWAY_ORACLE_TRANSCRIPTION_PREREGISTRATION_V1.json` immutable. Do not tune labels, affine transform, tolerance or inference settings after seeing oracle predictions.
-2. Restore the exact frozen Python3.10.21 / hashed Basic Pitch runtime in a stable workspace cache. Verify the installed-distribution snapshot and packaged model SHA before inference. Do not use an unpinned substitute if network/runtime restoration remains unavailable.
-3. Run `run_basic_pitch_development.py` once on the exact preregistered guitar-only first30 WAV, then pass that untouched result through `project_oracle_predictions.py`. Hash the native result and source-clock projection; do not hand-edit either.
-4. Score the projected oracle transcription against the SAME private M1–15 rhythm labels/alignment and report TP/FP/FN versus the whole-mix 26/57/100 baseline. Generic guitar isolation is not rhythm/lead separation; preserve model-rights, CPU/resource and customer-delivery gates and do not modify main/Production.
+- Exact frozen runtime recovery succeeded through the private GitHub Actions artifact: runtime ZIP SHA256 `47a6ad49740721d83b1589c897c48efd0c4d0ddbc8e0c0919dc38feaab6c9def`, embedded Python3.10.21 runtime tar SHA256 `8113897ae9412d921c5011570577d5a6ef00fb73ec59a1a57c8769880d914edb`. The transferred runtime re-verified Basic Pitch0.4.0 and model SHA256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`.
+- Ran the preregistered runner blob `95950c50e00777ba3c0398b917f95dcece70065c` exactly once on oracle WAV `e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6`. Frozen native result SHA256 `0e107ea954ab34b7701a31bd9ca0cccac1f01283528d070d5a5c6b15f2c42e68`:156 events,18.6281s model wall time,372304KiB peak RSS.
+- Real output exposed one validation-only bug before scoring: Basic Pitch event rows are unordered. Removed the projector's incorrect ordering requirement; events remain in native order and no MIDI/timing/scoring parameter changed. The corrected projector retains all six fail-closed tests plus explicit unordered-input acceptance.
+- Source-clock projection SHA256 `d305a86f543900a7ed6984b8c020b1cc13b99d8c0fcbcff0d2bad8e17c4690ce` maps all156 events through the preregistered affine relation; zero events were dropped. Private spec SHA256 `9acc13ee888d939ea0a1a120a84289806f8a7e0a4b7ccfd7538943bb1ee4e572`; private score SHA256 `36ae31bc186d9aeb9154d0c674110fa91e9d840833d78cd0a6441ee6a848dfc3`. All are stored durably outside public Git.
+- Reviewed M1–15 oracle score: **151 in-window predictions,126 targets,40 TP,111 FP,86 FN; precision26.49%, recall31.75%, F128.88%, onset MAE21.78ms**. Whole-mix baseline was26 TP/57 FP/100 FN; precision31.33%, recall20.63%, F124.88%. Isolation therefore adds14 exact TPs and reduces FNs by14, but also exposes many more extra notes.
+- Onset-only diagnostic improves from46→70 matched targets: recall36.51%→55.56% and F144.02%→50.54%, with essentially unchanged matched onset MAE (~18.2ms). This is strong evidence that isolation improves acoustic event visibility even though pitch identity remains weak.
+- The two prior zero-match classes remain zero exact matches after isolation. MIDI50/D3 has **11/15 targets with an onset-aligned MIDI62/D4 prediction** within50ms: a systematic +12-semitone octave error. MIDI57/A3 bend-start has only **1/14 targets with any prediction at all within50ms**; the bend attack is mostly absent, not merely octave-shifted.
+- Public aggregate is `docs/astra/GOMYWAY_ORACLE_REVIEWED_M1_15_SCORE_V1.json`. This development oracle is not a production separator and generic guitar does not establish rhythm/lead role truth. Customer delivery remains false; main/Production unchanged.
+
+## Exact next step — Fix octave evidence and bend-start inference without song-specific rules
+
+1. Keep the reviewed M1–15 labels/alignment, preregistered oracle run, native prediction and source-clock projection immutable as the development baseline. Do not retune the50ms scorer or affine mapping.
+2. Build a reference-blind octave-evidence diagnostic on isolated audio around each predicted note. Test whether a candidate one-octave-lower fundamental has stronger harmonic consistency than the Basic Pitch pitch; do not hard-code MIDI50/62 or this song's measures.
+3. Separately inspect bend/glide attacks using audio-only onset + pitch-contour evidence. The objective is a general event type that can represent an attacked note followed by continuous pitch movement, not a Gomyway-specific insertion.
+4. Evaluate each general rule on the frozen development bundle with raw TP/FP/FN and explicit regression counts. If a rule only improves this song through pitch-class/measure knowledge, reject it. Preserve role-separation/model-rights/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
