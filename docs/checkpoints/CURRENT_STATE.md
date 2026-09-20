@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **TUNING / STARTING MEASURE USER-CONFIRMED — CANDIDATE PITCHES ADDED; EXACT TIMING / BENDS STILL UNRESOLVED**
+Status: **SOURCE RHYTHM REVIEW COMPLETE FOR 1–16; OPENING PRE-BEND USER-CONFIRMED — AUDIO TIMING / LATER BENDS STILL OPEN**
 
 ## Product outcome
 
@@ -336,10 +336,18 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Validated real diagnostic JSON,10 energy rows/17 harmonic rows,136 populated pitch candidates and all152 entries retaining draft status. No new unit-suite run;21-test result remains previous milestone evidence. No score, main or Production change.
 - Do not repeat these spectral/threshold diagnostics expecting them to settle mixed-audio ambiguity. Next useful evidence is direct musical listening/annotation of the attack and subsequent anchors (the existing review page), plus rhythm-source review. User already confirmed standard tuning/no capo and opening measure1; do not re-ask those facts. A populated candidate must not be relabeled reviewed without new evidence.
 
+## Source rhythm and opening pre-bend correction — 2026-09-20
+
+- Re-inspected source crops for all16 measures, including unobscured13-14 in panel2. Explicitly read beams, flags, augmentation dots and the unnumbered tied stem. Stored source-symbol spans and source note-onset/tie classifications in private draft. All16 measures cover four quarter notes exactly by rational arithmetic;136 rhythmic positions span64 quarters. Simultaneous chord notes count as one rhythmic position. This completes the source rhythm reading, not acoustic timing/duration verification.
+- User replied **Bent first** to the question whether the opening note is picked normally then bent or pre-bent before picking. Interpret as opening pre-bend; the source full marking supplies nominal two-semitone amount. Corrected that opening candidate rather than leaving the unbent-fret assumption. Confirmation applies to opening note only; do not silently apply it to the15 later bends. Do not ask again about opening pre-bend, standard tuning/no capo or starting measure1.
+- Same private draft now revision5, SHA256 `a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9`. Revision4 (`b669007b…`) completed rhythm reading; revision5 incorporated the user's mid-task correction. All152 entries remain draft;136 pitch candidates retained. Remaining15 bend starts and exact audio timestamps remain unresolved.
+- Browser verification attempted with a55-second-bounded Playwright headless Chromium download. CDN request timed out after30s; outer command terminated the retry at55s (exit124). Browser remains unavailable; no playback/listening verification was performed. Do not repeat downloads in this environment without changed connectivity. The existing review page remains available for a listener; this is a tool availability blocker, not a reason to infer timestamp truth.
+- Validated private JSON, all-measure rational coverage,136 pitch candidates and draft status. No new unit-suite/model run or real score; previous21-test result remains historical. Receipt updated without publishing note labels. No main/Production change.
+
 ## Exact next step — Independently align and validate scoring labels
 
 1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. The user confirmed the opening riff is measure1. Resolve its exact audio timestamp and tempo map from recording/provenance, independently of candidate matching; do not re-ask the starting-measure identity. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
-2. Continue the saved private Gomyway-Reference-Draft-M1-16.json (hash above), already freshly read from each measure. Use revision3 and its latest hash: tuning/no capo is user-confirmed and136 candidate pitches are present. Verify the16 provisional bend-start pitches, continuation classification and rhythm/legato timing directly against source and audio. Approve sounding MIDI only after those are resolved. Do not restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
+2. Continue the saved private Gomyway-Reference-Draft-M1-16.json (hash above), already freshly read from each measure. Use revision5 and its latest hash: tuning/no capo and opening pre-bend are user-confirmed,136 candidate pitches are present, and source rhythm/tie reading is complete. Verify the15 remaining bend starts and map source beats to audio. Do not redo completed source rhythm reading. Approve final scoring labels only after remaining uncertainties are resolved. Do not restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 

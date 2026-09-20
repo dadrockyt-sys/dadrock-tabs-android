@@ -4,10 +4,11 @@
   "sourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
   "privateArtifact": {
     "filename": "Gomyway-Reference-Draft-M1-16.json",
-    "sha256": "7b720cad92b5b3d6e414f88923094e4f4997bca7668bfddcce4b3bb58287f004",
+    "sha256": "a131cee0bfb20ec574b4f14c49395a62cf89abccea7e20a300153e05d5ee04d9",
     "storedOutsidePublicGit": true,
-    "previousSha256": "021a225cf1daa518689b0c55b86f9cfba71463a4e1d78d2525da80207db0b8fe",
-    "revision": 3
+    "previousSha256": "7b720cad92b5b3d6e414f88923094e4f4997bca7668bfddcce4b3bb58287f004",
+    "revision": 5,
+    "intermediateRhythmRevisionSha256": "b669007b558bd80a04dafc02d60929552919b6845c830abd9a3c4b9fc3118f1c"
   },
   "coverage": {
     "measuresIndividuallyInspected": [
@@ -32,16 +33,20 @@
     "candidatePitchedEntries": 136,
     "candidateContinuationEntries": 16,
     "candidatePitchesFromConfirmedTuning": 136,
-    "unresolvedBendAttackPitches": 16,
-    "bendCandidatesAudioVerified": false
+    "unresolvedBendAttackPitches": 15,
+    "bendCandidatesAudioVerified": false,
+    "sourceRhythmMeasuresReviewed": 16,
+    "sourceRhythmQuarterBeats": 64,
+    "sourceRhythmicPositions": 136,
+    "userConfirmedOpeningPreBend": true
   },
   "method": "Cropped/enlarged exact source pixels for inspection; no generated image, model prediction matching or historical fixture copying. Repeated readings populated only after each visible measure was inspected. Enlargement adds no source detail.",
   "newFinding": "Panel 2 starts with measures13-14, repeating panel1 content obscured by player controls. Its second row is15-16. Screenshot boundaries are not measure boundaries.",
-  "draftContents": "All136 candidate MIDI pitches present, including16 fretted bend-start candidates from the upward-curve notation. These16 remain unverified against audio; populating a candidate is not review approval. No approved alignment.",
+  "draftContents": "Private draft now includes explicit notated symbol spans, source-onset versus tie classification, and opening pre-bend correction from user. All16 source measures visually reviewed with rational span checks. All scoring entries remain draft; audio timestamps and15 later bend starts unresolved.",
   "remaining": [
-    "Sounding pitch at bend attack and continuation interpretation",
-    "Rhythm and slurred-note onset timing confirmation",
-    "Exact first-measure audio timestamp and piecewise timing map"
+    "Remaining15 bend-start interpretations",
+    "Independent exact recording timestamps and piecewise timing map",
+    "Clip-window filtering and final reviewed-bundle assembly"
   ],
   "validation": {
     "jsonRoundTrip": true,
@@ -49,7 +54,8 @@
     "allCandidatePositionsWithinFourQuarterNotes": true,
     "sourceHashVerified": true,
     "newTestSuiteRun": false,
-    "focusedPythonTests": 21
+    "focusedPythonTests": 21,
+    "sourceRhythmRationalCoverageCheck": "All16 measures cover four quarter notes exactly; simultaneous notes counted once per rhythmic position; symbol spans are not measured acoustic durations."
   },
   "modelRerun": false,
   "predictionsChanged": false,
@@ -60,7 +66,8 @@
     "capo": 0,
     "firstAudibleRiffMeasure": 1,
     "dateUtc": "2026-09-20",
-    "evidence": "Direct user answers in current conversation; no exact timestamp supplied"
+    "evidence": "Direct user answers in current conversation; no exact timestamp supplied",
+    "openingBend": "User replied Bent first to the opening picked-versus-pre-bent question; interpreted as pre-bent before picking. Full amount read from source marking; not extended to later bends."
   },
   "openingDiagnostic": "GOMYWAY_OPENING_ATTACK_EVIDENCE_V1.json"
 }
