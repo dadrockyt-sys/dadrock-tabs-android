@@ -1,0 +1,44 @@
+{
+  "kind": "oracle-guitar-isolation-salience-diagnostic",
+  "version": 1,
+  "sourceAudioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "isolatedM4aSha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+  "isolatedFirst30WavSha256": "e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6",
+  "isolatedAssetDurationSeconds": 217.060136,
+  "timingAlignment": {
+    "method": "audio-only chroma-DTW correspondences, then affine fit over measure starts 2-15",
+    "isolatedSeconds": "0.5229997583867022 + 1.010758763429986 * sourceSeconds",
+    "offsetSeconds": 0.5229997583867022,
+    "scale": 1.010758763429986,
+    "fitRmsResidualSeconds": 0.007318595707234717,
+    "fitMaxResidualSeconds": 0.01527986600922393,
+    "fitMeasures": [2, 15],
+    "firstIsolatedGuitarAttackSeconds": 0.6211337868480725,
+    "firstAttackAffinePredictionSeconds": 0.6227462921383417
+  },
+  "reviewedTargetCount": 126,
+  "overallMedianHarmonicContrastGainDb": 2.72531832234609,
+  "positiveGainTargets": 104,
+  "summaryByMidi": {
+    "40": {"targets": 23, "medianGainDb": 0.8084790502901962, "positiveGainCount": 17},
+    "50": {"targets": 15, "medianGainDb": 4.086317571121814, "positiveGainCount": 14},
+    "52": {"targets": 30, "medianGainDb": 3.633927281249427, "positiveGainCount": 26},
+    "55": {"targets": 15, "medianGainDb": 0.3497316752493145, "positiveGainCount": 10},
+    "57": {"targets": 14, "medianGainDb": 2.4070590385704724, "positiveGainCount": 9},
+    "59": {"targets": 1, "medianGainDb": -1.8423443062515361, "positiveGainCount": 0},
+    "62": {"targets": 14, "medianGainDb": 4.289838807237338, "positiveGainCount": 14},
+    "67": {"targets": 14, "medianGainDb": 4.336017062774922, "positiveGainCount": 14}
+  },
+  "diagnosticSha256": "f9135ca6d91fd3eedf5af3a836d206c8c56986ed061841a71502452a796c5c68",
+  "focusedSyntheticTestsPassed": 3,
+  "predictionsRead": false,
+  "transcriptionModelRun": false,
+  "customerDeliveryEligible": false,
+  "interpretation": "The available guitar-only oracle materially increases reviewed target-pitch salience, including the MIDI50 and MIDI57 classes that the whole-mix Basic Pitch baseline did not match. This supports source isolation as a high-value next component, but does not establish that any approved separator can reproduce the oracle.",
+  "limitations": [
+    "This measures harmonic contrast, not transcription precision/recall.",
+    "The isolated asset is a development oracle and is not a product separator output.",
+    "The locked Basic Pitch runtime was unavailable in the active container, so no isolated-audio model inference was substituted with an unpinned environment.",
+    "Generic guitar isolation does not establish rhythm-versus-lead role separation."
+  ]
+}
