@@ -1,9 +1,9 @@
 # New Astra Work — CURRENT STATE
 
-Updated: 2026-09-19 UTC
+Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ONSET SCORER IMPLEMENTED; PROVISIONAL RHYTHM COUNTS SAVED; INDEPENDENT TIMING ALIGNMENT STILL REQUIRED**
+Status: **AUDIO-ONLY TIMING MISMATCH DETECTED — EARLY PULSES ~126.65 BPM; MEASURE-1 ANCHOR STILL UNVERIFIED**
 
 ## Product outcome
 
@@ -282,9 +282,18 @@ User requests lower overhead: batch focused reads/checks, concise updates, no un
 - `GOMYWAY_RHYTHM_PROVISIONAL_SCORE_V1.json`: 87 predictions, 104 rhythm-fixture targets, 5 matched, 82 unmatched predictions, 99 unmatched targets, matched mean absolute onset error27.8ms. Conditional P5.75% / R4.81% / F1 5.24%. These are NOT overall model accuracy: independent alignment and fresh label validation are absent; unmatched whole-mix events may belong to other instruments. Do not report 5.24% as validated transcription accuracy.
 - Predictions remain hash 6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659. No inference rerun, settings change, new packages, main/Production change. Existing 189-test backend result retained; only seven relevant scorer tests and exact replay run this step.
 
+## Independent audio pulse evidence — 2026-09-20
+
+- The exact baseline waveform SHA256 remains 60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb. Librosa 0.11.0 was run on that audio alone (hop128, sample rate22050), with no prediction/reference matching. It returned overall tempo127.6042 BPM and the first33 beat timestamps, which are preserved in `GOMYWAY_AUDIO_TIMING_EVIDENCE_V1.json`.
+- First RMS>0.01 window begins0.05805s; first detected onset0.110295s; first detected pulse0.121905s. None is automatically measure1/downbeat ground truth.
+- A descriptive regression of 24 detected pulses in the declared early [.5,12) second window gives126.6463 BPM, residual RMS6.64ms. Its period differs from129 BPM by about0.519s over60 intervals. This is concrete audio-derived evidence against relying on the old fixed129 grid; it is not a verified full-song tempo map or proof of exact quarter-note/downbeat interpretation.
+- `inspect_audio_timing.py` contains the audio-only extraction procedure for future reproducibility. The initial exploratory extraction succeeded. A later attempt to run the saved script encountered exit127: the temporary Python environment had disappeared after an environment update. Prior successful observations were preserved and regression recomputed with stdlib; no redundant installation/model run was performed. Saved script has not yet completed an end-to-end rerun.
+- Archived midterm source manifest blob83d57a9c4b6b70c800e4076e1394fefba3318bde confirms exact source audio hash but provides no independently verified measure-start anchor. Historical champion scores do not belong to Astra. No new accuracy score, model change or promotion.
+- Honor user's usage preference: short updates, batched focused work, no unnecessary repeated full-suite/model runs. Restore a needed runtime in a stable workspace cache rather than /tmp where feasible; verify locked identities after restoration. Do not claim control over GPT quota settings.
+
 ## Exact next step — Independently align and validate scoring labels
 
-1. Keep the 87-event candidate frozen. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
+1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
 2. Visually check the scored excerpt against the recovered rhythm image and bass/lead PDFs, preserving rests, ties/bends and uncertainty. The historical rhythm fixture repeats a two-bar template; verify its onset and pitch semantics before adopting it as definitive labels. Store normalized labels privately, outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, then use the tested scorer once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
