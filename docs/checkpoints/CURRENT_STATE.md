@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **SOURCE RHYTHM + SOUNDING-ATTACK PITCH REVIEW COMPLETE FOR M1–16 — INDEPENDENT AUDIO TIMING MAP STILL OPEN**
+Status: **REVIEWED BOUNDED M1–15 WHOLE-MIX→RHYTHM SCORE COMPLETE — SOURCE ISOLATION / EVENT INFERENCE IS THE NEXT BOTTLENECK**
 
 ## Product outcome
 
@@ -362,12 +362,22 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Private `Gomyway-Reference-Draft-M1-16-r6.json` is now durably stored outside public Git, SHA256 `5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977`. It contains 136 reviewed sounding-at-attack pitches:120 ordinary source-fret/tuning readings,1 user-confirmed opening pre-bend and15 later bend-start reviews. Its top-level state remains draft only because absolute audio timing is unresolved.
 - Public `GOMYWAY_PITCH_REVIEW_RECEIPT_V1.json` exposes hashes/counts only; normalized note targets remain private. No model rerun, separator, candidate change, new score, main or Production change.
 
-## Exact next step — Independently align and validate scoring labels
+## Bounded reviewed score — measures 1–15 — 2026-09-20
 
-1. Keep the 87-event candidate frozen. Pitch/rhythm source review is now complete in private revision6; do not reopen the15 later bends. Build the independent timing map from the exact recording and professional-source beat positions, never from prediction matching. The repeated-opening attack observations may be used as audio evidence but are not automatically approved anchors.
-2. Use private `Gomyway-Reference-Draft-M1-16-r6.json` SHA256 `5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977` as the frozen musical-side source. Its only unresolved items are timing/alignment. Map its reviewed beat positions onto independently confirmed audio anchors; keep normalized labels outside public Git.
-3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
-4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
+- Closed the timing blocker without extrapolation by scoring only measures1–15. Sixteen independently observed repeated-opening attacks bound all15 measure segments from beat0 to beat60: audio window [0.09868480725623582, 28.299319727891156). Measure16 is deliberately excluded because its closing boundary is not independently observed.
+- Private reviewed labels are stored outside public Git as `GOMYWAY_REVIEWED_LABELS_M1_15.json`, SHA256 `a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15`:126 attacks +15 tie continuations, reviewStatus complete, coverage reviewed, exact rhythm-source identity and revision6 pitch policy. Private alignment `GOMYWAY_ALIGNMENT_M1_15.json` SHA256 `31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae` contains15 contiguous observed measure segments and no prediction-derived anchor.
+- The original frozen first30 Basic Pitch candidate remains unchanged at SHA256 `6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659`. Public `GOMYWAY_FIRST30_SCORING_PROJECTION_V1.json` is an exact start+MIDI projection because those are the only candidate fields consumed by the onset scorer; projection SHA256 `1f3298efa446b36e7679a0eb3753d1aa03675732cbfd119a236c7c3b78bd13d7`. No inference was rerun.
+- Reviewed development score over the bounded window: **83 predictions,126 targets,26 TP,57 FP,100 FN; precision31.33%, recall20.63%, F1 24.88%, matched onset MAE22.99ms**. Public aggregate: `docs/astra/GOMYWAY_REVIEWED_M1_15_SCORE_V1.json`. This is whole-mix Basic Pitch versus rhythm labels, NOT requested-role separation accuracy or customer accuracy.
+- One-to-one onset-only diagnostic upper bound (ignoring MIDI) is46/126 targets: precision55.42%, recall36.51%, F144.02%, MAE18.18ms. Exact pitch therefore accounts for substantial additional loss, but onset/event coverage is already poor before pitch identity is considered.
+- Concrete failure signature: all15 reviewed MIDI50 targets and all14 reviewed MIDI57 targets have zero exact matches in this window. The candidate mostly detects MIDI40/52 material. This shows source/event inference is the dominant current failure; renderer/fingering tuning cannot repair the missing acoustic evidence.
+- Private spec/result were also saved to Library. `GOMYWAY_SCORING_BUNDLE_STATUS_V1.json` is updated from blocked to reviewed-bounded-score-complete-m1-15. Customer delivery remains false; roleAccuracy remains null; no main/Production change.
+
+## Exact next step — Isolate separation versus transcription failure
+
+1. Keep the reviewed M1–15 bundle, revision6 labels and frozen87-event whole-mix candidate immutable. Do not tune against the score by changing labels, alignment or tolerance.
+2. Run the same locked Basic Pitch settings on an already-available, independently sourced guitar-only development audio only if its identity/provenance is verified. Compare against the SAME private M1–15 rhythm bundle without moving anchors. This is a separation-vs-transcription diagnostic: a large recall lift would implicate whole-mix isolation; little lift would implicate Basic Pitch/event inference itself.
+3. Report raw TP/FP/FN and onset/pitch failure signatures. Do not treat generic guitar audio as rhythm-role truth and do not claim three-role separation. Do not use renderer/fretboard changes to mask missing acoustic events.
+4. Preserve model-rights, CPU/resource and customer-delivery gates. Save each actual result or blocker to this checkpoint on astra-work; do not modify main/Production.
 
 ## Copy-paste handoff
 
