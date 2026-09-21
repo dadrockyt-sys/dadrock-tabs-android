@@ -36,8 +36,22 @@ export function summarizeNoteEvidence(adapted = {}) {
   let octaveRelationAmbiguousCount = 0;
   let closeIntervalAmbiguousCount = 0;
   let rejectedCandidateCount = 0;
+  const evidenceStateCounts = {
+    'promoted-core': 0,
+    'promoted-technique': 0,
+    'recovered-recurring-onset': 0,
+    ambiguous: 0,
+    unassigned: 0,
+    rejected: 0,
+    unspecified: 0,
+  };
 
   for (const onset of onsets) {
+    const state = onset?.evidenceState;
+    if (state === null || state === undefined) evidenceStateCounts.unspecified += 1;
+    else if (evidenceStateCounts[state] !== undefined) evidenceStateCounts[state] += 1;
+    else evidenceStateCounts.unspecified += 1;
+
     if (classificationCounts[onset?.classification] !== undefined) {
       classificationCounts[onset.classification] += 1;
     }
@@ -92,6 +106,7 @@ export function summarizeNoteEvidence(adapted = {}) {
       rejectedProposalCount: classificationCounts.rejected,
       rejectedCandidateCount,
       classificationCounts,
+      evidenceStateCounts,
       singleCandidateAmbiguousCount,
       competingCandidateAmbiguousCount,
       harmonicRelationAmbiguousCount,
