@@ -35,6 +35,22 @@ const EXPECTED = Object.freeze({
     md5: 'ce168b2cd426f81a2a78499214e40605',
     sha256: '1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c',
   }),
+  reproduction: Object.freeze({
+    receiptSha256: '3a9474ccad43f1b06b76bc2e4b836642c355565a1d86a608aed8780a0bf8c333',
+    normalizedAudioSha256: '1711cac27e4c3c2d90840ec92faca29c4f343c5d55236d59e8f10c23b573f2b3',
+    featuresSha256: 'e3e4361e75bca63d71a6e1a672c592d2fedf1a6892e52ef0c0d3206ff5df5aa6',
+    modelWindowsSha256: '7f1a31c2e79328d48f73e72e3b800c124fab275a7bbcf02b08b342d0e1403731',
+  }),
+  runtime: Object.freeze({
+    platform: 'linux-x86_64',
+    pythonVersion: '3.10.15',
+    numpyVersion: '1.21.6',
+    scipyVersion: '1.8.1',
+    librosaVersion: '0.9.1',
+    torchVersion: '1.11.0+cpu',
+    dependencyLockSha256: '0e711709b063a705ad11570f6b7ef4dfe5bcc2d433d98707a1a74897dbb25bc0',
+    wheelManifestSha256: '0796acee36cea76e9784e602da190223a14a89907381882b401986763c371567',
+  }),
   service: Object.freeze({
     maxWallTimeSeconds: 1200,
     maxPeakMemoryMb: 4096,
@@ -83,8 +99,11 @@ export function evaluateTabcnnDevelopmentPreflight({
   if (preprocessing.numericalReproductionVerified !== true) {
     blockers.push('PREPROCESSING_NUMERICAL_REPRODUCTION_PENDING');
   }
-  if (!nonEmpty(preprocessing.numericalReproductionReceiptSha256)) {
-    blockers.push('PREPROCESSING_REPRODUCTION_RECEIPT_MISSING');
+  if (preprocessing.numericalReproductionReceiptSha256 !== EXPECTED.reproduction.receiptSha256
+      || preprocessing.normalizedAudioSha256 !== EXPECTED.reproduction.normalizedAudioSha256
+      || preprocessing.featuresSha256 !== EXPECTED.reproduction.featuresSha256
+      || preprocessing.modelWindowsSha256 !== EXPECTED.reproduction.modelWindowsSha256) {
+    blockers.push('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH');
   }
 
   if (artifact.record !== EXPECTED.artifact.record
@@ -106,11 +125,17 @@ export function evaluateTabcnnDevelopmentPreflight({
   }
 
   if (runtime.dependencyLockComplete !== true
-      || !nonEmpty(runtime.dependencyLockSha256)
-      || !/^[a-f0-9]{64}$/.test(runtime.dependencyLockSha256)) {
+      || runtime.dependencyLockSha256 !== EXPECTED.runtime.dependencyLockSha256
+      || runtime.wheelManifestSha256 !== EXPECTED.runtime.wheelManifestSha256) {
     blockers.push('RUNTIME_DEPENDENCY_LOCK_PENDING');
   }
-  if (runtime.exactPackageVersionsFrozen !== true) {
+  if (runtime.exactPackageVersionsFrozen !== true
+      || runtime.platform !== EXPECTED.runtime.platform
+      || runtime.pythonVersion !== EXPECTED.runtime.pythonVersion
+      || runtime.numpyVersion !== EXPECTED.runtime.numpyVersion
+      || runtime.scipyVersion !== EXPECTED.runtime.scipyVersion
+      || runtime.librosaVersion !== EXPECTED.runtime.librosaVersion
+      || runtime.torchVersion !== EXPECTED.runtime.torchVersion) {
     blockers.push('RUNTIME_PACKAGE_VERSIONS_UNFROZEN');
   }
   if (runtime.cpuSmokeTestPassed !== true) {
@@ -157,7 +182,10 @@ export function evaluateTabcnnDevelopmentPreflight({
       sourceIdentityVerified: sourceBlobsMatch(source),
       preprocessingIdentityVerified: preprocessingMatches(preprocessing),
       preprocessingNumericallyReproduced: preprocessing.numericalReproductionVerified === true
-        && nonEmpty(preprocessing.numericalReproductionReceiptSha256),
+        && preprocessing.numericalReproductionReceiptSha256 === EXPECTED.reproduction.receiptSha256
+        && preprocessing.normalizedAudioSha256 === EXPECTED.reproduction.normalizedAudioSha256
+        && preprocessing.featuresSha256 === EXPECTED.reproduction.featuresSha256
+        && preprocessing.modelWindowsSha256 === EXPECTED.reproduction.modelWindowsSha256,
       officialArtifactIdentityVerified: artifact.record === EXPECTED.artifact.record
         && artifact.file === EXPECTED.artifact.file
         && artifact.bytes === EXPECTED.artifact.bytes,
@@ -169,8 +197,14 @@ export function evaluateTabcnnDevelopmentPreflight({
         && artifact.sha256 === EXPECTED.artifact.sha256,
       runtimeLockVerified: runtime.dependencyLockComplete === true
         && runtime.exactPackageVersionsFrozen === true
-        && nonEmpty(runtime.dependencyLockSha256)
-        && /^[a-f0-9]{64}$/.test(runtime.dependencyLockSha256),
+        && runtime.dependencyLockSha256 === EXPECTED.runtime.dependencyLockSha256
+        && runtime.wheelManifestSha256 === EXPECTED.runtime.wheelManifestSha256
+        && runtime.platform === EXPECTED.runtime.platform
+        && runtime.pythonVersion === EXPECTED.runtime.pythonVersion
+        && runtime.numpyVersion === EXPECTED.runtime.numpyVersion
+        && runtime.scipyVersion === EXPECTED.runtime.scipyVersion
+        && runtime.librosaVersion === EXPECTED.runtime.librosaVersion
+        && runtime.torchVersion === EXPECTED.runtime.torchVersion,
       cpuBudgetVerified: runtime.cpuSmokeTestPassed === true
         && nonEmpty(runtime.cpuSmokeReceiptSha256)
         && finiteNonNegative(runtime.wallTimeSeconds)

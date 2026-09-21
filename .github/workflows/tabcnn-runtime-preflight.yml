@@ -67,7 +67,7 @@ jobs:
             --source-root /tmp/tabcnn-source \
             --receipt-out /tmp/tabcnn-preprocessing-receipt.json
           sha256sum /tmp/tabcnn-preprocessing-receipt.json
-          cat /tmp/tabcnn-preprocessing-receipt.json
+          diff -u docs/astra/TABCNN_PREPROCESSING_RECEIPT_V1.json /tmp/tabcnn-preprocessing-receipt.json
 
       - name: Verify frozen runtime and emit wheel identity manifest
         shell: bash
@@ -97,6 +97,5 @@ jobs:
             cd "$wheel_dir"
             sha256sum * | sort -k2
           ) | tee /tmp/tabcnn-runtime-wheel-manifest.txt
+          diff -u astra_backend/tabcnn_runtime/wheel-manifest.sha256 /tmp/tabcnn-runtime-wheel-manifest.txt
           echo "TABCNN_RUNTIME_WHEEL_MANIFEST_SHA256=$(sha256sum /tmp/tabcnn-runtime-wheel-manifest.txt | awk '{print $1}')"
-          echo "TABCNN_RUNTIME_WHEEL_MANIFEST_B64=$(base64 -w0 /tmp/tabcnn-runtime-wheel-manifest.txt)"
-          echo "TABCNN_PREPROCESS_RECEIPT_B64=$(base64 -w0 /tmp/tabcnn-preprocessing-receipt.json)"

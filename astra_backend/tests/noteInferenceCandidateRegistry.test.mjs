@@ -26,9 +26,17 @@ test('GuitarProFX TabCNN is primary but remains execution-blocked', () => {
   assert.equal(candidate.directStringFretOutput, true);
   assert.equal(candidate.artifact.publishedBytes, 3345122);
   assert.equal(candidate.artifact.publishedMd5, 'ce168b2cd426f81a2a78499214e40605');
-  assert.equal(candidate.artifact.sha256, null);
+  assert.equal(
+    candidate.artifact.sha256,
+    '1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c',
+  );
+  assert.equal(candidate.artifact.downloadedByAstra, true);
+  assert.equal(candidate.artifact.artifactPersistedByAstra, false);
+  assert.equal(candidate.operational.runtimeLockFrozen, true);
+  assert.equal(candidate.operational.preprocessingIdentityFrozen, true);
+  assert.equal(candidate.operational.cpuPathKnown, false);
   assert.equal(candidate.developmentExecutionReady, false);
-  assert.ok(candidate.blockers.includes('OFFICIAL_ARTIFACT_SHA256_NOT_VERIFIED_BY_ASTRA'));
+  assert.ok(candidate.blockers.includes('LEGACY_PICKLE_COMPATIBILITY_PATH_NOT_VERIFIED'));
   assert.ok(candidate.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_CHAIN_NOT_REVIEWED'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });

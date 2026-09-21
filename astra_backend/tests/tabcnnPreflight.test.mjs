@@ -26,12 +26,22 @@ function completeEvidence() {
     preprocessing: {
       ...expected.preprocessing,
       numericalReproductionVerified: true,
-      numericalReproductionReceiptSha256: 'b'.repeat(64),
+      numericalReproductionReceiptSha256: expected.reproduction.receiptSha256,
+      normalizedAudioSha256: expected.reproduction.normalizedAudioSha256,
+      featuresSha256: expected.reproduction.featuresSha256,
+      modelWindowsSha256: expected.reproduction.modelWindowsSha256,
     },
     runtime: {
       dependencyLockComplete: true,
-      dependencyLockSha256: 'c'.repeat(64),
+      dependencyLockSha256: expected.runtime.dependencyLockSha256,
+      wheelManifestSha256: expected.runtime.wheelManifestSha256,
       exactPackageVersionsFrozen: true,
+      platform: expected.runtime.platform,
+      pythonVersion: expected.runtime.pythonVersion,
+      numpyVersion: expected.runtime.numpyVersion,
+      scipyVersion: expected.runtime.scipyVersion,
+      librosaVersion: expected.runtime.librosaVersion,
+      torchVersion: expected.runtime.torchVersion,
       cpuSmokeTestPassed: true,
       cpuSmokeReceiptSha256: 'd'.repeat(64),
       wallTimeSeconds: 120,
@@ -114,7 +124,25 @@ test('missing numerical reproduction receipt blocks even when parameters match',
   const evidence = completeEvidence();
   evidence.preprocessing.numericalReproductionReceiptSha256 = null;
   const result = evaluateTabcnnDevelopmentPreflight(evidence);
-  assert.ok(result.blockers.includes('PREPROCESSING_REPRODUCTION_RECEIPT_MISSING'));
+  assert.ok(result.blockers.includes('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH'));
+  assert.equal(result.developmentExecutionReady, false);
+});
+
+test('runtime lock or wheel substitution fails closed', () => {
+  const evidence = completeEvidence();
+  evidence.runtime.wheelManifestSha256 = '0'.repeat(64);
+  const result = evaluateTabcnnDevelopmentPreflight(evidence);
+  assert.ok(result.blockers.includes('RUNTIME_DEPENDENCY_LOCK_PENDING'));
+  assert.equal(result.checks.runtimeLockVerified, false);
+  assert.equal(result.developmentExecutionReady, false);
+});
+
+test('preprocessing receipt or tensor identity substitution fails closed', () => {
+  const evidence = completeEvidence();
+  evidence.preprocessing.featuresSha256 = '0'.repeat(64);
+  const result = evaluateTabcnnDevelopmentPreflight(evidence);
+  assert.ok(result.blockers.includes('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH'));
+  assert.equal(result.checks.preprocessingNumericallyReproduced, false);
   assert.equal(result.developmentExecutionReady, false);
 });
 

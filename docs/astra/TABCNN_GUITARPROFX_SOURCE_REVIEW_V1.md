@@ -1,6 +1,6 @@
 # GuitarProFX TabCNN Source / Preprocessing Review V1
 
-Status: static source review; no checkpoint download or model execution
+Status: source + official artifact + runtime/preprocessing identity review; no checkpoint import or model execution
 Date: 2026-09-21
 
 ## Pinned source
@@ -44,17 +44,15 @@ The model is therefore substantially different from Basic Pitch: it predicts gui
 
 The official EGSet12 script loads the model through PyTorch and explicitly maps to CPU when `gpu_id < 0`. A CPU code path exists in source; Astra has not measured its latency or memory.
 
-## Critical reproducibility warning
+## Reproducibility result
 
-The source preprocessing semantics are now identity-pinned, but the **runtime preprocessing is not reproducibly frozen yet**.
+The bundled `setup.py` / requirements only specify lower bounds such as `numpy>=1.21.6`, `librosa>=0.9.1`, and `torch>=1.11.0`. The VQT wrapper itself warns that librosa conventions changed. Astra therefore reconstructed and froze an exact Linux x86-64 / CPython 3.10.15 runtime instead of trusting those lower bounds.
 
-The bundled `setup.py` / requirements only specify lower bounds such as:
+The successful runtime is committed in `astra_backend/tabcnn_runtime/requirements.lock.txt`. Lock SHA-256: **`0e711709b063a705ad11570f6b7ef4dfe5bcc2d433d98707a1a74897dbb25bc0`**. Exact wheel-manifest SHA-256: **`0796acee36cea76e9784e602da190223a14a89907381882b401986763c371567`**.
 
-- `numpy>=1.21.6`
-- `librosa>=0.9.1`
-- `torch>=1.11.0`
+Two real dependency-drift failures were found before the lock was stable: unpinned Numba 0.58 rejected NumPy 1.21.6, and SoundFile 0.14 used NumPy typing unavailable in 1.21.6. The final compatible runtime pins NumPy 1.21.6, SciPy 1.8.1, librosa 0.9.1, Numba 0.55.2, llvmlite 0.38.1, SoundFile 0.12.1, and PyTorch 1.11.0+cpu, plus exact transitives.
 
-The VQT wrapper itself contains a warning that librosa alpha/convention behavior has changed and should be re-verified. Therefore Astra must not claim that “same source parameters” are sufficient to reproduce the released checkpoint. Exact package versions must be reconstructed and numerically checked.
+On deterministic synthetic audio, Astra's minimal preprocessing implementation reproduced the exact pinned upstream source with **0.0 maximum absolute difference** for RMS-normalized waveform, 192-bin CQT/VQT features, and final 9-frame model windows. Receipt SHA-256: **`3a9474ccad43f1b06b76bc2e4b836642c355565a1d86a608aed8780a0bf8c333`**. The checkpoint was not loaded and the model was not invoked.
 
 ## Official artifact boundary
 
@@ -65,7 +63,7 @@ Official Zenodo record 11406378 publishes:
 - MD5: `ce168b2cd426f81a2a78499214e40605`
 - record license metadata: CC-BY-4.0
 
-Astra has not downloaded those bytes and has not computed SHA-256.
+Astra downloaded those exact bytes transiently from the official record in a bounded identity workflow, verified the published byte count and MD5, computed SHA-256 **`1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c`**, and deleted the temporary file. The model artifact was not committed or persisted.
 
 Third-party ONNX/GGUF conversions are **not** accepted as the primary Astra artifact. They may later serve as deployment candidates only after:
 
@@ -76,9 +74,9 @@ Third-party ONNX/GGUF conversions are **not** accepted as the primary Astra arti
 
 ## Runtime surface
 
-The bundled amt-tools setup is much broader than inference requires. It lists training/evaluation/interactive dependencies such as matplotlib, sacred, mir_eval, JAMS, tensorboard, pandas, mirdata, sounddevice and pynput in addition to NumPy/librosa/PyTorch.
+The bundled amt-tools setup is much broader than inference requires. Astra's preprocessing/runtime lock deliberately excludes the research-only Sacred, dataset, evaluation, visualization, MIDI/JAMS and interactive-device stack.
 
-Astra should **not** install that full surface blindly. The next runtime milestone should derive a minimal inference-only dependency graph from the pinned files and then freeze it with exact hashes.
+One checkpoint-load issue remains intentionally unresolved: the training code serializes the full model with `torch.save(model, ...)`, and the official inference code performs `torch.load(...)` before copying `loaded_model.state_dict()` into a fresh TabCNN. Therefore a minimal compatibility surface for the legacy `amt_tools` class/module paths must be frozen before the checkpoint can be deserialized safely. That compatibility path has not been executed yet.
 
 ## Product role boundary
 
@@ -88,18 +86,10 @@ For stereo material, Astra's existing spatial role evidence may select a role-su
 
 ## Next exact action
 
-Build an **offline preprocessing/runtime preflight contract** that pins these source blobs and requires:
+Freeze the **minimal legacy pickle-compatibility source surface** required for the official checkpoint's `amt_tools` class paths, without installing the broad training/evaluation environment and without loading the checkpoint yet. In parallel, complete checkpoint-license and training-data commercial-rights review.
 
-- exact 22.05 kHz mono/RMS-normalized input semantics,
-- exact CQT parameters,
-- exact dB/[0,1] transform,
-- exact 9-frame model window,
-- 19-fret guitar profile,
-- official checkpoint MD5 + locally computed SHA-256,
-- exact dependency lock,
-- CPU smoke/runtime result,
-- training/data rights review.
+Only after artifact identity, exact runtime, preprocessing reproduction, pickle compatibility, rights review and explicit development authorization are frozen may Astra perform a bounded CPU checkpoint-load/forward smoke test and measure wall time/RSS.
 
-Until all fields are complete, `tabcnn_guitarprofx_dafx24` remains `developmentExecutionReady:false`.
+Until those remaining fields are complete, `tabcnn_guitarprofx_dafx24` remains `developmentExecutionReady:false` and customer delivery remains false.
 
-No model was downloaded/imported/executed; no audio was opened; no main/Production change.
+No checkpoint was imported/executed; no customer audio was opened; no main/Production change.

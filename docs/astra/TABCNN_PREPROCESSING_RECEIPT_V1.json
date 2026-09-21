@@ -1,0 +1,80 @@
+{
+  "checkpointLoaded": false,
+  "contract": {
+    "audioNormalization": "rms",
+    "binsPerOctave": 24,
+    "cqtBins": 192,
+    "decibelReference": "max",
+    "featureScale": "db_div_80_plus_1",
+    "fmin": "C1",
+    "frameContext": 9,
+    "gamma": 0,
+    "hopLengthSamples": 512,
+    "sampleRateHz": 22050
+  },
+  "features": {
+    "dtype": "float32",
+    "max": 0.9999999403953552,
+    "min": 0.0,
+    "sha256": "e3e4361e75bca63d71a6e1a672c592d2fedf1a6892e52ef0c0d3206ff5df5aa6",
+    "shape": [
+      1,
+      192,
+      130
+    ]
+  },
+  "maxAbsoluteDifference": {
+    "features": 0.0,
+    "model_windows": 0.0,
+    "normalized_audio": 0.0
+  },
+  "modelInvoked": false,
+  "modelWindows": {
+    "dtype": "float32",
+    "max": 0.9999999403953552,
+    "min": 0.0,
+    "sha256": "7f1a31c2e79328d48f73e72e3b800c124fab275a7bbcf02b08b342d0e1403731",
+    "shape": [
+      1,
+      130,
+      1,
+      192,
+      9
+    ]
+  },
+  "normalizedAudio": {
+    "dtype": "float32",
+    "max": 3.076834201812744,
+    "min": -3.277636766433716,
+    "sha256": "1711cac27e4c3c2d90840ec92faca29c4f343c5d55236d59e8f10c23b573f2b3",
+    "shape": [
+      66150
+    ]
+  },
+  "runtime": {
+    "librosa": "0.9.1",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "scipy": "1.8.1",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-tabcnn-preprocessing-reproduction-v1",
+  "sourceBlobs": {
+    "constants": "79666ea0c5b0214ca664da454069b8d286cc5c18",
+    "cqt": "7f08cbd3448765c5406b28f8627a8a8fb66f27b7",
+    "featureCommon": "79b71e763bc12d9d8a26d5bcce5b8ff9800bea92",
+    "utils": "55e989685f95593605566a4e730b8aa2e0eabc12",
+    "vqt": "a4e5e7d4958ec64d2d149eb51acdaf936e649b00"
+  },
+  "sourceRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+  "syntheticAudio": {
+    "dtype": "float32",
+    "max": 0.7314325571060181,
+    "min": -0.7791678309440613,
+    "sha256": "a0d127dff4c0f701937b51744a9d77c1c745fe82de932353c7897fadef6f9858",
+    "shape": [
+      66150
+    ]
+  },
+  "syntheticAudioOnly": true
+}
