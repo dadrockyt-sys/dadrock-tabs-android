@@ -1,0 +1,22 @@
+{
+  "schema": "astra-guitar-techs-development-acquisition-authorization-v1",
+  "authorizedAtUtc": "2026-09-21",
+  "authorizationSource": "User explicit authorization in active ChatGPT conversation",
+  "authorizationScope": "guitar-techs-p1-p2-development-media-v1",
+  "developmentMediaAcquisitionAuthorized": true,
+  "authorizedArchives": [
+    "P1_chords.zip",
+    "P1_scales.zip",
+    "P1_singlenotes.zip",
+    "P1_techniques.zip",
+    "P2_chords.zip",
+    "P2_scales.zip",
+    "P2_singlenotes.zip",
+    "P2_techniques.zip"
+  ],
+  "p3Sealed": true,
+  "p3Archive": "P3_music.zip",
+  "realTrainingAuthorized": false,
+  "productionChangeAuthorized": false,
+  "customerDeliveryChangeAuthorized": false
+}

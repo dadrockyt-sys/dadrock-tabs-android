@@ -1,0 +1,126 @@
+name: Guitar-TECHS P1/P2 identity acquisition
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-development-acquisition.yml'
+      - 'docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_AUTHORIZATION_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acquire-identity:
+    name: Verify ${{ matrix.file }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { file: P1_chords.zip, bytes: 981741162, md5: be9ef8bbdceb1912d565254e607a6d94, performer: P1, category: chords }
+          - { file: P1_scales.zip, bytes: 453349723, md5: 9c0b98e8fb42a522df727ea8bf545e4f, performer: P1, category: scales }
+          - { file: P1_singlenotes.zip, bytes: 108626613, md5: ca0c4674dde3805574685a313f7c39eb, performer: P1, category: singlenotes }
+          - { file: P1_techniques.zip, bytes: 326280863, md5: 18634a41a6db5a8de10d07eb3122a872, performer: P1, category: techniques }
+          - { file: P2_chords.zip, bytes: 1150819056, md5: eb6f74dd19162237189281688ad7ad2e, performer: P2, category: chords }
+          - { file: P2_scales.zip, bytes: 471254783, md5: 96664853872f51e5f8aa4447313b7cf5, performer: P2, category: scales }
+          - { file: P2_singlenotes.zip, bytes: 116133457, md5: 40fbf03d8b04bb2cf42df20f36dc2254, performer: P2, category: singlenotes }
+          - { file: P2_techniques.zip, bytes: 395839610, md5: f4189251ce50be25f06a173b2c2bba00, performer: P2, category: techniques }
+
+    steps:
+      - name: Verify exact authorization receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          auth=/tmp/authorization.json
+          url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_AUTHORIZATION_V1.json"
+          curl --fail --location --retry 5 --retry-all-errors --output "$auth" "$url"
+          python3 - "$auth" <<'PY'
+          import json, sys
+          p = json.load(open(sys.argv[1], encoding='utf-8'))
+          assert p["schema"] == "astra-guitar-techs-development-acquisition-authorization-v1"
+          assert p["authorizationScope"] == "guitar-techs-p1-p2-development-media-v1"
+          assert p["developmentMediaAcquisitionAuthorized"] is True
+          assert p["p3Sealed"] is True
+          assert p["p3Archive"] == "P3_music.zip"
+          assert p["realTrainingAuthorized"] is False
+          allowed = {
+              "P1_chords.zip","P1_scales.zip","P1_singlenotes.zip","P1_techniques.zip",
+              "P2_chords.zip","P2_scales.zip","P2_singlenotes.zip","P2_techniques.zip",
+          }
+          assert set(p["authorizedArchives"]) == allowed
+          assert "P3_music.zip" not in p["authorizedArchives"]
+          print("GUITAR_TECHS_AUTHORIZATION_VERIFIED=true")
+          PY
+
+      - name: Download exact authorized development archive
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          case "$FILE" in
+            P1_chords.zip|P1_scales.zip|P1_singlenotes.zip|P1_techniques.zip|P2_chords.zip|P2_scales.zip|P2_singlenotes.zip|P2_techniques.zip) ;;
+            *) echo "unauthorized archive: $FILE" >&2; exit 92 ;;
+          esac
+          test "$FILE" != "P3_music.zip"
+          url="https://zenodo.org/records/14963133/files/$FILE?download=1"
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Guitar-TECHS-Acquisition/1.0' \
+            --output "/tmp/$FILE" "$url"
+
+      - name: Verify published identity and compute Astra SHA-256 before extraction
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+          EXPECT_BYTES: ${{ matrix.bytes }}
+          EXPECT_MD5: ${{ matrix.md5 }}
+          PERFORMER: ${{ matrix.performer }}
+          CATEGORY: ${{ matrix.category }}
+        run: |
+          set -euo pipefail
+          archive="/tmp/$FILE"
+          actual_bytes="$(stat -c '%s' "$archive")"
+          actual_md5="$(md5sum "$archive" | awk '{print $1}')"
+          test "$actual_bytes" = "$EXPECT_BYTES"
+          test "$actual_md5" = "$EXPECT_MD5"
+          actual_sha256="$(sha256sum "$archive" | awk '{print $1}')"
+          python3 - "$FILE" "$actual_bytes" "$actual_md5" "$actual_sha256" "$PERFORMER" "$CATEGORY" "$GITHUB_SHA" <<'PY'
+          import json, sys
+          file, size, md5, sha256, performer, category, commit = sys.argv[1:]
+          receipt = {
+              "schema": "astra-guitar-techs-development-archive-identity-v1",
+              "record": "https://zenodo.org/records/14963133",
+              "version": "v1",
+              "authorizationScope": "guitar-techs-p1-p2-development-media-v1",
+              "file": file,
+              "bytes": int(size),
+              "md5": md5,
+              "astraSha256": sha256,
+              "performer": performer,
+              "category": category,
+              "verifiedBeforeExtraction": True,
+              "extracted": False,
+              "p3Opened": False,
+              "trainingRun": False,
+              "workflowCommit": commit,
+          }
+          print("ASTRA_GUITARTECHS_IDENTITY_RECEIPT=" + json.dumps(receipt, sort_keys=True, separators=(",", ":")))
+          PY
+
+      - name: Delete media bytes without extraction
+        if: always()
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          rm -f "/tmp/$FILE"
+          test ! -e "/tmp/$FILE"
+          echo "GUITAR_TECHS_MEDIA_DELETED=true"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "GUITAR_TECHS_EXTRACTION_PERFORMED=false"
+          echo "GUITAR_TECHS_TRAINING_RUN=false"
