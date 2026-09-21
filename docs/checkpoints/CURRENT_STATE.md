@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **STEREO ROLE EVIDENCE BREAKTHROUGH — REFERENCE-BLIND L→RHYTHM / R→LEAD MAPPING RECOVERS 84 CORRECT-ROLE TPs; PRECISION TUNING + FALLBACK PATH NEXT**
+Status: **HIGH-CONFIDENCE STEREO CORE + ROLE-SUPPORTED BENDS — 47.19% PRECISION / 41.38% RECALL / 44.09% F1; NEXT TARGET IS PLAYABILITY/CONFIDENCE INTEGRATION**
 
 ## Product outcome
 
@@ -463,12 +463,40 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Public aggregate: `docs/astra/GOMYWAY_STEREO_ROLE_EVIDENCE_V1.json`. Private preregistration, native outputs, source-clock projections, role evidence and detailed score are durably stored in Library.
 - Architectural consequence: **do not fold stereo to mono before role analysis**. Stereo spatial evidence should be attempted first and may cheaply resolve rhythm/lead roles; mono/high-correlation inputs must fall back to a general separator/role-inference path. Customer delivery remains false and main/Production are unchanged.
 
-## Exact next step — Integrate stereo-first role evidence and improve precision safely
+## Structure-grid precision filter — 2026-09-20
 
-1. Preserve stereo through the analyzer input boundary. Add a lightweight stereo-evidence preflight before any mono fold-down: channel correlation plus reference-blind note-event chordality/register evidence. If evidence is weak or the input is mono, abstain and route to the existing general separation research path.
-2. Treat `stereo_role_evidence.py` as a development candidate, not production truth. Build a deterministic integration adapter that exposes `rhythm`, `lead`, `ambiguous` and `unassigned` evidence states to Astra's note-evidence contract without granting customer delivery.
-3. Improve **precision without role-label tuning**. First candidates: cross-channel same-MIDI amplitude deduplication (already positive), structure-grid consistency, repeated-phrase support and calibrated confidence/abstention. Any filter must be frozen before the dual-role score and must report TP gains/losses by both roles.
-4. Re-run bend-start extraction on the role-resolved channel streams. A bend candidate may enter a rhythm or lead stream only when stereo/role evidence supports that role; otherwise keep it as technique-only evidence. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
+- Added `astra_backend/evaluation/filter_structure_grid.py`, a reference-blind fail-closed filter over the independently reviewed M1–15 timing map. It materializes the frozen straight-sixteenth grid and only rejects predictions farther than the existing inclusive 50ms scorer tolerance from every valid subdivision. It never changes MIDI/timing or adds events.
+- Fixed the only local test issue before save: binary floating-point can represent a mathematical 50ms boundary microscopically above `0.05`, so the inclusive comparison uses a fixed `1e-9s` numerical epsilon without changing the musical tolerance. **7/7 focused tests pass** and branch CI includes them.
+- Applied after reference-blind stereo role mapping + cross-channel duplicate resolution: predictions fall245→231 while **all84 correct-role TPs remain**. FP falls161→147; aggregate precision34.29%→36.36%; recall stays41.38%; F137.50%→38.71%. Rhythm F133.33%; lead F146.59%.
+- Public aggregate: `docs/astra/GOMYWAY_STEREO_STRUCTURE_GRID_SCORE_V1.json`. Private filtered prediction hashes: rhythm `265bd933c01bc6ab2e17a87e3e851b1381fcbf40ffa4a4744a8e6158cbc2b073`, lead `694e7002c7d208459c153534bc3368d9fe67081d62027f99fc8fd096f6375a90`; score `c4a011dc3b27f88dc455fad10107ddad8e5051e1fb0942415571d7ba1de5447b`.
+
+## Recurring-phrase confidence partition — 2026-09-20
+
+- Added `astra_backend/evaluation/repeated_phrase_confidence.py`. A note event is recurring-core only when the same MIDI at the same within-measure structure slot appears in at least **3 distinct measures**. The confidence mode activates only if at least60% of the stream's reviewed-window events meet that recurrence condition; otherwise it abstains. One-off events are retained as `uncertain`, never silently deleted.
+- Corrected the contract before scoring so out-of-window events are not required to carry reviewed-window grid metadata. **7/7 focused tests pass** and CI includes them.
+- Prediction-only evidence activates strongly: rhythm recurring support67.42% across16 recurring keys; lead83.84% across14 keys.
+- After frozen scoring, recurring core has172 predictions / **79 TP / 93 FP / 124 FN; precision45.93%, recall38.92%, F142.13%**. Rhythm precision44.94%; lead precision46.99%. The59-event uncertain bucket contains only5 TP and54 FP, supporting calibrated abstention instead of destructive pruning.
+- Public aggregate: `docs/astra/GOMYWAY_STEREO_RECURRING_CONFIDENCE_V1.json`. Private partition hashes: rhythm `bfcc0544e6461eb189636ee89fe3446e313107cc9b70330b0d021cbc24e65cb7`, lead `ef5f95f08badd87689d9b5e4d7ec66533bd6840ea2c73f7427bc1f6e0147589d`, score `b83588c13b6bbd492cf543bb5fe125447356d98238a0c8dbacd4e487a4163ebe`.
+
+## Role-resolved glide-continuity bend recovery — 2026-09-20
+
+- Restored the exact frozen Python3.10.21 / Basic Pitch0.4.0 runtime and regenerated L/R first30 PCM solely to capture raw channel tensors. Frozen right-channel note events reproduced exactly; left reproduced all166 note pitches/times with only three <=1e-5 amplitude differences at the30s boundary outside the reviewed window. Left raw tensor SHA256 `41660cff543dd6f23bd2679eae911df050afb8329d98176ade4ee3a256969b4f`; right `cc0f57764feca8c43519be3e2a69ecc447806b5623d6921abef52f895f152cc4`.
+- Running the already-frozen attacked-bend detector separately by stereo role still left too many slur/neighbor-transition candidates. Added `astra_backend/evaluation/refine_bend_glide_continuity.py`: reference-blind physical-continuity evidence requires at least8 active contour frames,4 distinct contour bins, no >1-semitone frame jump and >=90% nondecreasing contour movement across35–240ms. Active contour floor is0.15. No target MIDI, measure number or reference label enters the rule.
+- **5/5 focused synthetic tests pass** and CI includes them. Frozen V3 output hashes: left `dea072a9db104a070cc2ab9b0d3e36fa04256973e6b1eed0c9ed2846e606eabe`; right `131541574a0a97784b2dbbef92e21afd52f4d0cbd5232073598d75e2b373f01c`.
+- Left/rhythm V3 shrinks42 V2 candidates to8 total /7 in the reviewed window while retaining **5/14 exact reviewed attacked-bend starts**. Diagnostic exact precision becomes71.43%, recall35.71%, F147.62%; timing-only precision85.71%, recall42.86%, F157.14%.
+- Applying the **already frozen** recurring-confidence rule to V3 retains6 role-supported recurring bend candidates and abstains on the lone nonrecurring +1-semitone candidate. Private bend partition SHA256 `71acd3f198adc3072a9256de59dbb0515205a003bbfe6e38e450e30eeecaa3a7`.
+- Merging only those recurring stereo-rhythm bends into the recurring rhythm core restores the five TPs that recurrence-only confidence had withheld for just one additional FP. Rhythm becomes95 predictions /45 TP /50 FP /81 FN; precision47.37%, recall35.71%, F140.72%. Lead recurring core remains83 /39 TP /44 FP /38 FN; F148.75%.
+- **Best balanced development state so far:**178 predictions against203 rhythm+lead targets -> **84 TP / 94 FP / 119 FN; precision47.19%, recall41.38%, F144.09%**. Relative to raw stereo role streams, TP is preserved at84 while FP drops161→94. Relative to recurring core without bend recovery, TP rises79→84 for only one added FP.
+- Public aggregate: `docs/astra/GOMYWAY_STEREO_CORE_PLUS_BENDS_V1.json`. Private rhythm merged prediction SHA256 `4f2f06dd19c4c5bd1a40bb6b5b7d1e6b1dcd4e57c17d64081e80d4d321102659`; private combined score SHA256 `4a652749f3ac873ea57fbebc243fb655b1515fc8abe0659f6da62ffd4adc3481`.
+- The current Library uploader returned `container_session_expired` when asked to persist the newest structure/repetition/bend private outputs. The exact hashes, deterministic code, frozen source artifacts and public aggregate receipts are committed; do **not** claim those newest private files are Library-persisted until an upload succeeds. Older source predictions/labels/alignment remain durably in Library.
+- Customer delivery remains false; this is exposed development material. No main/Production change.
+
+## Exact next step — Integrate high-confidence role evidence into Astra and attack remaining FP/FN
+
+1. Keep the stereo mapping, structure-grid filter, recurring-confidence policy and glide-continuity bend rule frozen. Do not tune them further against Gomyway labels.
+2. Build the deterministic integration adapter into Astra's existing note-evidence contract. Expose four states per event: `promoted` recurring/core role evidence, `promoted-technique` role-supported bend recovery, `ambiguous`, and `unassigned`. Customer delivery must remain false and mono/high-correlation inputs must fail closed to the fallback path.
+3. Attack the remaining **94 false positives** using reference-blind musical validity already present in Astra: onset-group playable-shape resolution and phrase-level fretboard-path consistency. First run diagnostics only; reject any rule that merely learns this song's register or target pitches. Score frozen proposals against both rhythm and lead roles and audit all lost TPs.
+4. In parallel, analyze the remaining119 FNs by category (missing onset, wrong pitch, correct event held in uncertain bucket, technique omitted). Use that error attribution to decide whether the next model work is confidence recovery, polyphonic/chord decoding, or a stronger pitch model. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
