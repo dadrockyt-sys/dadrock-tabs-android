@@ -15,7 +15,8 @@ function completeEvidence() {
     archives: expected.archives.map((archive) => ({ ...archive })),
     manifestSha256: expected.manifestSha256,
     splitReceiptSha256: expected.splitReceiptSha256,
-    astraArchiveSha256Complete: true,
+    developmentIdentityReceiptSha256: expected.developmentIdentityReceiptSha256,
+    astraDevelopmentArchives: expected.archives.slice(0, 8).map((archive) => ({ ...archive })),
     trainingMediaAcquired: true,
     extractedPerformanceGroupingVerified: true,
   };
@@ -23,13 +24,15 @@ function completeEvidence() {
 
 test('published identity is frozen while media admission remains blocked without bytes', () => {
   const evidence = completeEvidence();
-  evidence.astraArchiveSha256Complete = false;
+  evidence.developmentIdentityReceiptSha256 = '0'.repeat(64);
+  evidence.astraDevelopmentArchives = [];
   evidence.trainingMediaAcquired = false;
   evidence.extractedPerformanceGroupingVerified = false;
   const result = evaluateGuitarTechsDatasetAdmission(evidence);
   assert.equal(result.metadataIdentityVerified, true);
   assert.equal(result.trainingMediaAdmissionReady, false);
-  assert.ok(result.blockers.includes('GUITAR_TECHS_ASTRA_SHA256_PENDING'));
+  assert.ok(result.blockers.includes('GUITAR_TECHS_ASTRA_SHA256_IDENTITY_MISMATCH'));
+  assert.equal(result.astraDevelopmentIdentityVerified, false);
   assert.ok(result.blockers.includes('GUITAR_TECHS_MEDIA_NOT_ACQUIRED'));
   assert.ok(result.blockers.includes('GUITAR_TECHS_EXTRACTED_GROUPING_PENDING'));
   assert.equal(result.customerDeliveryEligible, false);
@@ -51,11 +54,20 @@ test('record, license, archive or split substitution fails closed', () => {
   const split = completeEvidence();
   split.splitReceiptSha256 = '0'.repeat(64);
   assert.ok(evaluateGuitarTechsDatasetAdmission(split).blockers.includes('GUITAR_TECHS_SPLIT_RECEIPT_MISMATCH'));
+
+  const astraSha = completeEvidence();
+  astraSha.astraDevelopmentArchives[0].astraSha256 = '0'.repeat(64);
+  assert.ok(evaluateGuitarTechsDatasetAdmission(astraSha).blockers.includes('GUITAR_TECHS_ASTRA_SHA256_IDENTITY_MISMATCH'));
+
+  const receipt = completeEvidence();
+  receipt.developmentIdentityReceiptSha256 = '0'.repeat(64);
+  assert.ok(evaluateGuitarTechsDatasetAdmission(receipt).blockers.includes('GUITAR_TECHS_ASTRA_SHA256_IDENTITY_MISMATCH'));
 });
 
 test('synthetic complete evidence can clear dataset admission but never customer delivery', () => {
   const result = evaluateGuitarTechsDatasetAdmission(completeEvidence());
   assert.equal(result.metadataIdentityVerified, true);
+  assert.equal(result.astraDevelopmentIdentityVerified, true);
   assert.equal(result.trainingMediaAdmissionReady, true);
   assert.deepEqual(result.blockers, []);
   assert.equal(result.customerDeliveryEligible, false);

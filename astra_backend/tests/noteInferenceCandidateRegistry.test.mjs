@@ -28,8 +28,13 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.initialization, 'random-only');
   assert.equal(candidate.operational.publishedDatasetIdentityFrozen, true);
   assert.equal(candidate.operational.publishedDatasetManifestSha256, 'a3445d799c4a0b17a0078dac0c9387a0e676111367a5f07d608fd55bd8118e52');
-  assert.equal(candidate.operational.astraArchiveSha256Frozen, false);
-  assert.equal(candidate.operational.trainingMediaDownloadedByAstra, false);
+  assert.equal(candidate.operational.astraArchiveSha256Frozen, true);
+  assert.equal(
+    candidate.operational.astraDevelopmentArchiveIdentityReceiptSha256,
+    'b6a4a577d7a447f4073dba85e6f3a4de7236544a6ed79df20b7f25d49c8602ac',
+  );
+  assert.equal(candidate.operational.trainingMediaDownloadedByAstra, true);
+  assert.equal(candidate.operational.trainingMediaPersistedByAstra, false);
   assert.equal(candidate.operational.splitReceiptFrozen, true);
   assert.equal(candidate.operational.splitReceiptSha256, 'd116556c13d250af28900bb1d73d2c0ccd3130246db8bdd2d6d387ac87be799a');
   assert.equal(candidate.operational.labelContractFrozen, true);
@@ -44,12 +49,14 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.syntheticTrainingSmokeRunId, 35561780492);
   assert.equal(candidate.operational.developmentAcquisitionContractFrozen, true);
   assert.equal(candidate.operational.developmentAcquisitionContractSha256, '0d8ceae4938cc79b658498a74021a132358683a60f48d09358fcbe935a7bc02c');
-  assert.equal(candidate.operational.developmentMediaAcquisitionAuthorized, false);
+  assert.equal(candidate.operational.developmentMediaAcquisitionAuthorized, true);
+  assert.equal(candidate.operational.developmentIdentityWorkflowRunId, 35562765028);
   assert.equal(candidate.operational.developmentMetricSchemaFrozen, true);
   assert.equal(candidate.operational.developmentMetricThresholdsFrozen, false);
   assert.equal(candidate.operational.p3FinalGateSealed, true);
-  assert.ok(candidate.blockers.includes('DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED'));
-  assert.ok(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'));
+  assert.equal(candidate.blockers.includes('DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED'), false);
+  assert.equal(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'), false);
+  assert.ok(candidate.blockers.includes('TRAINING_MEDIA_NOT_ACQUIRED'));
   assert.ok(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'));
   assert.ok(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));

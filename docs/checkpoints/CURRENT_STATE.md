@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 DEVELOPMENT MEDIA ACQUISITION AUTHORIZED; IDENTITY ACQUISITION IN PROGRESS; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; INVENTORY EXTRACTION NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -707,30 +707,41 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Verification on commit `cd220e3a49af20fdd90f372b905643a531290e24`: GitHub Actions run `35562034522` **PASS**; **265/265 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`bd464b272d4967afa9c8a212274aca799ea32eaec66d77a22680e521f4a83631`**; focused evaluation output SHA-256 **`c3e9b24273bfcb1986f324625128c41357acace18e840f74fa7d9f0446e3b313`**.
 - Receipt bookkeeping corrected before handoff: SHA-256 **`0d8ceae4938cc79b658498a74021a132358683a60f48d09358fcbe935a7bc02c`** is the digest of the exact committed JSON bytes; the earlier pre-serialization draft digest is not authoritative.
 
-## Guitar-TECHS P1/P2 acquisition authorization received — 2026-09-21
+## Guitar-TECHS P1/P2 byte identity acquisition complete — 2026-09-21
 
-- The user explicitly authorized P1/P2 development-media acquisition under scope `guitar-techs-p1-p2-development-media-v1`.
-- Authorization does **not** include P3, real model training, Production changes or customer-delivery changes.
-- `P3_music.zip` remains sealed and forbidden.
-- `docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_AUTHORIZATION_V1.json` freezes the authorization boundary.
-- Branch-only workflow `.github/workflows/guitar-techs-development-acquisition.yml` is the authorized identity-acquisition step. It can download only the frozen eight P1/P2 archives, verifies exact published bytes + MD5, computes Astra SHA-256 before any extraction, prints a receipt, then deletes the archive bytes.
-- This first acquisition phase performs **no extraction** and **no training**. After all eight receipts are collected and committed, extraction may proceed for inventory only under the already-authorized P1/P2 scope.
+- User authorization scope remained `guitar-techs-p1-p2-development-media-v1`; P3 and real training remained unauthorized.
+- Authorization commit: `104aaea644dfb25aec7f5ace1d5b3efe00c48896`.
+- Branch-only identity workflow run `35562765028`: **PASS**, all eight P1/P2 matrix jobs completed successfully.
+- Every archive matched its frozen published file name, byte count and MD5 before Astra SHA-256 was computed. Each archive was then deleted without extraction.
+- Frozen combined receipt: `docs/astra/GUITARTECHS_DEVELOPMENT_ARCHIVE_IDENTITY_V1.json`; receipt SHA-256 **`b6a4a577d7a447f4073dba85e6f3a4de7236544a6ed79df20b7f25d49c8602ac`**.
+- Astra SHA-256 identities:
+  - P1 chords: `de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326`
+  - P1 scales: `79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509`
+  - P1 single notes: `130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4`
+  - P1 techniques: `1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e`
+  - P2 chords: `9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce`
+  - P2 scales: `d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17`
+  - P2 single notes: `d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9`
+  - P2 techniques: `05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816`
+- `guitarTechsDatasetIdentity.mjs` now validates the exact eight Astra SHA-256 values plus the exact receipt digest; a caller-provided boolean can no longer clear the SHA gate.
+- Candidate registry now records acquisition authorization and identity completion. `DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED` and `DATASET_ASTRA_SHA256_NOT_FROZEN` are cleared; media is not persisted and `TRAINING_MEDIA_NOT_ACQUIRED` remains until inventory-only extraction reacquires the verified P1/P2 bytes.
+- `P3_music.zip` was not downloaded, opened, inspected or hashed by Astra. Real training did not run. Main/Production/customer-delivery behavior did not change.
 
-## Exact next step — P1/P2 identity acquisition in progress
+## Exact next step — authorized inventory-only extraction
 
-1. Let the branch-only identity workflow complete for all eight frozen P1/P2 archives.
-2. Require exact published file name, byte count and MD5 for every archive; compute Astra SHA-256 before extraction.
-3. Collect all eight SHA-256 receipts and freeze them in a committed dataset identity receipt.
+1. Reacquire only the same frozen eight P1/P2 archives under the existing authorization.
+2. For every archive, re-verify published bytes + MD5 + the now-frozen Astra SHA-256 **before extraction**.
+3. Extract for inventory only and freeze receipts for underlying-performance grouping, correlated capture-view grouping, exact six-string MIDI/track mapping, tuning evidence, and technique MIDI/pitch-bend semantics.
 4. Keep `P3_music.zip` sealed and untouched.
-5. Only after the eight-file identity receipt is committed, run inventory-only extraction to freeze performance grouping, correlated capture views, six-string track mapping, tuning evidence and technique MIDI/pitch-bend semantics.
-6. Do **not** start real training without a separate explicit training authorization.
+5. Run the already-frozen alignment checks only after the extraction receipts exist.
+6. Do **not** begin real model training without a separate explicit training authorization.
 7. Keep `main`, Production and customer-delivery behavior unchanged.
 
 ## NEXT ACTION TO RESUME — explicit
 
-**Resume the authorized P1/P2 identity acquisition; do not ask for acquisition authorization again.**
+**Proceed with inventory-only extraction of the verified P1/P2 development archives under the existing authorization; do not ask for acquisition authorization again.**
 
-If the identity workflow has finished, collect and verify all eight receipts, commit the combined Astra SHA-256 identity receipt and update this checkpoint. Then proceed to inventory-only extraction under the same P1/P2 authorization. P3 remains sealed and real training remains unauthorized.
+Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 before extracting it. P3 remains sealed and real training remains unauthorized.
 
 ## Copy-paste handoff
 
