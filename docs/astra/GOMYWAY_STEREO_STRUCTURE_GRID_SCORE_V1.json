@@ -1,0 +1,95 @@
+{
+  "kind": "gomyway-stereo-structure-grid-filter-development-score",
+  "version": 1,
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+  "rhythmLabelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "leadLabelsSha256": "f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb",
+  "privateRhythmPredictionSha256": "265bd933c01bc6ab2e17a87e3e851b1381fcbf40ffa4a4744a8e6158cbc2b073",
+  "privateLeadPredictionSha256": "694e7002c7d208459c153534bc3368d9fe67081d62027f99fc8fd096f6375a90",
+  "privateScoreSha256": "c4a011dc3b27f88dc455fad10107ddad8e5051e1fb0942415571d7ba1de5447b",
+  "policy": {
+    "referenceBlind": true,
+    "subdivisionBeats": 0.25,
+    "toleranceSeconds": 0.05,
+    "floatingPointEpsilonSeconds": 1e-9,
+    "alignmentMustBeComplete": true,
+    "alignmentMustBeIndependentOfPredictions": true,
+    "eventTimingChanged": false,
+    "eventMidiChanged": false,
+    "eventCountCanOnlyDecrease": true
+  },
+  "before": {
+    "aggregate": {
+      "predictions": 245,
+      "targets": 203,
+      "tp": 84,
+      "fp": 161,
+      "fn": 119,
+      "precision": 0.34285714285714286,
+      "recall": 0.41379310344827586,
+      "f1": 0.375
+    },
+    "rhythm": {
+      "predictions": 139,
+      "tp": 43,
+      "fp": 96,
+      "fn": 83,
+      "precision": 0.30935251798561153,
+      "recall": 0.3412698412698413,
+      "f1": 0.32452830188679244
+    },
+    "lead": {
+      "predictions": 106,
+      "tp": 41,
+      "fp": 65,
+      "fn": 36,
+      "precision": 0.3867924528301887,
+      "recall": 0.5324675324675324,
+      "f1": 0.44808743169398907
+    }
+  },
+  "after": {
+    "aggregate": {
+      "predictions": 231,
+      "targets": 203,
+      "tp": 84,
+      "fp": 147,
+      "fn": 119,
+      "precision": 0.36363636363636365,
+      "recall": 0.41379310344827586,
+      "f1": 0.3870967741935484
+    },
+    "rhythm": {
+      "predictions": 132,
+      "tp": 43,
+      "fp": 89,
+      "fn": 83,
+      "precision": 0.32575757575757575,
+      "recall": 0.3412698412698413,
+      "f1": 0.3333333333333333
+    },
+    "lead": {
+      "predictions": 99,
+      "tp": 41,
+      "fp": 58,
+      "fn": 36,
+      "precision": 0.41414141414141414,
+      "recall": 0.5324675324675324,
+      "f1": 0.4659090909090909
+    }
+  },
+  "delta": {
+    "removedPredictions": 14,
+    "tpChange": 0,
+    "fpChange": -14,
+    "fnChange": 0,
+    "f1Change": 0.012096774193548376
+  },
+  "interpretation": "The independently frozen straight-sixteenth structure grid can safely reject events farther than the existing 50 ms scoring tolerance from every valid subdivision. On this development window it removes 14 false positives with zero true-positive loss.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This development result depends on an independently established structure/timing map; production inputs need their own validated structure map.",
+    "The filter does not repair missing notes, wrong pitches, role ambiguity or techniques.",
+    "This is development evidence, not a locked final evaluation."
+  ]
+}
