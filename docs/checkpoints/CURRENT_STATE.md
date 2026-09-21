@@ -878,6 +878,19 @@ Real training remains separately unauthorized. A future authorization must be ex
 - Next action is implementation/preflight freeze, followed by the branch-only CPU training workflow if preflight passes.
 
 
+## Bounded real-training implementation launched — 2026-09-21
+
+- Repository visibility verified public before launch; standard GitHub-hosted CPU runners are used and paid compute remains forbidden.
+- Training script frozen at Git blob `6ce81a0bd82025357497e4dff780ff888fad7627`.
+- Exact 256-path alignment correction map frozen at Git blob `9090d465422ebf5d4fdf170693fe0936934f3073`.
+- Implementation receipt Git blob: `7b92a6789225b854c147e236edb39eb6d1f217e6`.
+- Checkpoint selection is preregistered on 10 deterministic performance-balanced validation captures (4 chords, 4 scales, 1 single-notes, 1 PalmMute; view priority directinput -> micamp -> ego -> exo). The selected checkpoint is then evaluated once on the full opposite-performer frozen accepted population.
+- Training remains capped at 2,500 iterations/fold, batch 32, Adadelta lr 1.0, seed 20260921, random initialization only, 50 checkpoint-selection evaluations.
+- The workflow must pass authorization/source identity checks and a synthetic self-test before any media access.
+- P3 is absent from workflow inputs; raw P1/P2 media is sequentially verified, prepared, and deleted. Output artifacts are development-only fold model + receipt retained 7 days.
+- Main, Production and customer delivery remain unchanged and unauthorized.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.

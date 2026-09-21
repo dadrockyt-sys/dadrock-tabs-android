@@ -1,0 +1,64 @@
+{
+  "authorizationReceiptSha256": "175de606db2276dd745d697e1e996e6c533a7ad6542d258ed66e2a8bbb6ea0d0",
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "checkpointSelection": {
+    "captureCount": 10,
+    "contentQuotas": {"chords":4,"scales":4,"singlenotes":1,"PalmMute":1},
+    "rule": "lexicographically first performances per quota; preferred accepted view directinput, then micamp, ego, exo",
+    "purpose": "checkpoint selection only; selected checkpoint is evaluated once on the full opposite-performer frozen validation population"
+  },
+  "datasetPreparation": {
+    "acceptedPrimaryCaptureCount": 256,
+    "acceptedPrimaryCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "alignmentCorrectionMapGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "archiveProcessing": "sequential-download-verify-extract-feature-delete",
+    "audioDecode": "ffmpeg mono 22050 Hz float32",
+    "featureContract": "astra_backend/tabcnn_runtime/preprocessing.py",
+    "labelPolicy": "explicit MIDI string tracks -> low-to-high E/A/D/G/B/e frets; fret 20+ and conflicting same-string states masked, never clipped",
+    "rawMediaPersistedAfterPreparation": false
+  },
+  "evaluation": {
+    "finalPopulation": "all frozen accepted capture views for the opposite performer, performance-balanced after view averaging",
+    "metricThresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "selectedCheckpointFullEvaluationCountPerFold": 1
+  },
+  "folds": [
+    {"id":"p1-train-p2-validate","train":"P1","validate":"P2"},
+    {"id":"p2-train-p1-validate","train":"P2","validate":"P1"}
+  ],
+  "guards": {
+    "customerDeliveryAuthorized": false,
+    "paidComputeAuthorized": false,
+    "productionMutationAuthorized": false,
+    "publishedCheckpointMayBeLoaded": false,
+    "sealedP3MayBeOpened": false
+  },
+  "runtime": {
+    "dependencyLockSha256": "0e711709b063a705ad11570f6b7ef4dfe5bcc2d433d98707a1a74897dbb25bc0",
+    "python": "3.10.15",
+    "runner": "ubuntu-22.04 standard public-repository runner",
+    "seed": 20260921,
+    "wheelManifestSha256": "0796acee36cea76e9784e602da190223a14a89907381882b401986763c371567"
+  },
+  "sampling": {
+    "batchSize": 32,
+    "captureViewWithinPerformance": "uniform",
+    "frameWithinCapture": "uniform",
+    "performance": "uniform",
+    "resampleIfAllStringsMasked": true
+  },
+  "schema": "astra-guitar-techs-real-training-implementation-v1",
+  "source": {
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "trainingScriptGitBlob": "6ce81a0bd82025357497e4dff780ff888fad7627"
+  },
+  "training": {
+    "batchSize": 32,
+    "initialization": "random-only",
+    "learningRate": 1.0,
+    "maxIterationsPerFold": 2500,
+    "optimizer": "Adadelta",
+    "validationCheckpointsPerFold": 50,
+    "validationEveryIterations": 50
+  }
+}
