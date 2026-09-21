@@ -900,6 +900,19 @@ Real training remains separately unauthorized. A future authorization must be ex
 - No thresholds, training limits, sampling rules, model architecture, dataset allowlist or authorization scope changed.
 
 
+## Real-training media-fetch retry hardening — 2026-09-21
+
+- Corrected preflight run `35568621144` passed authorization identity checks, exact runtime installation and the training-core self-test.
+- Both performer-disjoint fold jobs then failed **before dataset preparation completed and before any optimizer step** because Zenodo returned repeated HTTP 504 responses on the first development archive.
+- No model was trained, no checkpoint was selected, no P3 data was touched and customer delivery remained disabled.
+- Retry hardening changes orchestration only:
+  - fold jobs are serialized (`max-parallel: 1`) to avoid two simultaneous ~4 GB corpus fetches;
+  - each archive first tries Zenodo's record API content endpoint, then the published file endpoint;
+  - bounded retry/backoff and partial-file cleanup are explicit;
+  - all frozen byte count, MD5 and Astra SHA-256 verification remains mandatory before extraction.
+- Training limits, seed, random initialization, 256-path allowlist, alignment corrections, metric thresholds and checkpoint-selection policy are unchanged.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
