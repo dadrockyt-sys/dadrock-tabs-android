@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 BYTE IDENTITIES + 92-GROUP INVENTORY EVIDENCE FROZEN; P2 D-STRING TUNING UNRESOLVED; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 92-GROUP INVENTORY + SIX-STRING TUNING EVIDENCE FROZEN; ALIGNMENT NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -783,13 +783,25 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - Added `astra_backend/guitarTechsInventoryEvidence.mjs` with fail-closed receipt/run/group/string-map/P3/alignment/training checks and focused tests.
 - Candidate registry now clears `EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED` and the vague `TUNING_METADATA_NOT_FROZEN`; it records the inventory receipt and keeps the precise P2 D-string tuning blocker.
 - No alignment, model import, real training, P3 access, main/Production change or customer-delivery authorization occurred.
+- Verification on commit `23f92111f83595212aa92254c8e441321c1128cc`: GitHub Actions run `35565044068` **PASS**; **270/270 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 `f2b013d26a4949059eccc87bb65c8e3fe1b7dc11566111147fdea1c7eb324dab`; focused evaluation output SHA-256 `67253464b610a8b2f4120a193010b27dd34defc64aff76cb941a5d96442b0c6e`.
 
-## Exact next step — resolve P2 tuning before absolute-fret labels
+## P2 six-string tuning evidence frozen — 2026-09-21
 
-1. Seek independent authoritative or already-authorized dataset evidence for P2 D-string tuning without opening P3.
-2. Do not infer MIDI 50 merely because standard tuning is likely.
-3. Only after six-string P2 tuning is frozen may P2 absolute-fret label generation proceed.
-4. Then run the already-frozen P1/P2 alignment checks; alignment is not a training authorization.
+- The P2 `allsinglenotes` inventory itself resolves the prior D-string gap without P3 or model inference.
+- P1 establishes the shared six-track schema: each `e/B/G/D/A/E` track contains 23 consecutive chromatic positions spanning 22 semitones, with opens `64/59/55/50/45/40`.
+- P2 matches P1 exactly on five strings and again has 23 consecutive positions. The P2 D track alone has 22 consecutive pitches `51..72`: relative to the same D-string sweep, **only MIDI 50 is missing**.
+- Treating MIDI 51 as an alternate D# open would require the corresponding 22-fret endpoint MIDI 73, which is also absent and conflicts with the explicit `D` track identity and shared AllNotes schema.
+- P2 tuning is therefore frozen as low-to-high `40,45,50,55,59,64` = **E2 A2 D3 G3 B3 E4**. The receipt explicitly distinguishes the structurally verified D3 open from a directly observed P2 MIDI-50 event.
+- Frozen receipt: `docs/astra/GUITARTECHS_P2_TUNING_EVIDENCE_V1.json`; SHA-256 **`5474eaccdf651c637dc7b3b2145098fe050714b77542b843742ac2f645702715`**. Added `astra_backend/guitarTechsTuningEvidence.mjs` and fail-closed substitution tests.
+- Candidate registry now clears `P2_D_STRING_TUNING_NOT_FULLY_VERIFIED` while retaining alignment, metric-threshold, training, P3, role-evidence and customer-delivery blockers.
+- No alignment, model import, training, P3 access or Production/customer action occurred.
+
+## Exact next step — run frozen P1/P2 alignment checks
+
+1. Reacquire only the frozen P1/P2 development archives needed for the alignment run under the existing development-media authorization; re-verify bytes + MD5 + Astra SHA-256 before extraction.
+2. Run only the frozen alignment policy: lag -100..+100 ms at 1 ms steps, minimum 30 MIDI onset groups, >=80% within 20 ms after correction, median absolute residual <=10 ms, five deterministic strata/bootstrap lag estimates with MAD <=5 ms, and never apply >100 ms correction.
+3. Exclude/abstain any recording group that fails the frozen alignment gate; do not tune thresholds after results.
+4. Freeze alignment receipts before any feature generation or model training.
 5. **Do not begin real model training without separate explicit training authorization.**
 6. Keep P3 sealed and keep `main`, Production and customer-delivery behavior unchanged.
 

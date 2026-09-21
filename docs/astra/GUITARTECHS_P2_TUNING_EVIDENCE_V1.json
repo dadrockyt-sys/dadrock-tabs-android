@@ -1,0 +1,122 @@
+{
+  "dataset": "Guitar-TECHS",
+  "evidence": {
+    "p1SingleNotes": {
+      "coverageSemitones": 22,
+      "inferredOpenMidiByTrack": {
+        "A": 45,
+        "B": 59,
+        "D": 50,
+        "E": 40,
+        "G": 55,
+        "e": 64
+      },
+      "noteOnCountByTrack": {
+        "A": 23,
+        "B": 23,
+        "D": 23,
+        "E": 23,
+        "G": 23,
+        "e": 23
+      },
+      "performanceKey": "allsinglenotes",
+      "trackNamesHighToLow": [
+        "e",
+        "B",
+        "G",
+        "D",
+        "A",
+        "E"
+      ],
+      "uniqueMidiByTrack": {
+        "A": [45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67],
+        "B": [59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],
+        "D": [50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72],
+        "E": [40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62],
+        "G": [55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77],
+        "e": [64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86]
+      }
+    },
+    "p2SingleNotes": {
+      "dTrackMissingFromStandardSweep": [
+        50
+      ],
+      "dTrackObservedMaxMidi": 72,
+      "dTrackObservedMinMidi": 51,
+      "directlyObservedOpenMidiByTrack": {
+        "A": 45,
+        "B": 59,
+        "E": 40,
+        "G": 55,
+        "e": 64
+      },
+      "noteOnCountByTrack": {
+        "A": 23,
+        "B": 23,
+        "D": 22,
+        "E": 23,
+        "G": 23,
+        "e": 23
+      },
+      "performanceKey": "allsinglenotes",
+      "trackNamesHighToLow": [
+        "e",
+        "B",
+        "G",
+        "D",
+        "A",
+        "E"
+      ],
+      "uniqueMidiByTrack": {
+        "A": [45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67],
+        "B": [59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81],
+        "D": [51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72],
+        "E": [40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62],
+        "G": [55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77],
+        "e": [64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86]
+      }
+    }
+  },
+  "inference": {
+    "alternativeDSharpOpenWouldRequireUnobservedTopPitch73": true,
+    "fiveP2OpenStringsMatchP1Exactly": true,
+    "fiveP2TracksCover23ConsecutiveChromaticPositions": true,
+    "note": "The P2 D open pitch is inferred from the same per-string AllNotes schema observed in P1 and the exact missing-endpoint pattern; it is not claimed as a directly observed P2 MIDI 50 event.",
+    "p2DTrackCovers22ConsecutivePitches51Through72": true,
+    "p2DTrackDifferenceFromExpectedStandardSweep": [
+      50
+    ],
+    "p2DTrackExpectedStandardSweep50Through72": true,
+    "p2OpenMidiHighToLow": [
+      64,
+      59,
+      55,
+      50,
+      45,
+      40
+    ],
+    "p2OpenMidiLowToHigh": [
+      40,
+      45,
+      50,
+      55,
+      59,
+      64
+    ],
+    "p2Tuning": "E2 A2 D3 G3 B3 E4",
+    "sharedDatasetTrackSchema": true,
+    "status": "verified-by-shared-dataset-string-schema-and-single-missing-open-note"
+  },
+  "policy": {
+    "alignmentRun": false,
+    "customerDeliveryEligible": false,
+    "trainingRun": false,
+    "usesCustomerAudio": false,
+    "usesModelPrediction": false,
+    "usesP3": false
+  },
+  "record": "https://zenodo.org/records/14963133",
+  "schema": "astra-guitar-techs-p2-tuning-evidence-v1",
+  "sourceFullInventoryRunId": 35563511409,
+  "sourceInventoryReceiptSha256": "4d21d578a275587abe18d9f5382074fa9c33bd2f0698c5d10b340788de306bcd"
+}
