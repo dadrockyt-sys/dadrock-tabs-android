@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; RIGHTS-CLEAN GUITAR-TECHS CANDIDATE REGISTERED; PUBLISHED DATASET IDENTITY + PERFORMER-DISJOINT SPLIT FROZEN; LABEL/ALIGNMENT + TRAINING CONTRACT NEXT**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS RIGHTS-CLEAN CANDIDATE IDENTITY/SPLIT/LABEL/ALIGNMENT/TRAINING CONTRACTS FROZEN; SYNTHETIC BACKWARD SMOKE NEXT**
 
 ## Product outcome
 
@@ -644,15 +644,41 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Verification on `e29ec07e6e773cdc6d29d9736a007c0d6feea1fe`: **247/247 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`cc2e92438bd1716ddbde76a1663ab7be5bdb126754e65ce90ed5ee336916b555`**; focused evaluation output SHA-256 **`4790f8cba9f8c973c899b5774c5942ec961ffb6d3542cf21df8dd09a98d9218d`**.
 - No model was trained or executed; no main/Production/customer-delivery authority changed.
 
-## Exact next step — Freeze label/alignment semantics and bounded training contract before media acquisition
+## Guitar-TECHS label, alignment and bounded training contract frozen — 2026-09-21
 
-1. Preserve **P3 sealed**. Do not download/open `P3_music.zip` while designing labels, preprocessing, alignment, hyperparameters or acceptance criteria.
-2. Build a fail-closed label contract around the authoritative per-string MIDI evidence. Do **not** assume standard tuning unless tuning metadata is found in authoritative source material or later verified inside the development archives. If tuning is unavailable, pitch-to-fret conversion must abstain.
-3. Freeze a deterministic audio/MIDI alignment policy. The official Zenodo record warns of up to **100 ms** signal misalignment. Define how lag is estimated using P1/P2 development material, confidence/maximum-correction bounds and when alignment must abstain. Do not tune this policy on P3.
-4. Freeze the TabCNN label encoding: six strings, per-string silent class, fret-range policy, invalid pitch/string rejection, onset/frame semantics and how bends/harmonics are represented or excluded for v1. Technique labels may be auxiliary but cannot silently change note/fret truth.
-5. Freeze a bounded training-runtime contract **before downloading media**: platform/Python/PyTorch assumptions, random initialization, deterministic seeds, maximum epochs/early stopping, batch/window policy, artifact/metric receipts, resource ceilings and stop conditions. No paid compute is implied.
-6. Define development metrics on the P1↔P2 folds: string+fret frame accuracy is insufficient alone. Include onset/string/fret precision+recall/F1, note-event completeness, abstention, per-content-class results and cross-performer consistency. Freeze the criteria before opening P3.
-7. Only after the above contracts are committed may an authorized acquisition step download **P1/P2 development archives only**, verify published size/MD5 + Astra SHA-256, inspect actual tuning/layout/group identities and build extracted-file manifests. P3 remains unopened.
+- Commit `989d438459f43b4217e8500f430eb05017fbe2f0` adds `docs/astra/GUITARTECHS_LABEL_ALIGNMENT_TRAINING_CONTRACT_V1.json` and companion review markdown.
+- Contract receipt SHA-256: **`09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f`**.
+- Pinned TabCNN semantics were checked directly from source revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`:
+  - six independent string groups;
+  - frets **0–19** are softmax classes **0–19**;
+  - tablature silence state is **-1**, mapped by `SoftmaxGroups.get_loss()` to final class **20**;
+  - **21 classes/string, 126 logits total**.
+- Added `guitarTechsLabelContract.mjs`. It refuses to infer frets without an explicit verified six-track string map and tuning. Standard EADGBE is **not** assumed from the upstream source model. Missing tuning, out-of-range frets and same-string polyphony abstain/mask rather than clip or relabel as silence.
+- V1 primary training content is limited to content with stable fret truth once filenames/layout are verified: chords, scales, ordinary single notes and palm mute. Vibrato, pinch harmonics, natural harmonics and bendings remain auxiliary/held-out until their actual MIDI/pitch-bend semantics are inspected.
+- Alignment policy is frozen without media access:
+  - P1/P2 development material only; P3 cannot influence alignment;
+  - search lag **-100..+100 ms** at 1 ms steps;
+  - minimum 30 MIDI onset groups;
+  - require >=80% matched within 20 ms after correction;
+  - median absolute residual <=10 ms;
+  - five deterministic strata/bootstrap estimates with lag MAD <=5 ms;
+  - never apply >100 ms correction;
+  - otherwise exclude the recording group and abstain.
+- Initial training contract follows the pinned research training path where appropriate: random initialization, Adadelta, learning rate **1.0**, batch **32**, maximum **2,500 iterations/fold**, 50 validation checkpoints. Astra seed is **20260921**.
+- Training runtime identity reuses the already frozen Python 3.10.15 / PyTorch 1.11.0+cpu lock and wheel manifest. Paid compute and real training remain unauthorized.
+- Development metrics schema is frozen: onset+string+fret precision/recall/F1, note-event completeness, frame string+fret accuracy, abstention, per-content-class results and cross-performer consistency. Frame accuracy alone is explicitly insufficient.
+- Numeric development acceptance thresholds remain intentionally unfrozen until P1/P2 baselines exist. P3 opening remains unauthorized.
+- Verification: GitHub Actions run `35561654060` **PASS**; **256/256 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`1994796f76cf776d2331e983b94a15e1e1f650079ef192e2d8ecd4866e8a401b`**; focused evaluation output SHA-256 **`4bcd91c580b06cf0e87e63eac172d0db2fbbea0a317852327ef1070020f578af`**.
+- No Guitar-TECHS archive body was downloaded/opened and no model was trained or executed on real data.
+
+## Exact next step — Synthetic training-path smoke, then development-only acquisition preparation
+
+1. Run a **CPU synthetic backward/optimizer smoke only** on the exact frozen runtime and exact pinned TabCNN source classes. Use random initialization, seed `20260921`, batch 32, Adadelta LR 1.0, synthetic 192×9 feature windows and valid six-string labels. No checkpoint loading and no Guitar-TECHS media.
+2. Require deterministic repeated runs in-process, finite loss/gradients, expected output shape 126 logits, actual parameter update and a receipt with wall time + peak RSS. Fail closed if any differ.
+3. Freeze the synthetic smoke receipt and update the candidate blocker from `SYNTHETIC_TRAINING_SMOKE_PENDING` only if the exact runtime/source smoke passes.
+4. After the smoke passes, prepare—but do not silently perform—the P1/P2 development acquisition gate: download only the eight P1/P2 archives when development-media acquisition is authorized, verify exact published bytes/MD5 plus Astra SHA-256, inventory extracted paths/string-track/tuning metadata, and group correlated capture views by underlying performance.
+5. **Do not download/open P3_music.zip.** P3 remains sealed until development thresholds, preprocessing/alignment, model selection and acceptance criteria are frozen.
+6. Real training remains blocked until P1/P2 byte identity, extracted grouping, string mapping/tuning and alignment receipts are verified and an explicit training authorization exists.
 
 ## Copy-paste handoff
 
