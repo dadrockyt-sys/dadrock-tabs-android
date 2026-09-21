@@ -36,13 +36,17 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.labelAlignmentTrainingContractSha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');
   assert.equal(candidate.operational.alignmentPolicyFrozen, true);
   assert.equal(candidate.operational.trainingRuntimeFrozen, true);
-  assert.equal(candidate.operational.syntheticTrainingSmokePassed, false);
+  assert.equal(candidate.operational.syntheticTrainingSmokePassed, true);
+  assert.equal(
+    candidate.operational.syntheticTrainingSmokeReceiptSha256,
+    'ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d',
+  );
+  assert.equal(candidate.operational.syntheticTrainingSmokeRunId, 35561780492);
   assert.equal(candidate.operational.developmentMetricSchemaFrozen, true);
   assert.equal(candidate.operational.developmentMetricThresholdsFrozen, false);
   assert.equal(candidate.operational.p3FinalGateSealed, true);
   assert.ok(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'));
-  assert.ok(candidate.blockers.includes('SYNTHETIC_TRAINING_SMOKE_PENDING'));
   assert.ok(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
   assert.equal(candidate.customerDeliveryEligible, false);
@@ -148,4 +152,16 @@ test('legacy pickle globals are statically verified but deserialization remains 
   );
   assert.ok(candidate.blockers.includes('CHECKPOINT_DESERIALIZATION_NOT_AUTHORIZED'));
   assert.ok(candidate.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED'));
+});
+
+test('synthetic training smoke receipt is frozen and no longer a candidate blocker', () => {
+  const candidate = getNoteInferenceCandidate('astra_guitartechs_tabcnn_v1');
+  assert.equal(candidate.operational.syntheticTrainingSmokePassed, true);
+  assert.equal(
+    candidate.operational.syntheticTrainingSmokeReceiptSha256,
+    'ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d',
+  );
+  assert.equal(candidate.blockers.includes('SYNTHETIC_TRAINING_SMOKE_PENDING'), false);
+  assert.equal(candidate.operational.modelTrained, false);
+  assert.equal(candidate.customerDeliveryEligible, false);
 });

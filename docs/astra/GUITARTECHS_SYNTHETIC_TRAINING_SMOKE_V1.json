@@ -1,0 +1,53 @@
+{
+  "budget": {
+    "maxPeakRssMb": 2048,
+    "maxWallSeconds": 120,
+    "observedPeakRssMb": 357.9375,
+    "observedWallSeconds": 0.1946298820000152
+  },
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "deterministicRepeatedRunsEqual": true,
+  "guitarTechsMediaOpened": false,
+  "modelInitialization": "random-only",
+  "publishedCheckpointLoaded": false,
+  "result": {
+    "gradNorm": 1.2271532566034684,
+    "gradientTensorCount": 10,
+    "loss": 18.26586151123047,
+    "outputShape": [
+      32,
+      1,
+      126
+    ],
+    "stateAfterSha256": "e67706628b4f24a38879c5ee483a73cb67f24d1762d3cd6d6fe9abbca431976d",
+    "stateBeforeSha256": "cb8b060ea57c9b5c16d64bfba1cc3479f4a8cad1263062fcc0736f10f6f19529"
+  },
+  "runtime": {
+    "librosa": "0.9.1",
+    "numpy": "1.21.6",
+    "platform": "linux-x86_64",
+    "python": "3.10.15",
+    "scipy": "1.8.1",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-guitar-techs-synthetic-training-smoke-v1",
+  "sourceBlobs": {
+    "constants": "79666ea0c5b0214ca664da454069b8d286cc5c18",
+    "instrument": "eddc48a8b95de057035cd11ea2d1951e754ef349",
+    "modelCommon": "84beb4cf251b9cb9274d10cf203318314181af31",
+    "tabcnn": "e09856db2fffd77642e005ab509846acc894b886"
+  },
+  "sourceRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+  "training": {
+    "batchSize": 32,
+    "classesPerString": 21,
+    "featureBins": 192,
+    "frameWidth": 9,
+    "framesPerSample": 1,
+    "learningRate": 1,
+    "numStrings": 6,
+    "optimizer": "Adadelta",
+    "seed": 20260921,
+    "totalLogits": 126
+  }
+}

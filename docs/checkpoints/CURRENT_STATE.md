@@ -671,14 +671,34 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Verification: GitHub Actions run `35561654060` **PASS**; **256/256 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`1994796f76cf776d2331e983b94a15e1e1f650079ef192e2d8ecd4866e8a401b`**; focused evaluation output SHA-256 **`4bcd91c580b06cf0e87e63eac172d0db2fbbea0a317852327ef1070020f578af`**.
 - No Guitar-TECHS archive body was downloaded/opened and no model was trained or executed on real data.
 
-## Exact next step — Synthetic training-path smoke, then development-only acquisition preparation
+## Guitar-TECHS synthetic training-path smoke passed — 2026-09-21
 
-1. Run a **CPU synthetic backward/optimizer smoke only** on the exact frozen runtime and exact pinned TabCNN source classes. Use random initialization, seed `20260921`, batch 32, Adadelta LR 1.0, synthetic 192×9 feature windows and valid six-string labels. No checkpoint loading and no Guitar-TECHS media.
-2. Require deterministic repeated runs in-process, finite loss/gradients, expected output shape 126 logits, actual parameter update and a receipt with wall time + peak RSS. Fail closed if any differ.
-3. Freeze the synthetic smoke receipt and update the candidate blocker from `SYNTHETIC_TRAINING_SMOKE_PENDING` only if the exact runtime/source smoke passes.
-4. After the smoke passes, prepare—but do not silently perform—the P1/P2 development acquisition gate: download only the eight P1/P2 archives when development-media acquisition is authorized, verify exact published bytes/MD5 plus Astra SHA-256, inventory extracted paths/string-track/tuning metadata, and group correlated capture views by underlying performance.
-5. **Do not download/open P3_music.zip.** P3 remains sealed until development thresholds, preprocessing/alignment, model selection and acceptance criteria are frozen.
-6. Real training remains blocked until P1/P2 byte identity, extracted grouping, string mapping/tuning and alignment receipts are verified and an explicit training authorization exists.
+- Commit `f1110dcc9f6b0184b831a5574b9cc215ae853fd6` added a deterministic CPU backward/optimizer smoke using the exact frozen Python 3.10.15 / PyTorch 1.11.0+cpu runtime and exact pinned TabCNN source blobs.
+- The smoke used **random initialization only**. It loaded no published GuitarProFX checkpoint and opened no Guitar-TECHS media.
+- GitHub Actions run `35561780492` **PASS**:
+  - seed `20260921`;
+  - batch 32;
+  - one 192 x 9 synthetic feature window per sample;
+  - six strings x 21 classes = **126 logits**;
+  - Adadelta learning rate 1.0;
+  - loss **18.26586151123047**;
+  - finite gradient norm **1.2271532566034684** across 10 gradient tensors;
+  - model state changed from SHA-256 `cb8b060ea57c9b5c16d64bfba1cc3479f4a8cad1263062fcc0736f10f6f19529` to `e67706628b4f24a38879c5ee483a73cb67f24d1762d3cd6d6fe9abbca431976d`;
+  - repeated in-process runs were deterministic;
+  - observed wall time **0.194629882 s**;
+  - peak RSS **357.9375 MB**, below the 2,048 MB smoke budget.
+- Frozen receipt: `docs/astra/GUITARTECHS_SYNTHETIC_TRAINING_SMOKE_V1.json`, SHA-256 **`ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d`**.
+- Candidate `astra_guitartechs_tabcnn_v1` now records `syntheticTrainingSmokePassed:true`; blocker `SYNTHETIC_TRAINING_SMOKE_PENDING` is removed.
+- This does **not** authorize real dataset download, real training, P3 access, main/Production change or customer delivery.
+
+## Exact next step — Prepare the P1/P2 development acquisition gate; keep P3 sealed
+
+1. Build a fail-closed **development-media acquisition contract** for the eight P1/P2 Guitar-TECHS archives only. It must require explicit acquisition authorization before any archive body is downloaded.
+2. The gate must reject `P3_music.zip` categorically. P3 remains sealed until P1/P2 development thresholds, alignment, model selection and acceptance criteria are frozen.
+3. For each authorized P1/P2 archive, require exact official record/version/name, published byte count and MD5 from `GUITARTECHS_DATASET_MANIFEST_V1.json`, then compute and freeze Astra SHA-256 after download.
+4. After extraction, inventory paths without training: prove the six-string track mapping/tuning source, group all correlated capture views by underlying performance, classify content families, and identify which technique MIDI semantics require abstention/auxiliary handling.
+5. Freeze extracted-layout/grouping/tuning receipts before any alignment or real training. Do not assume EADGBE unless the dataset metadata itself verifies it.
+6. Real training remains blocked until all eight P1/P2 archive SHA-256s, extracted grouping, explicit string/tuning mapping, and alignment receipts are complete **and** training is separately authorized.
 
 ## Copy-paste handoff
 
