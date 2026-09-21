@@ -209,3 +209,65 @@ test('note evidence adaptation is deterministic', () => {
     adaptStructureConditionedNoteEvidence(evidence(map), map),
   );
 });
+
+
+test('explicit evidence state is preserved from onset through promoted event provenance', () => {
+  const map = structureMap();
+  const raw = evidence(map, {
+    onsets: [{
+      onsetId: 'core',
+      sourceStart: 0.5,
+      nearestStructureSlot: 0.5,
+      onsetConfidence: 0.9,
+      classification: 'unambiguous',
+      evidenceState: 'promoted-core',
+      selectedMidi: 64,
+      candidates: [{ midi: 64, confidence: 0.9 }],
+      provenance: { source: 'recurring-core' },
+    }],
+  });
+  const result = adaptStructureConditionedNoteEvidence(raw, map);
+  assert.equal(result.onsets[0].evidenceState, 'promoted-core');
+  assert.equal(result.promotedEvents[0].provenance.evidenceState, 'promoted-core');
+  assert.deepEqual(result.promotedEvents[0].provenance.sourceEvidenceProvenance, {
+    source: 'recurring-core',
+  });
+  assert.equal(result.metrics.evidenceStateCounts['promoted-core'], 1);
+  assert.equal(result.adapterContract.explicitEvidenceStateProvenance, true);
+});
+
+test('evidence state must be compatible with the existing classification', () => {
+  const map = structureMap();
+  const raw = evidence(map, {
+    onsets: [{
+      onsetId: 'bad-state',
+      sourceStart: 1,
+      nearestStructureSlot: 1,
+      onsetConfidence: 0.8,
+      classification: 'ambiguous',
+      evidenceState: 'promoted-core',
+      candidates: [
+        { midi: 64, confidence: 0.8 },
+        { midi: 67, confidence: 0.7 },
+      ],
+    }],
+  });
+  assert.throws(
+    () => adaptStructureConditionedNoteEvidence(raw, map),
+    /ambiguous classification requires evidenceState ambiguous/,
+  );
+});
+
+test('legacy note evidence without evidenceState remains backward compatible', () => {
+  const map = structureMap();
+  const result = adaptStructureConditionedNoteEvidence(evidence(map), map);
+  assert.equal(result.onsets[0].evidenceState, null);
+  assert.deepEqual(result.metrics.evidenceStateCounts, {
+    'promoted-core': 0,
+    'promoted-technique': 0,
+    'recovered-recurring-onset': 0,
+    ambiguous: 0,
+    unassigned: 0,
+    rejected: 0,
+  });
+});
