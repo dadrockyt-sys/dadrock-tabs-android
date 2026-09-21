@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **GUITAR-TECHS V1 REAL TRAINING FAILED FROZEN THRESHOLDS; ROOT-CAUSE DIAGNOSIS FROZEN: V1 UNDERTRAINED DUE SINGLE-FRAME / ITERATION-SEMANTICS MISMATCH; V2 200-FRAME PERFORMANCE-BALANCED SAMPLING SYNTHETICALLY FROZEN; NEW REAL-RUN AUTHORIZATION REQUIRED; P3 SEALED**
+Status: **GUITAR-TECHS V1 FAILED AND FROZEN; V2 ROOT-CAUSE FIX + 200-FRAME PERFORMANCE-BALANCED TRAINER + CPU BUDGET FROZEN; V2 SYNTHETIC IMPLEMENTATION SMOKE NEXT; V2 REAL TRAINING UNAUTHORIZED; P3 SEALED**
 
 ## Product outcome
 
@@ -986,6 +986,20 @@ Before any V2 real-data run, freeze the full V2 implementation and resource budg
 - Before choosing a V2 real-training budget, a no-media CPU benchmark is launched against the exact pinned TabCNN source/runtime.
 - It measures one effective batch of 32 sequences × 200 frames using gradient accumulation at sequence microbatches 1/2/4/8, recording effective-step wall time and peak RSS.
 - Synthetic random features/labels only. No Guitar-TECHS archive, P3, model checkpoint or customer data is accessed.
+
+
+## Guitar-TECHS V2 CPU budget + implementation frozen — 2026-09-21
+
+- Synthetic CPU benchmark run `35630098935` completed microbatch 1/2/4/8 with no real media.
+- Microbatch 1 was selected: median **7.597 s** per effective 32-sequence × 200-frame optimizer step, peak RSS **704,840 KiB**. Larger microbatches were not faster and used more memory.
+- Frozen budget receipt: `docs/astra/GUITARTECHS_V2_CPU_BUDGET_V1.json`; SHA-256 **`8705df7cde4456dc17b5973d84404981387a322ea195a3f995a72ae6b236b430`**.
+- V2 budget: 1,000 performance-balanced epochs/fold, batch 32, sequence microbatch 1 with gradient accumulation, 50 checkpoints every 20 epochs, no dropped tail, max 2,000 optimizer steps/fold, 345-minute runner timeout.
+- Supervised exposure: P1 **8.2M frames** (102.5× V1); P2 **8.0M** (100× V1). Benchmark-scaled training-only estimates are ~2.70 h and ~2.64 h respectively.
+- Full V2 trainer frozen at Git blob `4db5add96c58a8e54868ea06dacb1da724675163`; deterministic sampler blob `9eb62fde56f592646077afa1e0ff3013a5dc6560`; V1 preparation-only source remains blob `d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254`.
+- V2 trainer uses one 200-frame contiguous sequence per underlying performance per epoch, rotates only among alignment-accepted correlated views without extra performance weight, includes every performance tail batch, averages gradients over performance batches, and requires pretraining active/silence/mask/fret-distribution diagnostics.
+- V2 implementation receipt Git blob: `32424b78d8423d6a87e37a8ad3f1698fa99073ab`.
+- V2 real training is still **not authorized**. P3 remains sealed and thresholds remain unchanged.
+- Branch-only synthetic implementation smoke installs the exact runtime, verifies all frozen identities and runs a 200-frame TabCNN backward pass without media.
 
 
 ## Copy-paste handoff

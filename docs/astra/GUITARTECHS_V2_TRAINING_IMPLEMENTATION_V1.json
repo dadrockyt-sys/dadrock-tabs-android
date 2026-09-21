@@ -1,0 +1,55 @@
+{
+  "schema": "astra-guitar-techs-v2-training-implementation-v1",
+  "date": "2026-09-21",
+  "candidateId": "astra_guitartechs_tabcnn_v2",
+  "source": {
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "v2TrainingScriptGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "v2SamplingScriptGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "v1PreparationScriptGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "v1FailureDiagnosisReceiptSha256": "c9ec7f099b57451bdaaa683c3d644a3f11e340b296916f9771702f4699462848",
+    "cpuBudgetReceiptSha256": "8705df7cde4456dc17b5973d84404981387a322ea195a3f995a72ae6b236b430",
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "training": {
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1,
+    "seed": 20260921,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "dropLast": false,
+    "performanceBalancedEpoch": true,
+    "allTrainingPerformancesOncePerEpoch": true,
+    "deterministicAcceptedViewRotation": true,
+    "deterministicSegmentStart": true,
+    "loss": "mean six-string cross-entropy across all unmasked labels in each 200-frame sequence; gradients averaged across each performance batch",
+    "randomInitializationOnly": true
+  },
+  "pretrainingDiagnostics": {
+    "required": [
+      "active-frame-fraction",
+      "silence-fraction",
+      "mask-fraction",
+      "per-string-fret-histogram",
+      "primary-content-coverage"
+    ],
+    "hardSanity": [
+      "at-least-one-active-label-overall",
+      "every-string-has-active-labels",
+      "every-primary-content-class-has-active-labels"
+    ]
+  },
+  "guards": {
+    "realTrainingAuthorized": false,
+    "p3MayBeOpened": false,
+    "paidComputeAuthorized": false,
+    "thresholdsMayBeRetuned": false,
+    "productionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
