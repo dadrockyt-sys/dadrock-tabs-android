@@ -1,4 +1,5 @@
 name: Guitar-TECHS bounded P1 P2 real training
+# launch-retry: serialized Zenodo fetch hardening
 
 on:
   push:
