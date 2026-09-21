@@ -94,7 +94,7 @@ jobs:
           CATEGORY: ${{ matrix.category }}
         run: |
           set -euo pipefail
-          python3 astra_backend/guitartechs_alignment/align_development.py             --root "/tmp/alignment-${FILE%.zip}"             --archive "$FILE"             --performer "$PERFORMER"             --category "$CATEGORY"             --output "/tmp/${FILE%.zip}.alignment.json"             --script-sha256 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
+          python3 astra_backend/guitartechs_alignment/align_development.py             --root "/tmp/alignment-${FILE%.zip}"             --archive "$FILE"             --performer "$PERFORMER"             --category "$CATEGORY"             --output "/tmp/alignment-receipt.json"             --script-sha256 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
       - name: Upload alignment receipt only
         uses: actions/upload-artifact@v4
         with:
