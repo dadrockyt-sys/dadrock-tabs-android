@@ -974,6 +974,12 @@ Inspect Actions run `35569391647` first. Do not launch a duplicate while it is a
 Before any V2 real-data run, freeze the full V2 implementation and resource budget around the 200-frame performance-balanced semantics, including pretraining label-balance receipts. Then obtain separate explicit user authorization. Do not reinterpret or erase the V1 failure; it remains historical evidence of the incorrect single-frame training implementation.
 
 
+## V2 synthetic test coverage correction — 2026-09-21
+
+- Commit `81293a6a02d3f24b00c2a518158f7a3a65d431e3` passed **294/294 Node tests**, but the focused Python workflow remained at 78 tests because that workflow uses an explicit test-file list.
+- `test_guitartechs_v2_sampling.py` is now explicitly included in `.github/workflows/astra-backend-tests.yml`; the V2 sampling design is not considered fully verified until this updated run passes.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
