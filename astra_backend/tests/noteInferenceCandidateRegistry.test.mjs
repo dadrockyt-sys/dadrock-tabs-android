@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  BLOCKED_REFERENCE_NOTE_INFERENCE_CANDIDATE,
   PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE,
   SECONDARY_NOTE_INFERENCE_CANDIDATE,
   buildNoteInferenceDevelopmentPlan,
@@ -20,9 +21,21 @@ test('inventory keeps Basic Pitch as the existing frozen baseline', () => {
   assert.equal(candidate.customerDeliveryEligible, false);
 });
 
-test('GuitarProFX TabCNN is primary but remains execution-blocked', () => {
-  assert.equal(PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE, 'tabcnn_guitarprofx_dafx24');
+test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-training blocked', () => {
+  assert.equal(PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE, 'astra_guitartechs_tabcnn_v1');
   const candidate = getNoteInferenceCandidate(PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE);
+  assert.equal(candidate.source.license, 'CC-BY-4.0');
+  assert.equal(candidate.operational.initialization, 'random-only');
+  assert.equal(candidate.operational.trainingMediaDownloadedByAstra, false);
+  assert.equal(candidate.operational.p3FinalGateSealed, true);
+  assert.ok(candidate.blockers.includes('DATASET_EXACT_BYTE_IDENTITY_NOT_FROZEN'));
+  assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
+  assert.equal(candidate.customerDeliveryEligible, false);
+});
+
+test('GuitarProFX TabCNN remains a blocked reference candidate', () => {
+  assert.equal(BLOCKED_REFERENCE_NOTE_INFERENCE_CANDIDATE, 'tabcnn_guitarprofx_dafx24');
+  const candidate = getNoteInferenceCandidate(BLOCKED_REFERENCE_NOTE_INFERENCE_CANDIDATE);
   assert.equal(candidate.directStringFretOutput, true);
   assert.equal(candidate.artifact.publishedBytes, 3345122);
   assert.equal(candidate.artifact.publishedMd5, 'ce168b2cd426f81a2a78499214e40605');
@@ -62,7 +75,7 @@ test('no candidate can claim lead-rhythm distinction on its own', () => {
 });
 
 test('lead or rhythm development plan fails closed without complete external role evidence', () => {
-  for (const candidateId of ['basic_pitch_0_4_0', 'tabcnn_guitarprofx_dafx24', 'mr_mt3']) {
+  for (const candidateId of ['basic_pitch_0_4_0', 'astra_guitartechs_tabcnn_v1', 'tabcnn_guitarprofx_dafx24', 'mr_mt3']) {
     const plan = buildNoteInferenceDevelopmentPlan({
       candidateId,
       requestedRole: 'lead',
@@ -75,14 +88,16 @@ test('lead or rhythm development plan fails closed without complete external rol
   }
 });
 
-test('guitar-only TabCNN rejects bass planning explicitly', () => {
-  const plan = buildNoteInferenceDevelopmentPlan({
-    candidateId: 'tabcnn_guitarprofx_dafx24',
+test('guitar-only candidates reject bass planning explicitly', () => {
+  for (const candidateId of ['astra_guitartechs_tabcnn_v1', 'tabcnn_guitarprofx_dafx24']) {
+    const plan = buildNoteInferenceDevelopmentPlan({
+    candidateId,
     requestedRole: 'bass',
     inputRoleEvidenceStatus: 'complete',
   });
-  assert.ok(plan.blockers.includes('CANDIDATE_DOES_NOT_SUPPORT_BASS'));
-  assert.equal(plan.developmentExecutionReady, false);
+    assert.ok(plan.blockers.includes('CANDIDATE_DOES_NOT_SUPPORT_BASS'));
+    assert.equal(plan.developmentExecutionReady, false);
+  }
 });
 
 test('registry rejects unknown candidates and unsupported roles before any action', () => {

@@ -29,6 +29,55 @@ const CANDIDATES = Object.freeze({
     customerDeliveryEligible: false,
   }),
 
+  astra_guitartechs_tabcnn_v1: Object.freeze({
+    id: 'astra_guitartechs_tabcnn_v1',
+    family: 'astra-tabcnn-self-trained',
+    roleScope: ['generic-guitar'],
+    noteOutput: 'six-string-fret-state-frames',
+    directStringFretOutput: true,
+    leadRhythmDistinction: false,
+    source: Object.freeze({
+      dataset: 'Guitar-TECHS',
+      record: 'https://zenodo.org/records/14963133',
+      version: 'v1',
+      license: 'CC-BY-4.0',
+      trainingPlan: 'docs/astra/GUITARTECHS_TABCNN_TRAINING_CANDIDATE_V1.md',
+    }),
+    evidence: Object.freeze({
+      synchronizedPerStringMidi: true,
+      electricGuitarSpecific: true,
+      multiplePerformers: true,
+      multipleCapturePaths: true,
+      p3FullMusicExcerpts: 12,
+      blockedPublishedCheckpointUsedForInitialization: false,
+    }),
+    operational: Object.freeze({
+      initialization: 'random-only',
+      datasetByteIdentityFrozen: false,
+      trainingMediaDownloadedByAstra: false,
+      splitReceiptFrozen: false,
+      alignmentCorrectionVerified: false,
+      trainingRuntimeFrozen: false,
+      modelTrained: false,
+      p3FinalGateSealed: true,
+    }),
+    blockers: Object.freeze([
+      'DATASET_EXACT_BYTE_IDENTITY_NOT_FROZEN',
+      'TRAINING_MEDIA_NOT_ACQUIRED',
+      'SPLIT_RECEIPT_NOT_FROZEN',
+      'ALIGNMENT_CORRECTION_NOT_VERIFIED',
+      'TUNING_METADATA_NOT_FROZEN',
+      'TRAINING_RUNTIME_NOT_FROZEN',
+      'TRAINING_NOT_AUTHORIZED',
+      'MODEL_NOT_TRAINED',
+      'P3_FINAL_GATE_SEALED',
+      'LEAD_RHYTHM_DISTINCTION_UNAVAILABLE_WITHOUT_SEPARATE_ROLE_EVIDENCE',
+      'CUSTOMER_DELIVERY_NOT_AUTHORIZED',
+    ]),
+    developmentExecutionReady: false,
+    customerDeliveryEligible: false,
+  }),
+
   tabcnn_guitarprofx_dafx24: Object.freeze({
     id: 'tabcnn_guitarprofx_dafx24',
     family: 'tabcnn-guitarprofx',
@@ -136,7 +185,8 @@ const CANDIDATES = Object.freeze({
   }),
 });
 
-export const PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE = 'tabcnn_guitarprofx_dafx24';
+export const PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE = 'astra_guitartechs_tabcnn_v1';
+export const BLOCKED_REFERENCE_NOTE_INFERENCE_CANDIDATE = 'tabcnn_guitarprofx_dafx24';
 export const SECONDARY_NOTE_INFERENCE_CANDIDATE = 'mr_mt3';
 
 export function listNoteInferenceCandidates() {
@@ -168,7 +218,7 @@ export function buildNoteInferenceDevelopmentPlan({
       && inputRoleEvidenceStatus !== 'complete') {
     blockers.add('REQUESTED_GUITAR_ROLE_EVIDENCE_UNRESOLVED');
   }
-  if (candidateId === 'tabcnn_guitarprofx_dafx24' && requestedRole === 'bass') {
+  if (requestedRole === 'bass' && !candidate.roleScope.includes('bass')) {
     blockers.add('CANDIDATE_DOES_NOT_SUPPORT_BASS');
   }
 
