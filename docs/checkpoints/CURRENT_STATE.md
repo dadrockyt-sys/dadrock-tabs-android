@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **52.91% F1 BASELINE PRESERVED + ROLE-EVIDENCE STATES WIRED INTO ASTRA FAIL-CLOSED; NEXT STEP IS PIPELINE INTEGRATION, NOT MORE GOMYWAY THRESHOLD TUNING**
+Status: **ROLE-EVIDENCE PIPELINE + FRONTEND ANALYSIS BRIDGE COMPLETE — 215 NODE + 78 EVALUATION TESTS GREEN; NEXT QUALITY WORK MUST GENERALIZE BEYOND GOMYWAY**
 
 ## Product outcome
 
@@ -535,16 +535,26 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Added synthetic tests covering core/technique/recovery provenance, unresolved evidence preservation, abstention, duplicate IDs, lead/rhythm guitar mapping, bass mapping and determinism. The adapter also passes through `noteEvidenceEvaluator`; unresolved polyphony/pitch/duration evidence remains rejected for complete-tab acceptance, and role abstention surfaces as `ROLE_RELEVANCE_UNRESOLVED`.
 - Extended `noteEvidenceDiagnostics.mjs` to report evidence-state counts descriptively. No composite score or hidden acceptance metric was added.
 - Architecture note: `docs/astra/ROLE_EVIDENCE_INTEGRATION_V1.md`.
-- Integration commits through `d0877007a46033cc28fe8d6e6bf2e3f7cbcff1f5`; branch CI was green through the core adapter/evaluator commits, with the final documentation/diagnostic runs still verifying at checkpoint-write time.
+- Integration commits through `ab7d87248e03b63ab75ad3b8d0ef72a06bf61597`. Final branch verification: **215/215 Node tests passed**, **78/78 focused Python evaluation tests passed**, and the browser export script syntax/immutability checks passed. Node test-output SHA256 `5ba6eeb62fa6f861bf0be02d3cb21171e234d0c5865ad97384a73d728a66c390`; focused evaluation output SHA256 `0bba37d84c05ace9e0ec08b078456438ad94642f51c80e89a108fe56f13528e0`.
 - This integration changes no Gomyway metric. The authoritative exposed-development best remains **118 TP /125 FP /85 FN; precision48.56%, recall58.13%, F152.91%**.
 - No main/Production change and no customer-delivery authority granted.
 
-## Exact next step — Wire evidence states through the deterministic Astra pipeline
+## Deterministic pipeline + frontend analysis integration — 2026-09-21
 
-1. Keep the52.91% Gomyway development baseline and all successful stereo/structure/repetition/bend/raw-onset rules frozen. Do **not** tune more thresholds on this exposed song.
-2. Wire `roleEvidenceIntegrationAdapter.mjs` into the deterministic Astra pipeline boundary so promoted/core, promoted-technique, recovered-recurring-onset, ambiguous, unassigned and rejected states survive into pipeline/event diagnostics. Preserve existing note-evidence evaluator ownership and customer-delivery fail-closed behavior.
-3. Add synthetic end-to-end fixtures for stereo-complete role evidence, stereo-abstained evidence and mono/fallback evidence. Verify ambiguous/unassigned states cannot leak into promoted tablature events and role abstention cannot produce customer delivery.
-4. After integration is green, shift quality research to **cross-song / cross-role development evidence** or a stronger event-pitch model. The next quality claim must be prospective/general rather than another Gomyway-only heuristic. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
+- Added `astra_backend/roleEvidencePipelineAdapter.mjs`. It composes role evidence -> `noteEvidenceAdapter` -> `noteEvidenceEvaluator` -> `noteEventExposure` -> deterministic tab pipeline. The deterministic tab engine runs **only** when the existing evidence evaluator accepts the evidence and complete-tab-eligible events exist.
+- The wrapper preserves source evidence IDs/states in a separate `eventEvidence` mapping while leaving the deterministic tablature engine itself unchanged. Ambiguous/unassigned evidence cannot enter deterministic events. Role abstention cannot promote anything. The wrapper always reports `customerDeliveryEligible:false`.
+- Added synthetic coverage proving a fully resolved role stream reaches deterministic tablature with `promoted-core`, `promoted-technique`, and `recovered-recurring-onset` provenance intact; ambiguous, unassigned and abstained evidence stop before tablature; role mismatch fails before execution; output is deterministic.
+- Added `astra_backend/roleEvidenceAnalysisAdapter.mjs` to bridge the role-evidence pipeline into the existing frontend-shaped Astra analyzer result. A resolved synthetic tab can produce generated text/events, but the bridge intentionally supplies **no delivery policy**, so overall status remains partial and `renderEvents` stay empty/customer delivery false.
+- Frontend-shaped synthetic fixtures verify: complete role evidence -> partial-but-informative analyzer result with policy blocker; ambiguous evidence -> no deterministic/frontend events; role abstention -> overall `abstained` with no invented tab; request/pipeline role mismatch -> fail closed.
+- Final integration verification on commit `ab7d87248e03b63ab75ad3b8d0ef72a06bf61597`: **215 Node tests passed, 0 failed; 78 focused evaluation tests passed, 0 failed; browser export checks passed**.
+- This closes the current architecture milestone: the successful stereo/structure/repetition/technique/recovery evidence can now flow through Astra's real contracts without bypassing acceptance or delivery gates. No main/Production change.
+
+## Exact next step — Generalize beyond Gomyway
+
+1. Freeze the52.91% Gomyway result as exposed development evidence. Do not tune any successful threshold/rule further on that song.
+2. Inventory available lawful **second-song development material** that has audio plus independent rhythm/lead/bass truth. Do not reopen archived/restricted datasets merely because they exist; prefer already-authorized user-provided assets or clearly reusable development fixtures.
+3. Before scoring a second song, preregister which existing rules are carried over unchanged: stereo evidence/abstention, structure-grid consistency, three-measure recurrence, glide-continuity bends, and recurring raw-onset recovery. Any song-specific adaptation invalidates the prospective-generalization test.
+4. If no adequate second song exists, stop empirical tuning and evaluate a stronger general pitch/event model under the existing rights/runtime gates. Preserve main/Production and customer-delivery blockers.
 
 ## Copy-paste handoff
 
