@@ -693,7 +693,7 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 
 ## Guitar-TECHS P1/P2 development acquisition gate frozen — 2026-09-21
 
-- Added `docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_CONTRACT_V1.json`, SHA-256 **`38bd5897d0d70e44322265f212ca3702837f89ba46918ad9e0a3d0d294011a1a`**.
+- Added `docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_CONTRACT_V1.json`, SHA-256 **`0d8ceae4938cc79b658498a74021a132358683a60f48d09358fcbe935a7bc02c`**.
 - Added `astra_backend/guitarTechsDevelopmentAcquisition.mjs` and focused tests.
 - The gate is deliberately **no-action**: it downloads, opens and extracts no media; trains no model; opens no P3 data; grants no customer delivery.
 - Only the exact eight P1/P2 archives from the frozen Guitar-TECHS manifest are eligible for an acquisition plan. Staged exact subsets are supported so the ~4.004 GB development corpus can be acquired deliberately rather than as an uncontrolled all-or-nothing action.
@@ -704,6 +704,8 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - After a future authorized download, Astra SHA-256 must be computed **before extraction**; extracted grouping/string-map/tuning receipts remain mandatory before alignment or training.
 - Candidate registry now records the acquisition contract as frozen but `developmentMediaAcquisitionAuthorized:false`; blocker `DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED` is explicit.
 - No Guitar-TECHS media body was downloaded or opened in this milestone.
+- Verification on commit `cd220e3a49af20fdd90f372b905643a531290e24`: GitHub Actions run `35562034522` **PASS**; **265/265 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`bd464b272d4967afa9c8a212274aca799ea32eaec66d77a22680e521f4a83631`**; focused evaluation output SHA-256 **`c3e9b24273bfcb1986f324625128c41357acace18e840f74fa7d9f0446e3b313`**.
+- Receipt bookkeeping corrected before handoff: SHA-256 **`0d8ceae4938cc79b658498a74021a132358683a60f48d09358fcbe935a7bc02c`** is the digest of the exact committed JSON bytes; the earlier pre-serialization draft digest is not authoritative.
 
 ## Exact next step — Hold at authorization boundary, then acquire P1/P2 only if explicitly authorized
 

@@ -69,7 +69,7 @@ const CANDIDATES = Object.freeze({
       syntheticTrainingSmokeReceiptSha256: 'ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d',
       syntheticTrainingSmokeRunId: 35561780492,
       developmentAcquisitionContractFrozen: true,
-      developmentAcquisitionContractSha256: '38bd5897d0d70e44322265f212ca3702837f89ba46918ad9e0a3d0d294011a1a',
+      developmentAcquisitionContractSha256: '0d8ceae4938cc79b658498a74021a132358683a60f48d09358fcbe935a7bc02c',
       developmentMediaAcquisitionAuthorized: false,
       developmentMetricSchemaFrozen: true,
       developmentMetricThresholdsFrozen: false,
