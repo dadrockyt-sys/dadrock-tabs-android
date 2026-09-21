@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **GUITAR-TECHS P1/P2 REAL TRAINING AUTHORIZED; IMPLEMENTATION/PREFLIGHT IN PROGRESS; P3 SEALED; PAID COMPUTE/PRODUCTION/CUSTOMER DELIVERY UNAUTHORIZED**
+Status: **GUITAR-TECHS BOUNDED P1/P2 REAL TRAINING COMPLETE; BOTH PERFORMER-DISJOINT FOLDS FAIL FROZEN DEVELOPMENT THRESHOLDS; P3 REMAINS SEALED; FAILED MODELS NOT CUSTOMER-ELIGIBLE; P1/P2-ONLY DIAGNOSIS NEXT**
 
 ## Product outcome
 
@@ -930,6 +930,29 @@ Real training remains separately unauthorized. A future authorization must be ex
 ## NEXT ACTION TO RESUME — active training run
 
 Inspect Actions run `35569391647` first. Do not launch a duplicate while it is active. If fold 1 completes, collect its development-only model/result artifact and exact metrics; then allow serialized fold 2 to complete. Evaluate both folds only against the already-frozen threshold receipt. Do not tune thresholds after seeing results. Do not open P3 unless a later checkpoint explicitly establishes that both development folds passed and separately authorizes the sealed final gate.
+
+
+## Guitar-TECHS bounded P1/P2 real training result frozen — 2026-09-21
+
+- Authoritative GitHub Actions run `35569391647` completed preflight plus both serialized performer-disjoint training folds successfully at the workflow level.
+- Each fold used random initialization, exact frozen 256-path allowlist, 2,500 iterations, batch 32, Adadelta lr 1.0, seed 20260921 and 50 checkpoint evaluations. No published checkpoint was loaded, no paid compute was used and P3 remained unopened.
+- P1->P2 selected iteration 1400. Full validation: P **0.2019**, R **0.3270**, F1 **0.2379**, completeness **0.2325**, frame accuracy **0.2445**, abstention **0.0**. All four content-class F1 values are below 0.55.
+- P2->P1 selected iteration 2300. Full validation: P **0.1487**, R **0.3062**, F1 **0.1894**, completeness **0.1759**, frame accuracy **0.2357**, abstention **0.0**. All four content-class F1 values are below 0.55.
+- Aggregate macro F1 **0.2136** vs frozen >=0.70; macro completeness **0.2042** vs >=0.65.
+- Cross-performer consistency itself passes: F1 gap **0.0485** <=0.10 and frame-accuracy gap **0.0088** <=0.10. This is a consistently weak candidate, not a single-performer anomaly.
+- P1->P2 artifact `10630257769`, artifact digest `sha256:564f30d82e3e5d7ac6b21b3a7ded3ceddff6d2fe457d877d1e92666997f7b2b6`, result SHA-256 `024e5d2d3612732e85f2c0b812f223e602fcdf6e69f82ca8d5a2d0d0e89090f0`, model SHA-256 `8dc70d94741e0b472e93481f498efafb7627445896594752b217e000f2832a83`.
+- P2->P1 artifact `10635588120`, artifact digest `sha256:036189322b4eb5f5ca2f7eac6a82c8a3471cfd814355087f8d6452bb62306734`, result SHA-256 `c6dcc9e557c7e030f523410e705c35e4e7fea3c994e490487c7755e3e2793950`, model SHA-256 `d480cadf66fc0d98608c719252c34bdab4c3120252167e8786502b4332264841`.
+- Frozen aggregate receipt: `docs/astra/GUITARTECHS_REAL_TRAINING_DEVELOPMENT_RESULT_V1.json`; SHA-256 **`3edfcf97766bef89ea56429a7385107d99868dc948d867251bcc5f9066a18112`**.
+- Candidate registry now records `modelTrained:true`, `developmentEvaluationPassed:false`, `realTrainingAuthorizationConsumed:true`, and blocker `DEVELOPMENT_THRESHOLDS_NOT_MET`. `MODEL_NOT_TRAINED` and `TRAINING_MEDIA_NOT_ACQUIRED` are cleared.
+- **Do not retune the frozen acceptance thresholds to rescue this result. Do not open P3. Do not promote either failed fold model.**
+
+## Exact next step — P1/P2-only failure diagnosis
+
+1. Diagnose preprocessing/label/model-learning failure using only frozen P1/P2 development evidence and synthetic/unit tests.
+2. Check label occupancy and silence-class balance, fret-range masking, per-string class distributions, CQT/frame-to-label temporal convention, training batch sampling balance, and whether the pinned TabCNN tensor/output semantics match the loss/evaluator exactly.
+3. Prefer static analyses and tiny synthetic/fixture experiments first; do not launch another full real training run under the consumed V1 authorization.
+4. Any changed training design or another bounded real-data run requires a new frozen design receipt and separate explicit authorization.
+5. Keep P3 sealed; main, Production and customer delivery remain unchanged.
 
 
 ## Copy-paste handoff

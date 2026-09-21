@@ -73,6 +73,15 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.realTrainingImplementationReceiptGitBlob, '159d6b60ed25582181efd1d036bf86b47bbd5563');
   assert.equal(candidate.operational.realTrainingScriptGitBlob, 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254');
   assert.equal(candidate.operational.primaryAlignmentCorrectionMapGitBlob, '9090d465422ebf5d4fdf170693fe0936934f3073');
+  assert.equal(candidate.operational.realTrainingAuthorizationConsumed, true);
+  assert.equal(candidate.operational.realTrainingRunCompleted, true);
+  assert.equal(candidate.operational.realTrainingRunId, 35569391647);
+  assert.equal(candidate.operational.realTrainingDevelopmentResultReceiptSha256, '3edfcf97766bef89ea56429a7385107d99868dc948d867251bcc5f9066a18112');
+  assert.equal(candidate.operational.p1TrainP2ModelSha256, '8dc70d94741e0b472e93481f498efafb7627445896594752b217e000f2832a83');
+  assert.equal(candidate.operational.p2TrainP1ModelSha256, 'd480cadf66fc0d98608c719252c34bdab4c3120252167e8786502b4332264841');
+  assert.equal(candidate.operational.modelTrained, true);
+  assert.equal(candidate.operational.developmentEvaluationPassed, false);
+  assert.equal(candidate.operational.p3OpeningEligible, false);
   assert.equal(candidate.blockers.includes('TRAINING_NOT_AUTHORIZED'), false);
   assert.equal(candidate.operational.developmentMetricThresholdsReceiptSha256, 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15');
   assert.equal(candidate.operational.developmentMetricAcceptedCaptureKeysSha256, 'f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc');
@@ -95,12 +104,13 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.p2DStringOpenMidiStructurallyVerified, true);
   assert.equal(candidate.blockers.includes('DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED'), false);
   assert.equal(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'), false);
-  assert.ok(candidate.blockers.includes('TRAINING_MEDIA_NOT_ACQUIRED'));
+  assert.equal(candidate.blockers.includes('TRAINING_MEDIA_NOT_ACQUIRED'), false);
   assert.equal(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'), false);
   assert.equal(candidate.blockers.includes('TUNING_METADATA_NOT_FROZEN'), false);
   assert.equal(candidate.blockers.includes('P2_D_STRING_TUNING_NOT_FULLY_VERIFIED'), false);
   assert.equal(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'), false);
-  assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
+  assert.equal(candidate.blockers.includes('MODEL_NOT_TRAINED'), false);
+  assert.ok(candidate.blockers.includes('DEVELOPMENT_THRESHOLDS_NOT_MET'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });
 
