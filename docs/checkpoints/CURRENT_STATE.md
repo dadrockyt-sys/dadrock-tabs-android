@@ -1047,6 +1047,22 @@ If authorized, the scope must remain bounded to the frozen V2 P1/P2 design only:
 - V1 failed models remain historical evidence and are not used for V2 initialization.
 
 
+## Corrected V2 P1/P2 real training active — 2026-09-21
+
+- V2 authorization receipt SHA-256: `0edfb4656675e31fce0c8cbd1ba42f37619e877b43793d3386781572dea8cb69`.
+- Launch commit: `33b1f222d29ec25a3602b1b85a58f57e2e7dd8d0`.
+- Active GitHub Actions run: **`35662028832`**.
+- Preflight job `106539242502`: **PASS**, including V2 authorization/identity checks, exact pinned runtime install, exact pinned TabCNN source identity checks and `V2_SELF_TEST_PASS` 200-frame backward smoke.
+- Fold 1 job `106539518639` (`P1 -> P2`) is active; fold 2 job `106539518543` (`P2 -> P1`) is queued by the intentional `max-parallel: 1` serialization.
+- Frozen V2 limits remain unchanged: 1,000 performance-balanced epochs/fold, <=2,000 optimizer steps/fold, 200-frame sequences, batch 32, microbatch 1 + gradient accumulation, seed 20260921, 50 checkpoints every 20 epochs, unchanged development thresholds and exact 256-path alignment allowlist.
+- P3 remains sealed; paid compute, published-checkpoint initialization, threshold retuning, main/Production mutation and customer delivery remain forbidden.
+- Do not launch a duplicate V2 run while `35662028832` is active.
+
+## NEXT ACTION TO RESUME — active V2 training
+
+Inspect run `35662028832` first. If fold 1 completes, collect its development-only result/model artifact and exact pretraining label-balance diagnostics plus full opposite-performer validation metrics. Then allow serialized fold 2 to complete. Evaluate both folds only against the already-frozen thresholds; do not retune thresholds after seeing V2 results. Do not open P3 unless a later checkpoint establishes that both V2 development folds pass and separately authorizes the sealed final gate.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
