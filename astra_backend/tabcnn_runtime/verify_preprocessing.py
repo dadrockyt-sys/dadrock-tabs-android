@@ -74,8 +74,8 @@ def main() -> int:
     reference_windows = source_utils.framify_activations(
         reference_batched, 9, pad=True
     )
-    reference_windows = reference_windows.transpose(-2, -3)
-    reference_windows = reference_windows.transpose(-3, -4)
+    reference_windows = np.swapaxes(reference_windows, -2, -3)
+    reference_windows = np.swapaxes(reference_windows, -3, -4)
 
     astra = preprocess_waveform(audio.copy())
 
