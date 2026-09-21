@@ -858,6 +858,7 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - Added `astra_backend/guitarTechsDevelopmentMetricThresholds.mjs` with fail-closed two-fold evaluation and focused tests.
 - Candidate registry now records `developmentMetricThresholdsFrozen:true` and removes `DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN`.
 - This milestone ran **no real training**, opened no P3 material, authorized no paid compute and changed neither main nor Production.
+- Verification on commit `a37b55c6bcf2138bbeadfad21df1ffec9044e8a1`: GitHub Actions run `35567110651` **PASS**; **287/287 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 `3f4cb79e6b228998c38b88a84677b6b6ab4a61b9a60b01f04709616c0b73bce9`; focused evaluation output SHA-256 `aa34637b546e98ae5c20c7802f1f9f23d8ba8db68ef2e4553e5fe031e7ed6c7c`.
 
 ## Next authorization gate — real P1/P2 model training
 
