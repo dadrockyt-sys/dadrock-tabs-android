@@ -39,7 +39,7 @@ jobs:
             'librosa==0.9.1' \
             'numba==0.55.2' \
             'llvmlite==0.38.1' \
-            'soundfile==0.10.3.post1'
+            'soundfile==0.12.1'
           python -m pip check
 
       - name: Acquire exact preprocessing source blobs
