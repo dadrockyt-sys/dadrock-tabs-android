@@ -4,6 +4,8 @@ import { snapTimestampToStructureMap } from './structureMap.mjs';
 const EPSILON = 1e-9;
 const SLOT_TOLERANCE_SECONDS = 1e-6;
 const CLASSIFICATIONS = new Set(['unambiguous', 'ambiguous', 'no-candidate', 'rejected']);
+const EVIDENCE_STATES = new Set(['promoted-core', 'promoted-technique', 'recovered-recurring-onset', 'ambiguous', 'unassigned', 'rejected']);
+const PROMOTED_EVIDENCE_STATES = new Set(['promoted-core', 'promoted-technique', 'recovered-recurring-onset']);
 
 function finite(value, field) {
   const number = Number(value);
@@ -76,6 +78,26 @@ function normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap)
   return { sourceEnd, durationSeconds, durationConfidence };
 }
 
+function normalizeEvidenceState(value, classification, onsetIndex) {
+  if (value === undefined || value === null) return null;
+  if (!EVIDENCE_STATES.has(value)) {
+    throw new Error(`onsets[${onsetIndex}].evidenceState is invalid.`);
+  }
+  if (classification === 'unambiguous' && !PROMOTED_EVIDENCE_STATES.has(value)) {
+    throw new Error(`onsets[${onsetIndex}] unambiguous classification requires a promoted evidence state.`);
+  }
+  if (classification === 'ambiguous' && value !== 'ambiguous') {
+    throw new Error(`onsets[${onsetIndex}] ambiguous classification requires evidenceState ambiguous.`);
+  }
+  if (classification === 'no-candidate' && value !== 'unassigned') {
+    throw new Error(`onsets[${onsetIndex}] no-candidate classification requires evidenceState unassigned.`);
+  }
+  if (classification === 'rejected' && value !== 'rejected') {
+    throw new Error(`onsets[${onsetIndex}] rejected classification requires evidenceState rejected.`);
+  }
+  return value;
+}
+
 function normalizeOnset(onset, onsetIndex, structureMap) {
   const sourceStart = finite(onset?.sourceStart, `onsets[${onsetIndex}].sourceStart`);
   if (sourceStart < -EPSILON || sourceStart > structureMap.durationSeconds + EPSILON) {
@@ -120,6 +142,7 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
     throw new Error(`onsets[${onsetIndex}].selectedMidi must be null unless classification is unambiguous.`);
   }
 
+  const evidenceState = normalizeEvidenceState(onset?.evidenceState, classification, onsetIndex);
   const durationEvidence = normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap);
 
   return {
@@ -129,6 +152,7 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
     structureDisplacementSeconds: sourceStart - nearestStructureSlot,
     onsetConfidence: boundedConfidence(onset?.onsetConfidence ?? 0, `onsets[${onsetIndex}].onsetConfidence`),
     classification,
+    evidenceState,
     selectedMidi: classification === 'unambiguous' ? Number(onset.selectedMidi) : null,
     confidenceMargin,
     ...durationEvidence,
@@ -204,6 +228,8 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
         referenceBlind: true,
         structureIdentity: expectedIdentity.signature,
         noteEvidenceSource: raw?.provenance?.source ?? null,
+        evidenceState: onset.evidenceState,
+        sourceEvidenceProvenance: { ...onset.provenance },
       },
     };
     if (onset.sourceEnd !== null) event.end = onset.sourceEnd;
@@ -212,6 +238,10 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   });
 
   const candidateCount = onsets.reduce((sum, onset) => sum + onset.candidates.length, 0);
+  const evidenceStateCounts = Object.fromEntries([...EVIDENCE_STATES].map((state) => [state, 0]));
+  for (const onset of onsets) {
+    if (onset.evidenceState !== null) evidenceStateCounts[onset.evidenceState] += 1;
+  }
   const ambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'ambiguous').length;
   const noCandidateOnsetCount = onsets.filter((onset) => onset.classification === 'no-candidate').length;
   const rejectedOnsetCount = onsets.filter((onset) => onset.classification === 'rejected').length;
@@ -241,6 +271,7 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       gpuInvoked: provenance.gpuInvoked === true,
       explicitRejectedProposalState: true,
       rejectedProposalIsResolvedButNotPromoted: true,
+      explicitEvidenceStateProvenance: true,
     },
     role: raw.role,
     structureIdentity: expectedIdentity,
@@ -264,6 +295,7 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       rejectedEvidencePreserved: true,
       durationResolvedEvidenceCount,
       unresolvedDurationEvidenceCount: onsets.length - durationResolvedEvidenceCount,
+      evidenceStateCounts,
     },
     provenance,
   };
