@@ -1,0 +1,93 @@
+{
+  "kind": "gomyway-stereo-recurring-confidence-development-score",
+  "version": 1,
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+  "rhythmLabelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "leadLabelsSha256": "f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb",
+  "privateRhythmPartitionSha256": "bfcc0544e6461eb189636ee89fe3446e313107cc9b70330b0d021cbc24e65cb7",
+  "privateLeadPartitionSha256": "ef5f95f08badd87689d9b5e4d7ec66533bd6840ea2c73f7427bc1f6e0147589d",
+  "privateScoreSha256": "b83588c13b6bbd492cf543bb5fe125447356d98238a0c8dbacd4e487a4163ebe",
+  "policy": {
+    "referenceBlind": true,
+    "minDistinctMeasureSupport": 3,
+    "minStreamRepeatCoverage": 0.6,
+    "activationMeaning": "at least 60% of in-window events must themselves recur at the same MIDI and within-measure grid slot in at least three distinct measures",
+    "eventsDeleted": false,
+    "uncertainEventsPreserved": true,
+    "eventTimingChanged": false,
+    "eventMidiChanged": false
+  },
+  "sourceStructureFilteredBaseline": {
+    "aggregate": {
+      "predictions": 231,
+      "targets": 203,
+      "tp": 84,
+      "fp": 147,
+      "fn": 119,
+      "precision": 0.36363636363636365,
+      "recall": 0.41379310344827586,
+      "f1": 0.3870967741935484
+    }
+  },
+  "recurringCore": {
+    "rhythm": {
+      "recurringSupportCoverage": 0.6742424242424242,
+      "distinctRecurringKeys": 16,
+      "predictions": 89,
+      "targets": 126,
+      "tp": 40,
+      "fp": 49,
+      "fn": 86,
+      "precision": 0.449438202247191,
+      "recall": 0.31746031746031744,
+      "f1": 0.37209302325581395
+    },
+    "lead": {
+      "recurringSupportCoverage": 0.8383838383838383,
+      "distinctRecurringKeys": 14,
+      "predictions": 83,
+      "targets": 77,
+      "tp": 39,
+      "fp": 44,
+      "fn": 38,
+      "precision": 0.46987951807228917,
+      "recall": 0.5064935064935064,
+      "f1": 0.4875
+    },
+    "aggregate": {
+      "predictions": 172,
+      "targets": 203,
+      "tp": 79,
+      "fp": 93,
+      "fn": 124,
+      "precision": 0.45930232558139533,
+      "recall": 0.3891625615763547,
+      "f1": 0.42133333333333334
+    }
+  },
+  "uncertainDiagnostic": {
+    "rhythm": {
+      "predictions": 43,
+      "tp": 3,
+      "fp": 40
+    },
+    "lead": {
+      "predictions": 16,
+      "tp": 2,
+      "fp": 14
+    },
+    "aggregate": {
+      "predictions": 59,
+      "tp": 5,
+      "fp": 54
+    },
+    "interpretation": "The abstained one-off bucket is overwhelmingly false-positive on this development window, supporting calibrated abstention rather than destructive deletion."
+  },
+  "interpretation": "Repeated-phrase support provides a strong reference-blind confidence signal after stereo role assignment and structure-grid filtering. It raises aggregate precision from 36.36% to 45.93% and F1 from 38.71% to 42.13% while preserving all uncertain events separately.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "The recurring-core view is appropriate only when the prediction stream itself passes the repeat-coverage gate; through-composed material must abstain.",
+    "One-off true fills and variations are intentionally preserved as uncertain evidence rather than deleted.",
+    "This is development evidence on exposed material, not final customer accuracy."
+  ]
+}
