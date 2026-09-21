@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS RIGHTS-CLEAN CANDIDATE IDENTITY/SPLIT/LABEL/ALIGNMENT/TRAINING CONTRACTS FROZEN; SYNTHETIC BACKWARD SMOKE NEXT**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ACQUISITION GATE FROZEN; MEDIA ACQUISITION AWAITS EXPLICIT AUTHORIZATION**
 
 ## Product outcome
 
@@ -691,14 +691,28 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Candidate `astra_guitartechs_tabcnn_v1` now records `syntheticTrainingSmokePassed:true`; blocker `SYNTHETIC_TRAINING_SMOKE_PENDING` is removed.
 - This does **not** authorize real dataset download, real training, P3 access, main/Production change or customer delivery.
 
-## Exact next step — Prepare the P1/P2 development acquisition gate; keep P3 sealed
+## Guitar-TECHS P1/P2 development acquisition gate frozen — 2026-09-21
 
-1. Build a fail-closed **development-media acquisition contract** for the eight P1/P2 Guitar-TECHS archives only. It must require explicit acquisition authorization before any archive body is downloaded.
-2. The gate must reject `P3_music.zip` categorically. P3 remains sealed until P1/P2 development thresholds, alignment, model selection and acceptance criteria are frozen.
-3. For each authorized P1/P2 archive, require exact official record/version/name, published byte count and MD5 from `GUITARTECHS_DATASET_MANIFEST_V1.json`, then compute and freeze Astra SHA-256 after download.
-4. After extraction, inventory paths without training: prove the six-string track mapping/tuning source, group all correlated capture views by underlying performance, classify content families, and identify which technique MIDI semantics require abstention/auxiliary handling.
-5. Freeze extracted-layout/grouping/tuning receipts before any alignment or real training. Do not assume EADGBE unless the dataset metadata itself verifies it.
-6. Real training remains blocked until all eight P1/P2 archive SHA-256s, extracted grouping, explicit string/tuning mapping, and alignment receipts are complete **and** training is separately authorized.
+- Added `docs/astra/GUITARTECHS_DEVELOPMENT_ACQUISITION_CONTRACT_V1.json`, SHA-256 **`38bd5897d0d70e44322265f212ca3702837f89ba46918ad9e0a3d0d294011a1a`**.
+- Added `astra_backend/guitarTechsDevelopmentAcquisition.mjs` and focused tests.
+- The gate is deliberately **no-action**: it downloads, opens and extracts no media; trains no model; opens no P3 data; grants no customer delivery.
+- Only the exact eight P1/P2 archives from the frozen Guitar-TECHS manifest are eligible for an acquisition plan. Staged exact subsets are supported so the ~4.004 GB development corpus can be acquired deliberately rather than as an uncontrolled all-or-nothing action.
+- Every requested archive must match exact file name, performer/category, published byte count and MD5.
+- Acquisition planning requires both `developmentMediaAcquisitionAuthorized:true` and exact authorization scope `guitar-techs-p1-p2-development-media-v1`.
+- `P3_music.zip` is categorically rejected with `GUITAR_TECHS_P3_SEALED` even if an authorization flag is supplied.
+- Duplicate, unknown and substituted archive identities fail closed.
+- After a future authorized download, Astra SHA-256 must be computed **before extraction**; extracted grouping/string-map/tuning receipts remain mandatory before alignment or training.
+- Candidate registry now records the acquisition contract as frozen but `developmentMediaAcquisitionAuthorized:false`; blocker `DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED` is explicit.
+- No Guitar-TECHS media body was downloaded or opened in this milestone.
+
+## Exact next step — Hold at authorization boundary, then acquire P1/P2 only if explicitly authorized
+
+1. Do **not** download any Guitar-TECHS archive body until explicit P1/P2 development-media acquisition authorization is provided.
+2. When authorized, use only the exact frozen P1/P2 allowlist. Prefer staged acquisition if operationally useful; verify each file's exact published bytes + MD5 and compute Astra SHA-256 before extraction.
+3. Keep `P3_music.zip` sealed and untouched.
+4. After P1/P2 identity verification, extract for inventory only—not training—and freeze performance grouping, correlated capture views, explicit six-string track map, tuning evidence and technique-MIDI semantics.
+5. Run the frozen alignment checks only after those extraction receipts exist. Real training still requires a separate explicit training authorization.
+6. Do not modify main/Production or customer-delivery policy.
 
 ## Copy-paste handoff
 

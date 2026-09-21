@@ -42,9 +42,13 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
     'ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d',
   );
   assert.equal(candidate.operational.syntheticTrainingSmokeRunId, 35561780492);
+  assert.equal(candidate.operational.developmentAcquisitionContractFrozen, true);
+  assert.equal(candidate.operational.developmentAcquisitionContractSha256, '38bd5897d0d70e44322265f212ca3702837f89ba46918ad9e0a3d0d294011a1a');
+  assert.equal(candidate.operational.developmentMediaAcquisitionAuthorized, false);
   assert.equal(candidate.operational.developmentMetricSchemaFrozen, true);
   assert.equal(candidate.operational.developmentMetricThresholdsFrozen, false);
   assert.equal(candidate.operational.p3FinalGateSealed, true);
+  assert.ok(candidate.blockers.includes('DEVELOPMENT_MEDIA_ACQUISITION_NOT_AUTHORIZED'));
   assert.ok(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'));
   assert.ok(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'));
