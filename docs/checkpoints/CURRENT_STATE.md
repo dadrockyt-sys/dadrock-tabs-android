@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 92-GROUP INVENTORY + SIX-STRING TUNING EVIDENCE FROZEN; ALIGNMENT NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS P1/P2 INVENTORY + TUNING + ALIGNMENT EVIDENCE FROZEN; 256 PRIMARY CAPTURE PATHS ACCEPTED / 80 ABSTAINED; METRIC THRESHOLDS NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -818,6 +818,31 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - Corrected run `35565695012` passed the frozen script identity and all synthetic lag tests. All eight media jobs then failed at runner prerequisite before download because `ubuntu-24.04` did not have ffmpeg installed; **every download/extraction/alignment step was skipped**. The workflow now installs ffmpeg explicitly and records its exact version in result receipts.
 - First media-reaching run `35565808226` verified and aligned P1 single-notes far enough to print a coarse summary (**3/4 capture paths complete, 1 abstained**), but an orchestration mismatch left the script writing `/tmp/P1_singlenotes.alignment.json` while upload expected `/tmp/alignment-receipt.json`. Cleanup correctly deleted media and the unuploaded detailed receipt, so that coarse result is **diagnostic only and not frozen evidence**. The output path is now corrected exactly; a clean rerun is required.
 - First branch verification attempt on commit `b57f3dc68c09101990e70100a296465a27cd4c88` failed **before any alignment media job started** because the committed script bytes had SHA-256 `b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330` while the preregistration still contained the pre-formatting digest `ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547`. The synthetic gate prevented media access. Commit correcting the frozen script identity kept the algorithm bytes unchanged. A subsequent regression check found the implementation-JSON receipt itself had actual committed SHA-256 `b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f` rather than the pre-serialization digest `0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e`; that bookkeeping digest is corrected without changing the implementation JSON bytes.
+
+
+## Guitar-TECHS P1/P2 alignment evidence frozen — 2026-09-21
+
+- Clean authoritative alignment workflow run `35565975272` completed successfully on source commit `f6c0d17d367b1a264529ffce66a0a6d919bfd147`; all eight P1/P2 matrix jobs and the synthetic pre-media gate succeeded.
+- The run used the preregistered alignment implementation unchanged: script SHA-256 `b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330`; implementation receipt SHA-256 `b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f`.
+- Across **92 performances / 368 capture paths**, **275 passed** and **93 abstained**.
+- V1 primary content (chords, scales, single notes, PalmMute): **256 / 336 capture paths accepted**, **80 abstained and excluded**. P1 contributes 136 accepted / 32 abstained; P2 contributes 120 accepted / 48 abstained.
+- Primary-view acceptance: P1 directinput 41/42, micamp 41/42, ego 33/42, exo 21/42; P2 directinput 39/42, micamp 37/42, ego 19/42, exo 25/42.
+- Primary abstention causes were exactly the frozen gates: 62 `MAXIMUM_BOOTSTRAP_LAG_MAD_EXCEEDED` occurrences and 47 `MAXIMUM_MEDIAN_ABSOLUTE_RESIDUAL_EXCEEDED` occurrences. No primary capture failed minimum matched fraction or the 30-onset minimum.
+- No threshold was changed after observing results. Failed recording-session + capture-path pairs remain excluded exactly as the contract required.
+- Frozen combined receipt: `docs/astra/GUITARTECHS_DEVELOPMENT_ALIGNMENT_EVIDENCE_V1.json`; SHA-256 **`8e65fda2a74f5f5af77ab62be3538715d9ec2c0dcd783de5837a56c5dd42b1ae`**. Review: `docs/astra/GUITARTECHS_DEVELOPMENT_ALIGNMENT_REVIEW_V1.md`.
+- The receipt pins all eight Actions artifact digests, all eight detailed receipt SHA-256 values, runtime versions, the exact 80-path abstention list, accepted-set digest `f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc` and abstained-set digest `b4221bdc8236eb5f7c3a1cc5dca0f0d5d931d6acff7a56210525f08c0d26c812`.
+- Candidate registry now records `alignmentCorrectionVerified:true` **only for the exact accepted primary subset** and removes `ALIGNMENT_CORRECTION_NOT_VERIFIED`.
+- Added `astra_backend/guitarTechsAlignmentEvidence.mjs` and fail-closed receipt/run/implementation/count/set/P3/training substitution tests.
+- No TabCNN feature generation, model import, real training, P3 access, main/Production mutation or customer delivery occurred.
+
+## Exact next step — freeze development acceptance thresholds before real training
+
+1. Freeze numeric P1/P2 development acceptance thresholds for the already-required metrics **before** any real model training.
+2. Thresholds must evaluate both performer-disjoint folds and include onset string/fret precision, recall, F1, note-event completeness, frame string/fret accuracy, abstention rate, per-content-class results and cross-performer consistency.
+3. Define failure/abstention behavior without using P3 and without looking at any trained Guitar-TECHS model result.
+4. Keep the exact 256-path alignment allowlist mandatory for any later feature generation/training job.
+5. **Do not begin real model training without separate explicit training authorization.**
+6. Keep P3 sealed and keep `main`, Production and customer-delivery behavior unchanged.
 
 
 ## Copy-paste handoff

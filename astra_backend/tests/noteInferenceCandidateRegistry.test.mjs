@@ -43,7 +43,15 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.alignmentImplementationFrozen, true);
   assert.equal(candidate.operational.alignmentImplementationReceiptSha256, 'b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f');
   assert.equal(candidate.operational.alignmentScriptSha256, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
-  assert.equal(candidate.operational.alignmentCorrectionVerified, false);
+  assert.equal(candidate.operational.alignmentEvidenceFrozen, true);
+  assert.equal(candidate.operational.alignmentEvidenceReceiptSha256, '8e65fda2a74f5f5af77ab62be3538715d9ec2c0dcd783de5837a56c5dd42b1ae');
+  assert.equal(candidate.operational.alignmentWorkflowRunId, 35565975272);
+  assert.equal(candidate.operational.alignmentAcceptedPrimaryCaptureCount, 256);
+  assert.equal(candidate.operational.alignmentAbstainedPrimaryCaptureCount, 80);
+  assert.equal(candidate.operational.alignmentAcceptedPrimaryCaptureKeysSha256, 'f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc');
+  assert.equal(candidate.operational.alignmentAbstainedPrimaryCaptureKeysSha256, 'b4221bdc8236eb5f7c3a1cc5dca0f0d5d931d6acff7a56210525f08c0d26c812');
+  assert.equal(candidate.operational.alignmentCorrectionVerified, true);
+  assert.equal(candidate.blockers.includes('ALIGNMENT_CORRECTION_NOT_VERIFIED'), false);
   assert.equal(candidate.operational.trainingRuntimeFrozen, true);
   assert.equal(candidate.operational.syntheticTrainingSmokePassed, true);
   assert.equal(
