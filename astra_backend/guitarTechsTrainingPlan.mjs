@@ -74,6 +74,10 @@ const GUITAR_TECHS_PLAN = Object.freeze({
       purpose: 'single-use final source-disjoint generalization evaluation',
     }),
   }),
+  contractReceipt: Object.freeze({
+    path: 'docs/astra/GUITARTECHS_LABEL_ALIGNMENT_TRAINING_CONTRACT_V1.json',
+    sha256: '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f',
+  }),
   labelPolicy: Object.freeze({
     source: 'synchronized-per-string-midi',
     temporalAlignmentCorrectionRequired: true,
@@ -93,7 +97,8 @@ const GUITAR_TECHS_PLAN = Object.freeze({
     'EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED',
     'ALIGNMENT_CORRECTION_NOT_VERIFIED',
     'TUNING_METADATA_NOT_FROZEN',
-    'TRAINING_RUNTIME_NOT_FROZEN',
+    'SYNTHETIC_TRAINING_SMOKE_PENDING',
+    'DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN',
     'TRAINING_NOT_AUTHORIZED',
     'MODEL_NOT_TRAINED',
     'P3_FINAL_GATE_SEALED',

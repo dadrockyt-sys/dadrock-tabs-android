@@ -12,6 +12,7 @@ test('Guitar-TECHS plan is static and does not download, open or train', () => {
   assert.equal(plan.contract.downloadsTrainingMedia, false);
   assert.equal(plan.contract.opensTrainingMedia, false);
   assert.equal(plan.contract.trainsModel, false);
+  assert.equal(plan.contractReceipt.sha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');
   assert.equal(plan.customerDeliveryEligible, false);
 });
 

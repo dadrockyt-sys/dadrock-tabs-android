@@ -1,0 +1,119 @@
+{
+  "alignmentPolicy": {
+    "audioEvidence": "deterministic-audio-onset-envelope",
+    "bootstrapStrata": 5,
+    "developmentPerformersOnly": [
+      "P1",
+      "P2"
+    ],
+    "failureAction": "exclude-recording-group-and-abstain",
+    "grouping": "recording-session-plus-capture-path",
+    "lagSearchMs": [
+      -100,
+      100
+    ],
+    "lagStepMs": 1,
+    "matchToleranceMs": 20,
+    "maximumAbsoluteAppliedCorrectionMs": 100,
+    "maximumBootstrapLagMadMs": 5,
+    "maximumMedianAbsoluteResidualMs": 10,
+    "minimumMatchedFraction": 0.8,
+    "minimumMidiOnsetGroups": 30,
+    "p3MayInfluenceAlignment": false,
+    "receiptRequired": true,
+    "referenceAnnotations": "aggregate-six-track-midi-note-onsets"
+  },
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "developmentMetrics": {
+    "folds": [
+      "p1-train-p2-validate",
+      "p2-train-p1-validate"
+    ],
+    "frameAccuracyAloneSufficient": false,
+    "p3OpeningAuthorized": false,
+    "required": [
+      "onset-string-fret-precision",
+      "onset-string-fret-recall",
+      "onset-string-fret-f1",
+      "note-event-completeness",
+      "frame-string-fret-accuracy",
+      "abstention-rate",
+      "per-content-class-results",
+      "cross-performer-consistency"
+    ],
+    "thresholdsFrozen": false
+  },
+  "labelContract": {
+    "auxiliaryOrHeldOutUntilSemanticsVerified": [
+      "vibrato",
+      "pinch-harmonics",
+      "harmonics",
+      "bendings"
+    ],
+    "defaultTuningMayNotBeAssumed": true,
+    "eventDecoder": "contiguous-non-silent-string-fret-runs",
+    "frameHopSamples": 512,
+    "frameSampleRateHz": 22050,
+    "frameTimestamp": "center",
+    "numStrings": 6,
+    "outOfRangePitch": "abstain-mask-never-clip",
+    "primaryTrainingContent": [
+      "chords",
+      "scales",
+      "single-notes",
+      "palm-mute"
+    ],
+    "sameStringPolyphony": "abstain-mask-never-force",
+    "softmaxTarget": {
+      "classesPerString": 21,
+      "fretClassMax": 19,
+      "fretClassMin": 0,
+      "silenceClass": 20,
+      "totalLogits": 126
+    },
+    "stringOrder": "physical-low-to-high-after-explicit-track-map",
+    "stringTrackMapMustBeVerified": true,
+    "tablatureState": {
+      "maxFret": 19,
+      "minFret": 0,
+      "silence": -1
+    },
+    "techniqueLabelsMayOverrideFretTruth": false,
+    "tuningMustBeVerified": true
+  },
+  "schema": "astra-guitar-techs-label-alignment-training-contract-v1",
+  "sourceEvidence": {
+    "constantsBlob": "79666ea0c5b0214ca664da454069b8d286cc5c18",
+    "instrumentBlob": "eddc48a8b95de057035cd11ea2d1951e754ef349",
+    "softmaxGroupsBlob": "84beb4cf251b9cb9274d10cf203318314181af31",
+    "tabcnnModelBlob": "e09856db2fffd77642e005ab509846acc894b886",
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "trainingScriptBlob": "3531fb19292f8b6198ab48c311bee1d6b87ff162"
+  },
+  "trainingContract": {
+    "batchSize": 32,
+    "deterministicAlgorithmsRequired": true,
+    "forbiddenInitializationArtifact": "tabcnn_guitarprofx_dafx24",
+    "initialization": "random-only",
+    "learningRate": 1.0,
+    "maxIterationsPerFold": 2500,
+    "mixedPrecision": false,
+    "optimizer": "Adadelta",
+    "p3MayInfluenceTraining": false,
+    "paidComputeAuthorized": false,
+    "realTrainingAuthorized": false,
+    "runtime": {
+      "dependencyLockSha256": "0e711709b063a705ad11570f6b7ef4dfe5bcc2d433d98707a1a74897dbb25bc0",
+      "librosa": "0.9.1",
+      "numpy": "1.21.6",
+      "platform": "linux-x86_64",
+      "python": "3.10.15",
+      "scipy": "1.8.1",
+      "torch": "1.11.0+cpu",
+      "wheelManifestSha256": "0796acee36cea76e9784e602da190223a14a89907381882b401986763c371567"
+    },
+    "seed": 20260921,
+    "syntheticBackwardSmokeRequired": true,
+    "validationCheckpointsPerFold": 50
+  }
+}

@@ -32,9 +32,18 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.trainingMediaDownloadedByAstra, false);
   assert.equal(candidate.operational.splitReceiptFrozen, true);
   assert.equal(candidate.operational.splitReceiptSha256, 'd116556c13d250af28900bb1d73d2c0ccd3130246db8bdd2d6d387ac87be799a');
+  assert.equal(candidate.operational.labelContractFrozen, true);
+  assert.equal(candidate.operational.labelAlignmentTrainingContractSha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');
+  assert.equal(candidate.operational.alignmentPolicyFrozen, true);
+  assert.equal(candidate.operational.trainingRuntimeFrozen, true);
+  assert.equal(candidate.operational.syntheticTrainingSmokePassed, false);
+  assert.equal(candidate.operational.developmentMetricSchemaFrozen, true);
+  assert.equal(candidate.operational.developmentMetricThresholdsFrozen, false);
   assert.equal(candidate.operational.p3FinalGateSealed, true);
   assert.ok(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'));
+  assert.ok(candidate.blockers.includes('SYNTHETIC_TRAINING_SMOKE_PENDING'));
+  assert.ok(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'));
   assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });
