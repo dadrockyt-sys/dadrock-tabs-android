@@ -1143,3 +1143,20 @@ Inspect run `35662028832` first. When Fold 1 completes and its artifact appears,
 
 Inspect run `35662028832` first. If Fold 1 is complete, collect and cryptographically verify its artifact immediately and run structural admission only; otherwise leave the workflow untouched and preserve the serialized run. Continue with Fold 2 only through this same run.
 
+## SAVED NEXT STEP — active V2 run
+
+1. **Inspect GitHub Actions run `35662028832` first. Do not launch a duplicate.**
+2. If Fold 1 job `106539518639` (`P1 -> P2`) has completed and its artifact exists:
+   - record the Actions artifact ID and digest;
+   - obtain the fold artifact containing `training-result.json` and `model.pt`;
+   - compute and record the result JSON SHA-256 and model SHA-256;
+   - verify the fold structurally against `docs/astra/GUITARTECHS_V2_RESULT_ADMISSION_CONTRACT_V1.json` before interpreting its quality metrics;
+   - preserve the emitted pretraining label-balance diagnostics, selected checkpoint, supervised exposure, and full opposite-performer validation metrics exactly.
+3. **Do not relaunch Fold 2.** Allow this same serialized workflow run to continue into job `106539518543` (`P2 -> P1`), then perform the same artifact collection and structural admission when it completes.
+4. Only after both fold artifacts pass structural admission, run the already-frozen V2 development metric evaluator with the unchanged thresholds in `docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json`.
+5. If either structural admission or frozen development thresholds fail, freeze V2 development as FAIL and diagnose using P1/P2 evidence only. Another real-data run requires a new frozen design and separate explicit authorization.
+6. If both folds pass every frozen development gate, record only **eligible for a separate P3 authorization**. **Do not open P3 automatically.**
+7. Invariants: P3 sealed; no paid compute; no published-checkpoint initialization; no threshold retuning; no 256-path allowlist changes; no `main`/Production mutation; no customer delivery or promotion from development models.
+
+This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
