@@ -35,6 +35,8 @@ jobs:
           set -o pipefail
           npm --prefix astra_backend test 2>&1 | tee /tmp/astra-test-output.txt
           echo "ASTRA_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-test-output.txt | awk '{print $1}')"
+      - name: Install pinned evaluation NumPy
+        run: python3 -m pip install --disable-pip-version-check --no-deps "numpy==1.26.4"
       - name: Run focused evaluation suite
         shell: bash
         run: |
