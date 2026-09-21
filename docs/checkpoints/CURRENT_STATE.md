@@ -881,14 +881,23 @@ Real training remains separately unauthorized. A future authorization must be ex
 ## Bounded real-training implementation launched — 2026-09-21
 
 - Repository visibility verified public before launch; standard GitHub-hosted CPU runners are used and paid compute remains forbidden.
-- Training script frozen at Git blob `6ce81a0bd82025357497e4dff780ff888fad7627`.
+- Training script frozen at Git blob `d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254`.
 - Exact 256-path alignment correction map frozen at Git blob `9090d465422ebf5d4fdf170693fe0936934f3073`.
-- Implementation receipt Git blob: `7b92a6789225b854c147e236edb39eb6d1f217e6`.
+- Implementation receipt Git blob: `159d6b60ed25582181efd1d036bf86b47bbd5563`.
 - Checkpoint selection is preregistered on 10 deterministic performance-balanced validation captures (4 chords, 4 scales, 1 single-notes, 1 PalmMute; view priority directinput -> micamp -> ego -> exo). The selected checkpoint is then evaluated once on the full opposite-performer frozen accepted population.
 - Training remains capped at 2,500 iterations/fold, batch 32, Adadelta lr 1.0, seed 20260921, random initialization only, 50 checkpoint-selection evaluations.
 - The workflow must pass authorization/source identity checks and a synthetic self-test before any media access.
 - P3 is absent from workflow inputs; raw P1/P2 media is sequentially verified, prepared, and deleted. Output artifacts are development-only fold model + receipt retained 7 days.
 - Main, Production and customer delivery remain unchanged and unauthorized.
+
+
+## Real-training preflight correction — 2026-09-21
+
+- Launch run `35568412209` failed in the **training-core self-test before media access**. Both fold jobs were skipped; no P1/P2 archive was downloaded or opened.
+- Failure was a mask-axis bookkeeping error in the evaluator self-test path: prediction arrays are frame-major while the frozen label mask is string-major.
+- Corrected training script Git blob: `d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254`.
+- Updated implementation receipt Git blob: `159d6b60ed25582181efd1d036bf86b47bbd5563`.
+- No thresholds, training limits, sampling rules, model architecture, dataset allowlist or authorization scope changed.
 
 
 ## Copy-paste handoff

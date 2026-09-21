@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = '6ce81a0bd82025357497e4dff780ff888fad7627'
+          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
           test "$(git hash-object docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json)" = '9090d465422ebf5d4fdf170693fe0936934f3073'
           test "$(sha256sum docs/astra/GUITARTECHS_REAL_TRAINING_AUTHORIZATION_V1.json | awk '{print $1}')" = '175de606db2276dd745d697e1e996e6c533a7ad6542d258ed66e2a8bbb6ea0d0'
           test "$(sha256sum docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json | awk '{print $1}')" = 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15'

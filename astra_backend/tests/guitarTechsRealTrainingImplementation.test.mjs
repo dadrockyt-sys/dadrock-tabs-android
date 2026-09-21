@@ -13,11 +13,11 @@ test('bounded real-training implementation identities are frozen before media ac
   const corrections = readFileSync(new URL('../../docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json', import.meta.url));
   const auth = readFileSync(new URL('../../docs/astra/GUITARTECHS_REAL_TRAINING_AUTHORIZATION_V1.json', import.meta.url));
   const implementation = JSON.parse(readFileSync(new URL('../../docs/astra/GUITARTECHS_REAL_TRAINING_IMPLEMENTATION_V1.json', import.meta.url), 'utf8'));
-  assert.equal(gitBlobSha(script), '6ce81a0bd82025357497e4dff780ff888fad7627');
+  assert.equal(gitBlobSha(script), 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254');
   assert.equal(gitBlobSha(corrections), '9090d465422ebf5d4fdf170693fe0936934f3073');
   assert.equal(createHash('sha256').update(auth).digest('hex'), '175de606db2276dd745d697e1e996e6c533a7ad6542d258ed66e2a8bbb6ea0d0');
   assert.equal(JSON.parse(corrections).acceptedPrimaryCount, 256);
-  assert.equal(implementation.source.trainingScriptGitBlob, '6ce81a0bd82025357497e4dff780ff888fad7627');
+  assert.equal(implementation.source.trainingScriptGitBlob, 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254');
   assert.equal(implementation.datasetPreparation.alignmentCorrectionMapGitBlob, '9090d465422ebf5d4fdf170693fe0936934f3073');
   assert.equal(implementation.guards.sealedP3MayBeOpened, false);
   assert.equal(implementation.guards.paidComputeAuthorized, false);

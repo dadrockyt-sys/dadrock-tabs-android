@@ -237,7 +237,7 @@ def match_group(pred,ref):
     return dp[n][m][2]
 
 def capture_metrics(pred,ref):
-    mask=(ref==MASK);pred=pred.copy();pred[mask]=-1
+    mask=(ref==MASK);pred=pred.copy();pred[mask.T]=-1
     pe=[];re=[]
     # labels are 6 x T; runs expects T x 6
     rt=ref.T; mt=mask.T

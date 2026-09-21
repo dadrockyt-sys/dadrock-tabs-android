@@ -50,7 +50,7 @@
   "schema": "astra-guitar-techs-real-training-implementation-v1",
   "source": {
     "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
-    "trainingScriptGitBlob": "6ce81a0bd82025357497e4dff780ff888fad7627"
+    "trainingScriptGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254"
   },
   "training": {
     "batchSize": 32,
