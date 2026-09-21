@@ -1,0 +1,107 @@
+name: Guitar-TECHS P1/P2 frozen alignment
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-development-alignment.yml'
+      - 'astra_backend/guitartechs_alignment/**'
+      - 'docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install frozen alignment NumPy
+        run: python3 -m pip install --disable-pip-version-check --no-deps numpy==1.26.4
+      - name: Verify frozen implementation identity
+        run: test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+      - name: Run synthetic lag-recovery tests before media access
+        working-directory: astra_backend/guitartechs_alignment
+        run: python3 -m unittest -v test_alignment.py
+
+  align:
+    needs: synthetic
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { file: P1_chords.zip, bytes: 981741162, md5: be9ef8bbdceb1912d565254e607a6d94, sha256: de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326, performer: P1, category: chords }
+          - { file: P1_scales.zip, bytes: 453349723, md5: 9c0b98e8fb42a522df727ea8bf545e4f, sha256: 79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509, performer: P1, category: scales }
+          - { file: P1_singlenotes.zip, bytes: 108626613, md5: ca0c4674dde3805574685a313f7c39eb, sha256: 130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4, performer: P1, category: singlenotes }
+          - { file: P1_techniques.zip, bytes: 326280863, md5: 18634a41a6db5a8de10d07eb3122a872, sha256: 1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e, performer: P1, category: techniques }
+          - { file: P2_chords.zip, bytes: 1150819056, md5: eb6f74dd19162237189281688ad7ad2e, sha256: 9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce, performer: P2, category: chords }
+          - { file: P2_scales.zip, bytes: 471254783, md5: 96664853872f51e5f8aa4447313b7cf5, sha256: d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17, performer: P2, category: scales }
+          - { file: P2_singlenotes.zip, bytes: 116133457, md5: 40fbf03d8b04bb2cf42df20f36dc2254, sha256: d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9, performer: P2, category: singlenotes }
+          - { file: P2_techniques.zip, bytes: 395839610, md5: f4189251ce50be25f06a173b2c2bba00, sha256: 05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816, performer: P2, category: techniques }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install frozen alignment NumPy
+        run: python3 -m pip install --disable-pip-version-check --no-deps numpy==1.26.4
+      - name: Verify runner prerequisites
+        run: |
+          set -euo pipefail
+          test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+          ffmpeg -version | head -n 1
+      - name: Download exact authorized P1/P2 archive
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          case "$FILE" in
+            P1_chords.zip|P1_scales.zip|P1_singlenotes.zip|P1_techniques.zip|P2_chords.zip|P2_scales.zip|P2_singlenotes.zip|P2_techniques.zip) ;;
+            *) echo "unauthorized archive" >&2; exit 92 ;;
+          esac
+          test "$FILE" != "P3_music.zip"
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 3             --user-agent 'Astra-Guitar-TECHS-Alignment/1.0'             --output "/tmp/$FILE"             "https://zenodo.org/records/14963133/files/$FILE?download=1"
+      - name: Re-verify frozen archive identity before extraction
+        env:
+          FILE: ${{ matrix.file }}
+          EXPECT_BYTES: ${{ matrix.bytes }}
+          EXPECT_MD5: ${{ matrix.md5 }}
+          EXPECT_SHA256: ${{ matrix.sha256 }}
+        run: |
+          set -euo pipefail
+          archive="/tmp/$FILE"
+          test "$(stat -c '%s' "$archive")" = "$EXPECT_BYTES"
+          test "$(md5sum "$archive" | awk '{print $1}')" = "$EXPECT_MD5"
+          test "$(sha256sum "$archive" | awk '{print $1}')" = "$EXPECT_SHA256"
+      - name: Extract authorized development archive
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          mkdir -p "/tmp/alignment-${FILE%.zip}"
+          unzip -q "/tmp/$FILE" -d "/tmp/alignment-${FILE%.zip}"
+          rm -f "/tmp/$FILE"
+      - name: Run frozen alignment gate
+        env:
+          FILE: ${{ matrix.file }}
+          PERFORMER: ${{ matrix.performer }}
+          CATEGORY: ${{ matrix.category }}
+        run: |
+          set -euo pipefail
+          python3 astra_backend/guitartechs_alignment/align_development.py             --root "/tmp/alignment-${FILE%.zip}"             --archive "$FILE"             --performer "$PERFORMER"             --category "$CATEGORY"             --output "/tmp/${FILE%.zip}.alignment.json"             --script-sha256 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+      - name: Upload alignment receipt only
+        uses: actions/upload-artifact@v4
+        with:
+          name: alignment-${{ matrix.file }}
+          path: /tmp/${{ matrix.file }}.alignment.json
+          if-no-files-found: error
+          retention-days: 1
+      - name: Delete all development media
+        if: always()
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          rm -rf "/tmp/alignment-${FILE%.zip}" "/tmp/$FILE"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "GUITAR_TECHS_TRAINING_RUN=false"
