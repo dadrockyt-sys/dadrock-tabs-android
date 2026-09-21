@@ -28,8 +28,8 @@ function completeEvidence() {
       numericalReproductionVerified: true,
       numericalReproductionReceiptSha256: expected.reproduction.receiptSha256,
       normalizedAudioSha256: expected.reproduction.normalizedAudioSha256,
-      featuresSha256: expected.reproduction.featuresSha256,
-      modelWindowsSha256: expected.reproduction.modelWindowsSha256,
+      sourceParityVerified: true,
+      sourceParityMaxAbsoluteDifference: 0,
     },
     runtime: {
       dependencyLockComplete: true,
@@ -147,9 +147,9 @@ test('runtime lock or wheel substitution fails closed', () => {
   assert.equal(result.developmentExecutionReady, false);
 });
 
-test('preprocessing receipt or tensor identity substitution fails closed', () => {
+test('preprocessing normalized-audio identity substitution fails closed', () => {
   const evidence = completeEvidence();
-  evidence.preprocessing.featuresSha256 = '0'.repeat(64);
+  evidence.preprocessing.normalizedAudioSha256 = '0'.repeat(64);
   const result = evaluateTabcnnDevelopmentPreflight(evidence);
   assert.ok(result.blockers.includes('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH'));
   assert.equal(result.checks.preprocessingNumericallyReproduced, false);
