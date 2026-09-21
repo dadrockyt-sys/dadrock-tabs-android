@@ -596,11 +596,18 @@ export default function App({ initialLang = 'en' }) {
 
   // Search functionality
   const performSearch = async (query, type = 'all') => {
-    if (!query.trim()) return;
+    const normalizedQuery = query.trim().replace(/\s+/g, ' ');
+    if (!normalizedQuery) return;
+
     setLoading(true);
-    setActiveSearch(query);
+    setActiveSearch(normalizedQuery);
+    setSearchQuery(normalizedQuery);
+
     try {
-      const response = await fetch(`/api/videos?search=${encodeURIComponent(query)}&search_type=${type}&limit=100`);
+      const response = await fetch(
+        `/api/videos?search=${encodeURIComponent(normalizedQuery)}&search_type=${type}&limit=100`,
+        { cache: 'no-store' }
+      );
       const data = await response.json();
       setSearchResults(data.videos || []);
       setTotalCount(data.total || 0);
