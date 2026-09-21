@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **GUITAR-TECHS BOUNDED P1/P2 REAL TRAINING COMPLETE; BOTH PERFORMER-DISJOINT FOLDS FAIL FROZEN DEVELOPMENT THRESHOLDS; P3 REMAINS SEALED; FAILED MODELS NOT CUSTOMER-ELIGIBLE; P1/P2-ONLY DIAGNOSIS NEXT**
+Status: **GUITAR-TECHS V1 REAL TRAINING FAILED FROZEN THRESHOLDS; ROOT-CAUSE DIAGNOSIS FROZEN: V1 UNDERTRAINED DUE SINGLE-FRAME / ITERATION-SEMANTICS MISMATCH; V2 200-FRAME PERFORMANCE-BALANCED SAMPLING SYNTHETICALLY FROZEN; NEW REAL-RUN AUTHORIZATION REQUIRED; P3 SEALED**
 
 ## Product outcome
 
@@ -953,6 +953,25 @@ Inspect Actions run `35569391647` first. Do not launch a duplicate while it is a
 3. Prefer static analyses and tiny synthetic/fixture experiments first; do not launch another full real training run under the consumed V1 authorization.
 4. Any changed training design or another bounded real-data run requires a new frozen design receipt and separate explicit authorization.
 5. Keep P3 sealed; main, Production and customer delivery remain unchanged.
+
+
+## Guitar-TECHS V1 failure diagnosis frozen — 2026-09-21
+
+- Static comparison against pinned upstream revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7` found a concrete V1 training-semantics mismatch.
+- Upstream `guitarProFx.py` uses **200-frame** dataset samples. Shared `train.py` defines one training iteration as a complete loop through the DataLoader; each track supplies one random contiguous 200-frame slice per loop before batching.
+- Astra V1 instead treated 2,500 as exactly 2,500 optimizer steps and sampled **one isolated frame** for each of 32 batch elements.
+- V1 therefore supervised only **80,000 frame positions/fold**. Even with the same 2,500 optimizer-step count, 200-frame sequences would provide **16,000,000 positions**, a **200×** exposure difference.
+- V1 also accepted ordinary silence (`-1`) as a valid random sample because it rejected only `MASK=-100`, creating a secondary silence-dominance risk.
+- Pinned GuitarProfile/TabCNN output semantics were verified correct: 19 frets -> 20 playable states including open, plus silence -> 21 classes/string -> 126 logits. Output shape is not the primary failure.
+- Frozen diagnosis receipt: `docs/astra/GUITARTECHS_V1_TRAINING_FAILURE_DIAGNOSIS_V1.json`; SHA-256 **`c9ec7f099b57451bdaaa683c3d644a3f11e340b296916f9771702f4699462848`**.
+- Added deterministic V2 sampler `astra_backend/guitartechs_training_v2/sampling.py`: one 200-frame contiguous sequence per underlying performance per epoch, deterministic accepted-view rotation, seeded segment start, correlated views do not add performance weight, and the final partial batch is not dropped.
+- Added focused synthetic tests covering performance balance, deterministic rotation, 200-frame bounds, no dropped tail, fail-closed short captures and exact 200× same-step exposure arithmetic.
+- V2 keeps the already-frozen development quality thresholds unchanged.
+- **V2 real training is not authorized by the consumed V1 authorization. P3 remains sealed.**
+
+## Next authorization gate — corrected V2 P1/P2 training
+
+Before any V2 real-data run, freeze the full V2 implementation and resource budget around the 200-frame performance-balanced semantics, including pretraining label-balance receipts. Then obtain separate explicit user authorization. Do not reinterpret or erase the V1 failure; it remains historical evidence of the incorrect single-frame training implementation.
 
 
 ## Copy-paste handoff

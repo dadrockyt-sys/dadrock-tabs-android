@@ -81,6 +81,10 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.p2TrainP1ModelSha256, 'd480cadf66fc0d98608c719252c34bdab4c3120252167e8786502b4332264841');
   assert.equal(candidate.operational.modelTrained, true);
   assert.equal(candidate.operational.developmentEvaluationPassed, false);
+  assert.equal(candidate.operational.v1TrainingFailureDiagnosisFrozen, true);
+  assert.equal(candidate.operational.v1TrainingFailureDiagnosisReceiptSha256, 'c9ec7f099b57451bdaaa683c3d644a3f11e340b296916f9771702f4699462848');
+  assert.equal(candidate.operational.v2SequenceFramesFrozen, 200);
+  assert.equal(candidate.operational.v2RealTrainingAuthorized, false);
   assert.equal(candidate.operational.p3OpeningEligible, false);
   assert.equal(candidate.blockers.includes('TRAINING_NOT_AUTHORIZED'), false);
   assert.equal(candidate.operational.developmentMetricThresholdsReceiptSha256, 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15');
@@ -224,6 +228,7 @@ test('synthetic training smoke receipt is frozen and no longer a candidate block
     'ffb9c4178fe28683e2020083df96678a74e9a66413bb26d52aa5c01d07e49b9d',
   );
   assert.equal(candidate.blockers.includes('SYNTHETIC_TRAINING_SMOKE_PENDING'), false);
-  assert.equal(candidate.operational.modelTrained, false);
+  assert.equal(candidate.operational.modelTrained, true);
+  assert.equal(candidate.operational.developmentEvaluationPassed, false);
   assert.equal(candidate.customerDeliveryEligible, false);
 });
