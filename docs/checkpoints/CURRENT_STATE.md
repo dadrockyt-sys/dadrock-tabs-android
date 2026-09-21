@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; TABCNN TECHNICAL COMPATIBILITY FROZEN; PUBLISHED CHECKPOINT EXECUTION BLOCKED BY TRAINING-LINEAGE RIGHTS; RIGHTS-CLEAN SELF-TRAINED GUITAR MODEL PIVOT NEXT**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; RIGHTS-CLEAN GUITAR-TECHS CANDIDATE REGISTERED; PUBLISHED DATASET IDENTITY + PERFORMER-DISJOINT SPLIT FROZEN; LABEL/ALIGNMENT + TRAINING CONTRACT NEXT**
 
 ## Product outcome
 
@@ -612,14 +612,47 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Candidate blocker is now explicit: `TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED`. Checkpoint deserialization remains unauthorized.
 - Customer delivery remains false.
 
-## Exact next step — Build a rights-clean self-trained electric-guitar candidate
+## Rights-clean Guitar-TECHS candidate registered — 2026-09-21
 
-1. Keep the published GuitarProFX TabCNN checkpoint **non-executable** unless authoritative written permission/license evidence resolves its training lineage. Do not weaken or bypass the preflight.
-2. Design a separate Astra candidate using **Guitar-TECHS** as the primary training corpus. Its official project/Zenodo material explicitly states CC-BY-4.0, includes over five hours of electric-guitar content, three professional performers, multiple capture paths, techniques/chords/scales/excerpts, and synchronized per-string MIDI.
-3. Freeze authoritative Guitar-TECHS record/version/license identity before downloading training media. Build a deterministic manifest and split strategy by performer/track so validation is source-disjoint and cannot leak near-duplicate capture channels.
-4. Reuse the already-frozen TabCNN-compatible architecture/preprocessing contract where scientifically appropriate, but produce **new Astra-owned weights from authorized data**. Do not initialize from or deserialize the blocked GuitarProFX checkpoint.
-5. Before training, define a bounded CPU/GPU training contract, expected labels/string-fret mapping, attribution requirements, deterministic seed/split receipt, and acceptance metrics. Preserve role identity outside the generic-guitar model: Astra role evidence remains authoritative for lead vs rhythm.
-6. Use untouched external audio only after the training candidate and split are frozen. Do not tune against Gomyway as a hidden final test. No main/Production/customer-delivery change.
+- Commit `3fac5cad04c44e08c2fbdb3282111804b4457e1d` registers `astra_guitartechs_tabcnn_v1` as the primary next guitar note-inference candidate.
+- Architecture family is TabCNN-compatible six-string fret-state output, but initialization is **random only**. The blocked GuitarProFX checkpoint may not be deserialized, used for initialization, distillation or hidden teacher labels.
+- Guitar-TECHS is treated as generic-guitar evidence only; Astra role evidence remains authoritative for lead-versus-rhythm identity. Bass remains out of scope for this candidate.
+- Performer-disjoint design is fixed: P1 train -> P2 validate and P2 train -> P1 validate; only after development choices freeze may a final model fit P1+P2. P3 is a sealed final source-disjoint generalization gate.
+- All capture channels from the same underlying performance must remain in the same split. Random clip/channel splitting is forbidden.
+- Verification on `3fac5cad04c44e08c2fbdb3282111804b4457e1d`: **243/243 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 `279667d9a4198e4dddbd4f3504ee72a8a4d1de61a755a8d7d8664c1ee178be5d`; focused evaluation output SHA-256 `59bbead0bd8d34a61e0a846eb0957262479f96aa5e909b2980a7f08366e0926a`.
+
+## Guitar-TECHS published identity + split contract frozen — 2026-09-21
+
+- Added metadata-only workflow `.github/workflows/guitar-techs-metadata-identity.yml` at `8c5822dd4f7d3b94d72214db967d23fb7469c310`. Workflow run `35561191581` passed.
+- The workflow made **HEAD requests only** to the nine official Zenodo archives. No training audio/MIDI archive body was downloaded or opened.
+- Official project-owned website identity is pinned to repository `guitar-techs/guitar-techs.github.io`, commit `19a2954f789bfd192b2b4732788ceb000c1dd687`, `index.html` blob `64627b4fb227cd0e29cff05926f02fe0e12b5f26`. That exact blob states that all data is licensed under **CC BY 4.0**.
+- `docs/astra/GUITARTECHS_DATASET_MANIFEST_V1.json` freezes record `https://zenodo.org/records/14963133`, version `v1`, exact published archive byte counts and published MD5s for all nine archives. Total published bytes: **4,133,550,356**. Manifest SHA-256: **`a3445d799c4a0b17a0078dac0c9387a0e676111367a5f07d608fd55bd8118e52`**.
+- Exact archives:
+  - P1 chords 981,741,162 bytes / MD5 `be9ef8bbdceb1912d565254e607a6d94`
+  - P1 scales 453,349,723 / `9c0b98e8fb42a522df727ea8bf545e4f`
+  - P1 single notes 108,626,613 / `ca0c4674dde3805574685a313f7c39eb`
+  - P1 techniques 326,280,863 / `18634a41a6db5a8de10d07eb3122a872`
+  - P2 chords 1,150,819,056 / `eb6f74dd19162237189281688ad7ad2e`
+  - P2 scales 471,254,783 / `96664853872f51e5f8aa4447313b7cf5`
+  - P2 single notes 116,133,457 / `40fbf03d8b04bb2cf42df20f36dc2254`
+  - P2 techniques 395,839,610 / `f4189251ce50be25f06a173b2c2bba00`
+  - sealed P3 music 129,505,089 / `071ba80aecf00f4a31fbd167b3f22198`
+- `docs/astra/GUITARTECHS_SPLIT_RECEIPT_V1.json` freezes the non-random performer-disjoint split and sealed P3 rule. Receipt SHA-256: **`d116556c13d250af28900bb1d73d2c0ccd3130246db8bdd2d6d387ac87be799a`**.
+- Added `guitarTechsDatasetIdentity.mjs` with fail-closed substitution tests. Record/version/license/archive/split drift is rejected.
+- Important distinction: published size+MD5 identity is frozen, but **Astra SHA-256s are not yet acquired** because media bodies have not been downloaded. Blocker is now `DATASET_ASTRA_SHA256_NOT_FROZEN`, not the older vague published-identity blocker.
+- Extracted performance grouping is also not yet verified because archives have not been opened. P3 remains sealed.
+- Verification on `e29ec07e6e773cdc6d29d9736a007c0d6feea1fe`: **247/247 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`cc2e92438bd1716ddbde76a1663ab7be5bdb126754e65ce90ed5ee336916b555`**; focused evaluation output SHA-256 **`4790f8cba9f8c973c899b5774c5942ec961ffb6d3542cf21df8dd09a98d9218d`**.
+- No model was trained or executed; no main/Production/customer-delivery authority changed.
+
+## Exact next step — Freeze label/alignment semantics and bounded training contract before media acquisition
+
+1. Preserve **P3 sealed**. Do not download/open `P3_music.zip` while designing labels, preprocessing, alignment, hyperparameters or acceptance criteria.
+2. Build a fail-closed label contract around the authoritative per-string MIDI evidence. Do **not** assume standard tuning unless tuning metadata is found in authoritative source material or later verified inside the development archives. If tuning is unavailable, pitch-to-fret conversion must abstain.
+3. Freeze a deterministic audio/MIDI alignment policy. The official Zenodo record warns of up to **100 ms** signal misalignment. Define how lag is estimated using P1/P2 development material, confidence/maximum-correction bounds and when alignment must abstain. Do not tune this policy on P3.
+4. Freeze the TabCNN label encoding: six strings, per-string silent class, fret-range policy, invalid pitch/string rejection, onset/frame semantics and how bends/harmonics are represented or excluded for v1. Technique labels may be auxiliary but cannot silently change note/fret truth.
+5. Freeze a bounded training-runtime contract **before downloading media**: platform/Python/PyTorch assumptions, random initialization, deterministic seeds, maximum epochs/early stopping, batch/window policy, artifact/metric receipts, resource ceilings and stop conditions. No paid compute is implied.
+6. Define development metrics on the P1↔P2 folds: string+fret frame accuracy is insufficient alone. Include onset/string/fret precision+recall/F1, note-event completeness, abstention, per-content-class results and cross-performer consistency. Freeze the criteria before opening P3.
+7. Only after the above contracts are committed may an authorized acquisition step download **P1/P2 development archives only**, verify published size/MD5 + Astra SHA-256, inspect actual tuning/layout/group identities and build extracted-file manifests. P3 remains unopened.
 
 ## Copy-paste handoff
 
