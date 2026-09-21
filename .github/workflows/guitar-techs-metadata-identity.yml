@@ -1,0 +1,80 @@
+name: Guitar-TECHS metadata identity
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-metadata-identity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify project-owned CC BY 4.0 license statement
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://raw.githubusercontent.com/guitar-techs/guitar-techs.github.io/19a2954f789bfd192b2b4732788ceb000c1dd687/index.html'
+          out=/tmp/guitar-techs-index.html
+          curl --fail --location --retry 4 --output "$out" "$url"
+          test "$(git hash-object "$out")" = '64627b4fb227cd0e29cff05926f02fe0e12b5f26'
+          grep -Fq 'All data is licensed under a Creative Commons Attribution 4.0' "$out"
+          grep -Fq 'License (CC BY 4.0).' "$out"
+          echo 'GUITAR_TECHS_LICENSE_EVIDENCE=CC-BY-4.0'
+          echo 'GUITAR_TECHS_WEBSITE_COMMIT=19a2954f789bfd192b2b4732788ceb000c1dd687'
+          echo 'GUITAR_TECHS_WEBSITE_INDEX_BLOB=64627b4fb227cd0e29cff05926f02fe0e12b5f26'
+
+      - name: Probe exact official archive byte counts with HEAD only
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://zenodo.org/records/14963133/files'
+          files=(
+            P1_chords.zip
+            P1_scales.zip
+            P1_singlenotes.zip
+            P1_techniques.zip
+            P2_chords.zip
+            P2_scales.zip
+            P2_singlenotes.zip
+            P2_techniques.zip
+            P3_music.zip
+          )
+          for file in "${files[@]}"; do
+            headers="/tmp/${file}.headers"
+            curl --fail --silent --show-error --head --location --retry 5 \
+              --retry-all-errors --retry-delay 2 \
+              --user-agent 'Astra-Guitar-TECHS-Metadata/1.0' \
+              --dump-header "$headers" \
+              --output /dev/null \
+              "$base/$file?download=1"
+            bytes="$(awk 'BEGIN{IGNORECASE=1} /^content-length:/ {gsub("\r","",$2); value=$2} END{print value}' "$headers")"
+            test -n "$bytes"
+            test "$bytes" -gt 0
+            echo "GUITAR_TECHS_FILE_BYTES $file $bytes"
+          done
+
+      - name: Record published MD5 identities without media download
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat <<'EOF'
+          GUITAR_TECHS_FILE_MD5 P1_chords.zip be9ef8bbdceb1912d565254e607a6d94
+          GUITAR_TECHS_FILE_MD5 P1_scales.zip 9c0b98e8fb42a522df727ea8bf545e4f
+          GUITAR_TECHS_FILE_MD5 P1_singlenotes.zip ca0c4674dde3805574685a313f7c39eb
+          GUITAR_TECHS_FILE_MD5 P1_techniques.zip 18634a41a6db5a8de10d07eb3122a872
+          GUITAR_TECHS_FILE_MD5 P2_chords.zip eb6f74dd19162237189281688ad7ad2e
+          GUITAR_TECHS_FILE_MD5 P2_scales.zip 96664853872f51e5f8aa4447313b7cf5
+          GUITAR_TECHS_FILE_MD5 P2_singlenotes.zip 40fbf03d8b04bb2cf42df20f36dc2254
+          GUITAR_TECHS_FILE_MD5 P2_techniques.zip f4189251ce50be25f06a173b2c2bba00
+          GUITAR_TECHS_FILE_MD5 P3_music.zip 071ba80aecf00f4a31fbd167b3f22198
+          EOF
+          echo 'GUITAR_TECHS_RECORD=https://zenodo.org/records/14963133'
+          echo 'GUITAR_TECHS_VERSION=v1'
+          echo 'GUITAR_TECHS_TRAINING_MEDIA_DOWNLOADED=false'
