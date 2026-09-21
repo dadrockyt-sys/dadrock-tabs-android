@@ -83,6 +83,11 @@ export default function SearchBar({ variant = 'full', placeholder = null, curren
 
   const allResults = [...results.artists.map(a => ({ type: 'artist', ...a })), ...results.songs.map(s => ({ type: 'song', ...s }))];
 
+  const getSongPath = (song) => {
+    const path = song.href || (song.slug ? `/songs/${song.slug}` : '/');
+    return `${prefix}${path}`;
+  };
+
   const handleKeyDown = (e) => {
     if (!isOpen) return;
 
@@ -99,7 +104,7 @@ export default function SearchBar({ variant = 'full', placeholder = null, curren
       if (item.type === 'artist') {
         router.push(`${prefix}/artist/${item.slug}`);
       } else {
-        router.push(`${prefix}/songs/${item.slug}`);
+        router.push(getSongPath(item));
       }
 
       setIsOpen(false);
@@ -185,9 +190,9 @@ export default function SearchBar({ variant = 'full', placeholder = null, curren
               {results.songs.map((song, i) => {
                 const idx = results.artists.length + i;
                 return (
-                  <div key={song.slug}>
+                  <div key={song.slug || song.videoId || `${song.artist}-${song.title}-${i}`}>
                     <button
-                      onClick={() => handleNavigate(`${prefix}/songs/${song.slug}`)}
+                      onClick={() => handleNavigate(getSongPath(song))}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
                         selectedIndex === idx ? 'bg-amber-500/10 text-amber-500' : 'hover:bg-zinc-800 text-white'
                       }`}
