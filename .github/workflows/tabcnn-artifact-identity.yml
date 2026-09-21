@@ -1,0 +1,41 @@
+name: TabCNN artifact identity
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/tabcnn-artifact-identity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-official-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download exact official Zenodo checkpoint without execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://zenodo.org/records/11406378/files/best_TabCNN_tablature_trancription_model?download=1'
+          out='/tmp/best_TabCNN_tablature_trancription_model'
+          curl --fail --location --retry 6 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Artifact-Identity/1.0' \
+            --output "$out" "$url"
+
+          bytes="$(stat -c '%s' "$out")"
+          md5="$(md5sum "$out" | awk '{print $1}')"
+          sha256="$(sha256sum "$out" | awk '{print $1}')"
+
+          echo "TABCNN_ARTIFACT_BYTES=$bytes"
+          echo "TABCNN_ARTIFACT_MD5=$md5"
+          echo "TABCNN_ARTIFACT_SHA256=$sha256"
+
+          test "$bytes" = '3345122'
+          test "$md5" = 'ce168b2cd426f81a2a78499214e40605'
+
+          rm -f "$out"
+          test ! -e "$out"
