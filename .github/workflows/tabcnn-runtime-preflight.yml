@@ -25,21 +25,14 @@ jobs:
         with:
           python-version: '3.10.15'
 
-      - name: Install historically aligned direct runtime
+      - name: Install exact frozen runtime
         shell: bash
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check 'pip==24.0'
           python -m pip install --disable-pip-version-check \
-            --index-url https://download.pytorch.org/whl/cpu \
-            'torch==1.11.0+cpu'
-          python -m pip install --disable-pip-version-check \
-            'numpy==1.21.6' \
-            'scipy==1.8.1' \
-            'librosa==0.9.1' \
-            'numba==0.55.2' \
-            'llvmlite==0.38.1' \
-            'soundfile==0.12.1'
+            --extra-index-url https://download.pytorch.org/whl/cpu \
+            --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
           python -m pip check
 
       - name: Acquire exact preprocessing source blobs
@@ -76,10 +69,34 @@ jobs:
           sha256sum /tmp/tabcnn-preprocessing-receipt.json
           cat /tmp/tabcnn-preprocessing-receipt.json
 
-      - name: Print resolved runtime for lock review
+      - name: Verify frozen runtime and emit wheel identity manifest
         shell: bash
         run: |
           set -euo pipefail
           python --version
-          python -m pip freeze --all | sort | tee /tmp/tabcnn-runtime-freeze.txt
-          echo "TABCNN_RUNTIME_FREEZE_SHA256=$(sha256sum /tmp/tabcnn-runtime-freeze.txt | awk '{print $1}')"
+
+          python -m pip freeze --all \
+            | grep -vE '^(pip|setuptools)==' \
+            | sort \
+            | tee /tmp/tabcnn-runtime-freeze.txt
+          diff -u astra_backend/tabcnn_runtime/requirements.lock.txt /tmp/tabcnn-runtime-freeze.txt
+          echo "TABCNN_RUNTIME_LOCK_SHA256=$(sha256sum astra_backend/tabcnn_runtime/requirements.lock.txt | awk '{print $1}')"
+
+          wheel_dir=/tmp/tabcnn-runtime-wheels
+          mkdir -p "$wheel_dir"
+          while IFS= read -r requirement; do
+            python -m pip download --disable-pip-version-check \
+              --no-deps \
+              --only-binary=:all: \
+              --extra-index-url https://download.pytorch.org/whl/cpu \
+              --dest "$wheel_dir" \
+              "$requirement"
+          done < astra_backend/tabcnn_runtime/requirements.lock.txt
+
+          (
+            cd "$wheel_dir"
+            sha256sum * | sort -k2
+          ) | tee /tmp/tabcnn-runtime-wheel-manifest.txt
+          echo "TABCNN_RUNTIME_WHEEL_MANIFEST_SHA256=$(sha256sum /tmp/tabcnn-runtime-wheel-manifest.txt | awk '{print $1}')"
+          echo "TABCNN_RUNTIME_WHEEL_MANIFEST_B64=$(base64 -w0 /tmp/tabcnn-runtime-wheel-manifest.txt)"
+          echo "TABCNN_PREPROCESS_RECEIPT_B64=$(base64 -w0 /tmp/tabcnn-preprocessing-receipt.json)"
