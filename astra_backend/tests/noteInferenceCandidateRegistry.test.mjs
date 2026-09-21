@@ -64,7 +64,10 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.developmentMediaAcquisitionAuthorized, true);
   assert.equal(candidate.operational.developmentIdentityWorkflowRunId, 35562765028);
   assert.equal(candidate.operational.developmentMetricSchemaFrozen, true);
-  assert.equal(candidate.operational.developmentMetricThresholdsFrozen, false);
+  assert.equal(candidate.operational.developmentMetricThresholdsFrozen, true);
+  assert.equal(candidate.operational.developmentMetricThresholdsReceiptSha256, 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15');
+  assert.equal(candidate.operational.developmentMetricAcceptedCaptureKeysSha256, 'f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc');
+  assert.equal(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'), false);
   assert.equal(candidate.operational.p3FinalGateSealed, true);
   assert.equal(candidate.operational.inventoryEvidenceFrozen, true);
   assert.equal(candidate.operational.inventoryEvidenceReceiptSha256, '4d21d578a275587abe18d9f5382074fa9c33bd2f0698c5d10b340788de306bcd');
@@ -87,7 +90,7 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'), false);
   assert.equal(candidate.blockers.includes('TUNING_METADATA_NOT_FROZEN'), false);
   assert.equal(candidate.blockers.includes('P2_D_STRING_TUNING_NOT_FULLY_VERIFIED'), false);
-  assert.ok(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'));
+  assert.equal(candidate.blockers.includes('DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN'), false);
   assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });

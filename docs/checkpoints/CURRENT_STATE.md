@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS P1/P2 INVENTORY + TUNING + ALIGNMENT EVIDENCE FROZEN; 256 PRIMARY CAPTURE PATHS ACCEPTED / 80 ABSTAINED; METRIC THRESHOLDS NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; GUITAR-TECHS P1/P2 INVENTORY + TUNING + ALIGNMENT + DEVELOPMENT ACCEPTANCE THRESHOLDS FROZEN; 256 PRIMARY CAPTURE PATHS ELIGIBLE; REAL TRAINING NOW THE NEXT AUTHORIZATION GATE; P3 SEALED**
 
 ## Product outcome
 
@@ -843,6 +843,27 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 4. Keep the exact 256-path alignment allowlist mandatory for any later feature generation/training job.
 5. **Do not begin real model training without separate explicit training authorization.**
 6. Keep P3 sealed and keep `main`, Production and customer-delivery behavior unchanged.
+
+
+## Guitar-TECHS development metric thresholds frozen — 2026-09-21
+
+- Alignment-evidence commit `fff9beaacdbbe44a3bb42a1437decc83768489a6` passed GitHub Actions run `35566840139`.
+- Before any real Astra Guitar-TECHS model training, numeric development acceptance thresholds and exact metric semantics are now preregistered in `docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json`; SHA-256 **`fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15`**.
+- External sanity anchor only: Pedroza et al., ICASSP 2025 Table III reports the Guitar-TECHS-augmented model at tablature P 0.809±0.018, R 0.699±0.048, F1 0.747±0.031, TDR 0.905±0.015. Astra explicitly does **not** claim those published frame/tablature metrics or folds are equivalent to its stricter exact onset+string+fret evaluation.
+- Evaluation is restricted to the frozen 256-path alignment-accepted primary set and both performer-disjoint folds. Accepted views are averaged within each underlying performance before macro-averaging performances to prevent correlated-view weighting.
+- Event match is one-to-one exact physical string + fret with onset tolerance 50 ms; note-event completeness is duration-overlap based; frame accuracy is exact string/fret accuracy on active-union frames only, excluding silence-only true negatives.
+- Each fold must meet: precision >=0.75, recall >=0.60, onset string/fret F1 >=0.67, note-event completeness >=0.60, active-union frame accuracy >=0.70, abstention <=0.10, and each primary content class F1 >=0.55.
+- Across folds: macro onset F1 >=0.70, macro completeness >=0.65, F1 gap <=0.10 and frame-accuracy gap <=0.10.
+- Missing, non-finite or empty required metrics fail closed. Post-result threshold retuning is forbidden.
+- Added `astra_backend/guitarTechsDevelopmentMetricThresholds.mjs` with fail-closed two-fold evaluation and focused tests.
+- Candidate registry now records `developmentMetricThresholdsFrozen:true` and removes `DEVELOPMENT_METRIC_THRESHOLDS_NOT_FROZEN`.
+- This milestone ran **no real training**, opened no P3 material, authorized no paid compute and changed neither main nor Production.
+
+## Next authorization gate — real P1/P2 model training
+
+All pre-training evidence gates that can be completed without a real training run are now frozen: archive identity, grouping, string mapping, tuning, alignment allowlist, deterministic runtime/smoke, development metric definitions and acceptance thresholds.
+
+Real training remains separately unauthorized. A future authorization must be explicit for bounded P1/P2 training only; P3 stays sealed until a trained candidate passes both development folds under the frozen thresholds. Production/customer delivery remains unauthorized regardless.
 
 
 ## Copy-paste handoff

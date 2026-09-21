@@ -1,0 +1,113 @@
+{
+  "acceptanceThresholds": {
+    "crossPerformer": {
+      "frameStringFretAccuracyAbsoluteGapMax": 0.1,
+      "onsetStringFretF1AbsoluteGapMax": 0.1
+    },
+    "eachFold": {
+      "abstentionRateMax": 0.1,
+      "eachPrimaryContentClassOnsetStringFretF1Min": 0.55,
+      "frameStringFretAccuracyMin": 0.7,
+      "noteEventCompletenessMin": 0.6,
+      "onsetStringFretF1Min": 0.67,
+      "onsetStringFretPrecisionMin": 0.75,
+      "onsetStringFretRecallMin": 0.6
+    },
+    "twoFoldAggregate": {
+      "macroNoteEventCompletenessMin": 0.65,
+      "macroOnsetStringFretF1Min": 0.7
+    }
+  },
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "checkpointSelection": {
+    "perFold": "highest validation onset+string+fret F1 among checkpoints that do not violate any already-computable hard gate; ties by higher note-event completeness, then lower abstention rate, then earlier checkpoint",
+    "postResultThresholdRetuningAllowed": false,
+    "validationCheckpoints": 50
+  },
+  "date": "2026-09-21",
+  "evaluationPopulation": {
+    "acceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "aggregation": "average accepted capture views within each underlying performance, then macro-average underlying performances so performances with more surviving views do not receive extra weight",
+    "alignmentEligiblePrimaryCaptureCount": 256,
+    "folds": [
+      "p1-train-p2-validate",
+      "p2-train-p1-validate"
+    ],
+    "p3MayInfluenceThresholds": false,
+    "primaryContent": [
+      "chords",
+      "scales",
+      "singlenotes",
+      "PalmMute"
+    ]
+  },
+  "failurePolicy": {
+    "anyRequiredThresholdFailure": "development candidate fails closed; do not open P3",
+    "customerDeliveryEligible": false,
+    "emptyClass": "fail closed for that fold/content class",
+    "missingMetric": "fail closed",
+    "nanOrNonFinite": "fail closed"
+  },
+  "guards": {
+    "customerDeliveryEligible": false,
+    "p3OpeningAuthorizedByThisReceipt": false,
+    "paidComputeAuthorizedByThisReceipt": false,
+    "productionMutationAuthorized": false,
+    "realTrainingAuthorizedByThisReceipt": false
+  },
+  "metricDefinitions": {
+    "abstentionRate": {
+      "definition": "eligible evaluation frames for which the system returns no usable six-string state because an explicit development guard abstains, divided by eligible evaluation frames"
+    },
+    "crossPerformerConsistency": {
+      "definition": "absolute difference between the two performer-disjoint fold metrics"
+    },
+    "frameStringFretAccuracy": {
+      "definition": "exact state accuracy per physical string on active-union frames where reference or prediction is non-silent; macro-average six strings, then performances",
+      "silenceOnlyTrueNegativeFramesExcluded": true
+    },
+    "noteEventCompleteness": {
+      "definition": "sum temporal intersection duration of onset-matched exact-string/fret predicted/reference events divided by total reference event duration",
+      "range": [
+        0,
+        1
+      ]
+    },
+    "onsetStringFret": {
+      "eventSource": "contiguous non-silent string/fret runs",
+      "f1": "harmonic mean of precision and recall",
+      "match": "one-to-one exact physical string and fret, maximize match count then minimize onset error",
+      "onsetToleranceMs": 50,
+      "precision": "matched predicted events / predicted events",
+      "recall": "matched reference events / reference events"
+    },
+    "perContentClassResults": {
+      "classes": [
+        "chords",
+        "scales",
+        "singlenotes",
+        "PalmMute"
+      ],
+      "metric": "performance-macro onset+string+fret F1"
+    }
+  },
+  "schema": "astra-guitar-techs-development-metric-thresholds-v1",
+  "sourceEvidence": {
+    "alignmentEvidenceReceiptSha256": "8e65fda2a74f5f5af77ab62be3538715d9ec2c0dcd783de5837a56c5dd42b1ae",
+    "labelAlignmentTrainingContractSha256": "09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f",
+    "publishedAnchor": {
+      "comparability": "directional-anchor-only; published frame/tablature metrics and validation design are not claimed equivalent to Astra exact onset+string+fret metrics",
+      "doi": "10.1109/ICASSP49660.2025.10887996",
+      "paper": "Pedroza et al., Guitar-TECHS, ICASSP 2025",
+      "tablatureDisambiguationRateMean": 0.905,
+      "tablatureDisambiguationRateStd": 0.015,
+      "tablatureF1Mean": 0.747,
+      "tablatureF1Std": 0.031,
+      "tablaturePrecisionMean": 0.809,
+      "tablaturePrecisionStd": 0.018,
+      "tablatureRecallMean": 0.699,
+      "tablatureRecallStd": 0.048,
+      "table": "Table III, + Guitar-TECHS"
+    }
+  }
+}
