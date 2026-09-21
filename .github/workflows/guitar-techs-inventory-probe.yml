@@ -1,0 +1,193 @@
+name: Guitar-TECHS P1 single-note inventory probe
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-inventory-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Download exact verified P1 single-note archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          file='P1_singlenotes.zip'
+          url="https://zenodo.org/records/14963133/files/$file?download=1"
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Guitar-TECHS-Inventory-Probe/1.0' \
+            --output "/tmp/$file" "$url"
+
+      - name: Re-verify identity before extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive=/tmp/P1_singlenotes.zip
+          test "$(stat -c '%s' "$archive")" = '108626613'
+          test "$(md5sum "$archive" | awk '{print $1}')" = 'ca0c4674dde3805574685a313f7c39eb'
+          test "$(sha256sum "$archive" | awk '{print $1}')" = '130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4'
+          echo 'GUITAR_TECHS_PROBE_IDENTITY_VERIFIED=true'
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+
+      - name: Extract for inventory only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/guitar-techs-probe
+          unzip -q /tmp/P1_singlenotes.zip -d /tmp/guitar-techs-probe
+          rm -f /tmp/P1_singlenotes.zip
+          echo 'GUITAR_TECHS_PROBE_EXTRACTION_PURPOSE=inventory-only'
+
+      - name: Inspect layout and metadata without training or alignment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import collections, json, os, pathlib, struct, wave
+
+          root = pathlib.Path('/tmp/guitar-techs-probe')
+          files = sorted(p for p in root.rglob('*') if p.is_file())
+          rels = [p.relative_to(root).as_posix() for p in files]
+          ext_counts = collections.Counter((p.suffix.lower() or '<none>') for p in files)
+          ext_bytes = collections.Counter()
+          for p in files:
+              ext_bytes[p.suffix.lower() or '<none>'] += p.stat().st_size
+
+          summary = {
+              'schema':'astra-guitar-techs-inventory-probe-summary-v1',
+              'archive':'P1_singlenotes.zip',
+              'fileCount':len(files),
+              'totalExtractedBytes':sum(p.stat().st_size for p in files),
+              'extensionCounts':dict(sorted(ext_counts.items())),
+              'extensionBytes':dict(sorted(ext_bytes.items())),
+              'samplePaths':rels[:500],
+              'p3Opened':False,
+              'alignmentRun':False,
+              'trainingRun':False,
+          }
+          print('ASTRA_GUITARTECHS_PROBE_SUMMARY='+json.dumps(summary,sort_keys=True,separators=(',',':')))
+
+          text_suffixes={'.txt','.md','.csv','.tsv','.json','.yaml','.yml','.xml','.lab','.ini','.cfg'}
+          text_files=[p for p in files if p.suffix.lower() in text_suffixes]
+          for p in text_files[:50]:
+              try:
+                  data=p.read_text(encoding='utf-8',errors='replace')[:6000]
+              except Exception as e:
+                  data=f'<read-error {e}>'
+              print('ASTRA_TEXT_FILE_BEGIN '+p.relative_to(root).as_posix())
+              print(data)
+              print('ASTRA_TEXT_FILE_END')
+
+          def read_vlq(data, i):
+              value=0
+              for _ in range(4):
+                  b=data[i]; i+=1
+                  value=(value<<7)|(b&0x7f)
+                  if not (b&0x80): return value,i
+              return value,i
+
+          def parse_midi(path):
+              data=path.read_bytes()
+              if data[:4]!=b'MThd' or len(data)<14:
+                  return {'path':path.relative_to(root).as_posix(),'valid':False}
+              hlen=struct.unpack('>I',data[4:8])[0]
+              fmt,ntrks,division=struct.unpack('>HHH',data[8:14])
+              pos=8+hlen
+              tracks=[]
+              for ti in range(ntrks):
+                  if data[pos:pos+4]!=b'MTrk': break
+                  size=struct.unpack('>I',data[pos+4:pos+8])[0]
+                  chunk=data[pos+8:pos+8+size]; pos+=8+size
+                  i=0; running=None
+                  names=[]; instruments=[]; programs=[]; note_channels=collections.Counter()
+                  note_ons=0; pitch_bends=0; controls=collections.Counter(); meta_types=collections.Counter()
+                  min_note=128; max_note=-1
+                  while i < len(chunk):
+                      try:
+                          _,i=read_vlq(chunk,i)
+                          status=chunk[i]
+                          if status<0x80:
+                              if running is None: break
+                              status=running
+                          else:
+                              i+=1
+                              if status<0xF0: running=status
+                          if status==0xFF:
+                              if i>=len(chunk): break
+                              mt=chunk[i]; i+=1
+                              ln,i=read_vlq(chunk,i); payload=chunk[i:i+ln]; i+=ln
+                              meta_types[mt]+=1
+                              if mt==0x03: names.append(payload.decode('utf-8','replace'))
+                              elif mt==0x04: instruments.append(payload.decode('utf-8','replace'))
+                              continue
+                          if status in (0xF0,0xF7):
+                              ln,i=read_vlq(chunk,i); i+=ln; continue
+                          kind=status&0xF0; ch=status&0x0F
+                          if kind in (0xC0,0xD0):
+                              if i>=len(chunk): break
+                              a=chunk[i]; i+=1
+                              if kind==0xC0: programs.append({'channel':ch,'program':a})
+                              continue
+                          if i+1>len(chunk): break
+                          a=chunk[i]; b=chunk[i+1]; i+=2
+                          if kind==0x90 and b>0:
+                              note_ons+=1; note_channels[ch]+=1; min_note=min(min_note,a); max_note=max(max_note,a)
+                          elif kind==0xE0:
+                              pitch_bends+=1
+                          elif kind==0xB0:
+                              controls[a]+=1
+                      except Exception:
+                          break
+                  tracks.append({
+                      'index':ti,'names':names,'instruments':instruments,'programs':programs,
+                      'noteOns':note_ons,'noteChannels':dict(note_channels),
+                      'minMidi':None if max_note<0 else min_note,'maxMidi':None if max_note<0 else max_note,
+                      'pitchBendEvents':pitch_bends,'controlChangeCounts':dict(controls),
+                      'metaTypes':{str(k):v for k,v in meta_types.items()},
+                  })
+              return {'path':path.relative_to(root).as_posix(),'valid':True,'format':fmt,'tracksDeclared':ntrks,'division':division,'tracks':tracks}
+
+          midi_files=[p for p in files if p.suffix.lower() in {'.mid','.midi'}]
+          midi_summaries=[parse_midi(p) for p in midi_files]
+          print('ASTRA_MIDI_INVENTORY='+json.dumps({
+              'midiFileCount':len(midi_files),
+              'files':midi_summaries[:200],
+          },sort_keys=True,separators=(',',':')))
+
+          wav_files=[p for p in files if p.suffix.lower()=='.wav']
+          wav_summaries=[]
+          for p in wav_files[:200]:
+              try:
+                  with wave.open(str(p),'rb') as w:
+                      wav_summaries.append({
+                          'path':p.relative_to(root).as_posix(),
+                          'channels':w.getnchannels(),'sampleRate':w.getframerate(),
+                          'sampleWidth':w.getsampwidth(),'frames':w.getnframes(),
+                          'durationSeconds':w.getnframes()/w.getframerate(),
+                      })
+              except Exception as e:
+                  wav_summaries.append({'path':p.relative_to(root).as_posix(),'error':str(e)})
+          print('ASTRA_WAV_INVENTORY='+json.dumps({
+              'wavFileCount':len(wav_files),
+              'files':wav_summaries,
+          },sort_keys=True,separators=(',',':')))
+          PY
+
+      - name: Delete extracted media
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/guitar-techs-probe /tmp/P1_singlenotes.zip
+          echo 'GUITAR_TECHS_PROBE_MEDIA_DELETED=true'
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+          echo 'GUITAR_TECHS_ALIGNMENT_RUN=false'
+          echo 'GUITAR_TECHS_TRAINING_RUN=false'

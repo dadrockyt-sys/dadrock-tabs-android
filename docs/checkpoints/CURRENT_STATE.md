@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; INVENTORY EXTRACTION NEXT; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; INVENTORY EXTRACTION PROBE IN PROGRESS; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -742,6 +742,14 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 **Proceed with inventory-only extraction of the verified P1/P2 development archives under the existing authorization; do not ask for acquisition authorization again.**
 
 Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 before extracting it. P3 remains sealed and real training remains unauthorized.
+
+## Guitar-TECHS inventory extraction probe started — 2026-09-21
+
+- Identity-freeze commit `c3dbef4e7ed2d290ccea227f63a669272ac84fcf` passed GitHub Actions run `35563216204`: **265/265 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 `b1f11b2c75898296977f723accf0902784acfe439b882890496d4e67da10a033`; focused evaluation output SHA-256 `7648c12a60f894501b1d143be007ca9a186d9a0c5c0151a802c5d62786141306`.
+- Inventory extraction is already authorized for P1/P2. To avoid guessing archive semantics, the first extraction step is a bounded probe of the smallest verified archive, `P1_singlenotes.zip`.
+- The probe must re-verify exact bytes, published MD5 and frozen Astra SHA-256 `130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4` before extraction.
+- It may inspect directory/file layout, text metadata, WAV headers and MIDI structural metadata only. It performs no alignment, feature generation, model import or training.
+- `P3_music.zip` remains sealed and is not referenced as a downloadable input.
 
 ## Copy-paste handoff
 
