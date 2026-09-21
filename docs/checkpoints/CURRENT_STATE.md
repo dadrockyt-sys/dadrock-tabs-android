@@ -763,6 +763,13 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - No alignment, audio feature extraction, model import or training was performed. P3 was not opened.
 - Added reusable `astra_backend/guitartechs_inventory/inspect_extracted.py` and branch-only full P1/P2 inventory workflow. The full matrix re-verifies bytes + MD5 + frozen Astra SHA-256 before each archive is extracted.
 
+## P2 chords receipt recovery — 2026-09-21
+
+- Full P1/P2 inventory workflow run `35563511409` completed the P2 chords inventory job successfully, but GitHub's per-job log backing blob returned `BlobNotFound` when the assistant attempted to collect that receipt.
+- This is an evidence-retrieval failure, not an inventory-job failure.
+- A one-archive recovery workflow re-runs only the already-authorized, already-hash-frozen `P2_chords.zip`, re-verifies bytes + MD5 + Astra SHA-256 before extraction, writes the inventory receipt to a small short-lived Actions artifact, deletes extracted media, and performs no alignment or training.
+- P3 remains sealed.
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.

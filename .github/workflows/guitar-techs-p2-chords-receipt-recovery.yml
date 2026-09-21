@@ -1,0 +1,75 @@
+name: Recover P2 chords inventory receipt
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-p2-chords-receipt-recovery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Download exact verified P2 chords archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          file='P2_chords.zip'
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Guitar-TECHS-Inventory-Recovery/1.0' \
+            --output "/tmp/$file" \
+            "https://zenodo.org/records/14963133/files/$file?download=1"
+
+      - name: Re-verify all frozen identities before extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive=/tmp/P2_chords.zip
+          test "$(stat -c '%s' "$archive")" = '1150819056'
+          test "$(md5sum "$archive" | awk '{print $1}')" = 'eb6f74dd19162237189281688ad7ad2e'
+          test "$(sha256sum "$archive" | awk '{print $1}')" = '9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce'
+          echo 'GUITAR_TECHS_P2_CHORDS_IDENTITY_VERIFIED=true'
+
+      - name: Extract and write inventory receipt only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/inventory-P2_chords
+          mkdir -p "$root"
+          unzip -q /tmp/P2_chords.zip -d "$root"
+          rm -f /tmp/P2_chords.zip
+          python3 astra_backend/guitartechs_inventory/inspect_extracted.py \
+            --root "$root" \
+            --archive P2_chords.zip \
+            --performer P2 \
+            --category chords \
+            --bytes 1150819056 \
+            --md5 eb6f74dd19162237189281688ad7ad2e \
+            --sha256 9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce \
+            | sed -n 's/^ASTRA_GUITARTECHS_INVENTORY_RECEIPT=//p' \
+            > /tmp/P2_chords.inventory.json
+          python3 -m json.tool /tmp/P2_chords.inventory.json > /tmp/P2_chords.inventory.pretty.json
+          mv /tmp/P2_chords.inventory.pretty.json /tmp/P2_chords.inventory.json
+          test -s /tmp/P2_chords.inventory.json
+          rm -rf "$root"
+          echo 'GUITAR_TECHS_P2_CHORDS_MEDIA_DELETED=true'
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+          echo 'GUITAR_TECHS_ALIGNMENT_RUN=false'
+          echo 'GUITAR_TECHS_TRAINING_RUN=false'
+
+      - name: Upload receipt only
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-chords-inventory-receipt
+          path: /tmp/P2_chords.inventory.json
+          if-no-files-found: error
+          retention-days: 1
