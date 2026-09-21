@@ -1116,3 +1116,17 @@ Inspect run `35662028832` first. If fold 1 completes, collect its development-on
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
+
+## V2 resume observation — 2026-09-21
+
+- Resumed from this canonical checkpoint and re-read `AGENTS.md` before any repository write.
+- Read-only inspection of authoritative GitHub Actions run `35662028832`: preflight job `106539242502` remains **PASS**; Fold 1 job `106539518639` (`P1 -> P2`) remains **in progress** in the frozen optimizer/full-validation step; Fold 2 job `106539518543` (`P2 -> P1`) remains intentionally queued by `max-parallel: 1`.
+- Workflow artifacts currently returned: **0**. Therefore no fold artifact, result JSON, model SHA-256, label-balance receipt, selected checkpoint, or full-validation metric is yet available for admission.
+- Re-verified the frozen admission path on `astra-work`: `docs/astra/GUITARTECHS_V2_RESULT_ADMISSION_CONTRACT_V1.json` receipt SHA-256 `58184ff3c60499c2ba6b89ef1042ea3c0eb20603d5a3a10e2eb11700de7a41db`; development threshold receipt SHA-256 `fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15`; evaluator `astra_backend/guitarTechsV2ResultAdmission.mjs` still requires exact fold identities/counts/exposures, pretraining label-balance sanity and guard flags before metrics can be evaluated.
+- In-progress job-log archive fetch returned `BlobNotFound`; this is **not** treated as a workflow failure because the job itself remains `in_progress` via the authoritative Actions jobs endpoint.
+- No duplicate V2 run was launched. No training parameter, threshold, checkpoint-selection rule, 256-path allowlist, workflow checkout, `main`, Production or customer-delivery state was changed. **P3 remains sealed.**
+
+### EXPLICIT NEXT STEP TO RESUME
+
+Inspect run `35662028832` first. When Fold 1 completes and its artifact appears, collect the Actions artifact ID/digest, download the artifact, compute/record result JSON and model SHA-256, and structurally admit it against the frozen V2 contract before doing anything else. Then allow the same serialized run to continue into Fold 2; do not relaunch either fold. After both artifacts exist, run only the frozen V2 admission + development metric evaluator. Keep P3 sealed unless a later checkpoint records both-fold PASS and the user separately authorizes the P3 gate.
+
