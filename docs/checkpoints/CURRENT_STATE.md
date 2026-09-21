@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; SECOND-SONG NOTE BENCHMARK BLOCKED; TABCNN GUITARPROFX SELECTED AS NEXT BOUNDED GUITAR NOTE-INFERENCE CANDIDATE**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; TABCNN OFFICIAL CHECKPOINT IDENTITY FROZEN; INFERENCE-ONLY RUNTIME LOCK + PREPROCESSING REPRODUCTION NEXT**
 
 ## Product outcome
 
@@ -574,13 +574,24 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Current branch HEAD at checkpoint save: `87b8e90857dbdc7962765723cd5c8c72aef0e639`.
 - **No TabCNN checkpoint has been downloaded or executed.** Customer delivery remains false.
 
-## Exact next step — Verify preflight CI, then perform bounded official-artifact identity acquisition
+## TabCNN official artifact identity frozen — 2026-09-21
 
-1. Verify branch CI for commit `87b8e90857dbdc7962765723cd5c8c72aef0e639`. Do not advance if the new preflight tests are not green.
-2. If CI is green, perform **artifact-identity acquisition only** from the official Zenodo record11406378: download the exact file `best_TabCNN_tablature_trancription_model`; verify byte count3,345,122 and published MD5 `ce168b2cd426f81a2a78499214e40605`; compute/freeze Astra SHA-256. Do **not** execute the model yet.
-3. Save an artifact receipt and feed only those verified identity fields into `tabcnnPreflight.mjs`. The preflight must remain blocked on runtime lock, exact package versions, preprocessing numerical reproduction, CPU smoke, runtime/memory budget and rights review.
-4. Next, derive a **minimal inference-only dependency lock** from the pinned official source instead of installing the full amt-tools surface. Freeze exact versions/hashes and separately reproduce the preprocessing numerically before any model invocation.
-5. Only after artifact identity + runtime lock + preprocessing receipt + rights review are complete may a bounded CPU smoke test be authorized. Keep TabCNN generic-guitar only; role identity still comes from Astra role evidence. No Gomyway retuning, main, Production or customer delivery.
+- Verified the preflight gate commit `87b8e90857dbdc7962765723cd5c8c72aef0e639`: GitHub Actions run `35556466333` completed successfully.
+- Added a dedicated branch-only identity workflow, `.github/workflows/tabcnn-artifact-identity.yml`. It downloads only the exact official Zenodo checkpoint, computes size/MD5/SHA-256, performs no import/inference/audio access, deletes the temporary bytes, has read-only repository permissions, and does not persist the model artifact.
+- Official Zenodo record `11406378` identifies file `best_TabCNN_tablature_trancription_model`; published MD5 `ce168b2cd426f81a2a78499214e40605`. The official record also states that the best-performing GuitarProFX TabCNN weights are provided.
+- First identity acquisition run `35558742279` succeeded from the official Zenodo URL: **3,345,122 bytes**, MD5 **`ce168b2cd426f81a2a78499214e40605`**, Astra SHA-256 **`1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c`**. The temporary checkpoint was deleted and not committed/uploaded as an artifact.
+- `docs/astra/TABCNN_ARTIFACT_RECEIPT_V1.json` freezes that evidence. Raw receipt SHA-256: **`611a34fb6c087e99ba0fbb552407b1facd9729c995886e3cf7c9fc92ff491283`**.
+- Commit `9425ed25ccc3cac0349f4580a3f633bd90702a2b` pins the exact Astra SHA-256 in `tabcnnPreflight.mjs`, hardens the identity workflow to require it on future downloads, and adds a substitution regression test. A syntactically valid but different SHA-256 now fails closed with `OFFICIAL_ARTIFACT_SHA256_UNVERIFIED`.
+- Verification on commit `9425ed25ccc3cac0349f4580a3f633bd90702a2b`: artifact identity run `35558828514` **PASS**; Astra backend run `35558828537` **232/232 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`79786a97dc6a4101707d946c80d8ca1877ea4cafdf4065f3d1a869e7c29f2e83`**; focused evaluation output SHA-256 **`ca44d6ec178213c755ca2b7f5ea3bfb7d11821587dcca4ad435d71254e3fe2a1`**.
+- This clears only official checkpoint byte identity. **TabCNN has not been imported or executed.** Development execution remains blocked on exact inference runtime, numerical preprocessing reproduction, CPU smoke/budget evidence, checkpoint/training-data rights review and explicit development authorization. Customer delivery remains false.
+
+## Exact next step — Freeze minimal TabCNN inference runtime and reproduce preprocessing
+
+1. Derive a **minimal inference-only dependency surface** from the pinned official source revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`. Do not install the full training/amt-tools environment by default. Identify only packages required for checkpoint deserialization, model definition, CQT/VQT preprocessing and CPU forward inference.
+2. Freeze exact Python/platform assumptions, package versions and artifact hashes into a deterministic lock. Reject lower-bound-only dependency declarations and any NumPy/librosa/torch convention drift that can alter the 22,050 Hz -> CQT/VQT feature tensor.
+3. Before invoking the checkpoint, reproduce the pinned preprocessing numerically on deterministic synthetic audio and save a receipt covering waveform normalization, CQT/VQT dimensions/values, dB conversion and 9-frame context assembly. The reproduction must be independent of model output.
+4. Separately complete checkpoint-license and training-data commercial-rights review. Do not infer commercial permission solely from code or record-level metadata.
+5. Only after artifact identity + runtime lock + numerical preprocessing receipt + rights review are frozen may a bounded CPU smoke test be authorized. Keep TabCNN generic-guitar only; role identity still comes from Astra role evidence. No Gomyway retuning, main, Production or customer delivery.
 
 ## Copy-paste handoff
 
