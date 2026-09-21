@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; FULL P1/P2 INVENTORY EXTRACTION IN PROGRESS; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 BYTE IDENTITIES + 92-GROUP INVENTORY EVIDENCE FROZEN; P2 D-STRING TUNING UNRESOLVED; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -769,6 +769,30 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - This is an evidence-retrieval failure, not an inventory-job failure.
 - A one-archive recovery workflow re-runs only the already-authorized, already-hash-frozen `P2_chords.zip`, re-verifies bytes + MD5 + Astra SHA-256 before extraction, writes the inventory receipt to a small short-lived Actions artifact, deletes extracted media, and performs no alignment or training.
 - P3 remains sealed.
+
+## Guitar-TECHS P1/P2 inventory evidence frozen — 2026-09-21
+
+- Full authorized inventory run `35563511409` completed **all eight** P1/P2 jobs successfully. Every archive was re-verified against frozen byte count, published MD5 and Astra SHA-256 before extraction; extracted media was deleted after inventory.
+- P2-chords receipt recovery run `35563847021` also completed successfully after the original job-log backing blob was unavailable. Recovery artifact `10623565422` digest: `sha256:7e7cf64058903eed463f4e066b0896d0241022d0fae0f8d371e577618bb813f1`.
+- Frozen combined receipt: `docs/astra/GUITARTECHS_DEVELOPMENT_INVENTORY_EVIDENCE_V1.json`; SHA-256 **`4d21d578a275587abe18d9f5382074fa9c33bd2f0698c5d10b340788de306bcd`**. Companion review: `docs/astra/GUITARTECHS_DEVELOPMENT_INVENTORY_REVIEW_V1.md`.
+- Inventory covers **92 underlying performance groups**, 460 visible files and the four correlated capture families `directinput`, `micamp`, `ego`, `exo`. Every performance group has one MIDI file; all inspected MIDIs are format 1 / PPQ 960.
+- String labels are explicit MIDI track names `e/B/G/D/A/E`. Single-note, scale and technique files use fixed indices 1–6, but chord files can omit unplayed strings and shift later track indices. **Chord string identity is now frozen as track-name-based, never positional.**
+- P1 tuning is directly evidenced by single-note minima `64,59,55,50,45,40` -> E2-A2-D3-G3-B3-E4.
+- P2 single-note minima are `64,59,55,51,45,40`; the D-string open MIDI 50 is not directly observed, and the reviewed official dataset page does not state tuning. Astra therefore keeps **`P2_D_STRING_TUNING_NOT_FULLY_VERIFIED`** as a fail-closed blocker instead of assuming D3.
+- Technique semantics review found zero MIDI pitch-bend events in both performers' named technique MIDIs, including Bendings/Vibrato, while P2 scale MIDIs and two P2 chord MIDIs do contain pitch-bend events. Pitch-bend-controller presence is therefore **not** a trustworthy technique label. V1 primary note/fret content remains chords, scales, ordinary single notes and PalmMute; Bendings/Harmonics/PinchHarmonics/Vibrato remain auxiliary/held out.
+- Added `astra_backend/guitarTechsInventoryEvidence.mjs` with fail-closed receipt/run/group/string-map/P3/alignment/training checks and focused tests.
+- Candidate registry now clears `EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED` and the vague `TUNING_METADATA_NOT_FROZEN`; it records the inventory receipt and keeps the precise P2 D-string tuning blocker.
+- No alignment, model import, real training, P3 access, main/Production change or customer-delivery authorization occurred.
+
+## Exact next step — resolve P2 tuning before absolute-fret labels
+
+1. Seek independent authoritative or already-authorized dataset evidence for P2 D-string tuning without opening P3.
+2. Do not infer MIDI 50 merely because standard tuning is likely.
+3. Only after six-string P2 tuning is frozen may P2 absolute-fret label generation proceed.
+4. Then run the already-frozen P1/P2 alignment checks; alignment is not a training authorization.
+5. **Do not begin real model training without separate explicit training authorization.**
+6. Keep P3 sealed and keep `main`, Production and customer-delivery behavior unchanged.
+
 
 ## Copy-paste handoff
 

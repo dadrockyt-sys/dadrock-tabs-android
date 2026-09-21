@@ -1,0 +1,277 @@
+{
+  "aggregate": {
+    "alignmentRun": false,
+    "allArchivesVerifiedBeforeExtraction": true,
+    "allPerformanceGroupsHaveOneMidi": true,
+    "archiveCount": 8,
+    "audioCaptureViews": [
+      "directinput",
+      "micamp"
+    ],
+    "mediaPersisted": false,
+    "midiFormat": [
+      1
+    ],
+    "midiPpq": [
+      960
+    ],
+    "modelImported": false,
+    "p3Opened": false,
+    "performanceGroupCount": 92,
+    "performers": [
+      "P1",
+      "P2"
+    ],
+    "totalExtractedBytesAcrossInventoryRuns": 7288969715,
+    "trainingRun": false,
+    "videoCaptureViews": [
+      "ego",
+      "exo"
+    ],
+    "visibleFileCount": 460
+  },
+  "archives": [
+    {
+      "astraSha256": "de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326",
+      "bytes": 981741162,
+      "category": "chords",
+      "file": "P1_chords.zip",
+      "md5": "be9ef8bbdceb1912d565254e607a6d94",
+      "midiFiles": 28,
+      "mp3Files": 56,
+      "performanceGroups": 28,
+      "performer": "P1",
+      "visibleFiles": 140,
+      "wavFiles": 56
+    },
+    {
+      "astraSha256": "79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509",
+      "bytes": 453349723,
+      "category": "scales",
+      "file": "P1_scales.zip",
+      "md5": "9c0b98e8fb42a522df727ea8bf545e4f",
+      "midiFiles": 12,
+      "mp3Files": 24,
+      "performanceGroups": 12,
+      "performer": "P1",
+      "visibleFiles": 60,
+      "wavFiles": 24
+    },
+    {
+      "astraSha256": "130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4",
+      "bytes": 108626613,
+      "category": "singlenotes",
+      "file": "P1_singlenotes.zip",
+      "md5": "ca0c4674dde3805574685a313f7c39eb",
+      "midiFiles": 1,
+      "mp3Files": 2,
+      "performanceGroups": 1,
+      "performer": "P1",
+      "visibleFiles": 5,
+      "wavFiles": 2
+    },
+    {
+      "astraSha256": "1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e",
+      "bytes": 326280863,
+      "category": "techniques",
+      "file": "P1_techniques.zip",
+      "md5": "18634a41a6db5a8de10d07eb3122a872",
+      "midiFiles": 5,
+      "mp3Files": 10,
+      "performanceGroups": 5,
+      "performer": "P1",
+      "visibleFiles": 25,
+      "wavFiles": 10
+    },
+    {
+      "astraSha256": "9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce",
+      "bytes": 1150819056,
+      "category": "chords",
+      "file": "P2_chords.zip",
+      "md5": "eb6f74dd19162237189281688ad7ad2e",
+      "midiFiles": 28,
+      "mp3Files": 56,
+      "performanceGroups": 28,
+      "performer": "P2",
+      "visibleFiles": 140,
+      "wavFiles": 56
+    },
+    {
+      "astraSha256": "d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17",
+      "bytes": 471254783,
+      "category": "scales",
+      "file": "P2_scales.zip",
+      "md5": "96664853872f51e5f8aa4447313b7cf5",
+      "midiFiles": 12,
+      "mp3Files": 24,
+      "performanceGroups": 12,
+      "performer": "P2",
+      "visibleFiles": 60,
+      "wavFiles": 24
+    },
+    {
+      "astraSha256": "d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9",
+      "bytes": 116133457,
+      "category": "singlenotes",
+      "file": "P2_singlenotes.zip",
+      "md5": "40fbf03d8b04bb2cf42df20f36dc2254",
+      "midiFiles": 1,
+      "mp3Files": 2,
+      "performanceGroups": 1,
+      "performer": "P2",
+      "visibleFiles": 5,
+      "wavFiles": 2
+    },
+    {
+      "astraSha256": "05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816",
+      "bytes": 395839610,
+      "category": "techniques",
+      "file": "P2_techniques.zip",
+      "md5": "f4189251ce50be25f06a173b2c2bba00",
+      "midiFiles": 5,
+      "mp3Files": 10,
+      "performanceGroups": 5,
+      "performer": "P2",
+      "visibleFiles": 25,
+      "wavFiles": 10
+    }
+  ],
+  "authorizationScope": "guitar-techs-p1-p2-development-media-v1",
+  "dataset": "Guitar-TECHS",
+  "evidenceRuns": {
+    "fullInventoryRunId": 35563511409,
+    "p2ChordsRecoveryArtifactDigest": "sha256:7e7cf64058903eed463f4e066b0896d0241022d0fae0f8d371e577618bb813f1",
+    "p2ChordsRecoveryArtifactId": 10623565422,
+    "p2ChordsRecoveryRunId": 35563847021
+  },
+  "gates": {
+    "alignmentAuthorizedByThisReceipt": false,
+    "captureViewGroupingVerified": true,
+    "customerDeliveryEligible": false,
+    "p1TuningVerified": true,
+    "p2TuningFullyVerified": false,
+    "p3Sealed": true,
+    "performanceGroupingVerified": true,
+    "stringTrackMappingVerified": true,
+    "techniqueMidiSemanticsReviewed": true,
+    "trainingAuthorizedByThisReceipt": false
+  },
+  "record": "https://zenodo.org/records/14963133",
+  "schema": "astra-guitar-techs-development-inventory-evidence-v1",
+  "stringTrackEvidence": {
+    "allObservedNoteBearingChordTrackNamesSubsetOfCanonicalNames": true,
+    "canonicalTrackNamesHighToLow": [
+      "e",
+      "B",
+      "G",
+      "D",
+      "A",
+      "E"
+    ],
+    "chordRule": "Map string identity by explicit MIDI track name, never by track index; unused chord strings may be omitted and later tracks shift index.",
+    "chordTrackIndexSafe": false,
+    "fixedTrackIndexMapping": {
+      "1": "e",
+      "2": "B",
+      "3": "G",
+      "4": "D",
+      "5": "A",
+      "6": "E"
+    },
+    "fixedTrackIndexSafeFor": [
+      "singlenotes",
+      "scales",
+      "techniques"
+    ],
+    "sourceBasis": "Fishman Triple Play Connect multi-track MIDI pickup plus extracted explicit MIDI track names"
+  },
+  "techniqueMidiEvidence": {
+    "interpretation": "MIDI pitch-bend controller presence is not a reliable semantic technique label in this dataset. Bend/vibrato supervision must not be inferred from pitch-bend-event presence.",
+    "p1TechniquePitchBendEventCount": 0,
+    "p2ChordPitchBendEventCount": 128,
+    "p2ChordPitchBendEventsObserved": true,
+    "p2ScalePitchBendEventsObserved": true,
+    "p2TechniquePitchBendEventCount": 0,
+    "techniquePerformanceNames": [
+      "Bendings",
+      "Harmonics",
+      "PalmMute",
+      "PinchHarmonics",
+      "Vibrato"
+    ],
+    "v1HeldOutOrAuxiliaryTechniqueContent": [
+      "Bendings",
+      "Harmonics",
+      "PinchHarmonics",
+      "Vibrato"
+    ],
+    "v1PrimaryNoteFretContent": [
+      "chords",
+      "scales",
+      "singlenotes",
+      "PalmMute"
+    ]
+  },
+  "tuningEvidence": {
+    "p1": {
+      "highToLowObservedMinMidi": [
+        64,
+        59,
+        55,
+        50,
+        45,
+        40
+      ],
+      "highToLowTrackNames": [
+        "e",
+        "B",
+        "G",
+        "D",
+        "A",
+        "E"
+      ],
+      "interpretation": "E2 A2 D3 G3 B3 E4",
+      "lowToHighOpenStringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+      ],
+      "status": "verified-from-single-note-open-string-minima"
+    },
+    "p2": {
+      "highToLowObservedSingleNoteMinMidi": [
+        64,
+        59,
+        55,
+        51,
+        45,
+        40
+      ],
+      "highToLowTrackNames": [
+        "e",
+        "B",
+        "G",
+        "D",
+        "A",
+        "E"
+      ],
+      "status": "partial",
+      "trainingImplication": "Absolute fret inference for P2 must remain fail-closed until the D-string tuning is independently verified.",
+      "unresolved": [
+        "D-string open MIDI is not directly observed in P2 single-note inventory; observed minimum is 51.",
+        "Reviewed official dataset website did not state tuning explicitly."
+      ],
+      "verifiedOpenStrings": {
+        "A": 45,
+        "B": 59,
+        "E": 40,
+        "G": 55,
+        "e": 64
+      }
+    }
+  },
+  "version": "v1"
+}
