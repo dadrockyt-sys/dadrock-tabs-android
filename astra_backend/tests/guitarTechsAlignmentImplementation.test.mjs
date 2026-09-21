@@ -6,13 +6,12 @@ import { readFileSync } from 'node:fs';
 test('Guitar-TECHS alignment implementation is frozen before real alignment', () => {
   const source = readFileSync(new URL('../guitartechs_alignment/align_development.py', import.meta.url));
   const digest = createHash('sha256').update(source).digest('hex');
-  assert.equal(digest, 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547');
+  assert.equal(digest, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
 
-  const contract = JSON.parse(readFileSync(
-    new URL('../../docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json', import.meta.url),
-    'utf8',
-  ));
-  assert.equal(contract.scriptSha256, 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547');
+  const contractBytes = readFileSync(new URL('../../docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json', import.meta.url));
+  assert.equal(createHash('sha256').update(contractBytes).digest('hex'), '0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e');
+  const contract = JSON.parse(contractBytes.toString('utf8'));
+  assert.equal(contract.scriptSha256, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
   assert.equal(contract.sourceContractSha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');
   assert.deepEqual(contract.lagEstimator.searchMs, [-100, 100]);
   assert.equal(contract.lagEstimator.stepMs, 1);

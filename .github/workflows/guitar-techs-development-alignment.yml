@@ -21,7 +21,7 @@ jobs:
       - name: Install frozen alignment NumPy
         run: python3 -m pip install --disable-pip-version-check --no-deps numpy==1.26.4
       - name: Verify frozen implementation identity
-        run: test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+        run: test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
       - name: Run synthetic lag-recovery tests before media access
         working-directory: astra_backend/guitartechs_alignment
         run: python3 -m unittest -v test_alignment.py
@@ -49,7 +49,7 @@ jobs:
       - name: Verify runner prerequisites
         run: |
           set -euo pipefail
-          test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+          test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
           ffmpeg -version | head -n 1
       - name: Download exact authorized P1/P2 archive
         env:
@@ -89,7 +89,7 @@ jobs:
           CATEGORY: ${{ matrix.category }}
         run: |
           set -euo pipefail
-          python3 astra_backend/guitartechs_alignment/align_development.py             --root "/tmp/alignment-${FILE%.zip}"             --archive "$FILE"             --performer "$PERFORMER"             --category "$CATEGORY"             --output "/tmp/${FILE%.zip}.alignment.json"             --script-sha256 'ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547'
+          python3 astra_backend/guitartechs_alignment/align_development.py             --root "/tmp/alignment-${FILE%.zip}"             --archive "$FILE"             --performer "$PERFORMER"             --category "$CATEGORY"             --output "/tmp/${FILE%.zip}.alignment.json"             --script-sha256 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
       - name: Upload alignment receipt only
         uses: actions/upload-artifact@v4
         with:
