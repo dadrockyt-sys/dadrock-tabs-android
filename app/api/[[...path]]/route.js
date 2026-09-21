@@ -146,14 +146,19 @@ export async function GET(request, context) {
     // Get all videos with search
     if (path === '/videos') {
       const db = await getDb();
-      const search = searchParams.get('search');
+      const rawSearch = searchParams.get('search');
+      const search = rawSearch?.trim().replace(/\s+/g, ' ');
       const searchType = searchParams.get('search_type') || 'all';
       const skip = parseInt(searchParams.get('skip') || '0');
       const limit = parseInt(searchParams.get('limit') || '50');
 
       let query = {};
       if (search) {
-        const searchRegex = { $regex: search, $options: 'i' };
+        // Treat user input as literal text and ignore accidental whitespace.
+        const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\      let query = {};
+      if (search) {
+        const searchRegex = { $regex: search, $options: 'i' };');
+        const searchRegex = { $regex: escapedSearch, $options: 'i' };
         if (searchType === 'song') {
           query = { song: searchRegex };
         } else if (searchType === 'artist') {
