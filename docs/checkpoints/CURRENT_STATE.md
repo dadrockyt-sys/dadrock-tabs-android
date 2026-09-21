@@ -913,6 +913,25 @@ Real training remains separately unauthorized. A future authorization must be ex
 - Training limits, seed, random initialization, 256-path allowlist, alignment corrections, metric thresholds and checkpoint-selection policy are unchanged.
 
 
+## Bounded P1/P2 real training active — 2026-09-21
+
+- User authorization is active under scope `guitar-techs-p1-p2-real-training-v1`; P3, paid compute, main/Production mutation and customer delivery remain forbidden.
+- First corrected media-reaching run `35568621144` passed preflight but both folds stopped before any optimizer step because Zenodo returned repeated HTTP 504 responses on the first archive.
+- Fetch orchestration was hardened without changing the frozen training/evaluation contract: folds serialized, Zenodo API-content endpoint added as primary with published-file fallback, bounded retry/backoff and partial-file cleanup retained.
+- Exact launch commit: `ec4860d9da2eef2952bf47bb7beb904b215562c4`.
+- Active GitHub Actions run: **`35569391647`**.
+- Preflight job `106237628363`: **PASS**, including authorization/source identity checks, exact frozen runtime install and training-core self-test.
+- Fold 1 job `106237810511` (`P1 -> P2`) successfully crossed the earlier Zenodo failure point and is currently in **Prepare exact frozen 256-path P1/P2 development set**.
+- Fold 2 job `106237810493` (`P2 -> P1`) remains queued by the intentional `max-parallel: 1` serialization.
+- At this checkpoint there have been **zero real optimizer steps in this launch yet**; model training begins only after the 256-path prepared manifest is complete.
+- Frozen limits remain unchanged: random initialization, 2,500 iterations/fold, batch 32, Adadelta lr 1.0, seed 20260921, 50 checkpoint evaluations/fold, exact 256-path alignment allowlist, frozen metric thresholds.
+- P3 is absent from workflow inputs.
+
+## NEXT ACTION TO RESUME — active training run
+
+Inspect Actions run `35569391647` first. Do not launch a duplicate while it is active. If fold 1 completes, collect its development-only model/result artifact and exact metrics; then allow serialized fold 2 to complete. Evaluate both folds only against the already-frozen threshold receipt. Do not tune thresholds after seeing results. Do not open P3 unless a later checkpoint explicitly establishes that both development folds passed and separately authorizes the sealed final gate.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
