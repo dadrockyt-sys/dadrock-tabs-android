@@ -67,7 +67,7 @@ jobs:
             --source-root /tmp/tabcnn-source \
             --receipt-out /tmp/tabcnn-preprocessing-receipt.json
           sha256sum /tmp/tabcnn-preprocessing-receipt.json
-          diff -u docs/astra/TABCNN_PREPROCESSING_RECEIPT_V1.json /tmp/tabcnn-preprocessing-receipt.json
+          diff -u "$GITHUB_WORKSPACE/docs/astra/TABCNN_PREPROCESSING_RECEIPT_V1.json" /tmp/tabcnn-preprocessing-receipt.json
 
       - name: Verify frozen runtime and emit wheel identity manifest
         shell: bash
