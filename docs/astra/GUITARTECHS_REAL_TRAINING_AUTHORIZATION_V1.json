@@ -1,0 +1,36 @@
+{
+  "authorizationScope": "guitar-techs-p1-p2-real-training-v1",
+  "authorizedAt": "2026-09-21",
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "compute": {
+    "paidComputeAuthorized": false,
+    "runnerPolicy": "github-hosted-public-repository-cpu-only"
+  },
+  "development": {
+    "acceptedPrimaryCaptureCount": 256,
+    "acceptedPrimaryCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "alignmentEvidenceReceiptSha256": "8e65fda2a74f5f5af77ab62be3538715d9ec2c0dcd783de5837a56c5dd42b1ae",
+    "metricThresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "performers": ["P1", "P2"],
+    "folds": ["p1-train-p2-validate", "p2-train-p1-validate"]
+  },
+  "limits": {
+    "batchSize": 32,
+    "learningRate": 1.0,
+    "maxIterationsPerFold": 2500,
+    "optimizer": "Adadelta",
+    "seed": 20260921,
+    "validationCheckpointsPerFold": 50
+  },
+  "model": {
+    "initialization": "random-only",
+    "publishedCheckpointMayBeLoaded": false
+  },
+  "prohibitions": {
+    "customerDeliveryAuthorized": false,
+    "mainMutationAuthorized": false,
+    "p3MayBeOpened": false,
+    "productionMutationAuthorized": false
+  },
+  "schema": "astra-guitar-techs-real-training-authorization-v1"
+}

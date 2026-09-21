@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; GUITAR-TECHS P1/P2 INVENTORY + TUNING + ALIGNMENT + DEVELOPMENT ACCEPTANCE THRESHOLDS FROZEN; 256 PRIMARY CAPTURE PATHS ELIGIBLE; REAL TRAINING NOW THE NEXT AUTHORIZATION GATE; P3 SEALED**
+Status: **GUITAR-TECHS P1/P2 REAL TRAINING AUTHORIZED; IMPLEMENTATION/PREFLIGHT IN PROGRESS; P3 SEALED; PAID COMPUTE/PRODUCTION/CUSTOMER DELIVERY UNAUTHORIZED**
 
 ## Product outcome
 
@@ -865,6 +865,17 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 All pre-training evidence gates that can be completed without a real training run are now frozen: archive identity, grouping, string mapping, tuning, alignment allowlist, deterministic runtime/smoke, development metric definitions and acceptance thresholds.
 
 Real training remains separately unauthorized. A future authorization must be explicit for bounded P1/P2 training only; P3 stays sealed until a trained candidate passes both development folds under the frozen thresholds. Production/customer delivery remains unauthorized regardless.
+
+
+## P1/P2 real training authorized — 2026-09-21
+
+- User explicitly authorized the next bounded real-training gate.
+- Frozen authorization scope: `guitar-techs-p1-p2-real-training-v1`.
+- Receipt: `docs/astra/GUITARTECHS_REAL_TRAINING_AUTHORIZATION_V1.json`; SHA-256 **`175de606db2276dd745d697e1e996e6c533a7ad6542d258ed66e2a8bbb6ea0d0`**.
+- Authorized: random-initialized Astra TabCNN training on P1/P2 only, both performer-disjoint folds, max 2,500 iterations/fold, batch 32, Adadelta lr 1.0, seed 20260921, 50 validation checkpoints/fold, exact frozen 256-path alignment allowlist and frozen development thresholds.
+- Not authorized: P3 access, published GuitarProFX checkpoint loading, paid compute, main/Production mutation or customer delivery.
+- Candidate registry now clears `TRAINING_NOT_AUTHORIZED`; `MODEL_NOT_TRAINED`, P3 and customer-delivery gates remain.
+- Next action is implementation/preflight freeze, followed by the branch-only CPU training workflow if preflight passes.
 
 
 ## Copy-paste handoff
