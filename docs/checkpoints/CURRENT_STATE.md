@@ -716,6 +716,27 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 5. Run the frozen alignment checks only after those extraction receipts exist. Real training still requires a separate explicit training authorization.
 6. Do not modify main/Production or customer-delivery policy.
 
+## NEXT ACTION TO RESUME — explicit
+
+**Stop here until the user explicitly authorizes P1/P2 development-media acquisition.**
+
+When authorization is given, the next implementation step is:
+
+1. Acquire **only** the frozen eight P1/P2 Guitar-TECHS development archives under authorization scope `guitar-techs-p1-p2-development-media-v1`.
+2. Before extracting anything, verify each downloaded archive against the frozen published **file name, byte count, and MD5**, then compute and record its **Astra SHA-256**.
+3. **Do not download, open, inspect, or extract `P3_music.zip`.** P3 remains sealed.
+4. After P1/P2 byte identity is frozen, extract for **inventory only** and create receipts for:
+   - underlying-performance grouping;
+   - correlated capture-view grouping;
+   - exact six-string MIDI/track mapping;
+   - tuning evidence;
+   - technique MIDI/pitch-bend semantics.
+5. Only after those receipts exist may the frozen alignment checks run.
+6. **Do not begin real model training** without a separate explicit training authorization.
+7. Keep `main`, Production, and customer-delivery behavior unchanged.
+
+Current branch checkpoint before this note: `68e33551faf1bfd965f09ab4309813d568516b49`.
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
