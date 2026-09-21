@@ -1,0 +1,50 @@
+name: TabCNN static checkpoint inspection
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'astra_backend/tabcnn_runtime/inspect_checkpoint_pickle.py'
+      - '.github/workflows/tabcnn-static-checkpoint-inspection.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch commit
+        uses: actions/checkout@v4
+
+      - name: Download exact official checkpoint without import or execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=/tmp/best_TabCNN_tablature_trancription_model
+          curl --fail --location --retry 6 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Static-Checkpoint-Inspection/1.0' \
+            --output "$out" \
+            'https://zenodo.org/records/11406378/files/best_TabCNN_tablature_trancription_model?download=1'
+          test "$(stat -c '%s' "$out")" = '3345122'
+          test "$(md5sum "$out" | awk '{print $1}')" = 'ce168b2cd426f81a2a78499214e40605'
+          test "$(sha256sum "$out" | awk '{print $1}')" = '1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c'
+
+      - name: Parse pickle opcodes statically
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 astra_backend/tabcnn_runtime/inspect_checkpoint_pickle.py \
+            --checkpoint /tmp/best_TabCNN_tablature_trancription_model \
+            --receipt-out /tmp/tabcnn-static-inspection.json
+          sha256sum /tmp/tabcnn-static-inspection.json
+          cat /tmp/tabcnn-static-inspection.json
+
+      - name: Remove checkpoint bytes
+        shell: bash
+        run: |
+          rm -f /tmp/best_TabCNN_tablature_trancription_model
+          test ! -e /tmp/best_TabCNN_tablature_trancription_model
