@@ -1,9 +1,9 @@
 # New Astra Work — CURRENT STATE
 
-Updated: 2026-09-20 UTC
+Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; TABCNN OFFICIAL CHECKPOINT IDENTITY FROZEN; INFERENCE-ONLY RUNTIME LOCK + PREPROCESSING REPRODUCTION NEXT**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; TABCNN TECHNICAL COMPATIBILITY FROZEN; PUBLISHED CHECKPOINT EXECUTION BLOCKED BY TRAINING-LINEAGE RIGHTS; RIGHTS-CLEAN SELF-TRAINED GUITAR MODEL PIVOT NEXT**
 
 ## Product outcome
 
@@ -585,13 +585,41 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Verification on commit `9425ed25ccc3cac0349f4580a3f633bd90702a2b`: artifact identity run `35558828514` **PASS**; Astra backend run `35558828537` **232/232 Node tests passed**, **78/78 focused Python tests passed**. Node output SHA-256 **`79786a97dc6a4101707d946c80d8ca1877ea4cafdf4065f3d1a869e7c29f2e83`**; focused evaluation output SHA-256 **`ca44d6ec178213c755ca2b7f5ea3bfb7d11821587dcca4ad435d71254e3fe2a1`**.
 - This clears only official checkpoint byte identity. **TabCNN has not been imported or executed.** Development execution remains blocked on exact inference runtime, numerical preprocessing reproduction, CPU smoke/budget evidence, checkpoint/training-data rights review and explicit development authorization. Customer delivery remains false.
 
-## Exact next step — Freeze minimal TabCNN inference runtime and reproduce preprocessing
+## TabCNN runtime, preprocessing and legacy compatibility frozen — 2026-09-21
 
-1. Derive a **minimal inference-only dependency surface** from the pinned official source revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`. Do not install the full training/amt-tools environment by default. Identify only packages required for checkpoint deserialization, model definition, CQT/VQT preprocessing and CPU forward inference.
-2. Freeze exact Python/platform assumptions, package versions and artifact hashes into a deterministic lock. Reject lower-bound-only dependency declarations and any NumPy/librosa/torch convention drift that can alter the 22,050 Hz -> CQT/VQT feature tensor.
-3. Before invoking the checkpoint, reproduce the pinned preprocessing numerically on deterministic synthetic audio and save a receipt covering waveform normalization, CQT/VQT dimensions/values, dB conversion and 9-frame context assembly. The reproduction must be independent of model output.
-4. Separately complete checkpoint-license and training-data commercial-rights review. Do not infer commercial permission solely from code or record-level metadata.
-5. Only after artifact identity + runtime lock + numerical preprocessing receipt + rights review are frozen may a bounded CPU smoke test be authorized. Keep TabCNN generic-guitar only; role identity still comes from Astra role evidence. No Gomyway retuning, main, Production or customer delivery.
+- The minimal Linux CPU runtime is now frozen under Python **3.10.15** with exact package versions in `astra_backend/tabcnn_runtime/requirements.lock.txt`.
+- Dependency lock SHA-256: **`0e711709b063a705ad11570f6b7ef4dfe5bcc2d433d98707a1a74897dbb25bc0`**.
+- Binary/wheel identity manifest SHA-256: **`0796acee36cea76e9784e602da190223a14a89907381882b401986763c371567`**.
+- Frozen core runtime: NumPy **1.21.6**, SciPy **1.8.1**, librosa **0.9.1**, PyTorch **1.11.0+cpu**, Numba **0.55.2**, llvmlite **0.38.1**. The lock also freezes every resolved transitive package.
+- `docs/astra/TABCNN_PREPROCESSING_RECEIPT_V1.json` freezes the deterministic synthetic-audio reproduction contract. Astra independently mirrors the pinned upstream 22,050 Hz/RMS -> 192-bin CQT/24 bins per octave -> dB `/80 + 1` -> 9-frame window path.
+- A second GitHub runner exposed a least-significant-bit FFT/CQT byte difference while Astra and the pinned upstream implementation still matched **exactly within that run**. The gate was corrected: raw CQT/window byte hashes are diagnostic only; portable acceptance now requires frozen source/runtime identities, exact waveform identity, exact shapes/dtypes/ranges, and same-run Astra-vs-upstream max absolute difference <= **1e-7**.
+- Runtime workflow `35560657208` passed the corrected portable preprocessing gate.
+- Static checkpoint inspection proved the verified official artifact is a Torch ZIP with a **protocol-2 pickle**. The pickle references exactly three `amt_tools` classes: `amt_tools.models.tabcnn.TabCNN`, `amt_tools.models.common.SoftmaxGroups`, and `amt_tools.tools.instrument.GuitarProfile`.
+- `docs/astra/TABCNN_STATIC_CHECKPOINT_INSPECTION_V1.json` freezes the static archive/pickle receipt, SHA-256 **`72ecf7e106bc69ce7ef4aa66888cb544535615ad3a9c8a6246bb09a460da3971`**.
+- The frozen runtime can import those exact three class paths from the exact pinned upstream blobs **without opening or unpickling the checkpoint**.
+- `docs/astra/TABCNN_LEGACY_IMPORT_SURFACE_V1.json` freezes that import-surface receipt, SHA-256 **`b9d795cd0ddfb7e070cba24e57e62a7c8d3723c2dad0b853f69c8efc36662805`**.
+- Final verification on commit `f9dd12df9ac68fb1fa7532569c50363837550d5f`: Astra backend run `35560826986` **237/237 Node tests passed** and **78/78 focused Python tests passed**; Node output SHA-256 **`8d69c1345da22c0ccc037b53f30e74d6780e571d2fc7fbf0facaf96acdca3190`**; focused evaluation output SHA-256 **`1b05d9396e990414cfeadd891c37d1ce399527be450faa519ae353de4cc63f5d`**. Runtime preflight run `35560827097` **PASS**.
+- **No checkpoint deserialization, model forward pass, Gomyway evaluation or customer execution occurred.**
+
+## TabCNN rights/provenance review — execution remains blocked
+
+- Added `docs/astra/TABCNN_RIGHTS_PROVENANCE_REVIEW_V1.md`.
+- The released robust-guitar-tabs code is CC0 and the Zenodo checkpoint record publishes the checkpoint under CC-BY-4.0 metadata.
+- The DAFx-24 training lineage nevertheless includes **DadaGP-derived GuitarPro performances** plus GuitarSet/EGFxSet-related material.
+- DadaGP's own repository says dataset access is requested **for research purposes**. Its MIT repository license applies to the software and does not establish a commercial license for the separate score corpus.
+- Public GuitarSet metadata is inconsistent enough that Astra does not choose a permissive interpretation by convenience; third-party mirrors report CC-BY-4.0 while OpenAIRE/DataCite indexing reports CC-BY-NC for the Zenodo record lineage.
+- Therefore `trainingDataCommercialRightsCleared` is a separate fail-closed preflight requirement. A completed review does **not** mean the lineage is commercially cleared.
+- Candidate blocker is now explicit: `TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED`. Checkpoint deserialization remains unauthorized.
+- Customer delivery remains false.
+
+## Exact next step — Build a rights-clean self-trained electric-guitar candidate
+
+1. Keep the published GuitarProFX TabCNN checkpoint **non-executable** unless authoritative written permission/license evidence resolves its training lineage. Do not weaken or bypass the preflight.
+2. Design a separate Astra candidate using **Guitar-TECHS** as the primary training corpus. Its official project/Zenodo material explicitly states CC-BY-4.0, includes over five hours of electric-guitar content, three professional performers, multiple capture paths, techniques/chords/scales/excerpts, and synchronized per-string MIDI.
+3. Freeze authoritative Guitar-TECHS record/version/license identity before downloading training media. Build a deterministic manifest and split strategy by performer/track so validation is source-disjoint and cannot leak near-duplicate capture channels.
+4. Reuse the already-frozen TabCNN-compatible architecture/preprocessing contract where scientifically appropriate, but produce **new Astra-owned weights from authorized data**. Do not initialize from or deserialize the blocked GuitarProFX checkpoint.
+5. Before training, define a bounded CPU/GPU training contract, expected labels/string-fret mapping, attribution requirements, deterministic seed/split receipt, and acceptance metrics. Preserve role identity outside the generic-guitar model: Astra role evidence remains authoritative for lead vs rhythm.
+6. Use untouched external audio only after the training candidate and split are frozen. Do not tune against Gomyway as a hidden final test. No main/Production/customer-delivery change.
 
 ## Copy-paste handoff
 
