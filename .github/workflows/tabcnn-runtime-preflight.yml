@@ -83,7 +83,12 @@ jobs:
         run: |
           set -euo pipefail
           cd astra_backend/tabcnn_runtime
-          python verify_legacy_import_surface.py --source-root /tmp/tabcnn-source
+          python verify_legacy_import_surface.py \
+            --source-root /tmp/tabcnn-source \
+            --receipt-out /tmp/tabcnn-legacy-import-surface.json
+          sha256sum /tmp/tabcnn-legacy-import-surface.json
+          diff -u "$GITHUB_WORKSPACE/docs/astra/TABCNN_LEGACY_IMPORT_SURFACE_V1.json" \
+            /tmp/tabcnn-legacy-import-surface.json
 
       - name: Verify frozen runtime and emit wheel identity manifest
         shell: bash

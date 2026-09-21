@@ -28,6 +28,7 @@ EXPECTED = (
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-root", required=True)
+    parser.add_argument("--receipt-out", required=True)
     args = parser.parse_args()
 
     source_root = str(Path(args.source_root))
@@ -73,6 +74,8 @@ def main() -> int:
         },
         "resolvedGlobals": resolved,
     }
+    output = Path(args.receipt_out)
+    output.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("TABCNN_LEGACY_IMPORT_SURFACE=" + json.dumps(receipt, sort_keys=True))
     return 0
 

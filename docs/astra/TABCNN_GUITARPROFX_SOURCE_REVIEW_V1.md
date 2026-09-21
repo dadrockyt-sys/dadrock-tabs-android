@@ -99,3 +99,9 @@ No checkpoint was imported/executed; no customer audio was opened; no main/Produ
 A second GitHub-hosted run reproduced the pinned upstream preprocessing with **zero Astra-vs-source difference**, identical shapes/dtypes/min/max, and identical normalized-audio bytes, but the raw CQT/model-window float byte hashes differed from the earlier runner. This demonstrates least-significant-bit hardware/FFT variability rather than semantic preprocessing drift.
 
 Astra therefore treats raw CQT/model-window SHA-256 values in the original receipt as **diagnostic**, not portable identity. The portable gate now requires the exact frozen runtime/source identities, exact synthetic/normalized waveform identity, exact feature/window shapes and dtypes, stable numeric bounds, and same-run Astra-vs-pinned-source maximum absolute difference <= 1e-7. No model was loaded or executed.
+
+## Legacy checkpoint compatibility surface frozen — 2026-09-21
+
+Static inspection of the verified official checkpoint shows a Torch ZIP archive containing a protocol-2 pickle. The only `amt_tools` globals referenced by that pickle are `amt_tools.models.tabcnn.TabCNN`, `amt_tools.models.common.SoftmaxGroups`, and `amt_tools.tools.instrument.GuitarProfile`.
+
+Under the frozen Linux/Python/runtime lock, Astra imports those exact three classes from the exact pinned upstream source blobs without opening or unpickling the checkpoint. The frozen import-surface receipt is `docs/astra/TABCNN_LEGACY_IMPORT_SURFACE_V1.json`, SHA-256 `b9d795cd0ddfb7e070cba24e57e62a7c8d3723c2dad0b853f69c8efc36662805`. This clears static compatibility uncertainty only; checkpoint deserialization and inference remain unauthorized while rights are unresolved.

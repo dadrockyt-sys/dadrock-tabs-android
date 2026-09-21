@@ -1,0 +1,37 @@
+{
+  "checkpointOpened": false,
+  "checkpointUnpickled": false,
+  "modelInvoked": false,
+  "resolvedGlobals": [
+    {
+      "kind": "type",
+      "module": "amt_tools.models.common",
+      "name": "SoftmaxGroups"
+    },
+    {
+      "kind": "type",
+      "module": "amt_tools.models.tabcnn",
+      "name": "TabCNN"
+    },
+    {
+      "kind": "type",
+      "module": "amt_tools.tools.instrument",
+      "name": "GuitarProfile"
+    }
+  ],
+  "runtime": {
+    "librosa": "0.9.1",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "scipy": "1.8.1",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-tabcnn-legacy-import-surface-v1",
+  "sourceBlobs": {
+    "constants": "79666ea0c5b0214ca664da454069b8d286cc5c18",
+    "instrument": "eddc48a8b95de057035cd11ea2d1951e754ef349",
+    "modelCommon": "84beb4cf251b9cb9274d10cf203318314181af31",
+    "tabcnn": "e09856db2fffd77642e005ab509846acc894b886"
+  },
+  "sourceRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+}

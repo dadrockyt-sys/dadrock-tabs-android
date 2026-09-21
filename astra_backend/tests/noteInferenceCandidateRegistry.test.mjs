@@ -109,6 +109,10 @@ test('legacy pickle globals are statically verified but deserialization remains 
   assert.equal(candidate.operational.legacyPickleGlobalsStaticVerified, true);
   assert.equal(candidate.operational.legacyImportSurfaceVerified, true);
   assert.equal(
+    candidate.operational.legacyImportSurfaceReceiptSha256,
+    'b9d795cd0ddfb7e070cba24e57e62a7c8d3723c2dad0b853f69c8efc36662805',
+  );
+  assert.equal(
     candidate.operational.staticCheckpointInspectionReceiptSha256,
     '72ecf7e106bc69ce7ef4aa66888cb544535615ad3a9c8a6246bb09a460da3971',
   );

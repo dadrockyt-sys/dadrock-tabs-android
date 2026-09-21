@@ -73,6 +73,7 @@ const CANDIDATES = Object.freeze({
       staticCheckpointInspectionReceiptSha256: '72ecf7e106bc69ce7ef4aa66888cb544535615ad3a9c8a6246bb09a460da3971',
       legacyPickleGlobalsStaticVerified: true,
       legacyImportSurfaceVerified: true,
+      legacyImportSurfaceReceiptSha256: 'b9d795cd0ddfb7e070cba24e57e62a7c8d3723c2dad0b853f69c8efc36662805',
       expectedArtifactScale: 'small-single-digit-megabytes',
     }),
     blockers: Object.freeze([
