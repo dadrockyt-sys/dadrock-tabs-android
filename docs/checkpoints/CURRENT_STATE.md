@@ -1073,6 +1073,7 @@ Inspect run `35662028832` first. If fold 1 completes, collect its development-on
 - Even if both development folds pass, this contract does **not** authorize P3; it only marks P3 as eligible for a separate explicit authorization.
 - Added `astra_backend/guitarTechsV2ResultAdmission.mjs` and fail-closed structural/metric/P3/customer-delivery tests.
 - The running workflow checkout remains launch commit `33b1f222d29ec25a3602b1b85a58f57e2e7dd8d0`; this documentation/evaluator commit does not modify it.
+- Verification on commit `d2e8e29994c6a3fabb250455274070328fe2e76e`: GitHub Actions run `35665163937` **PASS**; **302/302 Node tests passed**, **85/85 focused Python tests passed**. Node output SHA-256 `eb1caa8fd52a96218162b85a1cd37b2868290096f4655a9a55f6f2c0b3787287`; focused evaluation output SHA-256 `99f558455baee2087d597d36ab8738e5b2cf073b5a1680045f57d7bd64b271a9`.
 
 
 ## Copy-paste handoff
