@@ -1,0 +1,19 @@
+{
+  "acquisition": {
+    "artifactPersisted": false,
+    "method": "github-actions-official-zenodo-download",
+    "modelExecuted": false,
+    "officialRecordVerified": true,
+    "publishedMd5Verified": true,
+    "workflow": ".github/workflows/tabcnn-artifact-identity.yml",
+    "workflowCommit": "08720f7d127b87ae9a84ccf7a9cfa27d3a7fda52",
+    "workflowRunId": 35558742279
+  },
+  "astraSha256": "1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c",
+  "bytes": 3345122,
+  "candidateId": "tabcnn_guitarprofx_dafx24",
+  "file": "best_TabCNN_tablature_trancription_model",
+  "publishedMd5": "ce168b2cd426f81a2a78499214e40605",
+  "record": "https://zenodo.org/records/11406378",
+  "schema": "astra-tabcnn-artifact-receipt-v1"
+}

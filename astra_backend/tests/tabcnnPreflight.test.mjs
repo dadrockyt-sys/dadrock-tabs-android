@@ -21,7 +21,7 @@ function completeEvidence() {
       downloadedFromOfficialRecord: true,
       md5: expected.artifact.md5,
       publishedMd5Verified: true,
-      sha256: 'a'.repeat(64),
+      sha256: expected.artifact.sha256,
     },
     preprocessing: {
       ...expected.preprocessing,
@@ -84,6 +84,15 @@ test('published MD5 is not enough without official-source download and Astra SHA
   const result = evaluateTabcnnDevelopmentPreflight(evidence);
   assert.ok(result.blockers.includes('OFFICIAL_ARTIFACT_NOT_DOWNLOADED'));
   assert.ok(result.blockers.includes('OFFICIAL_ARTIFACT_SHA256_UNVERIFIED'));
+  assert.equal(result.developmentExecutionReady, false);
+});
+
+test('artifact SHA256 substitution fails closed even when size and published MD5 match', () => {
+  const evidence = completeEvidence();
+  evidence.artifact.sha256 = '0'.repeat(64);
+  const result = evaluateTabcnnDevelopmentPreflight(evidence);
+  assert.ok(result.blockers.includes('OFFICIAL_ARTIFACT_SHA256_UNVERIFIED'));
+  assert.equal(result.checks.officialArtifactDigestVerified, false);
   assert.equal(result.developmentExecutionReady, false);
 });
 

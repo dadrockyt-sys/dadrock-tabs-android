@@ -33,6 +33,7 @@ const EXPECTED = Object.freeze({
     file: 'best_TabCNN_tablature_trancription_model',
     bytes: 3345122,
     md5: 'ce168b2cd426f81a2a78499214e40605',
+    sha256: '1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c',
   }),
   service: Object.freeze({
     maxWallTimeSeconds: 1200,
@@ -98,7 +99,9 @@ export function evaluateTabcnnDevelopmentPreflight({
       || artifact.md5 !== EXPECTED.artifact.md5) {
     blockers.push('OFFICIAL_ARTIFACT_MD5_UNVERIFIED');
   }
-  if (!nonEmpty(artifact.sha256) || !/^[a-f0-9]{64}$/.test(artifact.sha256)) {
+  if (!nonEmpty(artifact.sha256)
+      || !/^[a-f0-9]{64}$/.test(artifact.sha256)
+      || artifact.sha256 !== EXPECTED.artifact.sha256) {
     blockers.push('OFFICIAL_ARTIFACT_SHA256_UNVERIFIED');
   }
 
@@ -162,7 +165,8 @@ export function evaluateTabcnnDevelopmentPreflight({
         && artifact.publishedMd5Verified === true
         && artifact.md5 === EXPECTED.artifact.md5
         && nonEmpty(artifact.sha256)
-        && /^[a-f0-9]{64}$/.test(artifact.sha256),
+        && /^[a-f0-9]{64}$/.test(artifact.sha256)
+        && artifact.sha256 === EXPECTED.artifact.sha256,
       runtimeLockVerified: runtime.dependencyLockComplete === true
         && runtime.exactPackageVersionsFrozen === true
         && nonEmpty(runtime.dependencyLockSha256)
