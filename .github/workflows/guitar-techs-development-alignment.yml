@@ -46,11 +46,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install frozen alignment NumPy
         run: python3 -m pip install --disable-pip-version-check --no-deps numpy==1.26.4
+      - name: Install alignment audio decoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
       - name: Verify runner prerequisites
         run: |
           set -euo pipefail
           test "$(sha256sum astra_backend/guitartechs_alignment/align_development.py | awk '{print $1}')" = 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330'
-          ffmpeg -version | head -n 1
+          ffmpeg -version > /tmp/ffmpeg-version.txt
+          sed -n '1p' /tmp/ffmpeg-version.txt
       - name: Download exact authorized P1/P2 archive
         env:
           FILE: ${{ matrix.file }}
@@ -94,7 +99,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: alignment-${{ matrix.file }}
-          path: /tmp/${{ matrix.file }}.alignment.json
+          path: /tmp/alignment-receipt.json
           if-no-files-found: error
           retention-days: 1
       - name: Delete all development media
