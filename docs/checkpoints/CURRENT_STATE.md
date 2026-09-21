@@ -808,14 +808,14 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 
 ## Frozen P1/P2 alignment implementation launched — 2026-09-21
 
-- Added `docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json`, SHA-256 **`0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e`**, before observing any real alignment result.
+- Added `docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json`, SHA-256 **`b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f`**, before observing any real alignment result.
 - Frozen script: `astra_backend/guitartechs_alignment/align_development.py`, SHA-256 **`b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330`**.
 - The implementation preserves the already-frozen gate: lag -100..+100 ms at 1 ms steps; minimum 30 MIDI onset groups; >=80% matched within 20 ms; median absolute residual <=10 ms; five deterministic onset-index strata with lag MAD <=5 ms; maximum applied correction 100 ms; failures abstain.
 - Audio evidence is now exactly specified: ffmpeg decode to mono 8 kHz signed-16 PCM; 20 ms frame / 2 ms hop log-RMS positive-flux envelope; [0.25, 0.5, 0.25] smoothing; frame-end timestamps; median positive-flux peak-strength threshold. Exact ffmpeg version is recorded per result receipt.
 - Synthetic tests recover both positive and negative known lags and verify the abstention guards before any real-media job can run.
 - Branch-only workflow `.github/workflows/guitar-techs-development-alignment.yml` is restricted to the same eight P1/P2 archive allowlist, re-verifies byte count + MD5 + Astra SHA-256 before extraction, uploads JSON receipts only, and deletes media after each job.
 - P3 is not an input. The workflow performs no TabCNN feature generation, model import or training. Real training remains unauthorized.
-- First branch verification attempt on commit `b57f3dc68c09101990e70100a296465a27cd4c88` failed **before any alignment media job started** because the committed script bytes had SHA-256 `b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330` while the preregistration still contained the pre-formatting digest `ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547`. The synthetic gate prevented media access. Commit correcting the frozen identity keeps the algorithm bytes unchanged and updates only the pinned identity/receipt hashes.
+- First branch verification attempt on commit `b57f3dc68c09101990e70100a296465a27cd4c88` failed **before any alignment media job started** because the committed script bytes had SHA-256 `b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330` while the preregistration still contained the pre-formatting digest `ff7b1dd6799efeeca5d0239269a5e6431ad595a6320ce536ef5bba20d937b547`. The synthetic gate prevented media access. Commit correcting the frozen script identity kept the algorithm bytes unchanged. A subsequent regression check found the implementation-JSON receipt itself had actual committed SHA-256 `b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f` rather than the pre-serialization digest `0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e`; that bookkeeping digest is corrected without changing the implementation JSON bytes.
 
 
 ## Copy-paste handoff

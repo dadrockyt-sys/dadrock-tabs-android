@@ -84,7 +84,7 @@ const CANDIDATES = Object.freeze({
       alignmentPolicyFrozen: true,
       alignmentImplementationFrozen: true,
       alignmentImplementationReceipt: 'docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json',
-      alignmentImplementationReceiptSha256: '0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e',
+      alignmentImplementationReceiptSha256: 'b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f',
       alignmentScriptSha256: 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330',
       alignmentCorrectionVerified: false,
       trainingRuntimeFrozen: true,

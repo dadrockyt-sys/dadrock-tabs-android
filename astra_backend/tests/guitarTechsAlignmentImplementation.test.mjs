@@ -9,7 +9,7 @@ test('Guitar-TECHS alignment implementation is frozen before real alignment', ()
   assert.equal(digest, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
 
   const contractBytes = readFileSync(new URL('../../docs/astra/GUITARTECHS_ALIGNMENT_IMPLEMENTATION_V1.json', import.meta.url));
-  assert.equal(createHash('sha256').update(contractBytes).digest('hex'), '0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e');
+  assert.equal(createHash('sha256').update(contractBytes).digest('hex'), 'b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f');
   const contract = JSON.parse(contractBytes.toString('utf8'));
   assert.equal(contract.scriptSha256, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
   assert.equal(contract.sourceContractSha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');

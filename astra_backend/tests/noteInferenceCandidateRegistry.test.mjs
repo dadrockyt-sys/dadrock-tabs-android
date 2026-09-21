@@ -41,7 +41,7 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.labelAlignmentTrainingContractSha256, '09436268922e0d24332b7e3234225d54a0f28e58e23b55ea71227eeab1b1e81f');
   assert.equal(candidate.operational.alignmentPolicyFrozen, true);
   assert.equal(candidate.operational.alignmentImplementationFrozen, true);
-  assert.equal(candidate.operational.alignmentImplementationReceiptSha256, '0061b05a8e72982bf75d64554bcd003febbcdd9d7bf7b0377d826ea6e21f205e');
+  assert.equal(candidate.operational.alignmentImplementationReceiptSha256, 'b33dd0fd220fcef4a459cc47277f48cf90c0acd320e523c3afcea5fc52a8a26f');
   assert.equal(candidate.operational.alignmentScriptSha256, 'b084da0900acf9bd4ec61386a4a928350af0e138c9ed36ef3fbafb15539bc330');
   assert.equal(candidate.operational.alignmentCorrectionVerified, false);
   assert.equal(candidate.operational.trainingRuntimeFrozen, true);
