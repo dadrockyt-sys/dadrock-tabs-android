@@ -90,7 +90,11 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   assert.equal(candidate.operational.v2TrainingImplementationReceiptGitBlob, '32424b78d8423d6a87e37a8ad3f1698fa99073ab');
   assert.equal(candidate.operational.v2TrainingScriptGitBlob, '4db5add96c58a8e54868ea06dacb1da724675163');
   assert.equal(candidate.operational.v2SamplingScriptGitBlob, '9eb62fde56f592646077afa1e0ff3013a5dc6560');
-  assert.equal(candidate.operational.v2RealTrainingAuthorized, false);
+  assert.equal(candidate.operational.v2RealTrainingAuthorized, true);
+  assert.equal(candidate.operational.v2RealTrainingAuthorizationScope, 'guitar-techs-p1-p2-v2-real-training-v1');
+  assert.equal(candidate.operational.v2RealTrainingAuthorizationReceiptSha256, '0edfb4656675e31fce0c8cbd1ba42f37619e877b43793d3386781572dea8cb69');
+  assert.equal(candidate.operational.v2ModelTrained, false);
+  assert.equal(candidate.operational.v2DevelopmentEvaluationPassed, false);
   assert.equal(candidate.operational.p3OpeningEligible, false);
   assert.equal(candidate.blockers.includes('TRAINING_NOT_AUTHORIZED'), false);
   assert.equal(candidate.operational.developmentMetricThresholdsReceiptSha256, 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15');

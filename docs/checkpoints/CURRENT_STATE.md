@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **GUITAR-TECHS V1 FAILED AND FROZEN; V2 ROOT-CAUSE FIX + 200-FRAME PERFORMANCE-BALANCED TRAINER + CPU BUDGET FROZEN; V2 SYNTHETIC IMPLEMENTATION SMOKE NEXT; V2 REAL TRAINING UNAUTHORIZED; P3 SEALED**
+Status: **GUITAR-TECHS V1 FAILURE FROZEN; V2 200-FRAME DESIGN + CPU BUDGET + IMPLEMENTATION VERIFIED; V2 P1/P2 REAL TRAINING AUTHORIZED; P3 SEALED**
 
 ## Product outcome
 
@@ -1034,6 +1034,17 @@ If authorized, the scope must remain bounded to the frozen V2 P1/P2 design only:
 - CPU-only public GitHub-hosted runners;
 - P3 sealed;
 - no paid compute, main/Production mutation or customer delivery.
+
+
+## V2 P1/P2 real training authorized — 2026-09-21
+
+- User explicitly authorized the corrected V2 bounded real-training gate.
+- Authorization scope: `guitar-techs-p1-p2-v2-real-training-v1`.
+- Receipt: `docs/astra/GUITARTECHS_V2_REAL_TRAINING_AUTHORIZATION_V1.json`; SHA-256 **`0edfb4656675e31fce0c8cbd1ba42f37619e877b43793d3386781572dea8cb69`**.
+- Authorized only: frozen V2 P1/P2 design, 1,000 performance-balanced epochs/fold, max 2,000 optimizer steps/fold, batch 32, 200-frame sequences, microbatch 1 + gradient accumulation, seed 20260921, 50 checkpoint evaluations, exact 256-path alignment allowlist, unchanged development thresholds, public GitHub-hosted CPU runners.
+- Not authorized: P3 access, threshold retuning, published checkpoint loading, paid compute, main/Production mutation or customer delivery.
+- Branch-only workflow `.github/workflows/guitar-techs-v2-real-training.yml` verifies all frozen V2 identities and the authorization receipt before media access, runs the V2 synthetic self-test, serializes folds, reuses the hardened Zenodo fetch + byte/MD5/SHA verification, prepares exactly 256 paths, runs `train_v2.py`, uploads development-only model/result artifacts, and deletes raw/prepared media.
+- V1 failed models remain historical evidence and are not used for V2 initialization.
 
 
 ## Copy-paste handoff
