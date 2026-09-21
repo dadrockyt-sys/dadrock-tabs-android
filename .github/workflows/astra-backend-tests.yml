@@ -48,6 +48,7 @@ jobs:
             test_project_oracle_predictions.py \
             test_repair_contextual_octaves.py \
             test_score_role_aware_note_onsets.py \
-            test_stereo_role_evidence.py 2>&1 | tee /tmp/astra-evaluation-test-output.txt
+            test_stereo_role_evidence.py \
+            test_filter_structure_grid.py 2>&1 | tee /tmp/astra-evaluation-test-output.txt
           node test_alignment_review.cjs 2>&1 | tee -a /tmp/astra-evaluation-test-output.txt
           echo "ASTRA_EVALUATION_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-evaluation-test-output.txt | awk '{print $1}')"
