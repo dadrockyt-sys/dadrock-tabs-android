@@ -980,6 +980,14 @@ Before any V2 real-data run, freeze the full V2 implementation and resource budg
 - `test_guitartechs_v2_sampling.py` is now explicitly included in `.github/workflows/astra-backend-tests.yml`; the V2 sampling design is not considered fully verified until this updated run passes.
 
 
+## V2 synthetic CPU benchmark launched — 2026-09-21
+
+- Corrected sampling commit `419f8bb625486b0f50ecd518a8fe19103ac45f4f` passed run `35629845567`: **294/294 Node tests** and **85/85 focused Python tests**. Node output SHA-256 `3454a4f0a7fa4d5ca72fc6b511d3d8f80f85945016972c2b8a37fb1148d727ae`; focused output SHA-256 `7dda0bf7052a6a153e7e15205e1ced554cb684b338249926667ce29ace554fdb`.
+- Before choosing a V2 real-training budget, a no-media CPU benchmark is launched against the exact pinned TabCNN source/runtime.
+- It measures one effective batch of 32 sequences × 200 frames using gradient accumulation at sequence microbatches 1/2/4/8, recording effective-step wall time and peak RSS.
+- Synthetic random features/labels only. No Guitar-TECHS archive, P3, model checkpoint or customer data is accessed.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.

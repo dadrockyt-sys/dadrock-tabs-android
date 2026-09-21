@@ -1,0 +1,57 @@
+name: Guitar-TECHS V2 synthetic CPU benchmark
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/guitar-techs-v2-synthetic-benchmark.yml'
+      - 'astra_backend/guitartechs_training_v2/benchmark_synthetic.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    strategy:
+      fail-fast: false
+      matrix:
+        microbatch: [1, 2, 4, 8]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Install exact frozen runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+      - name: Benchmark 200-frame effective batch
+        run: |
+          python astra_backend/guitartechs_training_v2/benchmark_synthetic.py             --source-root /tmp/tabcnn-source             --microbatch ${{ matrix.microbatch }}             --measured-steps 2             --output /tmp/benchmark.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v2-benchmark-mb${{ matrix.microbatch }}
+          path: /tmp/benchmark.json
+          retention-days: 7
