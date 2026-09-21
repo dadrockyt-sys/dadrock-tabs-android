@@ -40,9 +40,10 @@ jobs:
         run: |
           set -euo pipefail
           root=/tmp/tabcnn-source/amt_tools
-          mkdir -p "$root/features" "$root/tools"
+          mkdir -p "$root/features" "$root/models" "$root/tools"
           : > "$root/__init__.py"
           : > "$root/features/__init__.py"
+          : > "$root/models/__init__.py"
           printf 'from .constants import *\n' > "$root/tools/__init__.py"
 
           base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
@@ -51,12 +52,18 @@ jobs:
           curl --fail --location --retry 4 -o "$root/features/cqt.py" "$base/features/cqt.py"
           curl --fail --location --retry 4 -o "$root/tools/utils.py" "$base/tools/utils.py"
           curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
 
           test "$(git hash-object "$root/features/common.py")" = '79b71e763bc12d9d8a26d5bcce5b8ff9800bea92'
           test "$(git hash-object "$root/features/vqt.py")" = 'a4e5e7d4958ec64d2d149eb51acdaf936e649b00'
           test "$(git hash-object "$root/features/cqt.py")" = '7f08cbd3448765c5406b28f8627a8a8fb66f27b7'
           test "$(git hash-object "$root/tools/utils.py")" = '55e989685f95593605566a4e730b8aa2e0eabc12'
           test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
 
       - name: Reproduce preprocessing numerically without model execution
         shell: bash
@@ -68,6 +75,13 @@ jobs:
             --receipt-out /tmp/tabcnn-preprocessing-receipt.json
           sha256sum /tmp/tabcnn-preprocessing-receipt.json
           diff -u "$GITHUB_WORKSPACE/docs/astra/TABCNN_PREPROCESSING_RECEIPT_V1.json" /tmp/tabcnn-preprocessing-receipt.json
+
+      - name: Verify legacy pickle class import surface without checkpoint deserialization
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd astra_backend/tabcnn_runtime
+          python verify_legacy_import_surface.py --source-root /tmp/tabcnn-source
 
       - name: Verify frozen runtime and emit wheel identity manifest
         shell: bash

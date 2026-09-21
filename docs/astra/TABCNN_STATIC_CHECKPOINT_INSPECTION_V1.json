@@ -1,0 +1,225 @@
+{
+  "archiveMembers": [
+    {
+      "bytes": 40,
+      "compressedBytes": 40,
+      "compression": 0,
+      "name": "model-2500/.data/serialization_id"
+    },
+    {
+      "bytes": 6,
+      "compressedBytes": 6,
+      "compression": 0,
+      "name": "model-2500/byteorder"
+    },
+    {
+      "bytes": 6470,
+      "compressedBytes": 6470,
+      "compression": 0,
+      "name": "model-2500/data.pkl"
+    },
+    {
+      "bytes": 1152,
+      "compressedBytes": 1152,
+      "compression": 0,
+      "name": "model-2500/data/0"
+    },
+    {
+      "bytes": 128,
+      "compressedBytes": 128,
+      "compression": 0,
+      "name": "model-2500/data/1"
+    },
+    {
+      "bytes": 73728,
+      "compressedBytes": 73728,
+      "compression": 0,
+      "name": "model-2500/data/2"
+    },
+    {
+      "bytes": 256,
+      "compressedBytes": 256,
+      "compression": 0,
+      "name": "model-2500/data/3"
+    },
+    {
+      "bytes": 147456,
+      "compressedBytes": 147456,
+      "compression": 0,
+      "name": "model-2500/data/4"
+    },
+    {
+      "bytes": 256,
+      "compressedBytes": 256,
+      "compression": 0,
+      "name": "model-2500/data/5"
+    },
+    {
+      "bytes": 3047424,
+      "compressedBytes": 3047424,
+      "compression": 0,
+      "name": "model-2500/data/6"
+    },
+    {
+      "bytes": 512,
+      "compressedBytes": 512,
+      "compression": 0,
+      "name": "model-2500/data/7"
+    },
+    {
+      "bytes": 64512,
+      "compressedBytes": 64512,
+      "compression": 0,
+      "name": "model-2500/data/8"
+    },
+    {
+      "bytes": 504,
+      "compressedBytes": 504,
+      "compression": 0,
+      "name": "model-2500/data/9"
+    },
+    {
+      "bytes": 2,
+      "compressedBytes": 2,
+      "compression": 0,
+      "name": "model-2500/version"
+    }
+  ],
+  "checkpoint": {
+    "bytes": 3345122,
+    "md5": "ce168b2cd426f81a2a78499214e40605",
+    "pickleMember": "model-2500/data.pkl",
+    "sha256": "1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c",
+    "zipArchive": true
+  },
+  "checkpointImported": false,
+  "checkpointUnpickled": false,
+  "modelInvoked": false,
+  "pickle": {
+    "amtToolsGlobals": [
+      {
+        "module": "amt_tools.models.common",
+        "name": "SoftmaxGroups"
+      },
+      {
+        "module": "amt_tools.models.tabcnn",
+        "name": "TabCNN"
+      },
+      {
+        "module": "amt_tools.tools.instrument",
+        "name": "GuitarProfile"
+      }
+    ],
+    "globals": [
+      {
+        "module": "__builtin__",
+        "name": "set"
+      },
+      {
+        "module": "_codecs",
+        "name": "encode"
+      },
+      {
+        "module": "amt_tools.models.common",
+        "name": "SoftmaxGroups"
+      },
+      {
+        "module": "amt_tools.models.tabcnn",
+        "name": "TabCNN"
+      },
+      {
+        "module": "amt_tools.tools.instrument",
+        "name": "GuitarProfile"
+      },
+      {
+        "module": "collections",
+        "name": "OrderedDict"
+      },
+      {
+        "module": "numpy",
+        "name": "dtype"
+      },
+      {
+        "module": "numpy.core.multiarray",
+        "name": "scalar"
+      },
+      {
+        "module": "torch",
+        "name": "FloatStorage"
+      },
+      {
+        "module": "torch",
+        "name": "device"
+      },
+      {
+        "module": "torch._utils",
+        "name": "_rebuild_parameter"
+      },
+      {
+        "module": "torch._utils",
+        "name": "_rebuild_tensor_v2"
+      },
+      {
+        "module": "torch.nn.modules.activation",
+        "name": "ReLU"
+      },
+      {
+        "module": "torch.nn.modules.container",
+        "name": "Sequential"
+      },
+      {
+        "module": "torch.nn.modules.conv",
+        "name": "Conv2d"
+      },
+      {
+        "module": "torch.nn.modules.dropout",
+        "name": "Dropout"
+      },
+      {
+        "module": "torch.nn.modules.linear",
+        "name": "Linear"
+      },
+      {
+        "module": "torch.nn.modules.pooling",
+        "name": "MaxPool2d"
+      }
+    ],
+    "interestingUnicodeStrings": [],
+    "opcodeCounts": {
+      "APPENDS": 1,
+      "BINFLOAT": 2,
+      "BINGET": 632,
+      "BININT": 3,
+      "BININT1": 120,
+      "BININT2": 11,
+      "BINPERSID": 10,
+      "BINPUT": 256,
+      "BINUNICODE": 103,
+      "BUILD": 19,
+      "EMPTY_DICT": 18,
+      "EMPTY_LIST": 18,
+      "EMPTY_TUPLE": 276,
+      "GLOBAL": 18,
+      "LONG_BINGET": 11,
+      "LONG_BINPUT": 311,
+      "MARK": 57,
+      "NEWFALSE": 23,
+      "NEWOBJ": 18,
+      "NEWTRUE": 28,
+      "NONE": 21,
+      "PROTO": 1,
+      "REDUCE": 301,
+      "SETITEM": 1,
+      "SETITEMS": 26,
+      "STOP": 1,
+      "TUPLE": 30,
+      "TUPLE1": 27,
+      "TUPLE2": 23,
+      "TUPLE3": 11
+    },
+    "pickleBytes": 6470,
+    "pickleSha256": "50fc4d764fad738bf5ce0e7d576a82e21ffde54162fe06871c366162f80fa9af",
+    "protocol": 2
+  },
+  "schema": "astra-tabcnn-static-checkpoint-inspection-v1"
+}

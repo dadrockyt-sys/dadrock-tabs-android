@@ -36,8 +36,8 @@ test('GuitarProFX TabCNN is primary but remains execution-blocked', () => {
   assert.equal(candidate.operational.preprocessingIdentityFrozen, true);
   assert.equal(candidate.operational.cpuPathKnown, false);
   assert.equal(candidate.developmentExecutionReady, false);
-  assert.ok(candidate.blockers.includes('LEGACY_PICKLE_COMPATIBILITY_PATH_NOT_VERIFIED'));
-  assert.ok(candidate.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_CHAIN_NOT_REVIEWED'));
+  assert.ok(candidate.blockers.includes('CHECKPOINT_DESERIALIZATION_NOT_AUTHORIZED'));
+  assert.ok(candidate.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });
 
@@ -102,4 +102,16 @@ test('registry reads are deterministic and return defensive copies', () => {
   const second = listNoteInferenceCandidates();
   assert.equal(second[0].blockers.includes('MUTATION'), false);
   assert.deepEqual(second, listNoteInferenceCandidates());
+});
+
+test('legacy pickle globals are statically verified but deserialization remains unauthorized', () => {
+  const candidate = getNoteInferenceCandidate('tabcnn_guitarprofx_dafx24');
+  assert.equal(candidate.operational.legacyPickleGlobalsStaticVerified, true);
+  assert.equal(candidate.operational.legacyImportSurfaceVerified, true);
+  assert.equal(
+    candidate.operational.staticCheckpointInspectionReceiptSha256,
+    '72ecf7e106bc69ce7ef4aa66888cb544535615ad3a9c8a6246bb09a460da3971',
+  );
+  assert.ok(candidate.blockers.includes('CHECKPOINT_DESERIALIZATION_NOT_AUTHORIZED'));
+  assert.ok(candidate.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED'));
 });

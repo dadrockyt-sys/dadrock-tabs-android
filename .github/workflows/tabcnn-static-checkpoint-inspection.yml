@@ -41,6 +41,7 @@ jobs:
             --checkpoint /tmp/best_TabCNN_tablature_trancription_model \
             --receipt-out /tmp/tabcnn-static-inspection.json
           sha256sum /tmp/tabcnn-static-inspection.json
+          diff -u docs/astra/TABCNN_STATIC_CHECKPOINT_INSPECTION_V1.json /tmp/tabcnn-static-inspection.json
           cat /tmp/tabcnn-static-inspection.json
 
       - name: Remove checkpoint bytes

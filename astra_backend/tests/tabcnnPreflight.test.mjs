@@ -50,6 +50,7 @@ function completeEvidence() {
     rights: {
       checkpointLicenseReviewed: true,
       trainingDataCommercialRightsReviewed: true,
+      trainingDataCommercialRightsCleared: true,
       developmentUseAuthorized: true,
     },
   };
@@ -143,6 +144,15 @@ test('preprocessing receipt or tensor identity substitution fails closed', () =>
   const result = evaluateTabcnnDevelopmentPreflight(evidence);
   assert.ok(result.blockers.includes('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH'));
   assert.equal(result.checks.preprocessingNumericallyReproduced, false);
+  assert.equal(result.developmentExecutionReady, false);
+});
+
+test('completed review does not clear unresolved commercial training lineage', () => {
+  const evidence = completeEvidence();
+  evidence.rights.trainingDataCommercialRightsCleared = false;
+  const result = evaluateTabcnnDevelopmentPreflight(evidence);
+  assert.ok(result.blockers.includes('TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED'));
+  assert.equal(result.checks.rightsVerified, false);
   assert.equal(result.developmentExecutionReady, false);
 });
 

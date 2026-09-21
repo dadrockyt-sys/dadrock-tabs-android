@@ -159,6 +159,9 @@ export function evaluateTabcnnDevelopmentPreflight({
   if (rights.trainingDataCommercialRightsReviewed !== true) {
     blockers.push('TRAINING_DATA_COMMERCIAL_RIGHTS_REVIEW_PENDING');
   }
+  if (rights.trainingDataCommercialRightsCleared !== true) {
+    blockers.push('TRAINING_DATA_COMMERCIAL_RIGHTS_UNRESOLVED');
+  }
   if (rights.developmentUseAuthorized !== true) {
     blockers.push('DEVELOPMENT_USE_NOT_AUTHORIZED');
   }
@@ -213,6 +216,7 @@ export function evaluateTabcnnDevelopmentPreflight({
         && runtime.peakMemoryMb <= EXPECTED.service.maxPeakMemoryMb,
       rightsVerified: rights.checkpointLicenseReviewed === true
         && rights.trainingDataCommercialRightsReviewed === true
+        && rights.trainingDataCommercialRightsCleared === true
         && rights.developmentUseAuthorized === true,
     },
     developmentExecutionReady: uniqueBlockers.length === 0,
