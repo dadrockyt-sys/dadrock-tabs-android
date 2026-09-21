@@ -1,0 +1,82 @@
+name: TabCNN runtime preflight
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'astra_backend/tabcnn_runtime/**'
+      - '.github/workflows/tabcnn-runtime-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce-preprocessing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout branch commit
+        uses: actions/checkout@v4
+
+      - name: Use Python 3.10.15
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Install historically aligned direct runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check \
+            --index-url https://download.pytorch.org/whl/cpu \
+            'torch==1.11.0+cpu'
+          python -m pip install --disable-pip-version-check \
+            'numpy==1.21.6' \
+            'scipy==1.8.1' \
+            'librosa==0.9.1'
+          python -m pip check
+
+      - name: Acquire exact preprocessing source blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/features" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/features/__init__.py"
+          printf 'from .constants import *\n' > "$root/tools/__init__.py"
+
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/features/common.py" "$base/features/common.py"
+          curl --fail --location --retry 4 -o "$root/features/vqt.py" "$base/features/vqt.py"
+          curl --fail --location --retry 4 -o "$root/features/cqt.py" "$base/features/cqt.py"
+          curl --fail --location --retry 4 -o "$root/tools/utils.py" "$base/tools/utils.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+
+          test "$(git hash-object "$root/features/common.py")" = '79b71e763bc12d9d8a26d5bcce5b8ff9800bea92'
+          test "$(git hash-object "$root/features/vqt.py")" = 'a4e5e7d4958ec64d2d149eb51acdaf936e649b00'
+          test "$(git hash-object "$root/features/cqt.py")" = '7f08cbd3448765c5406b28f8627a8a8fb66f27b7'
+          test "$(git hash-object "$root/tools/utils.py")" = '55e989685f95593605566a4e730b8aa2e0eabc12'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Reproduce preprocessing numerically without model execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd astra_backend/tabcnn_runtime
+          python verify_preprocessing.py \
+            --source-root /tmp/tabcnn-source \
+            --receipt-out /tmp/tabcnn-preprocessing-receipt.json
+          sha256sum /tmp/tabcnn-preprocessing-receipt.json
+          cat /tmp/tabcnn-preprocessing-receipt.json
+
+      - name: Print resolved runtime for lock review
+        shell: bash
+        run: |
+          set -euo pipefail
+          python --version
+          python -m pip freeze --all | sort | tee /tmp/tabcnn-runtime-freeze.txt
+          echo "TABCNN_RUNTIME_FREEZE_SHA256=$(sha256sum /tmp/tabcnn-runtime-freeze.txt | awk '{print $1}')"
