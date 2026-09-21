@@ -1130,3 +1130,16 @@ Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-w
 
 Inspect run `35662028832` first. When Fold 1 completes and its artifact appears, collect the Actions artifact ID/digest, download the artifact, compute/record result JSON and model SHA-256, and structurally admit it against the frozen V2 contract before doing anything else. Then allow the same serialized run to continue into Fold 2; do not relaunch either fold. After both artifacts exist, run only the frozen V2 admission + development metric evaluator. Keep P3 sealed unless a later checkpoint records both-fold PASS and the user separately authorizes the P3 gate.
 
+## V2 frozen trainer/admission compatibility audit — 2026-09-21
+
+- While authoritative run `35662028832` remained active with Fold 1 in progress and zero artifacts, performed a read-only static audit of the exact launch-commit trainer (`33b1f222d29ec25a3602b1b85a58f57e2e7dd8d0`) against the already-frozen V2 admission/evaluation code.
+- `train_v2.py` emits the exact structural fields required by `guitarTechsV2ResultAdmission.mjs`: schema/candidate/fold identities, seed `20260921`, 1,000 epochs, 2,000 optimizer steps, 200-frame sequences, batch 32, microbatch 1, 50 checkpoints, training performance count, validation capture count, supervised frame exposure, prepared capture counts, source receipt hashes, pretraining label balance, selected checkpoint, full validation metrics and all required guard flags.
+- Exposure arithmetic in the frozen trainer is exact by construction: P1 has 41 performances × 200 frames × 1,000 epochs = **8,200,000** supervised frame positions; P2 has 40 × 200 × 1,000 = **8,000,000**. With batch 32 and no dropped tail, both folds execute exactly 2 optimizer steps/epoch = **2,000 optimizer steps**.
+- The frozen `aggregate_metrics()` output matches the development evaluator input schema exactly: `precision`, `recall`, `f1`, `completeness`, `frameAccuracy`, `abstentionRate`, and `contentF1` for `chords`, `scales`, `singlenotes`, and `PalmMute`.
+- No schema mismatch, threshold drift, checkpoint-selection drift, or structural reason to modify/relaunch the active run was found.
+- Latest read-only Actions check remains unchanged: Fold 1 in progress, Fold 2 queued, artifacts **0**. **Do not relaunch. P3 remains sealed.**
+
+### EXPLICIT NEXT STEP TO RESUME
+
+Inspect run `35662028832` first. If Fold 1 is complete, collect and cryptographically verify its artifact immediately and run structural admission only; otherwise leave the workflow untouched and preserve the serialized run. Continue with Fold 2 only through this same run.
+
