@@ -1,0 +1,151 @@
+{
+  "kind": "gomyway-stereo-role-bend-glide-development-score",
+  "version": 1,
+  "sourceAudioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+  "rhythmLabelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "leadLabelsSha256": "f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb",
+  "channelRawActivations": {
+    "leftSha256": "41660cff543dd6f23bd2679eae911df050afb8329d98176ade4ee3a256969b4f",
+    "rightSha256": "cc0f57764feca8c43519be3e2a69ecc447806b5623d6921abef52f895f152cc4",
+    "captureRuntime": {
+      "pythonVersion": "3.10.21",
+      "basicPitchVersion": "0.4.0",
+      "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
+    }
+  },
+  "roleResolvedBendV2": {
+    "leftSha256": "f7d58e57fd714ae7e2faec9998c2d534addd38663e7e7875f1a1778fe5865400",
+    "rightSha256": "ff99c8b912ed3b96be74d325b457f4b50d99c216d4a179a8e19030565a861cb5",
+    "leftCandidates": 42,
+    "rightCandidates": 34
+  },
+  "glideContinuityV3": {
+    "leftSha256": "dea072a9db104a070cc2ab9b0d3e36fa04256973e6b1eed0c9ed2846e606eabe",
+    "rightSha256": "131541574a0a97784b2dbbef92e21afd52f4d0cbd5232073598d75e2b373f01c",
+    "policy": {
+      "referenceBlind": true,
+      "glideWindowSeconds": [
+        0.035,
+        0.24
+      ],
+      "minActiveContourSalience": 0.15,
+      "minActiveFrames": 8,
+      "minUniqueContourBins": 4,
+      "maxFrameJumpSemitones": 1,
+      "minNondecreasingFraction": 0.9
+    },
+    "left": {
+      "inputCandidates": 42,
+      "keptCandidates": 8,
+      "rejectedCandidates": 34,
+      "inReviewedWindow": 7
+    },
+    "right": {
+      "inputCandidates": 34,
+      "keptCandidates": 3,
+      "rejectedCandidates": 31
+    },
+    "reviewedRhythmBendDiagnostic": {
+      "targets": 14,
+      "exact": {
+        "tp": 5,
+        "fp": 2,
+        "fn": 9,
+        "precision": 0.7142857142857143,
+        "recall": 0.35714285714285715,
+        "f1": 0.47619047619047616
+      },
+      "timingOnly": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 8,
+        "precision": 0.8571428571428571,
+        "recall": 0.42857142857142855,
+        "f1": 0.5714285714285714
+      }
+    }
+  },
+  "recurringRoleSupportedBends": {
+    "privatePartitionSha256": "71acd3f198adc3072a9256de59dbb0515205a003bbfe6e38e450e30eeecaa3a7",
+    "inReviewedWindowCandidates": 6,
+    "recurringSupportCoverage": 0.8571428571428571,
+    "note": "Uses the previously frozen three-distinct-measure recurring-confidence policy unchanged; the nonrecurring +1-semitone candidate is abstained."
+  },
+  "mergedHighConfidenceStream": {
+    "privateRhythmPredictionSha256": "4f2f06dd19c4c5bd1a40bb6b5b7d1e6b1dcd4e57c17d64081e80d4d321102659",
+    "privateScoreSha256": "4a652749f3ac873ea57fbebc243fb655b1515fc8abe0659f6da62ffd4adc3481",
+    "rhythm": {
+      "predictions": 95,
+      "targets": 126,
+      "tp": 45,
+      "fp": 50,
+      "fn": 81,
+      "precision": 0.47368421052631576,
+      "recall": 0.35714285714285715,
+      "f1": 0.4072398190045249
+    },
+    "leadRecurringCore": {
+      "predictions": 83,
+      "targets": 77,
+      "tp": 39,
+      "fp": 44,
+      "fn": 38,
+      "precision": 0.46987951807228917,
+      "recall": 0.5064935064935064,
+      "f1": 0.4875
+    },
+    "aggregate": {
+      "predictions": 178,
+      "targets": 203,
+      "tp": 84,
+      "fp": 94,
+      "fn": 119,
+      "precision": 0.47191011235955055,
+      "recall": 0.41379310344827586,
+      "f1": 0.4409448818897638
+    }
+  },
+  "progression": {
+    "stereoRoleBaseline": {
+      "tp": 84,
+      "fp": 161,
+      "fn": 119,
+      "precision": 0.34285714285714286,
+      "recall": 0.41379310344827586,
+      "f1": 0.375
+    },
+    "plusStructureGrid": {
+      "tp": 84,
+      "fp": 147,
+      "fn": 119,
+      "precision": 0.36363636363636365,
+      "recall": 0.41379310344827586,
+      "f1": 0.3870967741935484
+    },
+    "recurringCoreBeforeBends": {
+      "tp": 79,
+      "fp": 93,
+      "fn": 124,
+      "precision": 0.45930232558139533,
+      "recall": 0.3891625615763547,
+      "f1": 0.42133333333333334
+    },
+    "recurringCorePlusRoleSupportedBends": {
+      "tp": 84,
+      "fp": 94,
+      "fn": 119,
+      "precision": 0.47191011235955055,
+      "recall": 0.41379310344827586,
+      "f1": 0.4409448818897638
+    }
+  },
+  "interpretation": "Stereo role evidence, structure consistency, repetition confidence and physical glide continuity now recover the original 84 correct-role events while cutting false positives from 161 to 94. Bend recovery restores five TPs to the recurring high-confidence stream for only one additional FP.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This is exposed development material, not a locked final evaluation.",
+    "The stereo role path requires strong reference-blind spatial evidence and must abstain on mono/high-correlation inputs.",
+    "Bend amount/duration, fingering, rendered notation and full-PDF quality are not scored here.",
+    "Private normalized labels and detailed predictions remain outside public Git."
+  ]
+}
