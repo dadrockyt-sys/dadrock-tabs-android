@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **HIGH-CONFIDENCE STEREO CORE + ROLE-SUPPORTED BENDS — 47.19% PRECISION / 41.38% RECALL / 44.09% F1; NEXT TARGET IS PLAYABILITY/CONFIDENCE INTEGRATION**
+Status: **RECURRING RAW-ONSET RECOVERY BREAKTHROUGH — 48.56% PRECISION / 58.13% RECALL / 52.91% F1; PLAYABILITY + PITCH ERROR REDUCTION NEXT**
 
 ## Product outcome
 
@@ -491,12 +491,36 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - The current Library uploader returned `container_session_expired` when asked to persist the newest structure/repetition/bend private outputs. The exact hashes, deterministic code, frozen source artifacts and public aggregate receipts are committed; do **not** claim those newest private files are Library-persisted until an upload succeeds. Older source predictions/labels/alignment remain durably in Library.
 - Customer delivery remains false; this is exposed development material. No main/Production change.
 
-## Exact next step — Integrate high-confidence role evidence into Astra and attack remaining FP/FN
+## Remaining-error attribution + raw-onset bottleneck — 2026-09-21
 
-1. Keep the stereo mapping, structure-grid filter, recurring-confidence policy and glide-continuity bend rule frozen. Do not tune them further against Gomyway labels.
-2. Build the deterministic integration adapter into Astra's existing note-evidence contract. Expose four states per event: `promoted` recurring/core role evidence, `promoted-technique` role-supported bend recovery, `ambiguous`, and `unassigned`. Customer delivery must remain false and mono/high-correlation inputs must fail closed to the fallback path.
-3. Attack the remaining **94 false positives** using reference-blind musical validity already present in Astra: onset-group playable-shape resolution and phrase-level fretboard-path consistency. First run diagnostics only; reject any rule that merely learns this song's register or target pitches. Score frozen proposals against both rhythm and lead roles and audit all lost TPs.
-4. In parallel, analyze the remaining119 FNs by category (missing onset, wrong pitch, correct event held in uncertain bucket, technique omitted). Use that error attribution to decide whether the next model work is confidence recovery, polyphonic/chord decoding, or a stronger pitch model. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
+- Froze a post-score diagnostic of the previous84TP/94FP/119FN high-confidence stereo core. Private attribution SHA256 `def27b6cb5da8359a21023408b8a19ed368372521fa1a1cd1cea210753d537ed`; public aggregate `docs/astra/GOMYWAY_STEREO_CORE_ERROR_ATTRIBUTION_V1.json`.
+- Of119 FNs: **5** are exact decoded events held in the uncertainty bucket, **14** are exact events in the opposite spatial channel, **47** have decoded onset evidence near the target but wrong pitch, and **53** have no final decoded onset in either channel. Rhythm FN technique flags include9 remaining reviewed attacked-bend starts and12 legato-slur attacks.
+- Of94 FPs: **71** have no reviewed target nearby,16 are wrong-pitch events near a reviewed target, and7 exactly match an opposite-role target. This confirms both spurious-event and pitch/role leakage remain material.
+- Raw tensor follow-up on the53 apparently missing decoded onsets found **32/53 already exceed Basic Pitch's unchanged0.5 neural onset threshold at the correct target pitch**, another13 lie in0.3–0.5, and only8 are below0.3. Private raw-onset diagnostic SHA256 `73b498f4d99e307439dadbc391be7aad81b57f79c2bdfe422395e8a5974d0faf`.
+- Interpretation: Basic Pitch's final note decoder/frame-sustain requirements discard substantial usable attack evidence. The next recovery experiment therefore used structure to supply pitch identity and the unchanged neural onset threshold to supply independent acoustic attack evidence, rather than globally lowering thresholds.
+
+## Recurring raw-onset gap recovery — 2026-09-21
+
+- Added `astra_backend/evaluation/recover_recurring_raw_onsets.py`. It can propose a missing event only for a role/MIDI/within-measure key already observed in at least3 distinct measures by the frozen recurring-confidence layer. It fills **internal gaps only** between first/last observed support; it never extrapolates leading/trailing measures and never invents a new pitch.
+- For a gap, an existing decoded same-MIDI event is preferred. Otherwise the correct stereo role channel must contain a local raw onset peak at the same MIDI within50ms of the independently frozen structure slot and the peak must meet Basic Pitch's unchanged **0.5 onset threshold**. The recovered event retains its acoustic onset rather than snapping to the grid.
+- **6/6 synthetic tests pass locally** and the branch CI suite includes them. Proposal generation was completed and hashed before reviewed labels were scored.
+- Frozen proposal hashes: rhythm `7670e2fc8d0b3656238d88e3914ff6766bef835427e2e306997ef6f1774fe28d` with44 proposals; lead `8c2d7c7658c68042a0cc7c673d4cc58d8638d88d08cd09edaea9aabc4adf6c9e` with21. After scoring,26 rhythm +8 lead proposals are exact TPs: **34/65 recovered events are correct**.
+- New role scores: rhythm139 predictions / **71 TP /68 FP /55 FN; precision51.08%, recall56.35%, F153.58%**. Lead104 / **47 TP /57 FP /30 FN; precision45.19%, recall61.04%, F151.93%**.
+- **New best aggregate development state:**243 predictions /203 targets -> **118 TP /125 FP /85 FN; precision48.56%, recall58.13%, F152.91%**. Relative to the prior high-confidence core, TP rises84→118 and FN falls119→85 while precision also rises47.19%→48.56%.
+- Private score SHA256 `3f67b633419c01f06d02c1c9c2b1c2de4dfca4506f387fda7eaf8d72a7d706a5`; public aggregate `docs/astra/GOMYWAY_RECURRING_RAW_ONSET_RECOVERY_V1.json`. This is the first role-aware development configuration above50% F1.
+- No global onset/frame threshold was lowered. This remains exposed development material and customer delivery remains false.
+
+## Branch CI dependency correction — 2026-09-21
+
+- The lightweight branch CI initially failed only when importing the new NumPy-based glide unit test; the preceding68 focused tests passed. The workflow now installs pinned `numpy==1.26.4 --no-deps` solely for activation-array unit tests before the focused suite.
+- This changes the old statement that the focused CI installs no runtime package: it now installs exactly one already-frozen numerical test dependency. It still installs no Basic Pitch, TFLite, Torch, separator/model weights, opens no audio, runs no inference and performs no Production action.
+
+## Exact next step — Reduce false positives without sacrificing recovered recall
+
+1. Keep stereo mapping, structure-grid filtering, recurring confidence, glide-continuity bends and recurring raw-onset recovery frozen. Do not retune their thresholds against Gomyway labels.
+2. Run **reference-blind playable-shape and fretboard-path diagnostics** on the new243-event role streams using Astra's existing physical guitar model. Start diagnostic-only: identify impossible simultaneous groups, extreme path discontinuities and unresolved shapes. Freeze any proposed validity rule before dual-role scoring and audit every TP lost.
+3. Re-run error attribution on the118TP/125FP/85FN baseline. Prioritize the remaining wrong-pitch class with context that is independently musical (polyphony/chord shape, harmonic consistency, phrase continuity); fixed MIDI-register role gates remain prohibited.
+4. Build the deterministic integration adapter into Astra's note-evidence contract with promoted/core, promoted-technique, recovered-recurring-onset, ambiguous and unassigned states. Mono/high-correlation inputs must fail closed to the general separation path. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
