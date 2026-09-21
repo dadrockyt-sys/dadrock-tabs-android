@@ -1,0 +1,95 @@
+{
+  "kind": "gomyway-recurring-raw-onset-recovery-development-score",
+  "version": 1,
+  "policy": {
+    "frozenBeforeScore": true,
+    "referenceLabelsRead": false,
+    "pitchSource": "only an already-observed recurring role/pitch/within-measure key",
+    "minDistinctMeasureSupport": 3,
+    "internalGapsOnly": true,
+    "leadingTrailingExtrapolationAllowed": false,
+    "rawOnsetThreshold": 0.5,
+    "rawOnsetThresholdSource": "unchanged Basic Pitch standard onset threshold",
+    "rawOnsetSearchToleranceSeconds": 0.05,
+    "acousticOnsetPreserved": true
+  },
+  "inputs": {
+    "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+    "rhythmLabelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+    "leadLabelsSha256": "f9751f364864ddb3b161a870d8ab26ac7b338ffe4c04db08a24ace4d381e23fb",
+    "leftRawActivationSha256": "41660cff543dd6f23bd2679eae911df050afb8329d98176ade4ee3a256969b4f",
+    "rightRawActivationSha256": "cc0f57764feca8c43519be3e2a69ecc447806b5623d6921abef52f895f152cc4"
+  },
+  "frozenProposalOutputs": {
+    "rhythm": {
+      "sha256": "7670e2fc8d0b3656238d88e3914ff6766bef835427e2e306997ef6f1774fe28d",
+      "proposals": 44,
+      "matchedAfterScore": 26
+    },
+    "lead": {
+      "sha256": "8c2d7c7658c68042a0cc7c673d4cc58d8638d88d08cd09edaea9aabc4adf6c9e",
+      "proposals": 21,
+      "matchedAfterScore": 8
+    }
+  },
+  "privateScoreSha256": "3f67b633419c01f06d02c1c9c2b1c2de4dfca4506f387fda7eaf8d72a7d706a5",
+  "baseline": {
+    "predictions": 178,
+    "targets": 203,
+    "tp": 84,
+    "fp": 94,
+    "fn": 119,
+    "precision": 0.47191011235955055,
+    "recall": 0.41379310344827586,
+    "f1": 0.4409448818897638
+  },
+  "recovered": {
+    "rhythm": {
+      "predictions": 139,
+      "targets": 126,
+      "tp": 71,
+      "fp": 68,
+      "fn": 55,
+      "precision": 0.5107913669064749,
+      "recall": 0.5634920634920635,
+      "f1": 0.5358490566037736
+    },
+    "lead": {
+      "predictions": 104,
+      "targets": 77,
+      "tp": 47,
+      "fp": 57,
+      "fn": 30,
+      "precision": 0.4519230769230769,
+      "recall": 0.6103896103896104,
+      "f1": 0.5193370165745856
+    },
+    "aggregate": {
+      "predictions": 243,
+      "targets": 203,
+      "tp": 118,
+      "fp": 125,
+      "fn": 85,
+      "precision": 0.48559670781893005,
+      "recall": 0.5812807881773399,
+      "f1": 0.5291479820627802
+    }
+  },
+  "delta": {
+    "predictions": 65,
+    "tp": 34,
+    "fp": 31,
+    "fn": -34,
+    "precision": 0.0136865954593795,
+    "recall": 0.16748768472906403,
+    "f1": 0.0882031001730164
+  },
+  "interpretation": "Recurring structure supplies pitch identity; the raw neural onset head supplies independent acoustic attack evidence. Filling only internal recurring gaps recovers 34 exact role-aware events and raises both aggregate precision and recall, reaching 52.91% F1 without lowering Basic Pitch's onset threshold.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This is exposed development material, not a locked final evaluation.",
+    "The rule is appropriate only for streams that independently pass the recurring-pattern confidence gate.",
+    "Through-composed or nonrepeating passages must not be completed by extrapolation.",
+    "Duration, technique completeness, fingering and rendered PDF quality remain outside this onset/pitch score."
+  ]
+}
