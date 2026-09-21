@@ -38,8 +38,7 @@ const EXPECTED = Object.freeze({
   reproduction: Object.freeze({
     receiptSha256: '3a9474ccad43f1b06b76bc2e4b836642c355565a1d86a608aed8780a0bf8c333',
     normalizedAudioSha256: '1711cac27e4c3c2d90840ec92faca29c4f343c5d55236d59e8f10c23b573f2b3',
-    featuresSha256: 'e3e4361e75bca63d71a6e1a672c592d2fedf1a6892e52ef0c0d3206ff5df5aa6',
-    modelWindowsSha256: '7f1a31c2e79328d48f73e72e3b800c124fab275a7bbcf02b08b342d0e1403731',
+    sourceParityTolerance: 1e-7,
   }),
   runtime: Object.freeze({
     platform: 'linux-x86_64',
@@ -100,10 +99,13 @@ export function evaluateTabcnnDevelopmentPreflight({
     blockers.push('PREPROCESSING_NUMERICAL_REPRODUCTION_PENDING');
   }
   if (preprocessing.numericalReproductionReceiptSha256 !== EXPECTED.reproduction.receiptSha256
-      || preprocessing.normalizedAudioSha256 !== EXPECTED.reproduction.normalizedAudioSha256
-      || preprocessing.featuresSha256 !== EXPECTED.reproduction.featuresSha256
-      || preprocessing.modelWindowsSha256 !== EXPECTED.reproduction.modelWindowsSha256) {
+      || preprocessing.normalizedAudioSha256 !== EXPECTED.reproduction.normalizedAudioSha256) {
     blockers.push('PREPROCESSING_REPRODUCTION_IDENTITY_MISMATCH');
+  }
+  if (preprocessing.sourceParityVerified !== true
+      || !finiteNonNegative(preprocessing.sourceParityMaxAbsoluteDifference)
+      || preprocessing.sourceParityMaxAbsoluteDifference > EXPECTED.reproduction.sourceParityTolerance) {
+    blockers.push('PREPROCESSING_SOURCE_PARITY_UNVERIFIED');
   }
 
   if (artifact.record !== EXPECTED.artifact.record
@@ -187,8 +189,9 @@ export function evaluateTabcnnDevelopmentPreflight({
       preprocessingNumericallyReproduced: preprocessing.numericalReproductionVerified === true
         && preprocessing.numericalReproductionReceiptSha256 === EXPECTED.reproduction.receiptSha256
         && preprocessing.normalizedAudioSha256 === EXPECTED.reproduction.normalizedAudioSha256
-        && preprocessing.featuresSha256 === EXPECTED.reproduction.featuresSha256
-        && preprocessing.modelWindowsSha256 === EXPECTED.reproduction.modelWindowsSha256,
+        && preprocessing.sourceParityVerified === true
+        && finiteNonNegative(preprocessing.sourceParityMaxAbsoluteDifference)
+        && preprocessing.sourceParityMaxAbsoluteDifference <= EXPECTED.reproduction.sourceParityTolerance,
       officialArtifactIdentityVerified: artifact.record === EXPECTED.artifact.record
         && artifact.file === EXPECTED.artifact.file
         && artifact.bytes === EXPECTED.artifact.bytes,

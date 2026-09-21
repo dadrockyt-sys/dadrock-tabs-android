@@ -107,6 +107,15 @@ test('artifact SHA256 substitution fails closed even when size and published MD5
   assert.equal(result.developmentExecutionReady, false);
 });
 
+test('source parity above tolerance blocks even when the frozen receipt is present', () => {
+  const evidence = completeEvidence();
+  evidence.preprocessing.sourceParityMaxAbsoluteDifference = 1e-5;
+  const result = evaluateTabcnnDevelopmentPreflight(evidence);
+  assert.ok(result.blockers.includes('PREPROCESSING_SOURCE_PARITY_UNVERIFIED'));
+  assert.equal(result.checks.preprocessingNumericallyReproduced, false);
+  assert.equal(result.developmentExecutionReady, false);
+});
+
 test('runtime budget limits are hard blockers', () => {
   const slow = completeEvidence();
   slow.runtime.wallTimeSeconds = 1200.001;

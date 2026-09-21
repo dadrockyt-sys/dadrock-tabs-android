@@ -93,3 +93,9 @@ Only after artifact identity, exact runtime, preprocessing reproduction, pickle 
 Until those remaining fields are complete, `tabcnn_guitarprofx_dafx24` remains `developmentExecutionReady:false` and customer delivery remains false.
 
 No checkpoint was imported/executed; no customer audio was opened; no main/Production change.
+
+## Portable numerical reproduction correction — 2026-09-21
+
+A second GitHub-hosted run reproduced the pinned upstream preprocessing with **zero Astra-vs-source difference**, identical shapes/dtypes/min/max, and identical normalized-audio bytes, but the raw CQT/model-window float byte hashes differed from the earlier runner. This demonstrates least-significant-bit hardware/FFT variability rather than semantic preprocessing drift.
+
+Astra therefore treats raw CQT/model-window SHA-256 values in the original receipt as **diagnostic**, not portable identity. The portable gate now requires the exact frozen runtime/source identities, exact synthetic/normalized waveform identity, exact feature/window shapes and dtypes, stable numeric bounds, and same-run Astra-vs-pinned-source maximum absolute difference <= 1e-7. No model was loaded or executed.
