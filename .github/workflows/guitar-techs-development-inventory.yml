@@ -1,0 +1,112 @@
+name: Guitar-TECHS P1/P2 development inventory
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/workflows/guitar-techs-development-inventory.yml'
+      - 'astra_backend/guitartechs_inventory/inspect_extracted.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    name: Inventory ${{ matrix.file }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { file: P1_chords.zip, bytes: 981741162, md5: be9ef8bbdceb1912d565254e607a6d94, sha256: de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326, performer: P1, category: chords }
+          - { file: P1_scales.zip, bytes: 453349723, md5: 9c0b98e8fb42a522df727ea8bf545e4f, sha256: 79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509, performer: P1, category: scales }
+          - { file: P1_singlenotes.zip, bytes: 108626613, md5: ca0c4674dde3805574685a313f7c39eb, sha256: 130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4, performer: P1, category: singlenotes }
+          - { file: P1_techniques.zip, bytes: 326280863, md5: 18634a41a6db5a8de10d07eb3122a872, sha256: 1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e, performer: P1, category: techniques }
+          - { file: P2_chords.zip, bytes: 1150819056, md5: eb6f74dd19162237189281688ad7ad2e, sha256: 9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce, performer: P2, category: chords }
+          - { file: P2_scales.zip, bytes: 471254783, md5: 96664853872f51e5f8aa4447313b7cf5, sha256: d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17, performer: P2, category: scales }
+          - { file: P2_singlenotes.zip, bytes: 116133457, md5: 40fbf03d8b04bb2cf42df20f36dc2254, sha256: d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9, performer: P2, category: singlenotes }
+          - { file: P2_techniques.zip, bytes: 395839610, md5: f4189251ce50be25f06a173b2c2bba00, sha256: 05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816, performer: P2, category: techniques }
+
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Download exact authorized archive
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          case "$FILE" in
+            P1_chords.zip|P1_scales.zip|P1_singlenotes.zip|P1_techniques.zip|P2_chords.zip|P2_scales.zip|P2_singlenotes.zip|P2_techniques.zip) ;;
+            *) echo "unauthorized archive: $FILE" >&2; exit 92 ;;
+          esac
+          test "$FILE" != "P3_music.zip"
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 3 \
+            --user-agent 'Astra-Guitar-TECHS-Development-Inventory/1.0' \
+            --output "/tmp/$FILE" \
+            "https://zenodo.org/records/14963133/files/$FILE?download=1"
+
+      - name: Verify published and Astra identities before extraction
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+          EXPECT_BYTES: ${{ matrix.bytes }}
+          EXPECT_MD5: ${{ matrix.md5 }}
+          EXPECT_SHA256: ${{ matrix.sha256 }}
+        run: |
+          set -euo pipefail
+          archive="/tmp/$FILE"
+          test "$(stat -c '%s' "$archive")" = "$EXPECT_BYTES"
+          test "$(md5sum "$archive" | awk '{print $1}')" = "$EXPECT_MD5"
+          test "$(sha256sum "$archive" | awk '{print $1}')" = "$EXPECT_SHA256"
+          echo "GUITAR_TECHS_INVENTORY_IDENTITY_VERIFIED=$FILE"
+
+      - name: Extract for inventory only
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          root="/tmp/inventory-${FILE%.zip}"
+          mkdir -p "$root"
+          unzip -q "/tmp/$FILE" -d "$root"
+          rm -f "/tmp/$FILE"
+          echo "GUITAR_TECHS_EXTRACTION_PURPOSE=inventory-only"
+
+      - name: Emit deterministic inventory receipt
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+          EXPECT_BYTES: ${{ matrix.bytes }}
+          EXPECT_MD5: ${{ matrix.md5 }}
+          EXPECT_SHA256: ${{ matrix.sha256 }}
+          PERFORMER: ${{ matrix.performer }}
+          CATEGORY: ${{ matrix.category }}
+        run: |
+          set -euo pipefail
+          root="/tmp/inventory-${FILE%.zip}"
+          python3 astra_backend/guitartechs_inventory/inspect_extracted.py \
+            --root "$root" \
+            --archive "$FILE" \
+            --performer "$PERFORMER" \
+            --category "$CATEGORY" \
+            --bytes "$EXPECT_BYTES" \
+            --md5 "$EXPECT_MD5" \
+            --sha256 "$EXPECT_SHA256"
+
+      - name: Delete extracted development media
+        if: always()
+        shell: bash
+        env:
+          FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          rm -rf "/tmp/inventory-${FILE%.zip}" "/tmp/$FILE"
+          echo "GUITAR_TECHS_INVENTORY_MEDIA_DELETED=true"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "GUITAR_TECHS_ALIGNMENT_RUN=false"
+          echo "GUITAR_TECHS_TRAINING_RUN=false"

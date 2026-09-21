@@ -3,7 +3,7 @@
 Updated: 2026-09-21 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; INVENTORY EXTRACTION PROBE IN PROGRESS; P3 SEALED; REAL TRAINING UNAUTHORIZED**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; PUBLISHED TABCNN BLOCKED BY RIGHTS; GUITAR-TECHS SYNTHETIC TRAINING PATH VERIFIED; P1/P2 ARCHIVE BYTE IDENTITIES + ASTRA SHA-256 FROZEN; FULL P1/P2 INVENTORY EXTRACTION IN PROGRESS; P3 SEALED; REAL TRAINING UNAUTHORIZED**
 
 ## Product outcome
 
@@ -750,6 +750,18 @@ Re-verify every archive against the frozen byte count, MD5 and Astra SHA-256 bef
 - The probe must re-verify exact bytes, published MD5 and frozen Astra SHA-256 `130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4` before extraction.
 - It may inspect directory/file layout, text metadata, WAV headers and MIDI structural metadata only. It performs no alignment, feature generation, model import or training.
 - `P3_music.zip` remains sealed and is not referenced as a downloadable input.
+
+## Guitar-TECHS inventory probe result — 2026-09-21
+
+- Probe workflow run `35563338841` completed successfully on `P1_singlenotes.zip`. Frozen byte/MD5/SHA identities passed before extraction; the extracted media was deleted after inspection.
+- Clean visible contents: 1 MIDI file, 2 WAV audio captures, 2 MP3 video captures. Resource forks/`.DS_Store` are ignored as packaging noise.
+- Underlying performance key is consistently `allsinglenotes`; capture views are `directinput`, `micamp`, `ego`, and `exo`.
+- The MIDI is format 1 / PPQ 960 with one conductor track plus six named string tracks: high-to-low `e`, `B`, `G`, `D`, `A`, `E`.
+- P1 single-note track minima are 64, 59, 55, 50, 45, 40 respectively, providing direct dataset tuning evidence consistent with E2-A2-D3-G3-B3-E4; this is observed evidence, not an assumed default.
+- No pitch-bend events occur in the P1 ordinary-single-note MIDI.
+- Direct-input WAV: mono, 48 kHz, 24-bit, 552.0 s. Mic/amp WAV: mono, 48 kHz, 16-bit, approximately 552.00035 s. The shared performance stem supports grouping these as correlated capture views of one performance.
+- No alignment, audio feature extraction, model import or training was performed. P3 was not opened.
+- Added reusable `astra_backend/guitartechs_inventory/inspect_extracted.py` and branch-only full P1/P2 inventory workflow. The full matrix re-verifies bytes + MD5 + frozen Astra SHA-256 before each archive is extracted.
 
 ## Copy-paste handoff
 
