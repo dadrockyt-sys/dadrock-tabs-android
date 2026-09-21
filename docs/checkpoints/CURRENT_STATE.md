@@ -1076,6 +1076,43 @@ Inspect run `35662028832` first. If fold 1 completes, collect its development-on
 - Verification on commit `d2e8e29994c6a3fabb250455274070328fe2e76e`: GitHub Actions run `35665163937` **PASS**; **302/302 Node tests passed**, **85/85 focused Python tests passed**. Node output SHA-256 `eb1caa8fd52a96218162b85a1cd37b2868290096f4655a9a55f6f2c0b3787287`; focused evaluation output SHA-256 `99f558455baee2087d597d36ab8738e5b2cf073b5a1680045f57d7bd64b271a9`.
 
 
+## EXPLICIT NEXT STEP TO RESUME — do this first
+
+1. **Inspect GitHub Actions run `35662028832` before doing anything else.**
+   - Preflight job `106539242502` already passed.
+   - Fold 1 job `106539518639` (`P1 -> P2`) is currently in the real V2 optimizer/full-validation step.
+   - Fold 2 job `106539518543` (`P2 -> P1`) is queued behind Fold 1 by the intentional serial policy.
+   - **Do not launch a duplicate V2 run while `35662028832` is active.**
+
+2. **When Fold 1 finishes, collect its development-only artifact before changing anything.**
+   - Record Actions artifact ID + digest.
+   - Record result JSON SHA-256 and model SHA-256.
+   - Verify V2 structural evidence against `docs/astra/GUITARTECHS_V2_RESULT_ADMISSION_CONTRACT_V1.json` (SHA-256 `58184ff3c60499c2ba6b89ef1042ea3c0eb20603d5a3a10e2eb11700de7a41db`).
+   - Require exact fold identity, seed, 1,000 epochs, 2,000 optimizer steps, 200-frame sequences, batch 32, microbatch 1, 50 checkpoints, P1 training performance count 41, P2 validation capture count 120, P1 supervised exposure 8.2M frame positions, frozen source receipts, guard flags, and pretraining label-balance hard sanity.
+   - Preserve the selected checkpoint and full opposite-performer validation metrics exactly as emitted.
+
+3. **Allow the same run to continue into Fold 2; do not relaunch it separately.**
+   - When Fold 2 finishes, collect the corresponding artifact IDs/digests, result/model SHA-256 values, label-balance diagnostics, selected checkpoint, and full opposite-performer validation metrics.
+   - Require P2 training performance count 40, P1 validation capture count 136, and P2 supervised exposure 8.0M frame positions, plus all other frozen V2 admission requirements.
+
+4. **After both fold artifacts exist, run only the frozen V2 result admission + development metric evaluation.**
+   - Use `astra_backend/guitarTechsV2ResultAdmission.mjs`.
+   - Development thresholds remain those in `docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json` (SHA-256 `fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15`).
+   - **Do not retune thresholds, alter the 256-path allowlist, change checkpoint selection, or rescue a weak result after seeing V2 metrics.**
+
+5. **Freeze the V2 development result into repo evidence and update this checkpoint.**
+   - If either structural admission or development thresholds fail: mark V2 development FAIL, keep both models development-only, keep P3 sealed, diagnose using P1/P2 evidence only, and require a new design + new authorization for another real-data run.
+   - If both folds pass every frozen gate: mark V2 development PASS/eligible-for-next-gate only. **Do not open P3 yet.** P3 still requires a separate explicit authorization.
+
+6. **Invariant constraints while resuming:**
+   - P3 stays sealed until separately authorized.
+   - No paid compute.
+   - No published checkpoint initialization.
+   - No `main` or Production mutation.
+   - No customer delivery/promotion from these development models.
+   - Preserve V1 failure evidence unchanged.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
