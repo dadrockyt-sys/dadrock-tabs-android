@@ -53,7 +53,10 @@ test('published archive identities are deterministic and defensive', () => {
   const first = getGuitarTechsTrainingPlan();
   const p3 = first.dataset.publishedArchives.P3[0];
   assert.equal(p3.file, 'P3_music.zip');
+  assert.equal(p3.bytes, 129505089);
   assert.equal(p3.md5, '071ba80aecf00f4a31fbd167b3f22198');
+  assert.equal(first.dataset.publishedIdentityManifestSha256, 'a3445d799c4a0b17a0078dac0c9387a0e676111367a5f07d608fd55bd8118e52');
+  assert.equal(first.splitPolicy.receiptSha256, 'd116556c13d250af28900bb1d73d2c0ccd3130246db8bdd2d6d387ac87be799a');
   first.dataset.publishedArchives.P1[0].md5 = 'mutated';
   const second = getGuitarTechsTrainingPlan();
   assert.equal(second.dataset.publishedArchives.P1[0].md5, 'be9ef8bbdceb1912d565254e607a6d94');

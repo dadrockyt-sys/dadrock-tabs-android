@@ -1,0 +1,46 @@
+{
+  "candidateId": "astra_guitartechs_tabcnn_v1",
+  "developmentFolds": [
+    {
+      "id": "p1-train-p2-validate",
+      "trainPerformers": [
+        "P1"
+      ],
+      "validationPerformers": [
+        "P2"
+      ]
+    },
+    {
+      "id": "p2-train-p1-validate",
+      "trainPerformers": [
+        "P2"
+      ],
+      "validationPerformers": [
+        "P1"
+      ]
+    }
+  ],
+  "extractedPerformanceGroupingVerified": false,
+  "finalFitPerformers": [
+    "P1",
+    "P2"
+  ],
+  "groupingUnit": "underlying-performance",
+  "hyperparametersFreezeBeforeFinalFit": true,
+  "keepAllCaptureChannelsTogether": true,
+  "mediaOpened": false,
+  "randomClipSplitForbidden": true,
+  "randomized": false,
+  "schema": "astra-guitar-techs-split-receipt-v1",
+  "sealedGeneralizationGate": {
+    "archive": "P3_music.zip",
+    "mayOpenBeforeFreeze": false,
+    "performers": [
+      "P3"
+    ],
+    "publishedBytes": 129505089,
+    "publishedMd5": "071ba80aecf00f4a31fbd167b3f22198",
+    "purpose": "single-use final source-disjoint generalization evaluation"
+  },
+  "strategy": "performer-disjoint-two-fold-development-plus-sealed-final-gate"
+}

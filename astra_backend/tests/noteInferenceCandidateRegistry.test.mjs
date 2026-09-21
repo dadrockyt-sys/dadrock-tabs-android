@@ -26,9 +26,15 @@ test('rights-clean Astra Guitar-TECHS candidate is primary and remains pre-train
   const candidate = getNoteInferenceCandidate(PRIMARY_NEXT_NOTE_INFERENCE_CANDIDATE);
   assert.equal(candidate.source.license, 'CC-BY-4.0');
   assert.equal(candidate.operational.initialization, 'random-only');
+  assert.equal(candidate.operational.publishedDatasetIdentityFrozen, true);
+  assert.equal(candidate.operational.publishedDatasetManifestSha256, 'a3445d799c4a0b17a0078dac0c9387a0e676111367a5f07d608fd55bd8118e52');
+  assert.equal(candidate.operational.astraArchiveSha256Frozen, false);
   assert.equal(candidate.operational.trainingMediaDownloadedByAstra, false);
+  assert.equal(candidate.operational.splitReceiptFrozen, true);
+  assert.equal(candidate.operational.splitReceiptSha256, 'd116556c13d250af28900bb1d73d2c0ccd3130246db8bdd2d6d387ac87be799a');
   assert.equal(candidate.operational.p3FinalGateSealed, true);
-  assert.ok(candidate.blockers.includes('DATASET_EXACT_BYTE_IDENTITY_NOT_FROZEN'));
+  assert.ok(candidate.blockers.includes('DATASET_ASTRA_SHA256_NOT_FROZEN'));
+  assert.ok(candidate.blockers.includes('EXTRACTED_PERFORMANCE_GROUPING_NOT_VERIFIED'));
   assert.ok(candidate.blockers.includes('MODEL_NOT_TRAINED'));
   assert.equal(candidate.customerDeliveryEligible, false);
 });

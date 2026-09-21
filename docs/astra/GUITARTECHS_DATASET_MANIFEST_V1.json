@@ -1,0 +1,100 @@
+{
+  "archives": [
+    {
+      "bytes": 981741162,
+      "category": "chords",
+      "file": "P1_chords.zip",
+      "md5": "be9ef8bbdceb1912d565254e607a6d94",
+      "performer": "P1",
+      "role": "development"
+    },
+    {
+      "bytes": 453349723,
+      "category": "scales",
+      "file": "P1_scales.zip",
+      "md5": "9c0b98e8fb42a522df727ea8bf545e4f",
+      "performer": "P1",
+      "role": "development"
+    },
+    {
+      "bytes": 108626613,
+      "category": "singlenotes",
+      "file": "P1_singlenotes.zip",
+      "md5": "ca0c4674dde3805574685a313f7c39eb",
+      "performer": "P1",
+      "role": "development"
+    },
+    {
+      "bytes": 326280863,
+      "category": "techniques",
+      "file": "P1_techniques.zip",
+      "md5": "18634a41a6db5a8de10d07eb3122a872",
+      "performer": "P1",
+      "role": "development"
+    },
+    {
+      "bytes": 1150819056,
+      "category": "chords",
+      "file": "P2_chords.zip",
+      "md5": "eb6f74dd19162237189281688ad7ad2e",
+      "performer": "P2",
+      "role": "development"
+    },
+    {
+      "bytes": 471254783,
+      "category": "scales",
+      "file": "P2_scales.zip",
+      "md5": "96664853872f51e5f8aa4447313b7cf5",
+      "performer": "P2",
+      "role": "development"
+    },
+    {
+      "bytes": 116133457,
+      "category": "singlenotes",
+      "file": "P2_singlenotes.zip",
+      "md5": "40fbf03d8b04bb2cf42df20f36dc2254",
+      "performer": "P2",
+      "role": "development"
+    },
+    {
+      "bytes": 395839610,
+      "category": "techniques",
+      "file": "P2_techniques.zip",
+      "md5": "f4189251ce50be25f06a173b2c2bba00",
+      "performer": "P2",
+      "role": "development"
+    },
+    {
+      "bytes": 129505089,
+      "category": "music",
+      "file": "P3_music.zip",
+      "md5": "071ba80aecf00f4a31fbd167b3f22198",
+      "performer": "P3",
+      "role": "sealed-final-generalization-gate"
+    }
+  ],
+  "astraArchiveSha256Status": "not-acquired",
+  "dataset": "Guitar-TECHS",
+  "license": {
+    "evidence": {
+      "indexBlob": "64627b4fb227cd0e29cff05926f02fe0e12b5f26",
+      "repository": "guitar-techs/guitar-techs.github.io",
+      "revision": "19a2954f789bfd192b2b4732788ceb000c1dd687",
+      "statement": "All data is licensed under a Creative Commons Attribution 4.0 License (CC BY 4.0)."
+    },
+    "id": "CC-BY-4.0"
+  },
+  "metadataProbe": {
+    "commit": "8c5822dd4f7d3b94d72214db967d23fb7469c310",
+    "headRequestsOnly": true,
+    "runId": 35561191581,
+    "trainingMediaDownloaded": false,
+    "trainingMediaOpened": false,
+    "workflow": ".github/workflows/guitar-techs-metadata-identity.yml"
+  },
+  "publishedDate": "2025-04-06",
+  "record": "https://zenodo.org/records/14963133",
+  "schema": "astra-guitar-techs-published-dataset-identity-v1",
+  "totalPublishedBytes": 4133550356,
+  "version": "v1"
+}
