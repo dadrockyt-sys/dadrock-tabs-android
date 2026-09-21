@@ -1,0 +1,67 @@
+name: Guitar-TECHS synthetic training smoke
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'astra_backend/guitartechs_training_smoke/**'
+      - '.github/workflows/guitar-techs-synthetic-training-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-backward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch commit
+        uses: actions/checkout@v4
+
+      - name: Use Python 3.10.15
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Install exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check \
+            --extra-index-url https://download.pytorch.org/whl/cpu \
+            --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+
+      - name: Acquire exact pinned model source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Run deterministic synthetic backward and optimizer smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_smoke/verify_synthetic_training_smoke.py \
+            --source-root /tmp/tabcnn-source \
+            --receipt-out /tmp/guitar-techs-synthetic-training-smoke.json
+          echo "GUITAR_TECHS_SYNTHETIC_TRAINING_SMOKE_SHA256=$(sha256sum /tmp/guitar-techs-synthetic-training-smoke.json | awk '{print $1}')"
+          cat /tmp/guitar-techs-synthetic-training-smoke.json
