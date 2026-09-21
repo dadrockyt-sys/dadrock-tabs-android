@@ -155,9 +155,7 @@ export async function GET(request, context) {
       let query = {};
       if (search) {
         // Treat user input as literal text and ignore accidental whitespace.
-        const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\      let query = {};
-      if (search) {
-        const searchRegex = { $regex: search, $options: 'i' };');
+        const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const searchRegex = { $regex: escapedSearch, $options: 'i' };
         if (searchType === 'song') {
           query = { song: searchRegex };
