@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { adaptRoleEvidenceStreams } from '../roleEvidenceIntegrationAdapter.mjs';
 import { buildStructureMap } from '../structureMap.mjs';
+import { evaluateNoteEvidence } from '../noteEvidenceEvaluator.mjs';
 
 function structureMap() {
   return buildStructureMap({
@@ -165,4 +166,39 @@ test('bass integrates as bass without widening delivery authority', () => {
 test('role evidence integration is deterministic', () => {
   const input = completeInput();
   assert.deepEqual(adaptRoleEvidenceStreams(input), adaptRoleEvidenceStreams(input));
+});
+
+
+test('integrated role evidence remains fail-closed through note evidence evaluator', () => {
+  const adapted = adaptRoleEvidenceStreams(completeInput());
+  const evaluation = evaluateNoteEvidence(adapted);
+  assert.equal(evaluation.acceptedForCompleteTab, false);
+  assert.ok(evaluation.failureReasons.includes('POLYPHONY_UNRESOLVED'));
+  assert.ok(evaluation.failureReasons.includes('PITCH_EVIDENCE_UNRESOLVED'));
+  assert.ok(evaluation.failureReasons.includes('DURATION_EVIDENCE_INCOMPLETE'));
+  assert.equal(adapted.customerDeliveryEligible, false);
+});
+
+test('role abstention reaches evaluator as unresolved role relevance', () => {
+  const input = completeInput({
+    roleEvidenceStatus: 'abstained',
+    streams: {
+      promotedCore: [],
+      promotedTechnique: [],
+      recoveredRecurringOnset: [],
+      ambiguous: [{
+        id: 'amb-only',
+        start: 1,
+        onsetConfidence: 0.6,
+        candidates: [{ midi: 64, confidence: 0.6 }],
+      }],
+      unassigned: [],
+      rejected: [],
+    },
+  });
+  const adapted = adaptRoleEvidenceStreams(input);
+  const evaluation = evaluateNoteEvidence(adapted);
+  assert.equal(evaluation.acceptedForCompleteTab, false);
+  assert.ok(evaluation.failureReasons.includes('ROLE_RELEVANCE_UNRESOLVED'));
+  assert.equal(adapted.customerDeliveryEligible, false);
 });
