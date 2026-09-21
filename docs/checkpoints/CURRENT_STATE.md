@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **RECURRING RAW-ONSET RECOVERY BREAKTHROUGH — 48.56% PRECISION / 58.13% RECALL / 52.91% F1; PLAYABILITY + PITCH ERROR REDUCTION NEXT**
+Status: **52.91% F1 BASELINE PRESERVED + ROLE-EVIDENCE STATES WIRED INTO ASTRA FAIL-CLOSED; NEXT STEP IS PIPELINE INTEGRATION, NOT MORE GOMYWAY THRESHOLD TUNING**
 
 ## Product outcome
 
@@ -515,12 +515,36 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - The lightweight branch CI initially failed only when importing the new NumPy-based glide unit test; the preceding68 focused tests passed. The workflow now installs pinned `numpy==1.26.4 --no-deps` solely for activation-array unit tests before the focused suite.
 - This changes the old statement that the focused CI installs no runtime package: it now installs exactly one already-frozen numerical test dependency. It still installs no Basic Pitch, TFLite, Torch, separator/model weights, opens no audio, runs no inference and performs no Production action.
 
-## Exact next step — Reduce false positives without sacrificing recovered recall
+## Post-52.91% rejected development experiments — 2026-09-21
 
-1. Keep stereo mapping, structure-grid filtering, recurring confidence, glide-continuity bends and recurring raw-onset recovery frozen. Do not retune their thresholds against Gomyway labels.
-2. Run **reference-blind playable-shape and fretboard-path diagnostics** on the new243-event role streams using Astra's existing physical guitar model. Start diagnostic-only: identify impossible simultaneous groups, extreme path discontinuities and unresolved shapes. Freeze any proposed validity rule before dual-role scoring and audit every TP lost.
-3. Re-run error attribution on the118TP/125FP/85FN baseline. Prioritize the remaining wrong-pitch class with context that is independently musical (polyphony/chord shape, harmonic consistency, phrase continuity); fixed MIDI-register role gates remain prohibited.
-4. Build the deterministic integration adapter into Astra's note-evidence contract with promoted/core, promoted-technique, recovered-recurring-onset, ambiguous and unassigned states. Mono/high-correlation inputs must fail closed to the general separation path. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
+- Tested an additional Basic Pitch frame-support gate on the frozen recurring raw-onset recoveries using the unchanged 0.3 frame threshold across the existing minimum-note window. It removed six recoveries but lost three TPs; aggregate F1 fell from52.91% to52.27%. Rejected.
+- Tested a 0.3–0.5 onset supplement that required the same pitch to also meet the unchanged0.3 frame threshold. Frozen proposals added27 events but only3 became TPs; aggregate F1 fell to51.27%. Rejected. The winning recovery remains the unchanged0.5 onset path.
+- Tested spatial own-channel dominance on recovered events. Precision rose slightly but four TPs were lost and aggregate F1 fell to52.78%. Rejected.
+- Tested a majority-density recurrence gate. It over-pruned legitimate rhythm recoveries and reduced aggregate F1 to49.05%. Rejected.
+- Tested simple and polyphonic recurring-slot pitch-substitution rules. Both abstained with **zero real substitutions**, showing the residual wrong-pitch class is not a simple one-extra/one-missing recurring-slot mismatch. No score change.
+- Tested hidden chord-tone completion from cross-measure raw onset/frame consensus plus Astra playable-shape ranking. The frozen stress test proposed126 additions but recovered only3 TPs and collapsed F1 to42.98%. Rejected decisively.
+- Astra's existing playable-shape diagnostic found **0 physically impossible onset groups** in the recovered role streams. Remaining FPs are plausible guitar events, not obviously impossible fretboard geometry.
+- Conclusion: stop song-specific metric chasing on Gomyway. The52.91% baseline is the current development winner. The remaining bottleneck requires a stronger/general event-pitch model or broader cross-song evidence, not additional threshold tuning on this exposed song.
+
+## Role-evidence integration into Astra — 2026-09-21
+
+- Extended `astra_backend/noteEvidenceAdapter.mjs` with optional explicit evidence-state provenance while preserving legacy behavior. Supported states: `promoted-core`, `promoted-technique`, `recovered-recurring-onset`, `ambiguous`, `unassigned`, and `rejected`.
+- Evidence states must agree with the existing classification contract: promoted states require `unambiguous`; `ambiguous` requires ambiguous classification; `unassigned` requires no-candidate; rejected requires rejected. Legacy inputs without a state remain valid and are reported as `unspecified`.
+- Added `astra_backend/roleEvidenceIntegrationAdapter.mjs`. It converts explicit role-evidence streams into the existing structure-conditioned note-evidence contract, preserves structure identity/slot checks, and always returns `customerDeliveryEligible:false`.
+- The adapter **fails closed** if role evidence has abstained but any promoted stream is supplied (`ABSTAINED_ROLE_EVIDENCE_CANNOT_PROMOTE`). Ambiguous/unassigned evidence can still be preserved for diagnostics.
+- Added synthetic tests covering core/technique/recovery provenance, unresolved evidence preservation, abstention, duplicate IDs, lead/rhythm guitar mapping, bass mapping and determinism. The adapter also passes through `noteEvidenceEvaluator`; unresolved polyphony/pitch/duration evidence remains rejected for complete-tab acceptance, and role abstention surfaces as `ROLE_RELEVANCE_UNRESOLVED`.
+- Extended `noteEvidenceDiagnostics.mjs` to report evidence-state counts descriptively. No composite score or hidden acceptance metric was added.
+- Architecture note: `docs/astra/ROLE_EVIDENCE_INTEGRATION_V1.md`.
+- Integration commits through `d0877007a46033cc28fe8d6e6bf2e3f7cbcff1f5`; branch CI was green through the core adapter/evaluator commits, with the final documentation/diagnostic runs still verifying at checkpoint-write time.
+- This integration changes no Gomyway metric. The authoritative exposed-development best remains **118 TP /125 FP /85 FN; precision48.56%, recall58.13%, F152.91%**.
+- No main/Production change and no customer-delivery authority granted.
+
+## Exact next step — Wire evidence states through the deterministic Astra pipeline
+
+1. Keep the52.91% Gomyway development baseline and all successful stereo/structure/repetition/bend/raw-onset rules frozen. Do **not** tune more thresholds on this exposed song.
+2. Wire `roleEvidenceIntegrationAdapter.mjs` into the deterministic Astra pipeline boundary so promoted/core, promoted-technique, recovered-recurring-onset, ambiguous, unassigned and rejected states survive into pipeline/event diagnostics. Preserve existing note-evidence evaluator ownership and customer-delivery fail-closed behavior.
+3. Add synthetic end-to-end fixtures for stereo-complete role evidence, stereo-abstained evidence and mono/fallback evidence. Verify ambiguous/unassigned states cannot leak into promoted tablature events and role abstention cannot produce customer delivery.
+4. After integration is green, shift quality research to **cross-song / cross-role development evidence** or a stronger event-pitch model. The next quality claim must be prospective/general rather than another Gomyway-only heuristic. Preserve rights/runtime/customer-delivery gates and do not modify main/Production.
 
 ## Copy-paste handoff
 
