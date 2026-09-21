@@ -1,0 +1,85 @@
+{
+  "kind": "gomyway-stereo-core-error-attribution",
+  "version": 1,
+  "sourceScoreSha256": "4a652749f3ac873ea57fbebc243fb655b1515fc8abe0659f6da62ffd4adc3481",
+  "privateAttributionSha256": "def27b6cb5da8359a21023408b8a19ed368372521fa1a1cd1cea210753d537ed",
+  "falseNegatives": {
+    "total": 119,
+    "rhythm": {
+      "total": 81,
+      "correctEventHeldUncertain": 3,
+      "exactEventInOppositeSpatialChannel": 9,
+      "sameRoleOnsetPresentWrongPitch": 19,
+      "oppositeChannelOnsetPresentWrongPitch": 22,
+      "noDecodedChannelOnsetWithin50ms": 28,
+      "techniqueFlags": {
+        "reviewedAttackedBendStart": 9,
+        "legatoSlurAttack": 12
+      }
+    },
+    "lead": {
+      "total": 38,
+      "correctEventHeldUncertain": 2,
+      "exactEventInOppositeSpatialChannel": 5,
+      "oppositeChannelOnsetPresentWrongPitch": 6,
+      "noDecodedChannelOnsetWithin50ms": 25
+    },
+    "combined": {
+      "correctEventHeldUncertain": 5,
+      "exactEventInOppositeSpatialChannel": 14,
+      "decodedOnsetPresentWrongPitch": 47,
+      "noDecodedChannelOnsetWithin50ms": 53
+    }
+  },
+  "falsePositives": {
+    "total": 94,
+    "rhythm": {
+      "total": 50,
+      "noReviewedTargetNearby": 42,
+      "nearSameRoleTargetWrongPitch": 7,
+      "matchesOppositeRoleTarget": 1
+    },
+    "lead": {
+      "total": 44,
+      "noReviewedTargetNearby": 29,
+      "nearOppositeRoleTargetWrongPitch": 9,
+      "matchesOppositeRoleTarget": 6
+    },
+    "combined": {
+      "noReviewedTargetNearby": 71,
+      "wrongPitchNearReviewedTarget": 16,
+      "exactOppositeRoleLeakage": 7
+    }
+  },
+  "rawOnsetDiagnostic": {
+    "privateDiagnosticSha256": "73b498f4d99e307439dadbc391be7aad81b57f79c2bdfe422395e8a5974d0faf",
+    "among53NoDecodedOnsetFns": {
+      "targetOnsetAtLeastBasicPitch05": 32,
+      "targetOnsetBetween03And05": 13,
+      "targetOnsetBelow03": 8
+    },
+    "rhythm": {
+      "count": 28,
+      "targetOnsetAtLeast05": 15,
+      "targetOnset03to05": 10,
+      "targetOnsetBelow03": 3,
+      "medianTargetOnset": 0.5080522000789642,
+      "medianTargetFrame": 0.24863893538713455
+    },
+    "lead": {
+      "count": 25,
+      "targetOnsetAtLeast05": 17,
+      "targetOnset03to05": 3,
+      "targetOnsetBelow03": 5,
+      "medianTargetOnset": 0.7365574240684509,
+      "medianTargetFrame": 0.2873483896255493
+    }
+  },
+  "interpretation": "Most remaining misses are not confidence-abstention mistakes. Forty-seven have decoded onset evidence at the wrong pitch and 53 have no final decoded onset; however, 32 of those 53 still exceed Basic Pitch's own 0.5 neural onset threshold at the correct pitch. This identifies note postprocessing/frame-sustain requirements as a major recoverable bottleneck.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This is post-score development error attribution and must not be used to claim an unbiased final evaluation.",
+    "Categories use the same frozen 50 ms reviewed development tolerance.",
+    "Technique flags overlap the mutually exclusive FN evidence categories."
+  ]
+}
