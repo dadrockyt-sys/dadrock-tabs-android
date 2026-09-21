@@ -86,3 +86,38 @@ test('fully resolved evidence stays descriptive and scoreless', () => {
   assert.equal(result.contract.compositeScore, null);
   assert.equal(result.contract.ownsAcceptanceDecision, false);
 });
+
+
+test('diagnostics expose evidence-state inventory without defining a score', () => {
+  const input = adapted();
+  input.onsets = [
+    { classification: 'unambiguous', evidenceState: 'promoted-core', candidates: [{ midi: 52, confidence: 0.9 }] },
+    { classification: 'unambiguous', evidenceState: 'promoted-technique', candidates: [{ midi: 57, confidence: 0.8 }] },
+    { classification: 'unambiguous', evidenceState: 'recovered-recurring-onset', candidates: [{ midi: 64, confidence: 0.75 }] },
+    { classification: 'ambiguous', evidenceState: 'ambiguous', candidates: [{ midi: 67, confidence: 0.7 }] },
+    { classification: 'no-candidate', evidenceState: 'unassigned', candidates: [] },
+    { classification: 'rejected', evidenceState: 'rejected', candidates: [{ midi: 76, confidence: 0.6 }] },
+  ];
+  input.promotedEvents = [
+    { midi: 52, start: 0.5 },
+    { midi: 57, start: 1.0 },
+    { midi: 64, start: 1.5 },
+  ];
+  const result = summarizeNoteEvidence(input);
+  assert.deepEqual(result.counts.evidenceStateCounts, {
+    'promoted-core': 1,
+    'promoted-technique': 1,
+    'recovered-recurring-onset': 1,
+    ambiguous: 1,
+    unassigned: 1,
+    rejected: 1,
+    unspecified: 0,
+  });
+  assert.equal(result.contract.compositeScore, null);
+  assert.equal(result.contract.ownsAcceptanceDecision, false);
+});
+
+test('legacy evidence without explicit state is counted as unspecified', () => {
+  const result = summarizeNoteEvidence(adapted());
+  assert.equal(result.counts.evidenceStateCounts.unspecified, result.counts.onsetCount);
+});
