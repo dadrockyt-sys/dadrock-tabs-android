@@ -1002,6 +1002,40 @@ Before any V2 real-data run, freeze the full V2 implementation and resource budg
 - Branch-only synthetic implementation smoke installs the exact runtime, verifies all frozen identities and runs a 200-frame TabCNN backward pass without media.
 
 
+## V2 implementation verification complete — 2026-09-21
+
+- Latest implementation commit `3c5949e263552b63398fc62b8710d0a8dc1b8620` passed both required no-real-data verification workflows.
+- Astra backend run `35630956072`: **295/295 Node tests passed**, **85/85 focused Python tests passed**. Node output SHA-256 `a5c99a7de47fee240b9506dc9c58b373c63d921db6666ec75207e8e5bebbe8c0`; focused evaluation output SHA-256 `45e89b4c3a14f2ee8dddb137087b21803bd4fb261295ed0f53ef96c6a38e0a42`.
+- V2 implementation smoke run `35630956102`: **PASS**.
+  - trainer Git blob verified: `4db5add96c58a8e54868ea06dacb1da724675163`;
+  - sampler Git blob verified: `9eb62fde56f592646077afa1e0ff3013a5dc6560`;
+  - CPU budget SHA-256 verified: `8705df7cde4456dc17b5973d84404981387a322ea195a3f995a72ae6b236b430`;
+  - implementation receipt Git blob verified: `32424b78d8423d6a87e37a8ad3f1698fa99073ab`;
+  - exact pinned TabCNN source loaded and the 200-frame synthetic backward self-test emitted `V2_SELF_TEST_PASS`.
+- Smoke guards explicitly recorded: `GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=false`, `GUITAR_TECHS_P3_OPENED=false`, `CUSTOMER_DELIVERY_ELIGIBLE=false`.
+- No V2 Guitar-TECHS archive was downloaded or opened, no optimizer was run on real data, P3 remained sealed, and no Production/main/customer-delivery state changed.
+
+## NEXT AUTHORIZATION GATE — corrected V2 P1/P2 real training
+
+All V2 design work that can be completed without another real-data run is now frozen and verified: root-cause diagnosis, 200-frame deterministic sampler, CPU budget, trainer implementation, exact identities, synthetic backward smoke and unchanged development thresholds.
+
+A new explicit user authorization is required before V2 can access P1/P2 media or run real optimizer steps. The prior V1 authorization is consumed and does not carry forward.
+
+If authorized, the scope must remain bounded to the frozen V2 P1/P2 design only:
+- P1/P2 development media only;
+- 1,000 performance-balanced epochs/fold;
+- at most 2,000 optimizer steps/fold;
+- batch 32 performances;
+- 200-frame sequences;
+- sequence microbatch 1 with gradient accumulation;
+- seed 20260921;
+- 50 checkpoints every 20 epochs;
+- unchanged frozen development thresholds and exact 256-path alignment allowlist;
+- CPU-only public GitHub-hosted runners;
+- P3 sealed;
+- no paid compute, main/Production mutation or customer delivery.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
