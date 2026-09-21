@@ -1063,6 +1063,18 @@ If authorized, the scope must remain bounded to the frozen V2 P1/P2 design only:
 Inspect run `35662028832` first. If fold 1 completes, collect its development-only result/model artifact and exact pretraining label-balance diagnostics plus full opposite-performer validation metrics. Then allow serialized fold 2 to complete. Evaluate both folds only against the already-frozen thresholds; do not retune thresholds after seeing V2 results. Do not open P3 unless a later checkpoint establishes that both V2 development folds pass and separately authorizes the sealed final gate.
 
 
+## V2 result-admission contract frozen while Fold 1 trains — 2026-09-21
+
+- Active real-training run `35662028832` has completed the exact 256-path preparation for Fold 1 and entered the frozen V2 optimizer loop.
+- No live-training parameter or threshold was changed.
+- Frozen post-run admission receipt: `docs/astra/GUITARTECHS_V2_RESULT_ADMISSION_CONTRACT_V1.json`; SHA-256 **`58184ff3c60499c2ba6b89ef1042ea3c0eb20603d5a3a10e2eb11700de7a41db`**.
+- Any future V2 fold artifact must prove the exact fold identity, seed, 1,000 epochs, 2,000 optimizer steps, 200-frame sequences, batch 32, microbatch 1, 50 checkpoints, exact prepared capture counts, expected performance counts, exact supervised exposure (P1 8.2M / P2 8.0M frame positions), frozen budget/failure-diagnosis receipts, pretraining label-balance hard sanity and all guard flags.
+- Only after both fold artifacts pass those structural checks are their full opposite-performer metrics passed into the already-frozen development metric evaluator.
+- Even if both development folds pass, this contract does **not** authorize P3; it only marks P3 as eligible for a separate explicit authorization.
+- Added `astra_backend/guitarTechsV2ResultAdmission.mjs` and fail-closed structural/metric/P3/customer-delivery tests.
+- The running workflow checkout remains launch commit `33b1f222d29ec25a3602b1b85a58f57e2e7dd8d0`; this documentation/evaluator commit does not modify it.
+
+
 ## Copy-paste handoff
 
 Continue Jimmy PAIge from `docs/checkpoints/CURRENT_STATE.md` on branch `astra-work` in `dadrockyt-sys/dadrock-tabs-android`. Read AGENTS.md first. Both V143/Gomyway and Songsterr Fresh are archived; do not resume their old task queues. Work on the active Astra milestone, preserve historical outcomes, and commit/push clean backend work plus this checkpoint after each major step. Do not modify main or Production.
