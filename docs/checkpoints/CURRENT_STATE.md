@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ROLE-EVIDENCE PIPELINE + FRONTEND ANALYSIS BRIDGE COMPLETE — 215 NODE + 78 EVALUATION TESTS GREEN; NEXT QUALITY WORK MUST GENERALIZE BEYOND GOMYWAY**
+Status: **ROLE-EVIDENCE PIPELINE COMPLETE; SECOND-SONG NOTE BENCHMARK BLOCKED; TABCNN GUITARPROFX SELECTED AS NEXT BOUNDED GUITAR NOTE-INFERENCE CANDIDATE**
 
 ## Product outcome
 
@@ -549,12 +549,28 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Final integration verification on commit `ab7d87248e03b63ab75ad3b8d0ef72a06bf61597`: **215 Node tests passed, 0 failed; 78 focused evaluation tests passed, 0 failed; browser export checks passed**.
 - This closes the current architecture milestone: the successful stereo/structure/repetition/technique/recovery evidence can now flow through Astra's real contracts without bypassing acceptance or delivery gates. No main/Production change.
 
-## Exact next step — Generalize beyond Gomyway
+## Second-song inventory + stronger note-inference pivot — 2026-09-21
 
-1. Freeze the52.91% Gomyway result as exposed development evidence. Do not tune any successful threshold/rule further on that song.
-2. Inventory available lawful **second-song development material** that has audio plus independent rhythm/lead/bass truth. Do not reopen archived/restricted datasets merely because they exist; prefer already-authorized user-provided assets or clearly reusable development fixtures.
-3. Before scoring a second song, preregister which existing rules are carried over unchanged: stereo evidence/abstention, structure-grid consistency, three-measure recurrence, glide-continuity bends, and recurring raw-onset recovery. Any song-specific adaptation invalidates the prospective-generalization test.
-4. If no adequate second song exists, stop empirical tuning and evaluate a stronger general pitch/event model under the existing rights/runtime gates. Preserve main/Production and customer-delivery blockers.
+- Added `docs/astra/SECOND_SONG_DEVELOPMENT_INVENTORY_V1.md`. Current repository/Library inventory does **not** contain an adequate second song with both audio and independent note-level onset+MIDI truth.
+- `public/Stairway to Heaven AI test.m4a` exists, but the archived `analyzer/fixtures/stairway_intro_reference.json` has an empty `notes` array and only phrase/chord-position truth. It is useful later for fingering/path regression, **not** for note-event precision/recall or validating the52.91% Gomyway recovery rules.
+- Therefore the52.91% Gomyway result remains exposed development evidence only. No additional Gomyway threshold/rule tuning is authorized for broader quality claims.
+- Added `astra_backend/noteInferenceCandidateRegistry.mjs`, tests, and `docs/astra/NOTE_INFERENCE_CANDIDATE_INVENTORY_V1.md`.
+- Primary next guitar note-inference candidate: **DAFx-24 GuitarProFX-augmented TabCNN**. Pinned source repository `robust-guitar-tabs/code` at revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`.
+- Official published checkpoint metadata identified at Zenodo record `11406378`: file `best_TabCNN_tablature_trancription_model`,3,345,122 bytes, published MD5 `ce168b2cd426f81a2a78499214e40605`, record license metadata CC-BY-4.0. Astra has **not** downloaded the checkpoint and has not computed its own SHA-256.
+- Secondary candidate: **MR-MT3**, source `gudgud96/MR-MT3` revision `826ea84a933f93cd707d11e91af711f1d19c8d79`, MIT code. Candidate checkpoint identity is frozen in the registry, but no bytes were downloaded or executed.
+- Added `docs/astra/TABCNN_GUITARPROFX_SOURCE_REVIEW_V1.md`. Exact source preprocessing semantics are now pinned:22,050 Hz mono input; RMS normalization;512-sample hop;192-bin CQT;24 bins/octave; C1 minimum; gamma0; amplitude-to-dB with ref=max then `/80 + 1`;9-frame TabCNN context;19-fret guitar profile; grouped-softmax fret/none classification per string.
+- The official inference source has a CPU path when `gpu_id < 0`, but Astra has not measured latency or memory.
+- Critical reproducibility blocker: the source dependency declarations are lower-bounded rather than exact, and the VQT source itself warns that librosa conventions changed. Exact runtime versions and numerical preprocessing reproduction must be frozen before model execution.
+- TabCNN is **generic guitar** note/tablature inference. It does not establish lead-versus-rhythm identity; Astra's existing role-evidence/abstention layer remains authoritative for that distinction.
+- No main/Production change and no customer-delivery authority granted.
+
+## Exact next step — Build TabCNN fail-closed preprocessing/runtime preflight
+
+1. **Do not run or download TabCNN yet.** Build a static `astra_backend/tabcnnPreflight.mjs` contract plus tests that can only return `developmentExecutionReady:true` after every required field is explicitly satisfied.
+2. Pin the already-reviewed source identities and preprocessing contract in that preflight: repository revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`; source blobs from `TABCNN_GUITARPROFX_SOURCE_REVIEW_V1.md`;22,050 Hz mono; RMS normalization;512 hop;192 CQT bins;24 bins/octave; C1 fmin; gamma0; dB/ref=max mapped by `/80 + 1`;9-frame context;19-fret guitar profile.
+3. Require **all** of these before execution can clear: official Zenodo checkpoint bytes downloaded from record11406378; published MD5 `ce168b2cd426f81a2a78499214e40605` verified; Astra SHA-256 computed/frozen; exact inference-only dependency lock with hashes; preprocessing numerical reproduction receipt; CPU smoke-test receipt; runtime/memory measurement within Astra's service budget; training/data commercial-rights review complete; customer delivery still false.
+4. Keep TabCNN generic-guitar only. Lead/rhythm identity must come from the existing role-evidence layer; mono/high-correlation inputs must remain abstained/fallback until separately validated.
+5. After the preflight/tests are green, save the milestone back into this `CURRENT_STATE.md`. Only then decide whether to authorize a bounded checkpoint download/runtime smoke test. Do **not** resume Gomyway tuning, archived V143 queues, main, or Production.
 
 ## Copy-paste handoff
 
