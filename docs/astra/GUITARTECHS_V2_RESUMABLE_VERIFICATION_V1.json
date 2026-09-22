@@ -38,5 +38,7 @@
       "runId": 35686192070,
       "reason": "Synthetic test helper NumPy array equality ambiguity; model/optimizer checks had passed; helper corrected before verification"
     }
-  ]
+  ],
+  "status": "supplemental_non_authoritative_mirror",
+  "canonicalRecord": "docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_VERIFICATION_V1.json"
 }
