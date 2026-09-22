@@ -1344,3 +1344,45 @@ This block supersedes the preceding authorization gate and is the authoritative 
 6. P3 remains sealed and requires a separate later authorization even if both folds pass.
 
 This block supersedes the prior manual-dispatch instruction and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## Guitar-TECHS V2 resumable development result frozen — 2026-09-22
+
+- Authorized resumable run `35688531407` completed **all six serialized segments successfully**.
+- Final P1 artifact: `guitar-techs-v2-p1-final-development-result`, artifact ID `10700342658`, archive digest `sha256:29a9b055a6a54528a118914298cf72a39b3c84b6006c4674e17791cfe799c272`.
+  - `training-result.json` SHA-256 `e9bc6861641a691fdaddc9bcf1a449d0d60a902c2121322f0ec26187f469232a`.
+  - `model.pt` SHA-256 `93fdb69757454c75dae07e3333ca2506680c7d80359bbdfa5e4816efe0da6d65`, exactly matching the emitted receipt.
+  - Selected checkpoint epoch **720**.
+  - Full P2 validation: precision **0.198748**, recall **0.355212**, F1 **0.239542**, completeness **0.253153**, frame accuracy **0.310546**.
+- Final P2 artifact: `guitar-techs-v2-p2-final-development-result`, artifact ID `10722879510`, archive digest `sha256:87be095fdbce81f55cb0fad0ebf5e898fc1f12ceb9cff686d660dcdfe2dae66b`.
+  - `training-result.json` SHA-256 `270f67d4015848befb50aa968561ec0143e368f3dfe7a3d92eea754ddfe0e866`.
+  - `model.pt` SHA-256 `f6954a89e7cfd5a6cad733fbcecacb4fa113d7842f1279f6586cefe5618f214c`, exactly matching the emitted receipt.
+  - Selected checkpoint epoch **840**.
+  - Full P1 validation: precision **0.150962**, recall **0.317509**, F1 **0.192875**, completeness **0.176767**, frame accuracy **0.251310**.
+- Frozen structural admission: **PASS / evidence accepted**.
+  - Zero structural blockers.
+  - Both folds have exact identities/counts/exposures, 1,000 epochs, 2,000 optimizer steps, 50 checkpoints, valid label-balance receipts and all guard flags false.
+  - Both internal model hashes match their receipts.
+- Frozen development metric decision: **FAIL**.
+  - Exact frozen evaluator reports `developmentAccepted=false`, `modelTrainingEvidenceComplete=true`, and **20 quality-threshold blockers**.
+  - Two-fold macro F1: **0.216208** vs required **>=0.70**.
+  - Two-fold macro completeness: **0.214960** vs required **>=0.65**.
+  - Cross-performer F1 gap: **0.046667**, which **passes** the <=0.10 consistency limit.
+  - Cross-performer frame-accuracy gap: **0.059236**, which **passes** the <=0.10 consistency limit.
+  - Abstention is 0.0 in both folds and passes its threshold.
+  - Both folds fail precision, recall, F1, completeness, frame accuracy and all four per-content F1 minimums.
+- Frozen result receipt: `docs/astra/GUITARTECHS_V2_DEVELOPMENT_RESULT_V1.json`.
+- P1/P2-only diagnosis receipt: `docs/astra/GUITARTECHS_V2_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json`.
+- Evidence indicates a broadly weak model/design rather than a single asymmetric performer split: both directions fail similarly, selected checkpoints are before epoch 1000, recall exceeds precision, scales are relatively strongest, and single-note/chord exact-string/fret quality is especially weak.
+- **V2 is development FAIL. P3 remains sealed. These models are development-only and are not eligible for customer delivery or P3 opening.**
+
+### EXPLICIT NEXT STEP TO RESUME — V3 design diagnosis only
+
+1. Do **not** retune the frozen V2 thresholds and do not launch another real-data optimizer run.
+2. Use only P1/P2 development evidence to decompose errors by onset, string assignment, fret classification, temporal run decoding and content class.
+3. Investigate class/activity imbalance, especially sparse PalmMute and singlenote targets, plus false-positive behavior implied by recall > precision.
+4. Design V3 changes offline/synthetically first (candidate areas: loss weighting/sampling, decoding/confidence calibration, representation/context or architecture).
+5. Freeze a new V3 design + synthetic verification before requesting any new real P1/P2 authorization.
+6. P3 remains sealed; no paid compute; no threshold/allowlist changes; no `main`/Production mutation; no customer delivery.
+
+This block supersedes the active-run monitoring instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
