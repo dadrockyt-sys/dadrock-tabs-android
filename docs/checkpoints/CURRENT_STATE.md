@@ -1261,3 +1261,55 @@ This block is the authoritative next action unless a later checkpoint explicitly
 - Canonical branch regression run `35686453636`: **PASS**, 302 Node tests and 85 focused Python tests; Node output SHA-256 `9ad393c28c47222cbccf70dbdd2e288ccae69120d6dde21e251f5822ec9d84ad`; focused evaluation output SHA-256 `3bd31bdbf42693eba5df295ae12d9d7525cfc4d235cb4ac4e9a42ce8348cefd5`.
 - A later supplemental regression run `35687158345` also passed 302 Node tests and 85 focused Python tests after the more detailed planning receipt was added; this does not create a second gate or authorization.
 - **Authoritative next action remains the preceding `EXPLICIT NEXT STEP TO RESUME — authorization gate`.** No new P1/P2 real-data run is authorized. P3 remains sealed.
+
+
+## Resumable V2 P1/P2 real training authorized + launch preflight verified — 2026-09-22
+
+- User explicitly authorized: **"I authorize the resumable V2 P1/P2 real training exactly as frozen in CURRENT_STATE.md. P3 remains sealed."**
+- New authorization receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_TRAINING_AUTHORIZATION_V1.json`.
+  - SHA-256: `ec2ba853b82c7d57f6da3d87c483967b85c01718599bf73f7cbd9099dbb0d85e`.
+  - Git blob: `c893b345ed40a6835eb3a25f2f3e8834d687452a`.
+- Authorized scope remains exactly the canonical resumable orchestration:
+  - P1->P2: epoch boundaries 400 -> 800 -> 1000.
+  - P2->P1: epoch boundaries 400 -> 800 -> 1000.
+  - 1,000 epochs/fold; exactly 2,000 optimizer steps/fold.
+  - 200-frame sequences; batch 32; microbatch 1; seed 20260921.
+  - 50 checkpoint evaluations every 20 epochs.
+  - Exact frozen 256-path P1/P2 development population and unchanged development thresholds.
+  - Public GitHub-hosted CPU runners only.
+- Explicitly still forbidden: P3 access, paid compute, published-checkpoint initialization, threshold retuning, alignment allowlist changes, `main`/Production mutation and customer delivery.
+- Reusable segment runner: `.github/workflows/guitar-techs-v2-resumable-segment.yml`; Git blob `51c7cb76c25130d954976041044869dbabc784f6`.
+- Dispatch-only controller: `.github/workflows/guitar-techs-v2-resumable-real-training.yml`; Git blob `51ac7753dfbd9e138eff28ddcf3af35536a7066c`.
+- No-media authorization preflight: `.github/workflows/guitar-techs-v2-resumable-preflight.yml`; Git blob `7d77d8ea628fdcf215c40d43cd592a2e5deebe6d`.
+- Authorization preflight run `35687686704`, job `106617937105`: **PASS**.
+  - Exact authorization/orchestration/trainer/runtime/alignment/threshold identities: PASS.
+  - Exact frozen runtime install: PASS.
+  - Exact pinned TabCNN source acquisition: PASS.
+  - `V2_SELF_TEST_PASS`.
+  - `V2_RESUME_SELF_TEST_PASS`.
+  - `GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=true`.
+  - `GUITAR_TECHS_P3_OPENED=false`.
+  - `CUSTOMER_DELIVERY_ELIGIBLE=false`.
+- The preflight accessed **no P1/P2 media** and performed no real optimizer training.
+- The controller is intentionally `workflow_dispatch` only. The active GitHub connector cannot issue a workflow-dispatch POST, so the authorized real run has **not yet been launched** from this chat.
+
+### EXPLICIT NEXT STEP TO RESUME — launch the authorized resumable run exactly once
+
+1. From a Codespace terminal already authenticated to this repository, run exactly:
+   `gh workflow run guitar-techs-v2-resumable-real-training.yml --ref astra-work`
+2. **Do not run that command twice.** The workflow also has a single concurrency group, but a second dispatch must still be treated as an unauthorized duplicate attempt.
+3. Immediately after dispatch, identify the new run with:
+   `gh run list --workflow guitar-techs-v2-resumable-real-training.yml --branch astra-work --limit 3`
+4. Resume by inspecting that new run first. Its own preflight must pass before the first P1 media-preparation segment is allowed to proceed.
+5. The real execution order is fixed:
+   - P1 0->400;
+   - P1 400->800;
+   - P1 800->1000 + full P2 validation + final Fold 1 artifact;
+   - P2 0->400;
+   - P2 400->800;
+   - P2 800->1000 + full P1 validation + final Fold 2 artifact.
+6. At each 400/800 boundary, require the exact resume artifact SHA-256 before loading it. Intermediate resume artifacts are not development-quality results.
+7. Only after both epoch-1000 fold artifacts exist may structural admission and the frozen development metric evaluator run.
+8. **P3 remains sealed regardless of development outcome until separately authorized.**
+
+This block supersedes the preceding authorization gate and is the authoritative next action unless a later checkpoint explicitly supersedes it.
