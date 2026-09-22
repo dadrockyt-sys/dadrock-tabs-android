@@ -1,0 +1,105 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-real-orchestration-v1",
+  "date": "2026-09-22",
+  "status": "frozen_design_not_authorized_for_execution",
+  "prerequisiteVerification": {
+    "receipt": "docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_VERIFICATION_V1.json",
+    "smokeRunId": 35686293546,
+    "resumableTrainerGitBlob": "86684be13ca6880a89d47bccd0d2b90c22b378fb",
+    "resumableDesignGitBlob": "b120b711c77ffa3bc98078da2dd8b1ec9f24788a"
+  },
+  "folds": [
+    {
+      "fold": "p1-train-p2-validate",
+      "trainPerformer": "P1",
+      "validationPerformer": "P2",
+      "segments": [
+        {
+          "endEpoch": 400,
+          "input": null,
+          "output": "p1-resume-400"
+        },
+        {
+          "endEpoch": 800,
+          "input": "p1-resume-400",
+          "output": "p1-resume-800"
+        },
+        {
+          "endEpoch": 1000,
+          "input": "p1-resume-800",
+          "output": "p1-final-result-model"
+        }
+      ]
+    },
+    {
+      "fold": "p2-train-p1-validate",
+      "trainPerformer": "P2",
+      "validationPerformer": "P1",
+      "segments": [
+        {
+          "endEpoch": 400,
+          "input": null,
+          "output": "p2-resume-400"
+        },
+        {
+          "endEpoch": 800,
+          "input": "p2-resume-400",
+          "output": "p2-resume-800"
+        },
+        {
+          "endEpoch": 1000,
+          "input": "p2-resume-800",
+          "output": "p2-final-result-model"
+        }
+      ]
+    }
+  ],
+  "serialization": {
+    "maxConcurrentRealTrainingJobs": 1,
+    "order": [
+      "p1-train-p2-validate@400",
+      "p1-train-p2-validate@800",
+      "p1-train-p2-validate@1000",
+      "p2-train-p1-validate@400",
+      "p2-train-p1-validate@800",
+      "p2-train-p1-validate@1000"
+    ],
+    "rationale": "Preserve the prior intentional one-fold-at-a-time policy and avoid concurrent CPU/media runs."
+  },
+  "eachSegmentMust": {
+    "verifyExactRuntimeAndSourceIdentities": true,
+    "prepareExactFrozen256PathPopulation": true,
+    "verifyResumeInputSha256WhenPresent": true,
+    "preserveFrozenThresholdsAndAllowlist": true,
+    "uploadIntermediateResumeStateOnlyBeforeFinalSegment": true,
+    "deletePreparedMediaAlways": true,
+    "timeoutMinutes": 345
+  },
+  "finalSegmentOnly": {
+    "runFullOppositePerformerValidation": true,
+    "emitTrainingResultJson": true,
+    "emitDevelopmentModel": true,
+    "structuralAdmissionRequiredBeforeMetrics": true
+  },
+  "frozenProtocol": {
+    "epochsPerFold": 1000,
+    "optimizerStepsPerFold": 2000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "seed": 20260921,
+    "validationCheckpoints": 50,
+    "checkpointEveryEpochs": 20,
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "authorizationGate": {
+    "newExplicitUserAuthorizationRequired": true,
+    "authorizationReceiptMustBeCreatedAndPinnedBeforeWorkflowEnablement": true,
+    "priorAuthorizationConsumed": true,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "productionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
