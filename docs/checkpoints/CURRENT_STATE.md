@@ -1313,3 +1313,34 @@ This block is the authoritative next action unless a later checkpoint explicitly
 8. **P3 remains sealed regardless of development outcome until separately authorized.**
 
 This block supersedes the preceding authorization gate and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## Resumable V2 launch workaround + active real run — 2026-09-22
+
+- The first manual launch attempt returned **404 Not Found** because the dispatch-only workflow exists only on branch `astra-work`; no real training was launched by that failed attempt and no duplicate exists.
+- Launch mechanism was changed without touching `main`: `.github/workflows/guitar-techs-v2-resumable-real-training.yml` now also accepts a push on `astra-work` only when `docs/astra/GUITARTECHS_V2_RESUMABLE_LAUNCH_V1.json` changes.
+- Updated controller Git blob: `bedd65b5b450fbd2f3a04f4afa5b726c01df4d63`.
+- The authorization preflight was repinned and rerun before launch: run `35688406394`, job `106620037252` **PASS**. It accessed no P1/P2 media.
+- One-time launch marker committed at `ef395f705c050c913f935e19a23cee013f6fcfde`.
+- Authorized real GitHub Actions run: **`35688531407`**.
+- Real-run preflight job `106620407443`: **PASS**.
+  - authorization/frozen identities: PASS;
+  - exact frozen runtime: PASS;
+  - exact pinned TabCNN source: PASS;
+  - original V2 self-test: PASS;
+  - resumable equivalence self-test: PASS;
+  - P3 remained sealed.
+- First real segment job `106620631615` (`P1 0->400`) has started and is currently in progress.
+- The training is running on GitHub-hosted `ubuntu-22.04` Actions runners, not in Codespaces. Codespaces may be stopped/closed without interrupting this Actions run.
+- Do not create or dispatch any second launch marker/workflow run. Run `35688531407` is the single authoritative resumable real-training run.
+
+### EXPLICIT NEXT STEP TO RESUME — active run 35688531407
+
+1. Inspect run `35688531407` first; do not launch another run.
+2. Allow `P1 0->400` to complete. Require artifact `guitar-techs-v2-p1-resume-e400` and verify its receipt/state SHA-256 before `P1 400->800` loads it.
+3. Continue only through the same serialized run: P1 400->800 -> P1 800->1000 + full P2 validation -> P2 0->400 -> P2 400->800 -> P2 800->1000 + full P1 validation.
+4. Intermediate 400/800 resume artifacts are orchestration state only and are not admissible model-quality results.
+5. After both epoch-1000 final fold artifacts exist, perform structural admission first, then the unchanged frozen development metric evaluation.
+6. P3 remains sealed and requires a separate later authorization even if both folds pass.
+
+This block supersedes the prior manual-dispatch instruction and is the authoritative next action unless a later checkpoint explicitly supersedes it.
