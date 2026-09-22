@@ -28,8 +28,8 @@ jobs:
           test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
           test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
           test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
-          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2_resumable.py)" = '2b80449fb26f23eae7af7ac65e47dd2605c2f21e'
-          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json)" = '49e2aa01a45d4be032f606613ad4d6365f8bb7a7'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2_resumable.py)" = '86684be13ca6880a89d47bccd0d2b90c22b378fb'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json)" = 'b120b711c77ffa3bc98078da2dd8b1ec9f24788a'
           test "$(sha256sum docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json | awk '{print $1}')" = 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15'
       - name: Install exact frozen runtime
         shell: bash
