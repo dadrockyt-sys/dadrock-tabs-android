@@ -1160,3 +1160,26 @@ Inspect run `35662028832` first. If Fold 1 is complete, collect and cryptographi
 
 This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
 
+
+
+## V2 Fold 1 runtime timeout frozen — 2026-09-22
+
+- Authoritative run `35662028832`, Fold 1 job `106539518639` (`P1 -> P2`), exhausted its frozen GitHub-hosted CPU job window and completed with conclusion **cancelled**.
+- Runner began at `2026-09-21T22:20:08.2774701Z`; the training step was cancelled at `2026-09-22T04:05:53.3961278Z` under the workflow's `timeout-minutes: 345` cap.
+- Last fully emitted checkpoint before cancellation: **epoch 600**, **optimizer step 1200**, state SHA-256 `508e6b8de3839e053e1a245a2cd79f666bfd15dde5a6991367732def4780f56d`.
+- The epoch-600 selection-subset checkpoint was not qualified, but **this is not an admissible V2 model-quality verdict**: the frozen protocol requires 1,000 epochs plus full opposite-performer validation and a complete result/model artifact.
+- Artifact upload was skipped and run artifact count remained **0**. Therefore Fold 1 cannot enter structural admission and no final development metric decision may be made from this partial run.
+- Cleanup completed and emitted `GUITAR_TECHS_P3_OPENED=false` and `CUSTOMER_DELIVERY_ELIGIBLE=false`. P3 remains sealed.
+- Frozen evidence receipt: `docs/astra/GUITARTECHS_V2_RUNTIME_TIMEOUT_EVIDENCE_V1.json`.
+- Fold 2 job `106539518543` began automatically because the matrix is serialized with `fail-fast: false`; at the first post-timeout inspection it was only installing the exact runtime. It should not be treated as a replacement for the missing Fold 1 result.
+
+### EXPLICIT NEXT STEP TO RESUME — timeout recovery
+
+1. Do **not** structurally admit or quality-score Fold 1; no complete artifact exists.
+2. Stop/leave stopped any continuation of run `35662028832` once the runtime failure is recognized; do not relaunch either fold under the same non-resumable 345-minute design.
+3. Design and synthetically verify a **resumable V2 execution layer** that preserves the already-frozen statistical protocol: 1,000 epochs/fold, 2,000 optimizer steps/fold, 200-frame sequences, batch 32, seed 20260921, 50 checkpoint evaluations and the same thresholds/allowlist.
+4. Resume state must preserve model weights, optimizer state, deterministic RNG/sampling state, current epoch/optimizer-step/supervised-exposure counters, all checkpoint summaries, best-qualified/best-any checkpoint-selection state, and integrity identities. A resumed execution must be equivalent to one uninterrupted frozen run except for orchestration boundaries.
+5. Perform CPU synthetic/resume-equivalence tests only. **Do not access P1/P2 again and do not launch a new real-data run without a new frozen design receipt and separate explicit user authorization.**
+6. P3 stays sealed; no paid compute, threshold retuning, allowlist changes, main/Production mutation or customer delivery.
+
+This timeout-recovery block supersedes the prior instruction to wait for a Fold 1 artifact from run `35662028832`.
