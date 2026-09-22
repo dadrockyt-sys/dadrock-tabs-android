@@ -53,7 +53,7 @@ jobs:
           test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
           test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
           test "$(git hash-object .github/workflows/guitar-techs-v2-resumable-segment.yml)" = '51c7cb76c25130d954976041044869dbabc784f6'
-          test "$(git hash-object .github/workflows/guitar-techs-v2-resumable-real-training.yml)" = '51ac7753dfbd9e138eff28ddcf3af35536a7066c'
+          test "$(git hash-object .github/workflows/guitar-techs-v2-resumable-real-training.yml)" = 'bedd65b5b450fbd2f3a04f4afa5b726c01df4d63'
           python - <<'PY'
           import json
           auth=json.load(open('docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_TRAINING_AUTHORIZATION_V1.json'))
