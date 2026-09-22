@@ -1,0 +1,70 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-real-training-authorization-v1",
+  "date": "2026-09-22",
+  "authorizationText": "I authorize the resumable V2 P1/P2 real training exactly as frozen in CURRENT_STATE.md. P3 remains sealed.",
+  "scope": {
+    "candidateId": "astra_guitartechs_tabcnn_v2",
+    "developmentMediaOnly": [
+      "P1",
+      "P2"
+    ],
+    "folds": [
+      {
+        "fold": "p1-train-p2-validate",
+        "segments": [
+          400,
+          800,
+          1000
+        ]
+      },
+      {
+        "fold": "p2-train-p1-validate",
+        "segments": [
+          400,
+          800,
+          1000
+        ]
+      }
+    ],
+    "epochsPerFold": 1000,
+    "optimizerStepsPerFold": 2000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "seed": 20260921,
+    "validationCheckpoints": 50,
+    "checkpointEveryEpochs": 20,
+    "exact256PathPopulation": true,
+    "thresholdsUnchanged": true,
+    "resumeStateSha256VerificationRequired": true,
+    "publicGithubHostedCpuRunnersOnly": true
+  },
+  "frozenIdentities": {
+    "resumableTrainerGitBlob": "86684be13ca6880a89d47bccd0d2b90c22b378fb",
+    "baseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "samplerGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "realTrainingPrepGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "resumableVerificationReceiptGitBlob": "0d5070061b8f7bce2ddae5e057d4378554e9f348",
+    "resumableOrchestrationReceiptGitBlob": "ffb5aeec6130509f84c8ce6b048805ad58b219a4",
+    "resultAdmissionContractGitBlob": "43ed2370b880f1ebccd2ccde0c360e349eb0dc4b",
+    "thresholdsGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "thresholdsSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "forbidden": {
+    "p3Access": true,
+    "paidCompute": true,
+    "publishedCheckpointInitialization": true,
+    "thresholdRetuning": true,
+    "alignmentAllowlistChanges": true,
+    "mainMutation": true,
+    "productionMutation": true,
+    "customerDelivery": true
+  },
+  "guards": {
+    "p3Opened": false,
+    "customerDeliveryEligible": false
+  }
+}
