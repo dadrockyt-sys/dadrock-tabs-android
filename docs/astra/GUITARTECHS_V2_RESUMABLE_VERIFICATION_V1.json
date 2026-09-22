@@ -1,0 +1,42 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-verification-v1",
+  "date": "2026-09-22",
+  "verificationRun": {
+    "runId": 35686293546,
+    "jobId": 106613697500,
+    "conclusion": "success",
+    "commit": "72a6430fe1c0b0871f89f277d63e73722a6e541d",
+    "markers": [
+      "V2_SELF_TEST_PASS",
+      "V2_RESUME_SELF_TEST_PASS"
+    ]
+  },
+  "identities": {
+    "resumableTrainerGitBlob": "86684be13ca6880a89d47bccd0d2b90c22b378fb",
+    "resumableDesignGitBlob": "b120b711c77ffa3bc98078da2dd8b1ec9f24788a",
+    "smokeWorkflowGitBlob": "7837db02a012d9eb4171ae568b19708d3d172140",
+    "baseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "samplerGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560"
+  },
+  "verifiedClaims": {
+    "exactFrozenRuntimeLoads": true,
+    "originalV2SyntheticBackwardPass": true,
+    "splitResumeModelStateEquivalent": true,
+    "splitResumeOptimizerStateEquivalent": true,
+    "splitResumePythonNumpyTorchRngEquivalent": true,
+    "realMediaAccessed": false,
+    "p1p2RealTrainingAuthorized": false,
+    "p3Opened": false,
+    "customerDeliveryEligible": false
+  },
+  "priorSmokeFailures": [
+    {
+      "runId": 35686049240,
+      "reason": "Torch 1.11 compatibility: unsupported weights_only keyword in torch.load; corrected before verification"
+    },
+    {
+      "runId": 35686192070,
+      "reason": "Synthetic test helper NumPy array equality ambiguity; model/optimizer checks had passed; helper corrected before verification"
+    }
+  ]
+}
