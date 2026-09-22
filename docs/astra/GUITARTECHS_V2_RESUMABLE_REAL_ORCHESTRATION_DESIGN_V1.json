@@ -1,7 +1,7 @@
 {
   "schema": "astra-guitar-techs-v2-resumable-real-orchestration-design-v1",
   "date": "2026-09-22",
-  "status": "frozen_design_only_not_authorized_for_real_data",
+  "status": "supplemental_non_authoritative_planning_detail",
   "prerequisiteVerification": {
     "receiptPath": "docs/astra/GUITARTECHS_V2_RESUMABLE_VERIFICATION_V1.json",
     "receiptGitBlob": "07e4d6e05b794bdfbfdc0b25b8adadd9c1a2798c",
@@ -183,5 +183,6 @@
     "productionMutation": false,
     "customerDelivery": false,
     "p3Opened": false
-  }
+  },
+  "canonicalRecord": "docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_V1.json"
 }
