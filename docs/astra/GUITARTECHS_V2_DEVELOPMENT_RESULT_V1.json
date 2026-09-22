@@ -1,0 +1,149 @@
+{
+  "schema": "astra-guitar-techs-v2-development-result-v1",
+  "date": "2026-09-22",
+  "sourceRun": {
+    "runId": 35688531407,
+    "headSha": "ef395f705c050c913f935e19a23cee013f6fcfde",
+    "branch": "astra-work",
+    "allSerializedJobsSuccessful": true
+  },
+  "frozenEvaluator": {
+    "resultAdmissionContractSha256": "58184ff3c60499c2ba6b89ef1042ea3c0eb20603d5a3a10e2eb11700de7a41db",
+    "resultAdmissionContractGitBlob": "43ed2370b880f1ebccd2ccde0c360e349eb0dc4b",
+    "resultAdmissionEvaluatorGitBlob": "147e44871e0f3e17408c999470f1149385cfc171",
+    "developmentMetricEvaluatorGitBlob": "f2d3b799b841f7aac2a0aac17e904d9563c1430e",
+    "thresholdReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "thresholdGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "frozenAdmissionAuthorizationReceiptSha256": "0edfb4656675e31fce0c8cbd1ba42f37619e877b43793d3386781572dea8cb69",
+    "resumableRunAuthorizationReceiptSha256": "ec2ba853b82c7d57f6da3d87c483967b85c01718599bf73f7cbd9099dbb0d85e"
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "artifact": {
+        "id": 10700342658,
+        "name": "guitar-techs-v2-p1-final-development-result",
+        "archiveDigest": "sha256:29a9b055a6a54528a118914298cf72a39b3c84b6006c4674e17791cfe799c272"
+      },
+      "resultJsonSha256": "e9bc6861641a691fdaddc9bcf1a449d0d60a902c2121322f0ec26187f469232a",
+      "modelSha256": "93fdb69757454c75dae07e3333ca2506680c7d80359bbdfa5e4816efe0da6d65",
+      "selectedCheckpointEpoch": 720,
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.1987482187302651,
+        "recall": 0.3552118707577178,
+        "f1": 0.23954169942820763,
+        "completeness": 0.25315288464686764,
+        "frameAccuracy": 0.31054568461147086,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.19823090401549182,
+          "scales": 0.3334742602598402,
+          "singlenotes": 0.13076072735639585,
+          "PalmMute": 0.29521262225104017
+        }
+      },
+      "resumeChain": [
+        {
+          "nextEpoch": 400,
+          "stateSha256": "58f8feb007712dc35a2b1731a8b911c7c31f70a2d23ff1687bacb8441d1eacfa"
+        },
+        {
+          "nextEpoch": 800,
+          "stateSha256": "9c85ddc3319bd016a78a6f2837944f0f802542cbec509f4af3c66eb7a04dfe5e"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8200000,
+      "validationCheckpoints": 50
+    },
+    "p2-train-p1-validate": {
+      "artifact": {
+        "id": 10722879510,
+        "name": "guitar-techs-v2-p2-final-development-result",
+        "archiveDigest": "sha256:87be095fdbce81f55cb0fad0ebf5e898fc1f12ceb9cff686d660dcdfe2dae66b"
+      },
+      "resultJsonSha256": "270f67d4015848befb50aa968561ec0143e368f3dfe7a3d92eea754ddfe0e866",
+      "modelSha256": "f6954a89e7cfd5a6cad733fbcecacb4fa113d7842f1279f6586cefe5618f214c",
+      "selectedCheckpointEpoch": 840,
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.1509619504929262,
+        "recall": 0.317508504795817,
+        "f1": 0.1928746367237972,
+        "completeness": 0.17676744090611363,
+        "frameAccuracy": 0.2513095863335899,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.13774194811856366,
+          "scales": 0.31935686822573933,
+          "singlenotes": 0.08731033577222147,
+          "PalmMute": 0.26923475199337266
+        }
+      },
+      "resumeChain": [
+        {
+          "nextEpoch": 400,
+          "stateSha256": "52a0dab44296152937dcb4fd593b86d7c8fcc0c5443a2c0a6fc7ca01f4eeb7d8"
+        },
+        {
+          "nextEpoch": 800,
+          "stateSha256": "669cc329de84a97cf981c80948281d7e7e04b26fba99eebd2f0c3523582b6657"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8000000,
+      "validationCheckpoints": 50
+    }
+  },
+  "structuralAdmission": {
+    "evidenceAccepted": true,
+    "modelTrainingEvidenceComplete": true,
+    "structuralBlockers": [],
+    "internalModelHashesMatchReceipts": true
+  },
+  "aggregateMetrics": {
+    "macroF1": 0.2162081680760024,
+    "macroCompleteness": 0.21496016277649063,
+    "crossPerformerF1AbsoluteGap": 0.04666706270441043,
+    "crossPerformerFrameAccuracyAbsoluteGap": 0.059236098277880955
+  },
+  "frozenMetricDecision": {
+    "developmentAccepted": false,
+    "blockers": [
+      "P1_TRAIN_P2_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_COMPLETENESS_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_F1_BELOW_THRESHOLD"
+    ],
+    "crossPerformerF1GapPassed": true,
+    "crossPerformerFrameAccuracyGapPassed": true,
+    "abstentionThresholdPassedBothFolds": true
+  },
+  "decision": {
+    "status": "FAIL",
+    "reason": "Both structurally valid performer-disjoint folds fail multiple pre-frozen development quality thresholds.",
+    "p3OpeningEligibleForSeparateAuthorization": false,
+    "p3Opened": false,
+    "customerDeliveryEligible": false,
+    "thresholdRetuningAllowed": false,
+    "anotherRealDataRunRequiresNewDesignAndExplicitAuthorization": true
+  }
+}
