@@ -1252,38 +1252,12 @@ This timeout-recovery block supersedes the prior instruction to wait for a Fold 
 This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
 
 
-## V2 resumable recovery verified + orchestration design frozen — 2026-09-22
+## Resumable recovery record reconciliation — 2026-09-22
 
-- Final no-real-data resumable smoke run `35686293546`, job `106613697500`: **PASS**.
-- Exact required markers were emitted: `V2_SELF_TEST_PASS` and `V2_RESUME_SELF_TEST_PASS`.
-- Guard step emitted: `GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=false`, `GUITAR_TECHS_P3_OPENED=false`, `CUSTOMER_DELIVERY_ELIGIBLE=false`.
-- Verified receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_VERIFICATION_V1.json`.
-- Verified resumable trainer Git blob: `86684be13ca6880a89d47bccd0d2b90c22b378fb`.
-- Verified resumable design Git blob used by the smoke: `b120b711c77ffa3bc98078da2dd8b1ec9f24788a`.
-- The recovery implementation preserves model state, optimizer state, Python/NumPy/Torch RNG state, optimizer-step/supervised-exposure counters, complete checkpoint history and best-checkpoint selection state across a SHA-256-verified resume boundary.
-- The first two smoke failures remain frozen diagnostic evidence only: Torch 1.11 loader compatibility in run `35686049240`, then a NumPy-array equality bug in the synthetic RNG test helper in run `35686192070`. Both were corrected before the passing verification.
-- Frozen real-run orchestration design: `docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_DESIGN_V1.json`, commit `71532b587665db5feac3457251401ef1eb8111f4`.
-- Planned serialized chain is P1 0->400->800->1000, then P2 0->400->800->1000. Each fresh runner reconstructs and cryptographically verifies the exact same 256-path development set; resumed jobs verify the prior resume-state SHA-256 before loading; raw/prepared media is never uploaded and is deleted after each job.
-- Runtime planning is based on the failed Fold 1 evidence: epoch 20 at `2026-09-21T23:01:29.1333657Z`, epoch 600 at `2026-09-22T04:01:40.8234643Z`, approximately 31.06 seconds/epoch. A 400-epoch segment plus observed setup overhead is estimated at about 238 minutes, leaving roughly 107 minutes against the 345-minute cap.
-- Full Astra regression verification on orchestration-design commit `71532b587665db5feac3457251401ef1eb8111f4`: run `35687158345`, job `106616328734` **PASS**; **302 Node tests** passed and **85 focused Python tests** passed. Node output SHA-256 `02318f9c570e9565e4a9bdd21c80c5f0e8a1f2916f9d34e2398001f90b155e74`; focused evaluation output SHA-256 `18277e8cd89333ae2153fd41c791ce0050e91a0d2d758aa5819aabc7f6caacd4`.
-- No P1/P2 media was accessed by the recovery smoke or orchestration-design verification. No new real optimizer run was launched. P3 remains sealed.
-
-### NEXT AUTHORIZATION GATE — resumable P1/P2 real training
-
-The timeout recovery is now designed and synthetically verified. Another real-data run is **not yet authorized**. The previous V2 authorization was consumed by run `35662028832` and does not carry forward.
-
-A new explicit user authorization is required before implementation may pin an authorization receipt and enable the resumable real-data workflow. If authorized, the scope must remain exactly:
-- P1/P2 development media only; P3 sealed;
-- same frozen candidate and source/runtime identities;
-- same 1,000 epochs/fold and 2,000 optimizer steps/fold;
-- same 200-frame sequences, batch 32, microbatch 1, seed 20260921;
-- same 50 validation checkpoints every 20 epochs;
-- same exact 256-path alignment population and unchanged thresholds;
-- orchestration boundaries only at epochs 400, 800 and 1000;
-- SHA-256-verified resume state preserving model/optimizer/RNG/counters/checkpoint-selection history;
-- public GitHub-hosted CPU runners only;
-- no paid compute, published checkpoint initialization, main/Production mutation or customer delivery.
-
-If separately authorized, first create and pin a new real-training authorization receipt, then implement the fail-closed serialized workflow from the frozen orchestration design and verify its preflight **before** allowing media access.
-
-P3 remains sealed and requires its own later authorization even if both resumed development folds ultimately pass.
+- Canonical resumable verification receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_VERIFICATION_V1.json`.
+- Canonical frozen real-run orchestration receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_V1.json`.
+- The later files `docs/astra/GUITARTECHS_V2_RESUMABLE_VERIFICATION_V1.json` and `docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_DESIGN_V1.json` contain consistent supplemental detail only and are explicitly marked non-authoritative mirrors.
+- Canonical smoke run `35686293546` / job `106613697500`: **PASS**, with `V2_SELF_TEST_PASS` and `V2_RESUME_SELF_TEST_PASS`.
+- Canonical branch regression run `35686453636`: **PASS**, 302 Node tests and 85 focused Python tests; Node output SHA-256 `9ad393c28c47222cbccf70dbdd2e288ccae69120d6dde21e251f5822ec9d84ad`; focused evaluation output SHA-256 `3bd31bdbf42693eba5df295ae12d9d7525cfc4d235cb4ac4e9a42ce8348cefd5`.
+- A later supplemental regression run `35687158345` also passed 302 Node tests and 85 focused Python tests after the more detailed planning receipt was added; this does not create a second gate or authorization.
+- **Authoritative next action remains the preceding `EXPLICIT NEXT STEP TO RESUME — authorization gate`.** No new P1/P2 real-data run is authorized. P3 remains sealed.
