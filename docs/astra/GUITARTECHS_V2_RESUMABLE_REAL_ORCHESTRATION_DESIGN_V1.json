@@ -1,0 +1,187 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-real-orchestration-design-v1",
+  "date": "2026-09-22",
+  "status": "frozen_design_only_not_authorized_for_real_data",
+  "prerequisiteVerification": {
+    "receiptPath": "docs/astra/GUITARTECHS_V2_RESUMABLE_VERIFICATION_V1.json",
+    "receiptGitBlob": "07e4d6e05b794bdfbfdc0b25b8adadd9c1a2798c",
+    "verificationRunId": 35686293546,
+    "verificationJobId": 106613697500,
+    "requiredMarkers": [
+      "V2_SELF_TEST_PASS",
+      "V2_RESUME_SELF_TEST_PASS"
+    ]
+  },
+  "authorizationGate": {
+    "defaultState": "UNSET_FAIL_CLOSED",
+    "requirement": "A separate user-authorized real-data receipt must be committed and its exact SHA-256 pinned in the workflow before any P1/P2 media step can execute.",
+    "priorAuthorizationDoesNotCarryForward": true,
+    "p3AuthorizationSeparate": true
+  },
+  "frozenStatisticalProtocol": {
+    "candidateId": "astra_guitartechs_tabcnn_v2",
+    "epochsPerFold": 1000,
+    "optimizerStepsPerFold": 2000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "seed": 20260921,
+    "validationCheckpoints": 50,
+    "checkpointEveryEpochs": 20,
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "acceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "preparedCaptureCounts": {
+      "P1": 136,
+      "P2": 120
+    },
+    "foldExpectations": {
+      "p1-train-p2-validate": {
+        "trainPerformer": "P1",
+        "validationPerformer": "P2",
+        "trainingPerformanceCount": 41,
+        "validationCaptureCount": 120,
+        "supervisedFramePositions": 8200000
+      },
+      "p2-train-p1-validate": {
+        "trainPerformer": "P2",
+        "validationPerformer": "P1",
+        "trainingPerformanceCount": 40,
+        "validationCaptureCount": 136,
+        "supervisedFramePositions": 8000000
+      }
+    }
+  },
+  "serializedJobs": [
+    {
+      "order": 1,
+      "id": "p1_segment_0_400",
+      "fold": "p1-train-p2-validate",
+      "train": "P1",
+      "validate": "P2",
+      "startEpoch": 0,
+      "endEpoch": 400,
+      "resumeInput": null,
+      "output": "p1-resume-e400"
+    },
+    {
+      "order": 2,
+      "id": "p1_segment_400_800",
+      "fold": "p1-train-p2-validate",
+      "train": "P1",
+      "validate": "P2",
+      "startEpoch": 400,
+      "endEpoch": 800,
+      "resumeInput": "p1-resume-e400",
+      "output": "p1-resume-e800"
+    },
+    {
+      "order": 3,
+      "id": "p1_segment_800_1000",
+      "fold": "p1-train-p2-validate",
+      "train": "P1",
+      "validate": "P2",
+      "startEpoch": 800,
+      "endEpoch": 1000,
+      "resumeInput": "p1-resume-e800",
+      "output": "p1-final-development-result"
+    },
+    {
+      "order": 4,
+      "id": "p2_segment_0_400",
+      "fold": "p2-train-p1-validate",
+      "train": "P2",
+      "validate": "P1",
+      "startEpoch": 0,
+      "endEpoch": 400,
+      "resumeInput": null,
+      "output": "p2-resume-e400"
+    },
+    {
+      "order": 5,
+      "id": "p2_segment_400_800",
+      "fold": "p2-train-p1-validate",
+      "train": "P2",
+      "validate": "P1",
+      "startEpoch": 400,
+      "endEpoch": 800,
+      "resumeInput": "p2-resume-e400",
+      "output": "p2-resume-e800"
+    },
+    {
+      "order": 6,
+      "id": "p2_segment_800_1000",
+      "fold": "p2-train-p1-validate",
+      "train": "P2",
+      "validate": "P1",
+      "startEpoch": 800,
+      "endEpoch": 1000,
+      "resumeInput": "p2-resume-e800",
+      "output": "p2-final-development-result"
+    }
+  ],
+  "perJobProcedure": [
+    "Checkout the single frozen launch commit.",
+    "Verify the future authorization receipt before any media access.",
+    "Verify exact resumable trainer, base trainer, sampler, runtime lock, thresholds, alignment and design identities.",
+    "Install the exact frozen CPU runtime and acquire only the exact pinned TabCNN source.",
+    "Re-download the same eight public Guitar-TECHS archives from the same Zenodo record; verify bytes, MD5 and SHA-256 exactly.",
+    "Prepare exactly the frozen 256 aligned capture paths and verify P1/P2 counts 136/120.",
+    "For resumed segments, download the single named prior resume artifact, read its JSON receipt, verify resume-state.pt SHA-256 before torch.load, and require fold/epoch/counter/source/guard identities.",
+    "Run train_v2_resumable.py only to the job's frozen end epoch.",
+    "At 400/800, upload only resume-state.pt plus its JSON receipt. These are orchestration state, not admissible development model results.",
+    "At 1000, emit training-result.json plus model.pt only after full opposite-performer validation.",
+    "Always delete prepared media and source zips before job completion."
+  ],
+  "resumeIntegrity": {
+    "resumeStateSha256Required": true,
+    "exactFoldIdentityRequired": true,
+    "exactNextEpochRequired": true,
+    "exactOptimizerStepCounterRequired": true,
+    "exactSupervisedExposureCounterRequired": true,
+    "exactCheckpointHistoryLengthRequired": true,
+    "modelOptimizerAndRngStatePreserved": true,
+    "bestCheckpointSelectionStatePreserved": true,
+    "thresholdRetuningForbidden": true,
+    "allowlistMutationForbidden": true
+  },
+  "timeBudgetEvidence": {
+    "failedRunId": 35662028832,
+    "fold1TimeoutMinutes": 345,
+    "lastCompletedEpoch": 600,
+    "observedCheckpointWindow": {
+      "epoch20Timestamp": "2026-09-21T23:01:29.1333657Z",
+      "epoch600Timestamp": "2026-09-22T04:01:40.8234643Z",
+      "epochsElapsed": 580,
+      "secondsElapsedApprox": 18012,
+      "secondsPerEpochApprox": 31.06
+    },
+    "estimated400EpochTrainingMinutesApprox": 207.1,
+    "observedSetupPlusFirst20EpochsMinutesApprox": 41.3,
+    "expected400EpochSegmentTotalMinutesApprox": 238,
+    "safetyMarginAgainst345MinuteCapMinutesApprox": 107,
+    "final200EpochSegmentHasAdditionalMargin": true,
+    "note": "Estimates are planning evidence only; each segment remains capped and must fail closed if runtime deviates materially."
+  },
+  "artifactPolicy": {
+    "intermediateRetentionDays": 7,
+    "finalRetentionDays": 7,
+    "rawOrPreparedMediaUploaded": false,
+    "intermediateResumeStateDevelopmentOnly": true,
+    "finalModelsDevelopmentOnly": true
+  },
+  "finalAdmission": {
+    "structuralAdmissionOnlyAfterBothFinalFoldArtifactsExist": true,
+    "evaluator": "astra_backend/guitarTechsV2ResultAdmission.mjs",
+    "thresholdsUnchanged": true,
+    "p3AutomaticallyOpened": false,
+    "separateP3AuthorizationRequired": true
+  },
+  "invariants": {
+    "paidCompute": false,
+    "publishedCheckpointInitialization": false,
+    "mainMutation": false,
+    "productionMutation": false,
+    "customerDelivery": false,
+    "p3Opened": false
+  }
+}
