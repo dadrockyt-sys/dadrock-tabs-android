@@ -1207,3 +1207,46 @@ This timeout-recovery block supersedes the prior instruction to wait for a Fold 
 4. If smoke passes, freeze the verified resumable implementation/receipt and design the real-data orchestration that chains epoch boundaries 400 -> 800 -> 1000 for each fold.
 5. A new real P1/P2 run requires a **separate explicit user authorization** after that orchestration is frozen. Do not infer authorization from the prior V2 run.
 6. P3 sealed; no paid compute; no threshold/allowlist changes; no main/Production mutation; no customer delivery.
+
+
+## V2 resumable recovery verified + next authorization gate — 2026-09-22
+
+- The failed non-resumable run `35662028832` is closed with **no admissible fold artifact**. Fold 1 timed out after epoch 600 / optimizer step 1200; Fold 2 was cancelled before its training step.
+- Resumable implementation: `astra_backend/guitartechs_training_v2/train_v2_resumable.py`; verified Git blob **`86684be13ca6880a89d47bccd0d2b90c22b378fb`**.
+- Resumable design receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json`; verified Git blob **`b120b711c77ffa3bc98078da2dd8b1ec9f24788a`**.
+- Synthetic verification receipt: `docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_VERIFICATION_V1.json`.
+- Final exact-runtime resume smoke run **`35686293546`**, job `106613697500`: **PASS**.
+  - `V2_SELF_TEST_PASS`
+  - `V2_RESUME_SELF_TEST_PASS`
+  - `GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=false`
+  - `GUITAR_TECHS_P3_OPENED=false`
+  - `CUSTOMER_DELIVERY_ELIGIBLE=false`
+- The resume smoke proves SHA-verified resume loading plus exact uninterrupted-vs-resumed equality for model state, optimizer state and Python/NumPy/Torch RNG state on the frozen TabCNN/Torch runtime.
+- Frozen real orchestration design: `docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_V1.json`.
+  - Fold 1: epoch boundaries **400 -> 800 -> 1000**.
+  - Fold 2: epoch boundaries **400 -> 800 -> 1000**.
+  - Only one real-training segment may run at a time.
+  - Intermediate jobs emit verified resume state only; the epoch-1000 segment alone may emit the complete development result/model after full opposite-performer validation.
+  - Every segment must reverify the exact runtime/source identities, exact frozen 256-path development population, unchanged thresholds/allowlist and P3/customer/paid-compute guards.
+- Branch-wide regression on run **`35686453636`**: **PASS**.
+  - Node: **302 tests**, output SHA-256 `9ad393c28c47222cbccf70dbdd2e288ccae69120d6dde21e251f5822ec9d84ad`.
+  - Focused Python evaluation: **85 tests**, **OK**, output SHA-256 `3bd31bdbf42693eba5df295ae12d9d7525cfc4d235cb4ac4e9a42ce8348cefd5`.
+- No real P1/P2 data was accessed by the recovery smoke. No new real optimizer run was launched. P3 remains sealed and no main/Production/customer-delivery state changed.
+
+### EXPLICIT NEXT STEP TO RESUME — authorization gate
+
+1. **Do not relaunch the old non-resumable workflow.**
+2. The resumable execution layer and six-segment orchestration are now frozen and synthetically verified.
+3. Before any new P1/P2 access, obtain a **new explicit user authorization** for the resumable V2 real-training run. The prior authorization was consumed by run `35662028832` and does not carry forward.
+4. If the user authorizes:
+   - create a new authorization receipt scoped only to the frozen resumable orchestration;
+   - pin its exact digest plus the verified resumable trainer/design/orchestration identities in a dispatch-only real-training workflow;
+   - verify preflight before media access;
+   - execute only the serialized 400 -> 800 -> 1000 segments for P1->P2, then P2->P1;
+   - SHA-verify each resume artifact before loading it;
+   - collect complete final fold artifacts only at epoch 1000 and admit them against the already-frozen V2 result-admission contract and unchanged development thresholds.
+5. If either complete fold fails structural admission or frozen thresholds, freeze V2 development FAIL and diagnose P1/P2 only. Do not retune thresholds or rescue a weak result.
+6. If both complete folds pass, record only **eligible for separate P3 authorization**. **Do not open P3 automatically.**
+7. Invariants: P3 sealed; no paid compute; no published-checkpoint initialization; no threshold/allowlist changes; no `main`/Production mutation; no customer delivery.
+
+This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
