@@ -2,6 +2,10 @@ name: Guitar-TECHS V2 resumable P1 P2 real training
 
 on:
   workflow_dispatch:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V2_RESUMABLE_LAUNCH_V1.json'
 
 permissions:
   contents: read
