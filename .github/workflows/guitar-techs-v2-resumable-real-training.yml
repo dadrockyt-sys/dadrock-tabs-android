@@ -1,0 +1,176 @@
+name: Guitar-TECHS V2 resumable P1 P2 real training
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guitar-techs-v2-resumable-real-training
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout frozen dispatch commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify authorization and frozen orchestration identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_TRAINING_AUTHORIZATION_V1.json | awk '{print $1}')" = 'ec2ba853b82c7d57f6da3d87c483967b85c01718599bf73f7cbd9099dbb0d85e'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_TRAINING_AUTHORIZATION_V1.json)" = 'c893b345ed40a6835eb3a25f2f3e8834d687452a'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_VERIFICATION_V1.json)" = '0d5070061b8f7bce2ddae5e057d4378554e9f348'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_V1.json)" = 'ffb5aeec6130509f84c8ce6b048805ad58b219a4'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESULT_ADMISSION_CONTRACT_V1.json)" = '43ed2370b880f1ebccd2ccde0c360e349eb0dc4b'
+          test "$(git hash-object docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json)" = '8e488ce4449fd3f35cf280af03fe1f1e017f3dc1'
+          test "$(sha256sum docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json | awk '{print $1}')" = 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2_resumable.py)" = '86684be13ca6880a89d47bccd0d2b90c22b378fb'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
+          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
+          test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
+          test "$(git hash-object docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json)" = '9090d465422ebf5d4fdf170693fe0936934f3073'
+          test "$(git hash-object .github/workflows/guitar-techs-v2-resumable-segment.yml)" = '51c7cb76c25130d954976041044869dbabc784f6'
+          python - <<'PY'
+          import json
+          auth=json.load(open('docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_TRAINING_AUTHORIZATION_V1.json'))
+          assert auth['authorizationText'].startswith('I authorize the resumable V2 P1/P2 real training')
+          assert auth['guards'] == {'p3Opened': False, 'customerDeliveryEligible': False}
+          assert auth['forbidden']['p3Access'] is True
+          assert auth['scope']['epochsPerFold'] == 1000
+          assert auth['scope']['optimizerStepsPerFold'] == 2000
+          assert auth['scope']['folds'][0]['segments'] == [400,800,1000]
+          assert auth['scope']['folds'][1]['segments'] == [400,800,1000]
+          orchestration=json.load(open('docs/astra/GUITARTECHS_V2_RESUMABLE_REAL_ORCHESTRATION_V1.json'))
+          assert orchestration['authorizationGate']['newExplicitUserAuthorizationRequired'] is True
+          assert orchestration['authorizationGate']['p3Opened'] is False
+          PY
+          echo "LAUNCH_COMMIT=${{ github.sha }}"
+          echo "GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=true"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Install exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Run exact V2 preflight smokes without media
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v2/train_v2.py self-test --source-root /tmp/tabcnn-source
+          python astra_backend/guitartechs_training_v2/train_v2_resumable.py resume-self-test --source-root /tmp/tabcnn-source
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+  p1_0_400:
+    needs: preflight
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p1-train-p2-validate
+      train_performer: P1
+      validation_performer: P2
+      start_epoch: 0
+      end_epoch: 400
+      resume_artifact: ''
+      output_artifact: guitar-techs-v2-p1-resume-e400
+      final_segment: false
+
+  p1_400_800:
+    needs: p1_0_400
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p1-train-p2-validate
+      train_performer: P1
+      validation_performer: P2
+      start_epoch: 400
+      end_epoch: 800
+      resume_artifact: guitar-techs-v2-p1-resume-e400
+      output_artifact: guitar-techs-v2-p1-resume-e800
+      final_segment: false
+
+  p1_800_1000:
+    needs: p1_400_800
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p1-train-p2-validate
+      train_performer: P1
+      validation_performer: P2
+      start_epoch: 800
+      end_epoch: 1000
+      resume_artifact: guitar-techs-v2-p1-resume-e800
+      output_artifact: guitar-techs-v2-p1-final-development-result
+      final_segment: true
+
+  p2_0_400:
+    needs: p1_800_1000
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p2-train-p1-validate
+      train_performer: P2
+      validation_performer: P1
+      start_epoch: 0
+      end_epoch: 400
+      resume_artifact: ''
+      output_artifact: guitar-techs-v2-p2-resume-e400
+      final_segment: false
+
+  p2_400_800:
+    needs: p2_0_400
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p2-train-p1-validate
+      train_performer: P2
+      validation_performer: P1
+      start_epoch: 400
+      end_epoch: 800
+      resume_artifact: guitar-techs-v2-p2-resume-e400
+      output_artifact: guitar-techs-v2-p2-resume-e800
+      final_segment: false
+
+  p2_800_1000:
+    needs: p2_400_800
+    uses: ./.github/workflows/guitar-techs-v2-resumable-segment.yml
+    with:
+      fold: p2-train-p1-validate
+      train_performer: P2
+      validation_performer: P1
+      start_epoch: 800
+      end_epoch: 1000
+      resume_artifact: guitar-techs-v2-p2-resume-e800
+      output_artifact: guitar-techs-v2-p2-final-development-result
+      final_segment: true
