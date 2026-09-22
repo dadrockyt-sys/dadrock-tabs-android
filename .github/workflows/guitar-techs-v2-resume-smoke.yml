@@ -1,0 +1,67 @@
+name: Guitar-TECHS V2 resumable execution smoke
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/guitar-techs-v2-resume-smoke.yml'
+      - 'astra_backend/guitartechs_training_v2/train_v2_resumable.py'
+      - 'docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify frozen resumable design identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
+          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2_resumable.py)" = '21a1a411e2dcb2ed4186b962afdf18b96b5a5acf'
+          test "$(git hash-object docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json)" = '73f6ae8b749a3ca2941d502cfcb18170355585dd'
+          test "$(sha256sum docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json | awk '{print $1}')" = 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15'
+      - name: Install exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+      - name: Run original V2 synthetic backward smoke
+        run: python astra_backend/guitartechs_training_v2/train_v2.py self-test --source-root /tmp/tabcnn-source
+      - name: Prove split/resume equivalence on exact TabCNN runtime
+        run: python astra_backend/guitartechs_training_v2/train_v2_resumable.py resume-self-test --source-root /tmp/tabcnn-source
+      - name: Confirm no real-media authority
+        run: |
+          echo "GUITAR_TECHS_V2_REAL_TRAINING_AUTHORIZED=false"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
