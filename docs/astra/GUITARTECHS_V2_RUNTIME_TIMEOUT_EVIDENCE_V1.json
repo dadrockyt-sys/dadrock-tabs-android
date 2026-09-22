@@ -1,0 +1,57 @@
+{
+  "schema": "astra-guitar-techs-v2-runtime-timeout-evidence-v1",
+  "date": "2026-09-22",
+  "sourceRun": {
+    "runId": 35662028832,
+    "launchCommit": "33b1f222d29ec25a3602b1b85a58f57e2e7dd8d0",
+    "fold": "p1-train-p2-validate",
+    "jobId": 106539518639,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "timeoutMinutes": 345,
+    "runnerStartedAt": "2026-09-21T22:20:08.2774701Z",
+    "trainingCancelledAt": "2026-09-22T04:05:53.3961278Z",
+    "artifactCountAfterFold1": 0
+  },
+  "lastCompletedCheckpoint": {
+    "epoch": 600,
+    "optimizerSteps": 1200,
+    "stateSha256": "508e6b8de3839e053e1a245a2cd79f666bfd15dde5a6991367732def4780f56d",
+    "metrics": {
+      "abstentionRate": 0,
+      "completeness": 0.3306856623092013,
+      "contentF1": {
+        "PalmMute": 0.3173076923076923,
+        "chords": 0.31196977586553226,
+        "scales": 0.38248124256301513,
+        "singlenotes": 0.2282282282282282
+      },
+      "f1": 0.3323339994250111,
+      "frameAccuracy": 0.32558093549225753,
+      "precision": 0.2934823480011448,
+      "recall": 0.40161504337930387
+    },
+    "qualified": false
+  },
+  "interpretation": {
+    "admissibleFinalFoldResult": false,
+    "modelQualityVerdict": "not_permitted_from_incomplete_fold",
+    "failureClass": "runtime_budget_orchestration_failure",
+    "reason": "The frozen trainer writes training-result.json and model.pt only after 1000 epochs plus full opposite-performer validation. The job timed out after the epoch-600 checkpoint, so no structurally admissible fold artifact exists.",
+    "p3Opened": false,
+    "customerDeliveryEligible": false,
+    "thresholdsChanged": false,
+    "allowlistChanged": false
+  },
+  "requiredNextDesign": {
+    "preserveStatisticalProtocol": true,
+    "epochsPerFold": 1000,
+    "totalOptimizerStepsPerFold": 2000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "seed": 20260921,
+    "validationCheckpoints": 50,
+    "requirement": "Make execution resumable across sequential bounded jobs while preserving model state, optimizer state, deterministic RNG/sampling state, checkpoint-selection history, supervised exposure accounting, and frozen metric semantics.",
+    "newRealDataAuthorizationRequired": true
+  }
+}
