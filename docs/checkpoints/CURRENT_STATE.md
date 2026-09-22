@@ -1183,3 +1183,27 @@ This block is the authoritative next action unless a later checkpoint explicitly
 6. P3 stays sealed; no paid compute, threshold retuning, allowlist changes, main/Production mutation or customer delivery.
 
 This timeout-recovery block supersedes the prior instruction to wait for a Fold 1 artifact from run `35662028832`.
+
+
+## V2 timeout run closed + resumable recovery implementation — 2026-09-22
+
+- Run `35662028832` is now closed. Fold 1 job `106539518639` timed out/cancelled after the epoch-600 checkpoint; Fold 2 job `106539518543` was then manually cancelled while its 256-path preparation step was in progress.
+- Fold 2's actual training step was **skipped**. Neither fold uploaded a development model/result artifact; there is no structurally admissible V2 fold result from this run.
+- P1 partial checkpoint evidence remains runtime/diagnostic evidence only and must not be promoted into a final development-quality verdict.
+- Added `astra_backend/guitartechs_training_v2/train_v2_resumable.py` implementing fail-closed resumable execution at frozen epoch boundaries **400 -> 800 -> 1000**.
+- Added `docs/astra/GUITARTECHS_V2_RESUMABLE_EXECUTION_DESIGN_V1.json`. The statistical protocol is unchanged: 1,000 epochs, 2,000 optimizer steps, 200-frame sequences, batch 32, seed 20260921, 50 validations, unchanged thresholds and unchanged alignment population.
+- Resume state preserves model, optimizer, Python/NumPy/Torch RNG state, counters/exposure, complete checkpoint history, best-qualified/best-any checkpoint state, cumulative training time and frozen identities. Resume input is SHA-256 verified before loading.
+- Added branch-only no-real-data workflow `.github/workflows/guitar-techs-v2-resume-smoke.yml` to verify exact frozen runtime/source identities, original V2 backward smoke and split/resume equivalence.
+- First smoke run `35686049240` failed only because frozen Torch 1.11 does not accept the newer `weights_only=` loader argument; no real media was accessed.
+- Second smoke run `35686192070` advanced through model/optimizer equivalence but exposed a NumPy-array comparison bug in the RNG test helper; no real media was accessed.
+- Both compatibility issues were corrected and identities repinned. Final synthetic verification is still required before this recovery design may be called verified.
+- **No new P1/P2 real-data authorization exists. Do not launch the resumable workflow on real media yet. P3 remains sealed.**
+
+### EXPLICIT NEXT STEP TO RESUME — resumable verification gate
+
+1. Inspect final resumable smoke run associated with commit `72a6430fe1c0b0871f89f277d63e73722a6e541d`.
+2. Require both `V2_SELF_TEST_PASS` and `V2_RESUME_SELF_TEST_PASS` plus the no-real-media guard step.
+3. If smoke fails, correct the synthetic/resume implementation only and repin identities; do not access P1/P2.
+4. If smoke passes, freeze the verified resumable implementation/receipt and design the real-data orchestration that chains epoch boundaries 400 -> 800 -> 1000 for each fold.
+5. A new real P1/P2 run requires a **separate explicit user authorization** after that orchestration is frozen. Do not infer authorization from the prior V2 run.
+6. P3 sealed; no paid compute; no threshold/allowlist changes; no main/Production mutation; no customer delivery.
