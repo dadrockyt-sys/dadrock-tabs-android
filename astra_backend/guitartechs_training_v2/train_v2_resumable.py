@@ -94,7 +94,7 @@ def _verified_torch_load(path, expected_sha256):
         raise RuntimeError(
             f"resume-state SHA-256 mismatch: expected {expected_sha256}, got {actual}"
         )
-    return torch.load(path, map_location="cpu", weights_only=False)
+    return torch.load(path, map_location="cpu")
 
 
 def _validate_segment_end(end_epoch):
