@@ -1,0 +1,72 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-execution-design-v1",
+  "date": "2026-09-22",
+  "status": "implementation_and_synthetic_verification_only",
+  "triggerEvidence": {
+    "receipt": "docs/astra/GUITARTECHS_V2_RUNTIME_TIMEOUT_EVIDENCE_V1.json",
+    "runId": 35662028832,
+    "fold1JobId": 106539518639,
+    "timeoutMinutes": 345,
+    "lastCompletedEpoch": 600,
+    "lastOptimizerStep": 1200,
+    "completeFoldArtifactProduced": false
+  },
+  "statisticalProtocolUnchanged": {
+    "epochsPerFold": 1000,
+    "optimizerStepsPerFold": 2000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "seed": 20260921,
+    "validationCheckpoints": 50,
+    "checkpointEveryEpochs": 20,
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "orchestrationChange": {
+    "segmentEnds": [
+      400,
+      800,
+      1000
+    ],
+    "rationale": "Observed Fold 1 reached only epoch 600 inside the 345-minute hosted-runner cap. The observed checkpoint cadence from epoch 20 through 600 was about 31 seconds per epoch, while setup/preparation consumed about 31 minutes. A 400-epoch segment is expected to remain well inside the same cap with over 100 minutes of margin at the observed pace.",
+    "intermediateSegmentsProduce": "resume-state.pt plus a JSON receipt; no development result/model verdict",
+    "finalSegmentProduces": "the same required result/model evidence after epoch 1000 and full opposite-performer validation"
+  },
+  "resumeStateMustPreserve": [
+    "model state_dict",
+    "optimizer state_dict",
+    "Python RNG state",
+    "NumPy RNG state",
+    "Torch RNG state",
+    "next epoch",
+    "optimizer-step counter",
+    "supervised-frame exposure counter",
+    "all checkpoint summaries",
+    "best-qualified checkpoint record and model state",
+    "best-any checkpoint record and model state",
+    "cumulative training wall time",
+    "fold and frozen source identities",
+    "P3/customer/paid/published-checkpoint guard flags"
+  ],
+  "integrity": {
+    "resumeInputRequiresExactSha256": true,
+    "segmentBoundariesMustBeFrozenCheckpoints": true,
+    "permittedEndEpochs": [
+      400,
+      800,
+      1000
+    ],
+    "baseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "samplerGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560"
+  },
+  "authorization": {
+    "realP1P2AccessAuthorizedByThisDesign": false,
+    "newRealDataRunAuthorizedByThisDesign": false,
+    "separateExplicitUserAuthorizationRequired": true,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "productionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
