@@ -1,0 +1,105 @@
+{
+  "schema": "astra-guitar-techs-v2-development-failure-diagnosis-v1",
+  "date": "2026-09-22",
+  "sourceResult": "docs/astra/GUITARTECHS_V2_DEVELOPMENT_RESULT_V1.json",
+  "evidenceBoundary": "P1/P2 development evidence only; P3 remains sealed.",
+  "observations": {
+    "bothFoldsStructurallyValid": true,
+    "selectionSubsetQualified": {
+      "P1": false,
+      "P2": false
+    },
+    "selectedCheckpointEpochs": {
+      "P1": 720,
+      "P2": 840
+    },
+    "fullValidation": {
+      "P1": {
+        "precision": 0.1987482187302651,
+        "recall": 0.3552118707577178,
+        "f1": 0.23954169942820763,
+        "completeness": 0.25315288464686764,
+        "frameAccuracy": 0.31054568461147086
+      },
+      "P2": {
+        "precision": 0.1509619504929262,
+        "recall": 0.317508504795817,
+        "f1": 0.1928746367237972,
+        "completeness": 0.17676744090611363,
+        "frameAccuracy": 0.2513095863335899
+      }
+    },
+    "selectionToFullValidationDrop": {
+      "P1": {
+        "f1": 0.10342755820898075,
+        "completeness": 0.07391040611238847,
+        "frameAccuracy": 0.07150308093977636
+      },
+      "P2": {
+        "f1": 0.09111096888332157,
+        "completeness": 0.06961603067055921,
+        "frameAccuracy": 0.0698234498980646
+      }
+    },
+    "crossPerformer": {
+      "f1AbsoluteGap": 0.04666706270441043,
+      "frameAccuracyAbsoluteGap": 0.059236098277880955,
+      "bothFrozenGapLimitsPassed": true
+    },
+    "classPattern": {
+      "strongestRelativeClass": "scales",
+      "weakestRelativeClass": "singlenotes",
+      "P1ContentF1": {
+        "chords": 0.19823090401549182,
+        "scales": 0.3334742602598402,
+        "singlenotes": 0.13076072735639585,
+        "PalmMute": 0.29521262225104017
+      },
+      "P2ContentF1": {
+        "chords": 0.13774194811856366,
+        "scales": 0.31935686822573933,
+        "singlenotes": 0.08731033577222147,
+        "PalmMute": 0.26923475199337266
+      }
+    },
+    "labelActivity": {
+      "P1ActiveFractionOfValid": 0.32217084539417673,
+      "P2ActiveFractionOfValid": 0.32597829284951685,
+      "P1ActiveCounts": {
+        "chords": 520797,
+        "scales": 63548,
+        "singlenotes": 17975,
+        "PalmMute": 3155
+      },
+      "P2ActiveCounts": {
+        "chords": 531872,
+        "scales": 73328,
+        "singlenotes": 17809,
+        "PalmMute": 771
+      }
+    },
+    "abstentionRateBothFolds": 0,
+    "recallExceedsPrecisionBothFolds": true
+  },
+  "interpretation": [
+    "The failure is not caused by missing/incomplete training evidence, resume corruption, or a single asymmetric performer split.",
+    "Both directions are similarly weak in absolute exact-string/fret quality, while cross-performer gaps remain within the frozen consistency limits.",
+    "The selected checkpoint occurs before epoch 1000 in both folds, so simply extending the same training schedule is not supported by this evidence.",
+    "Recall exceeds precision in both folds, consistent with substantial false-positive event prediction under the current objective/decoder.",
+    "Single-note and chord exact-string/fret performance are especially weak; scale performance is relatively strongest but still below threshold.",
+    "PalmMute supervision is extremely sparse relative to chords, especially for P2, so class/target imbalance should be explicitly examined in the next design."
+  ],
+  "nextDesignQuestions": [
+    "Test loss reweighting or sampling strategies that address silence/active and content imbalance without changing the frozen evaluation population.",
+    "Inspect confusion by string/fret and event type to determine whether errors arise primarily from onset detection, fret classification, string assignment, or temporal run decoding.",
+    "Compare checkpoint curves and calibration/false-positive behavior to evaluate whether confidence-aware abstention or decoding can improve precision without collapsing recall.",
+    "Evaluate architectural/context changes on synthetic or already-authorized P1/P2-derived development diagnostics only; do not touch P3.",
+    "Any new real-data optimizer run requires a separately frozen V3 design and new explicit authorization."
+  ],
+  "guards": {
+    "p3Opened": false,
+    "thresholdsRetuned": false,
+    "customerDeliveryEligible": false,
+    "newRealTrainingAuthorized": false
+  }
+}
