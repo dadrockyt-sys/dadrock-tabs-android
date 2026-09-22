@@ -428,6 +428,8 @@ def train_segment(args):
 def _nested_equal(a, b):
     if torch.is_tensor(a) and torch.is_tensor(b):
         return torch.equal(a, b)
+    if isinstance(a, np.ndarray) and isinstance(b, np.ndarray):
+        return np.array_equal(a, b)
     if isinstance(a, dict) and isinstance(b, dict):
         return a.keys() == b.keys() and all(_nested_equal(a[k], b[k]) for k in a)
     if isinstance(a, (list, tuple)) and isinstance(b, type(a)):
