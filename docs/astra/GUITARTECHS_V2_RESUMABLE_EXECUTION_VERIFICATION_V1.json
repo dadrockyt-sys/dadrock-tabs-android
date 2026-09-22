@@ -1,0 +1,46 @@
+{
+  "schema": "astra-guitar-techs-v2-resumable-execution-verification-v1",
+  "date": "2026-09-22",
+  "implementation": {
+    "resumableTrainerGitBlob": "86684be13ca6880a89d47bccd0d2b90c22b378fb",
+    "resumableDesignGitBlob": "b120b711c77ffa3bc98078da2dd8b1ec9f24788a",
+    "smokeWorkflowGitBlob": "7837db02a012d9eb4171ae568b19708d3d172140",
+    "baseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "samplerGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560"
+  },
+  "successfulSmoke": {
+    "runId": 35686293546,
+    "jobId": 106613697500,
+    "commit": "72a6430fe1c0b0871f89f277d63e73722a6e541d",
+    "conclusion": "success",
+    "originalV2BackwardSmoke": "V2_SELF_TEST_PASS",
+    "resumeEquivalenceSmoke": "V2_RESUME_SELF_TEST_PASS",
+    "originalV2BackwardSmokeAt": "2026-09-22T04:17:54.1239591Z",
+    "resumeEquivalenceSmokeAt": "2026-09-22T04:18:01.0083168Z"
+  },
+  "correctedPreVerificationFailures": [
+    {
+      "runId": 35686049240,
+      "reason": "Frozen Torch 1.11 rejected unsupported weights_only keyword during synthetic resume-state load."
+    },
+    {
+      "runId": 35686192070,
+      "reason": "Synthetic RNG equality helper required explicit NumPy array comparison; model and optimizer equivalence had already passed."
+    }
+  ],
+  "guaranteesTested": [
+    "exact pinned TabCNN source acquisition identities",
+    "original V2 200-frame backward smoke",
+    "SHA-256 verification before resume-state load",
+    "model-state equality between uninterrupted and split/resumed execution",
+    "optimizer-state equality between uninterrupted and split/resumed execution",
+    "Python/NumPy/Torch RNG-state equality between uninterrupted and split/resumed execution"
+  ],
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "p3Opened": false,
+    "customerDeliveryEligible": false,
+    "paidComputeAuthorized": false,
+    "productionMutationAuthorized": false
+  }
+}
