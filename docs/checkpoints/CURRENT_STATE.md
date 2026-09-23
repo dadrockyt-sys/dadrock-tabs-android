@@ -1575,3 +1575,109 @@ This block supersedes only the preceding immediate-task wording and is the autho
 8. P3 remains separately sealed regardless of future V3 development outcome.
 
 This block supersedes the active diagnosis-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## Guitar-TECHS V3 design + synthetic verification frozen — 2026-09-22
+
+- V3 diagnosis is complete and frozen. The bounded V3 candidate is now:
+  - candidate ID: `astra_guitartechs_tabcnn_v3_objective_decoder`;
+  - architecture: **unchanged TabCNN**;
+  - random initialization only;
+  - exact V2 sequence/batch/epoch/optimizer/checkpoint/resume budget retained.
+- Frozen V3 design receipt:
+  - `docs/astra/GUITARTECHS_V3_DESIGN_V1.json`;
+  - Git blob `5074c691c5ec97625849d364a764c73694a86ce5`.
+- V3 implementation components:
+  - `astra_backend/guitartechs_training_v3/objective_decoder.py`;
+  - Git blob `87e127c87851ea9a43b9a9e6240f1a7c4624424b`.
+  - `astra_backend/evaluation/test_guitartechs_v3_components.py`;
+  - Git blob `18a3c0ffd03366b5c11aa9cac1bb280e9d934dc0`.
+  - `astra_backend/guitartechs_training_v3/verify_synthetic_v3.py`;
+  - Git blob `36cc9197ae274ab0eee12892813f487427592692`.
+- V3 changes are diagnosis-driven and bounded:
+  - active-frame loss weight 1.20;
+  - bounded inverse-square-root primary-content weighting, cap 0.75..1.50;
+  - stable-reference-state continuity regularizer lambda 0.10;
+  - exact-string pitch-equivalent margin loss lambda 0.25, margin 0.15;
+  - confidence hysteresis decoder: start 0.55, continue 0.35;
+  - same-fret silence-gap merge <=2 frames (<=40 ms);
+  - active runs shorter than 2 frames (<40 ms) suppressed.
+- The architecture itself was intentionally not expanded because the frozen V2 diagnosis did not establish a capacity bottleneck.
+
+### Synthetic verification history
+
+- First V3 synthetic run `35806781928`: **FAIL before TabCNN source acquisition / synthetic optimizer smoke**.
+  - runtime + source/guard preflight: PASS;
+  - failure: objective reshaped logits using the fixed six-string dimension as the time dimension;
+  - no P1/P2 media accessed;
+  - no P3 accessed;
+  - no real optimizer steps;
+  - failure is recorded in `docs/astra/GUITARTECHS_V3_SYNTHETIC_LAUNCH_V1.json`.
+- Shape defect fixed in `objective_decoder.py`; design/workflow identities were repinned before retry.
+- Corrected V3 synthetic run `35806927973`: **PASS**.
+  - exact frozen identity/guard preflight: PASS;
+  - exact pinned runtime: Python 3.10.15, NumPy 1.21.6, Torch 1.11.0+cpu;
+  - deterministic V3 component unit tests: PASS;
+  - exact pinned TabCNN source acquisition: PASS;
+  - finite-gradient V3 objective smoke: PASS;
+  - bounded content weighting: PASS;
+  - pitch-equivalent wrong-string margin behavior: PASS;
+  - stable-run continuity penalty behavior: PASS;
+  - temporal fragmentation merge + singleton suppression: PASS;
+  - true-onset preservation: PASS;
+  - uninterrupted vs serialized-resumed TabCNN V3 synthetic optimization:
+    - model state equality: PASS;
+    - optimizer state equality: PASS;
+    - Python/NumPy/Torch RNG equality: PASS.
+- Synthetic verification artifact:
+  - name: `guitar-techs-v3-synthetic-verification-v1`;
+  - artifact ID: `10728630446`;
+  - JSON SHA-256: `cf2066cac6da63322d2898b0f4423c461730e7c76fd9bbca56580209b30b6d51`.
+- Frozen repository verification receipt:
+  - `docs/astra/GUITARTECHS_V3_SYNTHETIC_VERIFICATION_V1.json`;
+  - Git blob `e3cc2a9b15c9ee9be779d5e45a547efcae543087`;
+  - commit `5f16ef12d4718c83dc60cbd029b01b202554d1d6`.
+- Branch regression:
+  - launch commit regression run `35806928017`: **PASS**;
+  - verification-receipt commit regression run `35807070994`: **PASS**.
+- No P1/P2 development media was accessed by either synthetic run.
+- P3 was not accessed.
+- Real P1/P2 optimizer steps executed: **0**.
+- Paid compute used: false.
+- Frozen V2 thresholds unchanged.
+- Frozen alignment population unchanged.
+- `main`/Production/customer delivery unchanged.
+
+### EXPLICIT NEXT STEP TO RESUME — V3 real P1/P2 authorization gate
+
+1. **Do not launch any real V3 optimizer run without a new explicit user authorization.**
+2. The V3 design and exact-runtime synthetic verification are now frozen and satisfy the prerequisite gate for requesting authorization.
+3. If the user explicitly authorizes the frozen V3 P1/P2 development run:
+   - create a new V3 real-training authorization receipt scoped only to `astra_guitartechs_tabcnn_v3_objective_decoder`;
+   - preserve the exact frozen 256-path P1/P2 development population;
+   - preserve the frozen V2 development thresholds and alignment allowlist;
+   - preserve the 1,000-epoch/fold, 200-frame, batch-32, microbatch-1, Adadelta lr=1.0, seed 20260921 budget;
+   - preserve serialized resume boundaries 400 -> 800 -> 1000 for P1->P2 and P2->P1;
+   - initialize from random weights only;
+   - run on public GitHub-hosted CPU runners only;
+   - verify every source/runtime/design/authorization identity before P1/P2 media access;
+   - SHA-verify every resume artifact before loading;
+   - collect final fold results only at epoch 1000;
+   - run structural admission first, then the unchanged frozen development metric evaluator.
+4. If either V3 fold fails structural admission or frozen development thresholds:
+   - freeze V3 development FAIL;
+   - diagnose P1/P2 only;
+   - do not retune thresholds or rescue the result.
+5. If both V3 folds pass:
+   - record only **eligible for separate P3 authorization**;
+   - **do not open P3 automatically**.
+6. Still forbidden without separate authorization:
+   - P3 access;
+   - paid compute;
+   - published-checkpoint initialization;
+   - threshold retuning;
+   - alignment allowlist mutation;
+   - `main`/Production mutation;
+   - customer delivery.
+
+This block supersedes the V3 offline-design instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
