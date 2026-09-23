@@ -1455,3 +1455,48 @@ These steps are the explicit authoritative resume point after the frozen V2 deve
 Implement the **V3 development error-decomposition tooling and tests** against the already-completed P1/P2 V2 evidence, starting with exact onset/string/fret confusion and false-positive/false-negative accounting. Commit the tooling, tests and resulting diagnostic receipt to `astra-work`, then update this checkpoint again before proposing any V3 training architecture.
 
 This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 diagnosis tooling active — 2026-09-22
+
+- The immediate V3 diagnosis task from the preceding checkpoint has been implemented on `astra-work`.
+- Committed diagnosis components:
+  - `astra_backend/guitartechs_training_v2/diagnostics.py` — Git blob `500fa8f9ead07c6d8b444c7ed8ed04e23494e97e`.
+  - `astra_backend/guitartechs_training_v2/run_v2_diagnostics.py` — Git blob `cf5348104f2686ad5b16e8e8cdbfd3b9dfedf343`.
+  - `.github/workflows/guitar-techs-v3-diagnosis.yml` — Git blob `b3cca652bb7f4ef067491170f400166871423edd`.
+  - `docs/astra/GUITARTECHS_V3_DIAGNOSIS_LAUNCH_V1.json` — Git blob `d454f5fc8a579bf2818a8ed5df433b0e567a7268`.
+- The diagnostic is intentionally zero-optimizer, P1/P2-development-only analysis. It reproduces the frozen V2 fold metrics before reporting onset/string/fret confusion, temporal run behavior, frame activity, and false-positive/false-negative accounting.
+- Two pre-media-access retries are recorded in the launch receipt:
+  - run `35801475036`: checkout-expression failure; no P1/P2 media accessed.
+  - run `35801584371`: unit-test ordering failure before NumPy install; no P1/P2 media accessed.
+- Corrected diagnosis run `35801706358` from commit `43709e19f4b876c020ee4418f2591affb90421dc` is the single active diagnostic run.
+- In run `35801706358`, the following have already passed:
+  - checkout;
+  - exact launch/frozen-identity preflight;
+  - exact frozen runtime install plus diagnostic unit tests;
+  - pinned TabCNN source acquisition;
+  - both frozen V2 final-fold artifact downloads;
+  - exact frozen artifact SHA-256 verification.
+- Current active step at this checkpoint save: **Prepare exact frozen 256-path P1/P2 development set**.
+- Still pending in the same run: zero-optimizer error decomposition, diagnostic guard verification, artifact upload, and cleanup.
+- Invariants remain unchanged: V2 development verdict remains FAIL; optimizer steps authorized/executed for diagnosis = 0; P3 sealed; no paid compute; no threshold retuning; no alignment allowlist mutation; no `main`/Production mutation; no customer delivery.
+
+### EXPLICIT NEXT STEP TO RESUME — active V3 diagnosis run 35801706358
+
+1. Inspect run `35801706358` first. **Do not launch a duplicate diagnosis while it is active.**
+2. If it completes successfully:
+   - fetch artifact `guitar-techs-v2-error-decomposition-v1`;
+   - verify the uploaded JSON and its guard block;
+   - commit the diagnostic receipt under `docs/astra/`;
+   - summarize the P1 and P2 onset/string/fret, temporal-run, activity, FP/FN, and per-content findings without altering the frozen V2 verdict;
+   - run/confirm branch regression;
+   - update this checkpoint before proposing any V3 architecture or training design.
+3. If run `35801706358` fails:
+   - inspect the failed step/logs;
+   - fix only the diagnosis tooling/orchestration needed to obtain the frozen P1/P2 diagnostic;
+   - preserve zero optimizer steps and all existing guards;
+   - record the retry reason in the launch receipt before any retry.
+4. No real V3 P1/P2 training is authorized by this checkpoint. Any future optimizer run requires a new explicit user authorization after a V3 design + synthetic verification are frozen.
+5. P3 remains separately sealed under all outcomes.
+
+This block supersedes only the preceding immediate-task wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
