@@ -1500,3 +1500,78 @@ This block is the authoritative next action unless a later checkpoint explicitly
 5. P3 remains separately sealed under all outcomes.
 
 This block supersedes only the preceding immediate-task wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 diagnosis complete + result frozen — 2026-09-22
+
+- Corrected diagnosis run `35801706358`, job `106993298624`: **PASS**.
+- Run head: `43709e19f4b876c020ee4418f2591affb90421dc`.
+- Raw diagnostic artifact:
+  - name: `guitar-techs-v2-error-decomposition-v1`;
+  - artifact ID: `10727022388`;
+  - file: `GUITARTECHS_V2_ERROR_DECOMPOSITION_V1.json`;
+  - SHA-256: `edf8607c99bebbc19381c602fd06ab8cfcbb647aff0af665b2b0aa81948989b7`.
+- Frozen repository diagnosis receipt:
+  - `docs/astra/GUITARTECHS_V3_DIAGNOSIS_RESULT_V1.json`;
+  - commit: `c5fb60bf9d60a9dd3c919c77ea86a7573007e6fc`.
+- Both frozen V2 fold metrics reproduced exactly before diagnosis:
+  - P1->P2 selected epoch 720: precision 0.198748, recall 0.355212, F1 0.239542, completeness 0.253153, frame accuracy 0.310546.
+  - P2->P1 selected epoch 840: precision 0.150962, recall 0.317509, F1 0.192875, completeness 0.176767, frame accuracy 0.251310.
+- Aggregate 256-capture diagnostic:
+  - 49,163 reference events vs 106,992 predicted events.
+  - 16,693 exact onset+string+fret true positives.
+  - 90,299 false-positive events vs 32,470 false negatives; FP/FN ratio **2.781**.
+  - exact event micro F1 **0.2138**.
+  - onset-only F1 **0.4164**, with onset-only recall **0.6613**.
+  - staged onset matching covers 98.51% of the onset-only maximum, so the label-decomposition evidence is representative of onset-matched errors.
+- String/fret identity loss is substantial:
+  - 11,661 onset-matched events have both string and fret wrong.
+  - 8,041 are pitch-correct but assigned to the wrong string.
+  - 3,041 have wrong fret on the correct string.
+  - strongest off-diagonal string confusions include reference 3->predicted 4 (1,265), 2->3 (1,024), 4->5 (941), and 0->1 (864).
+- Temporal decoding is also a primary failure:
+  - mean onset-start absolute error is only **18.53 ms**;
+  - mean event-end absolute error is **839.66 ms**;
+  - mean duration absolute error is **852.57 ms**;
+  - 10,490 fragmented reference runs;
+  - predicted/reference run ratio **2.176**.
+- Content-class pooled diagnostic:
+  - scales: event F1 **0.3237**, strongest class;
+  - PalmMute: event F1 **0.2807** but very sparse;
+  - chords: event F1 **0.1521**, FP/FN **4.491**;
+  - singlenotes: event F1 **0.1028**, FP/FN **3.673**.
+- Diagnosis conclusion: the V2 failure is not explained by onset start timing or one performer. The main actionable losses are **event over-generation/fragmentation, string/fret identity confusion, and poor run termination/duration decoding**, with chords and singlenotes especially weak.
+- Frozen V2 verdict remains **FAIL**. The diagnosis made no threshold or verdict change.
+- Diagnosis guards verified:
+  - optimizer steps executed: 0;
+  - model weights modified: false;
+  - thresholds retuned: false;
+  - alignment allowlist changed: false;
+  - P3 opened: false;
+  - paid compute used: false;
+  - customer delivery eligible: false;
+  - main/Production modified: false.
+- Branch regression after the receipt commit was triggered as run `35806272185`; at checkpoint-save time it is still queued. The preceding checkpoint-only regression run `35802127312` passed.
+
+### EXPLICIT NEXT STEP TO RESUME — V3 offline design + synthetic verification
+
+1. **Do not launch real P1/P2 V3 training yet.** No optimizer authorization exists.
+2. Convert the frozen diagnosis into a bounded V3 design that directly targets the measured failure modes:
+   - activity/silence-aware and class-aware loss/sampling to suppress false-positive event generation without collapsing recall;
+   - string/fret representation or loss changes that penalize pitch-correct/wrong-string substitutions and adjacent-string confusion;
+   - confidence-aware temporal decoding with minimum-run/merge/termination handling aimed at fragmentation and ~0.85 s end/duration error;
+   - preserve onset-start behavior unless synthetic evidence shows a regression.
+3. Prefer the smallest architecture/representation changes supported by the diagnosis; do not change architecture merely because V2 failed.
+4. Build deterministic synthetic tests that prove:
+   - over-generation penalties behave as intended;
+   - sparse PalmMute and singlenote examples receive bounded nonzero supervision;
+   - adjacent-string/pitch-equivalent confusions receive stronger loss than exact assignments;
+   - temporal run decoding reduces synthetic fragmentation and duration error;
+   - resume equivalence/counters/checkpoint integrity remain intact if resumable training is retained;
+   - P3/customer/paid-compute/main guards fail closed.
+5. Freeze a V3 design receipt with exact seed, runtime/source identities, model/representation/loss/sampling/decoder definitions, sequence/batch/microbatch, epoch/step budget, checkpoint cadence and resume boundaries.
+6. Run branch regression and a dedicated V3 synthetic verification workflow. No P1/P2 media access is required for this gate.
+7. Only after the V3 design + synthetic verification are frozen may a **new explicit user authorization** be requested for a real P1/P2 V3 optimizer run.
+8. P3 remains separately sealed regardless of future V3 development outcome.
+
+This block supersedes the active diagnosis-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
