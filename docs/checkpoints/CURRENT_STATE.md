@@ -1766,3 +1766,19 @@ This block supersedes the V3 authorization-gate instructions and is the authorit
 6. P3 remains sealed regardless of V3 development outcome until separately authorized.
 
 This block supersedes the immediately preceding in-progress preflight status and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 P1 0->400 segment gate passed — 2026-09-22
+
+- Run `35808420395` remains the single authoritative V3 real-training run.
+- P1 0->400 job `107014479747`:
+  - checkout: PASS;
+  - setup Python: PASS;
+  - V3 authorization/frozen identity gate before media access: PASS;
+  - requested frozen segment validation: PASS;
+  - current step: exact frozen runtime installation.
+- P1/P2 media preparation has not yet begun at this checkpoint save.
+- Continue the same job only; next permitted steps are pinned runtime -> pinned TabCNN source -> exact 256-path P1/P2 preparation -> P1 0->400 training.
+- No duplicate launch. P3 remains sealed.
+
+This is the latest active-run status and supersedes the prior P1 setup-status wording.
