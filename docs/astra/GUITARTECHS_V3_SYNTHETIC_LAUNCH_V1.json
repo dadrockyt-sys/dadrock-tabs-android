@@ -1,0 +1,29 @@
+{
+  "schema": "astra-guitar-techs-v3-synthetic-launch-v1",
+  "date": "2026-09-22",
+  "candidateId": "astra_guitartechs_tabcnn_v3_objective_decoder",
+  "scope": "offline deterministic V3 synthetic verification only",
+  "purpose": "Verify the frozen V3 objective, decoder, bounded content weighting and exact-runtime resumability without accessing P1/P2 or P3 media.",
+  "sourceIdentities": {
+    "designGitBlob": "888d744ebeee4202181d5cbc8375a94f3b0758f9",
+    "objectiveDecoderGitBlob": "12b77028d0d41407e2d4440824147f1aaacc269e",
+    "componentTestsGitBlob": "18a3c0ffd03366b5c11aa9cac1bb280e9d934dc0",
+    "syntheticHarnessGitBlob": "36cc9197ae274ab0eee12892813f487427592692",
+    "workflowGitBlob": "555e1a6531203986155a1acc3137f1d7fc07afef"
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "p1p2MediaAccessAuthorized": false,
+    "paidComputeAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "invariants": [
+    "No P1/P2 development media is downloaded or opened.",
+    "P3 remains sealed.",
+    "Only synthetic optimizer operations are permitted inside the verification harness.",
+    "Frozen V2 development thresholds and alignment population are unchanged.",
+    "No main/Production/customer-delivery state may change."
+  ]
+}
