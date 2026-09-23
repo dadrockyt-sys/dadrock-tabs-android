@@ -68,7 +68,6 @@ jobs:
           assert len(corrections['correctionsMs']) == 256
           assert corrections['p3Opened'] is False
           PY
-          python3 -m unittest -v astra_backend/evaluation/test_guitartechs_v2_diagnostics.py
           echo "GUITAR_TECHS_P3_OPENED=false"
           echo "OPTIMIZER_STEPS_AUTHORIZED=0"
           echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
@@ -80,6 +79,7 @@ jobs:
           python -m pip install --disable-pip-version-check 'pip==24.0'
           python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
           python -m pip check
+          python3 -m unittest -v astra_backend/evaluation/test_guitartechs_v2_diagnostics.py
           sudo apt-get update
           sudo apt-get install -y ffmpeg unzip
 
