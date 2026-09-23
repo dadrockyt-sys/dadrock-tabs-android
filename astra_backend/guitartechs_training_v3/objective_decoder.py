@@ -128,7 +128,7 @@ def v3_sequence_loss(
     if continuity_lambda < 0 or identity_lambda < 0:
         raise ValueError("auxiliary loss weights must be nonnegative")
 
-    batch, frames, _ = labels.shape
+    batch, _, frames = labels.shape
     x = logits.reshape(batch, frames, NUM_STRINGS, NUM_CLASSES)
     target = normalized_targets(labels)
     flat = F.cross_entropy(
