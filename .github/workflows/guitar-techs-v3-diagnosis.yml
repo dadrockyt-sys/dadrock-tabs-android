@@ -22,7 +22,7 @@ jobs:
       - name: Checkout diagnosis launch commit
         uses: actions/checkout@v4
         with:
-          ref: \${{ github.sha }}
+          ref: ${{ github.sha }}
 
       - uses: actions/setup-python@v5
         with:
@@ -107,7 +107,7 @@ jobs:
         with:
           name: guitar-techs-v2-p1-final-development-result
           path: /tmp/p1-final
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: 35688531407
 
       - name: Download frozen V2 second fold artifact
@@ -115,7 +115,7 @@ jobs:
         with:
           name: guitar-techs-v2-p2-final-development-result
           path: /tmp/p2-final
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: 35688531407
 
       - name: Verify frozen V2 artifacts before diagnosis
