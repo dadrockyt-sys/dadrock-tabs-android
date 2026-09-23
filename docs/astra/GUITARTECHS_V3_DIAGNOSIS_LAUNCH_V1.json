@@ -7,7 +7,7 @@
   "sourceIdentities": {
     "diagnosticsGitBlob": "500fa8f9ead07c6d8b444c7ed8ed04e23494e97e",
     "runnerGitBlob": "cf5348104f2686ad5b16e8e8cdbfd3b9dfedf343",
-    "workflowGitBlob": "9829f50d2f2076aa17a65e428830748992aa942b",
+    "workflowGitBlob": "365192e5793fe25687a80b736caac64ea1756290",
     "developmentResultGitBlob": "a4e000759d7d5545e1dd9c776237db0a5d337cc3",
     "realTrainingGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254"
   },
@@ -26,5 +26,7 @@
     "Only the frozen V2 final fold models from run 35688531407 may be evaluated.",
     "No optimizer or model-weight update is permitted.",
     "P3 remains sealed."
-  ]
+  ],
+  "retryOfRunId": 35801475036,
+  "retryReason": "Initial diagnosis run failed during checkout before P1/P2 media access because workflow expressions were committed with a literal leading backslash."
 }
