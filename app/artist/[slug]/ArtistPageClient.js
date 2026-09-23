@@ -9,6 +9,7 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
 import SearchBar from '@/components/SearchBar';
+import { getStairway2FastUrl } from '@/lib/stairway2fast';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
 const getLocalizedPath = (path, lang) => {
@@ -169,17 +170,25 @@ const t = getSubPageTranslation(lang);
     setShowAd(true);
   };
 
+  const openStairwayLesson = (video) => {
+    const stairwayUrl = getStairway2FastUrl(video);
+    if (stairwayUrl) {
+      window.location.href = stairwayUrl;
+    }
+  };
+
   // Countdown effect for interstitial ad
   useEffect(() => {
     if (showAd && adCountdown > 0) {
       const timer = setTimeout(() => setAdCountdown(adCountdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (adCountdown === 0 && showAd) {
+      const video = pendingVideo;
       setShowAd(false);
-      setSelectedVideo(pendingVideo);
       setPendingVideo(null);
+      if (video) openStairwayLesson(video);
     }
-  }, [showAd, adCountdown]);
+  }, [showAd, adCountdown, pendingVideo]);
 
   // Get YouTube embed URL
   const getEmbedUrl = (video) => {
@@ -251,9 +260,10 @@ const t = getSubPageTranslation(lang);
             </div>
             <button
               onClick={() => {
+                const video = pendingVideo;
                 setShowAd(false);
-                setSelectedVideo(pendingVideo);
                 setPendingVideo(null);
+                if (video) openStairwayLesson(video);
               }}
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
