@@ -1386,3 +1386,72 @@ This block supersedes the prior manual-dispatch instruction and is the authorita
 6. P3 remains sealed; no paid compute; no threshold/allowlist changes; no `main`/Production mutation; no customer delivery.
 
 This block supersedes the active-run monitoring instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## SAVED NEXT STEPS — V3 diagnosis/design gate — 2026-09-22
+
+These steps are the explicit authoritative resume point after the frozen V2 development FAIL.
+
+1. **Start with P1/P2-only error decomposition; do not launch new training.**
+   - Use only the completed V2 development evidence from run `35688531407` and the frozen receipts:
+     - `docs/astra/GUITARTECHS_V2_DEVELOPMENT_RESULT_V1.json`
+     - `docs/astra/GUITARTECHS_V2_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json`
+   - Do not touch P3.
+   - Do not retune the frozen V2 thresholds or alter the accepted 256-path development population.
+
+2. **Quantify where exact-string/fret quality is being lost.**
+   - Decompose P1 and P2 errors separately into:
+     - onset detection error;
+     - string-assignment error;
+     - fret-classification error;
+     - temporal run segmentation/decoding error;
+     - false-positive vs false-negative event balance;
+     - per-content-class behavior for chords, scales, singlenotes and PalmMute.
+   - Preserve performer-disjoint reporting and do not merge away asymmetries before inspection.
+
+3. **Inspect imbalance and supervision quality before changing architecture.**
+   - Measure active/silent balance, per-string activity, fret-frequency imbalance, content-class imbalance and performer-specific activity.
+   - Pay special attention to very sparse PalmMute supervision and weak singlenote/chord F1.
+   - Determine whether the current loss/sampling scheme over-rewards common active states or produces excessive false positives.
+
+4. **Evaluate decoder/calibration failure separately from representation failure.**
+   - Use frozen V2 checkpoints/results to test offline diagnostics such as:
+     - confidence distributions for correct vs incorrect string/fret predictions;
+     - precision/recall tradeoff under confidence gating;
+     - temporal smoothing/run-merging sensitivity;
+     - string/fret confusion structure;
+     - whether confidence-aware abstention could improve precision without collapsing recall.
+   - These diagnostics are development analysis only and must not change the frozen V2 verdict.
+
+5. **Form V3 hypotheses only after diagnosis.**
+   Candidate design areas to compare offline/synthetically:
+   - class-aware or activity-aware loss weighting;
+   - performer-balanced/content-balanced sampling;
+   - improved silence/active handling;
+   - confidence-calibrated decoding;
+   - richer temporal/context representation;
+   - architectural changes only where diagnostics show representation capacity is the bottleneck.
+
+6. **Build a V3 synthetic verification harness before real-data authorization.**
+   - Require deterministic CPU tests for:
+     - revised loss/sampling behavior;
+     - resume equivalence if resumable training is retained;
+     - exposure/counter integrity;
+     - checkpoint-selection integrity;
+     - fail-closed guards for P3, customer delivery and paid compute.
+   - Preserve the existing branch regression suite.
+
+7. **Freeze a V3 design receipt before requesting another real-data run.**
+   - Record exact candidate ID, source/runtime identities, seed, sampling, loss, sequence length, batch/microbatch, epoch/step budget, checkpoint cadence, resume boundaries, development population and unchanged evaluator thresholds unless a wholly new evaluation protocol is separately justified before seeing new results.
+   - No real P1/P2 optimizer run is authorized by this checkpoint.
+
+8. **Only after V3 design + synthetic verification are frozen may a new P1/P2 authorization be requested.**
+   - Any future real-data run requires a new explicit user authorization.
+   - P3 remains separately sealed even if a later V3 development run passes.
+   - No paid compute, published-checkpoint initialization, threshold rescue, allowlist mutation, `main`/Production mutation or customer delivery.
+
+### Immediate next task
+
+Implement the **V3 development error-decomposition tooling and tests** against the already-completed P1/P2 V2 evidence, starting with exact onset/string/fret confusion and false-positive/false-negative accounting. Commit the tooling, tests and resulting diagnostic receipt to `astra-work`, then update this checkpoint again before proposing any V3 training architecture.
+
+This block is the authoritative next action unless a later checkpoint explicitly supersedes it.
