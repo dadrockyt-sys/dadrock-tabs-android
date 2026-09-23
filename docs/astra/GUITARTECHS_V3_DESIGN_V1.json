@@ -1,0 +1,126 @@
+{
+  "schema": "astra-guitar-techs-v3-design-v1",
+  "date": "2026-09-22",
+  "candidateId": "astra_guitartechs_tabcnn_v3_objective_decoder",
+  "diagnosisBasis": {
+    "receipt": "docs/astra/GUITARTECHS_V3_DIAGNOSIS_RESULT_V1.json",
+    "sourceRunId": 35801706358,
+    "rawDiagnosticSha256": "edf8607c99bebbc19381c602fd06ab8cfcbb647aff0af665b2b0aa81948989b7",
+    "measuredTargets": {
+      "predictedToReferenceRunRatio": 2.176270772735594,
+      "eventFalsePositiveToFalseNegativeRatio": 2.7809978441638434,
+      "onsetOnlyF1": 0.41641958310652877,
+      "exactEventF1": 0.2138003906375076,
+      "meanStartAbsoluteErrorMs": 18.52811333603109,
+      "meanEndAbsoluteErrorMs": 839.664328999637,
+      "meanDurationAbsoluteErrorMs": 852.5672403588728,
+      "pitchCorrectWrongString": 8041,
+      "bothStringAndFretWrong": 11661
+    }
+  },
+  "source": {
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "v2BaseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "v2ResumableTrainerGitBlob": "86684be13ca6880a89d47bccd0d2b90c22b378fb",
+    "v2SamplingGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "v3ObjectiveDecoderGitBlob": "12b77028d0d41407e2d4440824147f1aaacc269e",
+    "v3ComponentTestsGitBlob": "18a3c0ffd03366b5c11aa9cac1bb280e9d934dc0",
+    "v3SyntheticHarnessGitBlob": "36cc9197ae274ab0eee12892813f487427592692",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "v2CpuBudgetReceiptSha256": "8705df7cde4456dc17b5973d84404981387a322ea195a3f995a72ae6b236b430"
+  },
+  "architecture": {
+    "family": "TabCNN",
+    "changedFromV2": false,
+    "reason": "The frozen diagnosis identifies objective/identity/temporal-decoding failures but does not establish an architecture-capacity bottleneck.",
+    "randomInitializationOnly": true,
+    "publishedCheckpointInitialization": false
+  },
+  "trainingBudget": {
+    "seed": 20260921,
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1.0,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "resumeBoundariesEpochs": [400, 800, 1000],
+    "performanceBalancedEpoch": true,
+    "allTrainingPerformancesOncePerEpoch": true,
+    "deterministicAcceptedViewRotation": true,
+    "deterministicSegmentStart": true,
+    "dropLast": false,
+    "unchangedFromV2": true
+  },
+  "objective": {
+    "base": "per-string categorical cross-entropy over 20 fret classes plus silence, ignoring MASK",
+    "activeWeight": 1.2,
+    "silenceWeight": 1.0,
+    "contentWeighting": {
+      "method": "bounded inverse-square-root weighting from training performance-group counts",
+      "minimum": 0.75,
+      "maximum": 1.5,
+      "requiredClasses": ["chords", "scales", "singlenotes", "PalmMute"],
+      "purpose": "prevent sparse primary classes from receiving vanishing supervision without changing epoch performance exposure"
+    },
+    "continuityRegularizer": {
+      "lambda": 0.1,
+      "scope": "adjacent valid frames whose reference state is unchanged",
+      "measure": "mean squared difference between adjacent class-probability vectors",
+      "purpose": "penalize unstable within-run probability swings without smoothing across true reference state boundaries"
+    },
+    "exactStringPitchEquivalentMargin": {
+      "lambda": 0.25,
+      "margin": 0.15,
+      "tuningOpenMidi": [40, 45, 50, 55, 59, 64],
+      "purpose": "force the correct string/fret probability above alternative playable string/fret positions representing the same pitch"
+    }
+  },
+  "decoder": {
+    "type": "confidence hysteresis plus bounded same-fret gap merge and singleton suppression",
+    "startConfidence": 0.55,
+    "continueConfidence": 0.35,
+    "continueVsSilenceRatio": 0.8,
+    "maxSameFretSilenceGapFrames": 2,
+    "minimumActiveRunFrames": 2,
+    "hopSeconds": 0.02,
+    "intent": [
+      "preserve strong onset starts",
+      "bridge <=40 ms confidence dips inside otherwise stable same-fret runs",
+      "remove isolated <40 ms active bursts",
+      "reduce event fragmentation without changing reference acceptance thresholds"
+    ]
+  },
+  "syntheticVerificationRequirements": [
+    "bounded content balancing gives sparse classes nonzero stronger supervision while remaining within frozen caps",
+    "missed active frames receive stronger loss than under unweighted V2-style supervision",
+    "pitch-equivalent wrong-string alternatives receive a positive margin penalty",
+    "stable reference runs penalize fragmenting probability swings",
+    "decoder merges a <=2-frame same-fret gap and removes a one-frame false event while preserving the true onset",
+    "V3 objective produces finite gradients on exact pinned TabCNN runtime",
+    "uninterrupted and serialized-resumed TabCNN synthetic optimization are bit-exact for model, optimizer and Python/NumPy/Torch RNG state",
+    "P3/customer/paid-compute/main guards fail closed"
+  ],
+  "realEvaluationProtocol": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": ["P1->P2", "P2->P1"],
+    "developmentMetricThresholdsChanged": false,
+    "alignmentAllowlistChanged": false,
+    "p3Use": false
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "nextGate": "Dedicated V3 synthetic verification workflow must pass with exact source/runtime identities before any request for real P1/P2 authorization."
+}
