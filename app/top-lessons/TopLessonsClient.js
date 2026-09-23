@@ -6,6 +6,7 @@ import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, Ex
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
+import { getStairway2FastUrl } from '@/lib/stairway2fast';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
 
@@ -80,10 +81,10 @@ const t = getSubPageTranslation(lang);
   const [pendingVideoTitle, setPendingVideoTitle] = useState('');
   const adDuration = adSettings?.ad_duration || 5;
 
-  // Handle video click - show ad first, then open YouTube
-  const handleVideoClick = (e, youtubeUrl, title) => {
+  // Handle video click - show ad first, then open Stairway2Fast.
+  const handleVideoClick = (e, stairwayUrl, title) => {
     e.preventDefault();
-    setPendingVideoUrl(youtubeUrl);
+    setPendingVideoUrl(stairwayUrl);
     setPendingVideoTitle(title);
     setAdCountdown(adDuration);
     setShowAd(true);
@@ -97,7 +98,7 @@ const t = getSubPageTranslation(lang);
     } else if (adCountdown === 0 && showAd) {
       setShowAd(false);
       if (pendingVideoUrl) {
-        window.open(pendingVideoUrl, '_blank');
+        window.location.href = pendingVideoUrl;
         setPendingVideoUrl(null);
         setPendingVideoTitle('');
       }
@@ -206,7 +207,7 @@ const t = getSubPageTranslation(lang);
                 onClick={() => {
                   setShowAd(false);
                   if (pendingVideoUrl) {
-                    window.open(pendingVideoUrl, '_blank');
+                    window.location.href = pendingVideoUrl;
                     setPendingVideoUrl(null);
                     setPendingVideoTitle('');
                   }
@@ -346,6 +347,7 @@ const t = getSubPageTranslation(lang);
               const artistSlug = artistToSlug(video.artist);
               const cleanArtist = cleanArtistName(video.artist);
               const youtubeUrl = `https://www.youtube.com/watch?v=${video.videoId}`;
+              const stairwayUrl = getStairway2FastUrl(video.videoId) || youtubeUrl;
               
               // Medal colors for top 3
               const medalColors = ['text-amber-400', 'text-zinc-300', 'text-orange-600'];
@@ -372,8 +374,9 @@ const t = getSubPageTranslation(lang);
 
                   {/* Thumbnail */}
                   <a 
-                    href={youtubeUrl}
-                    onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                    href={stairwayUrl}
+                    rel="sponsored noopener noreferrer"
+                    onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                     className="flex-shrink-0 w-full md:w-72 aspect-video rounded-xl overflow-hidden bg-zinc-800 relative group/thumb cursor-pointer"
                   >
                     {video.thumbnail ? (
@@ -398,8 +401,9 @@ const t = getSubPageTranslation(lang);
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <a 
-                          href={youtubeUrl}
-                          onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                          href={stairwayUrl}
+                          rel="sponsored noopener noreferrer"
+                          onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                           className="block cursor-pointer"
                         >
                           <h2 className="text-2xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">
@@ -442,8 +446,9 @@ const t = getSubPageTranslation(lang);
                     {/* Watch Button */}
                     <div className="mt-4">
                       <a
-                        href={youtubeUrl}
-                        onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                        href={stairwayUrl}
+                        rel="sponsored noopener noreferrer"
+                        onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                         className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors cursor-pointer"
                       >
                         <Play className="w-4 h-4" fill="currentColor" />
@@ -483,7 +488,7 @@ const t = getSubPageTranslation(lang);
           <a
             href={YOUTUBE_CHANNEL}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="sponsored noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-500 rounded-full text-xl font-bold transition-all hover:scale-105"
           >
             <Youtube className="w-7 h-7" />

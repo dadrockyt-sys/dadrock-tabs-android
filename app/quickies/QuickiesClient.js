@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Youtube, Music, Home, Zap, ShoppingBag } from 'lucide-
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
+import { getStairway2FastUrl } from '@/lib/stairway2fast';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 const QUICKIES_PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLEneI6e1FjBVRrw6FfSBK32RiT8N43v0H";
@@ -42,11 +43,14 @@ const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh'
       const timer = setTimeout(() => setAdCountdown(adCountdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (adCountdown === 0 && showAd) {
+      const stairwayUrl = getStairway2FastUrl(pendingVideo);
       setShowAd(false);
-      setSelectedVideo(pendingVideo);
       setPendingVideo(null);
+      if (stairwayUrl) {
+        window.location.href = stairwayUrl;
+      }
     }
-  }, [showAd, adCountdown]);
+  }, [showAd, adCountdown, pendingVideo]);
 
   // Get YouTube embed URL
   const getEmbedUrl = (video) => {
@@ -119,9 +123,12 @@ const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh'
             </div>
             <button
               onClick={() => {
+                const stairwayUrl = getStairway2FastUrl(pendingVideo);
                 setShowAd(false);
-                setSelectedVideo(pendingVideo);
                 setPendingVideo(null);
+                if (stairwayUrl) {
+                  window.location.href = stairwayUrl;
+                }
               }}
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
