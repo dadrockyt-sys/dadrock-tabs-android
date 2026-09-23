@@ -1681,3 +1681,60 @@ This block supersedes the active diagnosis-run instructions and is the authorita
    - customer delivery.
 
 This block supersedes the V3 offline-design instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 P1/P2 real training authorized + active launch — 2026-09-22
+
+- User explicitly authorized the immediately preceding frozen V3 P1/P2 development-run gate with: **"I authorize"**.
+- Authorization is scoped only to candidate `astra_guitartechs_tabcnn_v3_objective_decoder` exactly as frozen in the preceding checkpoint.
+- New authorization receipt:
+  - `docs/astra/GUITARTECHS_V3_REAL_TRAINING_AUTHORIZATION_V1.json`;
+  - Git blob `133da867fa98b432fa3f7f2248c52cec330181ef`.
+- V3 resumable trainer:
+  - `astra_backend/guitartechs_training_v3/train_v3_resumable.py`;
+  - Git blob `464293f9a7c8fdfe1feb76460c5c370900fc1d53`.
+- The trainer preserves the frozen V2 orchestration mechanics but uses the frozen V3 objective and confidence/hysteresis decoder for checkpoint and full-fold evaluation.
+- V3 serialized segment workflow:
+  - `.github/workflows/guitar-techs-v3-resumable-segment.yml`;
+  - Git blob `0565748a7ecf8820023bdec5ba0228ca9d911bbf`.
+- V3 controller workflow:
+  - `.github/workflows/guitar-techs-v3-resumable-real-training.yml`;
+  - Git blob `a0624437940d4f40dd75ddf6234646513cb7c18c`.
+- One-time launch marker:
+  - `docs/astra/GUITARTECHS_V3_RESUMABLE_LAUNCH_V1.json`;
+  - launch commit `d3daf167fad3a04c91d34fe243b371f6c2b9743b`.
+- Single authoritative V3 real-training run: **`35808420395`**.
+- Fixed execution order:
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000 + full P2 validation;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000 + full P1 validation.
+- Controller preflight authorization/source-identity verification: **PASS**.
+- Current state at this checkpoint save: exact frozen runtime installation is in progress. P1/P2 media has not yet been accessed by run `35808420395`.
+- No duplicate V3 real-training run may be launched.
+- Invariants remain:
+  - P3 sealed and unauthorized;
+  - public GitHub-hosted CPU only;
+  - random initialization only;
+  - frozen 256-path P1/P2 population unchanged;
+  - frozen development thresholds unchanged;
+  - alignment allowlist unchanged;
+  - no paid compute;
+  - no `main`/Production mutation;
+  - no customer delivery.
+
+### EXPLICIT NEXT STEP TO RESUME — active V3 run 35808420395
+
+1. Inspect run `35808420395` first; **do not launch another V3 run**.
+2. Require its complete no-media preflight to pass: exact runtime, exact pinned TabCNN source, V3 component/synthetic checks and V3 resumable equality.
+3. Only after preflight passes may P1 0->400 reconstruct/access the exact frozen P1/P2 development population and train.
+4. At each 400/800 boundary, require the emitted V3 resume receipt and exact resume-state SHA-256 before loading the next segment.
+5. Intermediate resume artifacts are orchestration state only, not admissible model-quality evidence.
+6. Only epoch-1000 segments may emit final fold model/result artifacts.
+7. After both final fold artifacts exist, perform V3 structural admission first, then the unchanged frozen development metric evaluation.
+8. If either fold fails, freeze V3 development FAIL and diagnose P1/P2 only; no threshold rescue.
+9. If both folds pass, record only **eligible for separate P3 authorization**. P3 remains sealed until a separate explicit authorization.
+
+This block supersedes the V3 authorization-gate instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
