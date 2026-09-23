@@ -1,0 +1,141 @@
+{
+  "schema": "astra-guitar-techs-v3-diagnosis-result-v1",
+  "date": "2026-09-22",
+  "diagnosisRun": {
+    "runId": 35801706358,
+    "jobId": 106993298624,
+    "conclusion": "success",
+    "headSha": "43709e19f4b876c020ee4418f2591affb90421dc"
+  },
+  "sourceV2RunId": 35688531407,
+  "rawDiagnosticArtifact": {
+    "name": "guitar-techs-v2-error-decomposition-v1",
+    "artifactId": 10727022388,
+    "jsonFile": "GUITARTECHS_V2_ERROR_DECOMPOSITION_V1.json",
+    "jsonSha256": "edf8607c99bebbc19381c602fd06ab8cfcbb647aff0af665b2b0aa81948989b7"
+  },
+  "frozenMetricReproduction": {
+    "p1-train-p2-validate": {
+      "passed": true,
+      "selectedCheckpointEpoch": 720,
+      "precision": 0.1987482187302651,
+      "recall": 0.3552118707577178,
+      "f1": 0.23954169942820763,
+      "completeness": 0.25315288464686764,
+      "frameAccuracy": 0.31054568461147086
+    },
+    "p2-train-p1-validate": {
+      "passed": true,
+      "selectedCheckpointEpoch": 840,
+      "precision": 0.1509619504929262,
+      "recall": 0.317508504795817,
+      "f1": 0.1928746367237972,
+      "completeness": 0.17676744090611363,
+      "frameAccuracy": 0.2513095863335899
+    }
+  },
+  "aggregateErrorDecomposition": {
+    "captureCount": 256,
+    "eventMicro": {
+      "referenceEvents": 49163,
+      "predictedEvents": 106992,
+      "exactTruePositive": 16693,
+      "falsePositive": 90299,
+      "falseNegative": 32470,
+      "precision": 0.15602101091670406,
+      "recall": 0.33954396599068404,
+      "f1": 0.2138003906375076,
+      "falsePositiveToFalseNegativeRatio": 2.7809978441638434,
+      "onsetOnlyMatched": 32513,
+      "onsetOnlyPrecision": 0.3038825332735158,
+      "onsetOnlyRecall": 0.661330675508004,
+      "onsetOnlyF1": 0.41641958310652877
+    },
+    "onsetLabelDecomposition": {
+      "exactStringFret": 16693,
+      "fretWrongSameString": 3041,
+      "stringWrongSameFret": 634,
+      "bothStringAndFretWrong": 11661,
+      "pitchCorrectWrongString": 8041,
+      "stagedMatched": 32029,
+      "stagedMatchCoverageVsOnsetMaximum": 0.9851136468489528,
+      "unmatchedPredicted": 74963,
+      "unmatchedReference": 17134
+    },
+    "frameActivity": {
+      "valid": 11536294,
+      "referenceActive": 3623385,
+      "predictedActive": 2545696,
+      "exactActive": 1474195,
+      "wrongFretWhileActive": 649974,
+      "activityFalsePositive": 421527,
+      "activityFalseNegative": 1499216,
+      "activeExactPrecision": 0.5790931045969354,
+      "activeExactRecall": 0.40685574400733016
+    },
+    "temporalRun": {
+      "exactMatchedPairs": 16693,
+      "meanStartAbsoluteErrorMs": 18.52811333603109,
+      "meanEndAbsoluteErrorMs": 839.664328999637,
+      "meanDurationAbsoluteErrorMs": 852.5672403588728,
+      "meanReferenceOverlapFraction": 0.6358393481804757,
+      "fragmentedReferenceRuns": 10490,
+      "mergedPredictedRuns": 138,
+      "predictedToReferenceRunRatio": 2.176270772735594,
+      "exactPairsEndErrorOverOneFrame": 11283
+    }
+  },
+  "contentClassDiagnostics": {
+    "chords": {
+      "eventF1": 0.15207349245576166,
+      "onsetOnlyF1": 0.3435626322978905,
+      "falsePositiveToFalseNegativeRatio": 4.491052738199744
+    },
+    "scales": {
+      "eventF1": 0.3236682400539447,
+      "onsetOnlyF1": 0.5453738865031764,
+      "falsePositiveToFalseNegativeRatio": 1.278046739585201
+    },
+    "singlenotes": {
+      "eventF1": 0.10283806343906512,
+      "onsetOnlyF1": 0.26911519198664435,
+      "falsePositiveToFalseNegativeRatio": 3.6730434782608694
+    },
+    "PalmMute": {
+      "eventF1": 0.28066298342541435,
+      "onsetOnlyF1": 0.594475138121547,
+      "falsePositiveToFalseNegativeRatio": 0.8338028169014085
+    }
+  },
+  "topStringConfusionsRefToPred": [
+    {"referenceString": 3, "predictedString": 4, "count": 1265},
+    {"referenceString": 2, "predictedString": 3, "count": 1024},
+    {"referenceString": 4, "predictedString": 5, "count": 941},
+    {"referenceString": 0, "predictedString": 1, "count": 864},
+    {"referenceString": 3, "predictedString": 2, "count": 822}
+  ],
+  "diagnosticInterpretation": [
+    "Onset-only F1 is materially higher than exact onset+string+fret F1, so timing detection is not the sole bottleneck.",
+    "The model emits about 2.18 predicted runs per reference run and 2.78 event false positives per false negative, showing substantial event over-generation/fragmentation.",
+    "String/fret identity is a major failure source: 11661 staged onset matches have both string and fret wrong, and 8041 are pitch-correct but assigned to the wrong string.",
+    "Start timing is comparatively tight at about 18.5 ms mean absolute error, while end/duration errors are about 0.84-0.85 seconds, showing a strong temporal-run termination/segmentation problem.",
+    "Chords and singlenotes are the weakest event classes; scales are strongest, while PalmMute is sparse but not the dominant source of aggregate failure.",
+    "Both performer-disjoint folds reproduce the frozen failure pattern, so the evidence does not support treating this as a single-performer anomaly."
+  ],
+  "guards": {
+    "optimizerStepsExecuted": 0,
+    "modelWeightsModified": false,
+    "thresholdsRetuned": false,
+    "alignmentAllowlistChanged": false,
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false
+  },
+  "decision": {
+    "v2VerdictUnchanged": "FAIL",
+    "v3RealTrainingAuthorized": false,
+    "p3Opened": false,
+    "nextGate": "Freeze V3 design and deterministic synthetic verification before requesting any new P1/P2 optimizer authorization."
+  }
+}
