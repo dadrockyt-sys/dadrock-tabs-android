@@ -11,6 +11,7 @@ import SearchBar from '@/components/SearchBar';
 import ProgressTracker from '@/components/ProgressTracker';
 import Comments from '@/components/Comments';
 import ShareCard from '@/components/ShareCard';
+import { getStairway2FastUrl } from '@/lib/stairway2fast';
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
 
@@ -51,6 +52,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   const adDuration = adSettings?.ad_duration || 5;
 
   const youtubeUrl = `https://www.youtube.com/watch?v=${song.videoId}`;
+  const stairwayUrl = getStairway2FastUrl(song.videoId);
   const embedUrl = `https://www.youtube.com/embed/${song.videoId}?autoplay=1`;
   const artistSlug = artistToSlug(song.artist);
 
@@ -69,9 +71,11 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
       return () => clearTimeout(timer);
     } else if (adCountdown === 0 && showAd) {
       setShowAd(false);
-      setVideoPlaying(true);
+      if (stairwayUrl) {
+        window.location.href = stairwayUrl;
+      }
     }
-  }, [showAd, adCountdown]);
+  }, [showAd, adCountdown, stairwayUrl]);
 
   // Interstitial Ad Screen
   if (showAd) {
@@ -134,7 +138,12 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               />
             </div>
             <button
-              onClick={() => { setShowAd(false); setVideoPlaying(true); }}
+              onClick={() => {
+                setShowAd(false);
+                if (stairwayUrl) {
+                  window.location.href = stairwayUrl;
+                }
+              }}
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
             >
@@ -342,8 +351,8 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
                 if (adSettings?.ad_link) {
                   setAdCountdown(adSettings?.ad_duration || 5);
                   setShowAd(true);
-                } else {
-                  setVideoPlaying(true);
+                } else if (stairwayUrl) {
+                  window.location.href = stairwayUrl;
                 }
               }}
               className="w-full aspect-video rounded-xl overflow-hidden border border-zinc-800 bg-black relative group cursor-pointer"
@@ -372,9 +381,16 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         {/* Open in YouTube */}
         <div className="flex justify-center gap-3 mb-12">
           <a
-            href={youtubeUrl}
+            href={stairwayUrl || youtubeUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="sponsored noopener noreferrer"
+            onClick={(e) => {
+              if (stairwayUrl && adSettings?.ad_link) {
+                e.preventDefault();
+                setAdCountdown(adSettings?.ad_duration || 5);
+                setShowAd(true);
+              }
+            }}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
           >
             <Youtube className="w-4 h-4 text-red-500" />
