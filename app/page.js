@@ -9,6 +9,7 @@ import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 import { homepageTranslations } from '@/lib/homepageTranslations';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import GamificationPanel from '@/components/Gamification';
+import { getStairway2FastUrl } from '@/lib/stairway2fast';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const DADROCK_TEXT_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/2vno1305_Picsart_26-02-16_06-05-32-255%281%29.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/q10t8nk7_Picsart_26-02-17_18-51-12-061.png";
@@ -1507,9 +1508,13 @@ export default function App({ initialLang = 'en' }) {
       }, 1000);
       return () => clearTimeout(timer);
     } else if (currentPage === 'watch' && adCountdown === 0 && showAd) {
+      const stairwayUrl = getStairway2FastUrl(selectedVideo);
       setShowAd(false);
+      if (stairwayUrl) {
+        window.location.href = stairwayUrl;
+      }
     }
-  }, [currentPage, showAd, adCountdown]);
+  }, [currentPage, showAd, adCountdown, selectedVideo]);
 
   useEffect(() => {
     if (currentPage === 'admin' && isAuthenticated) {
@@ -2361,7 +2366,13 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 />
               </div>
               <button
-                onClick={() => setShowAd(false)}
+                onClick={() => {
+                  const stairwayUrl = getStairway2FastUrl(selectedVideo);
+                  setShowAd(false);
+                  if (stairwayUrl) {
+                    window.location.href = stairwayUrl;
+                  }
+                }}
                 className="mt-6 text-zinc-500 hover:text-white text-sm underline"
                 disabled={adCountdown > 0}
               >
@@ -2457,8 +2468,10 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           <div className="flex justify-center gap-3 mb-6">
             <button
               onClick={() => {
-                // Open in YouTube app (better fullscreen experience on mobile)
-                window.open(selectedVideo.youtube_url, '_blank');
+                const stairwayUrl = getStairway2FastUrl(selectedVideo);
+                if (stairwayUrl) {
+                  window.location.href = stairwayUrl;
+                }
               }}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
             >
