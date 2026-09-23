@@ -375,6 +375,7 @@ const t = getSubPageTranslation(lang);
                   {/* Thumbnail */}
                   <a 
                     href={stairwayUrl}
+                    rel="sponsored noopener noreferrer"
                     onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                     className="flex-shrink-0 w-full md:w-72 aspect-video rounded-xl overflow-hidden bg-zinc-800 relative group/thumb cursor-pointer"
                   >
@@ -401,6 +402,7 @@ const t = getSubPageTranslation(lang);
                       <div>
                         <a 
                           href={stairwayUrl}
+                          rel="sponsored noopener noreferrer"
                           onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                           className="block cursor-pointer"
                         >
@@ -445,6 +447,7 @@ const t = getSubPageTranslation(lang);
                     <div className="mt-4">
                       <a
                         href={stairwayUrl}
+                        rel="sponsored noopener noreferrer"
                         onClick={(e) => handleVideoClick(e, stairwayUrl, video.title)}
                         className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors cursor-pointer"
                       >
