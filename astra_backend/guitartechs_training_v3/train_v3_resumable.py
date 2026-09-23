@@ -450,7 +450,7 @@ def train_segment(args):
         }
         state_sha = _atomic_torch_save(payload, args.resume_out)
         receipt = _write_resume_receipt(args.resume_receipt_out, payload, state_sha)
-        print("V2_RESUME_STATE=" + json.dumps(receipt, sort_keys=True))
+        print("V3_RESUME_STATE=" + json.dumps(receipt, sort_keys=True))
         return
 
     if len(checkpoint_summaries) != base.CHECKPOINTS:
@@ -460,7 +460,7 @@ def train_segment(args):
 
     selected = best_qualified or best_any
     if selected is None:
-        raise RuntimeError("no V2 checkpoint evaluated")
+        raise RuntimeError("no V3 checkpoint evaluated")
     _, selected_record, selected_state = selected
     model.load_state_dict(selected_state)
 
