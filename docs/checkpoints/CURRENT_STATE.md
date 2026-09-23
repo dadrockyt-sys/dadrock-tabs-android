@@ -1738,3 +1738,31 @@ This block supersedes the V3 offline-design instructions and is the authoritativ
 9. If both folds pass, record only **eligible for separate P3 authorization**. P3 remains sealed until a separate explicit authorization.
 
 This block supersedes the V3 authorization-gate instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 launch preflight passed; P1 0->400 active — 2026-09-22
+
+- Authoritative V3 real-training run remains **`35808420395`**; no duplicate run exists or is authorized.
+- Controller no-media preflight job `107014273846`: **PASS**.
+  - authorization + launch marker identities: PASS;
+  - frozen V3 design/objective/trainer/segment identities: PASS;
+  - exact runtime installation: PASS;
+  - exact pinned TabCNN source acquisition: PASS;
+  - V3 component tests: PASS;
+  - V3 synthetic objective/decoder smoke: PASS;
+  - V3 resumable model/optimizer/RNG equality smoke: PASS.
+- No P1/P2 media was accessed by the controller preflight.
+- First serialized real segment job `107014479747` (`P1 0->400`) has started.
+- At this save point its checkout has completed and runner setup is in progress; its own mandatory authorization/identity gate still precedes media preparation.
+- P3 remains sealed and unauthorized.
+
+### EXPLICIT NEXT STEP TO RESUME — run 35808420395 / P1 0->400
+
+1. Inspect run `35808420395` and job `107014479747`; do not launch another run.
+2. Require the segment's own authorization/identity and frozen-segment validation steps to pass before media preparation.
+3. Allow only the fixed P1 0->400 segment to proceed.
+4. On completion require artifact `guitar-techs-v3-p1-resume-e400`, verify its `astra-guitar-techs-v3-resume-receipt-v1` receipt and exact resume-state SHA-256 before P1 400->800 loads it.
+5. Continue only through the same serialized controller run.
+6. P3 remains sealed regardless of V3 development outcome until separately authorized.
+
+This block supersedes the immediately preceding in-progress preflight status and is the authoritative next action unless a later checkpoint explicitly supersedes it.
