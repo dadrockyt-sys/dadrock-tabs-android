@@ -55,6 +55,7 @@ jobs:
             test_repeated_phrase_confidence.py \
             test_refine_bend_glide_continuity.py \
             test_recover_recurring_raw_onsets.py \
-            test_guitartechs_v2_sampling.py 2>&1 | tee /tmp/astra-evaluation-test-output.txt
+            test_guitartechs_v2_sampling.py \
+            test_guitartechs_v2_diagnostics.py 2>&1 | tee /tmp/astra-evaluation-test-output.txt
           node test_alignment_review.cjs 2>&1 | tee -a /tmp/astra-evaluation-test-output.txt
           echo "ASTRA_EVALUATION_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-evaluation-test-output.txt | awk '{print $1}')"
