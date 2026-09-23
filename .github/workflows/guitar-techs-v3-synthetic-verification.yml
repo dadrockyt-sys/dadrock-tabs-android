@@ -40,7 +40,7 @@ jobs:
           test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
           test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
           python - <<'PY'
-          import json
+          import json, subprocess
           x=json.load(open('docs/astra/GUITARTECHS_V3_DESIGN_V1.json'))
           assert x['schema'] == 'astra-guitar-techs-v3-design-v1'
           assert x['candidateId'] == 'astra_guitartechs_tabcnn_v3_objective_decoder'
@@ -58,6 +58,26 @@ jobs:
               'mainOrProductionMutationAuthorized': False,
               'customerDeliveryEligible': False,
           }
+          launch=json.load(open('docs/astra/GUITARTECHS_V3_SYNTHETIC_LAUNCH_V1.json'))
+          assert launch['schema'] == 'astra-guitar-techs-v3-synthetic-launch-v1'
+          assert launch['candidateId'] == x['candidateId']
+          assert launch['guards'] == {
+              'realP1P2TrainingAuthorized': False,
+              'optimizerStepsAuthorized': 0,
+              'p3Opened': False,
+              'p1p2MediaAccessAuthorized': False,
+              'paidComputeAuthorized': False,
+              'customerDeliveryEligible': False,
+          }
+          for path,key in (
+              ('docs/astra/GUITARTECHS_V3_DESIGN_V1.json','designGitBlob'),
+              ('astra_backend/guitartechs_training_v3/objective_decoder.py','objectiveDecoderGitBlob'),
+              ('astra_backend/evaluation/test_guitartechs_v3_components.py','componentTestsGitBlob'),
+              ('astra_backend/guitartechs_training_v3/verify_synthetic_v3.py','syntheticHarnessGitBlob'),
+              ('.github/workflows/guitar-techs-v3-synthetic-verification.yml','workflowGitBlob'),
+          ):
+              actual=subprocess.check_output(['git','hash-object',path], text=True).strip()
+              assert launch['sourceIdentities'][key] == actual, (path, actual, launch['sourceIdentities'][key])
           PY
           echo "REAL_P1P2_OPTIMIZER_STEPS_AUTHORIZED=0"
           echo "GUITAR_TECHS_P3_OPENED=false"
