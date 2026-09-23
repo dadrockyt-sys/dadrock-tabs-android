@@ -1,0 +1,37 @@
+{
+  "schema": "astra-guitar-techs-v3-resumable-launch-v1",
+  "date": "2026-09-22",
+  "candidateId": "astra_guitartechs_tabcnn_v3_objective_decoder",
+  "singleLaunch": true,
+  "authorization": {
+    "path": "docs/astra/GUITARTECHS_V3_REAL_TRAINING_AUTHORIZATION_V1.json",
+    "gitBlob": "133da867fa98b432fa3f7f2248c52cec330181ef"
+  },
+  "sourceIdentities": {
+    "authorizationGitBlob": "133da867fa98b432fa3f7f2248c52cec330181ef",
+    "designGitBlob": "5074c691c5ec97625849d364a764c73694a86ce5",
+    "syntheticVerificationGitBlob": "e3cc2a9b15c9ee9be779d5e45a547efcae543087",
+    "objectiveDecoderGitBlob": "87e127c87851ea9a43b9a9e6240f1a7c4624424b",
+    "trainerGitBlob": "464293f9a7c8fdfe1feb76460c5c370900fc1d53",
+    "segmentWorkflowGitBlob": "0565748a7ecf8820023bdec5ba0228ca9d911bbf",
+    "controllerWorkflowGitBlob": "a0624437940d4f40dd75ddf6234646513cb7c18c"
+  },
+  "executionOrder": [
+    "P1 0->400",
+    "P1 400->800",
+    "P1 800->1000 + full P2 validation",
+    "P2 0->400",
+    "P2 400->800",
+    "P2 800->1000 + full P1 validation"
+  ],
+  "guards": {
+    "p3Opened": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
