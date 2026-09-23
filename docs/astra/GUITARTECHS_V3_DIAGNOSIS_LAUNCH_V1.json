@@ -1,0 +1,30 @@
+{
+  "schema": "astra-guitar-techs-v3-diagnosis-launch-v1",
+  "date": "2026-09-22",
+  "sourceRunId": 35688531407,
+  "scope": "P1/P2 frozen V2 development evidence diagnosis only",
+  "purpose": "Reconstruct the frozen P1/P2 prepared development population and decompose the already-frozen V2 model errors without training or verdict changes.",
+  "sourceIdentities": {
+    "diagnosticsGitBlob": "500fa8f9ead07c6d8b444c7ed8ed04e23494e97e",
+    "runnerGitBlob": "cf5348104f2686ad5b16e8e8cdbfd3b9dfedf343",
+    "workflowGitBlob": "9829f50d2f2076aa17a65e428830748992aa942b",
+    "developmentResultGitBlob": "a4e000759d7d5545e1dd9c776237db0a5d337cc3",
+    "realTrainingGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254"
+  },
+  "guards": {
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "invariants": [
+    "V2 development FAIL remains frozen.",
+    "Only P1/P2 development material may be reconstructed.",
+    "Only the frozen V2 final fold models from run 35688531407 may be evaluated.",
+    "No optimizer or model-weight update is permitted.",
+    "P3 remains sealed."
+  ]
+}
