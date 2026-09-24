@@ -1,0 +1,38 @@
+{
+  "schema": "astra-guitar-techs-v4-resumable-launch-v1",
+  "date": "2026-09-24",
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "singleLaunch": true,
+  "authorization": {
+    "path": "docs/astra/GUITARTECHS_V4_REAL_TRAINING_AUTHORIZATION_V1.json",
+    "gitBlob": "427ca9fb3ccd7a406b2935ae75216d7591816efe"
+  },
+  "sourceIdentities": {
+    "authorizationGitBlob": "427ca9fb3ccd7a406b2935ae75216d7591816efe",
+    "designGitBlob": "376ece1578d9adfb998600e85cfbb6b39523951f",
+    "syntheticVerificationGitBlob": "892ce3c88d68accef4c13aea6220c6ffd1cd22a5",
+    "objectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "trainerGitBlob": "33892a222825a2713d3955cc34139b730f4adc3d",
+    "segmentWorkflowGitBlob": "d017f2c322a46cfefa6b9e939394c40142c6fb8a",
+    "controllerWorkflowGitBlob": "1b30139da602a2a11bfdebf2c53d856141a833f8",
+    "v3ErrorDecompositionResultGitBlob": "87ec9fb53fd025bd2d5c2b00a15b9bcd035b4433"
+  },
+  "executionOrder": [
+    "P1 0->400",
+    "P1 400->800",
+    "P1 800->1000 + full P2 validation",
+    "P2 0->400",
+    "P2 400->800",
+    "P2 800->1000 + full P1 validation"
+  ],
+  "guards": {
+    "p3Opened": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
