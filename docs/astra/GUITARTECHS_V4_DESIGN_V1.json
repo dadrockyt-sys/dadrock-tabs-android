@@ -1,0 +1,156 @@
+{
+  "schema": "astra-guitar-techs-v4-design-v1",
+  "date": "2026-09-24",
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "diagnosisBasis": {
+    "receipt": "docs/astra/GUITARTECHS_V3_ERROR_DECOMPOSITION_RESULT_V1.json",
+    "gitBlob": "87ec9fb53fd025bd2d5c2b00a15b9bcd035b4433",
+    "sourceRunId": 35955722006,
+    "rawV3DiagnosticSha256": "542ceafa228022d80efccf642c393ebb57e131958f9ebff488cfc62af4776297",
+    "measuredTargets": {
+      "v3PredictedToReferenceRunRatio": 1.3602912759595631,
+      "v3FragmentedReferenceRuns": 4219,
+      "v3MeanEndAbsoluteErrorMs": 588.1416231145585,
+      "v3EventMicroF1": 0.25108799627711376,
+      "v3OnsetOnlyF1": 0.5065021242858004,
+      "v3OnsetOnlyRecall": 0.5977462726033806,
+      "v3ExactTruePositive": 14568,
+      "v3FalseNegative": 34595,
+      "v3PitchCorrectWrongString": 8695,
+      "v3PredictedActiveFrames": 2547272,
+      "v3ExactActiveFrames": 1445215
+    },
+    "preservedSuccesses": [
+      "V3 reduced predicted/reference run ratio from 2.176 to 1.360.",
+      "V3 reduced fragmented reference runs by about 60%.",
+      "V3 reduced mean end/duration absolute error by about 30%.",
+      "V3 improved event micro F1 and onset-only F1."
+    ],
+    "targetedRegressions": [
+      "V3 exact true positives fell 12.7% aggregate.",
+      "V3 onset-only recall fell, dominated by P2->P1.",
+      "V3 activity false negatives and false positives both increased while total predicted active frames stayed nearly flat.",
+      "Pitch-correct wrong-string onset matches increased aggregate-wide."
+    ]
+  },
+  "source": {
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "v2BaseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "v2SamplingGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "v3ObjectiveDecoderGitBlob": "87e127c87851ea9a43b9a9e6240f1a7c4624424b",
+    "v4ObjectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "v4ComponentTestsGitBlob": "b494fa2ef8cae8cece9a5e9a98fe308e86c6ed64",
+    "v4SyntheticHarnessGitBlob": "dad761b59668969669a785ec89f0aed4b29a8248",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc",
+    "v2CpuBudgetReceiptSha256": "8705df7cde4456dc17b5973d84404981387a322ea195a3f995a72ae6b236b430"
+  },
+  "architecture": {
+    "family": "TabCNN",
+    "changedFromV3": false,
+    "reason": "V3 produced a clear temporal-segmentation gain; the next evidence-supported step is to repair recall calibration and string routing before expanding architecture.",
+    "randomInitializationOnly": true,
+    "publishedCheckpointInitialization": false
+  },
+  "trainingBudget": {
+    "seed": 20260921,
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "resumeBoundariesEpochs": [
+      400,
+      800,
+      1000
+    ],
+    "performanceBalancedEpoch": true,
+    "allTrainingPerformancesOncePerEpoch": true,
+    "deterministicAcceptedViewRotation": true,
+    "deterministicSegmentStart": true,
+    "dropLast": false,
+    "unchangedFromV3": true
+  },
+  "objective": {
+    "base": "per-string categorical cross-entropy over 20 fret classes plus silence, ignoring MASK",
+    "activeWeight": {
+      "v3": 1.2,
+      "v4": 1.3,
+      "purpose": "modestly restore active-reference pressure after V3 activity false negatives increased"
+    },
+    "silenceWeight": 1,
+    "contentWeighting": {
+      "method": "same bounded inverse-square-root weighting from training performance-group counts",
+      "minimum": 0.75,
+      "maximum": 1.5,
+      "unchangedFromV3": true
+    },
+    "continuityRegularizer": {
+      "lambda": 0.1,
+      "unchangedFromV3": true,
+      "purpose": "retain within-run stability that helped fragmentation"
+    },
+    "exactStringPitchEquivalentMargin": {
+      "lambda": 0.25,
+      "margin": 0.15,
+      "unchangedStrength": true,
+      "v4SemanticRepair": "skip alternative pitch-equivalent positions when the alternative string's reference target is MASK or is itself exactly that same-pitch fret",
+      "purpose": "penalize wrong-string routing without penalizing legitimate same-pitch multi-string reference notes"
+    }
+  },
+  "decoder": {
+    "type": "V3 hysteresis/gap scaffold plus bounded confirmed-start recovery",
+    "strongStartConfidence": 0.55,
+    "confirmedStartConfidence": 0.42,
+    "confirmedStartVsSilenceRatio": 0.9,
+    "nextFrameSameFretConfirmConfidence": 0.35,
+    "nextFrameSameFretVsSilenceRatio": 0.8,
+    "continueConfidence": 0.35,
+    "continueVsSilenceRatio": 0.8,
+    "maxSameFretSilenceGapFrames": 2,
+    "minimumActiveRunFrames": 2,
+    "intent": [
+      "preserve V3 fragmentation and duration gains",
+      "recover a low-confidence onset only when the same fret is confirmed on the next frame",
+      "preserve onset timing by back-admitting the first frame instead of delaying the start",
+      "continue rejecting isolated low-confidence single-frame spikes"
+    ]
+  },
+  "syntheticVerificationRequirements": [
+    "V4 active-reference default weighting is stronger than V3 while remaining bounded.",
+    "Reference-aware identity routing penalizes a wrong-string pitch equivalent.",
+    "Reference-aware identity routing does not penalize a legitimate same-pitch reference note on another string.",
+    "V3-style gap merge and singleton suppression remain intact.",
+    "A bounded two-frame confirmed low-confidence onset is admitted at its first frame.",
+    "An unconfirmed low-confidence spike remains rejected.",
+    "Strong true onset boundary remains preserved.",
+    "V4 objective produces finite gradients on exact pinned TabCNN runtime.",
+    "Uninterrupted and serialized-resumed TabCNN V4 synthetic optimization are bit-exact for model, optimizer and Python/NumPy/Torch RNG state.",
+    "P3/customer/paid-compute/main guards remain closed."
+  ],
+  "realEvaluationProtocol": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": [
+      "P1->P2",
+      "P2->P1"
+    ],
+    "developmentMetricThresholdsChanged": false,
+    "alignmentAllowlistChanged": false,
+    "p3Use": false
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "nextGate": "Dedicated V4 exact-runtime synthetic verification must pass before any request for real P1/P2 optimizer authorization."
+}
