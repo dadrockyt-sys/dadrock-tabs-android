@@ -1,0 +1,21 @@
+{
+  "schema": "astra-guitar-techs-v4-synthetic-launch-v1",
+  "date": "2026-09-24",
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "sourceIdentities": {
+    "designGitBlob": "376ece1578d9adfb998600e85cfbb6b39523951f",
+    "objectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "componentTestsGitBlob": "b494fa2ef8cae8cece9a5e9a98fe308e86c6ed64",
+    "syntheticHarnessGitBlob": "dad761b59668969669a785ec89f0aed4b29a8248",
+    "workflowGitBlob": "122769c56248b860072c528d7d77e60d095a1cdb"
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "p1p2MediaAccessAuthorized": false,
+    "paidComputeAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "purpose": "Exact-runtime offline verification of the diagnosis-driven V4 objective/decoder and resume behavior before any real P1/P2 authorization request."
+}
