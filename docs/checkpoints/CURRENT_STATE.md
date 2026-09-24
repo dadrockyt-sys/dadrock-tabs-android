@@ -1989,3 +1989,166 @@ This block supersedes the completed-V3 next-step wording and is the authoritativ
 8. P3 remains sealed.
 
 This block supersedes the prior active-decomposition run ID and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 diagnosis frozen; V4 design + synthetic verification PASS — 2026-09-24
+
+- Corrected V3 zero-optimizer decomposition run `35955722006`: **SUCCESS**.
+- Job `107493514365`: **SUCCESS**.
+- Raw diagnostic artifact:
+  - `guitar-techs-v3-error-decomposition-v1`;
+  - artifact ID `10791358034`;
+  - archive digest `sha256:7237285c4b94e800c6d06a561de266ac4f14cbf30a5fd38190a22179e3e53400`;
+  - JSON SHA-256 `542ceafa228022d80efccf642c393ebb57e131958f9ebff488cfc62af4776297`.
+- Frozen V3 decomposition result:
+  - `docs/astra/GUITARTECHS_V3_ERROR_DECOMPOSITION_RESULT_V1.json`;
+  - Git blob `87ec9fb53fd025bd2d5c2b00a15b9bcd035b4433`;
+  - commit `35da86244a902a369bb473b14241b82808cc8c09`.
+- Both frozen V3 fold metrics reproduced exactly: **PASS**.
+- Guards:
+  - optimizer steps executed 0;
+  - model weights modified false;
+  - thresholds retuned false;
+  - alignment allowlist changed false;
+  - P3 opened false;
+  - paid compute false;
+  - main/Production unchanged;
+  - customer delivery false.
+
+### What V3 actually fixed
+
+- Predicted event runs: **106,992 -> 66,876** (-37.5%).
+- Event false positives: **90,299 -> 52,308** (-42.1%).
+- Event micro F1: **0.2138 -> 0.2511** (+17.4% relative).
+- Onset-only F1: **0.4164 -> 0.5065** (+21.6% relative).
+- Fragmented reference runs: **10,490 -> 4,219** (-59.8%).
+- Predicted/reference run ratio: **2.176 -> 1.360**.
+- Mean end absolute error: **839.7 ms -> 588.1 ms**.
+- Mean duration absolute error: **852.6 ms -> 600.7 ms**.
+- Mean reference overlap: **0.6358 -> 0.7481**.
+
+### What V3 over-corrected / failed to fix
+
+- Exact event true positives: **16,693 -> 14,568** (-12.7%).
+- Event false negatives: **32,470 -> 34,595** (+6.5%).
+- Onset-only recall: **0.6613 -> 0.5977**.
+- Predicted active frames were almost unchanged: **2,545,696 -> 2,547,272**.
+- Exact-active frames fell: **1,474,195 -> 1,445,215**.
+- Activity false positives rose: **421,527 -> 489,796**.
+- Activity false negatives rose: **1,499,216 -> 1,565,909**.
+- Pitch-correct wrong-string onset matches rose: **8,041 -> 8,695**.
+- The P2->P1 fold carries the strongest recall/completeness regression.
+- Scales remain comparatively stable; chords and singlenotes remain the key weak classes.
+
+### Frozen V4 candidate
+
+- Candidate ID: `astra_guitartechs_tabcnn_v4_recall_routing`.
+- Frozen V4 design:
+  - `docs/astra/GUITARTECHS_V4_DESIGN_V1.json`;
+  - Git blob `376ece1578d9adfb998600e85cfbb6b39523951f`;
+  - commit `6b83b5244ba95733c6129536c1355d752f64f20b`.
+- V4 objective/decoder:
+  - `astra_backend/guitartechs_training_v4/objective_decoder.py`;
+  - Git blob `b9a96f6b256de52bfbb5076482a03263415213cb`.
+- V4 component tests:
+  - `astra_backend/evaluation/test_guitartechs_v4_components.py`;
+  - Git blob `b494fa2ef8cae8cece9a5e9a98fe308e86c6ed64`.
+- V4 exact-runtime synthetic harness:
+  - `astra_backend/guitartechs_training_v4/verify_synthetic_v4.py`;
+  - Git blob `dad761b59668969669a785ec89f0aed4b29a8248`.
+
+### V4 diagnosis-driven changes
+
+- Architecture remains unchanged TabCNN.
+- Training budget remains frozen from V3/V2.
+- Preserve V3 temporal scaffold that improved fragmentation:
+  - strong start confidence 0.55;
+  - continuation confidence 0.35;
+  - continuation vs silence ratio 0.80;
+  - same-fret silence-gap merge <=2 frames;
+  - minimum active run 2 frames.
+- Active-reference supervision increases modestly **1.20 -> 1.30**.
+- Add a bounded confirmed-start path:
+  - first-frame active confidence >=0.42;
+  - first-frame active/silence ratio >=0.90;
+  - same fret next frame confidence >=0.35;
+  - next-frame active/silence ratio >=0.80;
+  - admits the onset at its original first frame;
+  - unconfirmed weak spikes remain rejected.
+- Pitch-equivalent wrong-string margin strength remains 0.25 / margin 0.15, but semantics are repaired:
+  - do not penalize an alternative string when its reference target is MASK;
+  - do not penalize it when that alternative string is legitimately labeled at the exact same-pitch fret.
+- Continuity regularizer and bounded content weighting remain unchanged.
+- Frozen acceptance thresholds and alignment population remain unchanged.
+
+### V4 exact-runtime synthetic verification
+
+- Run `35960496515`: **SUCCESS**.
+- Head `19ffb70bae9ca670f7eac847052c140b2670e322`.
+- Artifact:
+  - `guitar-techs-v4-synthetic-verification-v1`;
+  - artifact ID `10792295752`;
+  - archive digest `sha256:c1e50fff51b86908c21c5ef1ac57471460923b8c05dbf005bafebdda2ce9b13c`;
+  - JSON SHA-256 `736acd0961cdfa3dde8ed1f00c543df8ae54e87f1488549b65b0ffe354f9ca1a`.
+- Frozen repository verification receipt:
+  - `docs/astra/GUITARTECHS_V4_SYNTHETIC_VERIFICATION_V1.json`;
+  - Git blob `892ce3c88d68accef4c13aea6220c6ffd1cd22a5`;
+  - commit `c1fc6b31f81d3487f3aa7e1f903a2d7728c85ab4`.
+- Exact runtime:
+  - Python 3.10.15;
+  - NumPy 1.21.6;
+  - Torch 1.11.0+cpu.
+- PASS:
+  - component unit tests;
+  - finite-gradient V4 objective;
+  - bounded content weights;
+  - stronger active-reference weighting;
+  - wrong-string pitch-equivalent routing penalty;
+  - no penalty for legitimate same-pitch multi-string reference note;
+  - continuity penalty;
+  - V3-style gap merge + singleton suppression;
+  - confirmed low-confidence onset recovery;
+  - unconfirmed low-confidence spike rejection;
+  - strong onset preservation;
+  - exact model-state resume equality;
+  - exact optimizer-state resume equality;
+  - exact Python/NumPy/Torch RNG resume equality.
+- P1/P2 media accessed: false.
+- P3 accessed: false.
+- Real optimizer steps executed: 0.
+- Paid compute used: false.
+
+### EXPLICIT NEXT STEP TO RESUME — V4 real P1/P2 authorization gate
+
+1. **Do not launch any V4 real optimizer run without a new explicit user authorization.**
+2. V4 design and exact-runtime synthetic verification are frozen and satisfy the offline prerequisite gate.
+3. If the user explicitly authorizes the frozen V4 P1/P2 development run:
+   - create a V4 real-training authorization receipt scoped only to `astra_guitartechs_tabcnn_v4_recall_routing`;
+   - preserve the exact frozen 256-path P1/P2 population;
+   - preserve frozen development thresholds and alignment allowlist;
+   - preserve 1,000 epochs/fold, 200-frame sequences, batch 32, microbatch 1, Adadelta lr=1.0, seed 20260921;
+   - preserve serialized resume boundaries 400 -> 800 -> 1000 for P1->P2 and P2->P1;
+   - random weights only;
+   - public GitHub-hosted CPU only;
+   - verify all source/runtime/design/authorization identities before P1/P2 media access;
+   - SHA-verify every resume artifact before loading;
+   - evaluate with the frozen V4 decoder;
+   - collect final fold evidence only at epoch 1000;
+   - run structural admission first, then the unchanged frozen development metric evaluator.
+4. If either V4 fold fails structural admission or frozen development thresholds:
+   - freeze V4 development FAIL;
+   - diagnose P1/P2 only;
+   - no threshold rescue.
+5. If both pass:
+   - record only eligible for separate P3 authorization;
+   - do not open P3 automatically.
+6. Still forbidden without separate authorization:
+   - P3 access;
+   - paid compute;
+   - published-checkpoint initialization;
+   - threshold retuning;
+   - alignment allowlist mutation;
+   - main/Production mutation;
+   - customer delivery.
+
+This block supersedes the V3 diagnosis-retry instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
