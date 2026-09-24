@@ -1910,3 +1910,41 @@ This is the latest active-run status and supersedes the prior P1 setup-status wo
 7. Any V4 real P1/P2 run requires a new frozen design + synthetic verification + new explicit user authorization.
 
 This block supersedes the active-training instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 zero-optimizer error decomposition active — 2026-09-23
+
+- User requested learning from V3 and rewiring for better results.
+- Per the frozen V3 FAIL checkpoint, no V4 design is to be frozen until a zero-optimizer V3 P1/P2 decomposition is complete.
+- New diagnostic runner:
+  - `astra_backend/guitartechs_training_v3/run_v3_diagnostics.py`;
+  - Git blob `899c09f0c1e1928f85e29cb1437437d99764f5d0`.
+- New diagnostic workflow:
+  - `.github/workflows/guitar-techs-v3-error-decomposition.yml`;
+  - Git blob `61b9396cafe192277dd97e9b77f7b4781ec2a2c4`.
+- Launch receipt:
+  - `docs/astra/GUITARTECHS_V3_ERROR_DECOMPOSITION_LAUNCH_V1.json`;
+  - Git blob `141c39d170939e2fe1d676bf9400b241e31eab3d`;
+  - launch commit `21bfe44692ba81c02c54a841470d1ff5ff02d150`.
+- Single authoritative diagnostic run: **`35953249703`**.
+- Diagnostic job: `107486086247`.
+- Frozen-identity/zero-optimizer guard: **PASS**.
+- Exact runtime: **PASS**.
+- Exact pinned TabCNN source: **PASS**.
+- Frozen V3 P1/P2 final artifacts downloaded and SHA-verified: **PASS**.
+- Current active step: reconstructing the exact frozen 256-path P1/P2 development set.
+- No optimizer steps are authorized or executed by this diagnostic.
+- P3 remains sealed.
+- Thresholds, alignment allowlist, main/Production, and customer delivery remain unchanged.
+
+### EXPLICIT NEXT STEP TO RESUME — V3 decomposition run 35953249703
+
+1. Inspect run `35953249703` first; do not launch a duplicate diagnostic.
+2. Allow only the zero-optimizer decomposition to complete against the exact frozen 256-path P1/P2 population.
+3. Require exact reproduction of both frozen V3 fold metrics before accepting the diagnostic output.
+4. Freeze the resulting V3 decomposition receipt and compare it directly to the frozen V2 decomposition.
+5. Only after that comparison is frozen may a bounded V4 design hypothesis be committed.
+6. Any V4 real P1/P2 optimizer run requires a new frozen V4 design, exact-runtime synthetic verification, and a new explicit user authorization.
+7. P3 remains separately sealed regardless of V4 development work.
+
+This block supersedes the completed-V3 next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
