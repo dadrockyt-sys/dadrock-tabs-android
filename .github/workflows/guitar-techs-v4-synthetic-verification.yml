@@ -1,0 +1,227 @@
+name: Guitar-TECHS V4 synthetic verification
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V4_SYNTHETIC_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guitar-techs-v4-synthetic-verification
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout frozen V4 design commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify frozen V4 identities and guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/astra/GUITARTECHS_V4_DESIGN_V1.json)" = '376ece1578d9adfb998600e85cfbb6b39523951f'
+          test "$(git hash-object astra_backend/guitartechs_training_v4/objective_decoder.py)" = 'b9a96f6b256de52bfbb5076482a03263415213cb'
+          test "$(git hash-object astra_backend/evaluation/test_guitartechs_v4_components.py)" = 'b494fa2ef8cae8cece9a5e9a98fe308e86c6ed64'
+          test "$(git hash-object astra_backend/guitartechs_training_v4/verify_synthetic_v4.py)" = 'dad761b59668969669a785ec89f0aed4b29a8248'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2_resumable.py)" = '86684be13ca6880a89d47bccd0d2b90c22b378fb'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
+          test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
+          python - <<'PY'
+          import json, subprocess
+          x=json.load(open('docs/astra/GUITARTECHS_V4_DESIGN_V1.json'))
+          assert x['schema'] == 'astra-guitar-techs-v4-design-v1'
+          assert x['candidateId'] == 'astra_guitartechs_tabcnn_v4_recall_routing'
+          assert x['architecture']['changedFromV3'] is False
+          assert x['trainingBudget']['unchangedFromV3'] is True
+          assert x['realEvaluationProtocol']['developmentMetricThresholdsChanged'] is False
+          assert x['realEvaluationProtocol']['alignmentAllowlistChanged'] is False
+          assert x['guards'] == {
+              'realP1P2TrainingAuthorized': False,
+              'optimizerStepsAuthorized': 0,
+              'p3Opened': False,
+              'paidComputeAuthorized': False,
+              'thresholdRetuningAuthorized': False,
+              'alignmentAllowlistMutationAuthorized': False,
+              'mainOrProductionMutationAuthorized': False,
+              'customerDeliveryEligible': False,
+          }
+          launch=json.load(open('docs/astra/GUITARTECHS_V4_SYNTHETIC_LAUNCH_V1.json'))
+          assert launch['schema'] == 'astra-guitar-techs-v4-synthetic-launch-v1'
+          assert launch['candidateId'] == x['candidateId']
+          assert launch['guards'] == {
+              'realP1P2TrainingAuthorized': False,
+              'optimizerStepsAuthorized': 0,
+              'p3Opened': False,
+              'p1p2MediaAccessAuthorized': False,
+              'paidComputeAuthorized': False,
+              'customerDeliveryEligible': False,
+          }
+          for path,key in (
+              ('docs/astra/GUITARTECHS_V4_DESIGN_V1.json','designGitBlob'),
+              ('astra_backend/guitartechs_training_v4/objective_decoder.py','objectiveDecoderGitBlob'),
+              ('astra_backend/evaluation/test_guitartechs_v4_components.py','componentTestsGitBlob'),
+              ('astra_backend/guitartechs_training_v4/verify_synthetic_v4.py','syntheticHarnessGitBlob'),
+              ('.github/workflows/guitar-techs-v4-synthetic-verification.yml','workflowGitBlob'),
+          ):
+              actual=subprocess.check_output(['git','hash-object',path], text=True).strip()
+              assert launch['sourceIdentities'][key] == actual, (path, actual, launch['sourceIdentities'][key])
+          PY
+          echo "REAL_P1P2_OPTIMIZER_STEPS_AUTHORIZED=0"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Install exact frozen TabCNN runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import numpy, torch
+          assert numpy.__version__ == '1.21.6'
+          assert torch.__version__ == '1.11.0+cpu'
+          print('V4_RUNTIME_IDENTITY_PASS')
+          PY
+
+      - name: Run deterministic V4 component unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest -v astra_backend/evaluation/test_guitartechs_v4_components.py
+
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Run exact-runtime V4 synthetic objective decoder and resume smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v4/verify_synthetic_v4.py --source-root /tmp/tabcnn-source
+
+      - name: Build verification receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, platform, subprocess
+          import numpy, torch
+
+          def sha256(path):
+              h=hashlib.sha256()
+              with open(path,'rb') as f:
+                  for chunk in iter(lambda:f.read(1024*1024),b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+
+          receipt={
+              'schema':'astra-guitar-techs-v4-synthetic-verification-v1',
+              'date':'2026-09-24',
+              'candidateId':'astra_guitartechs_tabcnn_v4_recall_routing',
+              'runHeadSha':subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+              'source':{
+                  'designGitBlob':blob('docs/astra/GUITARTECHS_V4_DESIGN_V1.json'),
+                  'objectiveDecoderGitBlob':blob('astra_backend/guitartechs_training_v4/objective_decoder.py'),
+                  'componentTestsGitBlob':blob('astra_backend/evaluation/test_guitartechs_v4_components.py'),
+                  'syntheticHarnessGitBlob':blob('astra_backend/guitartechs_training_v4/verify_synthetic_v4.py'),
+                  'runtimeLockGitBlob':blob('astra_backend/tabcnn_runtime/requirements.lock.txt'),
+                  'tabcnnRevision':'f50309ad06dc734ddae5e3a0eda756fca221e2e7',
+              },
+              'runtime':{
+                  'python':platform.python_version(),
+                  'numpy':numpy.__version__,
+                  'torch':torch.__version__,
+                  'device':'cpu',
+              },
+              'verification':{
+                  'componentUnitTests':'PASS',
+                  'objectiveFiniteGradient':'PASS',
+                  'contentBalanceBounds':'PASS',
+                  'activeReferenceWeightIncrease':'PASS',
+                  'referenceAwarePitchEquivalentWrongStringMargin':'PASS',
+                  'legitimateSamePitchUnisonNoPenalty':'PASS',
+                  'stableRunContinuityPenalty':'PASS',
+                  'temporalFragmentMergeAndSingletonSuppression':'PASS',
+                  'confirmedLowConfidenceOnsetRecovery':'PASS',
+                  'unconfirmedLowConfidenceSpikeRejection':'PASS',
+                  'trueOnsetPreservation':'PASS',
+                  'tabcnnResumeModelStateEquality':'PASS',
+                  'tabcnnResumeOptimizerStateEquality':'PASS',
+                  'tabcnnResumePythonNumpyTorchRngEquality':'PASS',
+              },
+              'media':{
+                  'p1p2Accessed':False,
+                  'p3Accessed':False,
+              },
+              'execution':{
+                  'realOptimizerStepsExecuted':0,
+                  'syntheticOptimizerStepOperations':8,
+                  'paidComputeUsed':False,
+              },
+              'guards':{
+                  'realP1P2TrainingAuthorized':False,
+                  'p3Opened':False,
+                  'thresholdsRetuned':False,
+                  'alignmentAllowlistChanged':False,
+                  'mainOrProductionModified':False,
+                  'customerDeliveryEligible':False,
+              },
+              'decision':{
+                  'syntheticDesignVerified':True,
+                  'realTrainingAuthorized':False,
+                  'nextGate':'Explicit user authorization is required before any real P1/P2 V4 optimizer run.'
+              }
+          }
+          out='/tmp/GUITARTECHS_V4_SYNTHETIC_VERIFICATION_V1.json'
+          open(out,'w').write(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print('V4_VERIFICATION_SHA256='+sha256(out))
+          PY
+
+      - name: Upload V4 synthetic verification receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v4-synthetic-verification-v1
+          path: /tmp/GUITARTECHS_V4_SYNTHETIC_VERIFICATION_V1.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Cleanup
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/tabcnn-source /tmp/GUITARTECHS_V4_SYNTHETIC_VERIFICATION_V1.json
+          echo "REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
