@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 PATH = Path(__file__).resolve().parents[1] / "guitartechs_training_v4" / "objective_decoder.py"
-SPEC = importlib.util.spec_from_file_location("guitartechs_v3_objective_decoder", PATH)
+SPEC = importlib.util.spec_from_file_location("guitartechs_v4_objective_decoder", PATH)
 MOD = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MOD)
 
@@ -160,7 +160,7 @@ class GuitarTechsV4ComponentTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             MOD.decode_with_hysteresis(probs)
 
-    def test_v3_objective_state_resume_is_exact(self):
+    def test_v4_objective_state_resume_is_exact(self):
         labels = torch.full((1, 6, 5), -1, dtype=torch.long)
         labels[0, 0, 1:4] = 5
         inputs = torch.arange(20, dtype=torch.float32).reshape(1, 5, 4) / 20.0
