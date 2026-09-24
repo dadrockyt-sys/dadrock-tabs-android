@@ -1,0 +1,151 @@
+{
+  "schema": "astra-guitar-techs-v3-development-failure-diagnosis-v1",
+  "date": "2026-09-23",
+  "sourceRunId": 35808420395,
+  "sourceResult": {
+    "path": "docs/astra/GUITARTECHS_V3_DEVELOPMENT_RESULT_V1.json",
+    "commit": "10f683cd0059edaac51b8add06ba609b07c1d0bb"
+  },
+  "scope": "P1/P2 development evidence only; no P3; no new optimizer run; no threshold retuning",
+  "evidence": {
+    "v3Aggregate": {
+      "macroF1": 0.23745158092071977,
+      "macroCompleteness": 0.2137459805570467,
+      "crossPerformerF1AbsoluteGap": 0.08951223026656088,
+      "crossPerformerFrameAccuracyAbsoluteGap": 0.05193806382869326
+    },
+    "v2Aggregate": {
+      "macroF1": 0.2162081680760024,
+      "macroCompleteness": 0.21496016277649063,
+      "crossPerformerF1AbsoluteGap": 0.04666706270441043,
+      "crossPerformerFrameAccuracyAbsoluteGap": 0.059236098277880955
+    },
+    "v3VsV2": {
+      "macroF1Delta": 0.02124341284471737,
+      "macroF1RelativeChange": 0.09825444169736364,
+      "macroCompletenessDelta": -0.0012141822194439433
+    },
+    "folds": {
+      "p1-train-p2-validate": {
+        "v3": {
+          "precision": 0.2528706586923944,
+          "recall": 0.3303800090334251,
+          "f1": 0.2822076960540002,
+          "completeness": 0.275083645748996,
+          "frameAccuracy": 0.3020545351420458,
+          "contentF1": {
+            "chords": 0.2646753116660195,
+            "scales": 0.3275143047339489,
+            "singlenotes": 0.20116141536944743,
+            "PalmMute": 0.27541666666666664
+          }
+        },
+        "deltaVsV2": {
+          "precision": 0.05412243996212929,
+          "recall": -0.024831861724292692,
+          "f1": 0.04266599662579257,
+          "completeness": 0.021930761102128382,
+          "frameAccuracy": -0.008491149469425086,
+          "contentF1": {
+            "chords": 0.06644440765052767,
+            "scales": -0.005959955525891347,
+            "singlenotes": 0.07040068801305158,
+            "PalmMute": -0.019795955584373526
+          }
+        },
+        "checkpointTrajectory": {
+          "bestSelectionEpoch": 1000,
+          "bestSelectionF1": 0.36950769566649366,
+          "bestSelectionPrecision": 0.3414560006756663,
+          "bestSelectionRecall": 0.4113388199450738,
+          "bestSelectionCompleteness": 0.3648387827547381,
+          "interpretation": "Selection-subset metrics were still strongest at the frozen final epoch, so this fold did not show a simple late-epoch collapse."
+        }
+      },
+      "p2-train-p1-validate": {
+        "v3": {
+          "precision": 0.1690372153283481,
+          "recall": 0.23298942404371248,
+          "f1": 0.19269546578743932,
+          "completeness": 0.15240831536509739,
+          "frameAccuracy": 0.2501164713133525,
+          "contentF1": {
+            "chords": 0.1357048585744536,
+            "scales": 0.3250407265828599,
+            "singlenotes": 0.08538774035200825,
+            "PalmMute": 0.25060645642843815
+          }
+        },
+        "deltaVsV2": {
+          "precision": 0.018075264835421878,
+          "recall": -0.08451908075210451,
+          "f1": -0.0001791709363578864,
+          "completeness": -0.02435912554101624,
+          "frameAccuracy": -0.0011931150202373897,
+          "contentF1": {
+            "chords": -0.0020370895441100545,
+            "scales": 0.0056838583571205414,
+            "singlenotes": -0.0019225954202132245,
+            "PalmMute": -0.018628295564934505
+          }
+        },
+        "checkpointTrajectory": {
+          "bestSelectionEpoch": 880,
+          "bestSelectionF1": 0.2848166895793486,
+          "epoch1000SelectionF1": 0.26036818390371197,
+          "bestSelectionPrecisionEpoch": 840,
+          "bestSelectionFrameAccuracyEpoch": 500,
+          "interpretation": "Selection-subset performance peaked before the end and declined by epoch 1000, indicating that simply extending the frozen epoch budget is not supported by this fold."
+        }
+      }
+    }
+  },
+  "diagnosis": [
+    {
+      "finding": "V3 improved precision in both folds but reduced recall in both folds, especially P2->P1.",
+      "evidenceStrength": "direct metric evidence",
+      "implication": "The V3 activity/identity/temporal controls reduced some false-event behavior but likely became too conservative for part of the development population."
+    },
+    {
+      "finding": "The V3 gain is concentrated in P1->P2; P2->P1 F1 is essentially unchanged from V2 while completeness and recall are worse.",
+      "evidenceStrength": "direct metric evidence",
+      "implication": "The current V3 objective/decoder changes do not generalize symmetrically across the performer-disjoint folds."
+    },
+    {
+      "finding": "Scales remain the strongest content class while singlenotes remain the weakest in both folds.",
+      "evidenceStrength": "direct metric evidence",
+      "implication": "The remaining failure is not only temporal fragmentation; exact note/string identity for sparse single-note material remains a primary weakness."
+    },
+    {
+      "finding": "Macro F1 improved while macro completeness was essentially flat/slightly worse.",
+      "evidenceStrength": "direct metric evidence",
+      "implication": "The design improved event correctness more than temporal coverage, so a further decoder-only tightening is not supported."
+    },
+    {
+      "finding": "P2->P1 selection-subset metrics peak before epoch 1000 and then degrade.",
+      "evidenceStrength": "direct checkpoint-trajectory evidence",
+      "implication": "More epochs alone are not an evidence-based V4 hypothesis."
+    }
+  ],
+  "nextDiagnosticTask": {
+    "type": "zero-optimizer P1/P2 V3 error decomposition",
+    "purpose": "Reconstruct exact V3 predictions and separate onset, activity false positive/false negative, string/fret confusion, pitch-correct wrong-string, fragmentation, end/duration, and per-content errors for each performer-disjoint fold, then compare directly with the frozen V2 decomposition.",
+    "permitted": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdRetuningAuthorized": false,
+    "p3Opened": false
+  },
+  "guards": {
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "thresholdRetuningPerformed": false,
+    "alignmentAllowlistChanged": false,
+    "mainOrProductionModified": false,
+    "customerDeliveryEligible": false
+  },
+  "decision": {
+    "v3Verdict": "FAIL",
+    "anotherRealP1P2TrainingRunAuthorized": false,
+    "nextRealTrainingRequiresNewDesignAndExplicitUserAuthorization": true
+  }
+}
