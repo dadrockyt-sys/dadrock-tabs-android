@@ -1,0 +1,155 @@
+{
+  "schema": "astra-guitar-techs-v3-error-decomposition-result-v1",
+  "date": "2026-09-24",
+  "diagnosisRun": {
+    "runId": 35955722006,
+    "jobId": 107493514365,
+    "conclusion": "success",
+    "headSha": "cbbadd4bb7bac0e98ca770ea27f1ee241c77ea4a"
+  },
+  "sourceV3RunId": 35808420395,
+  "rawDiagnosticArtifact": {
+    "name": "guitar-techs-v3-error-decomposition-v1",
+    "artifactId": 10791358034,
+    "archiveDigest": "sha256:7237285c4b94e800c6d06a561de266ac4f14cbf30a5fd38190a22179e3e53400",
+    "jsonFile": "GUITARTECHS_V3_ERROR_DECOMPOSITION_V1.json",
+    "jsonSha256": "542ceafa228022d80efccf642c393ebb57e131958f9ebff488cfc62af4776297"
+  },
+  "frozenMetricReproduction": {
+    "p1-train-p2-validate": {
+      "passed": true,
+      "precision": 0.2528706586923944,
+      "recall": 0.3303800090334251,
+      "f1": 0.2822076960540002,
+      "completeness": 0.275083645748996,
+      "frameAccuracy": 0.3020545351420458
+    },
+    "p2-train-p1-validate": {
+      "passed": true,
+      "precision": 0.1690372153283481,
+      "recall": 0.23298942404371248,
+      "f1": 0.19269546578743932,
+      "completeness": 0.15240831536509739,
+      "frameAccuracy": 0.2501164713133525
+    }
+  },
+  "aggregateV3": {
+    "eventMicro": {
+      "referenceEvents": 49163,
+      "predictedEvents": 66876,
+      "exactTruePositive": 14568,
+      "falsePositive": 52308,
+      "falseNegative": 34595,
+      "precision": 0.21783599497577608,
+      "recall": 0.2963204035555194,
+      "f1": 0.25108799627711376,
+      "falsePositiveToFalseNegativeRatio": 1.5120104061280533,
+      "onsetOnlyMatched": 29387,
+      "onsetOnlyPrecision": 0.4394252048567498,
+      "onsetOnlyRecall": 0.5977462726033806,
+      "onsetOnlyF1": 0.5065021242858004
+    },
+    "frameActivity": {
+      "referenceActive": 3623385,
+      "predictedActive": 2547272,
+      "exactActive": 1445215,
+      "wrongFretWhileActive": 612261,
+      "activityFalsePositive": 489796,
+      "activityFalseNegative": 1565909,
+      "activeExactPrecision": 0.5673579421435951,
+      "activeExactRecall": 0.39885769798130755
+    },
+    "temporalRun": {
+      "fragmentedReferenceRuns": 4219,
+      "predictedToReferenceRunRatio": 1.3602912759595631,
+      "meanStartAbsoluteErrorMs": 19.77553386355452,
+      "meanEndAbsoluteErrorMs": 588.1416231145585,
+      "meanDurationAbsoluteErrorMs": 600.7031595358262,
+      "meanReferenceOverlapFraction": 0.7480601944467924,
+      "exactPairsEndErrorOverOneFrame": 8162
+    },
+    "onsetLabelDecomposition": {
+      "exactStringFret": 14568,
+      "fretWrongSameString": 2198,
+      "stringWrongSameFret": 462,
+      "bothStringAndFretWrong": 11824,
+      "pitchCorrectWrongString": 8695,
+      "stagedMatched": 29052,
+      "unmatchedPredicted": 37824,
+      "unmatchedReference": 20111
+    }
+  },
+  "v3VsV2": {
+    "predictedEventsDelta": -40116,
+    "predictedEventsRelative": -0.3749439210408255,
+    "exactTruePositiveDelta": -2125,
+    "exactTruePositiveRelative": -0.12729886778889354,
+    "falsePositiveDelta": -37991,
+    "falsePositiveRelative": -0.4207244819986933,
+    "falseNegativeDelta": 2125,
+    "falseNegativeRelative": 0.0654450261780104,
+    "eventMicroF1Delta": 0.03728760563960615,
+    "eventMicroF1Relative": 0.17440382371810625,
+    "onsetOnlyF1Delta": 0.09008254117927167,
+    "onsetOnlyF1Relative": 0.21632638049163666,
+    "onsetOnlyRecallDelta": -0.0635844029046233,
+    "predictedActiveDelta": 1576,
+    "predictedActiveRelative": 0.0006190841325908192,
+    "exactActiveDelta": -28980,
+    "activityFalsePositiveDelta": 68269,
+    "activityFalseNegativeDelta": 66693,
+    "fragmentedReferenceRunsDelta": -6271,
+    "fragmentedReferenceRunsRelative": -0.5978074356530029,
+    "predictedToReferenceRunRatioDelta": -0.8159794967760308,
+    "meanEndAbsoluteErrorMsDelta": -251.5227058850785,
+    "meanDurationAbsoluteErrorMsDelta": -251.8640808230466,
+    "meanReferenceOverlapFractionDelta": 0.11222084626631668,
+    "pitchCorrectWrongStringDelta": 654,
+    "pitchCorrectWrongStringRelative": 0.08133316751647812,
+    "unmatchedReferenceDelta": 2977,
+    "unmatchedReferenceRelative": 0.17374810318664635
+  },
+  "foldInterpretation": {
+    "p1-train-p2-validate": [
+      "V3 materially improved event/onset precision and F1 while preserving onset-only recall.",
+      "Fragmentation and run over-generation fell sharply and temporal overlap improved.",
+      "Pitch-correct wrong-string matches increased substantially, showing unresolved string routing despite better temporal segmentation."
+    ],
+    "p2-train-p1-validate": [
+      "V3 reduced event over-generation and fragmentation but lost substantial onset recall and exact true positives.",
+      "This fold accounts for the most important V3 recall/completeness regression.",
+      "Long chord and singlenote end/duration errors remain severe despite improvement."
+    ]
+  },
+  "diagnosticInterpretation": [
+    "V3 temporal decoding was successful and should be preserved: predicted/reference run ratio fell from 2.176 to 1.360, fragmentation fell about 60%, and end/duration error improved about 30%.",
+    "V3 became too conservative at event admission, especially P2->P1: exact true positives fell 12.7% aggregate and onset-only recall fell from 0.661 to 0.598.",
+    "Frame-level predicted activity was almost unchanged while exact-active frames fell and both activity false positives and false negatives rose. The next design should improve routing/calibration rather than simply reducing total activity.",
+    "The pitch-equivalent identity margin did not solve wrong-string routing aggregate-wide: pitch-correct wrong-string onset matches rose from 8041 to 8695.",
+    "Scales remain comparatively stable; chords and singlenotes remain the most important weak classes, especially in the P2->P1 fold."
+  ],
+  "v4DesignTargets": [
+    "Preserve V3 gap merge, minimum-run suppression and continuation hysteresis that reduced fragmentation.",
+    "Add a bounded two-frame confirmed low-confidence onset path to recover true onsets without admitting singleton spikes.",
+    "Increase active-reference supervision modestly rather than broadly lowering all decoder confidence thresholds.",
+    "Make pitch-equivalent string-routing margin reference-aware so a legitimate same-pitch target on another active string is never penalized.",
+    "Do not strengthen the flawed V3 identity margin until its semantics are corrected.",
+    "Keep architecture, population, acceptance thresholds, alignment allowlist and real-training budget unchanged for offline V4 verification."
+  ],
+  "guards": {
+    "optimizerStepsExecuted": 0,
+    "modelWeightsModified": false,
+    "thresholdsRetuned": false,
+    "alignmentAllowlistChanged": false,
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false
+  },
+  "decision": {
+    "v3VerdictUnchanged": "FAIL",
+    "v4RealTrainingAuthorized": false,
+    "p3Opened": false,
+    "nextGate": "Freeze bounded V4 design and exact-runtime synthetic verification before requesting any real P1/P2 optimizer authorization."
+  }
+}
