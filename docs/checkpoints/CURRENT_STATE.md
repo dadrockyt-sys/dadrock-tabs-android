@@ -2211,3 +2211,39 @@ This block supersedes the V3 diagnosis-retry instructions and is the authoritati
 9. If both folds pass, record only **eligible for separate P3 authorization**. P3 remains sealed until separately authorized.
 
 This block supersedes the V4 authorization-gate instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V4 controller preflight PASS; P1 0->400 gate PASS — 2026-09-24
+
+- Authoritative V4 real-training run remains **`35961115171`**; no duplicate V4 run exists or is authorized.
+- Controller preflight job `107509698358`: **PASS**.
+  - V4 authorization + launch source identities: PASS;
+  - exact frozen runtime: PASS;
+  - exact pinned TabCNN source: PASS;
+  - deterministic V4 component tests: PASS;
+  - exact-runtime V4 synthetic objective/decoder smoke: PASS;
+  - V4 resumable model/optimizer/Python/NumPy/Torch RNG equality: PASS.
+- Controller preflight accessed no P1/P2 media.
+- First serialized segment job `107509990950` (`P1 0->400`) is active.
+- P1 0->400:
+  - checkout: PASS;
+  - setup Python: PASS;
+  - V4 authorization/frozen identity gate before media access: PASS;
+  - requested frozen segment validation: PASS;
+  - current step: exact frozen runtime installation.
+- P1/P2 media preparation had not yet begun at this checkpoint save.
+- Continue the same controller run only. No duplicate launch.
+- P3 remains sealed and unauthorized.
+
+### EXPLICIT NEXT STEP TO RESUME — run 35961115171 / P1 0->400
+
+1. Inspect run `35961115171` and job `107509990950`; do not launch another V4 run.
+2. Continue the fixed P1 0->400 segment through pinned runtime -> pinned TabCNN source -> exact frozen 256-path preparation -> bounded V4 training.
+3. On completion require artifact `guitar-techs-v4-p1-resume-e400`.
+4. Verify its `astra-guitar-techs-v4-resume-receipt-v1` receipt and exact resume-state SHA-256 before P1 400->800 loads it.
+5. Continue only through this same serialized controller:
+   P1 0->400 -> 400->800 -> 800->1000 -> P2 0->400 -> 400->800 -> 800->1000.
+6. Intermediate resume states are not model-quality evidence.
+7. P3 remains sealed regardless of V4 development outcome until separately authorized.
+
+This block supersedes the immediately preceding V4 launch-preflight status and is the authoritative next action unless a later checkpoint explicitly supersedes it.
