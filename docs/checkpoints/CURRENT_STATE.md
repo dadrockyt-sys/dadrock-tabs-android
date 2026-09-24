@@ -1948,3 +1948,44 @@ This block supersedes the active-training instructions and is the authoritative 
 7. P3 remains separately sealed regardless of V4 development work.
 
 This block supersedes the completed-V3 next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V3 zero-optimizer diagnosis retry after path-only failure — 2026-09-23
+
+- First V3 decomposition run `35953249703`: **FAIL**.
+- All frozen-evidence preparation steps passed before failure:
+  - launch/source guard PASS;
+  - exact runtime PASS;
+  - pinned TabCNN source PASS;
+  - frozen V3 P1/P2 final artifact download + SHA verification PASS;
+  - exact frozen 256-path P1/P2 reconstruction PASS.
+- Failure occurred at the decomposition invocation itself before any model inference:
+  - workflow incorrectly called `astra_backend/guitartechs_training_v2/run_v3_diagnostics.py`;
+  - frozen runner actually exists at `astra_backend/guitartechs_training_v3/run_v3_diagnostics.py`.
+- No model weights changed.
+- Optimizer steps executed: **0**.
+- P3 opened: **false**.
+- Failed run produced no accepted diagnostic artifact.
+- Workflow path-only fix:
+  - commit `5b898bfda0e00239326902853d55662c914b98dd`;
+  - corrected workflow Git blob `4f045f64cb12e1cd84096ef156c7d7ecfe08fefe`.
+- Launch receipt was repinned and failure/retry history recorded:
+  - commit `cbbadd4bb7bac0e98ca770ea27f1ee241c77ea4a`;
+  - launch receipt Git blob `0af38d29a831c45ac74d5aa4d574ce4540daca5e`.
+- Corrected authoritative retry run: **`35955722006`**.
+- Retry diagnostic job: `107493514365`.
+- At this checkpoint save, checkout has passed and setup Python is in progress.
+- No model/decoder/threshold/data-population/guard change was made for the retry.
+
+### EXPLICIT NEXT STEP TO RESUME — corrected V3 decomposition retry 35955722006
+
+1. Inspect run `35955722006` first; do not launch another retry.
+2. Require zero-optimizer/source-identity preflight to pass.
+3. Require exact runtime, pinned TabCNN source, frozen V3 fold artifacts and exact 256-path population to pass again.
+4. Run only `astra_backend/guitartechs_training_v3/run_v3_diagnostics.py`.
+5. Require exact reproduction of both frozen V3 fold metrics before accepting the decomposition.
+6. Freeze the resulting V3 error-decomposition receipt and compare it directly with the frozen V2 decomposition.
+7. Do not freeze V4 real-training authorization from this retry alone; V4 requires frozen design + synthetic verification + new explicit user authorization.
+8. P3 remains sealed.
+
+This block supersedes the prior active-decomposition run ID and is the authoritative next action unless a later checkpoint explicitly supersedes it.
