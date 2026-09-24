@@ -1,0 +1,58 @@
+{
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "date": "2026-09-24",
+  "decision": {
+    "nextGate": "Explicit user authorization is required before any real P1/P2 V4 optimizer run.",
+    "realTrainingAuthorized": false,
+    "syntheticDesignVerified": true
+  },
+  "execution": {
+    "paidComputeUsed": false,
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOptimizerStepOperations": 8
+  },
+  "guards": {
+    "alignmentAllowlistChanged": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false,
+    "p3Opened": false,
+    "realP1P2TrainingAuthorized": false,
+    "thresholdsRetuned": false
+  },
+  "media": {
+    "p1p2Accessed": false,
+    "p3Accessed": false
+  },
+  "runHeadSha": "19ffb70bae9ca670f7eac847052c140b2670e322",
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-guitar-techs-v4-synthetic-verification-v1",
+  "source": {
+    "componentTestsGitBlob": "b494fa2ef8cae8cece9a5e9a98fe308e86c6ed64",
+    "designGitBlob": "376ece1578d9adfb998600e85cfbb6b39523951f",
+    "objectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "syntheticHarnessGitBlob": "dad761b59668969669a785ec89f0aed4b29a8248",
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+  },
+  "verification": {
+    "activeReferenceWeightIncrease": "PASS",
+    "componentUnitTests": "PASS",
+    "confirmedLowConfidenceOnsetRecovery": "PASS",
+    "contentBalanceBounds": "PASS",
+    "legitimateSamePitchUnisonNoPenalty": "PASS",
+    "objectiveFiniteGradient": "PASS",
+    "referenceAwarePitchEquivalentWrongStringMargin": "PASS",
+    "stableRunContinuityPenalty": "PASS",
+    "tabcnnResumeModelStateEquality": "PASS",
+    "tabcnnResumeOptimizerStateEquality": "PASS",
+    "tabcnnResumePythonNumpyTorchRngEquality": "PASS",
+    "temporalFragmentMergeAndSingletonSuppression": "PASS",
+    "trueOnsetPreservation": "PASS",
+    "unconfirmedLowConfidenceSpikeRejection": "PASS"
+  }
+}
