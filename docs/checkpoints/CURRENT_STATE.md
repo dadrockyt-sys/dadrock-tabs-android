@@ -2152,3 +2152,62 @@ This block supersedes the prior active-decomposition run ID and is the authorita
    - customer delivery.
 
 This block supersedes the V3 diagnosis-retry instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V4 P1/P2 real training authorized + active launch — 2026-09-24
+
+- User explicitly authorized preparation and execution of the frozen V4 development run with: **"Please prepare and run V4"**.
+- Authorization is scoped only to candidate `astra_guitartechs_tabcnn_v4_recall_routing` and the frozen P1/P2 development protocol.
+- Authorization receipt:
+  - `docs/astra/GUITARTECHS_V4_REAL_TRAINING_AUTHORIZATION_V1.json`;
+  - Git blob `427ca9fb3ccd7a406b2935ae75216d7591816efe`;
+  - authorization commit `01e850e54257d55e11c2c183ffcbbae4fc3c16d4`.
+- V4 resumable trainer:
+  - `astra_backend/guitartechs_training_v4/train_v4_resumable.py`;
+  - Git blob `33892a222825a2713d3955cc34139b730f4adc3d`.
+- V4 serialized segment workflow:
+  - `.github/workflows/guitar-techs-v4-resumable-segment.yml`;
+  - Git blob `d017f2c322a46cfefa6b9e939394c40142c6fb8a`.
+- V4 controller workflow:
+  - `.github/workflows/guitar-techs-v4-resumable-real-training.yml`;
+  - Git blob `1b30139da602a2a11bfdebf2c53d856141a833f8`.
+- One-time launch marker:
+  - `docs/astra/GUITARTECHS_V4_RESUMABLE_LAUNCH_V1.json`;
+  - launch commit `19b629c549f11eedae0e7c22a2a2a42f9adc342e`.
+- Single authoritative V4 real-training run: **`35961115171`**.
+- Fixed execution order:
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000 + full P2 validation;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000 + full P1 validation.
+- Controller launch/source identity gate: **PASS**.
+- Current state at this checkpoint save: exact frozen runtime installation is in progress.
+- No P1/P2 media has been accessed by the controller preflight.
+- No duplicate V4 real-training run may be launched.
+- Invariants remain:
+  - P3 sealed and unauthorized;
+  - public GitHub-hosted CPU only;
+  - random initialization only;
+  - frozen 256-path P1/P2 population unchanged;
+  - frozen development thresholds unchanged;
+  - alignment allowlist unchanged;
+  - no paid compute;
+  - no published-checkpoint initialization;
+  - no `main`/Production mutation;
+  - no customer delivery.
+
+### EXPLICIT NEXT STEP TO RESUME — active V4 run 35961115171
+
+1. Inspect run `35961115171` first; **do not launch another V4 run**.
+2. Require its complete no-media preflight to pass: exact runtime, exact pinned TabCNN source, V4 component/synthetic checks and V4 resumable equality.
+3. Only after preflight passes may P1 0->400 reconstruct/access the exact frozen P1/P2 development population and train.
+4. At each 400/800 boundary, require the emitted V4 resume receipt and exact resume-state SHA-256 before loading the next segment.
+5. Intermediate resume artifacts are orchestration state only, not admissible model-quality evidence.
+6. Only epoch-1000 segments may emit final fold model/result artifacts.
+7. After both final fold artifacts exist, perform V4 structural admission first, then the unchanged frozen development metric evaluation.
+8. If either fold fails, freeze V4 development FAIL and diagnose P1/P2 only; no threshold rescue.
+9. If both folds pass, record only **eligible for separate P3 authorization**. P3 remains sealed until separately authorized.
+
+This block supersedes the V4 authorization-gate instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
