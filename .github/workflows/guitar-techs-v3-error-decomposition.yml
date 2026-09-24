@@ -189,7 +189,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python astra_backend/guitartechs_training_v2/run_v3_diagnostics.py \
+          python astra_backend/guitartechs_training_v3/run_v3_diagnostics.py \
             --source-root /tmp/tabcnn-source \
             --manifest /tmp/prepared/manifest.jsonl \
             --data-dir /tmp/prepared \
