@@ -185,7 +185,7 @@ jobs:
           PY
           echo "GUITAR_TECHS_P3_OPENED=false"
 
-      - name: Run zero-optimizer V2 error decomposition
+      - name: Run zero-optimizer V3 error decomposition
         shell: bash
         run: |
           set -euo pipefail
