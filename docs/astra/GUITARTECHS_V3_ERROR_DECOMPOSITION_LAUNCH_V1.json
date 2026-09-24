@@ -1,0 +1,25 @@
+{
+  "schema": "astra-guitar-techs-v3-error-decomposition-launch-v1",
+  "date": "2026-09-23",
+  "sourceRunId": 35808420395,
+  "scope": "P1/P2 frozen V3 development evidence diagnosis only",
+  "sourceIdentities": {
+    "developmentResultGitBlob": "b044d5c0fe95dfceb6218b202935e78f2c3d82b7",
+    "failureDiagnosisGitBlob": "8cfca668c425de2159fc01902d91734adac68e15",
+    "diagnosticsGitBlob": "500fa8f9ead07c6d8b444c7ed8ed04e23494e97e",
+    "runnerGitBlob": "899c09f0c1e1928f85e29cb1437437d99764f5d0",
+    "objectiveDecoderGitBlob": "87e127c87851ea9a43b9a9e6240f1a7c4624424b",
+    "trainerGitBlob": "464293f9a7c8fdfe1feb76460c5c370900fc1d53",
+    "workflowGitBlob": "61b9396cafe192277dd97e9b77f7b4781ec2a2c4"
+  },
+  "guards": {
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "purpose": "Reconstruct frozen V3 predictions with the frozen V3 decoder, decompose errors, compare against frozen V2 evidence, and inform a bounded V4 design."
+}
