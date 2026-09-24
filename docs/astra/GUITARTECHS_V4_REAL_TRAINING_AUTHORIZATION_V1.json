@@ -1,0 +1,66 @@
+{
+  "schema": "astra-guitar-techs-v4-real-training-authorization-v1",
+  "date": "2026-09-24",
+  "authorization": {
+    "userText": "Please prepare and run V4",
+    "interpretedScope": "Authorize the frozen V4 P1/P2 development run exactly as specified in the immediately preceding CURRENT_STATE.md gate.",
+    "explicitP3Authorization": false
+  },
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "frozenDesign": {
+    "path": "docs/astra/GUITARTECHS_V4_DESIGN_V1.json",
+    "gitBlob": "376ece1578d9adfb998600e85cfbb6b39523951f"
+  },
+  "frozenSyntheticVerification": {
+    "path": "docs/astra/GUITARTECHS_V4_SYNTHETIC_VERIFICATION_V1.json",
+    "gitBlob": "892ce3c88d68accef4c13aea6220c6ffd1cd22a5",
+    "runId": 35960496515,
+    "passed": true
+  },
+  "scope": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": [
+      {"train": "P1", "validate": "P2"},
+      {"train": "P2", "validate": "P1"}
+    ],
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1.0,
+    "seed": 20260921,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "resumeBoundariesEpochs": [400, 800, 1000],
+    "serializedExecutionOnly": true,
+    "randomInitializationOnly": true,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "developmentThresholdsChanged": false,
+    "alignmentAllowlistChanged": false
+  },
+  "authorizedActions": [
+    "verify frozen V4 identities before P1/P2 media access",
+    "reconstruct the exact frozen P1/P2 development population",
+    "execute the two serialized V4 development folds with resumable boundaries 400->800->1000",
+    "SHA-verify resume artifacts before loading",
+    "evaluate with the frozen V4 decoder",
+    "emit final fold artifacts only at epoch 1000",
+    "perform structural admission and unchanged frozen development metric evaluation after both final fold artifacts exist"
+  ],
+  "guards": {
+    "realP1P2TrainingAuthorized": true,
+    "p3Opened": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "outcomeRule": {
+    "ifEitherFoldFails": "Freeze V4 development FAIL; diagnose P1/P2 only; no threshold rescue.",
+    "ifBothFoldsPass": "Record only eligible for separate P3 authorization; do not open P3 automatically."
+  }
+}
