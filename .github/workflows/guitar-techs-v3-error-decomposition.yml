@@ -1,0 +1,244 @@
+name: Guitar-TECHS V3 zero-optimizer error decomposition
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V3_ERROR_DECOMPOSITION_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: guitar-techs-v3-error-decomposition
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    steps:
+      - name: Checkout diagnosis launch commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify V3 diagnosis launch and frozen identities before P1/P2 media access
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/astra/GUITARTECHS_V3_DEVELOPMENT_RESULT_V1.json)" = 'b044d5c0fe95dfceb6218b202935e78f2c3d82b7'
+          test "$(git hash-object docs/astra/GUITARTECHS_V3_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json)" = '8cfca668c425de2159fc01902d91734adac68e15'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/diagnostics.py)" = '500fa8f9ead07c6d8b444c7ed8ed04e23494e97e'
+          test "$(git hash-object astra_backend/guitartechs_training_v3/run_v3_diagnostics.py)" = '899c09f0c1e1928f85e29cb1437437d99764f5d0'
+          test "$(git hash-object astra_backend/guitartechs_training_v3/objective_decoder.py)" = '87e127c87851ea9a43b9a9e6240f1a7c4624424b'
+          test "$(git hash-object astra_backend/guitartechs_training_v3/train_v3_resumable.py)" = '464293f9a7c8fdfe1feb76460c5c370900fc1d53'
+          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
+          test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
+          test "$(git hash-object docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json)" = '9090d465422ebf5d4fdf170693fe0936934f3073'
+          python - <<'PY'
+          import json, subprocess
+          launch=json.load(open('docs/astra/GUITARTECHS_V3_ERROR_DECOMPOSITION_LAUNCH_V1.json'))
+          assert launch['schema'] == 'astra-guitar-techs-v3-error-decomposition-launch-v1'
+          assert launch['sourceRunId'] == 35808420395
+          assert launch['scope'] == 'P1/P2 frozen V3 development evidence diagnosis only'
+          assert launch['guards'] == {
+              'optimizerStepsAuthorized': 0,
+              'p3Opened': False,
+              'paidComputeAuthorized': False,
+              'thresholdRetuningAuthorized': False,
+              'alignmentAllowlistMutationAuthorized': False,
+              'customerDeliveryEligible': False,
+              'mainOrProductionMutationAuthorized': False,
+          }
+          for path,key in (
+              ('astra_backend/guitartechs_training_v2/diagnostics.py','diagnosticsGitBlob'),
+              ('astra_backend/guitartechs_training_v3/run_v3_diagnostics.py','runnerGitBlob'),
+              ('astra_backend/guitartechs_training_v3/objective_decoder.py','objectiveDecoderGitBlob'),
+              ('astra_backend/guitartechs_training_v3/train_v3_resumable.py','trainerGitBlob'),
+              ('.github/workflows/guitar-techs-v3-error-decomposition.yml','workflowGitBlob'),
+          ):
+              actual=subprocess.check_output(['git','hash-object',path], text=True).strip()
+              assert actual == launch['sourceIdentities'][key], (path,actual,launch['sourceIdentities'][key])
+          dev=json.load(open('docs/astra/GUITARTECHS_V3_DEVELOPMENT_RESULT_V1.json'))
+          assert dev['sourceRun']['runId'] == 35808420395
+          assert dev['decision']['status'] == 'FAIL'
+          assert dev['decision']['p3Opened'] is False
+          corrections=json.load(open('docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json'))
+          assert len(corrections['correctionsMs']) == 256
+          assert corrections['p3Opened'] is False
+          PY
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "OPTIMIZER_STEPS_AUTHORIZED=0"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Install exact frozen runtime and decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python3 -m unittest -v astra_backend/evaluation/test_guitartechs_v2_diagnostics.py astra_backend/evaluation/test_guitartechs_v3_components.py
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Download frozen V3 P1 fold artifact from authoritative run
+        uses: actions/download-artifact@v4
+        with:
+          name: guitar-techs-v3-p1-final-development-result
+          path: /tmp/p1-final
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 35808420395
+
+      - name: Download frozen V3 P2 fold artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: guitar-techs-v3-p2-final-development-result
+          path: /tmp/p2-final
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 35808420395
+
+      - name: Verify frozen V3 artifacts before diagnosis
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/p1-final/training-result.json | awk '{print $1}')" = '312cf52beadd3d19bdab2bfee8dad9307297978e773a9b598765afca3b865c45'
+          test "$(sha256sum /tmp/p1-final/model.pt | awk '{print $1}')" = 'de8f8f5bdaccfb42748474d312bbdb39d95b37d97d0851ae750dbbad4103319b'
+          test "$(sha256sum /tmp/p2-final/training-result.json | awk '{print $1}')" = 'eda78ca208223876613bff0df018ad5c2a4287aa3e8a41831216262ab007e23c'
+          test "$(sha256sum /tmp/p2-final/model.pt | awk '{print $1}')" = '1c0019169e79e058a577174248c33193a2594a22f086700f53564892f811447f'
+
+      - name: Prepare exact frozen 256-path P1/P2 development set
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/prepared /tmp/extract
+          : > /tmp/prepared/manifest.jsonl
+          while IFS=$'\t' read -r file bytes md5 sha performer category; do
+            rm -rf /tmp/extract/*
+            download_ok=0
+            for url in \
+              "https://zenodo.org/api/records/14963133/files/$file/content" \
+              "https://zenodo.org/records/14963133/files/$file?download=1"; do
+              for attempt in 1 2 3 4 5; do
+                rm -f "/tmp/$file.part"
+                if curl --fail --location --connect-timeout 30 --max-time 1800 \
+                  --retry 2 --retry-all-errors --retry-delay 5 \
+                  --user-agent 'Astra-Guitar-TECHS-V3-Diagnosis/1.0' \
+                  -o "/tmp/$file.part" "$url"; then
+                  mv "/tmp/$file.part" "/tmp/$file"
+                  download_ok=1
+                  break 2
+                fi
+                sleep "$((attempt * 15))"
+              done
+            done
+            test "$download_ok" = '1'
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            unzip -q "/tmp/$file" -d /tmp/extract
+            rm -f "/tmp/$file"
+            python astra_backend/guitartechs_real_training/real_training.py prepare-archive --root /tmp/extract --archive "$file" --performer "$performer" --category "$category" --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir /tmp/prepared --manifest /tmp/prepared/manifest.jsonl
+            rm -rf /tmp/extract/*
+          done <<'EOF'
+          P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1	chords
+          P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1	scales
+          P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1	singlenotes
+          P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1	techniques
+          P2_chords.zip	1150819056	eb6f74dd19162237189281688ad7ad2e	9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce	P2	chords
+          P2_scales.zip	471254783	96664853872f51e5f8aa4447313b7cf5	d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17	P2	scales
+          P2_singlenotes.zip	116133457	40fbf03d8b04bb2cf42df20f36dc2254	d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9	P2	singlenotes
+          P2_techniques.zip	395839610	f4189251ce50be25f06a173b2c2bba00	05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816	P2	techniques
+          EOF
+          test "$(wc -l < /tmp/prepared/manifest.jsonl)" = '256'
+          python - <<'PY'
+          import json
+          counts={'P1':0,'P2':0}
+          for line in open('/tmp/prepared/manifest.jsonl'):
+              row=json.loads(line); counts[row['performer']]+=1
+          assert counts == {'P1':136,'P2':120}, counts
+          PY
+          echo "GUITAR_TECHS_P3_OPENED=false"
+
+      - name: Run zero-optimizer V2 error decomposition
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v2/run_v3_diagnostics.py \
+            --source-root /tmp/tabcnn-source \
+            --manifest /tmp/prepared/manifest.jsonl \
+            --data-dir /tmp/prepared \
+            --development-result docs/astra/GUITARTECHS_V3_DEVELOPMENT_RESULT_V1.json \
+            --p1-model /tmp/p1-final/model.pt \
+            --p1-result /tmp/p1-final/training-result.json \
+            --p2-model /tmp/p2-final/model.pt \
+            --p2-result /tmp/p2-final/training-result.json \
+            --out /tmp/GUITARTECHS_V3_ERROR_DECOMPOSITION_V1.json
+
+      - name: Verify diagnostic receipt guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/GUITARTECHS_V3_ERROR_DECOMPOSITION_V1.json'))
+          assert x['schema'] == 'astra-guitar-techs-v3-error-decomposition-v1'
+          assert x['sourceRunId'] == 35808420395
+          assert x['folds']['p1-train-p2-validate']['frozenMetricReproduction']['passed'] is True
+          assert x['folds']['p2-train-p1-validate']['frozenMetricReproduction']['passed'] is True
+          assert x['guards'] == {
+              'optimizerStepsExecuted': 0,
+              'modelWeightsModified': False,
+              'thresholdsRetuned': False,
+              'alignmentAllowlistChanged': False,
+              'p3Opened': False,
+              'paidComputeUsed': False,
+              'customerDeliveryEligible': False,
+              'mainOrProductionModified': False,
+          }
+          PY
+          echo "DIAGNOSTIC_SHA256=$(sha256sum /tmp/GUITARTECHS_V3_ERROR_DECOMPOSITION_V1.json | awk '{print $1}')"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+
+      - name: Upload P1/P2-only diagnostic receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v3-error-decomposition-v1
+          path: /tmp/GUITARTECHS_V3_ERROR_DECOMPOSITION_V1.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Delete prepared P1/P2 diagnostic data
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/p1-final /tmp/p2-final /tmp/P1_*.zip /tmp/P2_*.zip
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
