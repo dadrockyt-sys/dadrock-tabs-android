@@ -1782,3 +1782,131 @@ This block supersedes the immediately preceding in-progress preflight status and
 - No duplicate launch. P3 remains sealed.
 
 This is the latest active-run status and supersedes the prior P1 setup-status wording.
+
+
+## V3 real training complete — structural PASS / development FAIL — 2026-09-23
+
+- Authoritative V3 real-training run `35808420395`: **completed successfully**.
+- All serialized jobs passed:
+  - preflight;
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000.
+- Frozen V3 development result:
+  - `docs/astra/GUITARTECHS_V3_DEVELOPMENT_RESULT_V1.json`;
+  - Git blob `b044d5c0fe95dfceb6218b202935e78f2c3d82b7`;
+  - commit `10f683cd0059edaac51b8add06ba609b07c1d0bb`.
+- Frozen V3 result-level failure diagnosis:
+  - `docs/astra/GUITARTECHS_V3_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json`;
+  - Git blob `8cfca668c425de2159fc01902d91734adac68e15`;
+  - commit `4ccffa1a2b39580bf82c049a7a9dcfc2857048f1`.
+
+### V3 structural admission
+
+- **PASS** with zero structural blockers.
+- Both final model SHA-256 values match their fold receipts.
+- Both embedded selected-state hashes match the selected checkpoint receipts.
+- All four resume-state artifacts were downloaded and SHA-verified:
+  - P1 e400: `1d2dd005f6172882e8a6550ef46241d2c8c44237eb071448802293e4e03a0ad3`;
+  - P1 e800: `5a00b535e80ee8ed45927bf9553162e7a6592d519a5d7c73791bef0c0c437540`;
+  - P2 e400: `351679f922b7051b6872f5c9ea6dd9d03aacd74a1bad988b7055de51fda83684`;
+  - P2 e800: `f2139c5f9a410d0914d103b4556c6988f73da96058a79695022af5ac9872c565`.
+- Resume receipts have the expected V3 schema, candidate, fold, epoch, optimizer-step, supervised-frame, frozen source identities and sealed guards.
+- Final fold evidence has the expected:
+  - candidate `astra_guitartechs_tabcnn_v3_objective_decoder`;
+  - seed 20260921;
+  - 1,000 epochs;
+  - 2,000 optimizer steps;
+  - 200-frame sequences;
+  - batch 32 / microbatch 1;
+  - 50 validation checkpoints;
+  - P1/P2 capture counts 136/120;
+  - 41/40 training performances;
+  - 8.2M / 8.0M supervised frame positions.
+- P3 false, published checkpoint false, paid compute false, customer delivery false.
+
+### V3 frozen development metrics
+
+- P1->P2:
+  - selected checkpoint epoch **1000**;
+  - precision **0.252871**;
+  - recall **0.330380**;
+  - F1 **0.282208**;
+  - completeness **0.275084**;
+  - frame accuracy **0.302055**;
+  - content F1: chords **0.264675**, scales **0.327514**, singlenotes **0.201161**, PalmMute **0.275417**.
+- P2->P1:
+  - selected checkpoint epoch **880**;
+  - precision **0.169037**;
+  - recall **0.232989**;
+  - F1 **0.192695**;
+  - completeness **0.152408**;
+  - frame accuracy **0.250116**;
+  - content F1: chords **0.135705**, scales **0.325041**, singlenotes **0.085388**, PalmMute **0.250606**.
+- Aggregate:
+  - macro F1 **0.237452** vs frozen minimum **0.70**;
+  - macro completeness **0.213746** vs frozen minimum **0.65**;
+  - cross-performer F1 gap **0.089512** -> PASS <= 0.10;
+  - cross-performer frame-accuracy gap **0.051938** -> PASS <= 0.10;
+  - abstention 0.0 both folds -> PASS.
+- Frozen metric decision: **FAIL**, 20 threshold blockers.
+- Both folds fail precision, recall, F1, completeness, frame accuracy, and all four per-content F1 minimums.
+- Thresholds were not changed or retuned.
+
+### V3 vs V2 evidence
+
+- Macro F1 improved from **0.216208** to **0.237452**:
+  - absolute +**0.021243**;
+  - about **+9.8% relative**.
+- Macro completeness was essentially flat/slightly worse:
+  - **0.214960 -> 0.213746**.
+- P1->P2 improved materially:
+  - precision +0.054122;
+  - F1 +0.042666;
+  - completeness +0.021931;
+  - chords +0.066444 F1;
+  - singlenotes +0.070401 F1;
+  - but recall -0.024832 and frame accuracy -0.008491.
+- P2->P1 did not improve:
+  - precision +0.018075;
+  - F1 -0.000179;
+  - recall -0.084519;
+  - completeness -0.024359.
+- Result-level interpretation:
+  - V3 improved precision more than recall and appears too conservative on part of the P1/P2 population;
+  - gains are concentrated in P1->P2 rather than symmetric across folds;
+  - scales remain strongest and singlenotes weakest;
+  - P2->P1 selection-subset performance peaked before epoch 1000, so simply adding epochs is not an evidence-supported next move.
+
+### Decision
+
+- **V3 development status: FAIL.**
+- P3 is **not eligible** to open and remains sealed.
+- No customer delivery.
+- No threshold rescue.
+- No further real P1/P2 optimizer run is authorized.
+- Any future real-data optimizer run requires a new frozen design and new explicit user authorization.
+
+### EXPLICIT NEXT STEP TO RESUME — zero-optimizer V3 P1/P2 error decomposition
+
+1. Do **not** launch another real V3 optimizer run.
+2. Build/run a zero-optimizer diagnostic against the already-completed V3 P1/P2 evidence only.
+3. Reconstruct exact V3 predictions with the frozen V3 decoder and decompose:
+   - onset detection;
+   - activity FP/FN balance;
+   - string assignment;
+   - fret assignment;
+   - pitch-correct wrong-string substitutions;
+   - fragmentation/merge behavior;
+   - event-end/duration error;
+   - chords/scales/singlenotes/PalmMute;
+   - performer-disjoint differences.
+4. Compare the V3 decomposition directly against the frozen V2 decomposition to identify which V3 changes helped and which over-corrected recall/completeness.
+5. No optimizer steps, no threshold retuning, no alignment changes, no P3, no paid compute, no `main`/Production/customer-delivery changes.
+6. Freeze that diagnostic before forming any V4 design hypothesis.
+7. Any V4 real P1/P2 run requires a new frozen design + synthetic verification + new explicit user authorization.
+
+This block supersedes the active-training instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
