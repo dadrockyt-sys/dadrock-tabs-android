@@ -115,7 +115,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest -v astra_backend/evaluation/test_guitartechs_v4_components.py
-          python astra_backend/guitartechs_training_v3/verify_synthetic_v4.py --source-root /tmp/tabcnn-source
+          python astra_backend/guitartechs_training_v4/verify_synthetic_v4.py --source-root /tmp/tabcnn-source
           python astra_backend/guitartechs_training_v4/train_v4_resumable.py resume-self-test --source-root /tmp/tabcnn-source
           echo "GUITAR_TECHS_P3_OPENED=false"
           echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
