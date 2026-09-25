@@ -7,7 +7,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from guitartechs_training_v5.model import (
+from .model import (
     MAX_MIDI,
     MIN_MIDI,
     NUM_CLASSES,
