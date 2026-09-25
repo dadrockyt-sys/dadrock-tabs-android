@@ -2545,3 +2545,138 @@ This block supersedes the V4-completion next-step wording and is the authoritati
 7. P3 remains separately sealed.
 
 This block supersedes the active V4 diagnosis instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V5 research-driven architecture wired, synthetic PASS, real P1/P2 run active — 2026-09-25
+
+- User explicitly authorized V5 with: **"Let's wire and run it 💚💪"**.
+- V5 is the first architecture/representation-level break after V2-V4 decoder/objective-only iterations.
+- Candidate: `astra_guitartechs_tabcnn_v5_temporal_multitask`.
+
+### Frozen V5 architecture
+
+- Design: `docs/astra/GUITARTECHS_V5_DESIGN_V1.json`;
+  - Git blob `40326d1aa71a2d913f7c55f1936244a940f94281`.
+- Model: `astra_backend/guitartechs_training_v5/model.py`;
+  - Git blob `105aae211c3e9d806f3b1feb60052d51169832a4`.
+- Objective/decoder: `astra_backend/guitartechs_training_v5/objective_decoder.py`;
+  - Git blob `fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16`.
+- V5 keeps the exact frozen 192-bin CQT representation to isolate the architecture hypothesis.
+- Architecture:
+  - pinned TabCNN convolutional acoustic encoder;
+  - 128-d acoustic embedding;
+  - single-layer **causal GRU**, hidden size 96;
+  - separate six-string **onset** head;
+  - separate six-string **activity** head;
+  - 44-bin MIDI 40..83 **multi-pitch** head;
+  - final 6x21 string/fret state head conditioned on the GRU state plus soft onset/activity/pitch probabilities.
+- Learned bounded homoscedastic task weighting covers state/onset/activity/pitch.
+- State active weight is reduced from V4 1.30 to **1.15** because activity/onset now have dedicated supervision.
+- V4 reference-aware same-pitch string-routing semantics are retained.
+- New-event decoding is explicitly onset-gated; continuation uses activity + current-state evidence without requiring repeated onset.
+- A fret change requires new onset evidence.
+- Two-frame run cleanup invariants remain: <=2 same-fret silence-gap merge, minimum active run 2 frames.
+
+### V5 synthetic verification
+
+- Two failed synthetic attempts were infrastructure/test-only and accessed no P1/P2 media:
+  - run `36115028321`: package import-path-only failure;
+  - run `36115263258`: test-only leaf-tensor in-place mutation.
+- Neither failure changed V5 model semantics or executed real optimizer steps.
+- Corrected authoritative synthetic run `36115437808`: **SUCCESS**.
+- Synthetic artifact:
+  - `guitar-techs-v5-synthetic-verification-v1`;
+  - artifact ID `10855325941`;
+  - archive digest `sha256:b8f5fd444d576b1c517766f725e924fa14109d4bcf7e570323f349b7fc4cdcc0`;
+  - raw JSON SHA-256 `f8fcd36673b75cf25d5d70e15d81b43ef32a4d0f9f37514bcbf124e7b180f293`.
+- Frozen verification receipt:
+  - `docs/astra/GUITARTECHS_V5_SYNTHETIC_VERIFICATION_V1.json`;
+  - Git blob `a31c6a71bcaab9fb7a9d1b9ca60cc6d1f53e25b0`.
+- PASS on exact Python 3.10.15 / NumPy 1.21.6 / Torch 1.11.0+cpu:
+  - component unit tests;
+  - exact output head shapes;
+  - finite gradients across state/onset/activity/pitch;
+  - finite learned task-weight gradients;
+  - causal prior-frame context propagation;
+  - onset required for new event;
+  - activity/state continuation without repeated onset;
+  - fret change requires new onset;
+  - singleton suppression;
+  - reference-aware pitch-equivalent routing;
+  - exact resumed model state;
+  - exact resumed optimizer state;
+  - exact Python/NumPy/Torch RNG state.
+- P1/P2 media accessed: false.
+- P3 accessed: false.
+- Real optimizer steps: 0.
+
+### V5 real-run authorization and orchestration
+
+- Authorization:
+  - `docs/astra/GUITARTECHS_V5_REAL_TRAINING_AUTHORIZATION_V1.json`;
+  - Git blob `60423cf04f2b26e2cacf0aea3b087b795b69338b`;
+  - authorization commit `98ecbce56d585edcd21b1a66b2c881f782013365`.
+- Trainer:
+  - `astra_backend/guitartechs_training_v5/train_v5_resumable.py`;
+  - Git blob `685c43d3887a76d01b839f601db1a8eb624d4dee`.
+- Segment workflow:
+  - `.github/workflows/guitar-techs-v5-resumable-segment.yml`;
+  - Git blob `878909b5ffbb16cccf65d1df9cb14dfced349b45`.
+- Controller:
+  - `.github/workflows/guitar-techs-v5-resumable-real-training.yml`;
+  - Git blob `5c3e5b4011e3462a54e5b748bd5e00cae8649709`.
+- Single launch marker commit: `71686e727b024c051211d2565899a5e2fb2fe5a4`.
+- Single authoritative V5 run: **`36115823434`**.
+- Controller preflight job `108009575980`: **PASS**.
+  - authorization/source identities PASS;
+  - exact runtime PASS;
+  - pinned TabCNN source PASS;
+  - V5 component suite PASS;
+  - exact-runtime V5 synthetic harness PASS;
+  - trainer-specific serialized resume self-test PASS.
+- Controller preflight accessed no P1/P2 media.
+- Active first segment: **P1 0->400**, job `108009937049`.
+  - checkout PASS;
+  - setup Python PASS;
+  - V5 authorization/source identity gate before media PASS;
+  - frozen segment validation PASS;
+  - current step at checkpoint save: exact runtime installation.
+- Fixed execution order:
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000 + full P2 validation;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000 + full P1 validation.
+
+### V5 invariants
+
+- Exact frozen 256-path P1/P2 population only.
+- Same frozen acceptance thresholds.
+- Same alignment allowlist.
+- Seed 20260921.
+- 1,000 epochs/fold, sequence 200, batch 32, microbatch 1.
+- Adadelta lr=1.0.
+- 50 validation checkpoints/fold at 20-epoch cadence.
+- Resume boundaries 400 -> 800 -> 1000.
+- Random initialization only.
+- Public GitHub-hosted CPU only.
+- P3 sealed and unauthorized.
+- No paid compute.
+- No published-checkpoint initialization.
+- No threshold retuning.
+- No `main`/Production mutation.
+- No customer delivery.
+
+### EXPLICIT NEXT STEP TO RESUME — active V5 run 36115823434
+
+1. Inspect run `36115823434` first; **do not launch another V5 run**.
+2. Continue job `108009937049` through pinned runtime -> pinned TabCNN source -> exact frozen 256-path preparation -> V5 P1 0->400 training.
+3. During bounded training, read `V5_CHECKPOINT=` records every 20 epochs for progress only; intermediate quality is not a final verdict.
+4. Require artifact `guitar-techs-v5-p1-resume-e400`, verify its V5 resume receipt and exact state SHA before P1 400->800.
+5. Continue only through this same serialized controller to both epoch-1000 folds.
+6. After both final artifacts, perform structural admission first, then unchanged frozen development metric evaluation.
+7. If either fold fails: freeze V5 FAIL and diagnose P1/P2 only; no threshold rescue.
+8. If both pass: record only eligible for separate P3 authorization; **do not open P3 automatically**.
+
+This block supersedes the V5 offline-design gate and is the authoritative next action unless a later checkpoint explicitly supersedes it.
