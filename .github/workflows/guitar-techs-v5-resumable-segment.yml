@@ -1,0 +1,369 @@
+name: Guitar-TECHS V5 resumable segment
+
+on:
+  workflow_call:
+    inputs:
+      fold:
+        required: true
+        type: string
+      train_performer:
+        required: true
+        type: string
+      validation_performer:
+        required: true
+        type: string
+      start_epoch:
+        required: true
+        type: number
+      end_epoch:
+        required: true
+        type: number
+      resume_artifact:
+        required: false
+        type: string
+        default: ''
+      output_artifact:
+        required: true
+        type: string
+      final_segment:
+        required: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  segment:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 345
+    steps:
+      - name: Checkout frozen dispatch commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify V5 authorization and frozen identities before media access
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/astra/GUITARTECHS_V5_REAL_TRAINING_AUTHORIZATION_V1.json)" = '60423cf04f2b26e2cacf0aea3b087b795b69338b'
+          test "$(git hash-object docs/astra/GUITARTECHS_V5_DESIGN_V1.json)" = '40326d1aa71a2d913f7c55f1936244a940f94281'
+          test "$(git hash-object docs/astra/GUITARTECHS_V5_SYNTHETIC_VERIFICATION_V1.json)" = 'a31c6a71bcaab9fb7a9d1b9ca60cc6d1f53e25b0'
+          test "$(git hash-object astra_backend/guitartechs_training_v5/model.py)" = '105aae211c3e9d806f3b1feb60052d51169832a4'
+          test "$(git hash-object astra_backend/guitartechs_training_v5/objective_decoder.py)" = 'fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16'
+          test "$(git hash-object astra_backend/guitartechs_training_v5/train_v5_resumable.py)" = '685c43d3887a76d01b839f601db1a8eb624d4dee'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
+          test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
+          test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
+          test "$(git hash-object astra_backend/tabcnn_runtime/requirements.lock.txt)" = '174a5016cfe9e6c00816d2171210aa84c66081a8'
+          test "$(git hash-object docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json)" = '8e488ce4449fd3f35cf280af03fe1f1e017f3dc1'
+          test "$(sha256sum docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json | awk '{print $1}')" = 'fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15'
+          test "$(git hash-object docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json)" = '9090d465422ebf5d4fdf170693fe0936934f3073'
+          python - <<'PY'
+          import json
+          auth=json.load(open('docs/astra/GUITARTECHS_V5_REAL_TRAINING_AUTHORIZATION_V1.json'))
+          assert auth['candidateId'] == 'astra_guitartechs_tabcnn_v5_temporal_multitask'
+          assert auth['guards']['realP1P2TrainingAuthorized'] is True
+          assert auth['guards']['p3Opened'] is False
+          assert auth['guards']['p3Authorized'] is False
+          assert auth['guards']['paidComputeAuthorized'] is False
+          assert auth['guards']['publishedCheckpointInitializationAuthorized'] is False
+          assert auth['guards']['thresholdRetuningAuthorized'] is False
+          assert auth['guards']['alignmentAllowlistMutationAuthorized'] is False
+          assert auth['guards']['mainOrProductionMutationAuthorized'] is False
+          assert auth['guards']['customerDeliveryEligible'] is False
+          assert auth['scope']['epochsPerFold'] == 1000
+          assert auth['scope']['sequenceFrames'] == 200
+          assert auth['scope']['batchSequences'] == 32
+          assert auth['scope']['microbatchSequences'] == 1
+          assert auth['scope']['resumeBoundariesEpochs'] == [400,800,1000]
+          design=json.load(open('docs/astra/GUITARTECHS_V5_DESIGN_V1.json'))
+          assert design['candidateId'] == auth['candidateId']
+          assert design['architecture']['temporalModel']['type'] == 'causal GRU'
+          assert design['architecture']['inputRepresentation']['melOrHcqtAdded'] is False
+          assert design['trainingBudget']['unchangedPopulationAndExposureFromV4'] is True
+          synth=json.load(open('docs/astra/GUITARTECHS_V5_SYNTHETIC_VERIFICATION_V1.json'))
+          assert synth['decision']['syntheticDesignVerified'] is True
+          assert synth['media'] == {'p1p2Accessed': False, 'p3Accessed': False}
+          corrections=json.load(open('docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json'))
+          assert len(corrections['correctionsMs']) == 256
+          assert corrections['p3Opened'] is False
+          PY
+          echo "LAUNCH_COMMIT=${{ github.sha }}"
+          echo "GUITAR_TECHS_V5_REAL_TRAINING_AUTHORIZED=true"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Validate requested frozen segment
+        shell: bash
+        env:
+          FOLD: ${{ inputs.fold }}
+          TRAIN: ${{ inputs.train_performer }}
+          VALIDATE: ${{ inputs.validation_performer }}
+          START_EPOCH: ${{ inputs.start_epoch }}
+          END_EPOCH: ${{ inputs.end_epoch }}
+          RESUME_ARTIFACT: ${{ inputs.resume_artifact }}
+          FINAL_SEGMENT: ${{ inputs.final_segment }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          fold=os.environ['FOLD']
+          train=os.environ['TRAIN']
+          validate=os.environ['VALIDATE']
+          start=int(os.environ['START_EPOCH'])
+          end=int(os.environ['END_EPOCH'])
+          resume=os.environ['RESUME_ARTIFACT']
+          final=os.environ['FINAL_SEGMENT'].lower() == 'true'
+          allowed={
+            ('p1-train-p2-validate','P1','P2',0,400,False),
+            ('p1-train-p2-validate','P1','P2',400,800,False),
+            ('p1-train-p2-validate','P1','P2',800,1000,True),
+            ('p2-train-p1-validate','P2','P1',0,400,False),
+            ('p2-train-p1-validate','P2','P1',400,800,False),
+            ('p2-train-p1-validate','P2','P1',800,1000,True),
+          }
+          assert (fold,train,validate,start,end,final) in allowed
+          assert (start == 0 and resume == '') or (start > 0 and resume != '')
+          PY
+
+      - name: Install exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Acquire exact pinned TabCNN source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Prepare exact frozen 256-path P1/P2 development set
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/prepared /tmp/extract
+          : > /tmp/prepared/manifest.jsonl
+          while IFS=$'\t' read -r file bytes md5 sha performer category; do
+            rm -rf /tmp/extract/*
+            download_ok=0
+            for url in \
+              "https://zenodo.org/api/records/14963133/files/$file/content" \
+              "https://zenodo.org/records/14963133/files/$file?download=1"; do
+              for attempt in 1 2 3 4 5; do
+                rm -f "/tmp/$file.part"
+                if curl --fail --location --connect-timeout 30 --max-time 1800 \
+                  --retry 2 --retry-all-errors --retry-delay 5 \
+                  --user-agent 'Astra-Guitar-TECHS-V5-Resumable-Training/1.0' \
+                  -o "/tmp/$file.part" "$url"; then
+                  mv "/tmp/$file.part" "/tmp/$file"
+                  download_ok=1
+                  break 2
+                fi
+                sleep "$((attempt * 15))"
+              done
+            done
+            test "$download_ok" = '1'
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            unzip -q "/tmp/$file" -d /tmp/extract
+            rm -f "/tmp/$file"
+            python astra_backend/guitartechs_real_training/real_training.py prepare-archive --root /tmp/extract --archive "$file" --performer "$performer" --category "$category" --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir /tmp/prepared --manifest /tmp/prepared/manifest.jsonl
+            rm -rf /tmp/extract/*
+          done <<'EOF'
+          P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1	chords
+          P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1	scales
+          P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1	singlenotes
+          P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1	techniques
+          P2_chords.zip	1150819056	eb6f74dd19162237189281688ad7ad2e	9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce	P2	chords
+          P2_scales.zip	471254783	96664853872f51e5f8aa4447313b7cf5	d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17	P2	scales
+          P2_singlenotes.zip	116133457	40fbf03d8b04bb2cf42df20f36dc2254	d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9	P2	singlenotes
+          P2_techniques.zip	395839610	f4189251ce50be25f06a173b2c2bba00	05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816	P2	techniques
+          EOF
+          test "$(wc -l < /tmp/prepared/manifest.jsonl)" = '256'
+          python - <<'PY'
+          import json
+          counts={'P1':0,'P2':0}
+          with open('/tmp/prepared/manifest.jsonl') as f:
+              for line in f:
+                  row=json.loads(line)
+                  counts[row['performer']]+=1
+          assert counts == {'P1':136,'P2':120}, counts
+          PY
+          echo "GUITAR_TECHS_P3_OPENED=false"
+
+      - name: Download and verify prior resume state
+        if: ${{ inputs.start_epoch > 0 }}
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.resume_artifact }}
+          path: /tmp/resume
+
+      - name: Admit prior resume state
+        if: ${{ inputs.start_epoch > 0 }}
+        shell: bash
+        env:
+          EXPECTED_FOLD: ${{ inputs.fold }}
+          EXPECTED_TRAIN: ${{ inputs.train_performer }}
+          EXPECTED_VALIDATE: ${{ inputs.validation_performer }}
+          EXPECTED_START: ${{ inputs.start_epoch }}
+        run: |
+          set -euo pipefail
+          RESUME_SHA="$(python - <<'PY'
+          import json
+          x=json.load(open('/tmp/resume/resume-receipt.json'))
+          print(x['resumeStateSha256'])
+          PY
+          )"
+          test "$(sha256sum /tmp/resume/resume-state.pt | awk '{print $1}')" = "$RESUME_SHA"
+          python - <<'PY'
+          import json, os
+          x=json.load(open('/tmp/resume/resume-receipt.json'))
+          assert x['schema'] == 'astra-guitar-techs-v5-resume-receipt-v1'
+          assert x['fold'] == os.environ['EXPECTED_FOLD']
+          assert x['trainPerformer'] == os.environ['EXPECTED_TRAIN']
+          assert x['validationPerformer'] == os.environ['EXPECTED_VALIDATE']
+          assert x['nextEpoch'] == int(os.environ['EXPECTED_START'])
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['publishedCheckpointLoaded'] is False
+          assert x['guards']['paidComputeUsed'] is False
+          assert x['guards']['customerDeliveryEligible'] is False
+          PY
+          echo "RESUME_SHA=$RESUME_SHA" >> "$GITHUB_ENV"
+
+      - name: Run bounded resumable segment
+        shell: bash
+        env:
+          FOLD: ${{ inputs.fold }}
+          TRAIN: ${{ inputs.train_performer }}
+          VALIDATE: ${{ inputs.validation_performer }}
+          START_EPOCH: ${{ inputs.start_epoch }}
+          END_EPOCH: ${{ inputs.end_epoch }}
+          FINAL_SEGMENT: ${{ inputs.final_segment }}
+          RESUME_ARTIFACT: ${{ inputs.resume_artifact }}
+        run: |
+          set -euo pipefail
+          args=(
+            train-segment
+            --source-root /tmp/tabcnn-source
+            --manifest /tmp/prepared/manifest.jsonl
+            --data-dir /tmp/prepared
+            --thresholds docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json
+            --fold "$FOLD"
+            --train-performer "$TRAIN"
+            --val-performer "$VALIDATE"
+            --end-epoch "$END_EPOCH"
+          )
+          if [ "$START_EPOCH" -gt 0 ]; then
+            args+=(--resume-in /tmp/resume/resume-state.pt --resume-sha256 "$RESUME_SHA")
+          fi
+          if [ "$FINAL_SEGMENT" = "true" ]; then
+            args+=(--result-out /tmp/training-result.json --model-out /tmp/model.pt)
+          else
+            args+=(--resume-out /tmp/resume-state.pt --resume-receipt-out /tmp/resume-receipt.json)
+          fi
+          python astra_backend/guitartechs_training_v5/train_v5_resumable.py "${args[@]}"
+
+      - name: Verify intermediate resume receipt
+        if: ${{ !inputs.final_segment }}
+        shell: bash
+        env:
+          EXPECTED_FOLD: ${{ inputs.fold }}
+          EXPECTED_END: ${{ inputs.end_epoch }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          x=json.load(open('/tmp/resume-receipt.json'))
+          assert x['fold'] == os.environ['EXPECTED_FOLD']
+          assert x['nextEpoch'] == int(os.environ['EXPECTED_END'])
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['customerDeliveryEligible'] is False
+          h=hashlib.sha256(open('/tmp/resume-state.pt','rb').read()).hexdigest()
+          assert h == x['resumeStateSha256']
+          PY
+
+      - name: Verify final fold receipt before upload
+        if: ${{ inputs.final_segment }}
+        shell: bash
+        env:
+          EXPECTED_FOLD: ${{ inputs.fold }}
+          EXPECTED_TRAIN: ${{ inputs.train_performer }}
+          EXPECTED_VALIDATE: ${{ inputs.validation_performer }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          x=json.load(open('/tmp/training-result.json'))
+          assert x['schema'] == 'astra-guitar-techs-real-training-fold-v5'
+          assert x['candidateId'] == 'astra_guitartechs_tabcnn_v5_temporal_multitask'
+          assert x['fold'] == os.environ['EXPECTED_FOLD']
+          assert x['trainPerformer'] == os.environ['EXPECTED_TRAIN']
+          assert x['validationPerformer'] == os.environ['EXPECTED_VALIDATE']
+          assert x['seed'] == 20260921
+          assert x['epochs'] == 1000
+          assert x['optimizerSteps'] == 2000
+          assert x['sequenceFrames'] == 200
+          assert x['batchSequences'] == 32
+          assert x['microbatchSequences'] == 1
+          assert x['validationCheckpoints'] == 50
+          assert x['preparedCaptureCounts'] == {'P1':136,'P2':120}
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['publishedCheckpointLoaded'] is False
+          assert x['guards']['paidComputeUsed'] is False
+          assert x['guards']['customerDeliveryEligible'] is False
+          PY
+
+      - name: Upload verified resume state
+        if: ${{ !inputs.final_segment }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.output_artifact }}
+          path: |
+            /tmp/resume-state.pt
+            /tmp/resume-receipt.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload final development-only model and receipt
+        if: ${{ inputs.final_segment }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.output_artifact }}
+          path: |
+            /tmp/training-result.json
+            /tmp/model.pt
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Delete prepared development data and resume material
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/resume /tmp/P1_*.zip /tmp/P2_*.zip
+          echo "GUITAR_TECHS_V5_REAL_TRAINING_AUTHORIZED=true"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
