@@ -31,10 +31,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git hash-object docs/astra/GUITARTECHS_V5_DESIGN_V1.json)" = '559a1c4264fbb56d89f9f4b51200bf0097c995f4'
+          test "$(git hash-object docs/astra/GUITARTECHS_V5_DESIGN_V1.json)" = '40326d1aa71a2d913f7c55f1936244a940f94281'
           test "$(git hash-object astra_backend/guitartechs_training_v5/model.py)" = '105aae211c3e9d806f3b1feb60052d51169832a4'
           test "$(git hash-object astra_backend/guitartechs_training_v5/objective_decoder.py)" = 'fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16'
-          test "$(git hash-object astra_backend/evaluation/test_guitartechs_v5_components.py)" = 'e760600eb89aa93000894d3b11259a7179ae7e6a'
+          test "$(git hash-object astra_backend/evaluation/test_guitartechs_v5_components.py)" = '557e9a741d60fa923df5aea3e46e20bfb2f04511'
           test "$(git hash-object astra_backend/guitartechs_training_v5/verify_synthetic_v5.py)" = 'cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea'
           test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
           test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
