@@ -1,0 +1,215 @@
+{
+  "schema": "astra-guitar-techs-v4-development-result-v1",
+  "date": "2026-09-25",
+  "candidateId": "astra_guitartechs_tabcnn_v4_recall_routing",
+  "sourceRun": {
+    "runId": 35961115171,
+    "headSha": "19b629c549f11eedae0e7c22a2a2a42f9adc342e",
+    "branch": "astra-work",
+    "allSerializedJobsSuccessful": true
+  },
+  "frozenEvidence": {
+    "designGitBlob": "376ece1578d9adfb998600e85cfbb6b39523951f",
+    "objectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "authorizationGitBlob": "427ca9fb3ccd7a406b2935ae75216d7591816efe",
+    "syntheticVerificationGitBlob": "892ce3c88d68accef4c13aea6220c6ffd1cd22a5",
+    "v3ErrorDecompositionResultGitBlob": "87ec9fb53fd025bd2d5c2b00a15b9bcd035b4433",
+    "developmentMetricEvaluatorGitBlob": "f2d3b799b841f7aac2a0aac17e904d9563c1430e",
+    "thresholdReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "thresholdGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "artifact": {
+        "id": 10824403867,
+        "name": "guitar-techs-v4-p1-final-development-result",
+        "archiveDigest": "sha256:2867f7ca79fe2cb8211725073d24d6d2a18b0719509141109e15abf5f68c9d55"
+      },
+      "resultJsonSha256": "87cb404b1c4fead59fcad4b2fabdec9aa75967adcc0746b9c8212ac2c7511550",
+      "modelSha256": "c93b7a5cc419fa8016aa8c5eb1fcda8582b7a46d68ca86c2dbbd89389ddfc073",
+      "selectedCheckpointEpoch": 720,
+      "selectedCheckpointOptimizerSteps": 1440,
+      "selectedStateSha256": "82f83001bcf8c35b1d0f63985ca526a48160ceec1c3807d347d14651724afd22",
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.25322165213485004,
+        "recall": 0.35206265470940196,
+        "f1": 0.28603641180422795,
+        "completeness": 0.2734412517208392,
+        "frameAccuracy": 0.31208703305004065,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.2627741286088241,
+          "scales": 0.3406222602163977,
+          "singlenotes": 0.18027784732707666,
+          "PalmMute": 0.34158415841584155
+        }
+      },
+      "resumeChain": [
+        {
+          "artifactId": 10802107460,
+          "artifactName": "guitar-techs-v4-p1-resume-e400",
+          "archiveDigest": "sha256:d44df2517bd99008e2874f70d00fe24947f41f23bce0b0297ee4622938d57315",
+          "nextEpoch": 400,
+          "receiptSha256": "898ad8973f94d9eb28e4db1d6bcfa305811d878ddf12b1417ac094488eb14e69",
+          "stateSha256": "94f9451231d112a0f3544a2ae085ef3679cfc80741e69f11dee302089e14ee02"
+        },
+        {
+          "artifactId": 10814049275,
+          "artifactName": "guitar-techs-v4-p1-resume-e800",
+          "archiveDigest": "sha256:0c5ad5fee12aa8e36ca9c351d6c61d730608ffd4209d009edb79e7ebc706eff5",
+          "nextEpoch": 800,
+          "receiptSha256": "1cc103eaf6ca90081d85de930cf3b32dfdeea3e157faaee19b71df176416d35f",
+          "stateSha256": "9ca1e1f0a8a69d0e3fd168ab1f759a3dc7b32968ad3829f28184af4186ac4e0f"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8200000,
+      "validationCheckpoints": 50
+    },
+    "p2-train-p1-validate": {
+      "artifact": {
+        "id": 10848341539,
+        "name": "guitar-techs-v4-p2-final-development-result",
+        "archiveDigest": "sha256:07bae903680a0dc367053f6822eb7ff80afd7c5ef3930a975556c2039b4abf8a"
+      },
+      "resultJsonSha256": "0a6b4577dc8bd35758f04b406ecf430c17c732228ab1edbc46c1bedef4ab019d",
+      "modelSha256": "a2a23fbe4106a9393d13211c5ae5b2cf6e466a4f751f75951d041a1e3b0ae419",
+      "selectedCheckpointEpoch": 400,
+      "selectedCheckpointOptimizerSteps": 800,
+      "selectedStateSha256": "f929666f1a95e861111f5a2672c0480c65d8bd030cc879ebad2023e45bc12b5a",
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.1651356803648916,
+        "recall": 0.27166307422748465,
+        "f1": 0.20100919444914897,
+        "completeness": 0.17087460387381048,
+        "frameAccuracy": 0.24587019530123036,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.1292298023871238,
+          "scales": 0.3651683633248158,
+          "singlenotes": 0.09480351600922726,
+          "PalmMute": 0.27534843205574916
+        }
+      },
+      "resumeChain": [
+        {
+          "artifactId": 10836084331,
+          "artifactName": "guitar-techs-v4-p2-resume-e400",
+          "archiveDigest": "sha256:a08d19ec7af2e55c3a7feda412fd9d3ca168548e4dae93370b68a380015be1c2",
+          "nextEpoch": 400,
+          "receiptSha256": "17880e0b1dee36e896a4764b277723003bd0a0b4237c3c3cfff6bf4d202404c5",
+          "stateSha256": "16f0ccb94a985d29c1a43ed63aec5d42beef0cefd0e3429c0e077abd9c713d77"
+        },
+        {
+          "artifactId": 10844271079,
+          "artifactName": "guitar-techs-v4-p2-resume-e800",
+          "archiveDigest": "sha256:5cfa2ea1b2d1ef405c3dd323c81817153c3e905c858bb04e3215f804463edada",
+          "nextEpoch": 800,
+          "receiptSha256": "5969f6dcf2187e81953f93d74cb8a8de6330a9b801cc93e1ab68620fabdfdc1b",
+          "stateSha256": "c021b0d81a1e3e3cb105bd9426f6e6d0be559599bf228ec71f7a1af99e1cec11"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8000000,
+      "validationCheckpoints": 50
+    }
+  },
+  "structuralAdmission": {
+    "evidenceAccepted": true,
+    "modelTrainingEvidenceComplete": true,
+    "structuralBlockers": [],
+    "finalModelFileHashesMatchReceipts": true,
+    "embeddedSelectedStateHashesMatchReceipts": true,
+    "resumeStateHashesMatchReceipts": true,
+    "resumeChainsMatchFinalReceipts": true,
+    "sourceIdentitiesMatchFrozenV4Design": true,
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "publishedCheckpointLoaded": false,
+    "customerDeliveryEligible": false
+  },
+  "aggregateMetrics": {
+    "macroF1": 0.24352280312668845,
+    "macroCompleteness": 0.22215792779732485,
+    "crossPerformerF1AbsoluteGap": 0.08502721735507898,
+    "crossPerformerFrameAccuracyAbsoluteGap": 0.06621683774881029
+  },
+  "frozenMetricDecision": {
+    "developmentAccepted": false,
+    "blockers": [
+      "P1_TRAIN_P2_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_COMPLETENESS_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_F1_BELOW_THRESHOLD"
+    ],
+    "crossPerformerF1GapPassed": true,
+    "crossPerformerFrameAccuracyGapPassed": true,
+    "abstentionThresholdPassedBothFolds": true
+  },
+  "comparisonToV3": {
+    "macroF1Delta": 0.006071222205968674,
+    "macroF1RelativeChange": 0.02556825346214775,
+    "macroCompletenessDelta": 0.008411947240278161,
+    "p1TrainP2Validate": {
+      "precisionDelta": 0.00035099344245564934,
+      "recallDelta": 0.02168264567597683,
+      "f1Delta": 0.0038287157502277513,
+      "completenessDelta": -0.0016423940281568017,
+      "frameAccuracyDelta": 0.010032497907994875,
+      "contentF1Delta": {
+        "chords": -0.001901183057195388,
+        "scales": 0.013107955482448808,
+        "singlenotes": -0.020883568042370765,
+        "PalmMute": 0.06616749174917491
+      }
+    },
+    "p2TrainP1Validate": {
+      "precisionDelta": -0.0039015349634564933,
+      "recallDelta": 0.03867365018377217,
+      "f1Delta": 0.008313728661709652,
+      "completenessDelta": 0.018466288508713097,
+      "frameAccuracyDelta": -0.004246276012122158,
+      "contentF1Delta": {
+        "chords": -0.006475056187329797,
+        "scales": 0.04012763674195591,
+        "singlenotes": 0.009415775657219017,
+        "PalmMute": 0.024741975627311008
+      }
+    }
+  },
+  "comparisonToV2Aggregate": {
+    "macroF1Delta": 0.02731463505068606,
+    "macroF1RelativeChange": 0.1263348896830461,
+    "macroCompletenessDelta": 0.007197765020834224
+  },
+  "decision": {
+    "status": "FAIL",
+    "reason": "Both structurally valid performer-disjoint V4 folds remain below multiple pre-frozen development quality thresholds despite diagnosis-driven recall improvements.",
+    "p3OpeningEligibleForSeparateAuthorization": false,
+    "p3Opened": false,
+    "customerDeliveryEligible": false,
+    "thresholdRetuningAllowed": false,
+    "anotherRealDataRunRequiresNewDesignAndExplicitAuthorization": true
+  }
+}
