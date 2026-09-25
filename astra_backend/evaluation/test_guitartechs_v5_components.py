@@ -76,9 +76,11 @@ class GuitarTechsV5ComponentTests(unittest.TestCase):
         labels[0, 0, 1] = 5
         outputs = synthetic_outputs(labels, correct_logit=2.0)
         x = outputs["tablature"].reshape(1, 2, 6, MOD.NUM_CLASSES)
-        x[0, 1, 1, 0] = 5.0
+        with torch.no_grad():
+            x[0, 1, 1, 0] = 5.0
         _, bad = MOD.v5_sequence_loss(outputs, labels)
-        x[0, 1, 0, 5] = 8.0
+        with torch.no_grad():
+            x[0, 1, 0, 5] = 8.0
         _, good = MOD.v5_sequence_loss(outputs, labels)
         self.assertGreater(float(bad["identityMargin"]), float(good["identityMargin"]))
 
