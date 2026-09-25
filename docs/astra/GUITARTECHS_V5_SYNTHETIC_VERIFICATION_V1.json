@@ -1,0 +1,58 @@
+{
+  "candidateId": "astra_guitartechs_tabcnn_v5_temporal_multitask",
+  "date": "2026-09-25",
+  "decision": {
+    "nextGate": "Use the already-explicit user V5 run authorization only after this receipt is frozen and verified.",
+    "realTrainingAuthorized": false,
+    "syntheticDesignVerified": true
+  },
+  "execution": {
+    "paidComputeUsed": false,
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOptimizerStepOperations": 8
+  },
+  "guards": {
+    "alignmentAllowlistChanged": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false,
+    "p3Opened": false,
+    "realP1P2TrainingAuthorized": false,
+    "thresholdsRetuned": false
+  },
+  "media": {
+    "p1p2Accessed": false,
+    "p3Accessed": false
+  },
+  "runHeadSha": "9eb4c6f1f725fcba99e382d0a29174f69ca289b5",
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-guitar-techs-v5-synthetic-verification-v1",
+  "source": {
+    "componentTestsGitBlob": "557e9a741d60fa923df5aea3e46e20bfb2f04511",
+    "designGitBlob": "40326d1aa71a2d913f7c55f1936244a940f94281",
+    "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
+    "objectiveDecoderGitBlob": "fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "syntheticHarnessGitBlob": "cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea",
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+  },
+  "verification": {
+    "activityStateContinuationWithoutRepeatedOnset": "PASS",
+    "allTaskFiniteGradients": "PASS",
+    "causalTemporalContextPropagation": "PASS",
+    "componentUnitTests": "PASS",
+    "exactOutputHeadShapes": "PASS",
+    "fretChangeRequiresNewOnset": "PASS",
+    "learnedTaskWeightFiniteGradient": "PASS",
+    "onsetRequiredForNewEvent": "PASS",
+    "referenceAwarePitchEquivalentRouting": "PASS",
+    "singletonSuppression": "PASS",
+    "v5ResumeModelStateEquality": "PASS",
+    "v5ResumeOptimizerStateEquality": "PASS",
+    "v5ResumePythonNumpyTorchRngEquality": "PASS"
+  }
+}
