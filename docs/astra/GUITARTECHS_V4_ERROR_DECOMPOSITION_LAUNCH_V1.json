@@ -1,0 +1,25 @@
+{
+  "schema": "astra-guitar-techs-v4-error-decomposition-launch-v1",
+  "date": "2026-09-25",
+  "sourceRunId": 35961115171,
+  "scope": "P1/P2 frozen V4 development evidence diagnosis only",
+  "sourceIdentities": {
+    "developmentResultGitBlob": "f4ceb5858265f5e6d90bc1efe052a494e7449217",
+    "failureDiagnosisGitBlob": "c973b0699153cd7661dfe9b90613a0583e0602d0",
+    "diagnosticsGitBlob": "500fa8f9ead07c6d8b444c7ed8ed04e23494e97e",
+    "runnerGitBlob": "abefe90795579f292d532703a4dd95dac33f7f0f",
+    "objectiveDecoderGitBlob": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "trainerGitBlob": "33892a222825a2713d3955cc34139b730f4adc3d",
+    "workflowGitBlob": "d87b6c9a7167c4fa95517286a779c685b08d95d4"
+  },
+  "guards": {
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "purpose": "Reconstruct frozen V4 predictions with the frozen V4 decoder, decompose errors, compare directly against V3, and determine whether V5 should change architecture/representation rather than apply another global decoder tweak."
+}
