@@ -2247,3 +2247,133 @@ This block supersedes the V4 authorization-gate instructions and is the authorit
 7. P3 remains sealed regardless of V4 development outcome until separately authorized.
 
 This block supersedes the immediately preceding V4 launch-preflight status and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V4 real training complete — structural PASS / development FAIL — 2026-09-25
+
+- Authoritative V4 real-training run `35961115171`: **completed successfully**.
+- All serialized jobs passed:
+  - preflight;
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000.
+- Frozen V4 development result:
+  - `docs/astra/GUITARTECHS_V4_DEVELOPMENT_RESULT_V1.json`;
+  - Git blob `f4ceb5858265f5e6d90bc1efe052a494e7449217`;
+  - commit `87877ed481738b6523dd3d3e3359158b554d0d86`.
+- Frozen V4 result-level failure diagnosis:
+  - `docs/astra/GUITARTECHS_V4_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json`;
+  - Git blob `c973b0699153cd7661dfe9b90613a0583e0602d0`;
+  - commit `5bbc3df5008a626f8e40641eeec9c31d7c15e563`.
+
+### V4 structural admission
+
+- **PASS** with zero structural blockers.
+- Both final model SHA-256 values match their fold receipts.
+- Both embedded selected checkpoint state hashes match their receipts.
+- All four resume-state artifacts were downloaded and SHA-verified:
+  - P1 e400: `94f9451231d112a0f3544a2ae085ef3679cfc80741e69f11dee302089e14ee02`;
+  - P1 e800: `9ca1e1f0a8a69d0e3fd168ab1f759a3dc7b32968ad3829f28184af4186ac4e0f`;
+  - P2 e400: `16f0ccb94a985d29c1a43ed63aec5d42beef0cefd0e3429c0e077abd9c713d77`;
+  - P2 e800: `c021b0d81a1e3e3cb105bd9426f6e6d0be559599bf228ec71f7a1af99e1cec11`.
+- Resume receipts have the expected V4 schema, candidate, fold, epoch, optimizer-step, supervised-frame, frozen source identities and sealed guards.
+- Final fold evidence has the expected:
+  - candidate `astra_guitartechs_tabcnn_v4_recall_routing`;
+  - seed 20260921;
+  - 1,000 epochs;
+  - 2,000 optimizer steps;
+  - 200-frame sequences;
+  - batch 32 / microbatch 1;
+  - 50 validation checkpoints;
+  - P1/P2 capture counts 136/120;
+  - 41/40 training performances;
+  - 8.2M / 8.0M supervised frame positions.
+- P3 false, published checkpoint false, paid compute false, customer delivery false.
+
+### V4 frozen development metrics
+
+- P1->P2:
+  - selected checkpoint epoch **720**;
+  - precision **0.253222**;
+  - recall **0.352063**;
+  - F1 **0.286036**;
+  - completeness **0.273441**;
+  - frame accuracy **0.312087**;
+  - content F1: chords **0.262774**, scales **0.340622**, singlenotes **0.180278**, PalmMute **0.341584**.
+- P2->P1:
+  - selected checkpoint epoch **400**;
+  - precision **0.165136**;
+  - recall **0.271663**;
+  - F1 **0.201009**;
+  - completeness **0.170875**;
+  - frame accuracy **0.245870**;
+  - content F1: chords **0.129230**, scales **0.365168**, singlenotes **0.094804**, PalmMute **0.275348**.
+- Aggregate:
+  - macro F1 **0.243523** vs frozen minimum **0.70**;
+  - macro completeness **0.222158** vs frozen minimum **0.65**;
+  - cross-performer F1 gap **0.085027** -> PASS <= 0.10;
+  - cross-performer frame-accuracy gap **0.066217** -> PASS <= 0.10;
+  - abstention 0.0 both folds -> PASS.
+- Frozen metric decision: **FAIL**, 20 threshold blockers.
+- Both folds fail precision, recall, F1, completeness, frame accuracy, and all four per-content F1 minimums.
+- Thresholds were not changed or retuned.
+
+### V4 vs V3 evidence
+
+- Macro F1:
+  - **0.237452 -> 0.243523**;
+  - absolute +**0.006071**;
+  - about **+2.56% relative**.
+- Macro completeness:
+  - **0.213746 -> 0.222158**;
+  - absolute +**0.008412**.
+- P1->P2:
+  - recall +0.021683;
+  - F1 +0.003829;
+  - frame accuracy +0.010032;
+  - PalmMute F1 +0.066167;
+  - scales +0.013108;
+  - singlenotes -0.020884;
+  - chords -0.001901.
+- P2->P1:
+  - recall +0.038674;
+  - F1 +0.008314;
+  - completeness +0.018466;
+  - scales +0.040128;
+  - PalmMute +0.024742;
+  - singlenotes +0.009416;
+  - chords -0.006475.
+- Relative to V2, V4 macro F1 is about **12.6% higher**, but absolute quality remains far below the frozen acceptance target.
+- Both selected checkpoints moved earlier than V3 (P1 epoch 720, P2 epoch 400), so simply adding epochs is not evidence-supported.
+
+### Decision
+
+- **V4 development status: FAIL.**
+- P3 is **not eligible** to open and remains sealed.
+- No customer delivery.
+- No threshold rescue.
+- No further real P1/P2 optimizer run is authorized.
+- Any future real-data optimizer run requires a new frozen design and new explicit user authorization.
+
+### EXPLICIT NEXT STEP TO RESUME — zero-optimizer V4 P1/P2 error decomposition
+
+1. Do **not** launch another V4 optimizer run.
+2. Build/run a zero-optimizer V4 diagnostic against the completed V4 P1/P2 evidence only.
+3. Reconstruct exact V4 predictions with the frozen V4 decoder and compare directly against V3:
+   - event TP/FP/FN;
+   - onset-only precision/recall/F1;
+   - frame activity exact/FP/FN;
+   - pitch-correct wrong-string and string/fret confusion;
+   - fragmentation/merge behavior;
+   - event-end/duration error;
+   - chords/scales/singlenotes/PalmMute;
+   - performer-disjoint differences.
+4. Determine whether the V4 recall gains preserved V3's temporal improvements and whether remaining chord/singlenote/string-routing failures justify a V5 architecture or representation change rather than another global decoder tweak.
+5. No optimizer steps, no threshold retuning, no alignment changes, no P3, no paid compute, no `main`/Production/customer-delivery changes.
+6. Freeze that diagnostic before any V5 design hypothesis.
+7. Any V5 real P1/P2 run requires a new frozen design + synthetic verification + new explicit user authorization.
+
+This block supersedes the active-V4-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
