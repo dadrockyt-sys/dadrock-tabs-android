@@ -1,0 +1,22 @@
+{
+  "schema": "astra-guitar-techs-v5-synthetic-launch-v1",
+  "date": "2026-09-25",
+  "candidateId": "astra_guitartechs_tabcnn_v5_temporal_multitask",
+  "sourceIdentities": {
+    "designGitBlob": "4ec63cb6dad38b74e553b83033930289a52daefe",
+    "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
+    "objectiveDecoderGitBlob": "908e08f2798669fb99048390d373ccc5cae6f70a",
+    "componentTestsGitBlob": "e760600eb89aa93000894d3b11259a7179ae7e6a",
+    "syntheticHarnessGitBlob": "cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea",
+    "workflowGitBlob": "63d2650212f545ae70a0404213765b9fd5b2bb76"
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "p1p2MediaAccessAuthorized": false,
+    "paidComputeAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "purpose": "Exact-runtime offline verification of the research-driven V5 temporal multi-task architecture before activating the user's V5 P1/P2 run authorization."
+}
