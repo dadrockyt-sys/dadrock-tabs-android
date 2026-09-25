@@ -1,0 +1,187 @@
+{
+  "schema": "astra-guitar-techs-v5-design-v1",
+  "date": "2026-09-25",
+  "candidateId": "astra_guitartechs_tabcnn_v5_temporal_multitask",
+  "diagnosisBasis": {
+    "receipt": "docs/astra/GUITARTECHS_V4_ERROR_DECOMPOSITION_RESULT_V1.json",
+    "gitBlob": "15a31047147ef02d34b01a02436eee195695b231",
+    "sourceRunId": 36099697079,
+    "keyEvidence": [
+      "V4 recovered 1467 exact events and reduced event FN by 1467 versus V3.",
+      "V4 simultaneously added 8772 event FP, 1437 fragmented reference runs, and worsened onset-only F1.",
+      "Pitch-correct wrong-string errors improved by 686, so reference-aware routing should be retained.",
+      "P2->P1 scales improved strongly while chords added 5061 FP, proving the residual failure is content-dependent rather than one global threshold error.",
+      "Frozen V4 macro F1 remained 0.243523; decoder/objective-only changes show diminishing returns."
+    ]
+  },
+  "externalResearchBasis": [
+    {
+      "concept": "Temporal recurrent modeling after TabCNN-style acoustic features",
+      "rationale": "Published guitar-tab research reports improved tablature recall/F1 when recurrent temporal context is added to a framewise TabCNN-style system.",
+      "useInV5": "single-layer causal GRU over learned TabCNN acoustic embeddings"
+    },
+    {
+      "concept": "Separate onset and sustained-frame estimation",
+      "rationale": "Onsets-and-Frames-style transcription separates event starts from sustained activity instead of forcing one frame classifier to solve both.",
+      "useInV5": "dedicated six-string onset head plus separate six-string activity head"
+    },
+    {
+      "concept": "Cascaded auxiliary pitch/string evidence",
+      "rationale": "Recent guitar-transcription systems use auxiliary pitch/activity estimates to improve final string/fret routing.",
+      "useInV5": "44-bin multi-pitch head whose soft probabilities condition the final state head"
+    }
+  ],
+  "architecture": {
+    "acousticBackbone": "Pinned TabCNN convolutional stack only; published/random pretrained weights are not loaded.",
+    "acousticEmbedding": 128,
+    "temporalModel": {
+      "type": "causal GRU",
+      "layers": 1,
+      "hiddenSize": 96,
+      "bidirectional": false,
+      "reason": "Adds learned temporal state while allowing deterministic streaming inference and bounded public-CPU cost."
+    },
+    "auxiliaryHeads": {
+      "onset": "6 binary logits, one per physical string",
+      "activity": "6 binary logits, one per physical string",
+      "pitch": "44 binary logits for MIDI 40..83"
+    },
+    "finalStateHead": {
+      "output": "6 x 21 string/fret-or-silence logits",
+      "routingInput": "GRU hidden state concatenated with soft onset, activity, and pitch probabilities",
+      "intent": "Separate event admission, sustained activity, pitch evidence, and final physical-string/fret routing."
+    },
+    "learnedTaskWeighting": {
+      "method": "bounded homoscedastic log-variance weighting",
+      "tasks": [
+        "state",
+        "onset",
+        "activity",
+        "pitch"
+      ],
+      "bounds": [
+        -2,
+        2
+      ],
+      "validationDataInfluence": false
+    },
+    "inputRepresentation": {
+      "feature": "existing frozen 192-bin CQT only",
+      "melOrHcqtAdded": false,
+      "reason": "Isolate the architectural hypothesis before changing both model and representation."
+    }
+  },
+  "objective": {
+    "stateCrossEntropy": {
+      "activeWeight": 1.15,
+      "reason": "Back off V4's 1.30 global active pressure now that activity/onset have dedicated heads."
+    },
+    "onsetBinaryCrossEntropy": {
+      "positiveWeight": 2
+    },
+    "activityBinaryCrossEntropy": {
+      "positiveWeight": 1.2
+    },
+    "pitchBinaryCrossEntropy": {
+      "positiveWeight": 3
+    },
+    "continuityRegularizer": {
+      "lambda": 0.05
+    },
+    "referenceAwarePitchEquivalentIdentityMargin": {
+      "lambda": 0.25,
+      "margin": 0.15,
+      "semantics": "Preserve the V4 repair: never penalize MASK or a legitimate same-pitch reference note on another string."
+    },
+    "contentWeighting": {
+      "method": "same bounded inverse-square-root training-performance weighting",
+      "minimum": 0.75,
+      "maximum": 1.5
+    }
+  },
+  "decoder": {
+    "type": "onset-gated multi-task temporal decoder",
+    "newEventRequires": {
+      "onsetProbabilityMin": 0.5,
+      "activityProbabilityMin": 0.5,
+      "stateProbabilityMin": 0.3,
+      "stateVsSilenceRatioMin": 0.7
+    },
+    "continuationRequires": {
+      "activityProbabilityMin": 0.45,
+      "currentStateProbabilityMin": 0.2,
+      "currentStateVsSilenceRatioMin": 0.6
+    },
+    "fretChangeRequiresNewOnset": true,
+    "maxSameFretSilenceGapFrames": 2,
+    "minimumActiveRunFrames": 2,
+    "reason": "Recovered activity may continue without repeated onset evidence, but every new event/state transition is explicitly onset-gated to attack chord over-generation."
+  },
+  "trainingBudget": {
+    "seed": 20260921,
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "resumeBoundariesEpochs": [
+      400,
+      800,
+      1000
+    ],
+    "performanceBalancedEpoch": true,
+    "deterministicAcceptedViewRotation": true,
+    "deterministicSegmentStart": true,
+    "unchangedPopulationAndExposureFromV4": true
+  },
+  "source": {
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
+    "objectiveDecoderGitBlob": "908e08f2798669fb99048390d373ccc5cae6f70a",
+    "componentTestsGitBlob": "e760600eb89aa93000894d3b11259a7179ae7e6a",
+    "syntheticHarnessGitBlob": "cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea",
+    "v2BaseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "v2SamplingGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "thresholdsReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "syntheticVerificationRequirements": [
+    "Exact pinned TabCNN convolutional source is used.",
+    "V5 output head shapes are exact.",
+    "All four supervised tasks and learned task weights receive finite gradients.",
+    "GRU propagates prior-frame context into later state predictions.",
+    "State/activity evidence alone cannot create a new event without onset evidence.",
+    "A valid onset can initiate an event which activity/state evidence then sustains without repeated onset.",
+    "A fret change requires new onset evidence.",
+    "Singleton event suppression and same-fret gap cleanup remain bounded.",
+    "Reference-aware same-pitch routing semantics remain correct.",
+    "Uninterrupted and serialized-resumed V5 optimization are bit-exact for model, optimizer and Python/NumPy/Torch RNG state.",
+    "P3/customer/paid-compute/main/threshold/alignment guards remain closed."
+  ],
+  "realEvaluationProtocol": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": [
+      "P1->P2",
+      "P2->P1"
+    ],
+    "developmentMetricThresholdsChanged": false,
+    "alignmentAllowlistChanged": false,
+    "p3Use": false
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "nextGate": "Dedicated V5 exact-runtime synthetic verification must pass before the user's V5 real-run authorization can be activated."
+}
