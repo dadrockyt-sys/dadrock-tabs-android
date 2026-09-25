@@ -141,7 +141,7 @@
     "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
     "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
     "objectiveDecoderGitBlob": "fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16",
-    "componentTestsGitBlob": "e760600eb89aa93000894d3b11259a7179ae7e6a",
+    "componentTestsGitBlob": "557e9a741d60fa923df5aea3e46e20bfb2f04511",
     "syntheticHarnessGitBlob": "cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea",
     "v2BaseTrainerGitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
     "v2SamplingGitBlob": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
@@ -188,6 +188,13 @@
     {
       "runId": 36115028321,
       "failure": "Package import path only: objective_decoder imported guitartechs_training_v5.model as a top-level module during unittest package import.",
+      "semanticDesignChanged": false,
+      "p1p2MediaAccessed": false,
+      "optimizerStepsExecuted": 0
+    },
+    {
+      "runId": 36115263258,
+      "failure": "Unit-test harness attempted in-place mutation through a leaf tensor view; production V5 model/objective code was not implicated.",
       "semanticDesignChanged": false,
       "p1p2MediaAccessed": false,
       "optimizerStepsExecuted": 0
