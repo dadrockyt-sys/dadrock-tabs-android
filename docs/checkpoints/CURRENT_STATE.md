@@ -2408,3 +2408,140 @@ This block supersedes the active-V4-run instructions and is the authoritative ne
 6. P3 remains sealed and no real optimizer run is authorized.
 
 This block supersedes the V4-completion next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V4 zero-optimizer diagnosis frozen — V5 architecture/representation direction — 2026-09-25
+
+- Authoritative V4 diagnosis run `36099697079`: **SUCCESS**.
+- Diagnostic job `107959365997`: **SUCCESS**.
+- Raw artifact:
+  - `guitar-techs-v4-error-decomposition-v1`;
+  - artifact ID `10850122489`;
+  - archive digest `sha256:db83ba548adf88660b9eddde2d02dbfb31b7aeb97db30784e2fa5d3fbfabda70`;
+  - JSON SHA-256 `4f218ad7527bcf2a2f574fb78e54031abfdbfd95c33e558d7df01d1f8ea223d2`.
+- Frozen V4 decomposition/comparison receipt:
+  - `docs/astra/GUITARTECHS_V4_ERROR_DECOMPOSITION_RESULT_V1.json`;
+  - Git blob `15a31047147ef02d34b01a02436eee195695b231`;
+  - commit `5661e541dbe9fee5349a78738e0247614c7b327b`.
+- Both frozen V4 fold metrics reproduced exactly: **PASS**.
+- Guards:
+  - optimizer steps executed 0;
+  - model weights modified false;
+  - thresholds retuned false;
+  - alignment allowlist changed false;
+  - P3 opened false;
+  - paid compute false;
+  - main/Production unchanged;
+  - customer delivery false.
+
+### Aggregate V4 diagnostic
+
+- Reference events: **49,163**.
+- Predicted events: **77,115**.
+- Exact event TP: **16,035**.
+- Event FP: **61,080**.
+- Event FN: **33,128**.
+- Event micro:
+  - precision **0.207936**;
+  - recall **0.326160**;
+  - F1 **0.253963**.
+- Onset-only:
+  - matched **30,728**;
+  - precision **0.398470**;
+  - recall **0.625023**;
+  - F1 **0.486672**.
+- Frame activity:
+  - predicted active **2,650,756**;
+  - exact active **1,478,517**;
+  - activity FP **513,128**;
+  - activity FN **1,485,757**;
+  - exact-active precision **0.557772**;
+  - exact-active recall **0.408049**.
+- Temporal:
+  - fragmented reference runs **5,656**;
+  - predicted/reference run ratio **1.568558**;
+  - mean start abs error **21.60 ms**;
+  - mean end abs error **642.39 ms**;
+  - mean duration abs error **657.47 ms**;
+  - mean reference overlap **0.705554**.
+- Identity:
+  - exact string/fret **16,035**;
+  - fret-wrong same-string **2,475**;
+  - string-wrong same-fret **512**;
+  - both string+fret wrong **11,299**;
+  - pitch-correct wrong-string **8,009**;
+  - unmatched predicted **46,794**;
+  - unmatched reference **18,842**.
+
+### V4 vs V3 diagnosis
+
+- V4 recovered recall:
+  - exact event TP **+1,467**;
+  - event FN **-1,467**;
+  - event recall **+0.029840**;
+  - onset-only recall **+0.027277**;
+  - frame activity FN **-80,152**.
+- V4 improved routing:
+  - pitch-correct wrong-string **8,695 -> 8,009** (-686);
+  - both-string-and-fret-wrong **-525**;
+  - exact string/fret **+1,467**.
+- But V4 partially undid V3 temporal/precision gains:
+  - predicted events **+10,239**;
+  - event FP **+8,772**;
+  - event precision **-0.009900**;
+  - onset-only precision **-0.040955**;
+  - onset-only F1 **-0.019830**;
+  - fragmented reference runs **+1,437**;
+  - predicted/reference run ratio **1.360 -> 1.569**;
+  - mean end error **+54.25 ms**;
+  - mean duration error **+56.77 ms**;
+  - mean reference overlap **-0.042506**.
+- Aggregate event micro F1 still rose slightly **+0.002875**, showing that the recall recovery was real but expensive.
+
+### Fold/content localization
+
+- P1->P2:
+  - frame activity improved, but onset/event precision and temporal segmentation regressed;
+  - chords: +208 TP but **+2,744 FP**, event F1 down;
+  - scales: FP fell 649 and event F1 improved slightly;
+  - singlenotes: event/onset F1 worsened;
+  - PalmMute: event F1 improved strongly.
+- P2->P1:
+  - the intended recall recovery is strongest here;
+  - scales: **+977 TP**, +0.0386 event F1, +0.0447 onset-only F1;
+  - chords: +212 TP but **+5,061 FP**, event F1 down;
+  - singlenotes and PalmMute improved modestly.
+- This confirms the remaining problem is strongly content-dependent rather than one global threshold/calibration error.
+
+### Decision from V4 diagnosis
+
+- V4 verdict remains **FAIL**.
+- No further V4 real optimizer run is authorized.
+- Another global start/continue threshold adjustment is **not** the evidence-supported next move.
+- Simply adding epochs is **not** supported.
+- V5 should test a bounded **architecture/representation change** while preserving the successful V3/V4 invariants:
+  - retain reference-aware string-routing semantics;
+  - retain temporal run cleanup principles;
+  - separate onset/activity estimation from fret/string state classification;
+  - add learned temporal context/state modeling beyond framewise TabCNN output;
+  - add explicit string-aware/pitch-aware identity supervision;
+  - avoid validation-threshold tuning disguised as content calibration.
+- P3 remains sealed.
+
+### EXPLICIT NEXT STEP TO RESUME — V5 offline design gate
+
+1. Do **not** launch V4 or V5 real optimizer training.
+2. Freeze a bounded V5 architecture/representation design based on the V4 diagnosis.
+3. Preferred design question: can a small temporal/onset head plus explicit string-identity auxiliary objective recover event admission without recreating chord over-generation?
+4. Keep the exact frozen P1/P2 population, thresholds, alignment allowlist and public-CPU development budget unchanged unless a separate design receipt explicitly proves a justified offline change.
+5. Build exact-runtime synthetic/unit verification for:
+   - onset/activity head behavior;
+   - temporal context;
+   - string-aware identity loss;
+   - resume equality;
+   - finite gradients;
+   - preservation of P3/threshold/alignment/customer guards.
+6. Only after V5 design + synthetic verification are frozen may real P1/P2 authorization be requested.
+7. P3 remains separately sealed.
+
+This block supersedes the active V4 diagnosis instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
