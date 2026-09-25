@@ -2377,3 +2377,34 @@ This block supersedes the immediately preceding V4 launch-preflight status and i
 7. Any V5 real P1/P2 run requires a new frozen design + synthetic verification + new explicit user authorization.
 
 This block supersedes the active-V4-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V4 zero-optimizer error decomposition active — 2026-09-25
+
+- Per the frozen V4 FAIL next-step gate, a zero-optimizer V4 P1/P2 decomposition has been launched.
+- Diagnostic runner:
+  - `astra_backend/guitartechs_training_v4/run_v4_diagnostics.py`;
+  - Git blob `abefe90795579f292d532703a4dd95dac33f7f0f`.
+- Diagnostic workflow:
+  - `.github/workflows/guitar-techs-v4-error-decomposition.yml`;
+  - Git blob `d87b6c9a7167c4fa95517286a779c685b08d95d4`.
+- Launch receipt:
+  - `docs/astra/GUITARTECHS_V4_ERROR_DECOMPOSITION_LAUNCH_V1.json`;
+  - launch commit `58077fcf9be53d257c3ca1bcf604a2ac1cca3785`.
+- Single authoritative V4 diagnosis run: **`36099697079`**.
+- Diagnostic job: `107959365997`.
+- Current state at checkpoint save: checkout in progress; zero-optimizer/source-identity guard still precedes any P1/P2 media access.
+- No optimizer steps are authorized.
+- P3 remains sealed.
+- No thresholds, alignment, Production, paid compute, or customer-delivery changes are authorized.
+
+### EXPLICIT NEXT STEP TO RESUME — V4 diagnosis run 36099697079
+
+1. Inspect run `36099697079` first; do not launch a duplicate diagnosis.
+2. Require zero-optimizer/source-identity preflight to pass.
+3. Require exact runtime, pinned TabCNN source, frozen V4 fold artifacts, and exact 256-path population to pass.
+4. Require exact reproduction of both frozen V4 fold metrics before accepting the decomposition.
+5. Freeze the V4 decomposition and compare directly with V3 before any V5 design is frozen.
+6. P3 remains sealed and no real optimizer run is authorized.
+
+This block supersedes the V4-completion next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
