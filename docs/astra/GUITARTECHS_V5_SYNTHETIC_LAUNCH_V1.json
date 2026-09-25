@@ -3,12 +3,12 @@
   "date": "2026-09-25",
   "candidateId": "astra_guitartechs_tabcnn_v5_temporal_multitask",
   "sourceIdentities": {
-    "designGitBlob": "559a1c4264fbb56d89f9f4b51200bf0097c995f4",
+    "designGitBlob": "40326d1aa71a2d913f7c55f1936244a940f94281",
     "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
     "objectiveDecoderGitBlob": "fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16",
-    "componentTestsGitBlob": "e760600eb89aa93000894d3b11259a7179ae7e6a",
+    "componentTestsGitBlob": "557e9a741d60fa923df5aea3e46e20bfb2f04511",
     "syntheticHarnessGitBlob": "cd5d25c6e70e02a9cd0fa342819380c90e3cb9ea",
-    "workflowGitBlob": "b326745b89bb6b6bf7818b9e7b6d9340201af54e"
+    "workflowGitBlob": "e8cec289e26320a37ef9319b4d59bcec79216830"
   },
   "guards": {
     "realP1P2TrainingAuthorized": false,
@@ -25,6 +25,15 @@
       "conclusion": "failure",
       "failureStage": "Run deterministic V5 component unit tests",
       "failure": "Package import path only; no semantic model/objective change.",
+      "p1p2MediaAccessed": false,
+      "realOptimizerStepsExecuted": 0,
+      "p3Opened": false
+    },
+    {
+      "runId": 36115263258,
+      "conclusion": "failure",
+      "failureStage": "Run deterministic V5 component unit tests",
+      "failure": "Test-only leaf tensor in-place mutation; production model/objective unchanged.",
       "p1p2MediaAccessed": false,
       "realOptimizerStepsExecuted": 0,
       "p3Opened": false
