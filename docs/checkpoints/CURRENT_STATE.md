@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **ATTEMPT 1 PREP FAILURE PRESERVED; SELECTOR REPAIR EXACT-RUNTIME VERIFIED; V2 RETRY REQUEST FROZEN; NO SECOND REAL RUN AUTHORIZED**  
+Status: **V2 CAPPED P1 RETRY AUTHORIZED AND LAUNCHED ONCE; RUN 36277631151 IN PROGRESS; NO SECOND V2 LAUNCH/RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -162,4 +162,22 @@ The V2 workflow triggers only on a future commit of `docs/astra/TINY_FIT_PILOT_R
 If explicitly authorized, verify every V2-pinned blob, create `TINY_FIT_PILOT_REAL_AUTHORIZATION_V2.json` matching the request exactly, then create exactly one source-pinned `TINY_FIT_PILOT_REAL_LAUNCH_V2.json`. One retry only; zero automatic retries.
 
 Attempt 1 remains non-model evidence: 0 optimizer steps. P2/P3 remain closed and full training remains stopped.
+
+## V2 capped P1 retry — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the frozen V2 request in chat on 2026-09-26.
+
+Created:
+- `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V2.json`
+- `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V2.json`
+
+Authorization commit: `5942493a9fc373e5fe20f9c7aeee21d58e7caedc`.  
+Launch commit: `891bbcc00391163fc4820235886d3ca1be76c113`.  
+Canonical V2 workflow run: **36277631151**, job **108503320536**.
+
+Scope remains exactly frozen: four specified P1 training performances, one view each, 200 frames/example, at most 200 optimizer steps total, 2700-second train/eval cap, 3600-second job cap, one candidate, zero automatic retries, zero paid compute. P2/P3 remain closed; full training remains stopped.
+
+**Do not create another V2 launch, rerun this workflow, extend optimizer steps, retune thresholds, open P2/P3, or restart full training without new explicit authorization.**
+
+Next action: inspect only run **36277631151**. Preserve its result/failure evidence when complete. If it fails, diagnose that existing run only. If it passes, preserve evidence and stop; no cross-performer screen is authorized yet.
 
