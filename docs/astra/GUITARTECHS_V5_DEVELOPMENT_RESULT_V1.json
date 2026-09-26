@@ -1,0 +1,239 @@
+{
+  "schema": "astra-guitar-techs-v5-development-result-v1",
+  "date": "2026-09-26",
+  "candidateId": "astra_guitartechs_tabcnn_v5_temporal_multitask",
+  "sourceRun": {
+    "runId": 36115823434,
+    "headSha": "71686e727b024c051211d2565899a5e2fb2fe5a4",
+    "branch": "astra-work",
+    "allSerializedJobsSuccessful": true
+  },
+  "frozenEvidence": {
+    "designGitBlob": "40326d1aa71a2d913f7c55f1936244a940f94281",
+    "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
+    "objectiveDecoderGitBlob": "fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16",
+    "syntheticVerificationGitBlob": "a31c6a71bcaab9fb7a9d1b9ca60cc6d1f53e25b0",
+    "authorizationGitBlob": "60423cf04f2b26e2cacf0aea3b087b795b69338b",
+    "v4ErrorDecompositionResultGitBlob": "15a31047147ef02d34b01a02436eee195695b231",
+    "developmentMetricEvaluatorGitBlob": "f2d3b799b841f7aac2a0aac17e904d9563c1430e",
+    "thresholdReceiptSha256": "fba6c921f17ec2ba3bace55b50823ea33bbf7828b61c0705da78b48ac8cfbe15",
+    "thresholdGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "alignmentAcceptedCaptureKeysSha256": "f520f5ffe3daf44da9bad1d145adaa1c9ff0bb662141b027f85b8c7bc827eabc"
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "artifact": {
+        "id": 10879678046,
+        "name": "guitar-techs-v5-p1-final-development-result",
+        "archiveDigest": "sha256:01a9a0708ee132be4b978389d07f0290e32d2e68322b3384feecb83534c23d96"
+      },
+      "resultJsonSha256": "d6ee3891746a978e0979fbdd1dda73b4b95b5ce07f59dfb7a3abe8a5ab59cf56",
+      "modelSha256": "1ddf4d3bb3551bbdc43ae7fcf6a5df93766ac4f668db65247ff75da6853b449a",
+      "selectedCheckpointEpoch": 1000,
+      "selectedCheckpointOptimizerSteps": 2000,
+      "selectedStateSha256": "571be9fa780d9213c03a81c2dfef00e0f00215a70d3003069f924090008cfb7a",
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.24784418085980403,
+        "recall": 0.016938980988297346,
+        "f1": 0.030810907400138303,
+        "completeness": 0.020273601494787297,
+        "frameAccuracy": 0.01806681418724517,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.014308561959315977,
+          "scales": 0.0669993027200062,
+          "singlenotes": 0.04801869107870447,
+          "PalmMute": 0.008403361344537815
+        }
+      },
+      "learnedTaskLogVarsAtSelectedState": [
+        -1.0254,
+        -2.0006,
+        -1.9208,
+        -2.0005
+      ],
+      "resumeChain": [
+        {
+          "artifactId": 10866164451,
+          "artifactName": "guitar-techs-v5-p1-resume-e400",
+          "archiveDigest": "sha256:41c78d779c0755bc0e1211a339a62da43181d15cf1b4cf5d83f3f99b6344669f",
+          "nextEpoch": 400,
+          "receiptSha256": "695a40816e284f6b587f19d35780d02aa0702e77e4b5017ddfba5cb6eb24afed",
+          "stateSha256": "f79ce3a82a93a7d2face64f52889ed849c660c39f16c536ae02fc4edd03e15fa"
+        },
+        {
+          "artifactId": 10876260249,
+          "artifactName": "guitar-techs-v5-p1-resume-e800",
+          "archiveDigest": "sha256:bcc03af3ff5ebb1e68b5a6cc8fefcfc335ba0424ace62a402fbf80cae110df23",
+          "nextEpoch": 800,
+          "receiptSha256": "07200ac45366f694348dfde627b837193d85cab12b9812f3d955526a57baa174",
+          "stateSha256": "9f19b4969904b610962440665c69ea6a29feb20ada0fc5c00900819919a31ec6"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8200000,
+      "validationCheckpoints": 50
+    },
+    "p2-train-p1-validate": {
+      "artifact": {
+        "id": 10898108088,
+        "name": "guitar-techs-v5-p2-final-development-result",
+        "archiveDigest": "sha256:22c40ebf9f123f93f6769c3b64a3df19335fc9c9324f079a9a99e13307d45de6"
+      },
+      "resultJsonSha256": "1652126e8aa16944192db557d8d741896174a5f9a06b4e07a7d37a37be12b4c1",
+      "modelSha256": "2a92d00b5347b73479c8aaa03de4ebd19519f36fa2d316cbf9349e990588020f",
+      "selectedCheckpointEpoch": 960,
+      "selectedCheckpointOptimizerSteps": 1920,
+      "selectedStateSha256": "947cf9b8aac9366f5ff92bf02a0402c78fe57082f3b707c168f516560bc13adb",
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false,
+      "fullValidationMetrics": {
+        "precision": 0.35564354404693954,
+        "recall": 0.05895087740137589,
+        "f1": 0.09745126982915348,
+        "completeness": 0.0475220412451454,
+        "frameAccuracy": 0.040103540684759534,
+        "abstentionRate": 0,
+        "contentF1": {
+          "chords": 0.062236519837806266,
+          "scales": 0.18174146964845397,
+          "singlenotes": 0.04364923852392171,
+          "PalmMute": 0.09056915306915307
+        }
+      },
+      "learnedTaskLogVarsAtSelectedState": [
+        -1.2954,
+        -2.0031,
+        -2.0029,
+        -2.0024
+      ],
+      "resumeChain": [
+        {
+          "artifactId": 10889393976,
+          "artifactName": "guitar-techs-v5-p2-resume-e400",
+          "archiveDigest": "sha256:1185ca1aa9cd21e8ecfb100e4b9decbe88d156fe81825bb83ffbbfb05d261b9e",
+          "nextEpoch": 400,
+          "receiptSha256": "dd778b80e03eff27d0996f43e586cd578e2927afc75e5b06e85e1a94c8448dde",
+          "stateSha256": "7c199cb04e8f5b53d0cfd1754a13f5c701b97ca3d295fd898fc3fd682801b447"
+        },
+        {
+          "artifactId": 10894109045,
+          "artifactName": "guitar-techs-v5-p2-resume-e800",
+          "archiveDigest": "sha256:a493680f89b9b48aa5d58a6976b640e9061faf9f2bba96815bafd54bc3c7150a",
+          "nextEpoch": 800,
+          "receiptSha256": "21b5488708cfb3270b3ec6cc0f342bffed32b9c6685d9319c115fa3606a61938",
+          "stateSha256": "f0a0bc97ef5ab8b0dbcab10f203dab7fe0bcd443ecb821f5144a227670fe65c7"
+        }
+      ],
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8000000,
+      "validationCheckpoints": 50
+    }
+  },
+  "structuralAdmission": {
+    "evidenceAccepted": true,
+    "modelTrainingEvidenceComplete": true,
+    "structuralBlockers": [],
+    "finalModelFileHashesMatchReceipts": true,
+    "embeddedSelectedStateHashesMatchReceipts": true,
+    "resumeStateHashesMatchReceipts": true,
+    "resumeChainsMatchFinalReceipts": true,
+    "sourceIdentitiesMatchFrozenV5Design": true,
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "publishedCheckpointLoaded": false,
+    "customerDeliveryEligible": false
+  },
+  "aggregateMetrics": {
+    "macroF1": 0.06413108861464589,
+    "macroCompleteness": 0.033897821369966344,
+    "crossPerformerF1AbsoluteGap": 0.06664036242901517,
+    "crossPerformerFrameAccuracyAbsoluteGap": 0.022036726497514363
+  },
+  "frozenMetricDecision": {
+    "developmentAccepted": false,
+    "blockers": [
+      "P1_TRAIN_P2_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P1_TRAIN_P2_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_CHORDS_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_COMPLETENESS_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_FRAME_ACCURACY_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PALMMUTE_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_PRECISION_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_RECALL_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SCALES_F1_BELOW_THRESHOLD",
+      "P2_TRAIN_P1_VALIDATE_SINGLENOTES_F1_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_COMPLETENESS_BELOW_THRESHOLD",
+      "TWO_FOLD_MACRO_F1_BELOW_THRESHOLD"
+    ],
+    "crossPerformerF1GapPassed": true,
+    "crossPerformerFrameAccuracyGapPassed": true,
+    "abstentionThresholdPassedBothFolds": true
+  },
+  "comparisonToV4": {
+    "macroF1Delta": -0.17939171451204255,
+    "macroF1RelativeChange": -0.7366526346147435,
+    "macroCompletenessDelta": -0.18826010642735852,
+    "p1TrainP2Validate": {
+      "precisionDelta": -0.0053774712750460085,
+      "recallDelta": -0.33512367372110463,
+      "f1Delta": -0.25522550440408964,
+      "completenessDelta": -0.2531676502260519,
+      "frameAccuracyDelta": -0.2940202188627955,
+      "contentF1Delta": {
+        "chords": -0.2484655666495081,
+        "scales": -0.2736229574963915,
+        "singlenotes": -0.1322591562483722,
+        "PalmMute": -0.3331807970713037
+      }
+    },
+    "p2TrainP1Validate": {
+      "precisionDelta": 0.19050786368204795,
+      "recallDelta": -0.21271219682610876,
+      "f1Delta": -0.1035579246199955,
+      "completenessDelta": -0.12335256262866509,
+      "frameAccuracyDelta": -0.2057666546164708,
+      "contentF1Delta": {
+        "chords": -0.06699328254931755,
+        "scales": -0.1834268936763618,
+        "singlenotes": -0.05115427748530555,
+        "PalmMute": -0.18477927898659607
+      }
+    }
+  },
+  "auditObservations": {
+    "p1CheckpointSelectionF1Maximum": {
+      "epoch": 1000,
+      "selectionSubsetF1": 0.053304267282940264
+    },
+    "p2CheckpointSelectionF1Maximum": {
+      "epoch": 960,
+      "selectionSubsetF1": 0.1325815472817859
+    },
+    "earlyCheckpoints": {
+      "observation": "Both folds had many initial checkpoint-selection F1 values at exactly 0.0 and only recovered weakly late in training."
+    },
+    "learnedTaskWeights": {
+      "observation": "At selected states, onset/activity/pitch task log-variance parameters were at or slightly beyond the frozen clamp floor near -2.0; this is diagnostic evidence only and does not alter the frozen verdict."
+    }
+  },
+  "decision": {
+    "status": "FAIL",
+    "reason": "Structurally valid V5 temporal multi-task training completed, but both performer-disjoint folds suffered severe recall/completeness collapse and remained below all substantive frozen quality thresholds.",
+    "p3OpeningEligibleForSeparateAuthorization": false,
+    "p3Opened": false,
+    "customerDeliveryEligible": false,
+    "thresholdRetuningAllowed": false,
+    "anotherRealDataRunRequiresNewDesignAndExplicitAuthorization": true
+  }
+}
