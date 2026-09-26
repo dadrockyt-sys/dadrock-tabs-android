@@ -1,10 +1,11 @@
 name: Astra tiny-fit capped P1 pilot
 
-# Intentionally no workflow_dispatch. This workflow remains inert until a future
-# commit adds the separately authorized launch document named below.
+# Intentionally no workflow_dispatch. This remains inert until a future,
+# separately authorized launch document is committed.
 on:
   push:
-    branches: [astra-work]
+    branches:
+      - astra-work
     paths:
       - 'docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json'
 
@@ -29,30 +30,158 @@ jobs:
         with:
           python-version: '3.10.15'
 
-      - name: Verify authorization launch and frozen source identities before media access
+      - name: Verify explicit authorization and pinned identities before media access
         shell: bash
         run: |
           set -euo pipefail
           test -f docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json
           test -f docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json
-\İYˆØÜËØ\İ˜KÕS–WÑ’UÔSÕÔÖS•UP×Õ‘T’Q’PĞUSÓ—ÕŒKšœÛÛ‚ˆ]ÛˆH	ÔIÂˆ[\ÜœÛÛ‹İXœ›ØÙ\ÜÂ‚ˆYˆ›ØŠ]
-N‚ˆ™]\›ˆİXœ›ØÙ\ÜË˜ÚXÚ×Ûİ]]
-ÉÙÚ]	Ë	Ú\Ú[Øš™Xİ	Ë]K^UYJKœİš\
+          test -f docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json
+          python - <<'PY'
+          import json, subprocess
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+          design=json.load(open('docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'))
+          synth=json.load(open('docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json'))
+          auth=json.load(open('docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json'))
+          launch=json.load(open('docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json'))
+          capture_keys=[
+              'P1|chords|Drop3_7|directinput',
+              'P1|scales|Ab|directinput',
+              'P1|singlenotes|allsinglenotes|directinput',
+              'P1|techniques|PalmMute|directinput',
+          ]
+          assert design['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert synth['decision']['exactRuntimeSyntheticVerified'] is True
+          assert synth['decision']['realTrainingAuthorized'] is False
+          assert auth['schema'] == 'astra-tiny-fit-pilot-real-authorization-v1'
+          assert auth['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert auth['authorization']['realP1TrainingAuthorized'] is True
+          assert auth['authorization']['realOptimizerStepsAuthorized'] == 200
+          assert auth['authorization']['p2Authorized'] is False
+          assert auth['authorization']['p3Authorized'] is False
+          assert auth['authorization']['paidComputeAuthorized'] is False
+          assert auth['authorization']['automaticFullTrainingAuthorized'] is False
+          assert auth['scope']['captureKeys'] == capture_keys
+          assert auth['scope']['maxUnderlyingPerformances'] == 4
+          assert auth['scope']['maxViewsPerPerformance'] == 1
+          assert auth['scope']['maxFramesPerExample'] == 200
+          assert auth['scope']['maxOptimizerStepsTotal'] == 200
+          assert launch['schema'] == 'astra-tiny-fit-pilot-real-launch-v1'
+          assert launch['candidateId'] == auth['candidateId']
+          assert launch['singleLaunch'] is True
+          expected={
+            'authorizationGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json',
+            'designGitBlob':'docs/astra/TINY_FIT_PILOT_DESIGN_V1.json',
+            'syntheticVerificationGitBlob':'docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json',
+            'preparedEventAdapterGitBlob':'astra_backend/evaluation/prepared_event_adapter_v1.py',
+            'tinyFitHarnessGitBlob':'astra_backend/tiny_fit_pilot_v1.py',
+            'runtimeLockGitBlob':'astra_backend/tabcnn_runtime/requirements.lock.txt',
+            'alignmentCorrectionsGitBlob':'docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json',
+            'workflowGitBlob':'.github/workflows/astra-tiny-fit-pilot-real.yml',
+          }
+          for key,path in expected.items():
+              assert launch['sourceIdentities'][key] == blob(path), (key,path)
+          PY
+          echo "TINY_FIT_REAL_P1_AUTHORIZED=true"
+          echo "TINY_FIT_MAX_OPTIMIZER_STEPS=200"
+          echo "P2_OPENED=false"
+          echo "P3_OPENED=false"
 
-B‚ˆ]]ZœÛÛ‹›ØY
-Ü[Š	ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÔ‘PSĞUUÔ’VUSÓ—ÕŒKšœÛÛ‰ÊJBˆ][˜ÚZœÛÛ‹›ØY
-Ü[Š	ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÔ‘PSÓUSÒÕŒKšœÛÛ‰ÊJBˆŞ[ZœÛÛ‹›ØY
-Ü[Š	ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÔÖS•UP×Õ‘T’Q’PĞUSÓ—ÕŒKšœÛÛ‰ÊJBˆ\ÚYÛZœÛÛ‹›ØY
-Ü[Š	ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÑTÒQÓ—ÕŒKšœÛÛ‰ÊJBˆ\ÜÙ\]]ÉÜØÚ[XI×HOH	Ø\İ˜K][KYš]\[İ\™X[X]]Üš^˜][Û‹]ŒIÂˆ\ÜÙ\]]ÉØØ[™Y]RY	×HOH	Ø\İ˜Wİ[WÙ]™[Ùš]İŒIÂˆ\ÜÙ\]]ÉØ]]Üš^˜][Û‰×VÉÜ™X[U˜Z[š[™Ğ]]Üš^™Y	×H\ÈYBˆ\ÜÙ\]]ÉØ]]Üš^˜][Û‰×VÉÜ]]Üš^™Y	×H\È˜[ÙBˆ\ÜÙ\]]ÉØ]]Üš^˜][Û‰×VÉÜĞ]]Üš^™Y	×H\È˜[ÙBˆ\ÜÙ\]]ÉØ]]Üš^˜][Û‰×VÉÜZYÛÛ\]P]]Üš^™Y	×H\È˜[ÙBˆ\ÜÙ\]]ÉÜØÛÜI×VÉØØ\\™RÙ^\É×HOH\ÚYÛ–ÉÜØÛÜI×VÉØØ\\™RÙ^\É×Bˆ\ÜÙ\]]ÉÜØÛÜI×VÉÛX^Ü[Z^™\”İ\Õİ[	×HOHŒˆ\ÜÙ\]]ÉÜØÛÜI×VÉÛX^œ˜[Y\Ô\‘^[\I×HOHŒˆ\ÜÙ\]]ÉÜØÛÜI×VÉÛX^[™\›Z[™Ô\™›Ü›X[˜Ù\É×HOHˆ\ÜÙ\][˜ÚÉÜØÚ[XI×HOH	Ø\İ˜K][KYš]\[İ\™X[[][˜Ú]ŒIÂˆ\ÜÙ\][˜ÚÉØØ[™Y]RY	×HOH]]ÉØØ[™Y]RY	×Bˆ\ÜÙ\][˜ÚÉÜÚ[™ÛS][˜Ú	×H\ÈYBˆ\ÜÙ\Ş[ÉÙXÚ\Ú[Û‰×VÉÙ^Xİ[[YTŞ[]XÕ™\šYšYY	×H\ÈYBˆ\ÜÙ\Ş[ÉÙXÚ\Ú[Û‰×VÉÜ™X[˜Z[š[™Ğ]]Üš^™Y	×H\È˜[ÙBˆ^XİY^Âˆ	Ù\ÚYÛ‘Ú]›Ø‰Î‰ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÑTÒQÓ—ÕŒKšœÛÛ‰Ëˆ	ÜŞ[]XÕ™\šYšXØ][Û‘Ú]›Ø‰Î‰ÙØÜËØ\İ˜KÕS–WÑ’UÔSÕÔÖS•UP×Õ‘T’Q’PĞUSÓ—ÕŒKšœÛÛ‰Ëˆ	Ü™\\™Y]™[Y\\‘Ú]›Ø‰Î‰Ø\İ˜WØ˜XÚÙ[™Ù]˜[X][Û‹Ü™\\™YÙ]™[ØY\\—İŒKœIËˆ	İ[Qš]\›™\ÜÑÚ]›Ø‰Î‰Ø\İ˜WØ˜XÚÙ[™İ[WÙš]Ü[İİŒKœIËˆ	Ü[[YSØÚÑÚ]›Ø‰Î‰Ø\İ˜WØ˜XÚÙ[™İX˜Û›—Ü[[YKÜ™\]Z\™[Y[Ë›ØÚË	Ëˆ	Ø[YÛ›Y[ÛÜœ™Xİ[ÛœÑÚ]›Ø‰Î‰ÙØÜËØ\İ˜KÑÕRUT•PÒ×Ô’SPT–WĞSQÓ“QS•ĞÓÔ”‘PÕSÓ”×ÕŒKšœÛÛ‰Ëˆ	İÛÜšÙ›İÑÚ]›Ø‰Î‰Ë™Ú]X‹İÛÜšÙ›İÜËØ\İ˜K][KYš]\[İ\™X[[[	ËˆBˆ›ÜˆÙ^K][ˆ^XİYš][\Ê
-N‚ˆ\ÜÙ\][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÚÙ^WHOH›ØŠ]
-K
-Ù^K]›ØŠ]
-K][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÚÙ^WJBˆ\ÜÙ\][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÉÜ™\\™Y]™[Y\\‘Ú]›Ø‰×HOHŞ[ÉÜÛİ\˜ÙI×VÉÜ™\\™Y]™[Y\\‘Ú]›Ø‰×Bˆ\ÜÙ\][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÉİ[Qš]\›™\ÜÑÚ]›Ø‰×HOHŞ[ÉÜÛİ\˜ÙI×VÉİ[Qš]\›™\ÜÑÚ]›Ø‰×Bˆ\ÜÙ\][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÉÜ[[YSØÚÑÚ]›Ø‰×HOHŞ[ÉÜÛİ\˜ÙI×VÉÜ[[YSØÚÑÚ]›Ø‰×Bˆ\ÜÙ\][˜ÚÉÜÛİ\˜ÙRY[]Y\É×VÉØ[YÛ›Y[ÛÜœ™Xİ[ÛœÑÚ]›Ø‰×HOHŞ[ÉÜÛİ\˜ÙI×VÉØ[YÛ›Y[ÛÜœ™Xİ[ÛœÑÚ]›Ø‰×Bˆ\ÜÙ\\ÚYÛ–ÉØYÙ]	×VÉØ]]ÛX]XÔ™]šY\É×HOHˆ\ÜÙ\\ÚYÛ–ÉØYÙ]	×VÉØ]]ÛX]XÑ[˜Z[š[™É×H\È˜[ÙBˆ\ÜÙ\\ÚYÛ–ÉÜØÛÜI×VÉÜ“Ü[™Y	×H\È˜[ÙH[™\ÚYÛ–ÉÜØÛÜI×VÉÜÓÜ[™Y	×H\È˜[ÙBˆBˆXÚÈ	ÕS–WÑ’UÔ‘PSÔWĞUUÔ’V‘Q]YIÂˆXÚÈ	ÕS–WÑ’UÔ—ĞUUÔ’V‘QY˜[ÙIÂˆXÚÈ	ÑÕRUT—ÕPÒ×Ô×ÓÔS‘QY˜[ÙIÂ‚ˆH˜[YNˆ[œİ[^Xİœ›Ş™[ˆ[[YH[™Ûİ\˜ÙHÛÛÂˆÚ[ˆ˜\Úˆ[ˆˆÙ]Y][È\Y˜Z[ˆ]Ûˆ[H\[œİ[KY\ØX›K\\]™\œÚ[Û‹XÚXÚÈ	Ü\OLŒ	Âˆ]Ûˆ[H\[œİ[KY\ØX›K\\]™\œÚ[Û‹XÚXÚÈˆKY^˜KZ[™^]\›Î‹ËÙİÛ›ØYœ]Ü˜Ú›Ü™ËİÚØÜHˆK\™\]Z\™[Y[\İ˜WØ˜XÚÙ[™İX˜Û›—Ü[[YKÜ™\]Z\™[Y[Ë›ØÚËˆ]Ûˆ[H\ÚXÚÂˆİYÈ\YÙ]\]BˆİYÈ\YÙ][œİ[^H™›\YÈ[š\ˆ]ÛˆH	ÔIÂˆ[\Ü[\KÜ˜Úˆ\ÜÙ\[\K—×İ™\œÚ[Û—×ÈOH	ÌKŒŒK‰Âˆ\ÜÙ\Ü˜Ú—×İ™\œÚ[Û—×ÈOH	ÌKŒLKŒ
-ØÜIÂˆB‚ˆH˜[YNˆ™\\™H^XİH›İ\ˆÙ[XİYH˜Z[š[™È^[\\ÂˆÚ[ˆ˜\Úˆ[ˆˆÙ]Y][È\Y˜Z[ˆZÙ\ˆ\İ\Ü[İY^[\\Èİ\ÜÙ[XİYˆÚ[HQ”ÏI	×	È™XY\ˆš[H]\ÈYHÚHØ\\™NÈÂˆ›H\™ˆİ\ÜÙ[XİYÊ‚ˆ›HYˆ‹İ\Éš[H‚ˆİ\›KY˜Z[K[ØØ][ÛˆKXÛÛ›™Xİ][Y[İ]ÌK[X^][YHLŒˆK]\Ù\‹XYÙ[	Ğ\İ˜KU[KQš]T[İUŒKÌKŒ	Èˆ[È‹İ\Éš[HˆˆšÎ‹ËŞ™[›ÙË›Ü™ËÜ™XÛÜ™ËÌMMŒÌLÌËÙš[\ËÉš[OÙİÛ›ØYLH‚ˆ\İ‰
-İ]XÈ	É\ÉÈ‹İ\Éš[HŠHˆH‰]\È‚ˆ\İ‰
-Y\İ[H‹İ\Éš[Hˆ]ÚÈ	ŞÜš[	_IÊHˆH‰YH‚ˆ\İ‰
-ÚLMœİ[H‹İ\Éš[Hˆ]ÚÈ	ŞÜš[	_IÊHˆH‰ÚH‚ˆUÓ”UX\İ˜WØ˜XÚÙ[™˜\İ˜WØ˜XÚÙ[™Ù]˜[X][Ûˆˆ]Ûˆ\İ˜WØ˜XÚÙ[™İ[WÙš]Ü[İİŒKœH^˜Xİ\Ù[XİY\Ûİ\˜ÙHˆKX\˜Ú]™H‹İ\Éš[HˆˆKXØ\\™KZÙ^H‰Ø\\™HˆˆK[İ]]Y\ˆİ\ÜÙ[XİYˆ›HYˆ‹İ\Éš[H‚ˆUÓ”UX\İ˜WØ˜XÚÙ[™˜\İ˜WØ˜XÚÙ[™Ù]˜[X][Ûˆˆ]Ûˆ\İ˜WØ˜XÚÙ[™İ[WÙš]Ü[İİŒKœH™\\™KXØ\\ˆˆK\›Ûİİ\ÜÙ[XİYˆKXØ\\™KZÙ^H‰Ø\\™HˆˆKXÛÜœ™Xİ[ÛœÈØÜËØ\İ˜KÑÕRUT•PÒ×Ô’SPT–WĞSQÓ“QS•ĞÓÔ”‘PÕSÓ”×ÕŒKšœÛÛˆˆK[İ]]Y\ˆİ\Ü[İY^[\\Âˆ›H\™ˆİ\ÜÙ[XİYÊ‚ˆÛ™H	ÑSÑ‰ÂˆWØÚÜ™Ëš\NNMÍLMŒ‚X™NYY˜™ÙXŒNLL™MLMMŒØM™MYMXMÍ™Y˜ÙNNMMŒMŒXÍYÌÎX™Œ™XÍLLLÍLYMYMMLLÌ‚T_ÚÜ™ß›Ü×Íß\™Xİ[œ]ˆWÜØØ[\Ëš\MLÌÍMÌŒÂNXÌNN˜˜MLŒ™ÌÙXN™MYM‚MÎYÙNYMŒØNLMMMØÎMLŒYMMŒLXÌNNÎY˜ÙLNMLYMÌŒNXŒÍLBT_ØØ[\ßXŸ\™Xİ[œ]ˆWÜÚ[™Û[›İ\Ëš\LLŒŒLÂXØLÍÍLÎMMÍXLÌLÙØÌÎYX‚LLÌNL˜YMMMMMÍ™XNMÌÌŒÍŒMÎMYYLL™˜MÎÍYÙYYXMT_Ú[™Û[›İ\ß[Ú[™Û[›İ\ß\™Xİ[œ]ˆWİXÚš\]Y\Ëš\LÌŒŒÂLNŒÍMXM™XNLLÙXŒÌLŒ˜NÌ‚LYMMN™ÍYLLYŒÙLLMN˜ÌMLÍŒYX™M™LÙ˜Œ™ŒŒÌŒÌŒÍ™BT_XÚš\]Y\ß[S]]_\™Xİ[œ]ˆSÑ‚ˆ\İ‰
-š[™İ\Ü[İY^[\\È[˜[YHY]KšœÛÛˆØÈ[
-HˆH	Í	ÂˆXÚÈ	ÔWÔÑSPÕQÔT‘“Ô“PSÑT×Ô‘TT‘QM	ÂˆXÚÈ	Ô—ÓQQPWĞPĞÑTÔÑQY˜[ÙIÂˆXÚÈ	ÑÕRUT—ÕPÒ×Ô×ÓÔS‘QY˜[ÙIÂ‚ˆH˜[YNˆ^Xİ]HÛ™HØ\YŒ\İ\˜Z[š[™Ë[Û›H[İˆÚ[ˆ˜\Úˆ[ˆˆÙ]Y][È\Y˜Z[ˆUÓ”UX\İ˜WØ˜XÚÙ[™˜\İ˜WØ˜XÚÙ[™Ù]˜[X][Ûˆˆ]Ûˆ\İ˜WØ˜XÚÙ[™İ[WÙš]Ü[İİŒKœH˜Z[‹\[İˆKY^[\\ËY\ˆİ\Ü[İY^[\\ÈˆK\™\İ[[İ]İ\İ[KYš]\™\İ[šœÛÛˆˆK[[Ù[[İ]İ\İ[KYš][[Ù[œ‚ˆH˜[YNˆ™\šYH[İ™XÙZ\Ø[››İ[\H[]˜Z[š[™ÈİXØÙ\ÜÂˆÚ[ˆ˜\Úˆ[ˆˆÙ]Y][È\Y˜Z[ˆ]ÛˆH	ÔIÂˆ[\ÜœÛÛ‚ˆZœÛÛ‹›ØY
-Ü[Š	Ëİ\İ[KYš]\™\İ[šœÛÛ‰ÊJBˆ\ÜÙ\ÉÜØÚ[XI×HOH	Ø\İ˜K][KYš]\[İ]ŒIÂˆ\ÜÙ\ÉØØ[™Y]RY	×HOH	Ø\İ˜Wİ[WÙ]™[Ùš]İŒIÂˆ\ÜÙ\ÉÙš]	×VÉÛÜ[Z^™\”İ\É×HHŒˆ\ÜÙ\ÉÙš]	×VÉÜ™\]Y\İYÜ[Z^™\”İ\É×HOHŒˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^[™\›Z[™Ô\™›Ü›X[˜Ù\É×HOHˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^šY]ÜÔ\”\™›Ü›X[˜ÙI×HOHBˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^œ˜[Y\Ô\‘^[\I×HOHŒˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^Ü[Z^™\”İ\Õİ[	×HOHŒˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^˜Z[š[™Ğ[™]˜[X][Û•Ø[ÙXÛÛ™É×HOHÌˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^[\™R›Ø”ÙXÛÛ™É×HOHÍŒˆ\ÜÙ\ÉÛ[Z]É×VÉÛX^Ø[™Y]Q\ÚYÛœÕ\Ô[İ	×HOHBˆ\ÜÙ\ÉÛ[Z]É×VÉØ]]ÛX]XÔ™]šY\É×HOHˆ\ÜÙ\ÉÙİX\™É×VÉÜ“Ü[™Y	×H\È˜[ÙBˆ\ÜÙ\ÉÙİX\™É×VÉÜÓÜ[™Y	×H\È˜[ÙBˆ\ÜÙ\ÉÙİX\™É×VÉÜZYÛÛ\]U\ÙY	×H\È˜[ÙBˆ\ÜÙ\ÉÙİX\™É×VÉØ]]ÛX]XÔ™]I×H\È˜[ÙBˆ\ÜÙ\ÉÙİX\™É×VÉØ]]ÛX]XÑ[˜Z[š[™É×H\È˜[ÙBˆ\ÜÙ\ÉÙİX\™É×VÉØİ\İÛY\‘[]™\Q[YÚX›I×H\È˜[ÙBˆ\ÜÙ\[ŠÉÜ™\\™Y	×JHOHˆBˆXÚÈ	Ñ•SÕRS’S‘×Ô‘TÕT•QY˜[ÙIÂˆXÚÈ	ÑÕRUT—ÕPÒ×Ô×ÓÔS‘QY˜[ÙIÂˆXÚÈ	ĞÕTÕÓQT—ÑSU‘T–WÑSQÒP“OY˜[ÙIÂ‚ˆH˜[YNˆ\ØY›İ[™Y[İ]šY[˜ÙHÛ›Bˆ\Ù\ÎˆXİ[ÛœËİ\ØYX\Y˜XİˆÚ]‚ˆ˜[YNˆ\İ˜K][KYš]XØ\Y\K\[İ]ŒBˆ]ˆˆİ\İ[KYš]\™\İ[šœÛÛ‚ˆİ\İ[KYš][[Ù[œˆİ\Ü[İY^[\\ËÊ‹ÛY]KšœÛÛ‚ˆY‹[›ËYš[\ËY›İ[™ˆ\œ›Ü‚ˆ™][[Û‹Y^\ÎˆÂ‚ˆH˜[YNˆÛX[\[Ù[XİYYYXH[™™\\™Y\œ˜^\ÂˆYˆ[Ø^\Ê
-BˆÚ[ˆ˜\Úˆ[ˆˆ›H\™ˆİ\Ü[İY^[\\Èİ\ÜÙ[XİYİ\ÔWÊ‹š\ˆ›HYˆİ\İ[KYš]\™\İ[šœÛÛˆİ\İ[KYš][[Ù[œˆXÚÈ	Ô—ÓQQPWĞPĞÑTÔÑQY˜[ÙIÂˆXÚÈ	ÑÕRUT—ÕPÒ×Ô×ÓÔS‘QY˜[ÙIÂˆXÚÈ	ĞÕTÕÓQT—ÑSU‘T–WÑSQÒP“OY˜[ÙIÂ
+      - name: Install exact frozen runtime and source tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check             --extra-index-url https://download.pytorch.org/whl/cpu             --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+          python - <<'PY'
+          import numpy, torch
+          assert numpy.__version__ == '1.21.6'
+          assert torch.__version__ == '1.11.0+cpu'
+          PY
+
+      - name: Prepare exactly four selected P1 training examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pilot-examples /tmp/selected
+          while IFS=$'\t' read -r file bytes md5 sha capture; do
+            rm -rf /tmp/selected/*
+            curl --fail --location --connect-timeout 30 --max-time 1200               --user-agent 'Astra-Tiny-Fit-Pilot-V1/1.0'               -o "/tmp/$file"               "https://zenodo.org/records/14963133/files/$file?download=1"
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            PYTHONPATH=astra_backend:astra_backend/evaluation               python astra_backend/tiny_fit_pilot_v1.py extract-selected-source                 --archive "/tmp/$file"                 --capture-key "$capture"                 --output-dir /tmp/selected
+            rm -f "/tmp/$file"
+            PYTHONPATH=astra_backend:astra_backend/evaluation               python astra_backend/tiny_fit_pilot_v1.py prepare-capture                 --root /tmp/selected                 --capture-key "$capture"                 --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json                 --output-dir /tmp/pilot-examples
+          done <<'EOF'
+          P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1|chords|Drop3_7|directinput
+          P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1|scales|Ab|directinput
+          P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1|singlenotes|allsinglenotes|directinput
+          P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1|techniques|PalmMute|directinput
+          EOF
+          test "$(find /tmp/pilot-examples -name meta.json | wc -l)" = '4'
+          echo "P1_SELECTED_PERFORMANCES_PREPARED=4"
+          echo "P2_MEDIA_ACCESSED=false"
+          echo "P3_MEDIA_ACCESSED=false"
+
+      - name: Execute one capped 200-step training-only pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend:astra_backend/evaluation             python astra_backend/tiny_fit_pilot_v1.py train-pilot               --examples-dir /tmp/pilot-examples               --result-out /tmp/tiny-fit-result.json               --model-out /tmp/tiny-fit-model.pt
+
+      - name: Verify capped result
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/tiny-fit-result.json'))
+          assert x['schema'] == 'astra-tiny-fit-pilot-v1'
+          assert x['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert x['fit']['optimizerSteps'] <= 200
+          assert x['fit']['requestedOptimizerSteps'] == 200
+          assert x['limits']['maxUnderlyingPerformances'] == 4
+          assert x['limits']['maxViewsPerPerformance'] == 1
+          assert x['limits']['maxFramesPerExample'] == 200
+          assert x['limits']['maxOptimizerStepsTotal'] == 200
+          assert x['limits']['maxTrainingAndEvaluationWallSeconds'] == 2700
+          assert x['limits']['maxEntireJobSeconds'] == 3600
+          assert x['limits']['maxCandidateDesignsThisPilot'] == 1
+          assert x['limits']['automaticRetries'] == 0
+          assert x['guards']['p2Opened'] is False
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['paidComputeUsed'] is False
+          assert x['guards']['automaticRetry'] is False
+          assert x['guards']['automaticFullTraining'] is False
+          assert x['guards']['customerDeliveryEligible'] is False
+          assert len(x['prepared']) == 4
+          PY
+          echo "FULL_TRAINING_RESTARTED=false"
+          echo "P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Upload bounded pilot evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-tiny-fit-capped-p1-pilot-v1
+          path: |
+            /tmp/tiny-fit-result.json
+            /tmp/tiny-fit-model.pt
+            /tmp/pilot-examples/*/meta.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Cleanup all selected media and prepared arrays
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/pilot-examples /tmp/selected /tmp/P1_*.zip
+          rm -f /tmp/tiny-fit-result.json /tmp/tiny-fit-model.pt
+          echo "P2_MEDIA_ACCESSED=false"
+          echo "P3_MEDIA_ACCESSED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
