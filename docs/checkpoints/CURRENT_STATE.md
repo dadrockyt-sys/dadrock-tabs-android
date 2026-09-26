@@ -2680,3 +2680,144 @@ This block supersedes the active V4 diagnosis instructions and is the authoritat
 8. If both pass: record only eligible for separate P3 authorization; **do not open P3 automatically**.
 
 This block supersedes the V5 offline-design gate and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V5 real training complete — structural PASS / development FAIL — 2026-09-26
+
+- Authoritative V5 real-training run `36115823434`: **completed successfully**.
+- All serialized jobs passed:
+  - preflight;
+  - P1 0->400;
+  - P1 400->800;
+  - P1 800->1000;
+  - P2 0->400;
+  - P2 400->800;
+  - P2 800->1000.
+- Frozen V5 development result:
+  - `docs/astra/GUITARTECHS_V5_DEVELOPMENT_RESULT_V1.json`;
+  - Git blob `a948e09c2309a289b6178583092c370ed002fd28`;
+  - commit `61343d5fbbe90077e1126eee2df9b9567977e9d7`.
+- Frozen V5 result-level failure diagnosis:
+  - `docs/astra/GUITARTECHS_V5_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json`;
+  - Git blob `dee8729f2326bf14d755365a2886a0e0ce377afb`;
+  - commit `a1510e43d39ea9dbbffe8a36360fab6ffba44048`.
+
+### V5 structural admission
+
+- **PASS** with zero structural blockers.
+- Both final model SHA-256 values match their fold receipts.
+- Both embedded selected checkpoint state hashes match the saved selected model states.
+- All four resume-state artifacts were downloaded and SHA-verified:
+  - P1 e400: `f79ce3a82a93a7d2face64f52889ed849c660c39f16c536ae02fc4edd03e15fa`;
+  - P1 e800: `9f19b4969904b610962440665c69ea6a29feb20ada0fc5c00900819919a31ec6`;
+  - P2 e400: `7c199cb04e8f5b53d0cfd1754a13f5c701b97ca3d295fd898fc3fd682801b447`;
+  - P2 e800: `f0a0bc97ef5ab8b0dbcab10f203dab7fe0bcd443ecb821f5144a227670fe65c7`.
+- Resume receipts have the expected V5 schema, candidate, fold, epoch, optimizer-step, supervised-frame, source identities and sealed guards.
+- Final fold evidence has the expected:
+  - candidate `astra_guitartechs_tabcnn_v5_temporal_multitask`;
+  - seed 20260921;
+  - 1,000 epochs;
+  - 2,000 optimizer steps;
+  - 200-frame sequences;
+  - batch 32 / microbatch 1;
+  - 50 validation checkpoints;
+  - P1/P2 capture counts 136/120;
+  - 41/40 training performances;
+  - 8.2M / 8.0M supervised frame positions.
+- P3 false, published checkpoint false, paid compute false, customer delivery false.
+
+### V5 frozen development metrics
+
+- P1->P2:
+  - selected checkpoint epoch **1000**;
+  - precision **0.247844**;
+  - recall **0.016939**;
+  - F1 **0.030811**;
+  - completeness **0.020274**;
+  - frame accuracy **0.018067**;
+  - content F1: chords **0.014309**, scales **0.066999**, singlenotes **0.048019**, PalmMute **0.008403**.
+- P2->P1:
+  - selected checkpoint epoch **960**;
+  - precision **0.355644**;
+  - recall **0.058951**;
+  - F1 **0.097451**;
+  - completeness **0.047522**;
+  - frame accuracy **0.040104**;
+  - content F1: chords **0.062237**, scales **0.181741**, singlenotes **0.043649**, PalmMute **0.090569**.
+- Aggregate:
+  - macro F1 **0.064131** vs frozen minimum **0.70**;
+  - macro completeness **0.033898** vs frozen minimum **0.65**;
+  - cross-performer F1 gap **0.066640** -> PASS <= 0.10;
+  - cross-performer frame-accuracy gap **0.022037** -> PASS <= 0.10;
+  - abstention 0.0 both folds -> PASS.
+- Frozen metric decision: **FAIL**, 20 threshold blockers.
+- Both folds fail precision, recall, F1, completeness, frame accuracy, and all four primary per-content F1 minimums.
+- Thresholds were not changed or retuned.
+
+### V5 vs V4 evidence
+
+- Macro F1:
+  - **0.243523 -> 0.064131**;
+  - absolute **-0.179392**;
+  - about **-73.7% relative**.
+- Macro completeness:
+  - **0.222158 -> 0.033898**;
+  - absolute **-0.188260**.
+- P1->P2:
+  - precision -0.005377;
+  - recall **-0.335124**;
+  - F1 **-0.255226**;
+  - completeness **-0.253168**;
+  - frame accuracy **-0.294020**.
+- P2->P1:
+  - precision **+0.190508**;
+  - recall **-0.212712**;
+  - F1 **-0.103558**;
+  - completeness **-0.123353**;
+  - frame accuracy **-0.205767**.
+- The defining V5 failure pattern is therefore **under-admission / recall collapse**, not V4-style over-generation.
+- Many early selection checkpoints had F1 exactly 0.0; best selection-subset F1 arrived only at epoch 1000 for P1 and epoch 960 for P2.
+- Selected-state learned task log-variance parameters:
+  - P1: approximately `[-1.0254, -2.0006, -1.9208, -2.0005]`;
+  - P2: approximately `[-1.2954, -2.0031, -2.0029, -2.0024]`;
+  - several auxiliary weights reached the frozen lower clamp neighborhood near -2.0. This is diagnostic evidence only, not proof of causality.
+
+### Decision
+
+- **V5 development status: FAIL.**
+- V5 architecture training itself was valid; the failure is behavioral, not orchestration corruption.
+- P3 is **not eligible** to open and remains sealed.
+- No customer delivery.
+- No threshold rescue.
+- No further real P1/P2 optimizer run is authorized.
+- Any future real-data optimizer run requires a new frozen design and new explicit user authorization.
+
+### EXPLICIT NEXT STEP TO RESUME — zero-optimizer V5 head/gate decomposition
+
+1. Do **not** launch another V5 optimizer run.
+2. Build/run a zero-optimizer V5 diagnostic against the completed V5 P1/P2 evidence only.
+3. Reconstruct frozen V5 head probabilities and measure independently:
+   - onset discrimination;
+   - activity discrimination;
+   - pitch discrimination;
+   - final state confidence.
+4. Attribute true-onset rejection across the frozen V5 conjunction:
+   - onset >= 0.50;
+   - activity >= 0.50;
+   - state >= 0.30;
+   - state/silence >= 0.70.
+5. Compute diagnostic ablations without changing accepted thresholds:
+   - onset-only gate;
+   - activity-only gate;
+   - state-only gate;
+   - pairwise gate combinations;
+   - full V5 gate.
+6. Measure per-content rejection for chords/scales/singlenotes/PalmMute.
+7. Check sequence-boundary onset-supervision loss under the deterministic sampler.
+8. Recover task-log-var/checkpoint trajectories where available and test whether multi-task weighting reached a pathological boundary.
+9. Decide whether the temporal/multi-head representation is useful but decoder-gated incorrectly, or whether the auxiliary heads themselves failed to learn useful discrimination.
+10. No optimizer steps, no threshold retuning, no alignment changes, no P3, no paid compute, no `main`/Production/customer-delivery changes.
+11. Freeze that zero-optimizer diagnostic before any V6 design.
+12. Any V6 real P1/P2 run requires a new frozen design + synthetic verification + explicit user authorization.
+
+This block supersedes the active-V5-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
