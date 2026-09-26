@@ -2821,3 +2821,51 @@ This block supersedes the V5 offline-design gate and is the authoritative next a
 12. Any V6 real P1/P2 run requires a new frozen design + synthetic verification + explicit user authorization.
 
 This block supersedes the active-V5-run instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V5 zero-optimizer head/gate diagnosis active — 2026-09-26
+
+- Per the frozen V5 FAIL next-step gate, a zero-optimizer V5 head/gate decomposition has been launched.
+- Diagnostic runner:
+  - `astra_backend/guitartechs_training_v5/run_v5_head_gate_diagnostics.py`;
+  - Git blob `06a4f7880f9160edea5624746713b2c45bf4a21d`.
+- Diagnostic workflow:
+  - `.github/workflows/guitar-techs-v5-head-gate-decomposition.yml`;
+  - Git blob `5f7a1a6f63762fefd6bc329cb2f0e7b811a21c70`.
+- Launch receipt:
+  - `docs/astra/GUITARTECHS_V5_HEAD_GATE_DIAGNOSIS_LAUNCH_V1.json`;
+  - launch commit `79997c3f85044937784aac76d47d1c4753a16f30`.
+- Single authoritative V5 diagnosis run: **`36218857870`**.
+- Diagnostic job: `108340168191`.
+- Zero-optimizer/source-identity gate before P1/P2 media access: **PASS**.
+- Current active step: exact frozen runtime/decoder installation.
+- Diagnostic scope:
+  - exact reproduction of both frozen V5 fold metrics;
+  - onset-head discrimination;
+  - activity-head discrimination;
+  - pitch-head threshold performance;
+  - true-onset gate attribution for onset/activity/state/identity;
+  - per-content gate rejection;
+  - diagnostic start-gate ablations (single, pairwise, full);
+  - deterministic training-sequence boundary onset-supervision loss;
+  - selected-state task log variances.
+- No optimizer steps are authorized or executed.
+- Thresholds are not retuned; ablations are diagnostic only and do not change the frozen development verdict.
+- P3 remains sealed.
+- No paid compute, alignment changes, main/Production mutation, or customer delivery.
+
+### EXPLICIT NEXT STEP TO RESUME — V5 diagnosis run 36218857870
+
+1. Inspect run `36218857870` first; do not launch a duplicate diagnosis.
+2. Require exact runtime, pinned TabCNN source, frozen V5 fold artifact hashes and exact 256-path reconstruction to pass.
+3. Require exact reproduction of both frozen V5 fold metrics before accepting any head/gate diagnosis.
+4. Freeze the resulting `astra-guitar-techs-v5-head-gate-decomposition-v1` receipt.
+5. Use the decomposition to determine whether:
+   - useful V5 heads are being destroyed by hard conjunctive gating;
+   - auxiliary heads themselves lack discrimination;
+   - learned task weighting is pathological;
+   - sequence-boundary onset supervision is materially damaging.
+6. Do not freeze or run V6 until this diagnostic is frozen.
+7. P3 remains sealed and no real optimizer run is authorized.
+
+This block supersedes the V5-completion next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
