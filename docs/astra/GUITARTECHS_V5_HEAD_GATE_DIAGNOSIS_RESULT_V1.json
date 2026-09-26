@@ -1,0 +1,211 @@
+{
+  "schema": "astra-guitar-techs-v5-head-gate-diagnosis-result-v1",
+  "date": "2026-09-26",
+  "diagnosisRun": {
+    "runId": 36218857870,
+    "jobId": 108340168191,
+    "conclusion": "success",
+    "headSha": "79997c3f85044937784aac76d47d1c4753a16f30"
+  },
+  "sourceV5RunId": 36115823434,
+  "rawDiagnosticArtifact": {
+    "name": "guitar-techs-v5-head-gate-decomposition-v1",
+    "artifactId": 10900001091,
+    "archiveDigest": "sha256:5e4a2f872bb42b1dabfec9762182760ec5c528ff01ebffd719bb0c147797e0ae",
+    "jsonFile": "GUITARTECHS_V5_HEAD_GATE_DECOMPOSITION_V1.json",
+    "jsonSha256": "dbecbd7a2fe542cc7196f857266b36a2e43954ac38dfaa76e4dce632c9e93c68"
+  },
+  "frozenMetricReproduction": {
+    "p1-train-p2-validate": {
+      "passed": true,
+      "precision": 0.24784418085980403,
+      "recall": 0.016938980988297346,
+      "f1": 0.030810907400138303,
+      "completeness": 0.020273601494787297,
+      "frameAccuracy": 0.01806681418724517
+    },
+    "p2-train-p1-validate": {
+      "passed": true,
+      "precision": 0.35564354404693954,
+      "recall": 0.05895087740137589,
+      "f1": 0.09745126982915348,
+      "completeness": 0.0475220412451454,
+      "frameAccuracy": 0.040103540684759534
+    }
+  },
+  "diagnosticQualityNote": {
+    "excludedField": "approxAUPRC100Bins",
+    "reason": "The diagnostic implementation integrated precision-recall in descending-recall order and emitted negative values, which are mathematically invalid. This field is excluded from all conclusions.",
+    "unaffectedEvidence": [
+      "frozen metric reproduction",
+      "AUROC values",
+      "head threshold micro metrics",
+      "true-onset gate pass counts",
+      "diagnostic gate ablations",
+      "sequence-boundary counts",
+      "selected task-log-var values"
+    ]
+  },
+  "principalFinding": {
+    "conclusion": "The V5 temporal/multi-head representation learned useful signal, but the hard onset>=0.50 event-start gate catastrophically under-admitted true events.",
+    "evidence": {
+      "p1-train-p2-validate": {
+        "referenceOnsets": 21872,
+        "onsetPassRate": 0.02386613021214338,
+        "activityPassRate": 0.3294623262618873,
+        "statePassRate": 0.27441477688368693,
+        "fullGatePassRate": 0.019065471836137528,
+        "stateIdentityCorrectRate": 0.6622622531089978,
+        "onsetApproxAUROC100Bins": 0.8503716831102814,
+        "activityApproxAUROC100Bins": 0.8966086262212074,
+        "pitchThreshold050F1": 0.8641738626744111
+      },
+      "p2-train-p1-validate": {
+        "referenceOnsets": 26752,
+        "onsetPassRate": 0.08604964114832536,
+        "activityPassRate": 0.3582162081339713,
+        "statePassRate": 0.31971441387559807,
+        "fullGatePassRate": 0.059434808612440194,
+        "stateIdentityCorrectRate": 0.5980861244019139,
+        "onsetApproxAUROC100Bins": 0.8790864243702485,
+        "activityApproxAUROC100Bins": 0.8677382054730964,
+        "pitchThreshold050F1": 0.7786895633393505
+      }
+    }
+  },
+  "gateAblations": {
+    "p1-train-p2-validate": {
+      "full": {
+        "precision": 0.24784418085980403,
+        "recall": 0.016938980988297346,
+        "f1": 0.030810907400138303,
+        "completeness": 0.020273601494787297
+      },
+      "onsetOnly": {
+        "precision": 0.24968211771001605,
+        "recall": 0.02066278444270308,
+        "f1": 0.03700957570278888,
+        "completeness": 0.02342126949016211
+      },
+      "activityOnly": {
+        "precision": 0.19365758652750048,
+        "recall": 0.2632160519670931,
+        "f1": 0.21269928951847464,
+        "completeness": 0.24174636107417286
+      },
+      "stateOnly": {
+        "precision": 0.20824490234111356,
+        "recall": 0.26802735014458773,
+        "f1": 0.2284340880364014,
+        "completeness": 0.24778586567912994
+      },
+      "activityState": {
+        "precision": 0.2028913258392678,
+        "recall": 0.2283068798846303,
+        "f1": 0.20734778974228357,
+        "completeness": 0.21759199491005185
+      }
+    },
+    "p2-train-p1-validate": {
+      "full": {
+        "precision": 0.35564354404693954,
+        "recall": 0.05895087740137589,
+        "f1": 0.09745126982915348,
+        "completeness": 0.0475220412451454
+      },
+      "onsetOnly": {
+        "precision": 0.3340526728312748,
+        "recall": 0.07538922660593955,
+        "f1": 0.11971997663396011,
+        "completeness": 0.05572276940448339
+      },
+      "activityOnly": {
+        "precision": 0.157458,
+        "recall": 0.276324,
+        "f1": 0.191413,
+        "completeness": 0.193991
+      },
+      "stateOnly": {
+        "precision": 0.17658482953527663,
+        "recall": 0.28001945286149516,
+        "f1": 0.2092525715740073,
+        "completeness": 0.20510533791531255
+      },
+      "activityState": {
+        "precision": 0.176309,
+        "recall": 0.252048,
+        "f1": 0.19849,
+        "completeness": 0.181879
+      }
+    },
+    "macroF1": {
+      "frozenFull": 0.06413108861464589,
+      "stateOnlyDiagnostic": 0.21884332980520435,
+      "activityOnlyDiagnostic": 0.20205614475923733
+    },
+    "interpretation": "Removing the hard onset gate recovers most of the lost V5 recall immediately. The underlying V5 state/activity representation remains imperfect and below V4 overall, but the catastrophic V5 collapse is primarily decoder admission, not total representation failure."
+  },
+  "secondaryFindings": [
+    {
+      "finding": "The onset head ranks true onsets reasonably well but is badly calibrated at the frozen 0.50 start threshold.",
+      "evidence": "Onset AUROC is ~0.85 and ~0.88, yet only ~2.4% and ~8.6% of true onsets exceed 0.50.",
+      "implication": "Do not rescue V5 by validation threshold tuning. In V6, use train-time learned event admission or soft onset evidence rather than a hard validation-sensitive probability cutoff."
+    },
+    {
+      "finding": "Activity and pitch heads contain substantial usable signal.",
+      "evidence": "Activity AUROC is ~0.90/~0.87; pitch micro F1 at 0.50 is ~0.864/~0.779.",
+      "implication": "Retain temporal activity and pitch auxiliary representation in V6 unless a bounded synthetic test disproves it."
+    },
+    {
+      "finding": "The final state head also retains useful string/fret identity information.",
+      "evidence": "At true reference onsets, best-fret identity is correct ~66.2% and ~59.8%; state-only decoding restores fold F1 to ~0.228/~0.209.",
+      "implication": "Do not discard the V5 temporal/state architecture wholesale."
+    },
+    {
+      "finding": "Sequence-start onset-supervision loss is negligible.",
+      "evidence": "Only ~0.49% of P1 sampled-sequence onsets and ~0.52% of P2 sampled-sequence onsets occur on the unsupervised first frame.",
+      "implication": "Sequence-boundary onset labeling is not the main cause of V5 collapse."
+    },
+    {
+      "finding": "Learned homoscedastic task weighting remains suspicious but is not needed to explain the collapse.",
+      "evidence": "Several selected-state auxiliary task log variances reached the frozen lower clamp neighborhood near -2.0.",
+      "implication": "V6 should remove this unnecessary degree of freedom or replace it with frozen explicit loss weights, but the primary demonstrated failure is the hard onset gate."
+    }
+  ],
+  "v6DesignDirection": {
+    "realTrainingAuthorized": false,
+    "recommended": [
+      "Retain the V5 causal GRU temporal representation, activity head, pitch head, reference-aware string-routing semantics, and temporal cleanup.",
+      "Remove the hard onset>=0.50 requirement from event admission.",
+      "Use onset as a soft feature or train a dedicated event-admission logit directly from temporal state + onset/activity/pitch/state evidence.",
+      "Train event admission against reference event-start labels so its decision boundary is learned from training data, not tuned on validation data.",
+      "Keep activity/state continuation separate from event-start admission.",
+      "Replace learned homoscedastic task weighting with frozen explicit task weights, or otherwise prevent auxiliary weights from riding the clamp boundary.",
+      "Preserve the exact frozen P1/P2 population, acceptance thresholds, alignment allowlist, and public-CPU protocol for any future real run."
+    ],
+    "explicitlyNotRecommended": [
+      "Do not tune the V5 0.50 onset threshold on validation data.",
+      "Do not simply lower the onset threshold and call that V6.",
+      "Do not discard the GRU/pitch/activity architecture based on the V5 frozen full-decoder score alone.",
+      "Do not add epochs as the primary fix."
+    ],
+    "nextGate": "Freeze a bounded V6 event-admission design and exact-runtime synthetic verification before requesting any real P1/P2 optimizer authorization."
+  },
+  "guards": {
+    "optimizerStepsExecuted": 0,
+    "modelWeightsModified": false,
+    "thresholdsRetuned": false,
+    "alignmentAllowlistChanged": false,
+    "p3Opened": false,
+    "paidComputeUsed": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false
+  },
+  "decision": {
+    "v5VerdictUnchanged": "FAIL",
+    "rootCauseClass": "hard onset-gate calibration/admission failure with useful underlying temporal representation",
+    "anotherV5RealRunAuthorized": false,
+    "v6RealTrainingAuthorized": false,
+    "p3Opened": false
+  }
+}
