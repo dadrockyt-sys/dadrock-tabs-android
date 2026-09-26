@@ -36,6 +36,7 @@ class TinyFitPilotTests(unittest.TestCase):
             "P1|chords|Drop3_7|micamp": -17,
             "P1|chords|Drop3_7|directinput": -19,
             "P1|scales|B|directinput": -24,
+            "P1|scales|A|directinput": -24,
             "P1|scales|Ab|micamp": -22,
             "P1|scales|Ab|directinput": -24,
             "P1|singlenotes|allsinglenotes|micamp": -23,

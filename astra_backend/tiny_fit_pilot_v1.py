@@ -189,10 +189,18 @@ def select_pilot_capture_keys(corrections):
 
     selected = []
     for category in PRIMARY_CONTENT:
-        performances = sorted(perf for (cat, perf) in grouped if cat == category)
+        # Preserve the frozen capture identity rule by ordering performances by
+        # their lexicographically first *full capture key*. This matters for
+        # prefix names such as "A" and "Ab": in the frozen metadata,
+        # "P1|scales|Ab|..." sorts before "P1|scales|A|..." because the
+        # separator after A sorts after the "b" in Ab.
+        performances = [perf for (cat, perf) in grouped if cat == category]
         if not performances:
             raise ValueError("missing P1 primary content " + category)
-        performance = performances[0]
+        performance = min(
+            performances,
+            key=lambda perf: min(key for _, key in grouped[(category, perf)]),
+        )
         views = sorted(
             grouped[(category, performance)],
             key=lambda row: (VIEW_PRIORITY.get(row[0], 99), row[0], row[1]),

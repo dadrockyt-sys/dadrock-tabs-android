@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **EXACT CAPPED P1 PILOT AUTHORIZED AND LAUNCHED ONCE; RUN 36276196059 IN PROGRESS; NO RERUN AUTHORIZED**  
+Status: **FIRST CAPPED P1 PILOT STOPPED DURING PREPARATION; 0 REAL OPTIMIZER STEPS; OFFLINE SELECTOR REPAIR COMMITTED; NO RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -106,3 +106,29 @@ Frozen advancement conditions remain:
 - unresolved selected-crop label count = 0.
 
 Current state at this checkpoint: **one capped P1 pilot authorized and launched; canonical run 36276196059 in progress; no second launch/rerun authorized; P2/P3 closed; full training not restarted.**
+
+## Capped P1 pilot attempt 1 — PREPARATION FAILURE, NOT A MODEL RESULT
+
+Canonical run **36276196059**, job **108499312084**, launch head `9aa5c9e89a41e08c2cc25681bf77fe481020a608`, attempt 1 completed **failure**.
+
+The authorization/hash gate and exact frozen runtime installation passed. The run failed in **Prepare exactly four selected P1 training examples** before the training step. Therefore:
+- real optimizer steps executed: **0**;
+- model fitting/evaluation did not run;
+- no advancement metrics exist;
+- P2 and P3 were not accessed;
+- no bounded-result artifact was uploaded;
+- cleanup completed successfully.
+
+P1 media access was limited to the first pinned archive, `P1_chords.zip`. Its hash checks passed, and exactly the selected `Drop3_7` MIDI and direct-input WAV were extracted before the preparation guard stopped:
+- MIDI: `P1_chords/midi/midi_Drop3_7.mid`, 2729 bytes, SHA-256 `a5856f6a6c1306fa6f0070ba8cf14dd8d61c60f1e3cc852695e5e05031c2274a`;
+- audio: `P1_chords/audio/directinput/directinput_Drop3_7.wav`, 29532984 bytes, SHA-256 `c3dccbba8365eb1a701c2bf47dca6aae8be894aff768323cea19ad00a3d1d34e`.
+
+Failure:
+`RuntimeError: metadata selection no longer matches frozen pilot capture keys`
+
+Root cause: `select_pilot_capture_keys()` sorted bare performance names. With the real correction map, bare `"A"` sorts before `"Ab"`, while the frozen scale capture is `P1|scales|Ab|directinput`. The frozen identity was derived from full capture-key lexical ordering, where the separator makes `...|Ab|...` sort before `...|A|...`. The synthetic unit fixture omitted the competing `A` key, so this inconsistency escaped verification.
+
+Offline repair: order performances by their lexicographically first **full capture key** and add a regression fixture containing both `A` and `Ab`. This does not change the four frozen capture identities, architecture, objective, thresholds, training budget, or P2/P3 boundary.
+
+**The failed authorization was single-launch. A second real P1 run is not authorized.** After exact-runtime synthetic re-verification of the repair, create a new source-pinned authorization request and require new explicit user authorization before another real media/optimizer run.
+
