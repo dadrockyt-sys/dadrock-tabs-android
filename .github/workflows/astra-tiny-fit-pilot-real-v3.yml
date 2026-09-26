@@ -74,7 +74,7 @@ jobs:
           assert launch['singleLaunch'] is True
           expected={
             'authorizationGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json',
-            'designGitBlob':'docs/astra/TINY_FIT_PILOT_DESIGN_V1.json',
+            'designGitBlob':'docs/astra/TINY_FIT_PILOT_DESIGN_V2.json',
             'syntheticVerificationGitBlob':'docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json',
             'preparedEventAdapterGitBlob':'astra_backend/evaluation/prepared_event_adapter_v1.py',
             'tinyFitHarnessGitBlob':'astra_backend/tiny_fit_pilot_v1.py',

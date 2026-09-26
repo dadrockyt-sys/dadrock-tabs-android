@@ -232,7 +232,9 @@ Artifact ID: `10917829509`.
 
 ## V3 retry gate — REQUEST ONLY
 
-Request: `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V3.json`.  
+Request: `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V3.json`.
+Final V3 request blob: `00f74000650b97dc48f978cd05e4ee673aaf085c`.  
+Dormant V3 workflow blob: `ccf8f50c28c49fce097f66e53bafb5bc7c7cc45c`.  
 Dormant workflow: `.github/workflows/astra-tiny-fit-pilot-real-v3.yml`.
 
 The request is not authorization. `TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json` and `TINY_FIT_PILOT_REAL_LAUNCH_V3.json` do not exist.
