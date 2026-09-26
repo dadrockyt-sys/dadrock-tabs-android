@@ -1,0 +1,76 @@
+{
+  "schema": "astra-tiny-fit-pilot-synthetic-verification-v2",
+  "date": "2026-09-26",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "repairReason": "Attempt 1 stopped before optimizer work because the metadata selector sorted bare performance names and chose A instead of the frozen Ab scale capture.",
+  "runHeadSha": "12632441e4fc90ce41d0315ec3b9174f2a569607",
+  "githubEvidence": {
+    "runId": 36277137786,
+    "jobId": 108501969202,
+    "artifactId": 10917224706,
+    "artifactName": "astra-tiny-fit-pilot-synthetic-verification-v1",
+    "artifactDigest": "sha256:cc0e1dca4543011b2275d7d76b689fb00016bdad16c503c6db42d3522a341459",
+    "backendTestsRunId": 36277137773
+  },
+  "runtime": {
+    "python": "3.10.15",
+    "numpy": "1.21.6",
+    "torch": "1.11.0+cpu",
+    "device": "cpu"
+  },
+  "source": {
+    "designGitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "preparedEventAdapterGitBlob": "e00da2fa33668838a79df2d767dfaed5888f3eca",
+    "adapterTestsGitBlob": "9e708e6638cc3ac1f255e20da9df191c6f1287e5",
+    "tinyFitHarnessGitBlob": "19e005a1779f4870b4e285dd62d39e26bfb8dd5a",
+    "tinyFitTestsGitBlob": "9e85c5bf28f33651fbc26efaadb8a201a6329f9e",
+    "syntheticHarnessGitBlob": "e0923e7f331cfb47465617db5553e38c26c29601",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "syntheticWorkflowGitBlob": "42c749b7dc839a480b31bb261d1f71011059d06b",
+    "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d"
+  },
+  "verification": {
+    "selectorRegressionWithAAndAb": "PASS",
+    "eventContractRegressionTests": "PASS",
+    "preparedEventAdapterFabricatedTests": "PASS",
+    "tinyFitComponentTests": "PASS",
+    "sourceAttackIdsPreserved": "PASS",
+    "carryInNoFalseOnset": "PASS",
+    "maskWholeEventSemantics": "PASS",
+    "sameFretReattackDecoder": "PASS",
+    "explicitOnsetSupervision": "PASS",
+    "finiteSyntheticBackward": "PASS",
+    "syntheticLossDecreased": "PASS",
+    "optimizerCapExtensionRejected": "PASS",
+    "wallCapExtensionRejected": "PASS",
+    "selectedZipExtractionOnly": "PASS",
+    "backendTests": "PASS"
+  },
+  "execution": {
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOptimizerStepOperations": 20,
+    "paidComputeUsed": false
+  },
+  "media": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false
+  },
+  "guards": {
+    "realTrainingAuthorized": false,
+    "secondRealRunAuthorized": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "automaticFullTraining": false,
+    "automaticRetry": false,
+    "customerDeliveryEligible": false
+  },
+  "decision": {
+    "exactRuntimeSyntheticVerified": true,
+    "repairedSelectorVerified": true,
+    "realTrainingAuthorized": false,
+    "nextGate": "Create a source-pinned retry authorization request only; require new explicit user authorization before a second real P1 run."
+  }
+}

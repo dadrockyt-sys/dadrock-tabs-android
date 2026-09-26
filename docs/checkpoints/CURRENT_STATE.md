@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **FIRST CAPPED P1 PILOT STOPPED DURING PREPARATION; 0 REAL OPTIMIZER STEPS; OFFLINE SELECTOR REPAIR COMMITTED; NO RERUN AUTHORIZED**  
+Status: **ATTEMPT 1 PREP FAILURE PRESERVED; SELECTOR REPAIR EXACT-RUNTIME VERIFIED; V2 RETRY REQUEST FROZEN; NO SECOND REAL RUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -131,4 +131,33 @@ Root cause: `select_pilot_capture_keys()` sorted bare performance names. With th
 Offline repair: order performances by their lexicographically first **full capture key** and add a regression fixture containing both `A` and `Ab`. This does not change the four frozen capture identities, architecture, objective, thresholds, training budget, or P2/P3 boundary.
 
 **The failed authorization was single-launch. A second real P1 run is not authorized.** After exact-runtime synthetic re-verification of the repair, create a new source-pinned authorization request and require new explicit user authorization before another real media/optimizer run.
+
+## Offline repair verification — PASS
+
+Repair commit: `12632441e4fc90ce41d0315ec3b9174f2a569607`.
+
+Exact-runtime synthetic verification run **36277137786**, job **108501969202**: **SUCCESS**. Normal backend tests run **36277137773** also passed.
+
+The repaired selector regression explicitly includes both P1 scale performances `A` and `Ab`, and `test_metadata_only_selection_is_frozen` passes while retaining the original frozen capture key `P1|scales|Ab|directinput`.
+
+Repair verification boundary: **0 real optimizer steps; no P1/P2/P3 media accessed; no paid compute.** Candidate architecture, objective, thresholds, 200-step cap, four frozen capture keys and P2/P3 boundaries are unchanged.
+
+Frozen repaired receipt: `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V2.json`.  
+Synthetic artifact ID: `10917224706`.
+
+## Retry gate — REQUEST ONLY
+
+A new reviewable request is frozen at:
+`docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V2.json`.
+
+A separate dormant retry workflow is prepared at:
+`.github/workflows/astra-tiny-fit-pilot-real-v2.yml`.
+
+The V2 workflow triggers only on a future commit of `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V2.json`. That launch file does **not** exist. `TINY_FIT_PILOT_REAL_AUTHORIZATION_V2.json` also does **not** exist.
+
+**Do not rerun attempt 1 and do not create V2 authorization/launch artifacts unless the user explicitly authorizes the exact V2 request.**
+
+If explicitly authorized, verify every V2-pinned blob, create `TINY_FIT_PILOT_REAL_AUTHORIZATION_V2.json` matching the request exactly, then create exactly one source-pinned `TINY_FIT_PILOT_REAL_LAUNCH_V2.json`. One retry only; zero automatic retries.
+
+Attempt 1 remains non-model evidence: 0 optimizer steps. P2/P3 remain closed and full training remains stopped.
 
