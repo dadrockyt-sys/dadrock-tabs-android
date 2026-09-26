@@ -1,13 +1,18 @@
 {
   "schema": "astra-tiny-fit-pilot-proposal-v1",
   "date": "2026-09-26",
-  "status": "offline_preparation_only_not_launch_ready",
+  "status": "offline_preparation_complete_exact_runtime_synthetic_verified_awaiting_explicit_real_authorization",
   "question": "Can an event-preserving guitar model fit a handful of its own training examples, including repeated same-fret attacks?",
   "realTrainingAuthorized": false,
   "proposedScope": {
     "performer": "P1",
     "split": "training_only",
-    "primaryContents": ["chords", "scales", "singlenotes", "PalmMute"],
+    "primaryContents": [
+      "chords",
+      "scales",
+      "singlenotes",
+      "PalmMute"
+    ],
     "maxUnderlyingPerformances": 4,
     "maxViewsPerPerformance": 1,
     "maxFramesPerExample": 200,
@@ -46,20 +51,39 @@
   ],
   "proposedAdvancement": {
     "trainingExampleEventF1Min": 0.95,
-    "matchedOffsetWithin50msFractionMin": 0.90,
-    "repeatedAttackRecallMinWhenPresent": 0.90,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackRecallMinWhenPresent": 0.9,
     "allMetricsFinite": true,
     "unresolvedLabelCountMax": 0,
     "meaning": "Engineering learnability screen only; thresholds must be frozen before execution. Passing is permission to assess a next pilot, not proof of generalization or customer eligibility.",
     "onFailure": "Stop this candidate, retain evidence, investigate inputs/targets/objective. No automatic extra epochs or new architecture. A budget-limited miss is not proof of impossibility."
   },
   "launchBlockers": [
-    "Event source/crop/mask adapter not yet integrated or verified",
-    "Pilot model/loss/event decoder not implemented or source-pinned",
-    "Metadata selection rule and eligible manifest identities not frozen",
-    "Exact-runtime synthetic gradient and stop-budget verification not completed",
-    "No new explicit real-data pilot authorization"
+    "No new explicit user authorization for the exact real P1 pilot",
+    "No real authorization document and no launch document; dormant real workflow therefore cannot start"
   ],
   "historicalScoresUnchanged": true,
-  "customerDeliveryEligible": false
+  "customerDeliveryEligible": false,
+  "frozenDesign": {
+    "path": "docs/astra/TINY_FIT_PILOT_DESIGN_V1.json",
+    "gitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "candidateId": "astra_tiny_event_fit_v1"
+  },
+  "syntheticVerification": {
+    "path": "docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json",
+    "gitBlob": "02c2f5d078242ce982af72f3038738d63c3ee0b9",
+    "githubRunId": 36275788105,
+    "githubJobId": 108498148554,
+    "exactRuntimeVerified": true,
+    "realOptimizerStepsExecuted": 0,
+    "p1MediaAccessed": false,
+    "p2MediaAccessed": false,
+    "p3Accessed": false
+  },
+  "resolvedLaunchBlockers": [
+    "Prepared event/crop/mask adapter implemented and fabricated fixtures verified",
+    "One pilot model/loss/event decoder frozen and source-pinned",
+    "Metadata-only capture selection and exact source archive identities frozen",
+    "Exact-runtime synthetic gradient, decoder and budget enforcement verification completed successfully"
+  ]
 }

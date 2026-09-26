@@ -1,0 +1,81 @@
+{
+  "schema": "astra-tiny-fit-pilot-real-authorization-request-v1",
+  "date": "2026-09-26",
+  "status": "request_only_not_authorization",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "authorizationGranted": false,
+  "realTrainingAuthorized": false,
+  "purpose": "Request one bounded P1 training-only learnability pilot after offline event-preserving preparation and exact-runtime synthetic verification.",
+  "requestedAuthorization": {
+    "realP1TrainingAuthorized": true,
+    "realOptimizerStepsAuthorized": 200,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "automaticFullTrainingAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "scope": {
+    "performer": "P1",
+    "split": "training_only",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "maxOptimizerStepsTotal": 200,
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobSeconds": 3600,
+    "maxCandidateDesigns": 1,
+    "automaticRetries": 0,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "paidComputeDollars": 0
+  },
+  "sourceIdentities": {
+    "designGitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "syntheticVerificationGitBlob": "02c2f5d078242ce982af72f3038738d63c3ee0b9",
+    "preparedEventAdapterGitBlob": "e00da2fa33668838a79df2d767dfaed5888f3eca",
+    "tinyFitHarnessGitBlob": "e504245d7038e0fd736e92927acab7ff250d115b",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "syntheticWorkflowGitBlob": "42c749b7dc839a480b31bb261d1f71011059d06b",
+    "realWorkflowGitBlob": "d63eb4c6234e4d94bfe001ae24ff25511c38e3f7"
+  },
+  "verifiedEvidence": {
+    "githubRunId": 36275788105,
+    "githubJobId": 108498148554,
+    "githubArtifactId": 10917501716,
+    "runHeadSha": "2975017d9632f75a9e24e4eb5d8e3b2ae0546468",
+    "runtime": {
+      "python": "3.10.15",
+      "numpy": "1.21.6",
+      "torch": "1.11.0+cpu",
+      "device": "cpu"
+    },
+    "exactRuntimeSyntheticVerified": true,
+    "realOptimizerStepsExecuted": 0,
+    "p1MediaAccessed": false,
+    "p2MediaAccessed": false,
+    "p3Accessed": false
+  },
+  "advancementThresholds": {
+    "trainingExampleEventF1Min": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackCoverageRequired": true,
+    "repeatedAttackRecallMinWhenPresent": 0.9,
+    "allMetricsFinite": true,
+    "unresolvedLabelCountMax": 0
+  },
+  "meaning": "Authorization would permit only the exact training-only pilot above. Passing would permit design of a separate same-budget cross-performer screen; it would not authorize full training, P2/P3 access, production use or customer delivery.",
+  "requiredNextArtifactIfAuthorized": "docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json",
+  "launchArtifactCreated": false
+}

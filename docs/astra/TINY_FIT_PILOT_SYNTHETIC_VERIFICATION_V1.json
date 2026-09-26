@@ -1,0 +1,69 @@
+{
+  "candidateId": "astra_tiny_event_fit_v1",
+  "date": "2026-09-26",
+  "decision": {
+    "exactRuntimeSyntheticVerified": true,
+    "nextGate": "Freeze this receipt and a source-pinned authorization request; require new explicit user authorization before any P1 media or real optimizer step.",
+    "realTrainingAuthorized": false
+  },
+  "execution": {
+    "paidComputeUsed": false,
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOptimizerStepOperations": 20
+  },
+  "githubEvidence": {
+    "artifactId": 10917501716,
+    "artifactName": "astra-tiny-fit-pilot-synthetic-verification-v1",
+    "jobId": 108498148554,
+    "runId": 36275788105,
+    "runUrl": "https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36275788105"
+  },
+  "guards": {
+    "automaticFullTraining": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "realTrainingAuthorized": false
+  },
+  "media": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false
+  },
+  "runHeadSha": "2975017d9632f75a9e24e4eb5d8e3b2ae0546468",
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-tiny-fit-pilot-synthetic-verification-v1",
+  "source": {
+    "adapterTestsGitBlob": "9e708e6638cc3ac1f255e20da9df191c6f1287e5",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "designGitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "preparedEventAdapterGitBlob": "e00da2fa33668838a79df2d767dfaed5888f3eca",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "syntheticHarnessGitBlob": "e0923e7f331cfb47465617db5553e38c26c29601",
+    "tinyFitHarnessGitBlob": "e504245d7038e0fd736e92927acab7ff250d115b",
+    "tinyFitTestsGitBlob": "ae463fb33a64e9f330df78dff0c56711e652c143",
+    "workflowGitBlob": "42c749b7dc839a480b31bb261d1f71011059d06b"
+  },
+  "verification": {
+    "carryInNoFalseOnset": "PASS",
+    "eventContractRegressionTests": "PASS",
+    "explicitOnsetSupervision": "PASS",
+    "finiteSyntheticBackward": "PASS",
+    "maskWholeEventSemantics": "PASS",
+    "optimizerCapExtensionRejected": "PASS",
+    "preparedEventAdapterFabricatedTests": "PASS",
+    "sameFretReattackDecoder": "PASS",
+    "selectedZipExtractionOnly": "PASS",
+    "sourceAttackIdsPreserved": "PASS",
+    "syntheticLossDecreased": "PASS",
+    "tinyFitComponentTests": "PASS",
+    "wallCapExtensionRejected": "PASS"
+  }
+}
