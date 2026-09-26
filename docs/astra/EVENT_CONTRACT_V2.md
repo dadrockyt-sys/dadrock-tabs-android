@@ -8,7 +8,7 @@ Status: offline primitives implemented; real-corpus integration and prevalence a
 python -m unittest discover -s astra_backend/evaluation -p 'test_event_contract_v2.py' -v
 ```
 
-Python standard library only. This command opens no corpus, loads no model and performs no optimizer steps. Local verification: Python 3.12.14, 26 passed. Python 3.10 CI is supplied separately; do not claim it passed until observed.
+Python standard library only. This command opens no corpus, loads no model and performs no optimizer steps. Local verification: Python 3.12.14, 26 passed. Python 3.10 CI also passed: run 36273580660, job 108491956218, implementation commit 7d6e8e894b9a8ff9b09128ca936433a97753de58.
 
 ## What changed
 

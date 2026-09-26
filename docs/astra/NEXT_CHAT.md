@@ -15,7 +15,7 @@ The user requested economical preparation for the next GPT chat, not another unb
 - V5 diagnosis proved hard onset admission collapse. State-only ablation recovers 0.218843; still below V4. Do not repeat this diagnosis.
 - Reproduced lost repeated-note boundaries; added explicit event adapter, frame targets and scorer.
 - Added corrected PR/ROC histogram helper and measured-status abstention helper.
-- 26 focused offline tests passed on Python 3.12.14. This is synthetic evidence, not real guitar quality or frozen-runtime training verification.
+- 26 focused offline tests passed on Python 3.12.14; Python 3.10 GitHub verification also passed (run 36273580660). This is synthetic evidence, not real guitar quality or frozen-ML-runtime training verification.
 - Prepared the bounded pilot proposal; it is NOT launch-ready.
 - Archived the long historical checkpoint intact. Read it only for specific old evidence, not as an active queue.
 

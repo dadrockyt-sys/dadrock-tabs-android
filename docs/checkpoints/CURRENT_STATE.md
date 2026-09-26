@@ -20,7 +20,7 @@ Before more full training: preserve actual note attacks in labels/scoring, prove
 - Added `astra_backend/evaluation/event_contract_v2.py`: explicit event IDs, tuple-source adapter with frozen-lag semantics, separate occupancy/onset targets, one-to-one event scoring, offset reporting, explicit uncertainty exclusions and status-based abstention counts.
 - Added `diagnostic_histogram_v2.py`: corrected increasing-recall integration, explicit trapezoidal PR vs average precision, single-class null results.
 - Added `test_event_contract_v2.py`: **26 passed on Python 3.12.14**, no external dependencies, real media, models or optimizer steps.
-- Added a five-minute Python 3.10 synthetic-only workflow. Its remote result is pending verification; local tests do not establish exact frozen ML-runtime readiness.
+- Added a five-minute Python 3.10 synthetic-only workflow. Run `36273580660`, job `108491956218`: **SUCCESS** on implementation commit `7d6e8e894b9a8ff9b09128ca936433a97753de58`. This verifies the stdlib helpers on Python 3.10, not the frozen ML training stack.
 - Prepared `docs/astra/TINY_FIT_PILOT_PROPOSAL_V1.json`: a proposal with explicit launch blockers, not authorization.
 - Inventoried V5 saved artifacts; final model artifacts expire October 2–3 UTC. Inventory is not a durable model backup.
 

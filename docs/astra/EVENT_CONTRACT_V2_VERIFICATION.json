@@ -9,10 +9,17 @@
   "modelLoaded": false,
   "optimizerSteps": 0,
   "frozenMLRuntimeVerified": false,
-  "remoteWorkflowStatus": "not_yet_observed",
+  "remoteWorkflowStatus": "success",
   "sourceSha256": {
     "astra_backend/evaluation/diagnostic_histogram_v2.py": "398f3bd299a3e3138bee8fe4c4bf25b4825619c78739b8d1d9b386934f3d1064",
     "astra_backend/evaluation/event_contract_v2.py": "35afb7376a62858f2c89f5d4dc6f0fa16bc7547f2293c0800bee083d429b7e4d",
     "astra_backend/evaluation/test_event_contract_v2.py": "e846819e9b00dccf16af46ad218745deecc0eb5d91907c7419eb773bbdb2b2e6"
+  },
+  "remoteVerification": {
+    "runId": 36273580660,
+    "jobId": 108491956218,
+    "implementationCommit": "7d6e8e894b9a8ff9b09128ca936433a97753de58",
+    "pythonRequested": "3.10",
+    "scope": "stdlib event-contract tests, no ML runtime or real media"
   }
 }
