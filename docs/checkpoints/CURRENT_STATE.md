@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V3 PRE-LAUNCH SELF-PIN GUARD REPAIRED; USER'S PRIOR V3 AUTHORIZATION NOT CONSUMED; NO REAL V3 AUTH/LAUNCH CREATED**  
+Status: **REPAIRED V3 CAPPED P1 RETRY AUTHORIZED AND LAUNCHED ONCE; RUN 36280547470 IN PROGRESS; NO SECOND V3 LAUNCH/RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -252,4 +252,22 @@ This was caught **before** creating a V3 authorization artifact, launch artifact
 Repair: the future launch artifact must pin the authorization blob; the authorization artifact must pin every pre-existing frozen source but does not self-pin. This changes no capture, crop rule, model, objective, threshold, optimizer budget, P2/P3 boundary, or retry policy.
 
 The user's chat authorization immediately preceding this discovery was **not consumed** because the exact frozen request was found invalid before authorization materialization. The repaired request must be explicitly authorized again before a V3 authorization or launch artifact is created.
+
+## Repaired V3 capped P1 retry — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the repaired V3 request in chat on 2026-09-26.
+
+Created:
+- `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json`
+- `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json`
+
+Authorization commit: `cb9916e409bd0fbb9790f592c02ba484619ab548`.  
+Launch commit: `70e0cdb2440357dbcb61005b8a5ca1b49ff32329`.  
+Canonical V3 workflow run: **36280547470**, job **108511412597**.
+
+Scope remains exactly frozen: four specified P1 training performances, one view each, 200 frames/example, at most 200 optimizer steps total, 2700-second train/eval cap, 3600-second job cap, one candidate, zero automatic retries, zero paid compute. P2/P3 remain closed; full training remains stopped.
+
+**Do not create another V3 launch, rerun this workflow, extend optimizer steps, retune thresholds, open P2/P3, or restart full training without new explicit authorization.**
+
+Next action: inspect only run **36280547470**. If it fails before/during optimizer work, preserve and diagnose that single run only. If it completes training, preserve exact metrics/evidence and stop; no cross-performer screen or broader training is authorized.
 
