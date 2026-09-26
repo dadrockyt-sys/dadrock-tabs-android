@@ -1,9 +1,9 @@
 # New Astra Work — CURRENT STATE
 
-Updated: 2026-09-21 UTC
+Updated: 2026-09-26 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **GUITAR-TECHS V1 FAILURE FROZEN; V2 200-FRAME DESIGN + CPU BUDGET + IMPLEMENTATION VERIFIED; V2 P1/P2 REAL TRAINING AUTHORIZED; P3 SEALED**
+Status: **V1–V5 FAILURES REVIEWED; EVENT-BOUNDARY SCORING GAP REPRODUCED; MEASUREMENT REPAIR + CAPPED PILOT BEFORE MORE TRAINING; P3 SEALED**
 
 ## Product outcome
 
@@ -3022,3 +3022,88 @@ This proves that removing the hard onset gate restores most of the lost V5 recal
 6. P3 remains separately sealed.
 
 This block supersedes the active V5 diagnosis instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## Cost-effective project review — 2026-09-26
+
+User requested inspection of this week's five training versions and a cost-effective route to completion. This is a source/results audit and revised next-task priority, not authorization for training or a claim of product readiness.
+
+### Evidence reviewed
+
+- Read the current remote checkpoint (pre-review blob 308be1f160ae8ca220d72fcc07b2727d4b123c82), current AGENTS.md, V2–V5 result/diagnosis blocks, V5 diagnosis receipt, V5 model, objective/decoder, resumable trainer, diagnostic runner, and shared real-training label/scoring implementation.
+- GitHub run 36115823434: all seven returned V5 jobs completed successfully. This confirms orchestration completion, not musical acceptance.
+- Existing local checkout is stale and has unrelated unfinished files; it was not reset or overwritten.
+- No real media opened, no model inference or optimizer execution, no P3, no deployment or paid compute.
+- Historical development macro F1: V1 approximately 0.2136; V2 0.216208; V3 0.237452; V4 0.243523; V5 0.064131. These are exact-string/fret onset metrics under the existing protocol, not general transcription accuracy.
+- V2–V5 each budget 1,000 sampled-sequence epochs per fold, two folds, 2,000 optimizer steps per fold. An epoch samples 200 frames per underlying performance; it is not a pass over all recorded frames. V1 used a different 2,500-step isolated-frame protocol, so “five identical 2,000-epoch runs” is not exact.
+- Only 41 / 40 underlying training performances per fold; 256 accepted captures include correlated views. Repeating these frames does not supply more independent performers.
+- V4 selected epochs 720 / 400. The evidence does not support increasing epochs as the first remedy.
+
+### Confirmed implementation gap: repeated same-fret attacks
+
+The shared real_training.py labels_for_frames converts source MIDI events to fret occupancy. Adjacent events on the same string and fret with no sampled silence become indistinguishable. V5 auxiliary_targets derives onset supervision only from silence-to-active or fret changes. The shared runs/capture_metrics reconstructs reference events from occupancy, so it loses the same boundaries.
+
+A focused source-extracted synthetic check executed successfully in this review:
+- Two source MIDI notes: low E string, MIDI 45, intervals [0.10,0.20) and [0.20,0.30).
+- Synthetic frame interval 0.01 seconds; no actual corpus input.
+- labels_for_frames -> runs returned ONE reference run.
+- capture_metrics with perfectly matching occupancy returned event F1 1.0.
+- The original two attacks were therefore not independently evaluated.
+- The test used the actual four functions labels_for_frames, runs, match_group and capture_metrics extracted via Python AST, with NumPy and declared synthetic constants. No trainer/module import or model run.
+
+This proves a representational/scoring limitation, not its prevalence in P1/P2 and not the cause of all historical failures. Preserve historical metrics under their original protocol. Add a separately versioned MIDI-event benchmark and explicit onset/event IDs; do not silently alter old scores or acceptance semantics. A new event-admission head trained on the same occupancy-derived starts would inherit this limitation.
+
+### Other audit findings and interpretation limits
+
+1. V5 hard onset admission rejects approximately 97.6% / 91.4% of reference starts at its 0.50 gate. Saved no-optimizer state-only ablation restores macro F1 to 0.218843, still below V4 and far below 0.70. Repeating V5 is unjustified.
+2. Activity and state admission also pass only about one third of reference starts. Removing onset gating is not a complete fix.
+3. Pitch-head F1 0.8642 / 0.7787 is pooled frame/pitch-bin F1 over fully valid frames, not note-event F1, string/fret accuracy or finished-tab quality. It supports investigating pitch-first inference, not claiming 80%+ product accuracy.
+4. AUROC around 0.85/0.88 plus poor recall at 0.50 establishes useful ranking with a bad operating point. It does not independently prove probability miscalibration. Reliability/precision-recall measurements remain necessary; the negative AUPRC fields in the old diagnostic are invalid and must remain excluded.
+5. The onset objective uses a fixed positive weight of 2.0 and one-frame transition targets; imbalance and target duration merit a training-only audit. A new admission head is a hypothesis, not a demonstrated cure.
+6. The reviewed capture_metrics returns abstentionRate=0.0 literally. Existing abstention PASS is not evidence of an implemented confidence-based refusal policy.
+7. Checkpoints are ranked by decoded validation F1, while individual loss components are discarded from the training log. Log per-head losses, predicted/reference event counts and gate recall during future pilots so collapse is visible before the end.
+8. Resume machinery, frontend adapter, rhythm/fingering/rendering modules and provenance remain useful. Synthetic implementation PASS did not establish learnability on real guitar recordings.
+9. These two-performer guitar experiments cannot establish bass, full-mix source separation, lead/rhythm distinction, full-song structure or professional PDF correctness.
+10. Exact recorded string/fret matching and playable alternative fingering are distinct objectives. Keep the exact benchmark; additionally assess pitch/onset/offset and playable fingering under a prospective product specification. Do not weaken the existing benchmark to obtain a pass.
+
+### Research cross-check
+
+- https://magenta.tensorflow.org/onsets-frames : original method uses separate onset/frame objectives, targets the first few onset frames, and uses onset conditioning/gating. This supports testing matched target/loss/decoder semantics, not transplanting piano performance claims to guitar.
+- https://docs.pytorch.org/docs/2.14/generated/torch.nn.BCEWithLogitsLoss.html : positive weighting changes the precision/recall trade-off. Check training prevalence and loss behavior rather than assuming an arbitrary sigmoid threshold is appropriate. This documentation review does not change the frozen Torch runtime.
+
+### Revised economical sequence
+
+A. Measurement and source contract first — no new real training.
+- Implement a separately versioned event-preserving label/scoring path with synthetic checks for adjacent same-fret reattacks, ties, masks, repeated chords, silence, onset tolerance and offset correctness.
+- Preserve legacy scoring in parallel and explicitly document comparability limits.
+- Correct diagnostic AUPRC direction and verify bounds against known synthetic rankings. Add actual event/abstention counts; do not call a hardcoded zero measured.
+- Inventory existing stored logits/receipts before considering new inference. Do not repeat the already-completed full V5 decomposition.
+- Quantify real-corpus prevalence only within a separately scoped allowed diagnostic; this review did not access the media.
+
+B. Cheapest decisive experiment before another full run.
+- Freeze an exact pilot design, source/data scope, stop rule and approval request after A.
+- Proposed first real-data pilot: a handful of TRAINING-only performances, at most 200 optimizer steps and 60 CPU runner minutes, whichever comes first, to prove near-perfect fitting of those examples and recovery of repeated attacks. These are proposed caps, not current authorization or a claim 200 steps must suffice.
+- If it cannot fit its own tiny examples, stop and inspect targets/features/objective; do not launch both full folds.
+- If using a saved V5 encoder for cheap head-only fitting, keep fold identity strict (P1-trained checkpoint only for P1 training, P2 equivalent), freeze the encoder, and recognize the selected checkpoints already used opposite-performer development feedback. This is exploratory reuse, never a new untouched validation claim. The old random-initialization rule needs an explicitly revised design; do not bypass it.
+- Compare only a small predeclared number of alternatives, one change at a time: e.g. event-preserving supervision plus fixed task weights versus a pitch-first event path using the existing deterministic fingering stage. No broad architecture/threshold sweep.
+
+C. Staged development budget after the learnability test.
+- Proposed initial cross-performer cap: 100 epochs per fold, 200 total, or 10% of a V2–V5 run's epoch budget. This is a computational screening stage, not a replacement final protocol or a guarantee of success.
+- Use step/exposure and wall-time budgets as well as epochs; architecture changes alter cost per epoch.
+- Predeclare advancement criteria against same-budget baseline results and per-head learning/recall, not hindsight. V5 learned late, so a short-run failure must not be misrepresented as proof of long-run impossibility.
+- Extend a promising candidate to a second bounded stage only after inspection; permit the full 1,000-per-fold budget only after demonstrated useful improvement and stable admission.
+- Preserve original completed FAIL results and thresholds. New pilots that stop early have pilot status, not an admissible old-protocol verdict.
+- Proposed paid-compute budget remains zero. Actual Actions bill/total monetary cost was not inspected. Do not quote a dollar saving or completion date.
+
+D. Product milestones.
+- Recommend first proving a short isolated guitar excerpt -> correct events -> playable preview/PDF end to end, with the current frontend/deterministic backend retained.
+- Add clean polyphony, then measured source separation and role selection, then full-song/technique coverage. Bass needs separate evidence.
+- This narrower first milestone is a recommendation, not a silent change to the promised final bass/rhythm/lead product.
+- P3 remains sealed. Passing development only enables a separately authorized final evaluation; it does not demonstrate all product stages.
+- If the bounded pilots show no meaningful improvement, stop this from-scratch model line and compare a small number of appropriately licensed pretrained options on the same development clips before spending on another architecture. No new model selected/downloaded in this review.
+
+### EXPLICIT NEXT STEP — measurement repair and pilot specification
+
+This review supersedes the immediate “build V6 admission head then request another full run” priority. First implement and verify the event-preserving synthetic scoring/label contract and fix diagnostic reporting. Then freeze one inexpensive, falsifiable learnability pilot with exact data, initialization, metrics, caps and stop conditions.
+
+Do not run real P1/P2 optimizer work under this review. Existing AGENTS.md and the frozen checkpoint require new explicit authorization after the concrete pilot is prepared. No new permission is needed for the authorized offline implementation. Do not reopen P3, change main/Production, retune historical thresholds or label old failures passes.
