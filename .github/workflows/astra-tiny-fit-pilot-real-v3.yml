@@ -88,7 +88,8 @@ jobs:
           for key,path in expected.items():
               actual = blob(path)
               assert launch['sourceIdentities'][key] == actual, (key,path,'launch')
-              assert auth['sourceIdentities'][key] == actual, (key,path,'authorization')
+              if key != 'authorizationGitBlob':
+                  assert auth['sourceIdentities'][key] == actual, (key,path,'authorization')
           PY
           echo "TINY_FIT_REAL_P1_AUTHORIZED=true"
           echo "TINY_FIT_MAX_OPTIMIZER_STEPS=200"

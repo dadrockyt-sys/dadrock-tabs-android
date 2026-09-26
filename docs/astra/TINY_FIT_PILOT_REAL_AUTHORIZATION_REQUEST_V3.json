@@ -77,7 +77,7 @@
     "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
     "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
     "attempt2FailureReceiptGitBlob": "9eae66f748974203fd20b24081c602d9e018e5f7",
-    "workflowGitBlob": "ccf8f50c28c49fce097f66e53bafb5bc7c7cc45c"
+    "workflowGitBlob": "43aacaef18b74a946acf1ad2a9eef6af707a38da"
   },
   "verifiedEvidence": {
     "syntheticRunId": 36279935269,
@@ -110,5 +110,15 @@
   "meaning": "Authorization would permit only one new bounded V3 attempt of the same P1 training-only pilot. It would not authorize reuse/rerun of V1/V2, full training, P2/P3 access, threshold retuning, production use or customer delivery.",
   "requiredNextArtifactIfAuthorized": "docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json",
   "requiredLaunchArtifactIfAuthorized": "docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json",
-  "launchArtifactCreated": false
+  "launchArtifactCreated": false,
+  "preLaunchGuardRepair": {
+    "reason": "Authorization artifact cannot cryptographically pin its own Git blob before it exists. The real workflow now requires the launch artifact to pin the authorization blob, while the authorization artifact must pin every pre-existing frozen source.",
+    "changesScope": false,
+    "changesMediaSelection": false,
+    "changesModel": false,
+    "changesObjective": false,
+    "changesThresholds": false,
+    "changesOptimizerBudget": false,
+    "priorChatAuthorizationConsumed": false
+  }
 }

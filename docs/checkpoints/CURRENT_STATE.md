@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V2 PREP FAILURE PRESERVED; LAUNCH-READY CROP REPAIR EXACT-RUNTIME VERIFIED; V3 REQUEST FROZEN; NO FURTHER REAL RUN AUTHORIZED**  
+Status: **V3 PRE-LAUNCH SELF-PIN GUARD REPAIRED; USER'S PRIOR V3 AUTHORIZATION NOT CONSUMED; NO REAL V3 AUTH/LAUNCH CREATED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -242,4 +242,14 @@ The request is not authorization. `TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json` an
 The V3 workflow can trigger only on a future V3 launch document and remains capped at the same four P1 captures, 200 frames/example, at most 200 optimizer steps, one candidate, zero retries, zero paid compute. P2/P3 remain closed; full training remains stopped.
 
 **Require new explicit user authorization of the exact V3 request before any further P1 media access or real optimizer step.**
+
+## V3 pre-launch guard repair
+
+A final pre-launch verification found an impossible self-reference in the dormant V3 workflow: it required `TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json` to contain the Git blob SHA of itself before that blob could exist.
+
+This was caught **before** creating a V3 authorization artifact, launch artifact, accessing any further P1 media, or executing any real optimizer step.
+
+Repair: the future launch artifact must pin the authorization blob; the authorization artifact must pin every pre-existing frozen source but does not self-pin. This changes no capture, crop rule, model, objective, threshold, optimizer budget, P2/P3 boundary, or retry policy.
+
+The user's chat authorization immediately preceding this discovery was **not consumed** because the exact frozen request was found invalid before authorization materialization. The repaired request must be explicitly authorized again before a V3 authorization or launch artifact is created.
 
