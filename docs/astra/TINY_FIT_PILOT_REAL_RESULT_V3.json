@@ -1,0 +1,111 @@
+{
+  "schema": "astra-tiny-fit-pilot-real-result-v3",
+  "date": "2026-09-26",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "workflow": {
+    "runId": 36280547470,
+    "jobId": 108511412597,
+    "headSha": "70e0cdb2440357dbcb61005b8a5ca1b49ff32329",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10918434248,
+    "name": "astra-tiny-fit-capped-p1-pilot-v3",
+    "digest": "sha256:4b62ad7336a216cbee0bf8a52c3c9c56d51eca7f963702c95bba7be320a7c573",
+    "resultFileSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647",
+    "modelFileSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f"
+  },
+  "fit": {
+    "optimizerSteps": 200,
+    "requestedOptimizerSteps": 200,
+    "stopReason": "requested_steps_reached",
+    "initialLoss": {
+      "total": 5.893743515014648,
+      "state": 3.0180442333221436,
+      "onset": 0.7189248204231262
+    },
+    "finalLoss": {
+      "total": 0.03999917209148407,
+      "state": 0.01247961912304163,
+      "onset": 0.006879888474941254
+    }
+  },
+  "evaluation": {
+    "engineeringAdvancementThresholdsMet": false,
+    "allMetricsFinite": true,
+    "trainingExampleEventF1Min": 0.5,
+    "matchedOffsetWithin50msFraction": 0.9375,
+    "repeatedAttackCoverageSatisfied": true,
+    "repeatedReferenceAttackCount": 2,
+    "repeatedAttackRecall": 1,
+    "noEventSyntheticFalsePositiveCount": 0,
+    "referenceAttackCountTotal": 16,
+    "predictedAttackCountTotal": 25,
+    "truePositiveTotal": 16,
+    "falsePositiveTotal": 9,
+    "falseNegativeTotal": 0,
+    "examples": [
+      {
+        "captureKey": "P1|chords|Drop3_7|directinput",
+        "f1": 0.7058823529411764,
+        "precision": 0.5454545454545454,
+        "recall": 1,
+        "referenceAttackCount": 6,
+        "predictedAttackCount": 11,
+        "falsePositive": 5,
+        "carryOutCount": 4,
+        "onsetAdmissionRecall": 1
+      },
+      {
+        "captureKey": "P1|scales|Ab|directinput",
+        "f1": 0.9411764705882353,
+        "precision": 0.8888888888888888,
+        "recall": 1,
+        "referenceAttackCount": 8,
+        "predictedAttackCount": 9,
+        "falsePositive": 1,
+        "carryOutCount": 1,
+        "onsetAdmissionRecall": 1
+      },
+      {
+        "captureKey": "P1|singlenotes|allsinglenotes|directinput",
+        "f1": 0.5,
+        "precision": 0.3333333333333333,
+        "recall": 1,
+        "referenceAttackCount": 1,
+        "predictedAttackCount": 3,
+        "falsePositive": 2,
+        "carryOutCount": 1,
+        "onsetAdmissionRecall": 1
+      },
+      {
+        "captureKey": "P1|techniques|PalmMute|directinput",
+        "f1": 0.6666666666666666,
+        "precision": 0.5,
+        "recall": 1,
+        "referenceAttackCount": 1,
+        "predictedAttackCount": 2,
+        "falsePositive": 1,
+        "carryOutCount": 1,
+        "onsetAdmissionRecall": 1
+      }
+    ]
+  },
+  "diagnosis": {
+    "observedFailure": "precision/extra-attack overprediction with perfect recall",
+    "boundaryScoringContractMismatch": true,
+    "carryOutPositiveTargetCountTotal": 7,
+    "falsePositiveTotal": 9,
+    "remainingNonBoundaryFalsePositiveCount": 2,
+    "note": "Carry-out attacks are supervised as positive onset targets but excluded from scorableEvents. The evaluator decodes all predictions and scores only against scorableEvents, so boundary attacks can be counted as false positives."
+  },
+  "decision": {
+    "engineeringAdvancement": "STOP",
+    "generalizationClaimAllowed": false,
+    "crossPerformerScreenAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false
+  }
+}
