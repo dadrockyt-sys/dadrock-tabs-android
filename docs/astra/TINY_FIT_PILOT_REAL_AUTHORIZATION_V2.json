@@ -1,0 +1,106 @@
+{
+  "schema": "astra-tiny-fit-pilot-real-authorization-v2",
+  "date": "2026-09-26",
+  "status": "authorized_exact_frozen_p1_retry_v2",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "authorizationGranted": true,
+  "authorization": {
+    "realP1TrainingAuthorized": true,
+    "realOptimizerStepsAuthorized": 200,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "automaticFullTrainingAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "scope": {
+    "performer": "P1",
+    "split": "training_only",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "maxOptimizerStepsTotal": 200,
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobSeconds": 3600,
+    "maxCandidateDesigns": 1,
+    "automaticRetries": 0,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "paidComputeDollars": 0
+  },
+  "repair": {
+    "selectorBehavior": "order performances by lexicographically first full capture key so the implementation matches the already frozen capture identities",
+    "selectorRegressionWithAAndAb": true,
+    "changesFrozenCaptureKeys": false,
+    "changesArchitecture": false,
+    "changesObjective": false,
+    "changesThresholds": false,
+    "changesOptimizerBudget": false
+  },
+  "sourceIdentities": {
+    "designGitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "preparedEventAdapterGitBlob": "e00da2fa33668838a79df2d767dfaed5888f3eca",
+    "tinyFitHarnessGitBlob": "19e005a1779f4870b4e285dd62d39e26bfb8dd5a",
+    "tinyFitTestsGitBlob": "9e85c5bf28f33651fbc26efaadb8a201a6329f9e",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
+    "syntheticVerificationGitBlob": "b6a441043d6157965ddd42f496461d059b254641",
+    "workflowGitBlob": "2e8a16371c11ca5ef7bf9aba3d2b4fbb9ec11324",
+    "authorizationRequestGitBlob": "9a2ad838e8e6e4de1d53ceee45fc35e0bc1b6bfe"
+  },
+  "verifiedEvidence": {
+    "syntheticRunId": 36277137786,
+    "syntheticJobId": 108501969202,
+    "syntheticArtifactId": 10917224706,
+    "syntheticRunHeadSha": "12632441e4fc90ce41d0315ec3b9174f2a569607",
+    "backendTestsRunId": 36277137773,
+    "runtime": {
+      "python": "3.10.15",
+      "numpy": "1.21.6",
+      "torch": "1.11.0+cpu",
+      "device": "cpu"
+    },
+    "exactRuntimeSyntheticVerified": true,
+    "selectorRegressionWithAAndAbPassed": true,
+    "realOptimizerStepsExecutedDuringRepairVerification": 0,
+    "p1MediaAccessedDuringRepairVerification": false,
+    "p2MediaAccessed": false,
+    "p3Accessed": false
+  },
+  "advancementThresholds": {
+    "trainingExampleEventF1Min": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackCoverageRequired": true,
+    "repeatedAttackRecallMinWhenPresent": 0.9,
+    "allMetricsFinite": true,
+    "unresolvedLabelCountMax": 0
+  },
+  "userAuthorization": {
+    "channel": "chat",
+    "instruction": "I authorize",
+    "interpretation": "Authorize only the exact V2 capped P1 retry frozen in TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V2.json."
+  },
+  "guards": {
+    "fullTrainingRestartAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "paidComputeAuthorized": false,
+    "customerDeliveryAuthorized": false,
+    "reuseAttempt1Authorized": false
+  },
+  "meaning": "Authorization would permit only one new bounded retry of the same training-only P1 pilot. It would not authorize reuse/rerun of attempt 1, full training, P2/P3 access, threshold retuning, production use or customer delivery.",
+  "requiredNextArtifact": "docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V2.json"
+}
