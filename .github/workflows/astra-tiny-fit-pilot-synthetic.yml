@@ -2,7 +2,8 @@ name: Astra tiny-fit pilot synthetic verification
 
 on:
   push:
-    branches: [astra-work]
+    branches:
+      - astra-work
     paths:
       - 'astra_backend/evaluation/prepared_event_adapter_v1.py'
       - 'astra_backend/evaluation/test_prepared_event_adapter_v1.py'
@@ -33,7 +34,7 @@ jobs:
         with:
           python-version: '3.10.15'
 
-      - name: Verify offline design guards before installing ML runtime
+      - name: Verify frozen offline guards
         shell: bash
         run: |
           set -euo pipefail
@@ -64,26 +65,22 @@ jobs:
           assert x['guards']['paidComputeAuthorized'] is False
           assert x['guards']['customerDeliveryEligible'] is False
           PY
-          echo 'REAL_P1P2_OPTIMIZER_STEPS_AUTHORIZED=0'
-          echo 'GUITAR_TECHS_P3_OPENED=false'
+          echo "REAL_P1_OPTIMIZER_STEPS_AUTHORIZED=0"
+          echo "P2_OPENED=false"
+          echo "P3_OPENED=false"
 
-      - name: Run adapter-only fabricated fixture tests
+      - name: Run stdlib event adapter regression tests
         shell: bash
         run: |
           set -euo pipefail
-          PYTHONPATH=astra_backend:astra_backend/evaluation \
-            python -m unittest -v \
-              astra_backend.evaluation.test_event_contract_v2 \
-              astra_backend.evaluation.test_prepared_event_adapter_v1
+          PYTHONPATH=astra_backend:astra_backend/evaluation python -m unittest -v             astra_backend.evaluation.test_event_contract_v2             astra_backend.evaluation.test_prepared_event_adapter_v1
 
       - name: Install exact frozen ML runtime
         shell: bash
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check 'pip==24.0'
-          python -m pip install --disable-pip-version-check \
-            --extra-index-url https://download.pytorch.org/whl/cpu \
-            --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check             --extra-index-url https://download.pytorch.org/whl/cpu             --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
           python -m pip check
           python - <<'PY'
           import numpy, torch
@@ -92,17 +89,17 @@ jobs:
           print('TINY_FIT_RUNTIME_IDENTITY_PASS')
           PY
 
-      - name: Run capped tiny-fit unit and synthetic backward checks
+      - name: Run capped model tests and synthetic backward smoke
         shell: bash
         run: |
           set -euo pipefail
-          PYTHONPATH=astra_backend:astra_backend/evaluation \
-            python -m unittest -v astra_backend.evaluation.test_tiny_fit_pilot_v1
-          PYTHONPATH=astra_backend:astra_backend/evaluation \
-            python astra_backend/tiny_fit_pilot_verify_synthetic_v1.py | tee /tmp/tiny-fit-synthetic.log
+          PYTHONPATH=astra_backend:astra_backend/evaluation             python -m unittest -v astra_backend.evaluation.test_tiny_fit_pilot_v1
+          PYTHONPATH=astra_backend:astra_backend/evaluation             python astra_backend/tiny_fit_pilot_verify_synthetic_v1.py | tee /tmp/tiny-fit-synthetic.log
           grep -q 'TINY_FIT_SYNTHETIC_PASS=' /tmp/tiny-fit-synthetic.log
-          echo 'REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0'
-          echo 'GUITAR_TECHS_P3_OPENED=false'
+          echo "REAL_P1_OPTIMIZER_STEPS_EXECUTED=0"
+          echo "P1_MEDIA_ACCESSED=false"
+          echo "P2_MEDIA_ACCESSED=false"
+          echo "P3_MEDIA_ACCESSED=false"
 
       - name: Build exact-runtime verification receipt
         shell: bash
@@ -111,74 +108,69 @@ jobs:
           python - <<'PY'
           import json, platform, subprocess
           import numpy, torch
-
           def blob(path):
               return subprocess.check_output(['git','hash-object',path], text=True).strip()
-
           receipt={
-              'schema':'astra-tiny-fit-pilot-synthetic-verification-v1',
-              'date':'2026-09-26',
-              'candidateId':'astra_tiny_event_fit_v1',
-              'runHeadSha':subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
-              'source':{
-                  'designGitBlob':blob('docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'),
-                  'preparedEventAdapterGitBlob':blob('astra_backend/evaluation/prepared_event_adapter_v1.py'),
-                  'adapterTestsGitBlob':blob('astra_backend/evaluation/test_prepared_event_adapter_v1.py'),
-                  'tinyFitHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_v1.py'),
-                  'tinyFitTestsGitBlob':blob('astra_backend/evaluation/test_tiny_fit_pilot_v1.py'),
-                  'syntheticHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_verify_synthetic_v1.py'),
-                  'eventContractV2GitBlob':blob('astra_backend/evaluation/event_contract_v2.py'),
-                  'runtimeLockGitBlob':blob('astra_backend/tabcnn_runtime/requirements.lock.txt'),
-                  'alignmentCorrectionsGitBlob':blob('docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json'),
-              },
-              'runtime':{
-                  'python':platform.python_version(),
-                  'numpy':numpy.__version__,
-                  'torch':torch.__version__,
-                  'device':'cpu',
-              },
-              'verification':{
-                  'eventContractRegressionTests':'PASS',
-                  'preparedEventAdapterFabricatedTests':'PASS',
-                  'tinyFitComponentTests':'PASS',
-                  'sourceAttackIdsPreserved':'PASS',
-                  'carryInNoFalseOnset':'PASS',
-                  'maskWholeEventSemantics':'PASS',
-                  'sameFretReattackDecoder':'PASS',
-                  'explicitOnsetSupervision':'PASS',
-                  'finiteSyntheticBackward':'PASS',
-                  'syntheticLossDecreased':'PASS',
-                  'optimizerCapExtensionRejected':'PASS',
-                  'wallCapExtensionRejected':'PASS',
-                  'selectedZipExtractionOnly':'PASS',
-              },
-              'execution':{
-                  'realOptimizerStepsExecuted':0,
-                  'syntheticOptimizerStepOperations':20,
-                  'paidComputeUsed':False,
-              },
-              'media':{
-                  'p1Accessed':False,
-                  'p2Accessed':False,
-                  'p3Accessed':False,
-              },
-              'guards':{
-                  'realTrainingAuthorized':False,
-                  'p2Opened':False,
-                  'p3Opened':False,
-                  'automaticFullTraining':False,
-                  'mainOrProductionModified':False,
-                  'customerDeliveryEligible':False,
-              },
-              'decision':{
-                  'exactRuntimeSyntheticVerified':True,
-                  'realTrainingAuthorized':False,
-                  'nextGate':'Freeze this receipt and a source-pinned authorization request; require new explicit user authorization before any P1 media or real optimizer step.'
-              }
+            'schema':'astra-tiny-fit-pilot-synthetic-verification-v1',
+            'date':'2026-09-26',
+            'candidateId':'astra_tiny_event_fit_v1',
+            'runHeadSha':subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+            'source':{
+              'designGitBlob':blob('docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'),
+              'preparedEventAdapterGitBlob':blob('astra_backend/evaluation/prepared_event_adapter_v1.py'),
+              'adapterTestsGitBlob':blob('astra_backend/evaluation/test_prepared_event_adapter_v1.py'),
+              'tinyFitHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_v1.py'),
+              'tinyFitTestsGitBlob':blob('astra_backend/evaluation/test_tiny_fit_pilot_v1.py'),
+              'syntheticHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_verify_synthetic_v1.py'),
+              'eventContractV2GitBlob':blob('astra_backend/evaluation/event_contract_v2.py'),
+              'runtimeLockGitBlob':blob('astra_backend/tabcnn_runtime/requirements.lock.txt'),
+              'alignmentCorrectionsGitBlob':blob('docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json'),
+              'workflowGitBlob':blob('.github/workflows/astra-tiny-fit-pilot-synthetic.yml'),
+            },
+            'runtime':{
+              'python':platform.python_version(),
+              'numpy':numpy.__version__,
+              'torch':torch.__version__,
+              'device':'cpu',
+            },
+            'verification':{
+              'eventContractRegressionTests':'PASS',
+              'preparedEventAdapterFabricatedTests':'PASS',
+              'tinyFitComponentTests':'PASS',
+              'sourceAttackIdsPreserved':'PASS',
+              'carryInNoFalseOnset':'PASS',
+              'maskWholeEventSemantics':'PASS',
+              'sameFretReattackDecoder':'PASS',
+              'explicitOnsetSupervision':'PASS',
+              'finiteSyntheticBackward':'PASS',
+              'syntheticLossDecreased':'PASS',
+              'optimizerCapExtensionRejected':'PASS',
+              'wallCapExtensionRejected':'PASS',
+              'selectedZipExtractionOnly':'PASS',
+            },
+            'execution':{
+              'realOptimizerStepsExecuted':0,
+              'syntheticOptimizerStepOperations':20,
+              'paidComputeUsed':False,
+            },
+            'media':{'p1Accessed':False,'p2Accessed':False,'p3Accessed':False},
+            'guards':{
+              'realTrainingAuthorized':False,
+              'p2Opened':False,
+              'p3Opened':False,
+              'automaticFullTraining':False,
+              'mainOrProductionModified':False,
+              'customerDeliveryEligible':False,
+            },
+            'decision':{
+              'exactRuntimeSyntheticVerified':True,
+              'realTrainingAuthorized':False,
+              'nextGate':'Freeze this receipt and a source-pinned authorization request; require new explicit user authorization before any P1 media or real optimizer step.'
+            }
           }
-          out='/tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json'
-          open(out,'w').write(json.dumps(receipt, indent=2, sort_keys=True)+'\n')
-          print(json.dumps(receipt, sort_keys=True))
+          open('/tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json','w').write(
+              json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print('SYNTHETIC_RECEIPT='+json.dumps(receipt,sort_keys=True))
           PY
 
       - name: Upload synthetic verification receipt
@@ -186,5 +178,14 @@ jobs:
         with:
           name: astra-tiny-fit-pilot-synthetic-verification-v1
           path: /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json
-Y‹[›ËYš[\ËY›Ý[™ˆ\œ›Ü‚ˆ™][[Û‹Y^\ÎˆÂ‚ˆH˜[YNˆÛX[\ˆYŽˆ[Ø^\Ê
-BˆÚ[ˆ˜\Úˆ[Žˆˆ›HYˆÝ\ÕS–WÑ’UÔSÕÔÖS•UP×Õ‘T’Q’PÐUSÓ—ÕŒKšœÛÛˆÝ\Ý[žKYš]\Þ[]XË›ÙÂˆXÚÈ	Ô‘PSÔT—ÓÔSRV‘T—ÔÕT×ÑVPÕUQL	ÂˆXÚÈ	ÑÕRUT—ÕPÒ×Ô×ÓÔS‘QY˜[ÙIÂˆXÚÈ	ÐÕTÕÓQT—ÑSU‘T–WÑSQÒP“Y˜[ÙIÂ
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Cleanup
+        if: always()
+        shell: bash
+        run: |
+          rm -f /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json /tmp/tiny-fit-synthetic.log
+          echo "REAL_P1_OPTIMIZER_STEPS_EXECUTED=0"
+          echo "P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
