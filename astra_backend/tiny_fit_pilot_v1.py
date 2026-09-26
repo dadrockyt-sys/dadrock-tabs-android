@@ -34,6 +34,7 @@ if str(HERE / "evaluation") not in sys.path:
 from evaluation.prepared_event_adapter_v1 import (
     MASK,
     prepare_event_crop,
+    select_launch_ready_training_crop,
     select_training_crop,
     source_events_from_notes,
 )
@@ -642,21 +643,22 @@ def prepare_capture(args):
         raise RuntimeError("selected source shorter than 200 frames")
 
     hop_seconds = HOP_LENGTH_SAMPLES / SAMPLE_RATE_HZ
-    crop_selection = select_training_crop(
-        source_events,
-        total_frames=int(features.shape[1]),
-        frames=MAX_FRAMES_PER_EXAMPLE,
-        hop_seconds=hop_seconds,
-    )
-    prepared = prepare_event_crop(
+    crop_selection, prepared = select_launch_ready_training_crop(
         notes,
         capture_id=args.capture_key,
         lag_ms=lag_ms,
         allowlist_lag_ms=corrections[args.capture_key],
-        crop_start_frame=crop_selection["startFrame"],
+        total_frames=int(features.shape[1]),
         frames=MAX_FRAMES_PER_EXAMPLE,
         hop_seconds=hop_seconds,
     )
+    if prepared is None:
+        print("TINY_FIT_PREPARE_REJECT=" + json.dumps({
+            "captureKey": args.capture_key,
+            "cropSelection": crop_selection,
+            "sourceIssueCountBeforeCrop": len(source_issues),
+        }, sort_keys=True), flush=True)
+        raise RuntimeError("no launch-ready training crop")
 
     start = prepared["crop"]["startFrame"]
     cropped_features = np.ascontiguousarray(
@@ -704,6 +706,12 @@ def prepare_capture(args):
     }
     meta_path.write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n")
     if not prepared["launchReady"]:
+        print("TINY_FIT_PREPARE_REJECT=" + json.dumps({
+            "captureKey": args.capture_key,
+            "cropSelection": crop_selection,
+            "unresolvedLabelCount": prepared["unresolvedLabelCount"],
+            "unresolvedCodes": sorted({row["code"] for row in prepared["unresolved"]}),
+        }, sort_keys=True), flush=True)
         raise RuntimeError("prepared pilot example has unresolved labels")
     print("TINY_FIT_PREPARED=" + json.dumps({
         "captureKey": args.capture_key,

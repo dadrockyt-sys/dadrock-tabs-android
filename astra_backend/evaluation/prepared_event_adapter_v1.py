@@ -424,3 +424,124 @@ def select_training_crop(events, *, total_frames, frames, hop_seconds):
         return {"startFrame": start_for(first.aligned_start), "reason": "earliest_source_attack", "coverageEventIds": [first.id]}
 
     return {"startFrame": 0, "reason": "no_resolved_source_attack", "coverageEventIds": []}
+
+
+def select_launch_ready_training_crop(
+    notes,
+    *,
+    capture_id,
+    lag_ms,
+    allowlist_lag_ms,
+    total_frames,
+    frames,
+    hop_seconds,
+):
+    """Choose the earliest deterministic source-driven crop that is launch-ready.
+
+    Candidate ordering stays training-only and model-independent:
+    1. repeated same-string/same-fret attack pairs, earliest second attack first;
+    2. individual resolved source attacks, earliest attack first.
+
+    Each candidate is prepared with the exact event adapter. Candidates with any
+    unresolved selected-crop label are rejected rather than repaired. Rejection
+    diagnostics are summarized so a real-data guard failure remains inspectable.
+    """
+    if type(total_frames) is not int or total_frames <= 0:
+        raise ValueError("total_frames must be positive")
+    if type(frames) is not int or frames <= 0 or frames > total_frames:
+        raise ValueError("frames must fit inside total_frames")
+    hop = _finite_number(hop_seconds, "hop_seconds")
+    if hop <= 0:
+        raise ValueError("hop_seconds must be positive")
+
+    events, _, _ = source_events_from_notes(notes, capture_id=capture_id, lag_ms=lag_ms)
+    usable = [
+        e for e in events
+        if 0 <= e.fret <= MAX_FRET and 0 <= e.aligned_start < e.aligned_end
+    ]
+    max_start = total_frames - frames
+
+    def start_for(seconds):
+        frame = max(0, int(math.floor(seconds / hop)) - 8)
+        return min(max_start, frame)
+
+    repeated = []
+    by_key = {}
+    for event in sorted(usable, key=lambda x: (x.aligned_start, x.string, x.fret, x.id)):
+        key = (event.string, event.fret)
+        prev = by_key.get(key)
+        if prev is not None:
+            first_frame = int(math.floor(prev.aligned_start / hop))
+            second_frame = int(math.floor(event.aligned_start / hop))
+            if second_frame - first_frame < frames:
+                repeated.append((prev, event, first_frame, second_frame))
+        by_key[key] = event
+    repeated.sort(key=lambda pair: (pair[1].aligned_start, pair[0].aligned_start, pair[0].id))
+
+    candidates = []
+    for first, second, first_frame, second_frame in repeated:
+        start = start_for(first.aligned_start)
+        if second_frame >= start + frames:
+            start = max(0, second_frame - frames + 1)
+        start = min(max_start, start)
+        if start <= first_frame < start + frames and start <= second_frame < start + frames:
+            candidates.append({
+                "startFrame": start,
+                "reason": "earliest_launch_ready_repeated_same_fret_attack",
+                "coverageEventIds": [first.id, second.id],
+            })
+
+    for event in sorted(usable, key=lambda e: (e.aligned_start, e.string, e.fret, e.id)):
+        candidates.append({
+            "startFrame": start_for(event.aligned_start),
+            "reason": "earliest_launch_ready_source_attack",
+            "coverageEventIds": [event.id],
+        })
+
+    seen = set()
+    rejections = []
+    issue_histogram = {}
+    for candidate in candidates:
+        identity = (
+            candidate["startFrame"],
+            candidate["reason"],
+            tuple(candidate["coverageEventIds"]),
+        )
+        if identity in seen:
+            continue
+        seen.add(identity)
+        prepared = prepare_event_crop(
+            notes,
+            capture_id=capture_id,
+            lag_ms=lag_ms,
+            allowlist_lag_ms=allowlist_lag_ms,
+            crop_start_frame=candidate["startFrame"],
+            frames=frames,
+            hop_seconds=hop,
+        )
+        if prepared["launchReady"]:
+            selected = dict(candidate)
+            selected["rejectedCandidateCount"] = len(rejections)
+            selected["rejectedCandidateIssueCodes"] = dict(sorted(issue_histogram.items()))
+            return selected, prepared
+
+        codes = sorted({row["code"] for row in prepared["unresolved"]})
+        for code in codes:
+            issue_histogram[code] = issue_histogram.get(code, 0) + 1
+        if len(rejections) < 16:
+            rejections.append({
+                "startFrame": candidate["startFrame"],
+                "reason": candidate["reason"],
+                "coverageEventIds": candidate["coverageEventIds"],
+                "unresolvedLabelCount": prepared["unresolvedLabelCount"],
+                "unresolvedCodes": codes,
+            })
+
+    return {
+        "startFrame": None,
+        "reason": "no_launch_ready_training_crop",
+        "coverageEventIds": [],
+        "rejectedCandidateCount": len(seen),
+        "rejectedCandidateIssueCodes": dict(sorted(issue_histogram.items())),
+        "rejectedCandidateExamples": rejections,
+    }, None

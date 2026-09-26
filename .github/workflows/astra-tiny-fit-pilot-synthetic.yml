@@ -1,4 +1,4 @@
-name: Astra tiny-fit pilot synthetic verification
+name: Astra tiny-fit pilot synthetic verification v3
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - 'astra_backend/evaluation/test_tiny_fit_pilot_v1.py'
       - 'astra_backend/tiny_fit_pilot_v1.py'
       - 'astra_backend/tiny_fit_pilot_verify_synthetic_v1.py'
-      - 'docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'
+      - 'docs/astra/TINY_FIT_PILOT_DESIGN_V2.json'
       - '.github/workflows/astra-tiny-fit-pilot-synthetic.yml'
 
 permissions:
@@ -40,8 +40,8 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import json
-          x=json.load(open('docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'))
-          assert x['schema'] == 'astra-tiny-fit-pilot-design-v1'
+          x=json.load(open('docs/astra/TINY_FIT_PILOT_DESIGN_V2.json'))
+          assert x['schema'] == 'astra-tiny-fit-pilot-design-v2'
           assert x['candidateId'] == 'astra_tiny_event_fit_v1'
           assert x['scope']['captureKeys'] == [
               'P1|chords|Drop3_7|directinput',
@@ -52,6 +52,8 @@ jobs:
           assert x['scope']['maxUnderlyingPerformances'] == 4
           assert x['scope']['maxViewsPerPerformance'] == 1
           assert x['scope']['maxFramesPerExample'] == 200
+          assert 'launchReady' in x['scope']['cropSelectionRule']
+          assert x['repairFromAttempt2']['realOptimizerStepsExecuted'] == 0
           assert x['optimizer']['maxOptimizerStepsTotal'] == 200
           assert x['budget']['maxTrainingAndEvaluationWallSeconds'] == 2700
           assert x['budget']['maxEntireJobSeconds'] == 3600
@@ -111,15 +113,16 @@ jobs:
           def blob(path):
               return subprocess.check_output(['git','hash-object',path], text=True).strip()
           receipt={
-            'schema':'astra-tiny-fit-pilot-synthetic-verification-v1',
+            'schema':'astra-tiny-fit-pilot-synthetic-verification-v3',
             'date':'2026-09-26',
             'candidateId':'astra_tiny_event_fit_v1',
             'runHeadSha':subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
             'source':{
-              'designGitBlob':blob('docs/astra/TINY_FIT_PILOT_DESIGN_V1.json'),
+              'designGitBlob':blob('docs/astra/TINY_FIT_PILOT_DESIGN_V2.json'),
               'preparedEventAdapterGitBlob':blob('astra_backend/evaluation/prepared_event_adapter_v1.py'),
               'adapterTestsGitBlob':blob('astra_backend/evaluation/test_prepared_event_adapter_v1.py'),
               'tinyFitHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_v1.py'),
+              'attempt2FailureReceiptGitBlob':blob('docs/astra/TINY_FIT_PILOT_REAL_FAILURE_V2.json'),
               'tinyFitTestsGitBlob':blob('astra_backend/evaluation/test_tiny_fit_pilot_v1.py'),
               'syntheticHarnessGitBlob':blob('astra_backend/tiny_fit_pilot_verify_synthetic_v1.py'),
               'eventContractV2GitBlob':blob('astra_backend/evaluation/event_contract_v2.py'),
@@ -147,6 +150,8 @@ jobs:
               'optimizerCapExtensionRejected':'PASS',
               'wallCapExtensionRejected':'PASS',
               'selectedZipExtractionOnly':'PASS',
+              'launchReadyCropSelection':'PASS',
+              'unresolvedCropFailsClosedWithDiagnostics':'PASS',
             },
             'execution':{
               'realOptimizerStepsExecuted':0,
@@ -165,10 +170,10 @@ jobs:
             'decision':{
               'exactRuntimeSyntheticVerified':True,
               'realTrainingAuthorized':False,
-              'nextGate':'Freeze this receipt and a source-pinned authorization request; require new explicit user authorization before any P1 media or real optimizer step.'
+              'nextGate':'Freeze this V3 receipt and a source-pinned authorization request; require new explicit user authorization before any further P1 media or real optimizer step.'
             }
           }
-          open('/tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json','w').write(
+          open('/tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json','w').write(
               json.dumps(receipt,indent=2,sort_keys=True)+'\n')
           print('SYNTHETIC_RECEIPT='+json.dumps(receipt,sort_keys=True))
           PY
@@ -176,8 +181,8 @@ jobs:
       - name: Upload synthetic verification receipt
         uses: actions/upload-artifact@v4
         with:
-          name: astra-tiny-fit-pilot-synthetic-verification-v1
-          path: /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json
+          name: astra-tiny-fit-pilot-synthetic-verification-v3
+          path: /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json
           if-no-files-found: error
           retention-days: 7
 
@@ -185,7 +190,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          rm -f /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json /tmp/tiny-fit-synthetic.log
+          rm -f /tmp/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json /tmp/tiny-fit-synthetic.log
           echo "REAL_P1_OPTIMIZER_STEPS_EXECUTED=0"
           echo "P3_OPENED=false"
           echo "CUSTOMER_DELIVERY_ELIGIBLE=false"

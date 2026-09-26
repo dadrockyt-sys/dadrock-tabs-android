@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V2 CAPPED P1 RETRY AUTHORIZED AND LAUNCHED ONCE; RUN 36277631151 IN PROGRESS; NO SECOND V2 LAUNCH/RERUN AUTHORIZED**  
+Status: **V2 RETRY STOPPED DURING P1 CROP PREPARATION; 0 REAL OPTIMIZER STEPS; OFFLINE LAUNCH-READY CROP REPAIR STAGED; NO FURTHER REAL RUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -180,4 +180,35 @@ Scope remains exactly frozen: four specified P1 training performances, one view 
 **Do not create another V2 launch, rerun this workflow, extend optimizer steps, retune thresholds, open P2/P3, or restart full training without new explicit authorization.**
 
 Next action: inspect only run **36277631151**. Preserve its result/failure evidence when complete. If it fails, diagnose that existing run only. If it passes, preserve evidence and stop; no cross-performer screen is authorized yet.
+
+## V2 capped P1 retry — PREPARATION FAILURE, NOT A MODEL RESULT
+
+Canonical run **36277631151**, job **108503320536**, launch head `891bbcc00391163fc4820235886d3ca1be76c113`: **FAILURE during preparation**.
+
+The V2 selector repair passed: authorization/source pins and runtime setup succeeded, and the first frozen capture `P1|chords|Drop3_7|directinput` was selected. The run then stopped because its chosen 200-frame event crop was not launch-ready:
+
+`RuntimeError: prepared pilot example has unresolved labels`
+
+Execution boundary:
+- real optimizer steps: **0**;
+- training/evaluation: **not executed**;
+- P1 media access: first pinned chords archive only;
+- P2/P3 access: **none**;
+- automatic retry: **none**;
+- result artifact: **none**;
+- cleanup: **success**.
+
+The exact unresolved subtype is **not recoverable from this run** because the V2 harness wrote the temporary metadata locally but raised before printing the unresolved diagnostics; cleanup then removed the temporary files. Do not invent whether it was overlap, sub-frame attack, frame-grid collision, unsupported fret or another registered unresolved condition.
+
+Frozen failure receipt: `docs/astra/TINY_FIT_PILOT_REAL_FAILURE_V2.json`.
+
+## Offline crop-repair direction
+
+The next offline design is `docs/astra/TINY_FIT_PILOT_DESIGN_V2.json`.
+
+It keeps the same four P1 captures, model architecture, objective, thresholds and 200-step budget. The only preparation change is source-driven and training-only: enumerate deterministic repeated-attack candidates first, then individual source-attack candidates, and select the earliest crop whose prepared labels are `launchReady` with zero unresolved selected-crop labels. Rejected candidates are not repaired; their unresolved-code summaries are retained. If no clean crop exists, fail closed before optimizer work.
+
+The real harness now emits `TINY_FIT_PREPARE_REJECT=` structured diagnostics before a crop-preparation stop.
+
+**No further real P1 run is authorized.** First require exact-runtime synthetic verification of this offline repair. Only after a frozen successful verification may a new request-only authorization artifact be prepared.
 

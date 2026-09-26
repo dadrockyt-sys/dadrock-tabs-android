@@ -3,6 +3,7 @@ import unittest
 from evaluation.prepared_event_adapter_v1 import (
     MASK,
     prepare_event_crop,
+    select_launch_ready_training_crop,
     select_training_crop,
     source_events_from_notes,
 )
@@ -183,6 +184,47 @@ class PreparedEventAdapterTests(unittest.TestCase):
             events, total_frames=600, frames=100, hop_seconds=HOP
         )
         self.assertEqual(selection["reason"], "earliest_source_attack")
+
+    def test_launch_ready_crop_skips_unresolved_earlier_repeat(self):
+        notes = {
+            "E": [
+                (0.10, 0.30, 45),
+                (0.20, 0.25, 45),
+                (2.00, 2.10, 47),
+                (2.40, 2.50, 47),
+            ]
+        }
+        selection, prepared = select_launch_ready_training_crop(
+            notes,
+            capture_id="cap",
+            lag_ms=0,
+            allowlist_lag_ms=0,
+            total_frames=400,
+            frames=100,
+            hop_seconds=HOP,
+        )
+        self.assertIsNotNone(prepared)
+        self.assertTrue(prepared["launchReady"])
+        self.assertEqual(selection["reason"], "earliest_launch_ready_repeated_same_fret_attack")
+        self.assertGreater(selection["rejectedCandidateCount"], 0)
+        self.assertIn("same_string_overlap", selection["rejectedCandidateIssueCodes"])
+        self.assertEqual(selection["coverageEventIds"], ["cap:E:2", "cap:E:3"])
+
+    def test_launch_ready_crop_fails_closed_when_every_candidate_is_unresolved(self):
+        notes = {"E": [(0.10, 0.30, 45), (0.20, 0.25, 45)]}
+        selection, prepared = select_launch_ready_training_crop(
+            notes,
+            capture_id="cap",
+            lag_ms=0,
+            allowlist_lag_ms=0,
+            total_frames=200,
+            frames=100,
+            hop_seconds=HOP,
+        )
+        self.assertIsNone(prepared)
+        self.assertEqual(selection["reason"], "no_launch_ready_training_crop")
+        self.assertGreater(selection["rejectedCandidateCount"], 0)
+        self.assertIn("same_string_overlap", selection["rejectedCandidateIssueCodes"])
 
     def test_hashes_are_stable_and_capture_scoped(self):
         kwargs = dict(
