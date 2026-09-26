@@ -1,0 +1,63 @@
+{
+  "observedAt": "2026-09-26",
+  "sourceRun": 36115823434,
+  "metadataOnly": true,
+  "artifactBackupCreated": false,
+  "artifacts": [
+    {
+      "id": 10898108088,
+      "name": "guitar-techs-v5-p2-final-development-result",
+      "size_in_bytes": 3414000,
+      "expired": false,
+      "expires_at": "2026-10-03T04:27:39Z",
+      "digest": "sha256:22c40ebf9f123f93f6769c3b64a3df19335fc9c9324f079a9a99e13307d45de6",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10898108088/zip"
+    },
+    {
+      "id": 10894109045,
+      "name": "guitar-techs-v5-p2-resume-e800",
+      "size_in_bytes": 13629852,
+      "expired": false,
+      "expires_at": "2026-10-03T01:43:03Z",
+      "digest": "sha256:a493680f89b9b48aa5d58a6976b640e9061faf9f2bba96815bafd54bc3c7150a",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10894109045/zip"
+    },
+    {
+      "id": 10889393976,
+      "name": "guitar-techs-v5-p2-resume-e400",
+      "size_in_bytes": 13554638,
+      "expired": false,
+      "expires_at": "2026-10-02T22:04:47Z",
+      "digest": "sha256:1185ca1aa9cd21e8ecfb100e4b9decbe88d156fe81825bb83ffbbfb05d261b9e",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10889393976/zip"
+    },
+    {
+      "id": 10879678046,
+      "name": "guitar-techs-v5-p1-final-development-result",
+      "size_in_bytes": 3411572,
+      "expired": false,
+      "expires_at": "2026-10-02T17:53:41Z",
+      "digest": "sha256:01a9a0708ee132be4b978389d07f0290e32d2e68322b3384feecb83534c23d96",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10879678046/zip"
+    },
+    {
+      "id": 10876260249,
+      "name": "guitar-techs-v5-p1-resume-e800",
+      "size_in_bytes": 13696117,
+      "expired": false,
+      "expires_at": "2026-10-02T16:31:11Z",
+      "digest": "sha256:bcc03af3ff5ebb1e68b5a6cc8fefcfc335ba0424ace62a402fbf80cae110df23",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10876260249/zip"
+    },
+    {
+      "id": 10866164451,
+      "name": "guitar-techs-v5-p1-resume-e400",
+      "size_in_bytes": 13289942,
+      "expired": false,
+      "expires_at": "2026-10-02T13:26:55Z",
+      "digest": "sha256:41c78d779c0755bc0e1211a339a62da43181d15cf1b4cf5d83f3f99b6344669f",
+      "archive_download_url": "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/10866164451/zip"
+    }
+  ]
+}
+

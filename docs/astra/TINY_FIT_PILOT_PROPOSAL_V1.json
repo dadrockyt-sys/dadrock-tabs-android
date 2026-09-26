@@ -1,0 +1,65 @@
+{
+  "schema": "astra-tiny-fit-pilot-proposal-v1",
+  "date": "2026-09-26",
+  "status": "offline_preparation_only_not_launch_ready",
+  "question": "Can an event-preserving guitar model fit a handful of its own training examples, including repeated same-fret attacks?",
+  "realTrainingAuthorized": false,
+  "proposedScope": {
+    "performer": "P1",
+    "split": "training_only",
+    "primaryContents": ["chords", "scales", "singlenotes", "PalmMute"],
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "selection": "Freeze a deterministic metadata-only selection rule within the existing accepted P1 population before opening examples. Do not cherry-pick using model outputs. Report missing repeated-attack coverage explicitly.",
+    "p2Opened": false,
+    "p3Opened": false,
+    "generalizationClaimAllowed": false
+  },
+  "proposedBudget": {
+    "maxOptimizerStepsTotal": 200,
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobMinutes": 60,
+    "runner": "public GitHub-hosted CPU only",
+    "paidComputeDollars": 0,
+    "maxCandidateDesignsThisPilot": 1,
+    "automaticRetries": 0,
+    "automaticFullTraining": false,
+    "stopAtFirstReachedLimit": true
+  },
+  "proposedInitialization": {
+    "kind": "random",
+    "seed": 20260921,
+    "note": "Preserves the existing random-init boundary. Reusing a V5 encoder would be a separately specified alternative, not an automatic fallback."
+  },
+  "proposedDiagnostics": [
+    "unweighted loss per head and fixed loss weights",
+    "reference and predicted attack counts",
+    "explicit-event onset precision recall F1",
+    "matched offset MAE and within-tolerance count",
+    "same-fret repeated-attack counts and recall",
+    "no-event false positives on a separate synthetic silence fixture",
+    "onset admission recall",
+    "optimizer steps and elapsed time",
+    "prepared input/event/source hashes",
+    "stop reason and unresolved label counts"
+  ],
+  "proposedAdvancement": {
+    "trainingExampleEventF1Min": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.90,
+    "repeatedAttackRecallMinWhenPresent": 0.90,
+    "allMetricsFinite": true,
+    "unresolvedLabelCountMax": 0,
+    "meaning": "Engineering learnability screen only; thresholds must be frozen before execution. Passing is permission to assess a next pilot, not proof of generalization or customer eligibility.",
+    "onFailure": "Stop this candidate, retain evidence, investigate inputs/targets/objective. No automatic extra epochs or new architecture. A budget-limited miss is not proof of impossibility."
+  },
+  "launchBlockers": [
+    "Event source/crop/mask adapter not yet integrated or verified",
+    "Pilot model/loss/event decoder not implemented or source-pinned",
+    "Metadata selection rule and eligible manifest identities not frozen",
+    "Exact-runtime synthetic gradient and stop-budget verification not completed",
+    "No new explicit real-data pilot authorization"
+  ],
+  "historicalScoresUnchanged": true,
+  "customerDeliveryEligible": false
+}

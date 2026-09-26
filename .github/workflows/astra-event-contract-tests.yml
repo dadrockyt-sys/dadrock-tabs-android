@@ -1,0 +1,23 @@
+name: Astra event contract synthetic tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [astra-work]
+    paths:
+      - astra_backend/evaluation/event_contract_v2.py
+      - astra_backend/evaluation/diagnostic_histogram_v2.py
+      - astra_backend/evaluation/test_event_contract_v2.py
+      - .github/workflows/astra-event-contract-tests.yml
+permissions:
+  contents: read
+jobs:
+  synthetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Offline stdlib contract tests only
+        run: python -m unittest discover -s astra_backend/evaluation -p 'test_event_contract_v2.py' -v
