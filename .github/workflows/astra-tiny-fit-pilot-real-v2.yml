@@ -52,7 +52,9 @@ jobs:
               'P1|techniques|PalmMute|directinput',
           ]
           assert design['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert synth['schema'] == 'astra-tiny-fit-pilot-synthetic-verification-v2'
           assert synth['decision']['exactRuntimeSyntheticVerified'] is True
+          assert synth['decision']['repairedSelectorVerified'] is True
           assert synth['decision']['realTrainingAuthorized'] is False
           assert auth['schema'] == 'astra-tiny-fit-pilot-real-authorization-v2'
           assert auth['candidateId'] == 'astra_tiny_event_fit_v1'
@@ -80,7 +82,7 @@ jobs:
             'attempt1FailureReceiptGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_FAILURE_V1.json',
             'runtimeLockGitBlob':'astra_backend/tabcnn_runtime/requirements.lock.txt',
             'alignmentCorrectionsGitBlob':'docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json',
-            'workflowGitBlob':'.github/workflows/astra-tiny-fit-pilot-real.yml',
+            'workflowGitBlob':'.github/workflows/astra-tiny-fit-pilot-real-v2.yml',
           }
           for key,path in expected.items():
               assert launch['sourceIdentities'][key] == blob(path), (key,path)
