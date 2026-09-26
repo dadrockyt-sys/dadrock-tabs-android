@@ -1,0 +1,151 @@
+{
+  "schema": "astra-guitar-techs-v5-development-failure-diagnosis-v1",
+  "date": "2026-09-26",
+  "sourceRunId": 36115823434,
+  "sourceResult": {
+    "path": "docs/astra/GUITARTECHS_V5_DEVELOPMENT_RESULT_V1.json",
+    "commit": "61343d5fbbe90077e1126eee2df9b9567977e9d7"
+  },
+  "scope": "V5 P1/P2 development evidence only; no P3; no threshold retuning; no new optimizer run",
+  "directFindings": [
+    {
+      "finding": "V5 is structurally valid but quality regressed sharply versus V4.",
+      "evidence": {
+        "v5MacroF1": 0.06413108861464589,
+        "v4MacroF1": 0.24352280312668845,
+        "relativeChange": -0.7366526346147435,
+        "v5MacroCompleteness": 0.033897821369966344,
+        "v4MacroCompleteness": 0.22215792779732485
+      }
+    },
+    {
+      "finding": "The dominant V5 failure mode is severe recall/completeness collapse rather than indiscriminate event over-generation.",
+      "evidence": {
+        "p1ToP2": {
+          "precision": 0.24784418085980403,
+          "recall": 0.016938980988297346,
+          "f1": 0.030810907400138303,
+          "completeness": 0.020273601494787297
+        },
+        "p2ToP1": {
+          "precision": 0.35564354404693954,
+          "recall": 0.05895087740137589,
+          "f1": 0.09745126982915348,
+          "completeness": 0.0475220412451454
+        }
+      }
+    },
+    {
+      "finding": "The collapse affects every primary content class in both folds.",
+      "evidence": {
+        "p1ToP2": {
+          "chords": 0.014308561959315977,
+          "scales": 0.0669993027200062,
+          "singlenotes": 0.04801869107870447,
+          "PalmMute": 0.008403361344537815
+        },
+        "p2ToP1": {
+          "chords": 0.062236519837806266,
+          "scales": 0.18174146964845397,
+          "singlenotes": 0.04364923852392171,
+          "PalmMute": 0.09056915306915307
+        }
+      }
+    },
+    {
+      "finding": "This was not fixed by additional epochs within the frozen budget.",
+      "evidence": {
+        "p1SelectionBest": {
+          "epoch": 1000,
+          "f1": 0.053304267282940264
+        },
+        "p2SelectionBest": {
+          "epoch": 960,
+          "f1": 0.1325815472817859
+        },
+        "earlyCheckpointPattern": "many initial checkpoint-selection F1 values were exactly zero"
+      }
+    },
+    {
+      "finding": "Both selected models drove auxiliary-task log-variance parameters to the frozen lower clamp neighborhood.",
+      "evidence": {
+        "p1SelectedTaskLogVars": [
+          -1.0254,
+          -2.0006,
+          -1.9208,
+          -2.0005
+        ],
+        "p2SelectedTaskLogVars": [
+          -1.2954,
+          -2.0031,
+          -2.0029,
+          -2.0024
+        ],
+        "frozenClampFloor": -2
+      },
+      "interpretation": "This is an audit signal that the learned task-weighting dynamics reached the imposed boundary for several auxiliary tasks; it does not by itself prove the cause of low recall."
+    }
+  ],
+  "hypothesesToTestWithoutTraining": [
+    {
+      "id": "H1_ONSET_GATE_UNDER_ADMISSION",
+      "hypothesis": "The onset>=0.50 AND activity>=0.50 AND state>=0.30 conjunction is rejecting most true events even when one or two heads contain useful evidence.",
+      "discriminatingTest": "On the frozen V5 validation outputs, measure true-reference onset probability/activity probability/state probability distributions and compute oracle/ablated event metrics for each gate component without changing accepted development thresholds."
+    },
+    {
+      "id": "H2_AUXILIARY_HEAD_CALIBRATION",
+      "hypothesis": "The onset/activity heads learned useful rankings but poorly calibrated probabilities, making fixed 0.50 gates inappropriate despite useful representations.",
+      "discriminatingTest": "Compute AUROC/AUPRC and precision-recall curves for onset/activity heads plus reliability bins; compare ranking quality with gate pass rates. Do not tune acceptance thresholds."
+    },
+    {
+      "id": "H3_STATE_CONDITIONING_BOTTLENECK",
+      "hypothesis": "Feeding raw sigmoid auxiliary probabilities into the final state routing head may cause the state head to rely on auxiliary certainty too strongly, reducing state recall.",
+      "discriminatingTest": "From frozen outputs, compare final-state logits against an acoustic+GRU-only diagnostic projection if available; otherwise inspect state confidence conditional on correct/incorrect auxiliary head decisions."
+    },
+    {
+      "id": "H4_MULTITASK_WEIGHT_BOUNDARY",
+      "hypothesis": "Learned homoscedastic weights reaching the clamp floor may have over-emphasized easy auxiliary losses or altered optimization balance.",
+      "discriminatingTest": "Reconstruct per-task loss/gradient scale statistics from frozen checkpoints or logs where possible; no retraining. Determine whether one task dominated shared GRU/acoustic gradients."
+    },
+    {
+      "id": "H5_SEQUENCE_BOUNDARY_ONSET_TARGETS",
+      "hypothesis": "Because onset targets require a valid preceding frame, sequence-window boundaries may systematically remove onset supervision at starts and interact poorly with the causal GRU.",
+      "discriminatingTest": "Count reference onsets falling at sequence starts/boundaries under the deterministic sampler and compare with lost-onset patterns."
+    }
+  ],
+  "nextDiagnosticTask": {
+    "type": "zero-optimizer V5 head-and-gate decomposition",
+    "purpose": "Determine whether V5's architecture learned useful onset/activity/pitch signals that were destroyed by gating/calibration, or whether the shared temporal representation itself failed.",
+    "requiredOutputs": [
+      "per-head onset/activity/pitch discrimination metrics independent of final decoder",
+      "gate-pass rates for true onsets and non-onsets",
+      "intersection/union attribution for onset/activity/state gate rejection",
+      "event metrics with frozen state head under diagnostic ablations: onset-only gate, activity-only gate, state-only gate, pairwise gates, full gate",
+      "probability reliability/calibration summaries without selecting new thresholds",
+      "per-content gate rejection for chords/scales/singlenotes/PalmMute",
+      "sequence-boundary onset-supervision loss count",
+      "task-log-var trajectory if recoverable from checkpoint/resume states",
+      "comparison with V4 event TP/FP/FN and fragmentation"
+    ],
+    "optimizerStepsAuthorized": 0,
+    "p1p2MediaAccessPermittedForDiagnosis": true,
+    "thresholdRetuningAuthorized": false,
+    "p3Opened": false
+  },
+  "designImplicationsIfConfirmed": {
+    "ifUsefulHeadsButBadGate": "Keep temporal/multi-head representation; replace hard conjunctive onset gate with a learned event-admission head or train-time-consistent event objective, then synthetic verify before any V6 real run.",
+    "ifHeadsPoorlyDiscriminative": "Revisit auxiliary target construction/imbalance and shared temporal training before retaining V5 architecture.",
+    "ifTaskWeightingDominates": "Remove learned homoscedastic weighting in favor of frozen explicit loss weights or gradient-balanced training validated synthetically.",
+    "ifBoundarySupervisionMaterial": "Use overlap/context-aware sequence training or carry causal hidden state across adjacent training chunks without leaking validation information."
+  },
+  "guards": {
+    "v5Verdict": "FAIL",
+    "anotherRealP1P2TrainingRunAuthorized": false,
+    "p3Opened": false,
+    "thresholdsRetuned": false,
+    "alignmentAllowlistChanged": false,
+    "paidComputeUsed": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false
+  }
+}
