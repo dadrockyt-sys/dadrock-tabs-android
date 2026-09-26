@@ -1,0 +1,46 @@
+{
+  "schema": "astra-tiny-fit-pilot-real-launch-v2",
+  "date": "2026-09-26",
+  "status": "authorized_single_capped_retry_v2",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "singleLaunch": true,
+  "authorizedHeadBeforeLaunch": "5942493a9fc373e5fe20f9c7aeee21d58e7caedc",
+  "sourceIdentities": {
+    "authorizationGitBlob": "d31a86b30ae76924334636e9ee8003027dd13c41",
+    "designGitBlob": "d9938c2cf525997dea315f6da1e6d3d820ee2bc6",
+    "syntheticVerificationGitBlob": "b6a441043d6157965ddd42f496461d059b254641",
+    "preparedEventAdapterGitBlob": "e00da2fa33668838a79df2d767dfaed5888f3eca",
+    "tinyFitHarnessGitBlob": "19e005a1779f4870b4e285dd62d39e26bfb8dd5a",
+    "tinyFitTestsGitBlob": "9e85c5bf28f33651fbc26efaadb8a201a6329f9e",
+    "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "workflowGitBlob": "2e8a16371c11ca5ef7bf9aba3d2b4fbb9ec11324"
+  },
+  "scope": {
+    "performer": "P1",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "maxOptimizerStepsTotal": 200,
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobSeconds": 3600,
+    "maxCandidateDesigns": 1,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0
+  },
+  "guards": {
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticFullTrainingAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "customerDeliveryAuthorized": false,
+    "reuseAttempt1Authorized": false
+  }
+}
