@@ -142,7 +142,9 @@ The repaired selector regression explicitly includes both P1 scale performances 
 
 Repair verification boundary: **0 real optimizer steps; no P1/P2/P3 media accessed; no paid compute.** Candidate architecture, objective, thresholds, 200-step cap, four frozen capture keys and P2/P3 boundaries are unchanged.
 
-Frozen repaired receipt: `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V2.json`.  
+Frozen repaired receipt: `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V2.json`.
+Final V2 request blob: `9a2ad838e8e6e4de1d53ceee45fc35e0bc1b6bfe`.  
+Dormant V2 workflow blob: `2e8a16371c11ca5ef7bf9aba3d2b4fbb9ec11324`.  
 Synthetic artifact ID: `10917224706`.
 
 ## Retry gate — REQUEST ONLY
