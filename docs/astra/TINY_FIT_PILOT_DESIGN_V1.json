@@ -1,0 +1,169 @@
+{
+  "schema": "astra-tiny-fit-pilot-design-v1",
+  "date": "2026-09-26",
+  "status": "offline_candidate_frozen_pending_exact_runtime_verification",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "question": "Can one event-preserving guitar candidate fit four of its own P1 training examples, including a repeated same-string/same-fret attack, within a hard 200-step budget?",
+  "scope": {
+    "performer": "P1",
+    "split": "training_only",
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "captureSelectionRule": "For each primary content class in order chords, scales, singlenotes, techniques: choose the lexicographically first P1 performance represented in the frozen alignment corrections, then choose view priority directinput, micamp, ego, exo. No model outputs are consulted.",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "cropSelectionRule": "After capture identity is frozen, source events may choose a training-only crop: earliest crop-capable same-string/same-fret repeated attack pair; otherwise earliest resolved source attack. This is deliberate fitting coverage and is forbidden as validation/generalization evidence.",
+    "p2Opened": false,
+    "p3Opened": false,
+    "generalizationClaimAllowed": false
+  },
+  "sourceArchives": [
+    {
+      "file": "P1_chords.zip",
+      "bytes": 981741162,
+      "md5": "be9ef8bbdceb1912d565254e607a6d94",
+      "sha256": "de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326",
+      "captureKey": "P1|chords|Drop3_7|directinput"
+    },
+    {
+      "file": "P1_scales.zip",
+      "bytes": 453349723,
+      "md5": "9c0b98e8fb42a522df727ea8bf545e4f",
+      "sha256": "79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509",
+      "captureKey": "P1|scales|Ab|directinput"
+    },
+    {
+      "file": "P1_singlenotes.zip",
+      "bytes": 108626613,
+      "md5": "ca0c4674dde3805574685a313f7c39eb",
+      "sha256": "130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4",
+      "captureKey": "P1|singlenotes|allsinglenotes|directinput"
+    },
+    {
+      "file": "P1_techniques.zip",
+      "bytes": 326280863,
+      "md5": "18634a41a6db5a8de10d07eb3122a872",
+      "sha256": "1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e",
+      "captureKey": "P1|techniques|PalmMute|directinput"
+    }
+  ],
+  "mediaAccessPolicy": {
+    "archiveListingAllowedAfterAuthorization": true,
+    "selectedMembersPerArchive": 2,
+    "selectedMemberKinds": ["one MIDI", "one canonical-view audio"],
+    "unrelatedMediaExtractionAllowed": false,
+    "fullArchiveExtractionAllowed": false
+  },
+  "eventPreparation": {
+    "source": "frozen midi_string_events tuple output plus exact frozen alignment correction",
+    "preserveSourceAttackIds": true,
+    "carryIn": "retain occupancy, no crop-edge onset, exclude event from event/offset scoring",
+    "carryOut": "retain source onset if inside crop, exclude event from event/offset scoring",
+    "registeredMasks": "event intersecting mask is excluded whole from scoring and its full in-crop occupancy is loss-masked",
+    "unsupportedFrets": "explicit unresolved issue, never clip",
+    "sameStringOverlap": "explicit unresolved issue, never force",
+    "subFrameAttack": "explicit unresolved issue, never silently drop",
+    "negativeAlignedTime": "explicit unresolved issue",
+    "frameGridCollision": "explicit unresolved issue and loss mask",
+    "outOfCropSourceIssues": "reported but do not veto an unrelated selected crop",
+    "unresolvedSelectedCropLabelCountMax": 0
+  },
+  "input": {
+    "representation": "existing frozen CQT",
+    "featureBins": 192,
+    "frameHopSamples": 512,
+    "sampleRateHz": 22050,
+    "newRepresentationAdded": false
+  },
+  "model": {
+    "type": "per-frame MLP training-only fitting harness",
+    "encoder": "Linear(192,128)+ReLU",
+    "stateHead": "Linear(128,126), six independent 21-class string states after reshape",
+    "onsetHead": "Linear(128,6)",
+    "initialization": "random",
+    "seed": 20260921,
+    "publishedCheckpointLoaded": false
+  },
+  "objective": {
+    "stateLoss": "masked cross entropy",
+    "stateLossWeight": 1.0,
+    "activeStateTokenWeight": 1.5,
+    "onsetLoss": "masked binary cross entropy from explicit source attack targets",
+    "onsetLossWeight": 4.0,
+    "onsetPositiveWeight": 8.0,
+    "onsetDerivedFromStateChanges": false
+  },
+  "decoder": {
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "sameFretReattack": "an admitted onset closes the current event and starts a new event even if fret identity is unchanged",
+    "fretChangeWithoutOnset": "close current event but do not invent a new one"
+  },
+  "optimizer": {
+    "name": "Adam",
+    "learningRate": 0.01,
+    "maxOptimizerStepsTotal": 200
+  },
+  "budget": {
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobSeconds": 3600,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "paidComputeDollars": 0,
+    "maxCandidateDesignsThisPilot": 1,
+    "automaticRetries": 0,
+    "automaticFullTraining": false,
+    "stopAtFirstReachedLimit": true
+  },
+  "runtime": {
+    "python": "3.10.15",
+    "numpy": "1.21.6",
+    "torch": "1.11.0+cpu",
+    "device": "cpu",
+    "runtimeLockPath": "astra_backend/tabcnn_runtime/requirements.lock.txt"
+  },
+  "diagnostics": [
+    "initial and final loss per head",
+    "reference and predicted attack counts",
+    "explicit-event onset precision recall F1",
+    "matched offset MAE and within-50ms count",
+    "same-fret repeated-attack count and recall",
+    "synthetic no-event false positives",
+    "onset admission recall",
+    "optimizer steps and elapsed time",
+    "prepared feature/source-event/target/source-media hashes",
+    "stop reason and unresolved label counts"
+  ],
+  "advancement": {
+    "trainingExampleEventF1Min": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackRecallMinWhenPresent": 0.9,
+    "repeatedAttackCoverageRequired": true,
+    "allMetricsFinite": true,
+    "unresolvedLabelCountMax": 0,
+    "meaning": "engineering learnability screen only; passing permits design of a separate same-budget cross-performer screen, not full training, generalization, P3 access or customer delivery",
+    "onFailure": "stop this candidate and retain evidence; investigate inputs, targets or objective; do not add epochs, retry automatically or invent a second candidate inside this pilot"
+  },
+  "frozenExistingSources": {
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "frozenCqtPreprocessingGitBlob": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "guards": {
+    "realP1TrainingAuthorized": false,
+    "realOptimizerStepsAuthorized": 0,
+    "p2Opened": false,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "historicalV1V5OutcomesUnchanged": true
+}
