@@ -1,7 +1,7 @@
 {
   "schema": "astra-tiny-fit-pilot-design-v1",
   "date": "2026-09-26",
-  "status": "offline_candidate_frozen_pending_exact_runtime_verification",
+  "status": "exact_runtime_synthetic_verification_requested",
   "candidateId": "astra_tiny_event_fit_v1",
   "question": "Can one event-preserving guitar candidate fit four of its own P1 training examples, including a repeated same-string/same-fret attack, within a hard 200-step budget?",
   "scope": {
@@ -55,7 +55,10 @@
   "mediaAccessPolicy": {
     "archiveListingAllowedAfterAuthorization": true,
     "selectedMembersPerArchive": 2,
-    "selectedMemberKinds": ["one MIDI", "one canonical-view audio"],
+    "selectedMemberKinds": [
+      "one MIDI",
+      "one canonical-view audio"
+    ],
     "unrelatedMediaExtractionAllowed": false,
     "fullArchiveExtractionAllowed": false
   },
@@ -91,11 +94,11 @@
   },
   "objective": {
     "stateLoss": "masked cross entropy",
-    "stateLossWeight": 1.0,
+    "stateLossWeight": 1,
     "activeStateTokenWeight": 1.5,
     "onsetLoss": "masked binary cross entropy from explicit source attack targets",
-    "onsetLossWeight": 4.0,
-    "onsetPositiveWeight": 8.0,
+    "onsetLossWeight": 4,
+    "onsetPositiveWeight": 8,
     "onsetDerivedFromStateChanges": false
   },
   "decoder": {
