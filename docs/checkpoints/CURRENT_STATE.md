@@ -2869,3 +2869,156 @@ This block supersedes the active-V5-run instructions and is the authoritative ne
 7. P3 remains sealed and no real optimizer run is authorized.
 
 This block supersedes the V5-completion next-step wording and is the authoritative next action unless a later checkpoint explicitly supersedes it.
+
+
+## V5 zero-optimizer head/gate diagnosis complete — hard onset gate identified — 2026-09-26
+
+- Authoritative V5 diagnosis run `36218857870`: **SUCCESS**.
+- Diagnostic job `108340168191`: **SUCCESS**.
+- Raw diagnostic artifact:
+  - `guitar-techs-v5-head-gate-decomposition-v1`;
+  - artifact ID `10900001091`;
+  - archive digest `sha256:5e4a2f872bb42b1dabfec9762182760ec5c528ff01ebffd719bb0c147797e0ae`;
+  - raw JSON SHA-256 `dbecbd7a2fe542cc7196f857266b36a2e43954ac38dfaa76e4dce632c9e93c68`.
+- Both frozen V5 full-fold metrics reproduced exactly: **PASS**.
+- Frozen diagnosis/interpretation receipt:
+  - `docs/astra/GUITARTECHS_V5_HEAD_GATE_DIAGNOSIS_RESULT_V1.json`;
+  - Git blob `7149184aa2ee9f7449d3c2ce182988e86d489eb5`;
+  - commit `b08eedeb4e3234c024824e909fdf6c0507a5299f`.
+- Guards:
+  - optimizer steps executed 0;
+  - model weights modified false;
+  - thresholds retuned false;
+  - alignment allowlist changed false;
+  - P3 opened false;
+  - paid compute false;
+  - main/Production unchanged;
+  - customer delivery false.
+
+### Diagnostic reporting note
+
+- The raw diagnostic's `approxAUPRC100Bins` fields are invalid because the integration direction produced negative AUPRC values.
+- Negative AUPRC is mathematically impossible.
+- These AUPRC fields are explicitly excluded from diagnosis and V6 decisions.
+- Unaffected evidence used below:
+  - exact frozen metric reproduction;
+  - AUROC;
+  - pitch threshold micro metrics;
+  - true-onset gate-pass counts;
+  - diagnostic gate ablations;
+  - sequence-boundary onset counts;
+  - selected task-log-var values.
+
+### Primary V5 root-cause finding
+
+**The V5 temporal/multi-head representation learned useful signal, but the hard `onset >= 0.50` start requirement catastrophically under-admitted real events.**
+
+P1->P2 true-reference-onset gate attribution:
+- reference onsets: **21,872**;
+- onset >=0.50 pass: **522 = 2.39%**;
+- activity >=0.50 pass: **7,206 = 32.95%**;
+- frozen state start gate pass: **6,002 = 27.44%**;
+- full onset+activity+state gate pass: **417 = 1.91%**;
+- final-state best-fret identity correct at true onsets: **66.23%**.
+- onset head approximate AUROC: **0.8504**.
+- activity head approximate AUROC: **0.8966**.
+- pitch head at 0.50: **F1 0.8642**, precision 0.8668, recall 0.8615.
+
+P2->P1:
+- reference onsets: **26,752**;
+- onset >=0.50 pass: **2,302 = 8.60%**;
+- activity >=0.50 pass: **9,583 = 35.82%**;
+- frozen state start gate pass: **8,553 = 31.97%**;
+- full gate pass: **1,590 = 5.94%**;
+- final-state best-fret identity correct at true onsets: **59.81%**.
+- onset head approximate AUROC: **0.8791**.
+- activity head approximate AUROC: **0.8677**.
+- pitch head at 0.50: **F1 0.7787**, precision 0.8242, recall 0.7380.
+
+Interpretation:
+- The onset head has useful ranking/discrimination, but its output is severely miscalibrated for a hard 0.50 start gate.
+- Activity, pitch and final state retain substantial usable information.
+- The V5 architecture should **not** be discarded wholesale.
+
+### Diagnostic gate ablations — no retraining
+
+P1->P2:
+- frozen full gate F1 **0.030811**, recall **0.016939**;
+- onset-only F1 **0.037010**, recall **0.020663**;
+- activity-only F1 **0.212699**, recall **0.263216**;
+- state-only F1 **0.228434**, recall **0.268027**;
+- activity+state F1 **0.207348**, recall **0.228307**.
+
+P2->P1:
+- frozen full gate F1 **0.097451**, recall **0.058951**;
+- onset-only F1 **0.119720**, recall **0.075389**;
+- activity-only F1 **0.191413**, recall **0.276324**;
+- state-only F1 **0.209253**, recall **0.280019**;
+- activity+state F1 **0.198490**, recall **0.252048**.
+
+Aggregate diagnostic macro F1:
+- frozen V5 full gate: **0.064131**;
+- state-only diagnostic: **0.218843**;
+- activity-only diagnostic: **0.202056**.
+
+This proves that removing the hard onset gate restores most of the lost V5 recall immediately, without changing weights or retraining. It does **not** make V5 acceptable; state-only remains below V4's frozen macro F1 0.243523 and far below the 0.70 acceptance threshold.
+
+### Other findings
+
+- Sequence-boundary onset-supervision loss is negligible:
+  - P1 training: **0.4899%** of sampled-sequence reference onsets fall on the unsupervised first frame;
+  - P2 training: **0.5193%**.
+- This rules out sequence-start target loss as the primary V5 collapse mechanism.
+- Selected-state learned task log variances:
+  - P1->P2: approximately `[-1.0254, -2.0006, -1.9208, -2.0005]`;
+  - P2->P1: approximately `[-1.2954, -2.0031, -2.0029, -2.0024]`.
+- Several auxiliary task weights reached the frozen clamp-floor neighborhood near -2.0.
+- This remains suspicious and should be simplified in V6, but it is not required to explain the demonstrated hard-gate collapse.
+
+### V6 evidence-supported direction
+
+- **Retain**:
+  - V5 causal GRU temporal representation;
+  - activity head;
+  - pitch head;
+  - reference-aware string-routing semantics;
+  - temporal continuation/run-cleanup principles.
+- **Change event admission**:
+  - remove the hard `onset >= 0.50` requirement;
+  - do not tune a replacement onset threshold on validation data;
+  - use onset as soft evidence or train a dedicated event-admission logit from GRU + onset/activity/pitch/state evidence;
+  - supervise event admission directly against training event-start labels.
+- Keep continuation separate from start admission.
+- Prefer frozen explicit multi-task weights over V5's learned homoscedastic weights, or otherwise prevent auxiliary task weights from riding the clamp boundary.
+- Do not simply lower V5's onset threshold and call that V6.
+- Do not add epochs as the primary fix.
+- Keep the exact frozen P1/P2 population, acceptance thresholds, alignment allowlist, and public-CPU development protocol.
+
+### Decision
+
+- V5 verdict remains **FAIL**.
+- Root-cause class: **hard onset-gate calibration/admission failure with useful underlying temporal representation**.
+- No V5 real rerun is authorized.
+- No V6 real P1/P2 optimizer run is authorized yet.
+- P3 remains sealed.
+
+### EXPLICIT NEXT STEP TO RESUME — V6 offline event-admission design
+
+1. Do **not** launch V5 or V6 real optimizer training.
+2. Freeze a bounded V6 design that preserves V5 temporal/activity/pitch/state representation but replaces hard onset gating with train-time learned event admission / soft onset evidence.
+3. Remove or freeze V5's learned task-weight degrees of freedom so the new design is easier to audit.
+4. Build exact-runtime synthetic/unit verification covering:
+   - event-admission gradients;
+   - positive and negative start examples;
+   - no-event noise rejection;
+   - sustained continuation without repeated onset;
+   - fret/string change start semantics;
+   - pitch/string routing;
+   - temporal context;
+   - finite gradients;
+   - exact resume equality;
+   - P3/threshold/alignment/customer guards.
+5. Only after V6 design + synthetic verification are frozen may a real P1/P2 authorization be requested.
+6. P3 remains separately sealed.
+
+This block supersedes the active V5 diagnosis instructions and is the authoritative next action unless a later checkpoint explicitly supersedes it.
