@@ -35,7 +35,7 @@ jobs:
           test "$(git hash-object docs/astra/GUITARTECHS_V5_DEVELOPMENT_RESULT_V1.json)" = 'a948e09c2309a289b6178583092c370ed002fd28'
           test "$(git hash-object docs/astra/GUITARTECHS_V5_DEVELOPMENT_FAILURE_DIAGNOSIS_V1.json)" = 'dee8729f2326bf14d755365a2886a0e0ce377afb'
           test "$(git hash-object astra_backend/guitartechs_training_v5/run_v5_head_gate_diagnostics.py)" = '06a4f7880f9160edea5624746713b2c45bf4a21d'
-          test "$(git hash-object astra_backend/guitartechs_training_v5/run_v5_head_gate_diagnostics.py)" = '06a4f7880f9160edea5624746713b2c45bf4a21d'
+          test "$(git hash-object astra_backend/guitartechs_training_v5/model.py)" = '105aae211c3e9d806f3b1feb60052d51169832a4'
           test "$(git hash-object astra_backend/guitartechs_training_v5/objective_decoder.py)" = 'fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16'
           test "$(git hash-object astra_backend/guitartechs_training_v5/train_v5_resumable.py)" = '685c43d3887a76d01b839f601db1a8eb624d4dee'
           test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
@@ -44,9 +44,9 @@ jobs:
           python - <<'PY'
           import json, subprocess
           launch=json.load(open('docs/astra/GUITARTECHS_V5_HEAD_GATE_DIAGNOSIS_LAUNCH_V1.json'))
-          assert launch['schema'] == 'astra-guitar-techs-v5-head-gate-decomposition-launch-v1'
+          assert launch['schema'] == 'astra-guitar-techs-v5-head-gate-diagnosis-launch-v1'
           assert launch['sourceRunId'] == 36115823434
-          assert launch['scope'] == 'P1/P2 frozen V4 development evidence diagnosis only'
+          assert launch['scope'] == 'P1/P2 frozen V5 head and gate diagnosis only'
           assert launch['guards'] == {
               'optimizerStepsAuthorized': 0,
               'p3Opened': False,
@@ -107,7 +107,7 @@ jobs:
           test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
           test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
 
-      - name: Download frozen V4 P1 fold artifact from authoritative run
+      - name: Download frozen V5 P1 fold artifact from authoritative run
         uses: actions/download-artifact@v4
         with:
           name: guitar-techs-v5-p1-final-development-result
@@ -115,7 +115,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: 36115823434
 
-      - name: Download frozen V4 P2 fold artifact
+      - name: Download frozen V5 P2 fold artifact
         uses: actions/download-artifact@v4
         with:
           name: guitar-techs-v5-p2-final-development-result
@@ -123,7 +123,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: 36115823434
 
-      - name: Verify frozen V4 artifacts before diagnosis
+      - name: Verify frozen V5 artifacts before diagnosis
         shell: bash
         run: |
           set -euo pipefail
