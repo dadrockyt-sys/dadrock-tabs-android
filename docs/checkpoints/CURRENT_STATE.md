@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **OFFLINE EVENT/CROP ADAPTER + CAPPED TINY-FIT PREPARATION VERIFIED; REAL PILOT AWAITING EXPLICIT AUTHORIZATION**  
+Status: **EXACT CAPPED P1 PILOT AUTHORIZED AND LAUNCHED ONCE; RUN 36276196059 IN PROGRESS; NO RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -60,14 +60,18 @@ Before media access it requires:
 
 It has a 60-minute GitHub CPU job timeout, no P2/P3 source path, no automatic retry, and no route to full training.
 
-## Current authorization boundary
+## Current authorization / launch boundary
 
-A reviewable request is frozen at:
-`docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V1.json`.
+The user explicitly continued with the exact frozen P1 scope in chat on 2026-09-26.
 
-That file is **a request only**. It does not grant authorization. No real authorization document and no launch document exist. Therefore the real workflow is inert.
+Created once:
+- `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json`
+- `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json`
 
-If the user later explicitly authorizes that exact request, the next chat may create the matching authorization and one launch document. Until then: do not access P1 media, do not execute a real optimizer step, and do not restart full training.
+Launch commit: `9aa5c9e89a41e08c2cc25681bf77fe481020a608`.  
+Canonical capped P1 workflow run: **36276196059**, job **108499312084**.
+
+This authorization applies only to that single bounded run: four specified P1 training examples, one view each, 200 frames/example, at most 200 optimizer steps total, one candidate, zero retries, zero paid compute. **Do not create a second launch artifact, rerun the workflow, extend optimizer steps, open P2/P3, retune thresholds, or restart full training without new explicit authorization.**
 
 ## Advancement rule if the real pilot is later authorized
 
@@ -87,18 +91,11 @@ The pre-pilot history remains at `docs/checkpoints/archive/CURRENT_STATE_2026_09
 
 ## Explicit next steps for the next chat
 
-**Stop here unless the user explicitly authorizes the exact frozen request in `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V1.json`.** Do not infer authorization from a request to continue, inspect, prepare, diagnose, or save state.
-
-If and only if that exact real pilot is explicitly authorized:
-
-1. Re-read `docs/astra/NEXT_CHAT.md`, this checkpoint, the frozen design, synthetic verification receipt, and authorization request.
-2. Verify the branch still contains the exact pinned blobs named in the authorization request. Any mismatch stops the launch; do not silently update pins or substitute files.
-3. Create `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json` matching the frozen request exactly: P1 only; four specified training performances; one view each; 200 frames/example; at most 200 optimizer steps total; 2700-second train/eval cap; 3600-second job cap; one candidate; zero retries; zero paid compute; P2/P3 closed; no full training; no threshold retuning.
-4. Create exactly one source-pinned `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json` that references the verified current Git blobs and the new authorization blob.
-5. Commit that launch document once to `astra-work`. This is the only intended trigger for `.github/workflows/astra-tiny-fit-pilot-real.yml`.
-6. Inspect the single bounded GitHub Actions run. Preserve the run ID, job ID, head SHA, runtime versions, prepared-example hashes, optimizer-step count, elapsed time, metrics, stop reason, and artifact identity in a frozen result receipt/checkpoint.
-7. If the pilot fails any frozen advancement condition, stop. Diagnose inputs, targets, crop/event preparation, or objective from preserved evidence only. Do **not** add epochs, rerun automatically, retune thresholds, open P2/P3, invent V6, or restart full training.
-8. If the pilot passes all frozen training-only thresholds, stop after preserving evidence. The only permitted next design task is a **separate same-budget cross-performer screen**; passing this pilot still does not authorize that screen, full training, P2/P3 access, production use, or customer delivery.
+1. Inspect canonical run **36276196059** / job **108499312084**. Do not launch or rerun anything.
+2. If it is still in progress, record the current step only; the existing run is the sole authorized real P1 execution.
+3. When it completes, inspect the bounded result and artifact. Preserve run ID, job ID, head SHA, runtime versions, prepared-example/source hashes, optimizer-step count, elapsed time, metrics, unresolved-label counts, stop reason, and artifact identity in a frozen result receipt and this checkpoint.
+4. If it fails or stops before/during optimizer work, preserve evidence and diagnose the existing run only. No automatic retry, no added steps/epochs, no threshold rescue, no second candidate, no P2/P3, and no V6/full-training restart.
+5. If it passes every frozen training-only threshold, preserve evidence and stop. Passing permits only the future **design** of a separate same-budget cross-performer screen; it does not itself authorize that screen or any full training.
 
 Frozen advancement conditions remain:
 - minimum per-example explicit-event F1 >= 0.95;
@@ -108,5 +105,4 @@ Frozen advancement conditions remain:
 - all metrics finite;
 - unresolved selected-crop label count = 0.
 
-Current state at this checkpoint: **offline adapter complete; capped pilot preparation complete; synthetic gate passed; real optimizer steps = 0; real P1 media not opened; P2/P3 closed; full training not restarted; real authorization and launch artifacts absent.**
-
+Current state at this checkpoint: **one capped P1 pilot authorized and launched; canonical run 36276196059 in progress; no second launch/rerun authorized; P2/P3 closed; full training not restarted.**
