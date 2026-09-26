@@ -1,5 +1,5 @@
 name: Astra offline pilot bootstrap
-# bootstrap trigger 2026-09-26
+# bootstrap trigger 2026-09-26b
 
 on:
   push:
