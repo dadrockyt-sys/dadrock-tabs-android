@@ -1,0 +1,25 @@
+{
+  "schema": "astra-guitar-techs-v5-head-gate-diagnosis-launch-v1",
+  "date": "2026-09-26",
+  "sourceRunId": 36115823434,
+  "scope": "P1/P2 frozen V5 head and gate diagnosis only",
+  "sourceIdentities": {
+    "developmentResultGitBlob": "a948e09c2309a289b6178583092c370ed002fd28",
+    "failureDiagnosisGitBlob": "dee8729f2326bf14d755365a2886a0e0ce377afb",
+    "runnerGitBlob": "06a4f7880f9160edea5624746713b2c45bf4a21d",
+    "modelGitBlob": "105aae211c3e9d806f3b1feb60052d51169832a4",
+    "objectiveDecoderGitBlob": "fc9fbd9704a0d6b30f9ee1023af3ec5ae979de16",
+    "trainerGitBlob": "685c43d3887a76d01b839f601db1a8eb624d4dee",
+    "workflowGitBlob": "5f7a1a6f63762fefd6bc329cb2f0e7b811a21c70"
+  },
+  "guards": {
+    "optimizerStepsAuthorized": 0,
+    "p3Opened": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "customerDeliveryEligible": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "purpose": "Measure whether V5 learned useful onset/activity/pitch/state representations that were suppressed by the hard conjunctive event gate, including per-head discrimination, true-onset gate attribution, diagnostic start-gate ablations, content localization, and sequence-boundary onset-supervision loss."
+}
