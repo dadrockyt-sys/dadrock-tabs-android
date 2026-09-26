@@ -84,3 +84,29 @@ Normal `Astra backend tests` also passed on the design-trigger commit. Historica
 ## Preserved history
 
 The pre-pilot history remains at `docs/checkpoints/archive/CURRENT_STATE_2026_09_26_PRE_PILOT.md` (original Git blob `1ae91540ac02133a4a1c63989350ad615f065954`). Consult specific sections only when needed.
+
+## Explicit next steps for the next chat
+
+**Stop here unless the user explicitly authorizes the exact frozen request in `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V1.json`.** Do not infer authorization from a request to continue, inspect, prepare, diagnose, or save state.
+
+If and only if that exact real pilot is explicitly authorized:
+
+1. Re-read `docs/astra/NEXT_CHAT.md`, this checkpoint, the frozen design, synthetic verification receipt, and authorization request.
+2. Verify the branch still contains the exact pinned blobs named in the authorization request. Any mismatch stops the launch; do not silently update pins or substitute files.
+3. Create `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json` matching the frozen request exactly: P1 only; four specified training performances; one view each; 200 frames/example; at most 200 optimizer steps total; 2700-second train/eval cap; 3600-second job cap; one candidate; zero retries; zero paid compute; P2/P3 closed; no full training; no threshold retuning.
+4. Create exactly one source-pinned `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json` that references the verified current Git blobs and the new authorization blob.
+5. Commit that launch document once to `astra-work`. This is the only intended trigger for `.github/workflows/astra-tiny-fit-pilot-real.yml`.
+6. Inspect the single bounded GitHub Actions run. Preserve the run ID, job ID, head SHA, runtime versions, prepared-example hashes, optimizer-step count, elapsed time, metrics, stop reason, and artifact identity in a frozen result receipt/checkpoint.
+7. If the pilot fails any frozen advancement condition, stop. Diagnose inputs, targets, crop/event preparation, or objective from preserved evidence only. Do **not** add epochs, rerun automatically, retune thresholds, open P2/P3, invent V6, or restart full training.
+8. If the pilot passes all frozen training-only thresholds, stop after preserving evidence. The only permitted next design task is a **separate same-budget cross-performer screen**; passing this pilot still does not authorize that screen, full training, P2/P3 access, production use, or customer delivery.
+
+Frozen advancement conditions remain:
+- minimum per-example explicit-event F1 >= 0.95;
+- matched-offset-within-50-ms fraction >= 0.90;
+- repeated same-string/same-fret attack coverage present;
+- repeated-attack recall >= 0.90 when present;
+- all metrics finite;
+- unresolved selected-crop label count = 0.
+
+Current state at this checkpoint: **offline adapter complete; capped pilot preparation complete; synthetic gate passed; real optimizer steps = 0; real P1 media not opened; P2/P3 closed; full training not restarted; real authorization and launch artifacts absent.**
+
