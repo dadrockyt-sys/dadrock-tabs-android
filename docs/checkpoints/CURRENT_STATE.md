@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V2 RETRY STOPPED DURING P1 CROP PREPARATION; 0 REAL OPTIMIZER STEPS; OFFLINE LAUNCH-READY CROP REPAIR STAGED; NO FURTHER REAL RUN AUTHORIZED**  
+Status: **V2 PREP FAILURE PRESERVED; LAUNCH-READY CROP REPAIR EXACT-RUNTIME VERIFIED; V3 REQUEST FROZEN; NO FURTHER REAL RUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -211,4 +211,33 @@ It keeps the same four P1 captures, model architecture, objective, thresholds an
 The real harness now emits `TINY_FIT_PREPARE_REJECT=` structured diagnostics before a crop-preparation stop.
 
 **No further real P1 run is authorized.** First require exact-runtime synthetic verification of this offline repair. Only after a frozen successful verification may a new request-only authorization artifact be prepared.
+
+## Launch-ready crop repair — exact-runtime verification PASS
+
+Repair commit: `192d61755924f296604fb1706666228e70dff378`.
+
+Synthetic verification run **36279935269**, job **108509713391**: **SUCCESS**. Backend tests run **36279935295**: **SUCCESS**.
+
+Verified in Python 3.10.15 / NumPy 1.21.6 / Torch 1.11.0+cpu:
+- launch-ready crop selection skips unresolved candidates;
+- an all-unresolved candidate set fails closed;
+- unresolved crop rejection diagnostics are retained;
+- existing event/carry/mask/reattack tests still pass;
+- synthetic backward/loss-decrease and hard budget-extension guards still pass.
+
+Verification boundary: **0 real optimizer steps; no P1/P2/P3 media accessed; no paid compute.**
+
+Frozen receipt: `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json`.  
+Artifact ID: `10917829509`.
+
+## V3 retry gate — REQUEST ONLY
+
+Request: `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V3.json`.  
+Dormant workflow: `.github/workflows/astra-tiny-fit-pilot-real-v3.yml`.
+
+The request is not authorization. `TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json` and `TINY_FIT_PILOT_REAL_LAUNCH_V3.json` do not exist.
+
+The V3 workflow can trigger only on a future V3 launch document and remains capped at the same four P1 captures, 200 frames/example, at most 200 optimizer steps, one candidate, zero retries, zero paid compute. P2/P3 remain closed; full training remains stopped.
+
+**Require new explicit user authorization of the exact V3 request before any further P1 media access or real optimizer step.**
 

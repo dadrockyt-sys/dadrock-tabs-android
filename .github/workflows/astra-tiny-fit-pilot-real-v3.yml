@@ -1,0 +1,194 @@
+name: Astra tiny-fit capped P1 pilot retry v3
+
+# Intentionally no workflow_dispatch. This remains inert until a future,
+# separately authorized launch document is committed.
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-tiny-fit-capped-p1-pilot-v3
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact authorized launch commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify explicit authorization and pinned identities before media access
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json
+          test -f docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json
+          test -f docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json
+          python - <<'PY'
+          import json, subprocess
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+          design=json.load(open('docs/astra/TINY_FIT_PILOT_DESIGN_V2.json'))
+          synth=json.load(open('docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json'))
+          auth=json.load(open('docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json'))
+          launch=json.load(open('docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json'))
+          capture_keys=[
+              'P1|chords|Drop3_7|directinput',
+              'P1|scales|Ab|directinput',
+              'P1|singlenotes|allsinglenotes|directinput',
+              'P1|techniques|PalmMute|directinput',
+          ]
+          assert design['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert synth['schema'] == 'astra-tiny-fit-pilot-synthetic-verification-v3'
+          assert synth['decision']['exactRuntimeSyntheticVerified'] is True
+          assert synth['decision']['launchReadyCropRepairVerified'] is True
+          assert synth['decision']['realTrainingAuthorized'] is False
+          assert auth['schema'] == 'astra-tiny-fit-pilot-real-authorization-v3'
+          assert auth['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert auth['authorization']['realP1TrainingAuthorized'] is True
+          assert auth['authorization']['realOptimizerStepsAuthorized'] == 200
+          assert auth['authorization']['p2Authorized'] is False
+          assert auth['authorization']['p3Authorized'] is False
+          assert auth['authorization']['paidComputeAuthorized'] is False
+          assert auth['authorization']['automaticFullTrainingAuthorized'] is False
+          assert auth['scope']['captureKeys'] == capture_keys
+          assert auth['scope']['maxUnderlyingPerformances'] == 4
+          assert auth['scope']['maxViewsPerPerformance'] == 1
+          assert auth['scope']['maxFramesPerExample'] == 200
+          assert auth['scope']['maxOptimizerStepsTotal'] == 200
+          assert launch['schema'] == 'astra-tiny-fit-pilot-real-launch-v3'
+          assert launch['candidateId'] == auth['candidateId']
+          assert launch['singleLaunch'] is True
+          expected={
+            'authorizationGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json',
+            'designGitBlob':'docs/astra/TINY_FIT_PILOT_DESIGN_V1.json',
+            'syntheticVerificationGitBlob':'docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V3.json',
+            'preparedEventAdapterGitBlob':'astra_backend/evaluation/prepared_event_adapter_v1.py',
+            'tinyFitHarnessGitBlob':'astra_backend/tiny_fit_pilot_v1.py',
+            'tinyFitTestsGitBlob':'astra_backend/evaluation/test_tiny_fit_pilot_v1.py',
+            'attempt1FailureReceiptGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_FAILURE_V1.json',
+            'attempt2FailureReceiptGitBlob':'docs/astra/TINY_FIT_PILOT_REAL_FAILURE_V2.json',
+            'runtimeLockGitBlob':'astra_backend/tabcnn_runtime/requirements.lock.txt',
+            'alignmentCorrectionsGitBlob':'docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json',
+            'workflowGitBlob':'.github/workflows/astra-tiny-fit-pilot-real-v3.yml',
+          }
+          for key,path in expected.items():
+              actual = blob(path)
+              assert launch['sourceIdentities'][key] == actual, (key,path,'launch')
+              assert auth['sourceIdentities'][key] == actual, (key,path,'authorization')
+          PY
+          echo "TINY_FIT_REAL_P1_AUTHORIZED=true"
+          echo "TINY_FIT_MAX_OPTIMIZER_STEPS=200"
+          echo "P2_OPENED=false"
+          echo "P3_OPENED=false"
+
+      - name: Install exact frozen runtime and source tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check             --extra-index-url https://download.pytorch.org/whl/cpu             --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+          python - <<'PY'
+          import numpy, torch
+          assert numpy.__version__ == '1.21.6'
+          assert torch.__version__ == '1.11.0+cpu'
+          PY
+
+      - name: Prepare exactly four selected P1 training examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pilot-examples /tmp/selected
+          while IFS=$'\t' read -r file bytes md5 sha capture; do
+            rm -rf /tmp/selected/*
+            curl --fail --location --connect-timeout 30 --max-time 1200               --user-agent 'Astra-Tiny-Fit-Pilot-V1/1.0'               -o "/tmp/$file"               "https://zenodo.org/records/14963133/files/$file?download=1"
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            PYTHONPATH=astra_backend:astra_backend/evaluation               python astra_backend/tiny_fit_pilot_v1.py extract-selected-source                 --archive "/tmp/$file"                 --capture-key "$capture"                 --output-dir /tmp/selected
+            rm -f "/tmp/$file"
+            PYTHONPATH=astra_backend:astra_backend/evaluation               python astra_backend/tiny_fit_pilot_v1.py prepare-capture                 --root /tmp/selected                 --capture-key "$capture"                 --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json                 --output-dir /tmp/pilot-examples
+          done <<'EOF'
+          P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1|chords|Drop3_7|directinput
+          P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1|scales|Ab|directinput
+          P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1|singlenotes|allsinglenotes|directinput
+          P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1|techniques|PalmMute|directinput
+          EOF
+          test "$(find /tmp/pilot-examples -name meta.json | wc -l)" = '4'
+          echo "P1_SELECTED_PERFORMANCES_PREPARED=4"
+          echo "P2_MEDIA_ACCESSED=false"
+          echo "P3_MEDIA_ACCESSED=false"
+
+      - name: Execute one capped 200-step training-only pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend:astra_backend/evaluation             python astra_backend/tiny_fit_pilot_v1.py train-pilot               --examples-dir /tmp/pilot-examples               --result-out /tmp/tiny-fit-result.json               --model-out /tmp/tiny-fit-model.pt
+
+      - name: Verify capped result
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/tiny-fit-result.json'))
+          assert x['schema'] == 'astra-tiny-fit-pilot-v1'
+          assert x['candidateId'] == 'astra_tiny_event_fit_v1'
+          assert x['fit']['optimizerSteps'] <= 200
+          assert x['fit']['requestedOptimizerSteps'] == 200
+          assert x['limits']['maxUnderlyingPerformances'] == 4
+          assert x['limits']['maxViewsPerPerformance'] == 1
+          assert x['limits']['maxFramesPerExample'] == 200
+          assert x['limits']['maxOptimizerStepsTotal'] == 200
+          assert x['limits']['maxTrainingAndEvaluationWallSeconds'] == 2700
+          assert x['limits']['maxEntireJobSeconds'] == 3600
+          assert x['limits']['maxCandidateDesignsThisPilot'] == 1
+          assert x['limits']['automaticRetries'] == 0
+          assert x['guards']['p2Opened'] is False
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['paidComputeUsed'] is False
+          assert x['guards']['automaticRetry'] is False
+          assert x['guards']['automaticFullTraining'] is False
+          assert x['guards']['customerDeliveryEligible'] is False
+          assert len(x['prepared']) == 4
+          PY
+          echo "FULL_TRAINING_RESTARTED=false"
+          echo "P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
+
+      - name: Upload bounded pilot evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-tiny-fit-capped-p1-pilot-v3
+          path: |
+            /tmp/tiny-fit-result.json
+            /tmp/tiny-fit-model.pt
+            /tmp/pilot-examples/*/meta.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Cleanup all selected media and prepared arrays
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/pilot-examples /tmp/selected /tmp/P1_*.zip
+          rm -f /tmp/tiny-fit-result.json /tmp/tiny-fit-model.pt
+          echo "P2_MEDIA_ACCESSED=false"
+          echo "P3_MEDIA_ACCESSED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"

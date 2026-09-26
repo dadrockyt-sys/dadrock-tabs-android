@@ -1,0 +1,77 @@
+{
+  "schema": "astra-tiny-fit-pilot-synthetic-verification-v3",
+  "date": "2026-09-26",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "runHeadSha": "192d61755924f296604fb1706666228e70dff378",
+  "githubEvidence": {
+    "runId": 36279935269,
+    "jobId": 108509713391,
+    "artifactId": 10917829509,
+    "artifactName": "astra-tiny-fit-pilot-synthetic-verification-v3",
+    "artifactDigest": "sha256:9e18a5a63b689615a6f9ad51b080dc8b6867c744342bf983178234bfbe46105d",
+    "backendTestsRunId": 36279935295
+  },
+  "runtime": {
+    "python": "3.10.15",
+    "numpy": "1.21.6",
+    "torch": "1.11.0+cpu",
+    "device": "cpu"
+  },
+  "source": {
+    "designGitBlob": "fb963168ef7243c8b0a5c4bc5247de24c0f96673",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "adapterTestsGitBlob": "5077a2b1521f949b41cddcd552e4e5263c9a422a",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "tinyFitTestsGitBlob": "9e85c5bf28f33651fbc26efaadb8a201a6329f9e",
+    "syntheticHarnessGitBlob": "e0923e7f331cfb47465617db5553e38c26c29601",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
+    "attempt2FailureReceiptGitBlob": "9eae66f748974203fd20b24081c602d9e018e5f7",
+    "syntheticWorkflowGitBlob": "582c785c01e298ea0e21631640819ad517298436"
+  },
+  "verification": {
+    "eventContractRegressionTests": "PASS",
+    "preparedEventAdapterFabricatedTests": "PASS",
+    "tinyFitComponentTests": "PASS",
+    "sourceAttackIdsPreserved": "PASS",
+    "carryInNoFalseOnset": "PASS",
+    "maskWholeEventSemantics": "PASS",
+    "sameFretReattackDecoder": "PASS",
+    "explicitOnsetSupervision": "PASS",
+    "finiteSyntheticBackward": "PASS",
+    "syntheticLossDecreased": "PASS",
+    "optimizerCapExtensionRejected": "PASS",
+    "wallCapExtensionRejected": "PASS",
+    "selectedZipExtractionOnly": "PASS",
+    "launchReadyCropSelection": "PASS",
+    "unresolvedCropFailsClosedWithDiagnostics": "PASS",
+    "backendTests": "PASS"
+  },
+  "execution": {
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOptimizerStepOperations": 20,
+    "paidComputeUsed": false
+  },
+  "media": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false
+  },
+  "guards": {
+    "realTrainingAuthorized": false,
+    "furtherRealRunAuthorized": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "automaticFullTraining": false,
+    "automaticRetry": false,
+    "customerDeliveryEligible": false
+  },
+  "decision": {
+    "exactRuntimeSyntheticVerified": true,
+    "launchReadyCropRepairVerified": true,
+    "realTrainingAuthorized": false,
+    "nextGate": "Freeze a source-pinned V3 authorization request only; require new explicit user authorization before any further P1 media or real optimizer step."
+  }
+}

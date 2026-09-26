@@ -1,0 +1,114 @@
+{
+  "schema": "astra-tiny-fit-pilot-real-authorization-request-v3",
+  "date": "2026-09-26",
+  "status": "request_only_not_authorization",
+  "candidateId": "astra_tiny_event_fit_v1",
+  "authorizationGranted": false,
+  "realTrainingAuthorized": false,
+  "purpose": "Request one further bounded P1 training-only learnability attempt only after two prior attempts both stopped before optimizer work and the crop-preparation guard was hardened and exact-runtime verified.",
+  "priorAttempts": [
+    {
+      "version": "v1",
+      "runId": 36276196059,
+      "jobId": 108499312084,
+      "failureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
+      "realOptimizerStepsExecuted": 0,
+      "classification": "preparation_selector_consistency_bug"
+    },
+    {
+      "version": "v2",
+      "runId": 36277631151,
+      "jobId": 108503320536,
+      "failureReceiptGitBlob": "9eae66f748974203fd20b24081c602d9e018e5f7",
+      "realOptimizerStepsExecuted": 0,
+      "classification": "prepared_crop_unresolved_labels_unknown_subtype"
+    }
+  ],
+  "requestedAuthorization": {
+    "realP1TrainingAuthorized": true,
+    "realOptimizerStepsAuthorized": 200,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "automaticFullTrainingAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "scope": {
+    "performer": "P1",
+    "split": "training_only",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "maxUnderlyingPerformances": 4,
+    "maxViewsPerPerformance": 1,
+    "maxFramesPerExample": 200,
+    "maxOptimizerStepsTotal": 200,
+    "maxTrainingAndEvaluationWallSeconds": 2700,
+    "maxEntireJobSeconds": 3600,
+    "maxCandidateDesigns": 1,
+    "automaticRetries": 0,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "paidComputeDollars": 0
+  },
+  "cropRepair": {
+    "rule": "enumerate deterministic repeated-attack candidates first, then source-attack candidates; choose earliest prepared crop with launchReady=true and zero unresolved selected-crop labels; reject rather than repair bad crops; emit structured diagnostics if none qualify",
+    "noModelOutputsUsed": true,
+    "changesFrozenCaptureKeys": false,
+    "changesCandidateArchitecture": false,
+    "changesObjective": false,
+    "changesThresholds": false,
+    "changesOptimizerBudget": false
+  },
+  "sourceIdentities": {
+    "designGitBlob": "fb963168ef7243c8b0a5c4bc5247de24c0f96673",
+    "syntheticVerificationGitBlob": "487764464c34f8ddeaf6eb76085751f285fb162f",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "tinyFitTestsGitBlob": "9e85c5bf28f33651fbc26efaadb8a201a6329f9e",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "attempt1FailureReceiptGitBlob": "b4a63f037a9782acc7627aad9da8200d3ff4ef6d",
+    "attempt2FailureReceiptGitBlob": "9eae66f748974203fd20b24081c602d9e018e5f7",
+    "workflowGitBlob": "48fb7602dc1adcf15a3c36bf27bb19ad46199816"
+  },
+  "verifiedEvidence": {
+    "syntheticRunId": 36279935269,
+    "syntheticJobId": 108509713391,
+    "syntheticArtifactId": 10917829509,
+    "syntheticRunHeadSha": "192d61755924f296604fb1706666228e70dff378",
+    "backendTestsRunId": 36279935295,
+    "runtime": {
+      "python": "3.10.15",
+      "numpy": "1.21.6",
+      "torch": "1.11.0+cpu",
+      "device": "cpu"
+    },
+    "exactRuntimeSyntheticVerified": true,
+    "launchReadyCropSelectionPassed": true,
+    "unresolvedCropFailsClosedWithDiagnosticsPassed": true,
+    "realOptimizerStepsExecutedDuringRepairVerification": 0,
+    "p1MediaAccessedDuringRepairVerification": false,
+    "p2MediaAccessed": false,
+    "p3Accessed": false
+  },
+  "advancementThresholds": {
+    "trainingExampleEventF1Min": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackCoverageRequired": true,
+    "repeatedAttackRecallMinWhenPresent": 0.9,
+    "allMetricsFinite": true,
+    "unresolvedLabelCountMax": 0
+  },
+  "meaning": "Authorization would permit only one new bounded V3 attempt of the same P1 training-only pilot. It would not authorize reuse/rerun of V1/V2, full training, P2/P3 access, threshold retuning, production use or customer delivery.",
+  "requiredNextArtifactIfAuthorized": "docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V3.json",
+  "requiredLaunchArtifactIfAuthorized": "docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V3.json",
+  "launchArtifactCreated": false
+}
