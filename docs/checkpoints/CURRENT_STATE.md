@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DECODER V2 RISING-EDGE CANDIDATE VERIFIED GREEN OFFLINE; ZERO-OPTIMIZER P1 RE-DECODE REQUEST FROZEN; NO REAL CHECK AUTHORIZED**  
+Status: **DECODER V2 ZERO-OPTIMIZER P1 CHECK AUTHORIZED AND LAUNCHED ONCE; RUN 36283779556 IN PROGRESS; NO SECOND LAUNCH/RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -558,4 +558,30 @@ Design: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_DESIGN_V1.json`.
 Dormant workflow: `.github/workflows/astra-tiny-fit-v3-decoder-v2-check.yml`.
 
 No authorization or launch file exists. **Fresh explicit authorization is required before any new P1 media access.** A pass would remain training-example evidence only and would not authorize P2/P3, cross-performer screening, or full training.
+
+## Decoder V2 zero-optimizer P1 check — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the frozen decoder V2 request in chat on 2026-09-26.
+
+Created:
+- `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_AUTHORIZATION_V1.json`
+- `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_LAUNCH_V1.json`
+
+Authorization commit: `d3c9382782d9128b3f14bd92043e468b402e81a4`.  
+Launch commit: `e45bc98ca9e7fbc38865987792ddff6aacabd137`.  
+Canonical decoder V2 check run: **36283779556**, job **108520534718**.
+
+Authorized scope remains:
+- exact frozen V3 model and hashes;
+- same four frozen P1 examples;
+- decoder V2 rising-edge same-fret semantics;
+- state threshold 0.50 and onset threshold 0.50 unchanged;
+- **0 optimizer steps**;
+- no threshold retuning;
+- no model mutation;
+- no P2/P3;
+- zero automatic retries;
+- no cross-performer screen or full training.
+
+**Do not create another decoder V2 launch or rerun this workflow.** Inspect run **36283779556** only. On completion, freeze the exact V1 reproduction, decoder V2 metrics, remaining FP/FN evidence, repeated-attack recall, offset fraction, and engineering training-only gate. A pass does not establish generalization.
 
