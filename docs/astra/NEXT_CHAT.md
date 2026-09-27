@@ -3,34 +3,27 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-Read `AGENTS.md`, then the top GPT-5.6 handoff review and the latest sections of `docs/checkpoints/CURRENT_STATE.md`.
+Temporal-context controlled intervention synthetic verification is GREEN.
 
-## Current position
+Canonical:
+- run **36332570200**
+- job **108657200907**
+- receipt: `docs/astra/TEMPORAL_CONTEXT_SYNTHETIC_VERIFICATION_V1.json`
 
-The combined P1/P2 diagnostic is frozen as workflow GREEN / scientific outcome **inconclusive**.
+No real media was accessed and no real optimizer steps ran.
 
-One controlled intervention design is now frozen:
-- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_DESIGN_V1.json`
-- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_AUTHORIZATION_REQUEST_V1.json`
+The saved authorization artifact conservatively authorized implementation + synthetic verification only. Therefore do **not** launch the real fit yet.
 
-It is **not authorized and not implemented**.
+Obtain explicit confirmation for the real fit ceiling:
+- 4 leave-one-content-group-out folds
+- candidate + equal-capacity comparator
+- max 125 steps/model/fold
+- max 1000 optimizer steps total
+- <=60 CPU minutes
+- unchanged 0.50/0.50 thresholds
+- no sweep
+- no automatic retry
+- zero paid compute
+- P3 sealed
 
-### Hypothesis
-
-Explicit neighboring-frame information helps unseen-content transfer beyond equal-capacity per-frame input.
-
-Candidate:
-`[x[t-1], x[t], x[t+1]] -> identical 576->128 model`
-
-Capacity-matched comparator:
-`[x[t], x[t], x[t]] -> identical 576->128 model`
-
-Four leave-one-content-group-out folds hold both P1/P2 versions of one category out of fitting. This tests unseen content only; neither performer is a holdout.
-
-Frozen maximum: 125 steps/model/fold, 1000 optimizer steps total, <=60 CPU minutes, no sweep/retry/threshold tuning, P3 sealed.
-
-## Exact next task
-
-Obtain Stephen's explicit authorization before implementation or fitting.
-
-If authorized, implement the harness and synthetic guard tests first. Real P1/P2 access remains blocked until that synthetic verification is green. Do not run an onset-head-only probe in parallel.
+After confirmation, create one single-use launch and run exactly once.

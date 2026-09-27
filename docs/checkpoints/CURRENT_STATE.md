@@ -290,6 +290,38 @@ A pass would support only that fixed triplet temporal context helps beyond equal
 4. P3 remains sealed throughout this intervention.
 5. Do not run an onset-head-only probe in parallel; this design intentionally chooses one hypothesis.
 
+## Temporal-context intervention synthetic verification — GREEN
+
+Authorization covered implementation + synthetic verification only. No real P1/P2 media access or optimizer work occurred.
+
+Canonical synthetic verification:
+- run **36332570200**
+- job **108657200907**
+- result: **SUCCESS**
+- receipt: `docs/astra/TEMPORAL_CONTEXT_SYNTHETIC_VERIFICATION_V1.json`
+
+Verified:
+- triplet edge replication
+- repeated-current comparator construction
+- equal parameter count
+- identical initialization
+- candidate differs from comparator only when neighboring-frame information differs
+
+Execution boundary held:
+- real media accessed: **no**
+- real optimizer steps: **0**
+- thresholds changed/searched: **no**
+- P3 opened: **no**
+
+The design is now implementation-verified, but the real controlled fit has **not** been launched. A single-use real launch must still be frozen before accessing P1/P2 media.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Prepare a single-use real launch for the exact frozen temporal-context design only if Stephen's authorization is interpreted to include the real bounded fit. The original authorization message followed a request that explicitly said implementation and fitting were authorized, but the saved authorization artifact conservatively limited itself to implementation + synthetic verification.
+2. To avoid ambiguity, do not start real fitting from that conservative artifact. Obtain explicit confirmation for the real fit ceiling: 4 folds, candidate+comparator, max 125 steps/model/fold, max 1000 optimizer steps total, <=60 CPU minutes, unchanged 0.50/0.50 thresholds, no sweep/retry, P3 sealed.
+3. After explicit real-fit confirmation, freeze authorization/launch identities and run once.
+4. No onset-head probe in parallel.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

@@ -1,0 +1,24 @@
+{
+  "schema": "astra-temporal-context-synthetic-verification-v1",
+  "date": "2026-09-27",
+  "workflow": {
+    "runId": 36332570200,
+    "jobId": 108657200907,
+    "conclusion": "success"
+  },
+  "packageCommit": "6bd0f0db26f234853914bc985ab3b16cded7f21a",
+  "verification": {
+    "testsPassed": 5,
+    "tests": [
+      "triplet edge replication",
+      "repeated-current comparator construction",
+      "equal parameter count",
+      "identical candidate/comparator initialization",
+      "candidate information differs only when neighbors differ"
+    ],
+    "realMediaAccessed": false,
+    "realOptimizerStepsExecuted": 0,
+    "p3Opened": false
+  },
+  "decision": "synthetic_green_real_fit_still_requires_single_use_launch"
+}
