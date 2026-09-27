@@ -1,0 +1,28 @@
+{
+  "schema": "astra-pretrained-note-front-end-synthetic-verification-v2",
+  "date": "2026-09-27",
+  "status": "green_request_only",
+  "packageCommit": "759fc699cdb4c8a6a5d2a61c23e0045ffdef310d",
+  "workflow": {
+    "runId": 36337046906,
+    "jobId": 108669774845,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10937144820,
+    "digest": "sha256:3e0a5489b2437a8217b5fe4f830a0319577525c42ea4f3b5c5bf9aa82fff84c8",
+    "expiresAt": "2026-10-27T17:28:54Z"
+  },
+  "scoringCorrection": "Exact simultaneous same-pitch duplicates are retained in ambiguity accounting but collapsed to one reference for pitch-only Stage-A scoring.",
+  "testsPassed": 7,
+  "basicPitch": {
+    "packageVersion": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
+  },
+  "boundaries": {
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "p3Opened": false
+  }
+}
