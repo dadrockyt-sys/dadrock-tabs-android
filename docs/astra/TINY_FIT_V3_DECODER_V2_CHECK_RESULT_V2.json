@@ -1,0 +1,108 @@
+{
+  "schema": "astra-tiny-fit-v3-decoder-v2-check-result-v2",
+  "date": "2026-09-26",
+  "run": {
+    "runId": 36284602349,
+    "jobId": 108522850285,
+    "headSha": "5c9e9eb00cc777ee1ef81ca88d31e3b6f0982237",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10919563631,
+    "name": "astra-v3-decoder-v2-zero-optimizer-p1-check-v2",
+    "digest": "sha256:099b87369a12cf6117e69199edfac292aee0af14b09746dddd1f118390676446",
+    "resultJsonSha256": "1d974927660bd41fcb2e2367c172580720a2b72b2b4a6051cb4c786f7ded2c2d",
+    "expiresAt": "2026-10-04T01:21:48Z"
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "resultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647",
+    "preparedTargetSetSha256": "7d57695005d132de49c929721852e9062ef006bf00a5df8f704f5bc0be95a9be"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdsChanged": false,
+    "modelWeightsChanged": false,
+    "captureSelectionChanged": false,
+    "cropSelectionChanged": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "automaticRetry": false
+  },
+  "semanticReproductionGuard": {
+    "passed": true,
+    "decoderV1BoundaryCorrectedTotals": {
+      "reference": 16,
+      "prediction": 17,
+      "tp": 16,
+      "fp": 1,
+      "fn": 0
+    },
+    "decoderV1BoundaryCorrectedTrainingExampleF1Min": 0.923076923076923,
+    "matchesFrozenDiagnosticV2": true
+  },
+  "decoderV2": {
+    "sameFretReattackRule": "fresh below-to-above onset-threshold crossing while same fret remains active",
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdsRetuned": false
+  },
+  "evaluation": {
+    "totals": {
+      "reference": 16,
+      "prediction": 16,
+      "tp": 16,
+      "fp": 0,
+      "fn": 0
+    },
+    "perExample": [
+      {
+        "captureKey": "P1|techniques|PalmMute|directinput",
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "captureKey": "P1|singlenotes|allsinglenotes|directinput",
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "captureKey": "P1|chords|Drop3_7|directinput",
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "captureKey": "P1|scales|Ab|directinput",
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      }
+    ],
+    "decoderV2TrainingExampleF1Min": 1,
+    "matchedOffsetWithin50msFraction": 0.9375,
+    "repeatedReferenceAttackCount": 2,
+    "repeatedAttackRecall": 1,
+    "repeatedAttackCoverageSatisfied": true,
+    "noEventSyntheticFalsePositiveCount": 0,
+    "remainingFalsePositiveCount": 0,
+    "unresolvedLabelCount": 0,
+    "allMetricsFinite": true,
+    "engineeringTrainingOnlyGateMet": true
+  },
+  "conclusion": {
+    "engineeringLearnabilityEstablishedOnFourP1TrainingExamples": true,
+    "decoderV2RemovedResidualDuplicateOnsetWithoutLosingTrueOrRepeatedAttacks": true,
+    "generalizationEstablished": false,
+    "customerDeliveryEligible": false,
+    "crossPerformerScreenAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false
+  },
+  "nextDecisionBoundary": "The next scientifically meaningful step is a separately designed and explicitly authorized cross-performer/generalization screen. This result alone does not justify full training or customer delivery."
+}
