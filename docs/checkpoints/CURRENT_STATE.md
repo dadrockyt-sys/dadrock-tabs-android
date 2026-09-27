@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN AUTHORIZED AND LAUNCHED ONCE; RUN 36286306972 IN PROGRESS; P3 SEALED; NO SECOND LAUNCH/RERUN AUTHORIZED**  
+Status: **MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN AUTHORIZED AND LAUNCHED ONCE; CANONICAL RUN 36286306972 IN PROGRESS; INSPECT THIS RUN ONLY; P3 SEALED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -738,4 +738,116 @@ Authorized scope:
 - no broader P1/P2 development run, full training, production mutation, or customer delivery.
 
 **Do not create another P2 screen launch or rerun this workflow.** Inspect run **36286306972** only. On completion, preserve aggregate precision/recall/F1, each-example F1, repeated-attack recall, offset fraction, unresolved labels, and the green/red screen decision. A green result supports only designing a broader P1/P2 development evaluation; it does not authorize P3 or full training.
+
+## Minimal P2 cross-performer screen — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the frozen request by saying **"I authorize"**.
+
+Frozen request:
+- `docs/astra/P2_CROSS_PERFORMER_SCREEN_AUTHORIZATION_REQUEST_V1.json`
+- request blob: `e813af9d17e714c5cbc1cc89fc4788ae4860c069`
+
+Authorization:
+- `docs/astra/P2_CROSS_PERFORMER_SCREEN_AUTHORIZATION_V1.json`
+- authorization blob: `9a873326fb9ee95f95afec80db8852b76a4f3852`
+- authorization commit: `7571663d9b9cee36c0e569fe8a1a7193b18cbf9b`
+
+Launch:
+- `docs/astra/P2_CROSS_PERFORMER_SCREEN_LAUNCH_V1.json`
+- launch blob: `3b46c2592d6d47f3c353e3efd8b81e5947104e06`
+- launch commit: `09bd6a3ede14991c1682941ad7fe46333c8da39b`
+
+Canonical workflow:
+- run: **36286306972**
+- job: **108527632565**
+- workflow: `Astra P2 cross-performer zero-optimizer screen v1`
+- launch head: `09bd6a3ede14991c1682941ad7fe46333c8da39b`
+- monitor: `https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36286306972`
+
+Last observed step state:
+- authorization/source-pin verification: **PASS**
+- frozen V3 artifact download: **PASS**
+- frozen V3 artifact hash verification: **PASS**
+- exact runtime install: **PASS**
+- prepare exactly four homologous P2 directinput examples: **IN PROGRESS**
+- model evaluation: pending
+- evidence upload: pending
+- cleanup: pending
+
+Authorized scope is exactly:
+- P2 only;
+- captures:
+  - `P2|chords|Drop3_7|directinput`
+  - `P2|scales|Ab|directinput`
+  - `P2|singlenotes|allsinglenotes|directinput`
+  - `P2|techniques|PalmMute|directinput`
+- 200 frames/example;
+- exact frozen V3 model;
+- decoder V2 rising-edge same-fret semantics;
+- state/onset thresholds **0.50 / 0.50**, unchanged;
+- **0 optimizer steps**;
+- no threshold retuning;
+- no model mutation;
+- no automatic retry;
+- no broader P1/P2 development run;
+- no full training;
+- **P3 remains sealed**;
+- no customer delivery / production mutation.
+
+Frozen screen gates:
+- aggregate precision >= **0.75**
+- aggregate recall >= **0.60**
+- aggregate F1 >= **0.67**
+- each selected example F1 >= **0.55**
+- repeated-attack recall >= **0.60** when repeated references exist
+- unresolved labels = **0**
+- synthetic-silence false positives = **0**
+- all metrics finite
+- post-result threshold retuning forbidden
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. **Inspect only canonical run 36286306972 / job 108527632565.**
+   Do not create another launch file and do not rerun the workflow.
+
+2. If P2 preparation fails:
+   - preserve the exact preparation diagnostics / rejection codes;
+   - freeze a failure receipt;
+   - update this checkpoint;
+   - stop.
+   No substitution capture, automatic retry, P3 access, optimizer work, or threshold change is authorized.
+
+3. If evaluation completes:
+   collect and freeze, at minimum:
+   - all four prepared capture identities / crop selections / target hashes;
+   - unresolved-label counts;
+   - aggregate reference / prediction / TP / FP / FN counts;
+   - aggregate precision, recall, F1;
+   - per-example precision, recall, F1 for chord / scale / single-note / PalmMute;
+   - matched-offset-within-50ms fraction;
+   - repeated-reference count and repeated-attack recall;
+   - synthetic-silence false-positive count;
+   - `crossPerformerScreenGreen`;
+   - confirmation optimizer steps = 0;
+   - confirmation thresholds/model weights unchanged;
+   - confirmation P3 was not opened;
+   - artifact ID/digest and cleanup status.
+
+4. If the screen is **RED**:
+   - freeze the result;
+   - classify the performer-shift failure by content/error type;
+   - stop before any broader training.
+   The next work should be diagnosis only and would require a newly frozen design before any new media/optimizer authorization.
+
+5. If the screen is **GREEN**:
+   - freeze the result;
+   - stop.
+   Green means only that these four source-disjoint P2 examples pass the pre-existing development event gates.
+   It does **not** establish final generalization and does **not** authorize P3, full training, production mutation, or customer delivery.
+   The next permissible planning step is a **broader P1/P2 development-evaluation design/request only**, with P3 still sealed and no optimizer work unless separately authorized.
+
+6. **Never open P3 from this run.**
+   `P3_music.zip` remains the sealed single-use final generalization gate and must not influence thresholds, decoder choices, model changes, or development decisions before a separate explicit authorization and freeze.
+
+This section is the canonical handoff for the next chat.
 
