@@ -5,24 +5,42 @@ Updated: 2026-09-27.
 
 ## Current verified position
 
-Basic Pitch Stage A failed because recall was strong but precision was poor (27 TP / 52 FP / 4 FN).
+MR-MT3 Stage-A offline implementation is complete and synthetic GREEN.
 
-Offline comparison is complete:
-- `docs/astra/NEXT_PATH_COMPARISON_V1.json`
+Canonical:
+- run **36339656152**
+- job **108677116337**
+- receipt: `docs/astra/MR_MT3_SYNTHETIC_VERIFICATION_V1.json`
+- package commit: `8e536c081d13300f118ccd0270a5e2fb250d3f65`
+- backend suite run **36339656140**: GREEN
 
-Selected next path:
-- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_DESIGN_V1.json`
-- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_AUTHORIZATION_REQUEST_V1.json`
+Frozen stack:
+- mt3-infer **0.2.0**
+- publishing commit `2d20ee5bb6ca727968bd23c6100fd2a35154166b`
+- MR-MT3 upstream commit `826ea84a933f93cd707d11e91af711f1d19c8d79`
+- checkpoint upload commit `539c08b0fe551076db6108a5f5b2a57d774881ed`
+- checkpoint bytes **183672643**
+- checkpoint SHA-256 `b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f`
+- MIT provenance verified for wrapper/backend
 
-MR-MT3 is selected over immediate SynthTab-style pretraining because it preserves a zero-optimizer, low-cost gate and has cleaner MIT licensing, while the released SynthTab corpus is ~2 TB and CC BY-NC 4.0.
+Synthetic gate: 8/8 tests PASS.
+No real media, optimizer, threshold search, or P3 access occurred.
 
 ## Exact next task
 
-Offline implementation only:
-1. Pin exact mt3-infer release, MR-MT3 backend provenance, checkpoint bytes/SHA-256 and licenses.
-2. Implement MIDI projection to guitar programs 24-31 and pitches 40-83 only.
-3. Reuse corrected pitch/onset scorer and crop boundaries.
-4. Add synthetic multitrack/program/range/percussion/crop/ambiguity tests.
-5. Run synthetic verification.
+Obtain Stephen's explicit authorization for the request-only real MR-MT3 Stage-A feasibility run.
 
-Do not access real P1/P2 media yet. No optimizer, no threshold search, no P3.
+Requested ceiling:
+- same exact 8 P1/P2 direct-input captures
+- frozen MR-MT3 identities above
+- programs 24-31 only
+- pitches 40-83 only
+- 0 optimizer steps
+- no threshold/confidence search
+- <=60 CPU minutes
+- one checkpoint download
+- zero retries
+- zero paid compute
+- P3 sealed
+
+Do not create a launch artifact before authorization.

@@ -1,7 +1,7 @@
 {
   "schema": "astra-mr-mt3-front-end-feasibility-authorization-request-v1",
   "date": "2026-09-27",
-  "status": "request_only_not_authorization",
+  "status": "request_only_synthetic_verified",
   "authorizationGranted": false,
   "design": "docs/astra/MR_MT3_FRONT_END_FEASIBILITY_DESIGN_V1.json",
   "implementationScope": {
@@ -21,7 +21,18 @@
     "thresholdSearch": false,
     "automaticRetries": 0,
     "paidComputeDollars": 0,
-    "p3": false
+    "p3": false,
+    "acceptedProgramsZeroBased": "24-31",
+    "acceptedPitchRange": "40-83",
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
   },
-  "noLaunchArtifactExists": true
+  "noLaunchArtifactExists": true,
+  "syntheticVerification": {
+    "runId": 36339656152,
+    "jobId": 108677116337,
+    "receipt": "docs/astra/MR_MT3_SYNTHETIC_VERIFICATION_V1.json",
+    "packageCommit": "8e536c081d13300f118ccd0270a5e2fb250d3f65",
+    "mt3InferVersion": "0.2.0",
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  }
 }

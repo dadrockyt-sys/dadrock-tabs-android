@@ -1,0 +1,53 @@
+{
+  "schema": "astra-mr-mt3-synthetic-verification-v1",
+  "date": "2026-09-27",
+  "status": "green_request_only",
+  "packageCommit": "8e536c081d13300f118ccd0270a5e2fb250d3f65",
+  "workflow": {
+    "runId": 36339656152,
+    "jobId": 108677116337,
+    "conclusion": "success"
+  },
+  "backendPreflight": {
+    "runId": 36339656140,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10938736127,
+    "digest": "sha256:5a3c66b26c4a7ac3d210fc31731a0830abcd08f3e89809874845acf8ec2b1daa",
+    "expiresAt": "2026-10-27T18:11:02Z"
+  },
+  "provenance": {
+    "mt3InferVersion": "0.2.0",
+    "mt3InferPublishCommit": "2d20ee5bb6ca727968bd23c6100fd2a35154166b",
+    "mt3InferWheelSha256": "95209657fafab7eda0e5187f5fb9ae3438a18e2a4e30acd4786f3cda25389ff4",
+    "mt3InferLicense": "MIT",
+    "mrMt3UpstreamCommit": "826ea84a933f93cd707d11e91af711f1d19c8d79",
+    "mrMt3UpstreamLicense": "MIT",
+    "checkpointRepository": "gudgud1014/MR-MT3",
+    "checkpointUploadCommit": "539c08b0fe551076db6108a5f5b2a57d774881ed",
+    "checkpointBytes": 183672643,
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  },
+  "tests": {
+    "count": 8,
+    "passed": true,
+    "coverage": [
+      "guitar program bounds 24-31 inclusive",
+      "non-guitar program rejection",
+      "percussion rejection",
+      "pitch range 40-83 enforcement",
+      "crop clipping without favorable onset shifting",
+      "deterministic synthetic multitrack MIDI projection",
+      "reuse of corrected duplicate-same-pitch Stage-A scorer",
+      "zero optimizer / zero threshold-search guards"
+    ]
+  },
+  "boundaries": {
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "p3Opened": false
+  },
+  "decision": "synthetic_green_real_media_still_not_authorized"
+}

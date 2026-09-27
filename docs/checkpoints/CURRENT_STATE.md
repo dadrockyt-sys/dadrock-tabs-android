@@ -786,6 +786,82 @@ The explicit precision/FP requirements are frozen before MR-MT3 sees real P1/P2 
 6. After synthetic green, freeze a request-only real ceiling; real execution still requires Stephen's explicit authorization.
 7. P3 remains sealed.
 
+## MR-MT3 Stage-A — OFFLINE IMPLEMENTATION COMPLETE, SYNTHETIC GREEN
+
+Completed 2026-09-27. No P1/P2/P3 corpus media was opened.
+
+Implementation:
+- `astra_backend/evaluation/mr_mt3_front_end_v1.py`
+- `astra_backend/evaluation/test_mr_mt3_front_end_v1.py`
+- `.github/workflows/astra-mr-mt3-synthetic-v1.yml`
+- provenance receipt: `docs/astra/MR_MT3_FROZEN_PROVENANCE_V1.json`
+- synthetic receipt: `docs/astra/MR_MT3_SYNTHETIC_VERIFICATION_V1.json`
+
+Canonical synthetic verification:
+- run **36339656152**
+- job **108677116337**
+- result: **SUCCESS**
+- package commit: `8e536c081d13300f118ccd0270a5e2fb250d3f65`
+- artifact **10938736127**, expires **2026-10-27T18:11:02Z**
+- normal backend run **36339656140**: **SUCCESS**
+
+### Frozen software/model provenance
+
+`mt3-infer`:
+- version **0.2.0**
+- PyPI publishing commit `2d20ee5bb6ca727968bd23c6100fd2a35154166b`
+- wheel SHA-256 `95209657fafab7eda0e5187f5fb9ae3438a18e2a4e30acd4786f3cda25389ff4`
+- license: **MIT**
+
+MR-MT3 backend:
+- upstream commit `826ea84a933f93cd707d11e91af711f1d19c8d79`
+- license: **MIT**
+
+Checkpoint:
+- repository: `gudgud1014/MR-MT3`
+- immutable upload commit `539c08b0fe551076db6108a5f5b2a57d774881ed`
+- exact bytes: **183672643**
+- SHA-256 `b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f`
+
+The synthetic workflow downloaded that immutable checkpoint solely to verify exact byte/hash identity, then removed it.
+
+### Synthetic contract verified
+
+All **8** tests passed:
+- guitar program bounds 24-31 inclusive
+- non-guitar program rejection
+- percussion exclusion
+- playable MIDI pitch range 40-83
+- crop clipping without favorable onset shifting
+- deterministic synthetic multitrack MIDI projection
+- corrected duplicate-same-pitch Stage-A scorer reuse
+- zero optimizer / zero threshold-search guards
+
+Execution boundary held:
+- real media accessed: **no**
+- optimizer steps: **0**
+- threshold search: **no**
+- P3 opened: **no**
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. MR-MT3 Stage-A is now **request-only and synthetic verified**.
+2. Do not create a real launch artifact until Stephen explicitly authorizes the real feasibility scope.
+3. Future requested real ceiling:
+   - same exact 4 P1 + 4 P2 direct-input captures
+   - frozen MR-MT3 software/checkpoint identities above
+   - accept only programs 24-31 and pitches 40-83
+   - 0 optimizer steps
+   - no confidence/threshold search
+   - one checkpoint download
+   - <=60 CPU minutes
+   - zero automatic retries
+   - zero paid compute
+   - P3 sealed
+4. Apply the already-frozen advancement gate exactly: aggregate F1 >=0.70, precision >=0.60, recall >=0.70, P1/P2 F1 >=0.60, every content pair >=0.50, P1/P2 gap <=0.15, FP <=31.
+5. Workflow GREEN would not automatically mean scientific pass; all criteria must pass.
+6. If MR-MT3 fails, stop the generic frozen-pretrained-front-end branch and move offline toward a commercial-safe synthetic/data-diversity design. Do not try a third generic AMT front end automatically.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
