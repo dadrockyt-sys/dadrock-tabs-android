@@ -1,0 +1,70 @@
+{
+  "schema": "astra-tiny-fit-v3-diagnostic-authorization-request-v2",
+  "date": "2026-09-26",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "purpose": "Request one repaired zero-optimizer diagnostic retry after diagnostic V1 failed solely because the same Event class was imported under two Python module names.",
+  "priorDiagnostic": {
+    "runId": 36281561748,
+    "jobId": 108514239716,
+    "realOptimizerStepsExecuted": 0,
+    "failureReceiptGitBlob": "b4d53e3cbe1cc8092cb769c08c445334aa03589b",
+    "classification": "python_module_identity_mismatch",
+    "p1ExamplesReprepared": true,
+    "frozenV3ArtifactHashesVerified": true
+  },
+  "repair": {
+    "canonicalEventImport": "evaluation.event_contract_v2",
+    "regression": "actual decode_event_list Event objects are accepted by detailed_score",
+    "backendTestsRunId": 36281862601,
+    "backendTestsPassed": true,
+    "changesModel": false,
+    "changesThresholds": false,
+    "changesCrops": false,
+    "changesScoringRule": false,
+    "changesP1Selection": false
+  },
+  "requestedAuthorization": {
+    "p1MediaAccessAuthorized": true,
+    "frozenV3ModelInferenceAuthorized": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdRetuningAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "crossPerformerScreenAuthorized": false,
+    "fullTrainingAuthorized": false
+  },
+  "scope": {
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "exactFrozenV3RunId": 36280547470,
+    "exactFrozenV3ArtifactId": 10918434248,
+    "exactFrozenV3ModelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "exactFrozenV3ResultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647",
+    "optimizerSteps": 0,
+    "thresholdRetuning": false,
+    "p2": false,
+    "p3": false
+  },
+  "sourceIdentities": {
+    "diagnosticGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "diagnosticTestsGitBlob": "474bf0c2566c87cdc7f4e46cdec55fe9a503af26",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "v3ResultReceiptGitBlob": "eb777edb898b18365cb66963d36216edf5f63c57",
+    "diagnosticV1FailureReceiptGitBlob": "b4d53e3cbe1cc8092cb769c08c445334aa03589b",
+    "workflowGitBlob": "9b0813fe339c136db4ac5fb0af0d62a364134e62"
+  },
+  "meaning": "Authorization would permit exactly one repaired diagnostic V2 run using the same four P1 crops and frozen V3 model for inference/scoring only. It would not authorize training, threshold changes, P2/P3, cross-performer screening, or full training.",
+  "requiredNextArtifactIfAuthorized": "docs/astra/TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V2.json",
+  "requiredLaunchArtifactIfAuthorized": "docs/astra/TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V2.json"
+}

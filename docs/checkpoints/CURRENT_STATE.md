@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DIAGNOSTIC V1 FAILED IN EVALUATOR NAMESPACE CHECK; 0 OPTIMIZER STEPS; OFFLINE REPAIR STAGED; NO RETRY AUTHORIZED**  
+Status: **DIAGNOSTIC V1 FAILURE PRESERVED; EVENT-NAMESPACE REPAIR VERIFIED GREEN; DIAGNOSTIC V2 REQUEST READY; NO RETRY AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -369,4 +369,18 @@ Offline repair: use the canonical `evaluation.event_contract_v2` namespace in th
 Frozen failure receipt: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_FAILURE_V1.json`.
 
 **Do not rerun diagnostic V1.** The original diagnostic authorization specified zero automatic retries. After backend tests pass, prepare a new request-only V2 diagnostic gate; a second diagnostic run requires new explicit authorization.
+
+## Repaired zero-optimizer diagnostic V2 — REQUEST ONLY
+
+Namespace-repair commit: `cdf874c3d3a6c2429441c9f23605bafe407e4026`.  
+Verification run **36281862601**: **SUCCESS** for complete backend and focused evaluation suites.
+
+The repair changes only Python import identity: the diagnostic now uses canonical `evaluation.event_contract_v2.Event`, matching `tiny_fit_pilot_v1.py`. A regression sends actual `decode_event_list()` events through the diagnostic scorer and passes.
+
+Request: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_REQUEST_V2.json`.  
+Dormant retry workflow: `.github/workflows/astra-tiny-fit-v3-diagnostic-v2.yml`.
+
+No V2 diagnostic authorization or launch exists. The retry remains **0 optimizer steps**, same four P1 crops, exact frozen V3 model, unchanged thresholds, no P2/P3.
+
+**Require new explicit user authorization before creating `TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V2.json` or `TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V2.json`.**
 
