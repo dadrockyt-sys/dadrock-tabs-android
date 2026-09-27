@@ -1,0 +1,34 @@
+{
+  "schema": "astra-p1-p2-combined-diagnostic-authorization-v1",
+  "date": "2026-09-27",
+  "status": "explicit_user_authorization",
+  "userInstruction": "I authorize",
+  "authorizedHeadBeforeLaunch": "978cd794e2f9580dc5e65db0726c85f6aef8f892",
+  "authorization": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "frozenV3ModelInferenceAuthorized": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "paidComputeDollars": 0
+  },
+  "limits": {
+    "captures": 8,
+    "framesPerCapture": 200,
+    "cpuJobMinutesMax": 90,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    }
+  },
+  "sourceIdentities": {
+    "authorizationRequestGitBlob": "84fa4ad5d334a8ccfac543467f0dbe84fbafd9e6",
+    "designGitBlob": "4879e8573f6c81d4b2dec6546b246502dbbe1943",
+    "syntheticVerificationGitBlob": "5b82eb12caefc81c4eec1a4a83b9916507241a35",
+    "workflowGitBlob": "b26ae04a651766896bbbe49ac380db9738ce54f9"
+  },
+  "claimBoundary": "Diagnostic only. No fitting, threshold change, P3 access, production mutation, or customer-readiness claim is authorized."
+}
