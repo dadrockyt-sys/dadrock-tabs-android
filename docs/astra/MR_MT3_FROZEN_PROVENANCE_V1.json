@@ -1,0 +1,30 @@
+{
+  "schema": "astra-mr-mt3-frozen-provenance-v1",
+  "date": "2026-09-27",
+  "mt3Infer": {
+    "version": "0.2.0",
+    "publishCommit": "2d20ee5bb6ca727968bd23c6100fd2a35154166b",
+    "wheelSha256": "95209657fafab7eda0e5187f5fb9ae3438a18e2a4e30acd4786f3cda25389ff4",
+    "license": "MIT"
+  },
+  "mrMt3Backend": {
+    "upstreamRepository": "gudgud96/MR-MT3",
+    "upstreamCommit": "826ea84a933f93cd707d11e91af711f1d19c8d79",
+    "license": "MIT",
+    "adapterProvenance": "mt3-infer 0.2.0 adapter header pins this upstream commit"
+  },
+  "checkpoint": {
+    "repository": "gudgud1014/MR-MT3",
+    "uploadCommit": "539c08b0fe551076db6108a5f5b2a57d774881ed",
+    "immutableUrl": "https://huggingface.co/gudgud1014/MR-MT3/resolve/539c08b0fe551076db6108a5f5b2a57d774881ed/mt3.pth?download=true",
+    "bytes": 183672643,
+    "sha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f",
+    "licenseLabel": "MIT"
+  },
+  "boundaries": {
+    "realMediaAccessed": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "p3": false
+  }
+}
