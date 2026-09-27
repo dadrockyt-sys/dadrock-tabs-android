@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN AUTHORIZED AND LAUNCHED ONCE; CANONICAL RUN 36286306972 IN PROGRESS; INSPECT THIS RUN ONLY; P3 SEALED**  
+Status: **P2 CROSS-PERFORMER SCREEN RED: 14 REFERENCES, 0 PREDICTIONS, 0 TP, 14 FN; RESULT FROZEN; BROADER TRAINING BLOCKED; P3 SEALED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -850,4 +850,94 @@ Frozen screen gates:
    `P3_music.zip` remains the sealed single-use final generalization gate and must not influence thresholds, decoder choices, model changes, or development decisions before a separate explicit authorization and freeze.
 
 This section is the canonical handoff for the next chat.
+
+## Minimal P2 cross-performer screen — COMPLETE, RED
+
+Canonical run **36286306972**, job **108527632565** completed successfully at the workflow level.
+
+Execution guards all held:
+- authorization/source pins: PASS
+- frozen V3 artifact hashes: PASS
+- exact four P2 captures prepared: PASS
+- optimizer steps: **0**
+- thresholds changed: **no**
+- model weights changed: **no**
+- P1 media reopened: **no**
+- P3 opened: **no**
+- cleanup: PASS
+- automatic retry: **no**
+
+Frozen evidence:
+- result: `docs/astra/P2_CROSS_PERFORMER_SCREEN_RESULT_V1.json`
+- result commit: `f10b7d5401472498278cc5bb3331ec25d11aced9`
+- artifact ID: **10920718166**
+- artifact digest: `sha256:1c3325d4e961e94e1541e3f8b48cd65a870a74a7d568d3e829ad1dfdb1fcb1ad`
+- result JSON SHA-256: `06ed422bbb055a831c472d75c2c333dfd98946773c93bdd79a470f959b8eb914`
+
+### Screen result
+
+Aggregate:
+- references: **14**
+- predictions: **0**
+- true positives: **0**
+- false positives: **0**
+- false negatives: **14**
+- recall: **0.0**
+- F1: **0.0**
+- precision: undefined because prediction count = 0
+- repeated reference attacks: **2**
+- repeated-attack recall: **0.0**
+- unresolved labels: **0**
+- synthetic-silence false positives: **0**
+- `crossPerformerScreenGreen=false`
+
+Per example:
+- `P2|chords|Drop3_7|directinput`: 4 references, 0 predictions, F1 **0.0**
+- `P2|scales|Ab|directinput`: 7 references, 0 predictions, F1 **0.0**, repeated recall **0.0**
+- `P2|singlenotes|allsinglenotes|directinput`: 1 reference, 0 predictions, F1 **0.0**
+- `P2|techniques|PalmMute|directinput`: 2 references, 0 predictions, F1 **0.0**, repeated recall **0.0**
+
+Classification: **complete cross-performer recall collapse**. The P1-trained frozen model + decoder V2 produced no decoded event on any selected P2 example.
+
+This is not a label-preparation failure: all four selected P2 crops were launch-ready with zero unresolved labels. It is also not the previous duplicate-onset precision issue: there were no predictions at all.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. **Do not broaden training, retune thresholds, open P3, or run another P2 screen.**
+   The current evidence blocks broader training.
+
+2. The next experiment must be **diagnostic only and zero-optimizer**.
+   Its purpose is to determine why P2 produces no decoded events.
+
+3. Freeze a new diagnostic design/request before any new P2 media access. It should record, for each of the same four P2 crops:
+   - onset probability distribution by string/frame;
+   - maximum onset probability and frames nearest each reference onset;
+   - state active probability for the true string/fret at each reference onset;
+   - silence probability and active-minus-silence margin;
+   - counts of frames passing onset-only, state-only, and joint decoder admission;
+   - decoded events at the frozen 0.50/0.50 thresholds;
+   - no threshold search or retuning.
+
+4. To distinguish model-output collapse from input-domain shift, the diagnostic should also compare frozen P1 vs P2:
+   - CQT feature mean/std and per-feature distribution summaries;
+   - RMS-normalized audio/feature scale summaries available from the prepared crops;
+   - model onset-logit and state-margin summaries.
+   Use matched homologous captures where possible.
+
+5. Interpret the diagnostic without changing thresholds:
+   - **onset low, state healthy** => onset head/generalization failure;
+   - **state low/silence dominant, onset healthy** => state-head/domain failure;
+   - **both low** => representation/domain-shift or severe memorization;
+   - **both individually pass but joint admission is zero** => decoder/admission interaction.
+   These are diagnostic categories only, not automatic fixes.
+
+6. After that diagnostic:
+   - if the failure is clearly preprocessing/domain normalization, design the smallest offline normalization/representation test first;
+   - if it is model memorization/generalization failure, design a new small P1+P2 development training experiment with strict capped compute;
+   - do not return to 2,000-epoch runs without new evidence.
+
+7. **P3 remains sealed.**
+   `P3_music.zip` must not be opened or used for tuning, architecture selection, threshold selection, decoder changes, or development diagnosis.
+
+No new P2 media access, optimizer work, or threshold change is authorized by this result. A fresh explicit authorization is required for the proposed activation/domain-shift diagnostic.
 
