@@ -5,17 +5,30 @@ Updated: 2026-09-27.
 
 Read `AGENTS.md`, then the top GPT-5.6 handoff review in `docs/checkpoints/CURRENT_STATE.md`.
 
-## Current active run
+## Current verified position
 
-The combined P1/P2 diagnostic is explicitly authorized and launched once.
+Combined diagnostic run **36329538118**, job **108648714178** completed successfully at the workflow level.
 
-- canonical run: **36329538118**
-- canonical job: **108648714178**
-- launch commit: `65142cad30b31bc8a4b6c3ae37891c35dad5b3cf`
-- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36329538118
+Frozen result:
+- `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_RESULT_V1.json`
+- artifact **10936105110**
+- scientific outcome: **inconclusive**
 
-Inspect only that run. Do not create another launch or rerun.
+Key facts:
+- P1 reproduction passed exactly: **23 raw decoded events -> 16 boundary-corrected scored predictions**, matching the frozen decoder-V2 receipt.
+- P2 remains **0 decoded predictions**.
+- P2 raw/scored references are **15 / 14**, with one boundary exclusion.
+- Conservative correspondence found only **6** matched P1/P2 events: 5 scales, 1 single-note, none for chords or PalmMute.
+- Fixed onset-head bias cancels as expected; matched scale onset-logit shifts are mostly large negative changes caused by hidden-representation differences projected through fixed weights. This is descriptive, not causal proof.
+- Chords and PalmMute retain important state failures.
+- P3 remains sealed.
 
-Authorized ceiling remains exact eight P1/P2 captures, 200 frames each, frozen V3 model, 0 optimizer steps, unchanged 0.50/0.50 thresholds, no threshold search, one <=90-minute CPU job, zero retries, zero paid compute, P3 sealed.
+## Exact next task
 
-If it completes, freeze the result and classify only under the predeclared descriptive outcome branches. No fitting, threshold changes, P3 access, full training, production mutation, or customer-readiness claim follows automatically.
+Prepare **design-only** for one predeclared capped controlled intervention. Do not fit yet.
+
+The design must choose one hypothesis, define a comparator, grouped/content-disjoint split, strict compute cap, metrics and stop conditions. If P1+P2 are used for development, neither performer is a holdout; any content-disjoint result tests unseen content only.
+
+Do not automatically run both a head-only probe and a temporal-context candidate. An onset-head-only probe can test feature usability but cannot fix state errors. A temporal-context candidate is an alternative hypothesis requiring its own justification.
+
+No optimizer work, threshold change, P3 access, new real-media run, production mutation, or customer-readiness claim is authorized.

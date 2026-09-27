@@ -139,6 +139,82 @@ Authorized execution boundary remains unchanged:
 4. Interpret only under the predeclared outcomes: `reproduction_failure`, `insufficient_correspondence`, `descriptive_evidence_supports_bounded_probe`, or `inconclusive`. Do not convert descriptive geometry into a causal claim.
 5. No fitting follows automatically. Any bounded intervention must be separately designed and explicitly authorized.
 
+## Combined P1/P2 diagnostic — COMPLETE, WORKFLOW GREEN, SCIENTIFIC OUTCOME INCONCLUSIVE
+
+Canonical run **36329538118**, job **108648714178** completed **SUCCESS**. All workflow steps passed, including exact authorization gate, frozen model hash verification, preparation of all eight approved captures, bounded diagnostic execution, result upload, and cleanup.
+
+Frozen evidence:
+- result receipt: `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_RESULT_V1.json`
+- artifact ID: **10936105110**
+- artifact digest: `sha256:c3c64ab242889ec4678de8f4aed08f3aacd6fc5792b7ff93e0a6fa0f51e27f10`
+- raw result JSON SHA-256: `80d47924b74a3281bef719c20f11b8abf542547e041efd245f87d5b9ea1351f2`
+- artifact expires: **2026-10-04T15:56:51Z**
+
+Execution boundaries all held:
+- optimizer steps: **0**
+- thresholds changed: **no**
+- threshold search: **no**
+- model mutation: **no**
+- P3 opened: **no**
+- automatic retry: **no**
+- cleanup: **PASS**
+
+### Reproduction and accounting
+
+The diagnostic exactly reproduced the frozen P1 decoder-V2 scored prediction count:
+- raw P1 decoded events: **23**
+- boundary-corrected P1 predictions: **16**
+- frozen expected scored predictions: **16**
+- boundary-excluded P1 predictions: **7**
+
+This resolves the prior 23-versus-16 discrepancy: the seven-event difference is explicitly accounted for by boundary exclusion under the identical scorer path.
+
+P2 remains:
+- raw decoded events: **0**
+- scored predictions: **0**
+- raw references: **15**
+- scored references after boundary exclusion: **14**
+- one P2 boundary-intersecting reference excluded
+
+Numerical equivalence to prior prepared feature/logit arrays remains **unverified** because the original arrays were not supplied for direct numerical comparison. Equal reproduced scoring is not treated as proof of numerical equivalence.
+
+### Valid correspondence
+
+Conservative source-identity + string/fret matching found **6** valid P1/P2 event correspondences:
+- chords: **0**
+- scales: **5**
+- single notes: **1**
+- PalmMute: **0**
+
+Unmatched events were retained and no positional event zipping was used.
+
+### Descriptive evidence
+
+For the five matched scale events, four P2-minus-P1 onset-logit deltas are large negative shifts of roughly **-10 to -12**, while the fifth is about **-1.03**. The fixed-weight projection identity reproduces these deltas to floating-point tolerance and the onset-head bias cancels, so this rules out a changing-bias explanation. It does **not** prove which repair is causal.
+
+The one matched single-note event has an onset-logit delta of about **-1.66**.
+
+P2 chords and PalmMute also show substantial state failures; PalmMute remains clearly not an onset-only problem. Attack, sustain and silence controls plus fixed adjacent-frame feature deltas were recorded without fitting or threshold search.
+
+### Scientific outcome
+
+Predeclared outcome: **`inconclusive`**.
+
+Reason: reproduction is sound, but only six conservative matched events exist and there are no valid cross-performer correspondences for chords or PalmMute. Observational projection, state-margin and neighboring-frame statistics are useful evidence but cannot establish a causal repair.
+
+Do **not** label this as proof of a head-only fix, a representation-only fix, or a temporal-context fix.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Do not rerun this diagnostic. Do not lower thresholds. Do not open P3.
+2. Next work is **design-only** for one predeclared, capped controlled intervention that can distinguish a repair hypothesis rather than another open-ended observational diagnostic.
+3. The design must specify one hypothesis, comparator, grouped split, budget, metrics, and stop conditions before any fitting authorization.
+4. If P1+P2 are used for development, do not call either performer a holdout. Use content-disjoint grouping and state clearly that this tests unseen content, not unseen performer generalization.
+5. An onset-head-only probe may test feature usability but cannot repair chord/PalmMute state failures and must not be presented as a product fix.
+6. A temporal-context candidate is an alternative hypothesis, not an automatic second candidate. Do not run both without a separately justified design.
+7. P3 remains sealed for a later separately frozen final gate.
+8. No optimizer work, new media access, launch artifact, production mutation, or customer-readiness claim is authorized by this result.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

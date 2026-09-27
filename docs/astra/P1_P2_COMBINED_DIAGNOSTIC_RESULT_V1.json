@@ -1,0 +1,72 @@
+{
+  "schema": "astra-p1-p2-combined-diagnostic-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "inconclusive",
+  "run": {
+    "runId": 36329538118,
+    "jobId": 108648714178,
+    "headSha": "65142cad30b31bc8a4b6c3ae37891c35dad5b3cf"
+  },
+  "artifact": {
+    "artifactId": 10936105110,
+    "name": "astra-p1-p2-combined-diagnostic-v1",
+    "digest": "sha256:c3c64ab242889ec4678de8f4aed08f3aacd6fc5792b7ff93e0a6fa0f51e27f10",
+    "resultJsonSha256": "80d47924b74a3281bef719c20f11b8abf542547e041efd245f87d5b9ea1351f2",
+    "expiresAt": "2026-10-04T15:56:51Z"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdsChanged": false,
+    "thresholdSearchExecuted": false,
+    "modelWeightsChanged": false,
+    "p3Opened": false,
+    "cleanupCompleted": true,
+    "automaticRetry": false
+  },
+  "reproduction": {
+    "passed": true,
+    "p1RawDecodedEvents": 23,
+    "p1BoundaryCorrectedPredictions": 16,
+    "expectedFrozenDecoderV2Predictions": 16,
+    "excludedBoundaryPredictions": 7,
+    "p2RawDecodedEvents": 0,
+    "p2BoundaryCorrectedPredictions": 0,
+    "p2RawReferenceCount": 15,
+    "p2ScoredReferenceCount": 14,
+    "p2ExcludedBoundaryReferences": 1,
+    "numericalEquivalenceToPriorPreparedArrays": "unverified"
+  },
+  "correspondence": {
+    "matchedEventsTotal": 6,
+    "byCategory": {
+      "chords": 0,
+      "scales": 5,
+      "singlenotes": 1,
+      "techniquesPalmMute": 0
+    },
+    "unmatchedEventsRetained": true,
+    "positionalZipUsed": false
+  },
+  "descriptiveFindings": {
+    "matchedScalePairs": "Four of five matched scale events show large negative P2-minus-P1 onset-logit deltas around -10 to -12; the fifth is about -1.03. Bias-cancellation identities hold to floating-point tolerance, so those deltas arise from changed hidden representations projected through fixed onset weights, not a changing bias.",
+    "singleNotePair": "The one matched single-note event shows an onset-logit delta of about -1.66.",
+    "stateEvidence": "P2 chord and PalmMute exact-center true-vs-silence state margins are frequently strongly negative; PalmMute remains a clear state/representation problem in addition to onset failure.",
+    "controls": "Sustain controls generally show suppressed onset admissions, while P2 reference attacks still fail onset admission. These controls are descriptive and do not establish a causal repair.",
+    "temporalEvidence": "Fixed adjacent-frame feature deltas were recorded for attack and control frames; no tuned temporal detector was fit."
+  },
+  "interpretation": {
+    "causalRepairEstablished": false,
+    "headOnlyRepairEstablished": false,
+    "simpleBiasExplanationSupported": false,
+    "broadRepresentationConclusionEstablished": false,
+    "reasonForInconclusive": "Only six conservative cross-performer event correspondences exist, with none for chords or PalmMute; observational projection/temporal statistics cannot by themselves establish causality."
+  },
+  "decision": {
+    "broaderTrainingAuthorized": false,
+    "p3MustRemainSealed": true,
+    "thresholdRetuningBlocked": true,
+    "automaticFitAuthorized": false,
+    "nextPermissibleWork": "Design-only for one predeclared capped controlled intervention, with explicit split/comparator and no execution until separately authorized."
+  }
+}
