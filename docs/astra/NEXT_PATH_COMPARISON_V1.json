@@ -1,0 +1,37 @@
+{
+  "schema": "astra-next-path-comparison-v1",
+  "date": "2026-09-27",
+  "status": "offline_review_complete",
+  "alternatives": [
+    {
+      "path": "alternative_frozen_front_end",
+      "candidate": "MR-MT3 via mt3-infer",
+      "evidence": [
+        "MR-MT3 upstream is MIT licensed.",
+        "mt3-infer is MIT licensed and wraps MR-MT3 behind a reproducible inference API.",
+        "mt3-infer documents an MR-MT3 checkpoint around 176 MB and SHA-256 verification on download.",
+        "The path is zero-optimizer and directly tests whether a different pretrained transcription prior improves Basic Pitch's precision failure."
+      ],
+      "expectedCost": "low-to-moderate: one checkpoint plus inference on the same eight short direct-input examples",
+      "licensingRisk": "low relative to the synthetic alternative, subject to pinning exact wrapper/backend/checkpoint identities before execution",
+      "precisionRationale": "MR-MT3 is sequence/multitrack transcription rather than Basic Pitch's frame/onset decoder; a predeclared guitar-program and playable-range projection can suppress obviously irrelevant instrument notes without tuning thresholds.",
+      "mainRisk": "domain mismatch remains; another generic pretrained front end may still fail on guitar-specific articulation."
+    },
+    {
+      "path": "synthetic_pretraining_data_diversity",
+      "candidate": "SynthTab-style synthetic guitar pretraining",
+      "evidence": [
+        "SynthTab directly targets low-resource guitar tablature transcription and reports synthetic data as a way to reduce overfitting.",
+        "The released SynthTab corpus is close to 2 TB and CC BY-NC 4.0.",
+        "The repository documents known rendering bugs affecting a small percentage of total audio duration despite many tracks being touched.",
+        "A clean-room commercial-safe synthetic renderer would require additional source-instrument licensing and substantially more engineering before a scientifically useful pilot."
+      ],
+      "expectedCost": "high: dataset acquisition/rendering, storage, preprocessing, and optimizer work",
+      "licensingRisk": "high for using the released CC BY-NC dataset in a commercial product path; custom rendering reduces this but introduces sample-library provenance work",
+      "precisionRationale": "domain-specific synthetic negatives could eventually target false positives and broaden content coverage better than eight crops",
+      "mainRisk": "large engineering and licensing commitment before knowing whether a simpler pretrained front end is sufficient."
+    }
+  ],
+  "selectedPath": "MR-MT3 frozen front-end feasibility",
+  "reason": "It is the cheapest materially different test that directly addresses the immediate precision question without optimizer work, avoids the non-commercial SynthTab dataset constraint, and preserves the option to pursue custom synthetic pretraining later if all frozen pretrained front ends fail."
+}

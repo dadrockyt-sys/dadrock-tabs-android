@@ -1,0 +1,75 @@
+{
+  "schema": "astra-mr-mt3-front-end-feasibility-design-v1",
+  "date": "2026-09-27",
+  "status": "design_only_not_authorized_not_implemented",
+  "hypothesis": "A frozen MR-MT3 transcription front end, projected a priori to guitar-family programs and the playable 20-fret standard-tuning pitch range, will achieve materially higher pitch+onset precision than Basic Pitch while retaining enough recall to pass the same Stage-A feasibility bar.",
+  "frontEnd": {
+    "name": "MR-MT3",
+    "wrapper": "mt3-infer",
+    "optimizerSteps": 0,
+    "fineTuning": false,
+    "exactVersionRule": "Pin an exact released mt3-infer version, vendored MR-MT3 backend commit/provenance, checkpoint URL, checkpoint byte size and SHA-256 before any real-media execution.",
+    "licenseRule": "Require MIT-compatible wrapper/backend provenance and freeze it in the synthetic receipt before authorization."
+  },
+  "fixedProjection": {
+    "purpose": "Convert multitrack MIDI output to guitar-note candidates without post-hoc tuning.",
+    "acceptedGeneralMidiProgramsZeroBased": "24-31 inclusive only (guitar family)",
+    "acceptedMidiPitchRange": "40-83 inclusive, matching standard tuning E2 through high-e string fret 19",
+    "percussionRejected": true,
+    "otherProgramsRejected": true,
+    "noteVelocityIgnoredForScoring": true,
+    "noConfidenceThresholdSearch": true,
+    "rationale": "These are instrument-contract constraints derived from the product target, not fitted on P1/P2 outcomes."
+  },
+  "dataScope": {
+    "realExecutionStatus": "not_authorized",
+    "captures": "same exact 4 P1 + 4 P2 direct-input captures and frozen 200-frame scoring intervals",
+    "p3": false,
+    "stringFretScoring": false,
+    "claimBoundary": "pitch/onset feasibility only"
+  },
+  "scoring": {
+    "primary": "same corrected Stage-A one-to-one pitch+onset scorer, 50 ms onset tolerance, exact simultaneous same-pitch duplicates collapsed for pitch-only scoring while ambiguity is retained",
+    "secondary": "pitch+onset+offset score at frozen 50 ms offset tolerance",
+    "noFavorableWindow": true,
+    "noThresholdSearch": true
+  },
+  "advancementCriteria": {
+    "allRequired": true,
+    "criteria": [
+      "aggregate pitch+onset F1 >= 0.70",
+      "aggregate pitch+onset precision >= 0.60",
+      "aggregate pitch+onset recall >= 0.70",
+      "P1 aggregate pitch+onset F1 >= 0.60",
+      "P2 aggregate pitch+onset F1 >= 0.60",
+      "each content-pair macro pitch+onset F1 >= 0.50",
+      "absolute P1-vs-P2 aggregate F1 gap <= 0.15",
+      "aggregate false positives <= 31 (no more than one FP per scored reference on the same eight-crop target)",
+      "zero optimizer steps, zero confidence/threshold search, exact checkpoint identity verified, unresolved labels = 0"
+    ],
+    "note": "The added precision/FP requirements directly address the Basic Pitch failure mode and are predeclared before MR-MT3 sees P1/P2."
+  },
+  "budget": {
+    "maxCpuMinutes": 60,
+    "optimizerSteps": 0,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "checkpointDownloads": 1,
+    "thresholdSearch": false,
+    "p3": false
+  },
+  "syntheticGateRequirements": [
+    "pin exact mt3-infer release and MR-MT3 checkpoint SHA-256",
+    "verify guitar-program filtering and 40-83 pitch-range filtering",
+    "verify percussion/other-instrument exclusion",
+    "verify crop clipping and corrected duplicate-pitch scorer reuse",
+    "verify zero-optimizer and no-threshold-search guards",
+    "verify deterministic MIDI parsing on a synthetic multitrack fixture"
+  ],
+  "outcomes": {
+    "pass": "Design-only Stage B string/fret assignment using frozen note evidence; no automatic fitting.",
+    "fail": "Stop generic frozen pretrained-front-end branch. Next offline design should move to a commercial-safe synthetic/data-diversity strategy rather than trying a third generic AMT front end.",
+    "infrastructureFailure": "Fix only adapter/provenance issues; do not reinterpret as a model result."
+  },
+  "executionAuthorization": false
+}

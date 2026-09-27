@@ -1,0 +1,27 @@
+{
+  "schema": "astra-mr-mt3-front-end-feasibility-authorization-request-v1",
+  "date": "2026-09-27",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "design": "docs/astra/MR_MT3_FRONT_END_FEASIBILITY_DESIGN_V1.json",
+  "implementationScope": {
+    "offlineOnlyBeforeRealAuthorization": true,
+    "tasks": [
+      "pin exact mt3-infer/MR-MT3 versions and checkpoint hash",
+      "implement MIDI projection/scoring adapter",
+      "synthetic multitrack/program/range/crop tests",
+      "run synthetic verification"
+    ]
+  },
+  "futureRealCeiling": {
+    "captures": 8,
+    "optimizerSteps": 0,
+    "maxCpuMinutes": 60,
+    "checkpointDownloads": 1,
+    "thresholdSearch": false,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3": false
+  },
+  "noLaunchArtifactExists": true
+}

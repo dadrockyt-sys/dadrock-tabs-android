@@ -713,6 +713,79 @@ Stop Basic Pitch **for this frozen Stage-A scope**. This does not prove pretrain
 6. No Stage-B string/fret fitting is justified yet because the selected Stage-A front end did not pass.
 7. No production/customer-readiness claim is supported.
 
+## Post-Basic-Pitch offline comparison — MR-MT3 SELECTED NEXT
+
+Completed 2026-09-27. No real media, optimizer work, threshold tuning, or P3 access occurred.
+
+Frozen comparison:
+- `docs/astra/NEXT_PATH_COMPARISON_V1.json`
+
+Selected design:
+- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_DESIGN_V1.json`
+- request-only scope: `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_AUTHORIZATION_REQUEST_V1.json`
+
+### Comparison result
+
+Two materially different branches were compared:
+
+**A. One alternative frozen pretrained front end — MR-MT3**
+- MR-MT3 upstream is MIT licensed.
+- `mt3-infer` is MIT licensed and provides an inference-only wrapper with checkpoint management.
+- Its MR-MT3 checkpoint is ~176 MB and the wrapper documents SHA-256 verification for that checkpoint.
+- This is another **0-optimizer** test and directly asks whether a different pretrained transcription prior can improve the precision failure seen with Basic Pitch.
+
+**B. Synthetic-pretraining/data diversity — SynthTab-style**
+- Scientifically attractive because it directly addresses low-resource guitar-tab overfitting.
+- But the released SynthTab corpus is nearly **2 TB** and **CC BY-NC 4.0**.
+- That non-commercial dataset posture is poorly aligned with the intended commercial product path.
+- A clean-room commercial-safe renderer is possible later, but it requires instrument/sample provenance work, generation infrastructure, and real optimizer budget.
+
+### Decision
+
+Choose **MR-MT3 frozen Stage-A feasibility** next.
+
+Reason: it is the cheapest materially different test, preserves a zero-optimizer boundary, has substantially cleaner licensing for the product path, and directly tests whether Basic Pitch's 52-false-positive failure was model-specific rather than proof that pretrained AMT is unsuitable.
+
+If MR-MT3 also fails, stop the generic frozen-front-end branch and move the next offline design toward a commercial-safe synthetic/data-diversity strategy. Do **not** test a third generic AMT model automatically.
+
+### Frozen MR-MT3 projection contract
+
+Before seeing any new P1/P2 outputs:
+- accept only zero-based General MIDI guitar-family programs **24-31**
+- accept only MIDI pitches **40-83**, the standard-tuning 20-fret product range
+- reject percussion and all other instrument programs
+- no velocity/confidence threshold tuning
+- same frozen crop intervals
+- same corrected one-to-one pitch scorer
+- same duplicate same-pitch ambiguity accounting
+
+These are product-domain constraints, not result-driven tuning.
+
+### MR-MT3 advancement gate
+
+All required:
+- aggregate pitch+onset F1 >= **0.70**
+- aggregate precision >= **0.60**
+- aggregate recall >= **0.70**
+- P1 F1 >= **0.60**
+- P2 F1 >= **0.60**
+- every content-pair macro F1 >= **0.50**
+- P1/P2 F1 gap <= **0.15**
+- aggregate false positives <= **31**
+- 0 optimizer, 0 threshold search, exact checkpoint verified, unresolved labels 0
+
+The explicit precision/FP requirements are frozen before MR-MT3 sees real P1/P2 and directly target the Basic Pitch failure mode.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Offline implementation only. Do not access real P1/P2 media.
+2. Pin one exact released `mt3-infer` version, its MR-MT3 backend provenance, exact checkpoint URL/bytes/SHA-256 and licenses.
+3. Implement the MR-MT3 MIDI projection adapter and reuse the corrected Stage-A pitch scorer.
+4. Synthetic tests must cover instrument-program filtering, playable pitch range, percussion exclusion, crop clipping, duplicate same-pitch handling, deterministic MIDI parsing, zero optimizer and no threshold search.
+5. Run synthetic verification only.
+6. After synthetic green, freeze a request-only real ceiling; real execution still requires Stephen's explicit authorization.
+7. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

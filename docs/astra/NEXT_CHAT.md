@@ -5,27 +5,24 @@ Updated: 2026-09-27.
 
 ## Current verified position
 
-Basic Pitch Stage-A run **36337236022**, job **108670300164** was workflow GREEN but **scientifically FAILED** the frozen gate.
+Basic Pitch Stage A failed because recall was strong but precision was poor (27 TP / 52 FP / 4 FN).
 
-Frozen result:
-- `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_RESULT_V1.json`
-- artifact **10938223666**
-- aggregate pitch+onset precision / recall / F1: **0.342 / 0.871 / 0.491**
-- P1 F1 **0.426**
-- P2 F1 **0.571**
-- scales pair macro F1 **0.741**
-- chords **0.333**
-- single notes **0.417**
-- PalmMute **0.367**
-- 27 TP / 52 FP / 4 FN
-- optimizer 0, no threshold search, P3 sealed
+Offline comparison is complete:
+- `docs/astra/NEXT_PATH_COMPARISON_V1.json`
 
-Interpretation: pretrained note recall is strong, but precision is too poor at the frozen defaults. Do not tune Basic Pitch thresholds on these eight development crops.
+Selected next path:
+- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_DESIGN_V1.json`
+- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_AUTHORIZATION_REQUEST_V1.json`
+
+MR-MT3 is selected over immediate SynthTab-style pretraining because it preserves a zero-optimizer, low-cost gate and has cleaner MIT licensing, while the released SynthTab corpus is ~2 TB and CC BY-NC 4.0.
 
 ## Exact next task
 
-Offline design review only.
+Offline implementation only:
+1. Pin exact mt3-infer release, MR-MT3 backend provenance, checkpoint bytes/SHA-256 and licenses.
+2. Implement MIDI projection to guitar programs 24-31 and pitches 40-83 only.
+3. Reuse corrected pitch/onset scorer and crop boundaries.
+4. Add synthetic multitrack/program/range/percussion/crop/ambiguity tests.
+5. Run synthetic verification.
 
-Compare exactly one alternative frozen/pretrained front-end path against one synthetic-pretraining/data-diversity path on feasibility, licensing/runtime, expected precision behavior and cost. Then select **one** materially different next hypothesis and freeze its design before any new real-media access or fitting.
-
-Do not run both automatically. Do not start Stage-B string/fret fitting. P3 remains sealed.
+Do not access real P1/P2 media yet. No optimizer, no threshold search, no P3.
