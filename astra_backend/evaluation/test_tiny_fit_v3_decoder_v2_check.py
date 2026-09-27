@@ -28,6 +28,19 @@ class DecoderV2CheckSemanticsTests(unittest.TestCase):
         self.assertEqual(score_events(v2, ref)["falsePositive"], 0)
         self.assertEqual(score_events(v2, ref)["f1"], 1.0)
 
+
+    def test_feature_hash_is_not_semantic_identity(self):
+        frozen = {
+            "captureKey": "P1|x|y|directinput",
+            "featureSha256": "old",
+            "targetSha256": "target",
+            "sourceEventSha256": "source",
+        }
+        current = dict(frozen, featureSha256="new")
+        def semantic_identity(row):
+            return {k: v for k, v in row.items() if k != "featureSha256"}
+        self.assertEqual(semantic_identity(frozen), semantic_identity(current))
+
     def test_real_same_fret_reattack_with_fresh_edge_is_preserved(self):
         state, onset = self._logits()
         state[2:10, 0, 20] = -8.0
