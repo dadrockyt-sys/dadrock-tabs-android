@@ -1,0 +1,28 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-launch-v1",
+  "date": "2026-09-27",
+  "status": "authorized_single_launch",
+  "singleLaunch": true,
+  "authorizedHeadBeforeLaunch": "eafa8dbb8d31074e8dfb1b9703ec780b9445114a",
+  "sourceIdentities": {
+    "fitScriptGitBlob": "ce0fa0f0d94f12bc9a3709cd85604820a244f45f",
+    "workflowGitBlob": "50a0237cdac4f3f5233c4f884ee9432a58f9ac49",
+    "authorizationGitBlob": "16ee8ad8249169d046ddd0975f37717ff9fa2946",
+    "designGitBlob": "086c1647f44824e25e2eed68087d411bbe4bc259",
+    "syntheticVerificationGitBlob": "b1834304aaf12d4126baedff95bc42d15e8a759b"
+  },
+  "scope": {
+    "folds": 4,
+    "modelsPerFold": 2,
+    "maxStepsPerModelPerFold": 125,
+    "maxOptimizerStepsTotal": 1000,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "maxCpuMinutes": 60,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3": false
+  }
+}
