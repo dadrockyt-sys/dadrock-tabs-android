@@ -1,63 +1,36 @@
 # Next chat: start here
 
-Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.  
-Canonical status: `docs/checkpoints/CURRENT_STATE.md`.
+Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
+Updated: 2026-09-27.
 
-## Current state
+Read `AGENTS.md`, then the **GPT-5.6 handoff review — 2026-09-27 — READ THIS FIRST** section at the TOP of `docs/checkpoints/CURRENT_STATE.md`. That section is the active direction. Older checkpoint sections are historical evidence and contain superseded next steps.
 
-Offline adapter and capped tiny-fit preparation are complete and exact-runtime synthetic verification passed. **Do not restart full training. Do not rerun V5 diagnosis. Do not open P2 or P3.**
+## Verified position
 
-Canonical exact-runtime evidence:
-- receipt: `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json`
-- GitHub run: **36275788105**
-- job: **108498148554**
-- verified head: `2975017d9632f75a9e24e4eb5d8e3b2ae0546468`
-- runtime: Python 3.10.15 / NumPy 1.21.6 / Torch 1.11.0+cpu
-- real optimizer steps: **0**
-- P1/P2/P3 media accessed: **none**
+- The capped P1 model completed 200 optimizer steps; decoder V2 subsequently passed the four-example training-only engineering gate.
+- The P2 cross-performer screen failed: no decoded events.
+- Activation diagnostic run **36325297420**, job **108636792679**, completed successfully with **0 optimizer steps**. Its receipt reports **0/15 P2 onset passes and 9/15 state passes**.
+- State failures include **chords (1/4 passes)** as well as **PalmMute (0/2)**.
+- Onset-admission collapse is observed; its causal origin is NOT isolated. Do not infer a head-only fix from the diagnostic class name or embedding cosine similarity.
+- P3 remains sealed. Full training remains stopped.
 
-## Frozen pilot
+## Exact next task for GPT-5.6
 
-Read:
-1. `docs/astra/TINY_FIT_PILOT_DESIGN_V1.json`
-2. `docs/astra/TINY_FIT_PILOT_SYNTHETIC_VERIFICATION_V1.json`
-3. `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V1.json`
-4. `astra_backend/evaluation/prepared_event_adapter_v1.py`
-5. `astra_backend/tiny_fit_pilot_v1.py`
+Prepare the combined **offline diagnostic package** specified in the top checkpoint review: design, implementation, meaningful synthetic tests, and a request-only workflow. This ordinary offline work is already permitted; complete it before asking for real-data authorization.
 
-Exact capture keys are:
-- `P1|chords|Drop3_7|directinput`
-- `P1|scales|Ab|directinput`
-- `P1|singlenotes|allsinglenotes|directinput`
-- `P1|techniques|PalmMute|directinput`
+It must cover:
+1. Frozen identity/reproduction guards and raw-versus-scored boundary accounting.
+2. Valid event correspondence, with unmatched events retained.
+3. Attack, sustain and silence controls.
+4. Frozen head projections/margins and state errors for chords and PalmMute.
+5. Descriptive temporal-feature evidence, without fitting or threshold search.
+6. Explicit inconclusive outcomes; no automatic causal conclusion from embedding distances.
+7. One bounded execution request and durable evidence/expiry planning.
 
-Caps are four underlying P1 performances, one view each, 200 frames/example, 200 optimizer steps total, 2700 seconds train/eval inside a 60-minute CPU job, one candidate, zero automatic retries, zero paid compute.
+A later fit must test one capped hypothesis using a predeclared split and comparator. Training on P1+P2 leaves no performer holdout among those two. Already-examined P2 examples are development data. Keep whole performances/views together and distinguish unseen-content from unseen-performer claims.
 
-## Exact next gate
+## Execution boundary
 
-There is **no active real-data authorization**.
+This review authorized documentation and offline preparation only. Do not create a real launch artifact, reopen corpus media, fit a model, change thresholds, access P3, restart V1–V5, deploy, or claim customer readiness. Existing single-run authorizations are historical, not reusable grants.
 
-If the user explicitly authorizes the exact request in `TINY_FIT_PILOT_REAL_AUTHORIZATION_REQUEST_V1.json`, then:
-1. create `docs/astra/TINY_FIT_PILOT_REAL_AUTHORIZATION_V1.json` matching the request exactly;
-2. verify every frozen Git blob and receipt identity;
-3. create one source-pinned `docs/astra/TINY_FIT_PILOT_REAL_LAUNCH_V1.json`;
-4. allow the dormant workflow `.github/workflows/astra-tiny-fit-pilot-real.yml` to run once;
-5. inspect and preserve the bounded result.
-
-Without that explicit authorization, stop here. Do not access P1 archives or execute a real optimizer step.
-
-## After a future real pilot
-
-If it fails: preserve evidence and diagnose inputs/targets/objective. Do not automatically add steps, rerun, alter thresholds or invent V6.
-
-If it passes the already frozen training-only thresholds: design a **separate same-budget cross-performer screen**. Passing does not authorize full training, P3, production or customer delivery.
-
-## Important implementation facts
-
-- Explicit source attack IDs are preserved through crop/mask preparation.
-- Carry-in occupancy cannot create a crop-edge onset.
-- Source onsets are separate from state occupancy.
-- Same-fret reattacks are representable by the decoder.
-- Unsupported frets, overlaps, negative aligned time, sub-frame attacks and frame-grid collisions are explicit unresolved labels, never silent repairs.
-- The future source extractor opens only selected MIDI/audio members after a pinned archive hash is verified.
-- The real workflow has no manual-dispatch trigger and no P2/P3 source path.
+Read the full top checkpoint section for the exact proposed diagnostic ceiling, decision rules, evidence limitations and next milestone. Preserve frozen receipts and verify the remote branch after saving.
