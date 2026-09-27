@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **P1 ENGINEERING GATE GREEN; MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN DESIGNED AND REQUEST FROZEN; P2/P3 MEDIA CLOSED PENDING EXPLICIT AUTHORIZATION**  
+Status: **MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN AUTHORIZED AND LAUNCHED ONCE; RUN 36286306972 IN PROGRESS; P3 SEALED; NO SECOND LAUNCH/RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -715,4 +715,27 @@ Dormant workflow: `.github/workflows/astra-p2-cross-performer-screen-v1.yml`.
 A green screen would support only a broader P1/P2 development-evaluation design. It would **not** establish final generalization, authorize P3, full training, production mutation, or customer delivery.
 
 **No P2 authorization or launch exists. Fresh explicit authorization is required before P2 media access.**
+
+## Minimal P2 cross-performer zero-optimizer screen — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the frozen P2 screen request in chat on 2026-09-26.
+
+Authorization commit: `7571663d9b9cee36c0e569fe8a1a7193b18cbf9b`.  
+Launch commit: `09bd6a3ede14991c1682941ad7fe46333c8da39b`.  
+Canonical P2 screen run: **36286306972**, job **108527632565**.
+
+Authorized scope:
+- P2 only; exact four homologous `directinput` captures;
+- exact frozen V3 model + decoder V2;
+- independent deterministic source-only crop selection;
+- state/onset thresholds remain 0.50 / 0.50;
+- **0 optimizer steps**;
+- no threshold retuning;
+- no model mutation;
+- no P1 media access;
+- P3 remains sealed;
+- zero automatic retries;
+- no broader P1/P2 development run, full training, production mutation, or customer delivery.
+
+**Do not create another P2 screen launch or rerun this workflow.** Inspect run **36286306972** only. On completion, preserve aggregate precision/recall/F1, each-example F1, repeated-attack recall, offset fraction, unresolved labels, and the green/red screen decision. A green result supports only designing a broader P1/P2 development evaluation; it does not authorize P3 or full training.
 
