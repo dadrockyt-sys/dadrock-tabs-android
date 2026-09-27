@@ -1,0 +1,34 @@
+{
+  "schema": "astra-tiny-fit-v3-diagnostic-launch-v2",
+  "date": "2026-09-26",
+  "status": "authorized_single_repaired_zero_optimizer_diagnostic_v2",
+  "singleLaunch": true,
+  "sourceIdentities": {
+    "authorizationGitBlob": "999b8ffcb032a234cc98c10ff7d64f5dabc8390b",
+    "diagnosticGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "diagnosticTestsGitBlob": "474bf0c2566c87cdc7f4e46cdec55fe9a503af26",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "v3ResultReceiptGitBlob": "eb777edb898b18365cb66963d36216edf5f63c57",
+    "diagnosticV1FailureReceiptGitBlob": "b4d53e3cbe1cc8092cb769c08c445334aa03589b",
+    "workflowGitBlob": "9b0813fe339c136db4ac5fb0af0d62a364134e62"
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "resultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647"
+  },
+  "scope": {
+    "p1MediaAccess": true,
+    "optimizerSteps": 0,
+    "thresholdsChanged": false,
+    "modelWeightsChanged": false,
+    "p2": false,
+    "p3": false,
+    "automaticRetries": 0
+  }
+}
