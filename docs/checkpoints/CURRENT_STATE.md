@@ -862,6 +862,67 @@ Execution boundary held:
 5. Workflow GREEN would not automatically mean scientific pass; all criteria must pass.
 6. If MR-MT3 fails, stop the generic frozen-pretrained-front-end branch and move offline toward a commercial-safe synthetic/data-diversity design. Do not try a third generic AMT front end automatically.
 
+## MR-MT3 Stage-A real feasibility — AUTHORIZED AND LAUNCHED ONCE
+
+Stephen explicitly authorized the exact request-only real-media scope on 2026-09-27.
+
+Preflight:
+- authorized implementation commit: `8255de5774056ee913e18ad263172c1cfdb7dd84`
+- backend preflight run **36340199365**, job **108678658848**: **SUCCESS**
+- complete Astra backend suite: PASS
+- focused evaluation suite: PASS
+
+Single-use launch:
+- launch artifact: `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_LAUNCH_V1.json`
+- launch commit: `9428dd75d446d9e91e2e3b66e2a9aa9a4772d102`
+- launch blob: `a2cb4d0b73f37c41444158a21b39b9e8b4d7581a`
+
+Canonical real feasibility run:
+- run **36340278435**
+- job **108678884568**
+- status at checkpoint: **in progress**
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36340278435
+
+Frozen stack:
+- mt3-infer **0.2.0**
+- MR-MT3 upstream commit `826ea84a933f93cd707d11e91af711f1d19c8d79`
+- checkpoint immutable upload commit `539c08b0fe551076db6108a5f5b2a57d774881ed`
+- checkpoint bytes **183672643**
+- checkpoint SHA-256 `b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f`
+
+Frozen execution ceiling:
+- same exact 4 P1 + 4 P2 direct-input captures
+- accepted programs **24-31** only
+- accepted MIDI pitch range **40-83** only
+- optimizer steps **0**
+- no confidence/threshold search
+- no model mutation
+- one checkpoint download
+- one CPU job <= **60 minutes**
+- zero automatic retries
+- zero paid compute
+- P3 sealed
+- pitch/onset feasibility only; no string/fret scoring or fitting
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect **only** run **36340278435**, job **108678884568**. Do not rerun automatically.
+2. If preparation, package install, checkpoint verification, inference, projection, or scoring fails, preserve the exact failure and stop. No alternate checkpoint/version, parameter change, retry, or P3 access is authorized.
+3. If the run completes, freeze the artifact/result and evaluate the predeclared criteria exactly:
+   - aggregate pitch+onset F1 >= 0.70
+   - aggregate precision >= 0.60
+   - aggregate recall >= 0.70
+   - P1 F1 >= 0.60
+   - P2 F1 >= 0.60
+   - every content-pair macro F1 >= 0.50
+   - absolute P1/P2 F1 gap <= 0.15
+   - aggregate false positives <= 31
+   - zero optimizer / zero threshold search / exact checkpoint identity / unresolved labels zero
+4. Workflow GREEN is not automatically a scientific pass. **All** frozen criteria must pass.
+5. If MR-MT3 fails, stop the generic frozen-pretrained-front-end branch. The next work is offline design for a commercial-safe synthetic/data-diversity strategy. Do not test a third generic AMT front end automatically.
+6. If MR-MT3 passes, next work is design-only for Stage B string/fret assignment. Do not start Stage B fitting automatically.
+7. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
