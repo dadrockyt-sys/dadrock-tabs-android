@@ -1,0 +1,67 @@
+{
+  "schema": "astra-tiny-fit-v3-decoder-v2-check-authorization-request-v1",
+  "date": "2026-09-26",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "purpose": "Request one zero-optimizer P1 re-decode of the frozen V3 model using decoder V2 rising-edge same-fret reattack semantics and boundary-corrected scoring.",
+  "verifiedOfflineEvidence": {
+    "decoderCandidateCommit": "a7ce312ffb51037d5f9d978c676f721b69d1fd6f",
+    "backendTestsRunId": 36283349847,
+    "backendAndFocusedTestsPassed": true,
+    "residualV1FalsePositiveCount": 1,
+    "residualErrorIsOneFrameSameFretPlateau": true,
+    "observedTrueSameFretReattackSeparationsFrames": [
+      21,
+      176
+    ]
+  },
+  "requestedAuthorization": {
+    "p1MediaAccessAuthorized": true,
+    "frozenV3ModelInferenceAuthorized": true,
+    "optimizerStepsAuthorized": 0,
+    "decoderV2Authorized": true,
+    "thresholdRetuningAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "crossPerformerScreenAuthorized": false,
+    "fullTrainingAuthorized": false
+  },
+  "scope": {
+    "performer": "P1",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "frozenV3Model": true,
+    "reprepareExactFrozenCrops": true,
+    "optimizerSteps": 0,
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdRetuning": false,
+    "p2": false,
+    "p3": false
+  },
+  "sourceIdentities": {
+    "designGitBlob": "599a8f9beebd65b27fcfbe88bfd51a253dd082ca",
+    "checkScriptGitBlob": "1d5d5a55ec208413053c3bb0003dbdf29e21259d",
+    "checkTestsGitBlob": "998a5372524df5ea500c9563561a07e7f8b1bd45",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "decoderV2TestsGitBlob": "0357bc6d89bdb12de5e0de4a23798988dba0938a",
+    "diagnosticHelpersGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "v3DiagnosticResultGitBlob": "bf2597871d3a6db794123f752276a9677acbe63f",
+    "workflowGitBlob": "f9e55e1bae232d8e2f26d3543b90e48baf9d9eee"
+  },
+  "expectedQuestion": "Does decoder V2 remove the one residual false attack while preserving all true/repeated attacks and the frozen offset gate on the same four P1 training examples?",
+  "claimBoundary": "A pass would show the frozen V3 model plus decoder V2 fits these four P1 training examples. It would not establish generalization. A cross-performer screen would require separate design and authorization.",
+  "requiredNextArtifactIfAuthorized": "docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_AUTHORIZATION_V1.json",
+  "requiredLaunchArtifactIfAuthorized": "docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_LAUNCH_V1.json"
+}
