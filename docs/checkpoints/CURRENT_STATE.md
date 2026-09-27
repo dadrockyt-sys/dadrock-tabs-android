@@ -565,6 +565,67 @@ Execution boundary:
 4. Real scoring is pitch/onset first, with pitch/onset+offset secondary. It does **not** score string/fret identity.
 5. If the real gate passes all frozen criteria, next work is design-only for Stage B string/fret assignment. If it fails, stop Basic Pitch without threshold tuning on these eight examples.
 
+## Basic Pitch Stage-A real feasibility — AUTHORIZED AND LAUNCHED ONCE
+
+Stephen explicitly authorized the exact zero-optimizer real-media Stage-A feasibility scope on 2026-09-27.
+
+Corrected synthetic gate:
+- ambiguity-scoring correction commit: `759fc699cdb4c8a6a5d2a61c23e0045ffdef310d`
+- corrected synthetic run **36337046906**, job **108669774845**: **SUCCESS**
+- receipt: `docs/astra/PRETRAINED_NOTE_FRONT_END_SYNTHETIC_VERIFICATION_V2.json`
+- exact simultaneous same-pitch duplicates are retained as ambiguity evidence but collapsed to one reference for pitch-only scoring
+
+Real-run preflight:
+- implementation commit: `a42754d4937fc995cb16c072f7b75a016d4357f0`
+- backend preflight run **36337157840**, job **108670087589**: **SUCCESS**
+- complete Astra backend suite: PASS
+- focused evaluation suite: PASS
+
+Single-use launch:
+- launch artifact: `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_LAUNCH_V1.json`
+- launch commit: `0538052888cb781941ba2b45f83ba504a42fb4a5`
+- launch blob: `9857c6f9ea82e91807962dfa9d175acf599f3207`
+
+Canonical real feasibility run:
+- run **36337236022**
+- job **108670300164**
+- status at checkpoint: **in progress**
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36337236022
+
+Frozen execution boundary:
+- same exact 4 P1 + 4 P2 direct-input captures
+- Basic Pitch **0.4.0**
+- exact model SHA-256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+- onset threshold **0.5**
+- frame threshold **0.3**
+- minimum note length **127.70 ms**
+- optimizer steps **0**
+- no threshold search/retuning
+- no model mutation
+- one CPU job <= **45 minutes**
+- zero automatic retries
+- zero paid compute
+- P3 sealed
+- pitch/onset feasibility only; no string/fret scoring or fitting
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect **only** run **36337236022**, job **108670300164**. Do not rerun automatically.
+2. If preparation, model identity, inference, or scoring fails, preserve the exact failure and stop. No alternate package/version/model, threshold change, retry, or P3 access is authorized.
+3. If the run completes, freeze the result artifact and evaluate every predeclared criterion exactly:
+   - aggregate pitch+onset F1 >= 0.70
+   - aggregate pitch+onset recall >= 0.70
+   - P1 aggregate pitch+onset F1 >= 0.60
+   - P2 aggregate pitch+onset F1 >= 0.60
+   - every content-pair macro pitch+onset F1 >= 0.50
+   - absolute P1/P2 aggregate F1 gap <= 0.15
+   - zero optimizer / zero threshold search
+   - all 8 identities verified / unresolved labels zero
+4. Workflow GREEN is not automatically a scientific pass. **All** frozen criteria must pass.
+5. If Stage A fails, stop Basic Pitch on this scope and do not tune thresholds on these eight examples.
+6. If Stage A passes, next action is **design-only** for Stage B string/fret assignment conditioned on frozen note evidence. Do not start Stage B fitting automatically.
+7. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

@@ -3,39 +3,27 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-## Current verified position
+## Active canonical run
 
-Pretrained note-front-end Stage A offline adapter/scorer is implemented and synthetic GREEN.
+Basic Pitch Stage-A zero-optimizer feasibility is authorized and launched once.
 
-Canonical verification:
-- run **36336757424**
-- job **108668968907**
-- receipt: `docs/astra/PRETRAINED_NOTE_FRONT_END_SYNTHETIC_VERIFICATION_V1.json`
-- package commit: `ed7fcf897239760aa147f78ed80e1db5fccf3aa0`
+- run **36337236022**
+- job **108670300164**
+- launch commit: `0538052888cb781941ba2b45f83ba504a42fb4a5`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36337236022
+
+Inspect only that run. Do not rerun automatically.
 
 Frozen front end:
-- Basic Pitch **0.4.0**
-- Linux `nmp.tflite`
+- Basic Pitch 0.4.0
 - model SHA-256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
-- onset threshold 0.5
-- frame threshold 0.3
-- minimum note length 127.70 ms
+- onset 0.5 / frame 0.3 / min note length 127.70 ms
+- optimizer steps 0
 - no threshold search
-
-No real media was opened; optimizer steps remain 0; P3 sealed.
-
-## Exact next task
-
-Obtain Stephen's explicit authorization for the request-only real Stage-A feasibility run.
-
-Requested ceiling:
-- same exact 8 P1/P2 direct-input captures
-- frozen Basic Pitch package/model identity above
-- 0 optimizer steps
-- max 45 CPU minutes
-- zero automatic retries
-- zero paid compute
-- pitch/onset scoring only for the primary gate
+- <=45 CPU minutes
+- zero retries
 - P3 sealed
 
-Do not create a launch artifact before authorization.
+Corrected pitch-only scoring collapses exact simultaneous same-pitch duplicates to one scoring reference while retaining their ambiguity accounting.
+
+If the run completes, freeze the result and require every predeclared advancement criterion. Workflow success alone is not a scientific pass. If it fails, stop Basic Pitch without threshold tuning on these eight examples. If it passes, next work is design-only for Stage B string/fret assignment.
