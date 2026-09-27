@@ -98,6 +98,47 @@ The package is now **request-only and ready for explicit authorization**. There 
 6. No fitting, threshold search, P3 access, full-training restart, production mutation, or customer-readiness claim is authorized.
 
 
+## Combined P1/P2 diagnostic — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the exact frozen request on 2026-09-27 with **"I authorize"**.
+
+Authorization:
+- authorization artifact: `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_AUTHORIZATION_V1.json`
+- authorization commit: `37718f3b5ac2251c1808812779b55b325912b503`
+- authorization blob: `e911515731fdacd393c6ac51858c37ec216604be`
+
+Single-use launch:
+- launch artifact: `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_LAUNCH_V1.json`
+- launch commit: `65142cad30b31bc8a4b6c3ae37891c35dad5b3cf`
+- launch blob: `a0577cf7ae7d0387c53d996b54904820ce46817a`
+
+Canonical run:
+- run **36329538118**
+- job **108648714178**
+- status at checkpoint: **in progress**
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36329538118
+
+Authorized execution boundary remains unchanged:
+- exact 4 P1 + 4 homologous P2 direct-input captures;
+- 200 frames per capture;
+- exact frozen V3 model;
+- **0 optimizer steps**;
+- frozen state/onset thresholds **0.50 / 0.50**;
+- no threshold search;
+- one CPU job <=90 minutes;
+- zero automatic retries;
+- zero paid compute;
+- **P3 sealed**;
+- no fitting, full-training restart, deployment, production mutation, or customer-readiness claim.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect **only** run **36329538118**, job **108648714178**. Do not launch or rerun another diagnostic.
+2. If setup/preparation fails, preserve the exact failure and stop. No substitution capture, retry, threshold change, optimizer work, or P3 access is authorized.
+3. If the diagnostic completes, freeze the full result and artifact identity, including reproduction status, raw-vs-boundary-corrected accounting, event correspondence/unmatched events, attack/sustain/silence controls, head projections/state margins, adjacent-frame evidence, optimizer=0, unchanged thresholds, and P3 sealed.
+4. Interpret only under the predeclared outcomes: `reproduction_failure`, `insufficient_correspondence`, `descriptive_evidence_supports_bounded_probe`, or `inconclusive`. Do not convert descriptive geometry into a causal claim.
+5. No fitting follows automatically. Any bounded intervention must be separately designed and explicitly authorized.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
