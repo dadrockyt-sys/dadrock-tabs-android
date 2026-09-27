@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DIAGNOSTIC V2 GREEN; ONE-FRAME SAME-FRET ONSET PLATEAU ISOLATED; DECODER V2 RISING-EDGE CANDIDATE STAGED OFFLINE; NO REAL RE-DECODE OR TRAINING AUTHORIZED**  
+Status: **DECODER V2 RISING-EDGE CANDIDATE VERIFIED GREEN OFFLINE; ZERO-OPTIMIZER P1 RE-DECODE REQUEST FROZEN; NO REAL CHECK AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -538,4 +538,24 @@ Synthetic regressions cover:
 Analysis receipt: `docs/astra/V3_REATTACK_DECODER_ANALYSIS_V1.json`.
 
 This is offline evidence only. **No P1 media has been newly accessed for this decoder candidate, no optimizer step has run, and no threshold has been retuned.** After tests pass, the next permissible action is only to freeze a request for one zero-optimizer P1 re-decode with decoder V2; that real-data check requires new explicit authorization.
+
+## Decoder V2 zero-optimizer P1 re-decode — REQUEST ONLY
+
+Decoder V2 candidate commit `a7ce312ffb51037d5f9d978c676f721b69d1fd6f` passed complete backend and focused evaluation suites in run **36283349847**.
+
+A dormant real-P1 check is staged to answer one narrow question: does the rising-edge same-fret decoder remove the single residual Drop3_7 false onset while preserving all true attacks, repeated-attack recall, offset quality, and silence behavior?
+
+The check uses:
+- exact frozen V3 model and hashes;
+- exact same four P1 crops;
+- boundary-corrected Event-v2 scoring;
+- state threshold **0.50** and onset threshold **0.50** unchanged;
+- **0 optimizer steps**;
+- decoder V1 corrected metrics must reproduce diagnostic V2 before decoder V2 is interpreted.
+
+Request: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_AUTHORIZATION_REQUEST_V1.json`.  
+Design: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_DESIGN_V1.json`.  
+Dormant workflow: `.github/workflows/astra-tiny-fit-v3-decoder-v2-check.yml`.
+
+No authorization or launch file exists. **Fresh explicit authorization is required before any new P1 media access.** A pass would remain training-example evidence only and would not authorize P2/P3, cross-performer screening, or full training.
 
