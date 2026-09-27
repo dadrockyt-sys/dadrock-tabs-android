@@ -1,0 +1,160 @@
+{
+  "schema": "astra-p1-p2-activation-domain-shift-diagnostic-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "diagnosticConclusion": "onset_head_generalization_failure_with_PalmMute_state_representation_collapse",
+  "run": {
+    "runId": 36325297420,
+    "jobId": 108636792679,
+    "headSha": "a5c2c2add245f29c1b7b690a8ed22865217828b7"
+  },
+  "artifact": {
+    "artifactId": 10934054467,
+    "name": "astra-p1-p2-activation-domain-diagnostic-v1",
+    "digest": "sha256:9c12aeb14fd6b7a3766c10b19c0fc9827400a8f1c5da18f11e02f66784a8f7b5",
+    "resultJsonSha256": "7f8313d7a0b75e82606d6c09092b94a3dd6098d27f66bcea64aebb1163df3027",
+    "expiresAt": "2026-10-04T14:52:03Z"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdsChanged": false,
+    "thresholdSearchExecuted": false,
+    "modelWeightsChanged": false,
+    "p1MediaAccessed": true,
+    "p2MediaAccessed": true,
+    "p3Opened": false,
+    "cleanupCompleted": true,
+    "automaticRetry": false
+  },
+  "frozenThresholds": {
+    "stateActive": 0.5,
+    "onset": 0.5,
+    "referenceProbeWindowFrames": 2
+  },
+  "summary": {
+    "p1": {
+      "diagnosticClass": "reference_admission_healthy",
+      "decodedEventCount": 23,
+      "referenceCount": 16,
+      "referenceOnsetPassCount": 16,
+      "referenceStatePassCount": 16,
+      "referenceJointAdmissionCount": 16
+    },
+    "p2": {
+      "diagnosticClass": "onset_head_generalization_failure",
+      "decodedEventCount": 0,
+      "rawReferenceProbeCount": 15,
+      "scoredReferenceCountInPriorScreen": 14,
+      "referenceOnsetPassCount": 0,
+      "referenceStatePassCount": 9,
+      "referenceJointAdmissionCount": 0,
+      "note": "The activation diagnostic probes raw scorableEvents before boundary exclusion; the prior P2 screen scored 14 references after its boundary exclusion. Crop selections/target hashes remain identical."
+    }
+  },
+  "categories": [
+    {
+      "category": "chords",
+      "p1ReferenceCount": 6,
+      "p1OnsetPass": 6,
+      "p1StatePass": 6,
+      "p1JointPass": 6,
+      "p1Decoded": 10,
+      "p2ReferenceCount": 4,
+      "p2OnsetPass": 0,
+      "p2StatePass": 1,
+      "p2JointPass": 0,
+      "p2Decoded": 0,
+      "p2DiagnosticClass": "onset_head_generalization_failure",
+      "p1OnsetProbabilityMax": 0.9410909414291382,
+      "p2OnsetProbabilityMax": 0.42199334502220154,
+      "p1FeatureL2Rms": 0.316269975953112,
+      "p2FeatureL2Rms": 0.3291060572295365
+    },
+    {
+      "category": "scales",
+      "p1ReferenceCount": 8,
+      "p1OnsetPass": 8,
+      "p1StatePass": 8,
+      "p1JointPass": 8,
+      "p1Decoded": 9,
+      "p2ReferenceCount": 8,
+      "p2OnsetPass": 0,
+      "p2StatePass": 7,
+      "p2JointPass": 0,
+      "p2Decoded": 0,
+      "p2DiagnosticClass": "onset_head_generalization_failure",
+      "p1OnsetProbabilityMax": 0.997195839881897,
+      "p2OnsetProbabilityMax": 0.5166255235671997,
+      "p1FeatureL2Rms": 0.2918151371712506,
+      "p2FeatureL2Rms": 0.25968104234177236
+    },
+    {
+      "category": "singlenotes",
+      "p1ReferenceCount": 1,
+      "p1OnsetPass": 1,
+      "p1StatePass": 1,
+      "p1JointPass": 1,
+      "p1Decoded": 2,
+      "p2ReferenceCount": 1,
+      "p2OnsetPass": 0,
+      "p2StatePass": 1,
+      "p2JointPass": 0,
+      "p2Decoded": 0,
+      "p2DiagnosticClass": "onset_head_generalization_failure",
+      "p1OnsetProbabilityMax": 0.891497015953064,
+      "p2OnsetProbabilityMax": 0.2455764263868332,
+      "p1FeatureL2Rms": 0.19644535137179814,
+      "p2FeatureL2Rms": 0.21622596002325087
+    },
+    {
+      "category": "techniques",
+      "p1ReferenceCount": 1,
+      "p1OnsetPass": 1,
+      "p1StatePass": 1,
+      "p1JointPass": 1,
+      "p1Decoded": 2,
+      "p2ReferenceCount": 2,
+      "p2OnsetPass": 0,
+      "p2StatePass": 0,
+      "p2JointPass": 0,
+      "p2Decoded": 0,
+      "p2DiagnosticClass": "both_heads_or_representation_domain_collapse",
+      "p1OnsetProbabilityMax": 0.9161516427993774,
+      "p2OnsetProbabilityMax": 0.2500390112400055,
+      "p1FeatureL2Rms": 0.19323938572465665,
+      "p2FeatureL2Rms": 0.11677086737334552
+    }
+  ],
+  "interpretation": {
+    "primaryFinding": "The universal P2 failure is onset admission: zero of 15 reference probes has onset probability >= 0.5 within +/-2 frames, while the state head still admits the true state on 9 of 15 probes.",
+    "secondaryFinding": "PalmMute also loses state admission on both P2 references, indicating a content-specific representation/state failure in addition to onset-head collapse.",
+    "simpleGlobalFeatureScaleExplanationSupported": false,
+    "evidence": "P2 feature L2 RMS is higher than P1 for chords and singlenotes, lower for scales and PalmMute; there is no consistent global amplitude direction.",
+    "thresholdRescueRecommended": false,
+    "thresholdEvidence": "Reference-window onset probabilities are far below 0.5 on P2; lowering the threshold enough to rescue most references would be a post-result retune and is not scientifically justified. The P2 scale crop also has a non-reference whole-crop onset maximum above 0.5, so threshold lowering risks unrelated admissions."
+  },
+  "decision": {
+    "broaderTrainingStillBlocked": true,
+    "p3MustRemainSealed": true,
+    "thresholdRetuningBlocked": true,
+    "nextExperiment": "zero-optimizer encoder-vs-onset-head decomposition on the same matched P1/P2 captures",
+    "nextExperimentPurpose": "Determine whether P2 divergence is already present in the shared 128-d encoder representation or is amplified primarily by the onset-head linear decision boundary.",
+    "requiredMeasurements": [
+      "shared encoder activation norms/distributions at reference windows",
+      "matched P1-vs-P2 encoder cosine/euclidean distances by category/string/fret where comparable",
+      "per-string onset-head linear contribution and bias at each reference window",
+      "true-state-vs-silence logit margin decomposition",
+      "nearest P1 reference embedding for each P2 reference",
+      "no threshold search and no optimizer steps"
+    ],
+    "subsequentDecisionRule": {
+      "representationCloseButOnsetLogitCollapsed": "Design a tiny balanced P1+P2 onset-head-focused development fit with strict capped compute; keep shared encoder frozen initially.",
+      "representationDiverged": "Test normalization/representation robustness offline before any fit.",
+      "PalmMuteRepresentationCollapse": "Handle as content-specific representation issue; do not let an onset-head-only repair claim full generalization."
+    },
+    "newMediaAccessRequiresExplicitAuthorization": true,
+    "optimizerWorkRequiresExplicitAuthorization": true,
+    "fullTrainingAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
