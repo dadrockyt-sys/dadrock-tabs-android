@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DECODER V2 CHECK V1 FAILURE PRESERVED; SEMANTIC REPRODUCTION REPAIR VERIFIED GREEN; RETRY V2 REQUEST FROZEN; NO RETRY AUTHORIZED**  
+Status: **REPAIRED DECODER V2 ZERO-OPTIMIZER P1 CHECK RETRY V2 AUTHORIZED AND LAUNCHED ONCE; RUN 36284602349 IN PROGRESS; NO SECOND LAUNCH/RERUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -619,4 +619,26 @@ Retry V2 request: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_AUTHORIZATION_REQUEST
 Dormant retry workflow: `.github/workflows/astra-tiny-fit-v3-decoder-v2-check-v2.yml`.
 
 No V2 authorization or launch exists. **Fresh explicit authorization is required before any new P1 media access or inference.** Scope remains exact frozen V3 model, same four P1 crops, decoder V2, unchanged 0.50/0.50 thresholds, 0 optimizer steps, no P2/P3, no automatic retry.
+
+## Repaired decoder V2 zero-optimizer P1 check retry V2 — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the repaired retry request in chat on 2026-09-26.
+
+Authorization commit: `99b7dc85c7737d7ba4c59e8680a7f9e80aea22e6`.  
+Launch commit: `5c9e9eb00cc777ee1ef81ca88d31e3b6f0982237`.  
+Canonical retry V2 run: **36284602349**.
+
+Authorized scope remains:
+- exact frozen V3 model and artifact hashes;
+- same four frozen P1 examples;
+- decoder V2 rising-edge same-fret semantics;
+- decoder V1 boundary-corrected semantic metrics must reproduce before decoder V2 is interpreted;
+- state/onset thresholds remain 0.50 / 0.50;
+- **0 optimizer steps**;
+- no model mutation;
+- no P2/P3;
+- zero automatic retries;
+- no cross-performer screen or full training.
+
+**Do not create another retry V2 launch or rerun this workflow.** Inspect run **36284602349** only.
 
