@@ -1,0 +1,142 @@
+{
+  "schema": "astra-p2-cross-performer-screen-result-v1",
+  "date": "2026-09-27",
+  "classification": "RED_cross_performer_recall_collapse",
+  "run": {
+    "runId": 36286306972,
+    "jobId": 108527632565,
+    "headSha": "09bd6a3ede14991c1682941ad7fe46333c8da39b",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10920718166,
+    "name": "astra-p2-cross-performer-zero-optimizer-screen-v1",
+    "digest": "sha256:1c3325d4e961e94e1541e3f8b48cd65a870a74a7d568d3e829ad1dfdb1fcb1ad",
+    "resultJsonSha256": "06ed422bbb055a831c472d75c2c333dfd98946773c93bdd79a470f959b8eb914",
+    "expiresAt": "2026-10-04T01:49:38Z"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdsChanged": false,
+    "modelWeightsChanged": false,
+    "p1MediaAccessed": false,
+    "p2MediaAccessed": true,
+    "p3Opened": false,
+    "cleanupCompleted": true,
+    "automaticRetry": false
+  },
+  "sourceModel": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "decoder": "event_decoder_v2",
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "evaluation": {
+    "totals": {
+      "reference": 14,
+      "prediction": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 14
+    },
+    "aggregatePrecision": null,
+    "aggregateRecall": 0,
+    "aggregateF1": 0,
+    "minimumExampleF1": 0,
+    "matchedOffsetWithin50msFraction": null,
+    "repeatedReferenceAttackCount": 2,
+    "repeatedAttackRecall": 0,
+    "syntheticSilenceFalsePositiveCount": 0,
+    "unresolvedLabelCount": 0,
+    "allMetricsFinite": false,
+    "crossPerformerScreenGreen": false,
+    "examples": [
+      {
+        "captureKey": "P2|chords|Drop3_7|directinput",
+        "referenceCount": 4,
+        "predictionCount": 0,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "targetSha256": "3508bac1a566a1104233c66d583f01eaa089e0eb398de3d65eff436d656f0c75",
+        "featureSha256": "882530529381d7d0268a8a91f7fbe727f27ae2b1ca7a44ddde89fdba8ed510ab",
+        "startFrame": 0
+      },
+      {
+        "captureKey": "P2|scales|Ab|directinput",
+        "referenceCount": 7,
+        "predictionCount": 0,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "repeatedReferenceAttackCount": 1,
+        "repeatedAttackRecall": 0,
+        "targetSha256": "9a9507b60765c9bb2d3d21bb6775a7a4be065b9046ae0aead182e4a1cbd650e9",
+        "featureSha256": "b5b3f7f049a2c2354d9333ed861f3f1b71f54e0a2d0dbf626d7df0a450c86f6a",
+        "startFrame": 336
+      },
+      {
+        "captureKey": "P2|singlenotes|allsinglenotes|directinput",
+        "referenceCount": 1,
+        "predictionCount": 0,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "targetSha256": "e2eb414127cb87b2d09d99097a4e1df0895e3544a36ef9dbe7326a3d2ddf0d2b",
+        "featureSha256": "bad44048c953b4438bf2a7d2a2c168227af60933b24bad814df0d0dccb4cb27b",
+        "startFrame": 163
+      },
+      {
+        "captureKey": "P2|techniques|PalmMute|directinput",
+        "referenceCount": 2,
+        "predictionCount": 0,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "repeatedReferenceAttackCount": 1,
+        "repeatedAttackRecall": 0,
+        "targetSha256": "1c8d216a844b9a2f4be54c57cf7ec6e65bdfd6e5a26fe03d109471d89d283be5",
+        "featureSha256": "6576417076b4767e02ad0240708ee45663792ce5cadd23340a00340b8416332e",
+        "startFrame": 21526
+      }
+    ]
+  },
+  "frozenGates": {
+    "aggregatePrecisionMin": 0.75,
+    "aggregateRecallMin": 0.6,
+    "aggregateF1Min": 0.67,
+    "eachExampleF1Min": 0.55,
+    "repeatedAttackRecallMinWhenPresent": 0.6,
+    "unresolvedLabelCountMax": 0,
+    "syntheticSilenceFalsePositiveCountMax": 0,
+    "postResultThresholdRetuningAllowed": false
+  },
+  "diagnosis": {
+    "immediateClass": "complete_cross_performer_recall_collapse",
+    "evidence": [
+      "All four P2 examples prepared successfully with zero unresolved labels.",
+      "All four examples had predictionCount=0.",
+      "Fourteen scorable references produced zero true positives and fourteen false negatives.",
+      "Both repeated-reference examples had repeatedAttackRecall=0.",
+      "No false positives occurred because no event was decoded."
+    ],
+    "notEstablished": [
+      "Whether onset probabilities are globally below 0.5.",
+      "Whether state active probabilities are globally below admission.",
+      "Whether preprocessing/amplitude/domain shift drives the collapse.",
+      "Whether a representation/model architecture change is required."
+    ]
+  },
+  "decision": {
+    "broaderTrainingBlocked": true,
+    "p3MustRemainSealed": true,
+    "thresholdRetuningBlocked": true,
+    "immediateNextWork": "zero-optimizer P2 activation/domain-shift diagnostic that records state/onset probability distributions at reference frames and compares frozen P1 vs P2 feature/output statistics",
+    "newP2MediaAccessRequiresExplicitAuthorization": true,
+    "optimizerWorkRequiresExplicitAuthorization": true,
+    "fullTrainingAuthorized": false,
+    "customerDeliveryEligible": false
+  }
+}
