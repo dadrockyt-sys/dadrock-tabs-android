@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DECODER V2 ZERO-OPTIMIZER P1 CHECK GREEN; TRAINING-ONLY ENGINEERING GATE MET 16/16 TP, 0 FP, 0 FN; RESULT FROZEN; NO GENERALIZATION SCREEN OR FULL TRAINING AUTHORIZED**  
+Status: **P1 ENGINEERING GATE GREEN; MINIMAL P2 CROSS-PERFORMER ZERO-OPTIMIZER SCREEN DESIGNED AND REQUEST FROZEN; P2/P3 MEDIA CLOSED PENDING EXPLICIT AUTHORIZATION**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -676,4 +676,43 @@ Result JSON SHA-256: `1d974927660bd41fcb2e2367c172580720a2b72b2b4a6051cb4c786f7d
 This **establishes engineering learnability on the four selected P1 training examples** with decoder V2. It does **not** establish cross-performer generalization, customer readiness, or justify full training by itself.
 
 **Stop here.** No P2/P3 access, cross-performer screen, full training, customer delivery, or additional optimizer work is authorized. The next scientifically meaningful step is a separately designed cross-performer/generalization screen with fresh explicit authorization.
+
+## Minimal P2 cross-performer screen — REQUEST ONLY
+
+After the decoder V2 P1 engineering gate passed, the next step has been reduced to the smallest source-disjoint generalization screen that can falsify the current success before any additional optimizer spend.
+
+Frozen design:
+- P2 only; P1 media is not reopened;
+- exact homologous `directinput` captures:
+  - `P2|chords|Drop3_7|directinput`
+  - `P2|scales|Ab|directinput`
+  - `P2|singlenotes|allsinglenotes|directinput`
+  - `P2|techniques|PalmMute|directinput`
+- 200 frames/example;
+- independent deterministic source-only launch-ready crop selection;
+- exact frozen V3 model + decoder V2;
+- state/onset thresholds remain **0.50 / 0.50**;
+- **0 optimizer steps**;
+- no threshold retuning, no model mutation;
+- P3 remains sealed;
+- missing/unresolved selected capture fails closed; no substitution.
+
+The screen reuses the existing performer-disjoint development event thresholds that are computable on this four-example screen:
+- aggregate precision >= **0.75**
+- aggregate recall >= **0.60**
+- aggregate F1 >= **0.67**
+- each selected content example F1 >= **0.55**
+- repeated-attack recall >= **0.60** when repeated references are present
+- unresolved labels = **0**
+- synthetic-silence false positives = **0**
+
+Screen code and guards passed backend/focused evaluation tests in run **36286081940**.
+
+Design: `docs/astra/P2_CROSS_PERFORMER_SCREEN_DESIGN_V1.json`.  
+Request: `docs/astra/P2_CROSS_PERFORMER_SCREEN_AUTHORIZATION_REQUEST_V1.json`.  
+Dormant workflow: `.github/workflows/astra-p2-cross-performer-screen-v1.yml`.
+
+A green screen would support only a broader P1/P2 development-evaluation design. It would **not** establish final generalization, authorize P3, full training, production mutation, or customer delivery.
+
+**No P2 authorization or launch exists. Fresh explicit authorization is required before P2 media access.**
 
