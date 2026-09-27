@@ -1,0 +1,43 @@
+name: Astra pretrained note front-end synthetic v1
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/pretrained_note_front_end_v1.py'
+      - 'astra_backend/evaluation/test_pretrained_note_front_end_v1.py'
+      - '.github/workflows/astra-pretrained-note-front-end-synthetic-v1.yml'
+permissions: { contents: read }
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10.15' }
+      - name: Install pinned Basic Pitch
+        run: python -m pip install --disable-pip-version-check 'basic-pitch==0.4.0'
+      - name: Run synthetic scorer tests and freeze model identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd astra_backend
+          PYTHONPATH=. python -m unittest -v evaluation/test_pretrained_note_front_end_v1.py
+          PYTHONPATH=. python - <<'PY' > /tmp/basic-pitch-identity.json
+          import json
+          from evaluation.pretrained_note_front_end_v1 import basic_pitch_model_identity
+          print(json.dumps({
+            "schema":"astra-basic-pitch-model-identity-v1",
+            "optimizerStepsExecuted":0,
+            "thresholdSearchExecuted":False,
+            "realMediaAccessed":False,
+            "p3Opened":False,
+            **basic_pitch_model_identity(),
+          },indent=2,sort_keys=True))
+          PY
+          cat /tmp/basic-pitch-identity.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-basic-pitch-synthetic-identity-v1
+          path: /tmp/basic-pitch-identity.json
+          retention-days: 30
