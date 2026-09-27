@@ -626,6 +626,93 @@ Frozen execution boundary:
 6. If Stage A passes, next action is **design-only** for Stage B string/fret assignment conditioned on frozen note evidence. Do not start Stage B fitting automatically.
 7. P3 remains sealed.
 
+## Basic Pitch Stage-A feasibility — WORKFLOW GREEN, SCIENTIFIC GATE FAILED
+
+Canonical run **36337236022**, job **108670300164** completed **SUCCESS** at the workflow level. The frozen Stage-A advancement gate **FAILED**.
+
+Frozen artifact:
+- artifact ID **10938223666**
+- digest `sha256:081399fe343bed50f52e587f8c64c9b427c1105a337f7cb1391f5e204cf4ea06`
+- expires **2026-10-27T18:02:33Z**
+- frozen receipt: `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_RESULT_V1.json`
+
+Execution boundaries held:
+- optimizer steps: **0**
+- threshold search: **no**
+- thresholds changed: **no**
+- model mutation: **no**
+- automatic retry: **no**
+- P3 opened: **no**
+- Basic Pitch model identity matched the frozen SHA
+
+### Stage-A result
+
+Aggregate pitch+onset:
+- precision **0.3418**
+- recall **0.8710**
+- F1 **0.4909**
+- TP **27**
+- FP **52**
+- FN **4**
+
+P1:
+- precision **0.2889**
+- recall **0.8125**
+- F1 **0.4262**
+
+P2:
+- precision **0.4118**
+- recall **0.9333**
+- F1 **0.5714**
+
+Absolute P1/P2 F1 gap: **0.1452** — just inside the frozen <=0.15 balance criterion.
+
+Content-pair macro F1:
+- chords **0.3333**
+- scales **0.7411**
+- single notes **0.4167**
+- techniques / PalmMute **0.3667**
+
+No duplicate same-pitch ambiguity groups occurred in the eight scored crops.
+
+### Frozen gate evaluation
+
+PASS:
+- aggregate recall >=0.70
+- P1/P2 F1 gap <=0.15
+- zero optimizer / zero threshold search
+- all identities verified / unresolved labels zero
+
+FAIL:
+- aggregate F1 >=0.70
+- P1 F1 >=0.60
+- P2 F1 >=0.60
+- every content-pair macro F1 >=0.50
+
+Therefore **positiveGate=false**.
+
+### Scientific interpretation
+
+Basic Pitch at the frozen defaults has **high recall but insufficient precision** on these sparse 200-frame scoring windows. It found 27/31 scored pitch events but emitted 79 scored-window predictions, producing 52 false positives.
+
+This is not a license to tune onset/frame/min-note thresholds on these eight examples. Those examples are development data and threshold tuning would convert the frozen feasibility gate into post-hoc optimization.
+
+Scales are encouraging (pair macro F1 0.741), but chords, single notes and PalmMute remain below the required content floor.
+
+Stop Basic Pitch **for this frozen Stage-A scope**. This does not prove pretrained AMT is unsuitable in general.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Do not rerun Basic Pitch and do not tune its thresholds on these eight crops.
+2. P3 remains sealed.
+3. Next work is **offline design review only**.
+4. Choose one materially different next branch:
+   - one alternative frozen/pretrained front end with its own fixed defaults and zero-optimizer gate, **or**
+   - a synthetic-pretraining/data-diversity strategy that directly addresses overfitting/coverage.
+5. Do not run both automatically. Compare feasibility, licensing/runtime, expected precision behavior, and cost offline first, then freeze one path.
+6. No Stage-B string/fret fitting is justified yet because the selected Stage-A front end did not pass.
+7. No production/customer-readiness claim is supported.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

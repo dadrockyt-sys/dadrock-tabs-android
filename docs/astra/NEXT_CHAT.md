@@ -3,27 +3,29 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-## Active canonical run
+## Current verified position
 
-Basic Pitch Stage-A zero-optimizer feasibility is authorized and launched once.
+Basic Pitch Stage-A run **36337236022**, job **108670300164** was workflow GREEN but **scientifically FAILED** the frozen gate.
 
-- run **36337236022**
-- job **108670300164**
-- launch commit: `0538052888cb781941ba2b45f83ba504a42fb4a5`
-- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36337236022
+Frozen result:
+- `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_RESULT_V1.json`
+- artifact **10938223666**
+- aggregate pitch+onset precision / recall / F1: **0.342 / 0.871 / 0.491**
+- P1 F1 **0.426**
+- P2 F1 **0.571**
+- scales pair macro F1 **0.741**
+- chords **0.333**
+- single notes **0.417**
+- PalmMute **0.367**
+- 27 TP / 52 FP / 4 FN
+- optimizer 0, no threshold search, P3 sealed
 
-Inspect only that run. Do not rerun automatically.
+Interpretation: pretrained note recall is strong, but precision is too poor at the frozen defaults. Do not tune Basic Pitch thresholds on these eight development crops.
 
-Frozen front end:
-- Basic Pitch 0.4.0
-- model SHA-256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
-- onset 0.5 / frame 0.3 / min note length 127.70 ms
-- optimizer steps 0
-- no threshold search
-- <=45 CPU minutes
-- zero retries
-- P3 sealed
+## Exact next task
 
-Corrected pitch-only scoring collapses exact simultaneous same-pitch duplicates to one scoring reference while retaining their ambiguity accounting.
+Offline design review only.
 
-If the run completes, freeze the result and require every predeclared advancement criterion. Workflow success alone is not a scientific pass. If it fails, stop Basic Pitch without threshold tuning on these eight examples. If it passes, next work is design-only for Stage B string/fret assignment.
+Compare exactly one alternative frozen/pretrained front-end path against one synthetic-pretraining/data-diversity path on feasibility, licensing/runtime, expected precision behavior and cost. Then select **one** materially different next hypothesis and freeze its design before any new real-media access or fitting.
+
+Do not run both automatically. Do not start Stage-B string/fret fitting. P3 remains sealed.

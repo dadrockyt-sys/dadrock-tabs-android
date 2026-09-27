@@ -1,0 +1,84 @@
+{
+  "schema": "astra-pretrained-note-front-end-feasibility-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "front_end_failed_advancement_gate",
+  "run": {
+    "runId": 36337236022,
+    "jobId": 108670300164,
+    "headSha": "0538052888cb781941ba2b45f83ba504a42fb4a5"
+  },
+  "artifact": {
+    "artifactId": 10938223666,
+    "name": "astra-pretrained-note-front-end-feasibility-v1",
+    "digest": "sha256:081399fe343bed50f52e587f8c64c9b427c1105a337f7cb1391f5e204cf4ea06",
+    "expiresAt": "2026-10-27T18:02:33Z"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "thresholdsChanged": false,
+    "modelMutation": false,
+    "automaticRetry": false,
+    "p3Opened": false,
+    "runtimeSeconds": 126.1289085200001
+  },
+  "aggregate": {
+    "precision": 0.34177215189873417,
+    "recall": 0.8709677419354839,
+    "f1": 0.4909090909090909,
+    "truePositive": 27,
+    "falsePositive": 52,
+    "falseNegative": 4
+  },
+  "byPerformer": {
+    "P1": {
+      "precision": 0.28888888888888886,
+      "recall": 0.8125,
+      "f1": 0.4262295081967213,
+      "truePositive": 13,
+      "falsePositive": 32,
+      "falseNegative": 3
+    },
+    "P2": {
+      "precision": 0.4117647058823529,
+      "recall": 0.9333333333333333,
+      "f1": 0.5714285714285713,
+      "truePositive": 14,
+      "falsePositive": 20,
+      "falseNegative": 1
+    }
+  },
+  "contentPairMacroF1": {
+    "chords": 0.33333333333333337,
+    "scales": 0.7410526315789474,
+    "singlenotes": 0.4166666666666667,
+    "techniques": 0.3666666666666667
+  },
+  "absoluteP1P2F1Gap": 0.14519906323185,
+  "criteria": {
+    "aggregatePitchOnsetF1AtLeast0_70": false,
+    "aggregatePitchOnsetRecallAtLeast0_70": true,
+    "p1AggregatePitchOnsetF1AtLeast0_60": false,
+    "p2AggregatePitchOnsetF1AtLeast0_60": false,
+    "eachContentPairMacroPitchOnsetF1AtLeast0_50": false,
+    "absoluteP1P2F1GapAtMost0_15": true,
+    "zeroOptimizerAndZeroThresholdSearch": true,
+    "allEightIdentitiesVerifiedAndUnresolvedZero": true
+  },
+  "interpretation": {
+    "conclusion": "Basic Pitch 0.4.0 at frozen defaults is not supported as the Stage-A front end under the predeclared gate.",
+    "keyPattern": "Recall is high but precision is poor because predictions greatly outnumber the sparse frozen references (79 predictions vs 31 scored references aggregate).",
+    "importantCaveat": "This result does not justify threshold tuning on these eight examples, and does not prove pretrained AMT is unsuitable in general.",
+    "strongestContent": "scales pair macro F1 0.741",
+    "weakestContents": "chords 0.333, singlenotes 0.417, techniques/PalmMute 0.367",
+    "note": "No duplicate same-pitch ambiguity groups were present in these eight scored crops."
+  },
+  "decision": {
+    "stopBasicPitchThisScope": true,
+    "thresholdTuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "p3MustRemainSealed": true,
+    "nextPermissibleWork": "Offline review of one alternative frozen front end or a synthetic-pretraining/data-diversity strategy; no real fitting or threshold search until separately designed and authorized."
+  }
+}
