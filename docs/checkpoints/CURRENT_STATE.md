@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V3 RESULT FROZEN; ZERO-OPTIMIZER BOUNDARY DIAGNOSTIC AUTHORIZED BY USER AND STAGED; NOT YET LAUNCHED**  
+Status: **V3 ZERO-OPTIMIZER BOUNDARY DIAGNOSTIC LAUNCHED ONCE; RUN 36281561748 IN PROGRESS; NO SECOND DIAGNOSTIC LAUNCH AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -332,4 +332,22 @@ Authorization: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V1.json`.
 Dormant workflow: `.github/workflows/astra-tiny-fit-v3-diagnostic.yml`.
 
 The diagnostic workflow remains inert until exactly one `docs/astra/TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V1.json` is committed after tests/source pins are verified.
+
+## V3 zero-optimizer boundary diagnostic — LAUNCHED ONCE
+
+User authorized this diagnostic by instructing **"Run the diagnostic."**
+
+Launch commit: `f581e98c0999ca9e4ef4ece2cea103df462b3800`.  
+Canonical diagnostic run: **36281561748**.
+
+Authorized execution remains:
+- same four frozen P1 examples;
+- exact frozen V3 model artifact from run 36280547470;
+- **0 optimizer steps**;
+- no threshold retuning or model mutation;
+- no P2/P3;
+- no automatic retry;
+- no full training or cross-performer screen.
+
+**Do not create another diagnostic launch or rerun this workflow.** Inspect run **36281561748** only. On completion, freeze the diagnostic JSON and exact remaining false-positive event evidence.
 
