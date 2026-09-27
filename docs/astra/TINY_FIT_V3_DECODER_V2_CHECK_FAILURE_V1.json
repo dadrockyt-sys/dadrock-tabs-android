@@ -1,0 +1,46 @@
+{
+  "schema": "astra-tiny-fit-v3-decoder-v2-check-failure-v1",
+  "date": "2026-09-26",
+  "run": {
+    "runId": 36283779556,
+    "jobId": 108520534718,
+    "headSha": "e45bc98ca9e7fbc38865987792ddff6aacabd137",
+    "conclusion": "failure"
+  },
+  "execution": {
+    "authorizationVerified": true,
+    "frozenV3ArtifactHashesVerified": true,
+    "allFourP1ExamplesReprepared": true,
+    "optimizerStepsExecuted": 0,
+    "decoderV2Interpreted": false,
+    "cleanupCompleted": true
+  },
+  "failure": {
+    "step": "Run decoder V2 zero-optimizer check",
+    "exception": "RuntimeError: prepared examples differ from frozen V3 target set",
+    "classification": "overstrict_feature_byte_identity_guard",
+    "modelFailure": false,
+    "decoderFailure": false,
+    "dataLabelFailure": false,
+    "observation": "All four crop/target identities reproduced, but all four feature SHA-256 values differed from frozen V3 despite the same runner image and pinned package versions.",
+    "currentFeatureHashes": {
+      "P1|chords|Drop3_7|directinput": "6af1fac638fbcf1ab007d9ec717c004dbd10e9963abf18601d49bdb65013b263",
+      "P1|scales|Ab|directinput": "0362bb1684632ecf7a1da2049d61c9080b7885b83e0f5add6eebef6d5c4f9b6e",
+      "P1|singlenotes|allsinglenotes|directinput": "164db60823e00e9efab9c86154ef2c9df75fe464431fdd0b6cec86d809c9f806",
+      "P1|techniques|PalmMute|directinput": "90400c99f792c60a79f8ddbdb8176d6d4aa7e6a32e689647deaefe1d9359ffc9"
+    },
+    "frozenFeatureHashes": {
+      "P1|chords|Drop3_7|directinput": "278363f1b1129baeadb65dabdfb8353ebbbba23d9aefff188f88e43d73c15a91",
+      "P1|scales|Ab|directinput": "e34e9dd87e8be0f65c7758c1f64505656efaf16f4db00aaff4821da52f33615a",
+      "P1|singlenotes|allsinglenotes|directinput": "083c87bfc280f7d97b2f763cff214b4d0efbe607a43451882b1ddee9327c4328",
+      "P1|techniques|PalmMute|directinput": "bb71d75b85c2db3871390e8a340f9fefccdbfcdddb2343077565b5f59df98e25"
+    }
+  },
+  "repairDirection": "Treat feature SHA as provenance rather than semantic equality. Require exact source/crop/target identities, then require decoder-V1 boundary-corrected totals and minimum F1 to reproduce frozen diagnostic V2 exactly before interpreting decoder V2.",
+  "guards": {
+    "automaticRetryExecuted": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "trainingExecuted": false
+  }
+}
