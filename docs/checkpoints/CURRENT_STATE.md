@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DIAGNOSTIC V1 FAILURE PRESERVED; EVENT-NAMESPACE REPAIR VERIFIED GREEN; DIAGNOSTIC V2 REQUEST READY; NO RETRY AUTHORIZED**  
+Status: **REPAIRED ZERO-OPTIMIZER DIAGNOSTIC V2 AUTHORIZED AND LAUNCHED ONCE; RUN 36282028911 QUEUED/IN PROGRESS; NO SECOND V2 DIAGNOSTIC LAUNCH AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -383,4 +383,27 @@ Dormant retry workflow: `.github/workflows/astra-tiny-fit-v3-diagnostic-v2.yml`.
 No V2 diagnostic authorization or launch exists. The retry remains **0 optimizer steps**, same four P1 crops, exact frozen V3 model, unchanged thresholds, no P2/P3.
 
 **Require new explicit user authorization before creating `TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V2.json` or `TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V2.json`.**
+
+## Repaired zero-optimizer diagnostic V2 — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly authorized the repaired diagnostic V2 in chat on 2026-09-26.
+
+Created:
+- `docs/astra/TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V2.json`
+- `docs/astra/TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V2.json`
+
+Authorization commit: `b8b85ea8e1948e8693efc15f441c4a973c9f4d50`.  
+Launch commit: `a1b84b8a572678eae6d6c77af1fc0aaa4e19d0bc`.  
+Canonical diagnostic V2 run: **36282028911**.
+
+Scope remains:
+- exact frozen V3 model and result artifact;
+- same four P1 crops;
+- **0 optimizer steps**;
+- unchanged thresholds/model weights;
+- no P2/P3;
+- zero automatic retries;
+- no cross-performer screen or full training.
+
+**Do not create another V2 diagnostic launch or rerun this workflow without new explicit authorization.** Inspect only run **36282028911**. If it completes, freeze the exact boundary-corrected metrics and remaining unmatched prediction events. If it fails, preserve and diagnose that run only.
 
