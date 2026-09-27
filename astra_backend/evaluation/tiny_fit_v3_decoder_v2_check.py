@@ -71,8 +71,34 @@ def run(args):
 
     metas, features, state, onset = _load_prepared_examples(args.examples_dir)
     prepared = _prepared_summary(metas)
-    if prepared != frozen_v3["prepared"]:
-        raise RuntimeError("prepared examples differ from frozen V3 target set")
+    frozen_prepared = frozen_v3["prepared"]
+
+    # CQT floating-point bytes can differ across hosted runners even when the
+    # exact source/crop/targets and pinned software are unchanged. Treat the
+    # feature SHA as observed provenance, not as the semantic identity gate.
+    # Every non-feature identity must still match exactly, and decoder-V1
+    # boundary-corrected metrics must reproduce the frozen diagnostic before
+    # decoder V2 is interpreted.
+    def semantic_identity(row):
+        return {
+            key: value for key, value in row.items()
+            if key != "featureSha256"
+        }
+
+    if [semantic_identity(row) for row in prepared] != [
+        semantic_identity(row) for row in frozen_prepared
+    ]:
+        raise RuntimeError("prepared source/crop/target identity differs from frozen V3")
+
+    feature_hash_drift = [
+        {
+            "captureKey": current["captureKey"],
+            "frozenFeatureSha256": frozen["featureSha256"],
+            "currentFeatureSha256": current["featureSha256"],
+            "changed": current["featureSha256"] != frozen["featureSha256"],
+        }
+        for current, frozen in zip(prepared, frozen_prepared)
+    ]
 
     checkpoint = torch.load(args.model, map_location="cpu")
     if checkpoint.get("schema") != "astra-tiny-fit-pilot-v1":
@@ -229,6 +255,9 @@ def run(args):
             "modelWeightsChanged": False,
             "captureSelectionChanged": False,
             "cropSelectionChanged": False,
+            "featureHashByteIdentityRequired": False,
+            "featureHashDrift": feature_hash_drift,
+            "semanticReproductionGuard": "decoder-V1 boundary-corrected totals and min F1 must exactly reproduce frozen diagnostic V2 before decoder V2 is interpreted",
         },
         "decoderV2": {
             "sameFretReattackRule": "fresh below-to-above onset-threshold crossing while same fret remains active",
