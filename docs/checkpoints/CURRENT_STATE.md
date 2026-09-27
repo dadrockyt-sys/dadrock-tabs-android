@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **P1-P2 ACTIVATION/DOMAIN-SHIFT DIAGNOSTIC AUTHORIZED AND LAUNCHED ONCE; CANONICAL RUN 36325297420 IN PROGRESS; 0 OPTIMIZER STEPS; P3 SEALED**  
+Status: **P1-P2 ACTIVATION DIAGNOSTIC GREEN; PRIMARY FAILURE = P2 ONSET-HEAD GENERALIZATION COLLAPSE (0/15 ONSET PASSES, 9/15 STATE PASSES); PALMMUTE ALSO STATE/REPRESENTATION COLLAPSE; P3 SEALED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -1001,3 +1001,123 @@ Diagnostic measurements:
 8. P3 remains sealed under all outcomes until a separate final-gate design, freeze, and explicit authorization.
 
 This is the canonical handoff.
+
+## P1-P2 activation/domain-shift diagnostic — COMPLETE, WORKFLOW GREEN
+
+Canonical diagnostic run **36325297420**, job **108636792679** completed **SUCCESS**.
+
+Authorization / launch:
+- authorization commit: `b162124b9fd26b9ecdf10a7405490bb551f5d7ea`
+- launch commit: `a5c2c2add245f29c1b7b690a8ed22865217828b7`
+- authorization blob: `b4e501e2eb6490372bfb0813def63414cd2b844c`
+- launch blob: `5d5045ecb521561116b8e43cfe0cf541a42ba1b9`
+
+Execution boundary:
+- exact frozen V3 model: PASS
+- exact P1 controls prepared: PASS
+- exact homologous P2 examples prepared: PASS
+- optimizer steps: **0**
+- thresholds changed: **no**
+- threshold search: **no**
+- model weights changed: **no**
+- P3 opened: **no**
+- cleanup: PASS
+- automatic retry: **no**
+
+Frozen evidence:
+- result: `docs/astra/P1_P2_ACTIVATION_DIAGNOSTIC_RESULT_V1.json`
+- result commit: `bb223a6b6246945c3a6d2465756f8c8e99fc4a02`
+- artifact ID: **10934054467**
+- artifact digest: `sha256:9c12aeb14fd6b7a3766c10b19c0fc9827400a8f1c5da18f11e02f66784a8f7b5`
+- raw diagnostic JSON SHA-256: `7f8313d7a0b75e82606d6c09092b94a3dd6098d27f66bcea64aebb1163df3027`
+
+### Exact diagnostic finding
+
+P1 control:
+- decoded events: **23**
+- reference probes: **16**
+- onset passes within +/-2 frames: **16 / 16**
+- true-state passes within +/-2 frames: **16 / 16**
+- joint onset+state admissions: **16 / 16**
+- class: `reference_admission_healthy`
+
+P2:
+- decoded events: **0**
+- raw reference probes: **15**
+- onset passes within +/-2 frames: **0 / 15**
+- true-state passes within +/-2 frames: **9 / 15**
+- joint onset+state admissions: **0 / 15**
+- class: `onset_head_generalization_failure`
+
+The prior P2 scoring screen reported 14 scored references because its Event-v2 boundary exclusions remove one boundary-intersecting reference. This diagnostic probes the raw prepared `scorableEvents` before that scorer exclusion; crop selections and target hashes match.
+
+Per content:
+- chords: P2 onset **0/4**, state **1/4**, joint **0/4**
+- scales: P2 onset **0/8**, state **7/8**, joint **0/8**
+- singlenotes: P2 onset **0/1**, state **1/1**, joint **0/1**
+- PalmMute: P2 onset **0/2**, state **0/2**, joint **0/2**
+
+Primary classification: **onset-head generalization failure**.  
+Secondary classification: **PalmMute also has a state/representation failure**.
+
+Feature-scale evidence does **not** support a simple global gain/normalization explanation:
+- chords feature L2 RMS: P1 **0.3163**, P2 **0.3291** (P2 higher)
+- scales: P1 **0.2918**, P2 **0.2597** (P2 lower)
+- singlenotes: P1 **0.1964**, P2 **0.2162** (P2 higher)
+- PalmMute: P1 **0.1932**, P2 **0.1168** (P2 lower)
+
+Therefore do **not** assume that rescaling CQT magnitude alone will solve the generalization failure.
+
+Threshold rescue is also blocked:
+- frozen onset threshold remains **0.50**
+- zero P2 reference windows reach 0.50
+- most P2 reference-window onset probabilities are orders of magnitude below 0.50
+- the P2 scale crop has a whole-crop non-reference onset maximum above 0.50, so simply lowering the threshold risks unrelated admissions
+- post-result threshold retuning is forbidden
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. **Do not retrain yet. Do not lower thresholds. Do not open P3.**
+   The current evidence is sufficient to localize the main failure but not yet to choose the correct repair.
+
+2. The next experiment should be a **zero-optimizer encoder-vs-onset-head decomposition diagnostic** on the same matched P1/P2 captures.
+   Purpose: determine whether P2 divergence is already present in the shared 128-dimensional encoder representation or is introduced/amplified primarily by the onset-head linear boundary.
+
+3. Before any new P1/P2 media access, freeze a new design/request-only gate. The diagnostic should record:
+   - shared encoder activation norm / mean / std / quantiles at reference windows;
+   - matched P1-vs-P2 encoder cosine and Euclidean distances by content and, where comparable, physical string/fret;
+   - nearest P1 reference embedding for every P2 reference embedding;
+   - per-string onset-head linear contribution `h·w + b` at every reference window;
+   - onset-head bias and contribution deltas P2-vs-P1;
+   - true-state logit versus silence-logit margin at each reference window;
+   - decomposition of state failure for PalmMute;
+   - decoded events at the unchanged 0.50 / 0.50 thresholds only;
+   - **0 optimizer steps and no threshold search**.
+
+4. Interpret that decomposition with these frozen decision branches:
+   - **Encoder representations remain close but P2 onset logits collapse:** treat the onset head/objective as the primary problem. Next design should be a tiny **balanced P1+P2 onset-head-focused development fit**, initially freezing the shared encoder, with a strict small optimizer cap. Do not jump to full-model or 2,000-epoch training.
+   - **Encoder representations diverge strongly P1-vs-P2:** treat representation/domain robustness as the primary problem. First test normalization/representation alternatives offline or zero-optimizer where possible before fitting.
+   - **PalmMute remains representation/state collapsed while other content is onset-only:** treat PalmMute as a separate content-specific representation problem; an onset-head repair alone must not be claimed as full generalization.
+   - **Mixed/ambiguous:** collect only the minimum additional zero-optimizer evidence needed; do not spend optimizer budget to guess.
+
+5. If a small P1+P2 fit is eventually justified, it must be separately designed and authorized with:
+   - P1+P2 development only;
+   - P3 sealed;
+   - balanced performer sampling;
+   - explicit onset supervision retained;
+   - decoder V2 retained unless new evidence invalidates it;
+   - no post-result threshold tuning;
+   - strict optimizer/wall-clock cap;
+   - zero automatic retries;
+   - a held-out performer/content evaluation that prevents memorizing the same four pairs.
+
+6. **Do not return to long 2,000-epoch V1-V5-style runs.**
+   We now have direct evidence that the P1 model learned its training examples but the onset head does not transfer to P2. More epochs on P1 are not supported by the evidence.
+
+7. **P3 remains sealed under every current branch.**
+   `P3_music.zip` must not be used for diagnosis, threshold selection, representation choice, architecture choice, or development training. It remains the single-use final generalization gate.
+
+8. No new media access, threshold change, optimizer work, broader training, production mutation, or customer delivery is authorized by this diagnostic result. A fresh explicit authorization is required for the encoder-vs-onset-head decomposition diagnostic.
+
+This section is the canonical next-chat handoff.
+
