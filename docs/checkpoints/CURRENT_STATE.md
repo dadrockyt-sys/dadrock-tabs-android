@@ -215,6 +215,81 @@ Do **not** label this as proof of a head-only fix, a representation-only fix, or
 7. P3 remains sealed for a later separately frozen final gate.
 8. No optimizer work, new media access, launch artifact, production mutation, or customer-readiness claim is authorized by this result.
 
+## Temporal-context controlled intervention — DESIGN FROZEN, NOT AUTHORIZED
+
+Prepared on 2026-09-27 after the combined diagnostic's predeclared **inconclusive** result. This is design-only. No fitting, optimizer work, new media access, threshold change, workflow launch, or P3 access occurred.
+
+Frozen design:
+- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_DESIGN_V1.json`
+- request-only artifact: `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_AUTHORIZATION_REQUEST_V1.json`
+
+### Single hypothesis
+
+Test whether **explicit neighboring-frame information** improves unseen-content event transfer and state robustness relative to an equal-capacity per-frame control.
+
+The causal control is intentionally tight:
+- candidate input at frame t: `[x[t-1], x[t], x[t+1]]`
+- comparator input at frame t: `[x[t], x[t], x[t]]`
+- both use the identical **576->128 ReLU encoder + identical state/onset heads**
+- identical parameter count, initialization within each fold, optimizer, loss, decoder V2, and 0.50/0.50 thresholds
+- therefore the controlled information difference is neighboring-frame access, not extra width/capacity
+
+This choice is preferred over an onset-head-only probe because chords and PalmMute have material state failures that an onset-only intervention cannot repair or test.
+
+### Predeclared grouped split
+
+Use four-fold **leave-one-content-group-out**:
+- chords / Drop3_7
+- scales / Ab
+- singlenotes / allsinglenotes
+- techniques / PalmMute
+
+For each fold, both P1 and P2 versions of the held-out content group remain out of fitting. Train on the other six captures and evaluate on the two held-out captures.
+
+This is **unseen-content development evaluation only**. P1 and P2 are both development performers; neither may be described as a performer holdout. No random frame split is permitted.
+
+### Frozen budget
+
+- 1 candidate + 1 comparator
+- 4 folds
+- max **125 optimizer steps/model/fold**
+- max **1000 optimizer steps total**
+- one CPU job, max **60 minutes**
+- no sweep
+- no automatic retry
+- no threshold search/retuning
+- zero paid compute
+- P3 sealed
+
+### Primary advancement criteria
+
+All are required:
+- candidate macro boundary-corrected event F1 >= comparator + **0.10**
+- aggregate precision >= **0.75**
+- aggregate recall >= **0.60**
+- aggregate F1 >= **0.67**
+- every held-out capture F1 >= **0.55**
+- repeated-attack recall >= **0.60** when repeated held-out references exist
+- real-audio silence/non-active false-admission rate no more than **0.01** absolute worse than comparator
+- held-out true-state accuracy no more than **0.02** absolute worse than comparator
+- all metrics finite; unresolved labels = 0
+
+Also report per-content precision/recall/F1, exact-center and fixed +/-2 onset recall separately, attack-state errors, sustain-state accuracy, offsets, exclusions, repeated-attack numerator/denominator, real non-active false admissions, runtime and step counts.
+
+### Stop rules
+
+If identity/preparation fails, stop before fitting. At 125 steps, stop each model even if improving. No extra epochs, LR changes, alternate context widths, threshold rescue, architecture sweep, or retry. A failed candidate stops this hypothesis.
+
+A pass would support only that fixed triplet temporal context helps beyond equal-capacity per-frame input on this P1/P2 unseen-content development test. It would **not** establish unseen-performer generalization, P3 success, mixed-song/bass readiness, or customer readiness.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Do not implement or fit this design until Stephen explicitly authorizes the frozen request.
+2. If authorized, implement the candidate/comparator harness and synthetic guard tests first; do not access real P1/P2 media until synthetic verification is green.
+3. After synthetic green, freeze source identities and a single-use real launch under the exact budget above.
+4. P3 remains sealed throughout this intervention.
+5. Do not run an onset-head-only probe in parallel; this design intentionally chooses one hypothesis.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

@@ -3,32 +3,34 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-Read `AGENTS.md`, then the top GPT-5.6 handoff review in `docs/checkpoints/CURRENT_STATE.md`.
+Read `AGENTS.md`, then the top GPT-5.6 handoff review and the latest sections of `docs/checkpoints/CURRENT_STATE.md`.
 
-## Current verified position
+## Current position
 
-Combined diagnostic run **36329538118**, job **108648714178** completed successfully at the workflow level.
+The combined P1/P2 diagnostic is frozen as workflow GREEN / scientific outcome **inconclusive**.
 
-Frozen result:
-- `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_RESULT_V1.json`
-- artifact **10936105110**
-- scientific outcome: **inconclusive**
+One controlled intervention design is now frozen:
+- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_DESIGN_V1.json`
+- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_AUTHORIZATION_REQUEST_V1.json`
 
-Key facts:
-- P1 reproduction passed exactly: **23 raw decoded events -> 16 boundary-corrected scored predictions**, matching the frozen decoder-V2 receipt.
-- P2 remains **0 decoded predictions**.
-- P2 raw/scored references are **15 / 14**, with one boundary exclusion.
-- Conservative correspondence found only **6** matched P1/P2 events: 5 scales, 1 single-note, none for chords or PalmMute.
-- Fixed onset-head bias cancels as expected; matched scale onset-logit shifts are mostly large negative changes caused by hidden-representation differences projected through fixed weights. This is descriptive, not causal proof.
-- Chords and PalmMute retain important state failures.
-- P3 remains sealed.
+It is **not authorized and not implemented**.
+
+### Hypothesis
+
+Explicit neighboring-frame information helps unseen-content transfer beyond equal-capacity per-frame input.
+
+Candidate:
+`[x[t-1], x[t], x[t+1]] -> identical 576->128 model`
+
+Capacity-matched comparator:
+`[x[t], x[t], x[t]] -> identical 576->128 model`
+
+Four leave-one-content-group-out folds hold both P1/P2 versions of one category out of fitting. This tests unseen content only; neither performer is a holdout.
+
+Frozen maximum: 125 steps/model/fold, 1000 optimizer steps total, <=60 CPU minutes, no sweep/retry/threshold tuning, P3 sealed.
 
 ## Exact next task
 
-Prepare **design-only** for one predeclared capped controlled intervention. Do not fit yet.
+Obtain Stephen's explicit authorization before implementation or fitting.
 
-The design must choose one hypothesis, define a comparator, grouped/content-disjoint split, strict compute cap, metrics and stop conditions. If P1+P2 are used for development, neither performer is a holdout; any content-disjoint result tests unseen content only.
-
-Do not automatically run both a head-only probe and a temporal-context candidate. An onset-head-only probe can test feature usability but cannot fix state errors. A temporal-context candidate is an alternative hypothesis requiring its own justification.
-
-No optimizer work, threshold change, P3 access, new real-media run, production mutation, or customer-readiness claim is authorized.
+If authorized, implement the harness and synthetic guard tests first. Real P1/P2 access remains blocked until that synthetic verification is green. Do not run an onset-head-only probe in parallel.

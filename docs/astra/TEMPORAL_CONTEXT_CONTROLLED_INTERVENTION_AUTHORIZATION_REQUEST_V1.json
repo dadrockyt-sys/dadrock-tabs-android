@@ -1,0 +1,27 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-authorization-request-v1",
+  "date": "2026-09-27",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "purpose": "Request implementation and one bounded P1/P2 development fit of the frozen temporal-context controlled intervention design.",
+  "design": "docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_DESIGN_V1.json",
+  "requestedScope": {
+    "realMediaAccess": "same 8 already-exposed P1/P2 direct-input crops only",
+    "optimizerStepsMaxTotal": 1000,
+    "optimizerStepsPerModelPerFold": 125,
+    "folds": 4,
+    "candidate": "temporal_triplet",
+    "comparator": "capacity_matched_repeated_current",
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "wallMinutesMax": 60,
+    "p3Authorized": false
+  },
+  "claimBoundary": "Development-only unseen-content causal probe. Neither performer is a holdout. Passing cannot authorize P3, full training, production mutation, or customer delivery.",
+  "noLaunchArtifactExists": true
+}

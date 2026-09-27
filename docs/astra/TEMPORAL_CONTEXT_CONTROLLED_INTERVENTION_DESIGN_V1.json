@@ -1,0 +1,122 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-design-v1",
+  "date": "2026-09-27",
+  "status": "design_only_not_authorized_not_implemented",
+  "hypothesis": "Explicit neighboring-frame information improves unseen-content event transfer and state robustness relative to an otherwise identical capacity-matched per-frame control.",
+  "rationale": [
+    "The frozen V3 model is per-frame and cannot explicitly compare adjacent frames.",
+    "P2 onset admission collapsed, but chords and PalmMute also show state failures, so an onset-head-only intervention cannot test the full observed failure.",
+    "The combined diagnostic recorded descriptive neighboring-frame evidence but did not establish causality.",
+    "A controlled input intervention can test temporal information while holding architecture, parameter count, optimizer, loss, decoder and thresholds constant."
+  ],
+  "candidate": {
+    "name": "temporal_triplet",
+    "inputPerFrame": "concat(x[t-1], x[t], x[t+1])",
+    "featureDim": 576,
+    "edgeRule": "replicate x[t] for any missing neighbor at crop boundary",
+    "model": "576->128 ReLU shared encoder; 6x21 state head; 6 onset-logit head",
+    "loss": "same explicit event loss and weights as tiny_fit_pilot_v1",
+    "decoder": "event_decoder_v2 unchanged",
+    "thresholds": {
+      "stateActive": 0.5,
+      "onset": 0.5
+    }
+  },
+  "comparator": {
+    "name": "capacity_matched_repeated_current",
+    "inputPerFrame": "concat(x[t], x[t], x[t])",
+    "featureDim": 576,
+    "edgeRule": "not applicable",
+    "model": "identical 576->128 ReLU shared encoder; identical heads",
+    "purpose": "Controls for parameter count and input width; the sole information difference is access to neighboring frames."
+  },
+  "initialization": {
+    "seed": 20260927,
+    "rule": "Candidate and comparator use identical initial weights within each fold.",
+    "optimizer": "Adam",
+    "learningRate": 0.01,
+    "noSweep": true
+  },
+  "population": {
+    "source": "the same already-exposed 4 P1 + 4 homologous P2 direct-input 200-frame development crops only",
+    "p3Sealed": true,
+    "claimBoundary": "All P1/P2 examples are development data. No performer holdout exists in this experiment."
+  },
+  "split": {
+    "method": "four-fold leave-one-content-group-out",
+    "groups": [
+      "chords:Drop3_7",
+      "scales:Ab",
+      "singlenotes:allsinglenotes",
+      "techniques:PalmMute"
+    ],
+    "rule": "For each fold, both P1 and P2 views of the held-out content group are excluded from fitting and used only for that fold's evaluation.",
+    "trainingPerFold": "6 captures from the other three content groups",
+    "evaluationPerFold": "2 captures: P1 and P2 of the held-out content group",
+    "noRandomFrameSplit": true,
+    "interpretation": "Tests unseen-content transfer within already-examined performers only; does not test unseen-performer generalization."
+  },
+  "budget": {
+    "modelsPerFold": 2,
+    "folds": 4,
+    "maxOptimizerStepsPerModelPerFold": 125,
+    "maxOptimizerStepsTotal": 1000,
+    "maxWallMinutes": 60,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "candidates": 1,
+    "comparatorModels": 1
+  },
+  "metrics": {
+    "primary": [
+      "boundary-corrected event precision/recall/F1 per held-out capture and macro across all 8 held-out evaluations",
+      "candidate-minus-comparator macro event F1"
+    ],
+    "secondary": [
+      "source-attack onset recall at exact center and fixed +/-2 separately",
+      "true-state admission/error on source-defined attack frames",
+      "true-state accuracy on active non-attack/sustain frames",
+      "real-audio silence/non-active frame false-admission rate",
+      "repeated-attack numerator/denominator and recall when present",
+      "matched offset within 50 ms",
+      "boundary exclusions and unresolved-label count",
+      "runtime and optimizer-step count"
+    ]
+  },
+  "positiveProbeCriteria": {
+    "allRequired": true,
+    "criteria": [
+      "candidate macro boundary-corrected event F1 >= comparator macro F1 + 0.10",
+      "candidate aggregate precision >= 0.75",
+      "candidate aggregate recall >= 0.60",
+      "candidate aggregate F1 >= 0.67",
+      "every held-out capture F1 >= 0.55",
+      "candidate repeated-attack recall >= 0.60 when repeated held-out references exist",
+      "candidate real-audio silence/non-active false-admission rate is not higher than comparator by more than 0.01 absolute",
+      "candidate held-out true-state accuracy is not lower than comparator by more than 0.02 absolute",
+      "all metrics finite and unresolved labels = 0"
+    ],
+    "note": "These are probe advancement criteria only. Passing does not establish performer generalization or customer readiness."
+  },
+  "stopConditions": [
+    "Stop a model at 125 optimizer steps even if still improving.",
+    "No extra epochs, learning-rate changes, threshold rescue, alternate context widths, architecture sweep, or automatic retry.",
+    "If preparation/identity guards fail, stop before optimizer work.",
+    "If candidate fails positiveProbeCriteria, record and stop this hypothesis.",
+    "If candidate passes, next step is design-only for a separately authorized performer-generalization evaluation; P3 remains sealed."
+  ],
+  "causalInterpretation": {
+    "pass": "Supports the hypothesis that explicit neighboring-frame information is useful beyond equal-capacity per-frame input on this P1/P2 unseen-content development test.",
+    "fail": "Does not support this fixed triplet-context intervention under the frozen budget; do not infer that all temporal models are ineffective.",
+    "prohibitedClaims": [
+      "unseen-performer generalization",
+      "P3/generalization success",
+      "bass or mixed-song readiness",
+      "customer readiness",
+      "temporal context is the unique causal mechanism"
+    ]
+  },
+  "executionAuthorization": false
+}
