@@ -1,0 +1,127 @@
+{
+  "schema": "astra-p2-cross-performer-screen-authorization-v1",
+  "date": "2026-09-26",
+  "status": "authorized_exact_minimal_p2_zero_optimizer_screen",
+  "authorizationGranted": true,
+  "authorization": {
+    "p2MediaAccessAuthorized": true,
+    "p1MediaAccessAuthorized": false,
+    "frozenV3ModelInferenceAuthorized": true,
+    "decoderV2Authorized": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdRetuningAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "broaderP1P2DevelopmentAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "population": {
+    "performer": "P2",
+    "exactCaptureKeys": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ],
+    "captureView": "directinput",
+    "framesPerExample": 200,
+    "cropRule": "independent deterministic source-only earliest launch-ready crop",
+    "substitutionsAllowed": false,
+    "missingOrUnresolvedPolicy": "fail closed"
+  },
+  "screenThresholds": {
+    "aggregatePrecisionMin": 0.75,
+    "aggregateRecallMin": 0.6,
+    "aggregateF1Min": 0.67,
+    "eachExampleF1Min": 0.55,
+    "repeatedAttackRecallMinWhenPresent": 0.6,
+    "unresolvedLabelCountMax": 0,
+    "syntheticSilenceFalsePositiveCountMax": 0,
+    "postResultRetuningAllowed": false,
+    "source": "docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json"
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "decoderV2Rule": "fresh below-to-above onset-threshold crossing for same-fret reattack while the fret remains active",
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "p2ArchiveIdentities": [
+    {
+      "file": "P2_chords.zip",
+      "bytes": 1150819056,
+      "md5": "eb6f74dd19162237189281688ad7ad2e",
+      "sha256": "9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce"
+    },
+    {
+      "file": "P2_scales.zip",
+      "bytes": 471254783,
+      "md5": "96664853872f51e5f8aa4447313b7cf5",
+      "sha256": "d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17"
+    },
+    {
+      "file": "P2_singlenotes.zip",
+      "bytes": 116133457,
+      "md5": "40fbf03d8b04bb2cf42df20f36dc2254",
+      "sha256": "d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9"
+    },
+    {
+      "file": "P2_techniques.zip",
+      "bytes": 395839610,
+      "md5": "f4189251ce50be25f06a173b2c2bba00",
+      "sha256": "05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816"
+    }
+  ],
+  "alignmentCorrectionsMs": {
+    "P2|chords|Drop3_7|directinput": 47,
+    "P2|scales|Ab|directinput": -15,
+    "P2|singlenotes|allsinglenotes|directinput": -16,
+    "P2|techniques|PalmMute|directinput": -17
+  },
+  "sourceIdentities": {
+    "designGitBlob": "50be648317856752e876c262c8c0ccca7d50603e",
+    "screenScriptGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "screenTestsGitBlob": "0bd39ef5c778f04cb36ae1da51b56e64ae34187b",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "diagnosticHelpersGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "eventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractGitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "developmentThresholdsGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "datasetManifestGitBlob": "07d7bcad929f269c797079cc093bd8639e7d3b11",
+    "splitReceiptGitBlob": "bfc02a23c8d2e34ab9e5d6c6bb968ebbc7cc8450",
+    "developmentArchiveIdentityGitBlob": "33579dff28bf8b237dd477875285051ff49281df",
+    "decoderV2ResultGitBlob": "03e0dd727d510decfb4b8e82dd88c267e616f50e",
+    "workflowGitBlob": "4d4a6cf48f6f629dea791fee76fac18ed19ae040",
+    "authorizationRequestGitBlob": "e813af9d17e714c5cbc1cc89fc4788ae4860c069"
+  },
+  "outcomes": {
+    "green": "Supports designing a broader P1/P2 development evaluation only. Does not authorize P3 or full training.",
+    "red": "Stop broader training and diagnose performer shift.",
+    "inconclusive": "Fail closed; redesign before more compute."
+  },
+  "hardClaimBoundary": "This four-example P2 screen cannot establish final generalization, customer readiness, production eligibility, or authorize P3.",
+  "userAuthorization": {
+    "channel": "chat",
+    "instruction": "I authorize",
+    "interpretation": "Authorize only the minimal four-example P2 cross-performer zero-optimizer screen frozen in P2_CROSS_PERFORMER_SCREEN_AUTHORIZATION_REQUEST_V1.json."
+  },
+  "guards": {
+    "optimizerMustRemainZero": true,
+    "thresholdsFrozen": true,
+    "modelWeightsFrozen": true,
+    "p1MediaAccessAuthorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "broaderP1P2DevelopmentAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "requiredNextArtifact": "docs/astra/P2_CROSS_PERFORMER_SCREEN_LAUNCH_V1.json"
+}
