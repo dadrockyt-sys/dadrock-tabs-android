@@ -1,0 +1,21 @@
+{
+  "schema": "astra-p1-p2-combined-diagnostic-launch-v1",
+  "date": "2026-09-27",
+  "status": "authorized_single_launch",
+  "singleLaunch": true,
+  "authorizedHeadBeforeLaunch": "978cd794e2f9580dc5e65db0726c85f6aef8f892",
+  "authorizationGitBlob": "e911515731fdacd393c6ac51858c37ec216604be",
+  "scope": {
+    "captures": 8,
+    "framesPerCapture": 200,
+    "optimizerSteps": 0,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "p3": false,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0
+  }
+}
