@@ -1,9 +1,66 @@
 # Astra — current handoff
 
-Updated: 2026-09-26 UTC  
+Updated: 2026-09-27 UTC  
 Branch: `astra-work`  
-Status: **P1-P2 ACTIVATION DIAGNOSTIC GREEN; PRIMARY FAILURE = P2 ONSET-HEAD GENERALIZATION COLLAPSE (0/15 ONSET PASSES, 9/15 STATE PASSES); PALMMUTE ALSO STATE/REPRESENTATION COLLAPSE; P3 SEALED**  
+Status: **REVIEWED HANDOFF: P1 TRAINING-ONLY GATE MET; P2 TRANSFER FAILED; CAUSE NOT YET ISOLATED; OFFLINE DIAGNOSTIC PACKAGE NEXT; P3 SEALED**
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
+
+## GPT-5.6 handoff review — 2026-09-27 — READ THIS FIRST
+
+This review supersedes the older next-step prescriptions below; the historical receipts remain unchanged. Reviewed branch head: `13d3be19fcabd82bd9afd02be168d5dda589fd7d`. User requested inspection and a saved direction, not another real-data run.
+
+### Verdict and established evidence
+
+Keep the small-budget engineering approach. Do not restart V1–V5 or spend more epochs on the four P1 crops. Decoder V2 achieved the recorded training-only gate (16 TP, 0 FP, 0 FN; offset fraction 0.9375; only two repeated reference attacks). This is a useful plumbing/learnability result, not evidence of a usable transcription product.
+
+The P2 screen failed with no decoded events. The latest activation diagnostic run 36325297420 / job 108636792679 is independently confirmed SUCCESS through GitHub job steps, including cleanup. Its committed receipt reports 0/15 P2 onset probes and 9/15 state probes passing. This review inspected the receipt, model source, diagnostic source and workflow; it did not independently recompute the raw artifact metrics.
+
+### Corrections to the previous interpretation
+
+1. **Observed onset-admission failure is not a causal diagnosis of the onset head.** The shared encoder, training coverage, features, timing/labels and head can all contribute. The classifier in `p1_p2_activation_diagnostic_v1.py` labels any zero-onset/nonzero-state case `onset_head_generalization_failure`; that label is descriptive, not an intervention proving that retraining only the head will work.
+2. **Chords also have substantial state failure:** only 1/4 P2 chord state probes pass, compared with 0/2 PalmMute, 7/8 scales and 1/1 single notes. Do not characterize everything except PalmMute as onset-only.
+3. **There is no changing head bias between performers.** With identical frozen weights, for string s, `z2-z1 = w_s · (h2-h1)`; the bias cancels. Global cosine/Euclidean similarity can conceal changes along a sensitive weight direction. Close embeddings alone cannot justify a head-only repair; far embeddings alone cannot establish which repair will help.
+4. **Category pairing is not event alignment.** P1/P2 crops are selected independently and have different event counts. Match by verified source sequence identity, string/fret and local context where possible; report unmatched events. Never zip events by array position or silently choose favorable matches.
+5. **The current model has no explicit inter-frame context.** `TinyEventFitModel.forward` is a per-frame 192->128 ReLU MLP with linear heads. CQT frames contain windowed audio, but the model cannot explicitly compare adjacent frames. Missing temporal attack information is a hypothesis worth assessing; it is not yet a demonstrated cause or permission to change architecture.
+6. Mixed feature RMS directions do not prove normalization irrelevant. They only fail to support a single simple global-gain explanation. Likewise 15 probes are insufficient for broad performer/content claims.
+
+### Exact next task: one decision-ready OFFLINE package
+
+GPT-5.6 should prepare one combined diagnostic design, implementation, synthetic tests and request-only workflow, before asking for any fresh real-data authorization. Ordinary reversible offline implementation is already permitted by AGENTS.md. Do not ask Stephen to authorize writing the design or synthetic tests.
+
+The package should resolve these questions in one bounded pass rather than create an open-ended sequence of diagnostics:
+
+- **Reproduction first.** Assert exact capture allowlists, 200-frame shapes, source/crop/target identities, model SHA, finite arrays and zero unresolved selected labels against frozen manifests. Current diagnostic loading verifies a feature against its newly generated metadata and four categories, but does not itself compare all source/crop/target identities to the frozen reference. Strengthen this in the new diagnostic without editing old receipts.
+- **Resolve raw-versus-scored counts.** The latest diagnostic reports 23 raw P1 decoded events, whereas the decoder-V2 engineering receipt reports 16 scored predictions. Run the identical boundary-exclusion/scoring path and retain event-ID exclusion accounting. Do not assume those seven events are all harmless boundaries without checking. Preserve the 15 raw versus 14 scored P2 distinction explicitly.
+- **Check preprocessing reproducibility.** Equal aggregate F1 does not establish numerically equivalent features/logits. If original arrays are available within allowed evidence, compare finite values, shapes and numeric differences under predeclared tolerances; otherwise label numerical equivalence unverified. Do not explain byte-hash differences as harmless solely because package versions match.
+- **Probe attacks AND controls.** Include source-defined attack windows, active non-attack/sustain frames and silence, plus per-string positive counts and exclusions. Keep exact center-frame and fixed +/-2-frame results separate. No best-window selection presented as exact onset accuracy and no shifted-label/threshold search.
+- **Measure task-relevant margins.** Retain encoder statistics as descriptive context. Record frozen onset logits, `w·h`, constant bias, and pairwise projected differences where valid. For state errors report true fret versus silence AND strongest incorrect fret, with actual softmax/admission outcomes. Examine chords and PalmMute explicitly.
+- **Assess temporal-information hypothesis without fitting.** Use fixed, source-aligned neighboring-frame feature changes as descriptive evidence alongside attack/sustain controls; do not tune a new detector on these results. Missing separation is informative, but no observational statistic alone proves a causal repair.
+- **Keep outcome branches honest.** Output reproduction failure / insufficient correspondence / descriptive evidence favoring a bounded probe / inconclusive. Do not invent a post-result cutoff for “close embeddings.” If causal isolation is needed, design a controlled intervention next rather than call descriptive geometry a proof.
+
+Proposed ceiling for this diagnostic package: the same eight already-exposed P1/P2 captures, 200 frames each, one frozen model, 0 optimizer steps, unchanged 0.50/0.50 thresholds, one CPU job no longer than the existing 90-minute ceiling, zero automatic retries, no paid compute, P3 sealed. This is a design ceiling, **not execution authorization**. Reuse permitted saved evidence before proposing another source download; do not assume old single-run media grants authorize reuse in a new experiment.
+
+Synthetic tests should target real remaining risks: wrong capture/target rejection, unequal event counts and unmatched correspondence, boundary-accounting consistency, bias-cancellation/projection identity, and attack-versus-sustain controls. Make the exact runnable scope and expected decisions reviewable, then obtain the authorization required by the existing corpus freeze.
+
+### Subsequent fitting and success criteria
+
+If the diagnostic supports a fit, choose ONE predeclared, capped hypothesis test. A frozen-encoder head-only probe is a cheap test of feature usability, not an automatic product fix; it cannot change state errors if only the onset head is trained. A temporal-context candidate is an alternative hypothesis, not an extra automatic candidate. Define budgets, comparator, split, metrics and stop conditions before launch; no sweep, automatic retry, threshold rescue or 2,000-epoch restart.
+
+**Split before fitting.** P2's examined examples are development data. If training on both P1 and P2, neither performer is a performer holdout. A content-disjoint split within P1/P2 can test new content but cannot establish unseen-performer generalization. Group all views/crops of each underlying performance together; hold composition/exercise identities together across performers when claiming unseen-content performance. No random frame split. Newly selected evaluation data require their own authorized scope. Never relabel these four pairs as untouched validation.
+
+Report per-content event precision/recall/F1, state errors, repeated-attack numerator/denominator, offsets, real silence/non-attack false positives, exclusions and runtime. Synthetic silence alone is not real-audio specificity evidence. Predeclare advancement criteria without relaxing historical gates retroactively. If a capped candidate fails, record and stop that candidate; do not extend its budget.
+
+P3 remains sealed for a separately frozen, explicitly authorized final gate after development decisions are finished. Neither isolated direct-input guitar results nor P3 alone should be assumed to establish bass, rhythm/lead selection, mixed-song transcription, playable fingering or customer readiness. Those product requirements need representative, separately designed evaluation later.
+
+### Cost, evidence and handoff discipline
+
+Avoid repeated multi-gigabyte preparation for small numerical questions where permitted derived evidence can suffice. The latest diagnostic artifact expires **2026-10-04T14:52:03Z** according to its receipt. Check the V3 model artifact's availability/expiry too; future workflows depend on it. Plan authorized durable retention of model/derived evidence and manifest hashes before expiration, consistent with data rules; never retrain just to recreate an expired model or commit customer/corpus audio to Git.
+
+Do not multiply workflows and approvals for ordinary offline fixes. Preserve historical launch files and frozen receipts; prepare one coherent next request. If ambiguous after the combined diagnostic, write down which bounded intervention would distinguish hypotheses and its cost rather than automatically ordering another observational run.
+
+**Next response from GPT-5.6 should implement the offline package above and report its tests, remaining uncertainty, and exact proposed execution scope.** No new real-media access, fitting, launch artifact, deployment or production change is authorized by this review. Update this checkpoint after the milestone and verify the remote branch. The historical log below is evidence, not the active task queue.
+
+## Historical direction and execution log (superseded as task queue)
 
 ## Direction
 
