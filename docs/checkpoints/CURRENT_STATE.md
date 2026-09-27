@@ -76,6 +76,12 @@ The implementation covers exact eight-capture allowlists, 200x192 finite feature
 
 Frozen V3 model artifact **10918434248** is currently available and expires **2026-10-03T23:51:34Z**. The prior activation diagnostic artifact expires **2026-10-04T14:52:03Z**. Durable retention / manifest preservation must be handled before expiry if later execution is authorized; do not retrain merely to recreate an expired artifact.
 
+### Offline synthetic verification attempt 1 — TEST FIXTURE FAILURE
+
+Workflow run **36329164081**, job **108647662873** failed in the synthetic-only unittest step. Exact frozen runtime installation succeeded. No real media was accessed; optimizer steps remained 0; P3 remained sealed.
+
+Failure was confined to the new boundary-accounting test fixture: it supplied a two-field exclusion interval `(lo, hi)`, while the frozen scorer contract requires `(string, lo, hi)`. The implementation path uses `boundary_exclusions(...)`, which already returns the correct three-field shape. Offline repair: change the synthetic fixture to `(1, 0.25, 0.35)` and rerun the same synthetic gate. This does not alter diagnostic scope, thresholds, model, media policy, or P3 boundary.
+
 ### EXACT NEXT STEPS
 
 1. Inspect the automatic offline synthetic test workflow triggered by this package commit. It must pass before any real-data authorization is requested.

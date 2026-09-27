@@ -27,7 +27,7 @@ class CombinedDiagnosticTests(unittest.TestCase):
         preds=[Event("p1",0,3,.10,.20),Event("p2",1,5,.28,.32)]
         raw=score_events(preds,refs,onset_tolerance=.05,offset_tolerance=.05)
         scored=score_events(preds,refs,onset_tolerance=.05,offset_tolerance=.05,
-                            excluded_intervals=[(.25,.35)])
+                            excluded_intervals=[(1,.25,.35)])
         self.assertEqual(raw["predictionCount"],2)
         self.assertEqual(scored["predictionCount"],1)
         self.assertEqual(scored["truePositive"],1)
