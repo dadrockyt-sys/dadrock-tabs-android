@@ -1,0 +1,43 @@
+{
+  "schema": "astra-tiny-fit-v3-decoder-v2-check-design-v1",
+  "date": "2026-09-26",
+  "purpose": "Test whether rising-edge same-fret reattack decoding removes the one residual P1 false positive without retraining or threshold changes.",
+  "sourceEvidence": {
+    "v3RunId": 36280547470,
+    "v3ArtifactId": 10918434248,
+    "diagnosticV2RunId": 36282028911,
+    "diagnosticV2ResultGitBlob": "bf2597871d3a6db794123f752276a9677acbe63f",
+    "decoderAnalysisGitBlob": "8a080db1ca311029f45556bbb6a4442a44121d45"
+  },
+  "scope": {
+    "performer": "P1",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "frozenV3Model": true,
+    "reprepareExactFrozenCrops": true,
+    "optimizerSteps": 0,
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdRetuning": false,
+    "p2": false,
+    "p3": false
+  },
+  "invariants": [
+    "Decoder V1 boundary-corrected totals and minimum F1 must reproduce diagnostic V2 exactly before decoder V2 is interpreted.",
+    "Decoder V2 uses the same model logits and exact thresholds; only same-fret reattack admission changes to a fresh threshold crossing.",
+    "No optimizer, model mutation, P2/P3, automatic retry, or full training."
+  ],
+  "trainingOnlyGate": {
+    "minPerExampleF1": 0.95,
+    "matchedOffsetWithin50msFractionMin": 0.9,
+    "repeatedAttackCoverageRequired": true,
+    "repeatedAttackRecallMin": 0.9,
+    "syntheticSilenceFalsePositiveCountMax": 0,
+    "unresolvedLabelCountMax": 0
+  },
+  "claimBoundary": "A pass would show the frozen V3 model plus decoder V2 fits these four P1 training examples. It would not establish generalization. A cross-performer screen would require separate design and authorization."
+}
