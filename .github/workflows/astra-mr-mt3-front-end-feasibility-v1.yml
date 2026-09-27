@@ -88,7 +88,16 @@ jobs:
           /tmp/mt3venv/bin/pip download --no-deps --only-binary=:all: 'mt3-infer==0.2.0' -d /tmp
           wheel="$(find /tmp -maxdepth 1 -name 'mt3_infer-0.2.0-*.whl' -print -quit)"
           test "$(sha256sum "$wheel" | awk '{print $1}')" = "95209657fafab7eda0e5187f5fb9ae3438a18e2a4e30acd4786f3cda25389ff4"
-          /tmp/mt3venv/bin/pip install --disable-pip-version-check "$wheel"
+          /tmp/mt3venv/bin/pip install --disable-pip-version-check "$wheel" \
+            'transformers==4.57.5' 'torch==2.7.1' 'torchaudio==2.7.1' 'torchvision==0.22.1'
+          /tmp/mt3venv/bin/python - <<'PY'
+          import mt3_infer,torch,torchaudio,torchvision,transformers
+          assert mt3_infer.__version__=='0.2.0'
+          assert transformers.__version__=='4.57.5'
+          assert torch.__version__.split('+')[0]=='2.7.1'
+          assert torchaudio.__version__.split('+')[0]=='2.7.1'
+          assert torchvision.__version__.split('+')[0]=='0.22.1'
+          PY
       - name: Download and verify immutable MR-MT3 checkpoint once
         shell: bash
         run: |

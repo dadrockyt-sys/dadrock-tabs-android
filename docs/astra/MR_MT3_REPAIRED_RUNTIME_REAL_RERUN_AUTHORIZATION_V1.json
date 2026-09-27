@@ -1,0 +1,25 @@
+{
+  "schema": "astra-mr-mt3-repaired-runtime-real-rerun-authorization-v1",
+  "date": "2026-09-27",
+  "status": "explicit_user_authorization",
+  "userInstruction": "I authorize",
+  "prerequisiteSmoke": {
+    "runId": 36355209501,
+    "jobId": 108721473357,
+    "conclusion": "success"
+  },
+  "scope": {
+    "sameScientificDesign": true,
+    "sameExactCaptures": 8,
+    "sameProjection": true,
+    "sameCheckpoint": true,
+    "onlyRuntimeChanged": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "maxCpuMinutes": 60,
+    "checkpointDownloads": 1,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3Authorized": false
+  }
+}

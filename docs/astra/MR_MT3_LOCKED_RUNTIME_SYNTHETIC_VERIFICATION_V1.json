@@ -1,0 +1,31 @@
+{
+  "schema": "astra-mr-mt3-locked-runtime-synthetic-verification-v1",
+  "date": "2026-09-27",
+  "status": "green_real_rerun_authorized_separately",
+  "workflow": {
+    "runId": 36355209501,
+    "jobId": 108721473357,
+    "conclusion": "success"
+  },
+  "repairCommit": "3d3e00bd486cd6cffb09cbba923fb3508a705c32",
+  "frozenRuntime": {
+    "python": "3.10.15",
+    "mt3Infer": "0.2.0",
+    "transformers": "4.57.5",
+    "torch": "2.7.1",
+    "torchaudio": "2.7.1",
+    "torchvision": "0.22.1",
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  },
+  "smoke": {
+    "input": "1-second 440 Hz synthetic mono audio at 16 kHz",
+    "outputMidiTracks": 1,
+    "transcriptionCompleted": true
+  },
+  "boundaries": {
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "p3Opened": false
+  }
+}
