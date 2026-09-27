@@ -1,0 +1,63 @@
+{
+  "schema": "astra-v3-reattack-decoder-analysis-v1",
+  "date": "2026-09-26",
+  "sourceEvidence": {
+    "diagnosticV2RunId": 36282028911,
+    "diagnosticResultGitBlob": "bf2597871d3a6db794123f752276a9677acbe63f",
+    "v3ModelRunId": 36280547470,
+    "v3ArtifactId": 10918434248
+  },
+  "residualError": {
+    "captureKey": "P1|chords|Drop3_7|directinput",
+    "string": 1,
+    "fret": 0,
+    "falsePredictedStartFrame": 10,
+    "falsePredictedStartSeconds": 0.23219954648526078,
+    "targetOnsetAtFalseFrame": 0,
+    "onsetProbabilityAtFalseFrame": 0.506671667098999,
+    "onsetThreshold": 0.5,
+    "onsetMargin": 0.0066716670989990234,
+    "nearestTrueSameFretSourceStartSeconds": 0.20584126984127238,
+    "sourceDeltaSeconds": 0.026358276643988404,
+    "frameGridObservation": "The real source onset maps to target frame 9; the false reattack begins at frame 10, exactly one frame later."
+  },
+  "observedTrueSameFretReattacks": [
+    {
+      "captureKey": "P1|scales|Ab|directinput",
+      "string": 5,
+      "fret": 4,
+      "targetFrames": [
+        9,
+        30
+      ],
+      "separationFrames": 21,
+      "separationGridSeconds": 0.4876190476190476,
+      "separationSourceSeconds": 0.49479166666666696
+    },
+    {
+      "captureKey": "P1|chords|Drop3_7|directinput",
+      "string": 1,
+      "fret": 0,
+      "targetFrames": [
+        9,
+        185
+      ],
+      "separationFrames": 176,
+      "separationGridSeconds": 4.08671201814059,
+      "separationSourceSeconds": 4.087499999999999
+    }
+  ],
+  "diagnosis": "The lone corrected false positive is consistent with an onset plateau: the decoder admits every suprathreshold frame as a same-fret reattack. The residual event occurs one frame after a real onset, whereas the observed genuine same-fret reattacks are separated by a return below the attack region and much larger frame gaps.",
+  "candidateDecoder": {
+    "module": "astra_backend/evaluation/event_decoder_v2.py",
+    "rule": "When a note is already active on the same fret, admit a reattack only on a fresh below-to-above onset-threshold crossing. Consecutive suprathreshold onset frames on the same active fret remain one attack.",
+    "differentFretBehavior": "unchanged from V1",
+    "stateChangeWithoutOnsetBehavior": "unchanged from V1",
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdRetuning": false,
+    "modelWeightsChanged": false
+  },
+  "currentClaimBoundary": "This is an offline decoder candidate supported by frozen evidence and synthetic regressions. It is not yet a real-data re-score and does not change the frozen V3 result.",
+  "nextGate": "After backend/focused tests pass, prepare a request-only zero-optimizer real P1 re-decode using the frozen V3 model, boundary-corrected scoring, and decoder V2. New P1 media access requires explicit authorization."
+}

@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DIAGNOSTIC V2 GREEN; BOUNDARY ACCOUNTING REMOVES 8/9 FALSE POSITIVES; ONE NEAR-THRESHOLD DUPLICATE ONSET REMAINS; NO RETRAINING AUTHORIZED**  
+Status: **DIAGNOSTIC V2 GREEN; ONE-FRAME SAME-FRET ONSET PLATEAU ISOLATED; DECODER V2 RISING-EDGE CANDIDATE STAGED OFFLINE; NO REAL RE-DECODE OR TRAINING AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -518,4 +518,24 @@ Artifact: **10918344868**, digest `sha256:7010e18f691153be935541898fdaf916f15ea7
 The corrected result still does **not** meet the frozen 0.95 per-example F1 gate because Drop3_7 remains at 0.923077. No threshold retuning is permitted retroactively.
 
 **Next cheapest step:** offline analysis of duplicate-onset suppression / onset-separation semantics around this single event. Do not retrain, retune thresholds, open P2/P3, or start a cross-performer screen yet.
+
+## Offline decoder V2 candidate — same-fret onset rising-edge gate
+
+Frozen diagnostic V2 isolated one remaining false positive: A string, fret 0, in Drop3_7. The real source onset maps to target frame **9**; the false predicted reattack starts at frame **10**, exactly one 23.22 ms frame later. The false frame has target onset 0 and onset probability **0.506672**, only **0.006672** above the frozen 0.50 threshold.
+
+Frozen V3 metadata contains two genuine scorable same-string/same-fret reattacks:
+- Ab scale high-e fret 4: target frames 9 -> 30 (**21 frames / 487.6 ms grid spacing**);
+- Drop3_7 A-string open: target frames 9 -> 185 (**176 frames / 4.0867 s grid spacing**).
+
+Candidate `astra_backend/evaluation/event_decoder_v2.py` leaves both frozen thresholds at 0.50 but changes same-fret reattack semantics: while the same fret remains active, a reattack requires a **fresh below->above onset-threshold crossing**. Consecutive suprathreshold onset frames therefore remain one attack. Different-fret admitted onsets and state-change-without-onset behavior remain unchanged.
+
+Synthetic regressions cover:
+- consecutive same-fret onset plateau => one attack;
+- separated fresh same-fret threshold crossing => two attacks;
+- different-fret onset during an onset plateau => preserved;
+- fret change without onset => still no invented attack.
+
+Analysis receipt: `docs/astra/V3_REATTACK_DECODER_ANALYSIS_V1.json`.
+
+This is offline evidence only. **No P1 media has been newly accessed for this decoder candidate, no optimizer step has run, and no threshold has been retuned.** After tests pass, the next permissible action is only to freeze a request for one zero-optimizer P1 re-decode with decoder V2; that real-data check requires new explicit authorization.
 
