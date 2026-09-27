@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **P2 CROSS-PERFORMER SCREEN RED: 14 REFERENCES, 0 PREDICTIONS, 0 TP, 14 FN; RESULT FROZEN; BROADER TRAINING BLOCKED; P3 SEALED**  
+Status: **P1-P2 ACTIVATION/DOMAIN-SHIFT DIAGNOSTIC AUTHORIZED AND LAUNCHED ONCE; CANONICAL RUN 36325297420 IN PROGRESS; 0 OPTIMIZER STEPS; P3 SEALED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -941,3 +941,63 @@ This is not a label-preparation failure: all four selected P2 crops were launch-
 
 No new P2 media access, optimizer work, or threshold change is authorized by this result. A fresh explicit authorization is required for the proposed activation/domain-shift diagnostic.
 
+## P1-P2 activation/domain-shift diagnostic — AUTHORIZED AND LAUNCHED ONCE
+
+User explicitly instructed **"Run the diagnostic"** on 2026-09-27. This authorization applies only to the zero-optimizer diagnostic described below.
+
+Artifacts:
+- design: `docs/astra/P1_P2_ACTIVATION_DIAGNOSTIC_DESIGN_V1.json`
+- authorization: `docs/astra/P1_P2_ACTIVATION_DIAGNOSTIC_AUTHORIZATION_V1.json`
+- launch: `docs/astra/P1_P2_ACTIVATION_DIAGNOSTIC_LAUNCH_V1.json`
+- workflow: `.github/workflows/astra-p1-p2-activation-diagnostic-v1.yml`
+
+Authorization commit: `b162124b9fd26b9ecdf10a7405490bb551f5d7ea`.  
+Launch commit: `a5c2c2add245f29c1b7b690a8ed22865217828b7`.  
+Authorization blob: `b4e501e2eb6490372bfb0813def63414cd2b844c`.
+
+Canonical diagnostic:
+- run: **36325297420**
+- job: **108636792679**
+- monitor: `https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36325297420`
+
+Authorized scope:
+- exact four frozen P1 control examples;
+- exact four homologous P2 examples;
+- exact frozen V3 model + decoder V2;
+- state/onset thresholds remain **0.50 / 0.50**;
+- **0 optimizer steps**;
+- no threshold search or retuning;
+- no model mutation;
+- zero automatic retries;
+- **P3 remains sealed**;
+- no full training, production mutation, or customer delivery.
+
+Diagnostic measurements:
+- CQT feature mean/std/quantiles/absolute mean/L2 RMS;
+- onset probability/logit distributions;
+- state-logit distributions;
+- whole-crop onset-only, state-only and joint-admission counts;
+- reference-onset probes within +/-2 frames;
+- true-fret probability, silence probability and active-minus-silence margin;
+- reference onset/state/joint pass counts;
+- decoder-V2 event counts at frozen thresholds;
+- paired P2-minus-P1 feature/output deltas by content.
+
+### EXACT NEXT STEPS
+
+1. Inspect **only** run **36325297420**, job **108636792679**. Do not create another launch or rerun.
+2. If setup/preparation fails, preserve the exact failure and stop. No substitution captures and no automatic retry.
+3. If diagnostic completes, freeze the result JSON/artifact and classify P2 using the preregistered categories:
+   - `onset_head_generalization_failure`
+   - `state_head_or_representation_failure`
+   - `both_heads_or_representation_domain_collapse`
+   - `onset_state_admission_misalignment`
+   - `partial_generalization_failure`
+   - `reference_admission_healthy`
+4. Preserve P1-vs-P2 paired feature/output statistics and reference-probe counts. Do not infer causality beyond the measured evidence.
+5. No threshold change, optimizer work, broader training, or P3 access follows automatically from any diagnostic category.
+6. If a preprocessing/domain-shift mechanism is clearly supported, next action is design/request-only for the smallest offline normalization/representation test.
+7. If model memorization/generalization failure is supported instead, next action is design/request-only for a tightly capped P1+P2 development fit experiment.
+8. P3 remains sealed under all outcomes until a separate final-gate design, freeze, and explicit authorization.
+
+This is the canonical handoff.
