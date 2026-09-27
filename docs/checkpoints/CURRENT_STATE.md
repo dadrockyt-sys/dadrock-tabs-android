@@ -366,6 +366,84 @@ Frozen execution ceiling:
 5. If it fails the criteria, record and stop this temporal-triplet hypothesis under the frozen budget.
 6. If it passes, the next action is design-only for a separately authorized performer-generalization evaluation. P3 remains sealed.
 
+## Temporal-context controlled intervention — WORKFLOW GREEN, HYPOTHESIS FAILED
+
+Canonical run **36332898065**, job **108658126314** completed **SUCCESS** at the workflow level. The scientific advancement gate **FAILED** exactly as predeclared.
+
+Frozen artifact:
+- artifact ID **10937201537**
+- digest `sha256:591c90a938f293ddc9e073b1d93852893307e3317f1b3607bae534e067e04ef2`
+- expires **2026-10-11T17:01:44Z**
+- frozen receipt: `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_RESULT_V1.json`
+
+Execution boundaries held:
+- optimizer steps: **1000 / 1000 authorized**
+- threshold search: **no**
+- thresholds changed: **no**
+- automatic retry: **no**
+- P3 opened: **no**
+- runtime: **12.59 s** excluding preparation/setup
+
+### Controlled result
+
+Candidate temporal triplet:
+- aggregate precision **0.125**
+- aggregate recall **0.100**
+- aggregate F1 **0.1111**
+- macro held-out-capture F1 **0.1458**
+- minimum held-out-capture F1 **0.0**
+- repeated-attack recall **0/4 = 0.0**
+- inactive admission rate **0.00396**
+- sustain true-state accuracy **0.3318**
+
+Equal-capacity repeated-current comparator:
+- aggregate precision **0.1333**
+- aggregate recall **0.0667**
+- aggregate F1 **0.0889**
+- macro held-out-capture F1 **0.1442**
+- minimum held-out-capture F1 **0.0**
+- repeated-attack recall **0/4 = 0.0**
+- inactive admission rate **0.0**
+- sustain true-state accuracy **0.2871**
+
+Temporal candidate minus comparator macro F1 = only **+0.0016**, versus the frozen required **+0.10**.
+
+Failed required criteria:
+- macro F1 improvement >= +0.10: **FAIL**
+- aggregate precision >= 0.75: **FAIL**
+- aggregate recall >= 0.60: **FAIL**
+- aggregate F1 >= 0.67: **FAIL**
+- every held-out capture F1 >= 0.55: **FAIL**
+- repeated-attack recall >= 0.60 when present: **FAIL**
+
+Passed safety/nonregression criteria:
+- inactive false-admission degradation <=0.01: **PASS**
+- sustain-state degradation <=0.02: **PASS**
+- finite metrics / unresolved labels zero: **PASS**
+
+Chords and PalmMute remain especially weak: both held-out P1 and P2 captures scored **0 event F1** for the temporal candidate in those folds.
+
+### Scientific interpretation
+
+The fixed one-frame-neighbor temporal-triplet hypothesis is **not supported** under the frozen budget and grouped split.
+
+Do not rescue this result by adding epochs, lowering thresholds, widening context, changing LR, or rerunning. This does **not** prove all temporal modeling is useless; it only stops this exact controlled hypothesis.
+
+The evidence now points away from simple incremental repairs:
+- head-only was already insufficient to explain state failures;
+- the fixed temporal-triplet intervention adds essentially no held-out-content event advantage;
+- both candidate and comparator fit their training folds to very low losses yet transfer poorly, which is consistent with severe development-set memorization / inadequate representation coverage under this tiny eight-crop regime.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Stop this temporal-triplet hypothesis. Do not rerun it.
+2. Do not reopen V1-V5-style long training and do not spend more epochs on the same eight crops.
+3. P3 remains sealed.
+4. Next work is **offline design review only**. The next hypothesis must be materially different and address the evidence that tiny-crop fitting learns training folds but fails held-out-content transfer.
+5. Before any additional real fitting, prefer a data/representation strategy that increases useful supervised diversity without violating the cost/data freeze, and define a bounded pilot with a genuine validation split.
+6. Do not automatically widen context or introduce a larger temporal architecture; that would be an untested new hypothesis requiring its own design.
+7. No production/customer-readiness claims are supported.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

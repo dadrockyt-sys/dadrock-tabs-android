@@ -1,0 +1,78 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "hypothesis_failed",
+  "run": {
+    "runId": 36332898065,
+    "jobId": 108658126314,
+    "headSha": "01abec205826525d35d19e2657f9e120d2062685"
+  },
+  "artifact": {
+    "artifactId": 10937201537,
+    "name": "astra-temporal-context-controlled-intervention-v1",
+    "digest": "sha256:591c90a938f293ddc9e073b1d93852893307e3317f1b3607bae534e067e04ef2",
+    "expiresAt": "2026-10-11T17:01:44Z"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 1000,
+    "maxAuthorized": 1000,
+    "thresholdSearchExecuted": false,
+    "thresholdsChanged": false,
+    "automaticRetry": false,
+    "p3Opened": false,
+    "runtimeSeconds": 12.59143555799983
+  },
+  "candidate": {
+    "precision": 0.125,
+    "recall": 0.1,
+    "f1": 0.11111111111111112,
+    "macroF1": 0.14583333333333334,
+    "minCaptureF1": 0,
+    "repeatedAttackRecall": 0,
+    "repeatedAttackReferenceCount": 4,
+    "inactiveAdmissionRate": 0.00396012563157176,
+    "sustainTrueStateAccuracy": 0.3318405732198836
+  },
+  "comparator": {
+    "precision": 0.13333333333333333,
+    "recall": 0.06666666666666667,
+    "f1": 0.08888888888888888,
+    "macroF1": 0.14423076923076922,
+    "minCaptureF1": 0,
+    "repeatedAttackRecall": 0,
+    "repeatedAttackReferenceCount": 4,
+    "inactiveAdmissionRate": 0,
+    "sustainTrueStateAccuracy": 0.28705776981639053
+  },
+  "macroF1Delta": 0.0016025641025641216,
+  "criteria": {
+    "macroF1DeltaAtLeast0_10": false,
+    "aggregatePrecisionAtLeast0_75": false,
+    "aggregateRecallAtLeast0_60": false,
+    "aggregateF1AtLeast0_67": false,
+    "everyHeldOutCaptureF1AtLeast0_55": false,
+    "repeatedAttackRecallAtLeast0_60WhenPresent": false,
+    "inactiveAdmissionNotWorseByMoreThan0_01": true,
+    "sustainStateNotWorseByMoreThan0_02": true,
+    "allMetricsFiniteAndUnresolvedZero": true
+  },
+  "interpretation": {
+    "positiveProbe": false,
+    "conclusion": "The fixed ±1-frame temporal-triplet intervention is not supported under the predeclared budget and split.",
+    "caveat": "This does not show that all temporal architectures are ineffective; it shows this controlled triplet-context intervention failed its advancement criteria.",
+    "prohibitedNextInference": [
+      "do not increase steps automatically",
+      "do not lower thresholds",
+      "do not widen temporal context automatically",
+      "do not open P3",
+      "do not claim performer generalization or customer readiness"
+    ]
+  },
+  "decision": {
+    "thisHypothesisStops": true,
+    "automaticRetryAuthorized": false,
+    "p3MustRemainSealed": true,
+    "nextPermissibleWork": "Offline design review only: identify a materially different bounded hypothesis using the accumulated evidence, or pause further fitting."
+  }
+}

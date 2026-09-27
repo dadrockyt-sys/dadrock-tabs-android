@@ -3,17 +3,28 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-## Active canonical run
+## Current verified position
 
-Temporal-context controlled intervention real fit is authorized and launched once.
+Temporal-context controlled intervention run **36332898065**, job **108658126314** was workflow GREEN but **scientifically FAILED** its frozen advancement gate.
 
-- run **36332898065**
-- job **108658126314**
-- launch commit: `01abec205826525d35d19e2657f9e120d2062685`
-- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36332898065
+Frozen result:
+- `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_RESULT_V1.json`
+- artifact **10937201537**
+- candidate macro F1 **0.1458**
+- comparator macro F1 **0.1442**
+- delta only **+0.0016** vs required **+0.10**
+- candidate aggregate precision/recall/F1 **0.125 / 0.100 / 0.111**
+- repeated-attack recall **0/4**
+- minimum held-out-capture F1 **0.0**
+- chords and PalmMute held-out captures remain 0 F1
+- P3 sealed
 
-Inspect only that run. Do not rerun automatically.
+The fixed temporal-triplet hypothesis is stopped. Do not rerun, add epochs, lower thresholds, widen context, or change LR as a rescue.
 
-Frozen ceiling: 4 leave-one-content-group-out folds, candidate + equal-capacity comparator, 125 steps/model/fold, 1000 steps total maximum, <=60 CPU minutes, unchanged 0.50/0.50 thresholds, no sweep, no threshold rescue, no retries, zero paid compute, P3 sealed.
+## Exact next task
 
-If the run completes, freeze the result and evaluate every predeclared criterion. Workflow success alone is not a scientific pass. If any required criterion fails, stop this fixed temporal-triplet hypothesis. If all pass, next work is design-only for a separately authorized performer-generalization evaluation. P3 remains sealed.
+Offline design review only.
+
+Use the accumulated evidence to propose one materially different, cost-bounded path. The key pattern is that the tiny models drive training loss very low yet fail held-out-content transfer, so the next design should address representation/data diversity rather than another minor decoder/head/context tweak.
+
+Do not run real fitting, access P3, or restart V1-V5-style training without a newly frozen design and explicit authorization.
