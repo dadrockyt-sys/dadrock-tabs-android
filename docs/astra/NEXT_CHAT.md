@@ -3,29 +3,27 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-## Active canonical run
+## Current verified position
 
-MR-MT3 Stage-A zero-optimizer feasibility is authorized and launched once.
+MR-MT3 real Stage-A run **36340278435**, job **108678884568** failed due **runtime incompatibility before first forward pass**, not a scientific model result.
 
-- run **36340278435**
-- job **108678884568**
-- launch commit: `9428dd75d446d9e91e2e3b66e2a9aa9a4772d102`
-- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36340278435
+Exact error:
+`'T5Stack' object has no attribute 'get_extended_attention_mask'`
 
-Inspect only that run. Do not rerun automatically.
+Cause:
+- workflow installed Transformers 5.17.0 / Torch 2.14.0 from unbounded mt3-infer dependency floors
+- mt3-infer 0.2.0's own uv.lock pins Transformers 4.57.5 / Torch 2.7.1 / Torchaudio 2.7.1 / Torchvision 0.22.1
 
-Frozen stack:
-- mt3-infer 0.2.0
-- checkpoint SHA-256 `b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f`
-- programs 24-31 only
-- pitches 40-83 only
-- optimizer steps 0
-- no threshold/confidence search
-- <=60 CPU minutes
-- one checkpoint download
-- zero retries
-- P3 sealed
+Frozen receipt:
+- `docs/astra/MR_MT3_REAL_FEASIBILITY_INFRASTRUCTURE_FAILURE_V1.json`
 
-If the run completes, freeze the result and require every predeclared advancement criterion. Workflow success alone is not a scientific pass.
+Synthetic-only runtime repair is active:
+- run **36355209501**
+- job **108721473357**
+- repair commit `3d3e00bd486cd6cffb09cbba923fb3508a705c32`
 
-If it fails, stop the generic frozen pretrained-front-end branch and move offline toward a commercial-safe synthetic/data-diversity strategy. If it passes, next work is design-only for Stage B string/fret assignment.
+No real rerun is authorized. P3 sealed.
+
+## Exact next task
+
+Inspect only the synthetic smoke. If green, freeze the locked runtime and request new explicit authorization for one real rerun with the scientific design unchanged. If smoke fails, stop MR-MT3 and move offline to a commercial-safe synthetic/data-diversity design.

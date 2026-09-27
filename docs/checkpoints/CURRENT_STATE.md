@@ -923,6 +923,61 @@ Frozen execution ceiling:
 6. If MR-MT3 passes, next work is design-only for Stage B string/fret assignment. Do not start Stage B fitting automatically.
 7. P3 remains sealed.
 
+## MR-MT3 real Stage-A — INFRASTRUCTURE FAILURE, NO SCIENTIFIC RESULT
+
+Canonical run **36340278435**, job **108678884568** failed before any scientific scoring.
+
+Succeeded before failure:
+- authorization guard
+- frozen Astra preparation runtime install
+- exact eight approved P1/P2 capture preparation
+- mt3-infer 0.2.0 wheel identity check
+- immutable MR-MT3 checkpoint download / exact byte count / SHA-256 verification
+
+Failure:
+- first MR-MT3 inference on the first selected audio
+- exact error: `InferenceError: Model forward pass failed: 'T5Stack' object has no attribute 'get_extended_attention_mask'`
+- no MIDI result was produced
+- Stage-A scoring did not run
+- no result artifact exists
+
+Root cause isolated to runtime dependency drift:
+- mt3-infer 0.2.0 declares `transformers>=4.35.0` and `torch>=2.0.0`
+- unbounded pip resolution installed Transformers **5.17.0**, Torch **2.14.0**, Torchaudio **2.11.0**, Torchvision **0.29.0**
+- mt3-infer's own committed `uv.lock` at publish commit pins Transformers **4.57.5**, Torch **2.7.1**, Torchaudio **2.7.1**, Torchvision **0.22.1**
+- this is an infrastructure compatibility failure, **not evidence that MR-MT3 failed the scientific gate**
+
+Boundary:
+- optimizer steps **0**
+- threshold search **no**
+- P3 opened **no**
+- automatic retry **no**
+- prior real authorization is **not** reused automatically
+
+Frozen failure receipt:
+- `docs/astra/MR_MT3_REAL_FEASIBILITY_INFRASTRUCTURE_FAILURE_V1.json`
+
+Offline runtime-repair package:
+- `docs/astra/MR_MT3_RUNTIME_REPAIR_V1.json`
+- `.github/workflows/astra-mr-mt3-runtime-smoke-v1.yml`
+- repair commit `3d3e00bd486cd6cffb09cbba923fb3508a705c32`
+
+Active synthetic-only smoke:
+- run **36355209501**
+- job **108721473357**
+- purpose: exact mt3-infer 0.2.0 locked runtime + immutable checkpoint + 1-second synthetic 440 Hz audio
+- real P1/P2 media access: **none**
+- no real rerun is authorized
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect only synthetic smoke run **36355209501**, job **108721473357**.
+2. If smoke fails, preserve exact failure and stop MR-MT3 executable path; move offline to the commercial-safe synthetic/data-diversity design.
+3. If smoke passes, freeze the repaired runtime identity.
+4. Do **not** rerun real P1/P2 automatically. A new explicit authorization is required because the original real launch failed and the runtime contract changed.
+5. Any future authorized rerun must keep the same scientific design/gates/captures/checkpoint/projection and change only the runtime to the package's own locked compatibility versions.
+6. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
