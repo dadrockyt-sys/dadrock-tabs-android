@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **REPAIRED DECODER V2 ZERO-OPTIMIZER P1 CHECK RETRY V2 AUTHORIZED AND LAUNCHED ONCE; RUN 36284602349 IN PROGRESS; NO SECOND LAUNCH/RERUN AUTHORIZED**  
+Status: **DECODER V2 ZERO-OPTIMIZER P1 CHECK GREEN; TRAINING-ONLY ENGINEERING GATE MET 16/16 TP, 0 FP, 0 FN; RESULT FROZEN; NO GENERALIZATION SCREEN OR FULL TRAINING AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -641,4 +641,39 @@ Authorized scope remains:
 - no cross-performer screen or full training.
 
 **Do not create another retry V2 launch or rerun this workflow.** Inspect run **36284602349** only.
+
+## Decoder V2 zero-optimizer P1 check retry V2 — GREEN, TRAINING-ONLY GATE MET
+
+Canonical run **36284602349**, job **108522850285**: **SUCCESS**.
+
+The repaired semantic guard passed before decoder V2 interpretation:
+- decoder V1 boundary-corrected totals reproduced exactly: **16 references, 17 predictions, 16 TP, 1 FP, 0 FN**;
+- decoder V1 corrected minimum per-example F1 reproduced exactly: **0.9230769231**.
+
+Decoder V2 then produced:
+- **16 references, 16 predictions, 16 TP, 0 FP, 0 FN**;
+- PalmMute F1: **1.0**;
+- allsinglenotes F1: **1.0**;
+- Drop3_7 F1: **1.0**;
+- Ab scale F1: **1.0**;
+- minimum per-example F1: **1.0**;
+- matched offsets within 50 ms: **0.9375**;
+- repeated reference attacks: **2**;
+- repeated-attack recall: **1.0**;
+- synthetic silence false positives: **0**;
+- unresolved labels: **0**;
+- `engineeringTrainingOnlyGateMet=true`.
+
+Decoder V2 uses the same frozen 0.50 state/onset thresholds and the same frozen V3 model weights. It executed **0 optimizer steps**. The only decoder semantic change is same-fret reattack admission requiring a fresh below->above onset-threshold crossing while the same fret remains active.
+
+Frozen result: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_RESULT_V2.json`.  
+Result commit: `2a0de5c7a4ffe86325f9320f47e45fb811244380`.  
+Actions artifact: **10919563631**, digest `sha256:099b87369a12cf6117e69199edfac292aee0af14b09746dddd1f118390676446`.  
+Result JSON SHA-256: `1d974927660bd41fcb2e2367c172580720a2b72b2b4a6051cb4c786f7ded2c2d`.
+
+### Meaning and hard boundary
+
+This **establishes engineering learnability on the four selected P1 training examples** with decoder V2. It does **not** establish cross-performer generalization, customer readiness, or justify full training by itself.
+
+**Stop here.** No P2/P3 access, cross-performer screen, full training, customer delivery, or additional optimizer work is authorized. The next scientifically meaningful step is a separately designed cross-performer/generalization screen with fresh explicit authorization.
 
