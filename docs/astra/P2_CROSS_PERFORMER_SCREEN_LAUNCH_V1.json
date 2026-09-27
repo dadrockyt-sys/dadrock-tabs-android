@@ -1,0 +1,46 @@
+{
+  "schema": "astra-p2-cross-performer-screen-launch-v1",
+  "date": "2026-09-26",
+  "status": "authorized_single_minimal_p2_zero_optimizer_screen",
+  "singleLaunch": true,
+  "sourceIdentities": {
+    "authorizationGitBlob": "9a873326fb9ee95f95afec80db8852b76a4f3852",
+    "designGitBlob": "50be648317856752e876c262c8c0ccca7d50603e",
+    "screenScriptGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "screenTestsGitBlob": "0bd39ef5c778f04cb36ae1da51b56e64ae34187b",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "diagnosticHelpersGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "eventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractGitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "developmentThresholdsGitBlob": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "decoderV2ResultGitBlob": "03e0dd727d510decfb4b8e82dd88c267e616f50e",
+    "workflowGitBlob": "4d4a6cf48f6f629dea791fee76fac18ed19ae040"
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f"
+  },
+  "scope": {
+    "performer": "P2",
+    "exactCaptureKeys": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ],
+    "frozenV3ModelInference": true,
+    "decoderV2": true,
+    "optimizerSteps": 0,
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdsChanged": false,
+    "modelWeightsChanged": false,
+    "p1MediaAccess": false,
+    "p3": false,
+    "automaticRetries": 0
+  }
+}
