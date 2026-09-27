@@ -978,6 +978,73 @@ Active synthetic-only smoke:
 5. Any future authorized rerun must keep the same scientific design/gates/captures/checkpoint/projection and change only the runtime to the package's own locked compatibility versions.
 6. P3 remains sealed.
 
+## MR-MT3 repaired-runtime real rerun — AUTHORIZED AND LAUNCHED ONCE
+
+The first real MR-MT3 run failed due runtime incompatibility before scientific scoring. The locked-runtime synthetic smoke then passed, and Stephen explicitly authorized one repaired-runtime rerun.
+
+Locked-runtime smoke:
+- run **36355209501**
+- job **108721473357**
+- result: **SUCCESS**
+- mt3-infer 0.2.0
+- Transformers **4.57.5**
+- Torch **2.7.1**
+- Torchaudio **2.7.1**
+- Torchvision **0.22.1**
+- exact MR-MT3 checkpoint SHA unchanged
+- 1-second synthetic inference completed and wrote valid MIDI
+- no real media / no optimizer / no threshold search / P3 sealed
+
+Repaired-runtime preflight:
+- package commit `c1e966e0156f02b92a219c82fd1e9116ccf42caa`
+- backend preflight run **36356291121**: **SUCCESS**
+- complete backend suite: PASS
+- focused evaluation suite: PASS
+
+Authorized single rerun:
+- launch commit `4899207e0470a605cad873b6243c8ef34ce12773`
+- launch blob `ff160416cc9f64061c60b8866f8dcdbc49bb32d7`
+- canonical run **36356352219**
+- canonical job **108724744341**
+- status at checkpoint: **in progress**
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36356352219
+
+Scientific contract is unchanged from the original MR-MT3 design:
+- same exact 4 P1 + 4 P2 direct-input captures
+- same checkpoint SHA
+- programs 24-31 only
+- pitches 40-83 only
+- 0 optimizer steps
+- no confidence/threshold search
+- no model mutation
+- <=60 CPU minutes
+- one checkpoint download
+- zero automatic retries
+- zero paid compute
+- P3 sealed
+
+Advancement gate remains exactly:
+- aggregate pitch+onset F1 >= 0.70
+- aggregate precision >= 0.60
+- aggregate recall >= 0.70
+- P1 F1 >= 0.60
+- P2 F1 >= 0.60
+- every content-pair macro F1 >= 0.50
+- P1/P2 F1 gap <= 0.15
+- aggregate FP <= 31
+- exact checkpoint / zero optimizer / zero threshold search / unresolved labels zero
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect **only** run **36356352219**, job **108724744341**.
+2. Do not rerun automatically for any reason.
+3. If infrastructure fails again, preserve the exact failure and stop MR-MT3 executable path.
+4. If workflow completes, freeze the result artifact and evaluate every predeclared scientific criterion exactly.
+5. Workflow GREEN alone is not a scientific pass.
+6. If scientific gate fails, stop the generic frozen-front-end branch and move offline to the commercial-safe synthetic/data-diversity strategy.
+7. If scientific gate passes, next work is design-only for Stage B string/fret assignment.
+8. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
