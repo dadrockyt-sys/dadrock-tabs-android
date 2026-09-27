@@ -1,0 +1,32 @@
+{
+  "schema": "astra-mr-mt3-runtime-repair-design-v1",
+  "date": "2026-09-27",
+  "status": "offline_synthetic_only",
+  "hypothesis": "The MR-MT3 adapter will complete inference when run under mt3-infer 0.2.0's own locked compatibility versions instead of the unbounded latest dependencies.",
+  "frozenRuntime": {
+    "python": "3.10.15",
+    "mt3Infer": "0.2.0",
+    "transformers": "4.57.5",
+    "torch": "2.7.1",
+    "torchaudio": "2.7.1",
+    "torchvision": "0.22.1",
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  },
+  "smoke": {
+    "input": "synthetic 1-second 440 Hz mono waveform at 16 kHz",
+    "model": "mr_mt3",
+    "device": "cpu",
+    "autoDownload": false,
+    "successCondition": "CLI exits 0 and writes a parseable MIDI file",
+    "noScientificScoring": true
+  },
+  "boundaries": {
+    "realMediaAccess": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "p3": false,
+    "automaticRealRetry": false
+  },
+  "nextIfGreen": "Freeze repaired runtime identity and request explicit authorization for one real rerun. Do not reuse the prior real authorization automatically.",
+  "nextIfFail": "Stop MR-MT3 executable path and proceed to commercial-safe synthetic/data-diversity design."
+}

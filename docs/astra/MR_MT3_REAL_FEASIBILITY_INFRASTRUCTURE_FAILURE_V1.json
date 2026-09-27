@@ -1,0 +1,45 @@
+{
+  "schema": "astra-mr-mt3-real-feasibility-infrastructure-failure-v1",
+  "date": "2026-09-27",
+  "run": {
+    "runId": 36340278435,
+    "jobId": 108678884568,
+    "headSha": "9428dd75d446d9e91e2e3b66e2a9aa9a4772d102"
+  },
+  "conclusion": "infrastructure_failure_no_scientific_result",
+  "succeededBeforeFailure": [
+    "authorization guard",
+    "frozen Astra preparation runtime install",
+    "exact eight capture preparation",
+    "mt3-infer 0.2.0 wheel identity verification",
+    "immutable MR-MT3 checkpoint download and SHA verification"
+  ],
+  "failureStep": "Run frozen MR-MT3 inference on exactly eight selected audios",
+  "firstInference": {
+    "audioDurationSeconds": 204,
+    "error": "InferenceError: Model forward pass failed: 'T5Stack' object has no attribute 'get_extended_attention_mask'"
+  },
+  "runtimeDrift": {
+    "declaredRequirement": "transformers>=4.35.0; torch>=2.0.0",
+    "installedByPip": {
+      "transformers": "5.17.0",
+      "torch": "2.14.0",
+      "torchaudio": "2.11.0",
+      "torchvision": "0.29.0"
+    },
+    "projectUvLock": {
+      "transformers": "4.57.5",
+      "torch": "2.7.1",
+      "torchaudio": "2.7.1",
+      "torchvision": "0.22.1"
+    },
+    "interpretation": "The real workflow did not honor mt3-infer's own tested/locked dependency set. Transformers major-version drift broke the vendored MR-MT3 T5 implementation before the first forward pass."
+  },
+  "scientificScoringExecuted": false,
+  "resultArtifactProduced": false,
+  "optimizerStepsExecuted": 0,
+  "thresholdSearchExecuted": false,
+  "p3Opened": false,
+  "automaticRetryExecuted": false,
+  "decision": "Do not count as MR-MT3 model failure. Offline runtime repair/synthetic smoke only; real rerun requires a new explicit authorization."
+}

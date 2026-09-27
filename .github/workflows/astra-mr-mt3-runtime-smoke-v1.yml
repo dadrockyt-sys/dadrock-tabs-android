@@ -1,0 +1,69 @@
+name: Astra MR-MT3 locked-runtime synthetic smoke v1
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/MR_MT3_RUNTIME_REPAIR_V1.json'
+      - '.github/workflows/astra-mr-mt3-runtime-smoke-v1.yml'
+permissions: { contents: read }
+jobs:
+  smoke:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10.15' }
+      - name: Install mt3-infer with project-locked compatibility versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/mt3venv
+          /tmp/mt3venv/bin/pip install --disable-pip-version-check 'pip==24.0'
+          /tmp/mt3venv/bin/pip install --disable-pip-version-check             'mt3-infer==0.2.0' 'transformers==4.57.5'             'torch==2.7.1' 'torchaudio==2.7.1' 'torchvision==0.22.1'
+          /tmp/mt3venv/bin/python - <<'PY'
+          import mt3_infer, torch, torchaudio, torchvision, transformers
+          assert mt3_infer.__version__=='0.2.0'
+          assert torch.__version__.split('+')[0]=='2.7.1'
+          assert torchaudio.__version__.split('+')[0]=='2.7.1'
+          assert torchvision.__version__.split('+')[0]=='0.22.1'
+          assert transformers.__version__=='4.57.5'
+          print('LOCKED_RUNTIME_OK')
+          PY
+      - name: Download and verify immutable checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/mt3_models/mr_mt3
+          curl --fail --location --connect-timeout 30 --max-time 900             -o /tmp/mt3_models/mr_mt3/mt3.pth             'https://huggingface.co/gudgud1014/MR-MT3/resolve/539c08b0fe551076db6108a5f5b2a57d774881ed/mt3.pth?download=true'
+          test "$(stat -c '%s' /tmp/mt3_models/mr_mt3/mt3.pth)" = "183672643"
+          test "$(sha256sum /tmp/mt3_models/mr_mt3/mt3.pth | awk '{print $1}')" = "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+      - name: Create synthetic audio
+        run: |
+          /tmp/mt3venv/bin/python - <<'PY'
+          import numpy as np, soundfile as sf
+          sr=16000
+          t=np.arange(sr,dtype=np.float32)/sr
+          x=(0.1*np.sin(2*np.pi*440*t)).astype(np.float32)
+          sf.write('/tmp/synthetic.wav',x,sr)
+          PY
+      - name: Run locked-runtime synthetic inference
+        env:
+          MT3_CHECKPOINT_DIR: /tmp/mt3_models
+        shell: bash
+        run: |
+          set -euo pipefail
+          /tmp/mt3venv/bin/mt3-infer transcribe /tmp/synthetic.wav             -o /tmp/synthetic.mid -m mr_mt3 -d cpu --no-download
+          test -s /tmp/synthetic.mid
+          /tmp/mt3venv/bin/python - <<'PY'
+          import mido
+          m=mido.MidiFile('/tmp/synthetic.mid')
+          print('SYNTHETIC_MIDI_TRACKS',len(m.tracks))
+          print('REAL_MEDIA_ACCESSED=false')
+          print('OPTIMIZER_STEPS_EXECUTED=0')
+          print('THRESHOLD_SEARCH_EXECUTED=false')
+          print('P3_OPENED=false')
+          PY
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/mt3venv /tmp/mt3_models /tmp/synthetic.wav /tmp/synthetic.mid
