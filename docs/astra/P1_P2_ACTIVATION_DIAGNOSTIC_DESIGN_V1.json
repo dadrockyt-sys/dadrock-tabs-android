@@ -1,0 +1,60 @@
+{
+  "schema": "astra-p1-p2-activation-domain-shift-diagnostic-design-v1",
+  "date": "2026-09-27",
+  "status": "authorized_by_user_instruction_pending_launch",
+  "userInstruction": "Run the diagnostic",
+  "purpose": "Explain the P2 zero-prediction cross-performer collapse before any further optimizer work.",
+  "sourceEvidence": {
+    "p1EngineeringResult": "docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_RESULT_V2.json",
+    "p2ScreenResult": "docs/astra/P2_CROSS_PERFORMER_SCREEN_RESULT_V1.json",
+    "p2ScreenRunId": 36286306972
+  },
+  "population": {
+    "p1": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "p2": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ],
+    "framesPerExample": 200,
+    "cropRule": "same deterministic source-only launch-ready preparation used by the proven P1 path and P2 screen"
+  },
+  "diagnosticMeasurements": [
+    "CQT feature mean/std/quantiles/absolute mean/L2 RMS",
+    "onset probability and logit distributions",
+    "state logit distributions",
+    "whole-crop onset-only/state-only/joint-admission counts",
+    "per-reference onset probability within +/-2 frames",
+    "per-reference true-fret probability, silence probability and active-minus-silence margin",
+    "per-reference onset/state/joint pass counts",
+    "decoder-V2 event counts at frozen thresholds",
+    "paired P2-minus-P1 feature/output deltas by content"
+  ],
+  "execution": {
+    "optimizerSteps": 0,
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "modelWeightsFrozen": true,
+    "p1MediaAccess": true,
+    "p2MediaAccess": true,
+    "p3Sealed": true,
+    "automaticRetry": false
+  },
+  "diagnosticClasses": [
+    "onset_head_generalization_failure",
+    "state_head_or_representation_failure",
+    "both_heads_or_representation_domain_collapse",
+    "onset_state_admission_misalignment",
+    "partial_generalization_failure",
+    "reference_admission_healthy"
+  ],
+  "hardBoundary": "Diagnostic only. It cannot authorize threshold changes, optimizer work, P3 access, full training, production mutation, or customer delivery."
+}
