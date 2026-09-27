@@ -1,15 +1,26 @@
 {
   "schema": "astra-tiny-fit-v3-diagnostic-result-v2",
   "date": "2026-09-26",
-  "sourceDiagnostic": {
+  "run": {
     "runId": 36282028911,
     "jobId": 108515568798,
     "headSha": "a1b84b8a572678eae6d6c77af1fc0aaa4e19d0bc",
-    "conclusion": "success",
+    "conclusion": "success"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdsChanged": false,
+    "modelWeightsChanged": false,
+    "captureSelectionChanged": false,
+    "cropSelectionChanged": false,
+    "p2Opened": false,
+    "p3Opened": false
+  },
+  "artifact": {
     "artifactId": 10918344868,
-    "artifactName": "astra-v3-zero-optimizer-boundary-diagnostic-v1",
-    "artifactDigest": "sha256:7010e18f691153be935541898fdaf916f15ea7a592f25b3d3885340f577cd4ad",
-    "artifactJsonSha256": "c960a86f9f2847656598afb1ed790161bccca5bfe7700dfffc28027ac340842d"
+    "name": "astra-v3-zero-optimizer-boundary-diagnostic-v1",
+    "digest": "sha256:7010e18f691153be935541898fdaf916f15ea7a592f25b3d3885340f577cd4ad",
+    "expiresAt": "2026-10-04T00:29:48Z"
   },
   "sourceV3": {
     "runId": 36280547470,
@@ -18,33 +29,24 @@
     "resultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647",
     "preparedTargetSetSha256": "7d57695005d132de49c929721852e9062ef006bf00a5df8f704f5bc0be95a9be"
   },
-  "execution": {
-    "optimizerStepsExecuted": 0,
-    "modelWeightsChanged": false,
-    "thresholdsChanged": false,
-    "captureSelectionChanged": false,
-    "cropSelectionChanged": false,
-    "p2Opened": false,
-    "p3Opened": false
+  "rawTotals": {
+    "reference": 16,
+    "prediction": 25,
+    "tp": 16,
+    "fp": 9,
+    "fn": 0
   },
-  "raw": {
-    "referenceCount": 16,
-    "predictionCount": 25,
-    "truePositive": 16,
-    "falsePositive": 9,
-    "falseNegative": 0
+  "boundaryCorrectedTotals": {
+    "reference": 16,
+    "prediction": 17,
+    "tp": 16,
+    "fp": 1,
+    "fn": 0
   },
-  "boundaryCorrected": {
-    "referenceCount": 16,
-    "predictionCount": 17,
-    "truePositive": 16,
-    "falsePositive": 1,
-    "falseNegative": 0,
-    "trainingExampleF1Min": 0.923076923076923,
-    "matchedOffsetWithin50msFraction": 0.9375,
-    "wouldMeetFrozenF1Gate": false
-  },
-  "perExample": [
+  "boundaryCorrectedTrainingExampleF1Min": 0.923076923076923,
+  "boundaryCorrectedMatchedOffsetWithin50msFraction": 0.9375,
+  "boundaryCorrectedWouldMeetFrozenF1Gate": false,
+  "examples": [
     {
       "captureKey": "P1|techniques|PalmMute|directinput",
       "rawF1": 0.6666666666666666,
@@ -76,42 +78,43 @@
   ],
   "remainingFalsePositive": {
     "captureKey": "P1|chords|Drop3_7|directinput",
-    "predictionId": "diag:2:s1:2",
+    "id": "diag:2:s1:2",
     "string": 1,
     "fret": 0,
     "startSeconds": 0.23219954648526078,
     "endSeconds": 0.25541950113378686,
     "startFrame": 10,
     "onsetProbability": 0.506671667098999,
-    "onsetThreshold": 0.5,
     "onsetMarginAboveThreshold": 0.0066716670989990234,
     "activeProbability": 0.7487640976905823,
-    "activeThreshold": 0.5,
     "activeMarginAboveThreshold": 0.24876409769058228,
     "silenceProbability": 0.2512359321117401,
     "activeMinusSilence": 0.49752816557884216,
-    "targetStateAtStart": 0,
     "targetOnsetAtStart": 0,
-    "nearestReference": {
+    "targetStateAtStart": 0,
+    "nearestSameStringFretReference": {
       "id": "P1|chords|Drop3_7|directinput:A:13",
-      "string": 1,
-      "fret": 0,
       "startSeconds": 0.20584126984127238,
       "endSeconds": 0.23709126984127238,
-      "predictedOnsetDeltaSeconds": 0.026358276643988404
+      "onsetDeltaSeconds": 0.026358276643988404
     },
-    "classification": "same-string same-fret duplicate reattack while reference event is still active",
-    "interpretation": "Decoder admitted a second onset because onset probability barely exceeded the frozen threshold while the same fret remained active. This is not a wrong-fret or missed-note error."
+    "interpretation": "A second onset was decoded 26.36 ms after a real A-string open-note onset while the note state remained active. The onset logit was only 0.00667 above the frozen 0.50 threshold, so this is a near-threshold duplicate-onset error rather than a wrong-note/state error."
   },
-  "conclusion": {
-    "boundaryScoringMismatchConfirmed": true,
-    "boundaryPredictionsRemoved": 8,
-    "genuineRemainingFalsePositiveCount": 1,
-    "recallAfterBoundaryCorrection": 1,
-    "frozenF1GateStillNotMet": true,
-    "nextLowestCostQuestion": "Can an event-identity/refractory decoder rule suppress this within-note duplicate reattack without threshold retuning or harming real same-fret reattacks?",
-    "noTrainingAuthorized": true,
-    "noThresholdRetuningAuthorized": true,
-    "noP2P3Authorized": true
+  "diagnosis": {
+    "boundaryFalsePositivesRemoved": 8,
+    "originalFalsePositives": 9,
+    "genuineRemainingFalsePositives": 1,
+    "threeOfFourExamplesPerfectAfterBoundaryCorrection": true,
+    "residualFailureClass": "near-threshold duplicate onset on active same-string/same-fret state",
+    "thresholdRetuningPerformed": false
+  },
+  "decision": {
+    "advancementStillBlocked": true,
+    "reason": "minimum corrected F1 remains 0.9231 below frozen 0.95 due to one duplicate onset",
+    "nextRecommendedWork": "offline decoder/onset-separation diagnostic around the single A-string duplicate; do not retrain yet",
+    "retrainingAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "crossPerformerScreenAuthorized": false,
+    "fullTrainingAuthorized": false
   }
 }

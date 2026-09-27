@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DIAGNOSTIC V2 GREEN; BOUNDARY MISMATCH CONFIRMED; 1 GENUINE DUPLICATE REATTACK REMAINS; 0 OPTIMIZER STEPS; RESULT FROZEN; NO FURTHER RUN AUTHORIZED**  
+Status: **DIAGNOSTIC V2 GREEN; BOUNDARY ACCOUNTING REMOVES 8/9 FALSE POSITIVES; ONE NEAR-THRESHOLD DUPLICATE ONSET REMAINS; NO RETRAINING AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -466,4 +466,56 @@ Diagnostic JSON SHA-256: `c960a86f9f2847656598afb1ed790161bccca5bfe7700dfffc2802
 **Stop here.** Do not retrain, retune thresholds, rerun the diagnostic, open P2/P3, or start a cross-performer screen without new explicit authorization.
 
 Cheapest next question: design an offline decoder-contract test for a short refractory/event-identity rule that suppresses this within-note duplicate reattack while preserving true same-fret repeated attacks. This should be tested first on synthetic and frozen-logit evidence with **0 optimizer steps**.
+
+## V3 zero-optimizer diagnostic V2 — GREEN
+
+Canonical run **36282028911**, job **108515568798**: **SUCCESS**.
+
+Execution boundary:
+- optimizer steps: **0**;
+- thresholds changed: **no**;
+- model weights changed: **no**;
+- same four P1 crops reproduced: **yes**;
+- P2/P3: **not opened**.
+
+Raw V3 totals reproduced exactly: **16 references, 25 predictions, 16 TP, 9 FP, 0 FN**.
+
+With whole-event carry-in/carry-out exclusions passed through the existing Event-v2 scoring contract:
+- corrected totals: **16 references, 17 predictions, 16 TP, 1 FP, 0 FN**;
+- matched offsets within 50 ms: **0.9375**;
+- corrected minimum per-example F1: **0.923077**.
+
+Corrected F1:
+- PalmMute: **1.0**
+- allsinglenotes: **1.0**
+- Ab scale: **1.0**
+- Drop3_7: **0.923077**
+
+The boundary mismatch therefore explains **8 of the original 9 false positives**.
+
+### Only remaining false positive
+
+Capture: `P1|chords|Drop3_7|directinput`  
+String: A (string index 1)  
+Fret: 0  
+Predicted onset: **0.23220 s**  
+Nearest real same-string/fret onset: **0.20584 s**  
+Delta: **+26.36 ms**
+
+At the false onset frame:
+- onset probability: **0.506672**
+- frozen onset threshold: **0.50**
+- margin above threshold: **+0.006672**
+- active-state probability: **0.748764**
+- target state: active fret 0
+- target onset: **0**
+
+This is a **near-threshold duplicate onset while the correct note state remains active**, not a wrong-note/state prediction.
+
+Frozen diagnostic result: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_RESULT_V2.json`.  
+Artifact: **10918344868**, digest `sha256:7010e18f691153be935541898fdaf916f15ea7a592f25b3d3885340f577cd4ad`.
+
+The corrected result still does **not** meet the frozen 0.95 per-example F1 gate because Drop3_7 remains at 0.923077. No threshold retuning is permitted retroactively.
+
+**Next cheapest step:** offline analysis of duplicate-onset suppression / onset-separation semantics around this single event. Do not retrain, retune thresholds, open P2/P3, or start a cross-performer screen yet.
 
