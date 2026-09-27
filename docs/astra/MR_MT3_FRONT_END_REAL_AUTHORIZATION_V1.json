@@ -1,0 +1,30 @@
+{
+  "schema": "astra-mr-mt3-real-feasibility-authorization-v1",
+  "date": "2026-09-27",
+  "status": "explicit_user_authorization",
+  "userInstruction": "I authorize",
+  "scope": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "exactCaptures": 8,
+    "optimizerStepsAuthorized": 0,
+    "modelMutationAuthorized": false,
+    "confidenceThresholdSearchAuthorized": false,
+    "acceptedProgramsZeroBased": "24-31",
+    "acceptedPitchRange": "40-83",
+    "maxCpuMinutes": 60,
+    "checkpointDownloads": 1,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3Authorized": false
+  },
+  "frozenStack": {
+    "mt3InferVersion": "0.2.0",
+    "mt3InferWheelSha256": "95209657fafab7eda0e5187f5fb9ae3438a18e2a4e30acd4786f3cda25389ff4",
+    "mrMt3UpstreamCommit": "826ea84a933f93cd707d11e91af711f1d19c8d79",
+    "checkpointUploadCommit": "539c08b0fe551076db6108a5f5b2a57d774881ed",
+    "checkpointBytes": 183672643,
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  },
+  "claimBoundary": "One zero-optimizer pitch/onset MR-MT3 feasibility run only. No threshold tuning, string/fret fitting, P3, production mutation, or customer-readiness claim."
+}
