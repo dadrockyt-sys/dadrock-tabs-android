@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **REPAIRED ZERO-OPTIMIZER DIAGNOSTIC V2 AUTHORIZED AND LAUNCHED ONCE; RUN 36282028911 QUEUED/IN PROGRESS; NO SECOND V2 DIAGNOSTIC LAUNCH AUTHORIZED**  
+Status: **DIAGNOSTIC V2 GREEN; BOUNDARY MISMATCH CONFIRMED; 1 GENUINE DUPLICATE REATTACK REMAINS; 0 OPTIMIZER STEPS; RESULT FROZEN; NO FURTHER RUN AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -406,4 +406,64 @@ Scope remains:
 - no cross-performer screen or full training.
 
 **Do not create another V2 diagnostic launch or rerun this workflow without new explicit authorization.** Inspect only run **36282028911**. If it completes, freeze the exact boundary-corrected metrics and remaining unmatched prediction events. If it fails, preserve and diagnose that run only.
+
+## Repaired zero-optimizer diagnostic V2 — GREEN
+
+Canonical run **36282028911**, job **108515568798**: **SUCCESS**.
+
+Execution boundary:
+- exact frozen V3 model loaded and hash-verified;
+- same four P1 crops re-prepared;
+- optimizer steps: **0**;
+- thresholds/model weights/crop selection: **unchanged**;
+- P2/P3: **not opened**.
+
+Raw V3 accounting reproduced exactly: **16 references, 25 predictions, 16 TP, 9 FP, 0 FN**.
+
+Boundary-corrected accounting:
+- references: **16**
+- predictions: **17**
+- true positives: **16**
+- false positives: **1**
+- false negatives: **0**
+- minimum per-example F1: **0.9230769231**
+- matched offsets within 50 ms: **0.9375**
+- frozen 0.95 per-example F1 gate: **still not met**
+
+Per-example boundary-corrected F1:
+- PalmMute: **1.0**
+- allsinglenotes: **1.0**
+- Drop3_7: **0.9230769231**
+- Ab scale: **1.0**
+
+The boundary correction excludes **8 of the 9** raw false positives, confirming the V3 evaluator was substantially contaminated by carry-in/carry-out scoring.
+
+### One genuine remaining false positive
+
+Only one unmatched prediction remains, on `P1|chords|Drop3_7|directinput`:
+
+- prediction ID: `diag:2:s1:2`
+- string index: **1 (A string)**
+- fret: **0**
+- predicted onset: **0.2321995465 s**
+- nearest true same-string/same-fret onset: **0.2058412698 s**
+- onset delta: **+0.0263582766 s**
+- the true reference remains active until **0.2370912698 s**
+- target state at predicted onset: **fret 0 active**
+- target onset at predicted onset: **0**
+- onset probability: **0.5066716671**
+- frozen onset threshold: **0.5**
+- margin over threshold: only **0.0066716671**
+- active probability: **0.7487640977**
+- silence probability: **0.2512359321**
+
+Classification: **same-string/same-fret duplicate reattack inside a still-active true note**. This is not a wrong-note error and not a recall error. The decoder split a held note because a borderline onset score barely crossed 0.5.
+
+Frozen result: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_RESULT_V2.json`.  
+Diagnostic artifact: **10918344868**, digest `sha256:7010e18f691153be935541898fdaf916f15ea7a592f25b3d3885340f577cd4ad`.  
+Diagnostic JSON SHA-256: `c960a86f9f2847656598afb1ed790161bccca5bfe7700dfffc28027ac340842d`.
+
+**Stop here.** Do not retrain, retune thresholds, rerun the diagnostic, open P2/P3, or start a cross-performer screen without new explicit authorization.
+
+Cheapest next question: design an offline decoder-contract test for a short refractory/event-identity rule that suppresses this within-note duplicate reattack while preserving true same-fret repeated attacks. This should be tested first on synthetic and frozen-logit evidence with **0 optimizer steps**.
 
