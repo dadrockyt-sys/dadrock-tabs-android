@@ -60,7 +60,7 @@ Do not multiply workflows and approvals for ordinary offline fixes. Preserve his
 
 **Next response from GPT-5.6 should implement the offline package above and report its tests, remaining uncertainty, and exact proposed execution scope.** No new real-media access, fitting, launch artifact, deployment or production change is authorized by this review. Update this checkpoint after the milestone and verify the remote branch. The historical log below is evidence, not the active task queue.
 
-## Offline combined diagnostic package — IMPLEMENTED, SYNTHETIC VERIFICATION PENDING
+## Offline combined diagnostic package — IMPLEMENTED, SYNTHETIC VERIFIED GREEN
 
 Prepared on 2026-09-27 under the GPT-5.6 handoff review. No new corpus media was opened, no optimizer steps were run, no thresholds changed, and P3 remains sealed.
 
@@ -82,13 +82,19 @@ Workflow run **36329164081**, job **108647662873** failed in the synthetic-only 
 
 Failure was confined to the new boundary-accounting test fixture: it supplied a two-field exclusion interval `(lo, hi)`, while the frozen scorer contract requires `(string, lo, hi)`. The implementation path uses `boundary_exclusions(...)`, which already returns the correct three-field shape. Offline repair: change the synthetic fixture to `(1, 0.25, 0.35)` and rerun the same synthetic gate. This does not alter diagnostic scope, thresholds, model, media policy, or P3 boundary.
 
+### Offline synthetic verification — GREEN
+
+Repaired workflow run **36329296182**, job **108648036163** completed **SUCCESS**. The package passed all four targeted synthetic tests: non-positional correspondence with unmatched retention, wrong string/fret rejection, bias-cancellation/projection identity, and boundary-accounting behavior with string-scoped exclusions. No real P1/P2/P3 media was opened, no optimizer steps ran, and no thresholds were searched or changed.
+
+Frozen receipt: `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_SYNTHETIC_VERIFICATION_V1.json`.
+
+The package is now **request-only and ready for explicit authorization**. There is still no real authorization artifact and no launch artifact. Do not run the real diagnostic until Stephen explicitly authorizes the exact bounded request.
+
 ### EXACT NEXT STEPS
 
-1. Inspect the automatic offline synthetic test workflow triggered by this package commit. It must pass before any real-data authorization is requested.
-2. If the synthetic workflow fails, repair only the offline package and rerun synthetic verification. Do not open P1/P2/P3 media.
-3. If it passes, freeze a synthetic-verification receipt and update this checkpoint.
-4. Then present the already-created **request-only** scope for explicit user authorization. Do not create `P1_P2_COMBINED_DIAGNOSTIC_AUTHORIZATION_V1.json` or `...LAUNCH_V1.json` until the user explicitly authorizes it.
-5. A future authorized execution is capped at the same eight P1/P2 captures, 200 frames each, frozen V3 model, 0 optimizer steps, unchanged 0.50/0.50 thresholds, one <=90-minute CPU job, zero retries, zero paid compute, P3 sealed.
+1. Present the frozen request-only scope to Stephen for explicit authorization. Do not create an authorization or launch artifact unless he authorizes it. triggered by this package commit. It must pass before any real-data authorization is requested.
+
+2. A future authorized execution is capped at the same eight P1/P2 captures, 200 frames each, frozen V3 model, 0 optimizer steps, unchanged 0.50/0.50 thresholds, one <=90-minute CPU job, zero retries, zero paid compute, P3 sealed.
 6. No fitting, threshold search, P3 access, full-training restart, production mutation, or customer-readiness claim is authorized.
 
 

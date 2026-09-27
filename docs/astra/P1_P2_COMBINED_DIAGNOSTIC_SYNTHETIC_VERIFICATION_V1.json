@@ -1,0 +1,50 @@
+{
+  "schema": "astra-p1-p2-combined-diagnostic-synthetic-verification-v1",
+  "date": "2026-09-27",
+  "packageCommit": "377bf512588185ac8c3ba603993157a79dfb3877",
+  "workflow": {
+    "runId": 36329296182,
+    "jobId": 108648036163,
+    "conclusion": "success"
+  },
+  "priorFailedAttempt": {
+    "runId": 36329164081,
+    "jobId": 108647662873,
+    "classification": "synthetic_fixture_exclusion_tuple_shape",
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "p3Opened": false
+  },
+  "verification": {
+    "exactRuntimeInstalled": true,
+    "testsPassed": 4,
+    "tests": [
+      "conservative non-positional correspondence retains unmatched events",
+      "wrong string/fret cannot match correspondence",
+      "onset-head bias cancels from projected pairwise delta",
+      "boundary-accounting scorer behavior with string-scoped exclusion"
+    ],
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "p3Opened": false
+  },
+  "sourceIdentities": {
+    "diagnosticScriptGitBlob": "ddcda240a7ba3c64469690275f798ce271c56f84",
+    "diagnosticTestsGitBlob": "b4df5cae9745294fd544862a3425467e86041c2c",
+    "designGitBlob": "4879e8573f6c81d4b2dec6546b246502dbbe1943",
+    "requestOnlyWorkflowGitBlob": "b26ae04a651766896bbbe49ac380db9738ce54f9",
+    "offlineTestsWorkflowGitBlob": "3478182bc65f5563bd2683d16a1d85a460a2b300",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "crossPerformerScreenGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "boundaryHelperGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07"
+  },
+  "decision": "offline_package_verified_request_only",
+  "authorizationState": {
+    "realDiagnosticAuthorized": false,
+    "launchArtifactExists": false,
+    "p3Authorized": false,
+    "optimizerWorkAuthorized": false
+  }
+}

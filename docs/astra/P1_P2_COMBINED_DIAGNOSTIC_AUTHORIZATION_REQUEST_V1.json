@@ -1,7 +1,7 @@
 {
   "schema": "astra-p1-p2-combined-diagnostic-authorization-request-v1",
   "date": "2026-09-27",
-  "status": "request_only_not_authorization",
+  "status": "request_only_synthetic_verified",
   "authorizationGranted": false,
   "purpose": "Request one bounded real-data execution of the already-prepared combined diagnostic after synthetic verification is green.",
   "requestedAuthorization": {
@@ -25,5 +25,22 @@
     }
   },
   "noLaunchArtifactExists": true,
-  "claimBoundary": "Execution would provide descriptive evidence only. It cannot authorize fitting, threshold changes, P3, production mutation, or customer readiness."
+  "claimBoundary": "Execution would provide descriptive evidence only. It cannot authorize fitting, threshold changes, P3, production mutation, or customer readiness.",
+  "syntheticVerification": {
+    "runId": 36329296182,
+    "jobId": 108648036163,
+    "conclusion": "success",
+    "receipt": "docs/astra/P1_P2_COMBINED_DIAGNOSTIC_SYNTHETIC_VERIFICATION_V1.json"
+  },
+  "sourceIdentities": {
+    "diagnosticScriptGitBlob": "ddcda240a7ba3c64469690275f798ce271c56f84",
+    "diagnosticTestsGitBlob": "b4df5cae9745294fd544862a3425467e86041c2c",
+    "designGitBlob": "4879e8573f6c81d4b2dec6546b246502dbbe1943",
+    "requestOnlyWorkflowGitBlob": "b26ae04a651766896bbbe49ac380db9738ce54f9",
+    "offlineTestsWorkflowGitBlob": "3478182bc65f5563bd2683d16a1d85a460a2b300",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "crossPerformerScreenGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "boundaryHelperGitBlob": "bd336fe7bf3f03940165988117d12b1c24bd5eec",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07"
+  }
 }
