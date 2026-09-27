@@ -1,0 +1,27 @@
+name: Astra temporal context synthetic verification v1
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/temporal_context_intervention_v1.py'
+      - 'astra_backend/evaluation/test_temporal_context_intervention_v1.py'
+      - 'docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_AUTHORIZATION_V1.json'
+permissions: { contents: read }
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10.15' }
+      - name: Install torch only
+        run: python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu torch==1.11.0+cpu
+      - name: Run synthetic tests
+        shell: bash
+        run: |
+          cd astra_backend
+          PYTHONPATH=. python -m unittest -v evaluation/test_temporal_context_intervention_v1.py
+          echo "REAL_MEDIA_ACCESSED=false"
+          echo "REAL_OPTIMIZER_STEPS_EXECUTED=0"
+          echo "P3_OPENED=false"

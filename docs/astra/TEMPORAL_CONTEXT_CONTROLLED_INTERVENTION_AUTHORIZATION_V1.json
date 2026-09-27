@@ -1,0 +1,17 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-authorization-v1",
+  "date": "2026-09-27",
+  "status": "explicit_user_authorization_for_implementation_and_synthetic_only",
+  "userInstruction": "I authorize",
+  "authorization": {
+    "implementHarness": true,
+    "runSyntheticVerification": true,
+    "realMediaAccessAuthorized": false,
+    "realOptimizerWorkAuthorized": false,
+    "p3Authorized": false,
+    "thresholdSearchAuthorized": false
+  },
+  "designGitBlob": "086c1647f44824e25e2eed68087d411bbe4bc259",
+  "requestGitBlob": "a4380131bab7f81d70c5349784295a10afe2b334",
+  "claimBoundary": "This authorization permits implementation and synthetic verification only. Real P1/P2 fitting still requires a green synthetic gate and a separately frozen single-use launch."
+}
