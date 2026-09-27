@@ -1,0 +1,47 @@
+{
+  "schema": "astra-pretrained-note-front-end-synthetic-verification-v1",
+  "date": "2026-09-27",
+  "status": "green_request_only",
+  "packageCommit": "ed7fcf897239760aa147f78ed80e1db5fccf3aa0",
+  "workflow": {
+    "runId": 36336757424,
+    "jobId": 108668968907,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10937905851,
+    "digest": "sha256:a664d1f143d031ab45b3ae7e0ebc26af4d00d8bbe65ed2904b313448002dc571",
+    "expiresAt": "2026-10-27T17:24:14Z"
+  },
+  "tests": {
+    "count": 6,
+    "passed": true,
+    "coverage": [
+      "standard-tuning string/fret to MIDI pitch mapping",
+      "wrong capture identity rejection",
+      "duplicate same-pitch ambiguity retention",
+      "frozen crop-boundary clipping without favorable-window selection",
+      "one-to-one pitch/onset and pitch/onset/offset scoring",
+      "frozen zero-optimizer threshold constants"
+    ]
+  },
+  "basicPitch": {
+    "packageVersion": "0.4.0",
+    "runtimeModel": "nmp.tflite",
+    "modelBytes": 204448,
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "defaults": {
+      "onsetThreshold": 0.5,
+      "frameThreshold": 0.3,
+      "minimumNoteLengthMs": 127.7,
+      "melodiaTrick": true
+    }
+  },
+  "boundaries": {
+    "realMediaAccessed": false,
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "p3Opened": false
+  },
+  "decision": "synthetic_green_real_media_still_not_authorized"
+}

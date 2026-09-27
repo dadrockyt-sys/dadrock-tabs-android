@@ -518,6 +518,53 @@ If Basic Pitch fails, stop it without tuning thresholds on these eight examples.
 4. Do **not** reopen P1/P2 media until synthetic is green and Stephen separately explicitly authorizes the request-only real feasibility run.
 5. No string/fret fitting, no threshold tuning, no P3, no production mutation.
 
+## Pretrained note-front-end Stage A — OFFLINE ADAPTER IMPLEMENTED, SYNTHETIC GREEN
+
+Completed 2026-09-27. No corpus media was reopened.
+
+Implementation:
+- `astra_backend/evaluation/pretrained_note_front_end_v1.py`
+- `astra_backend/evaluation/test_pretrained_note_front_end_v1.py`
+- `.github/workflows/astra-pretrained-note-front-end-synthetic-v1.yml`
+- synthetic receipt: `docs/astra/PRETRAINED_NOTE_FRONT_END_SYNTHETIC_VERIFICATION_V1.json`
+
+Canonical synthetic verification:
+- run **36336757424**
+- job **108668968907**
+- result: **SUCCESS**
+- package commit: `ed7fcf897239760aa147f78ed80e1db5fccf3aa0`
+- artifact **10937905851**, expires **2026-10-27T17:24:14Z**
+
+Verified synthetic contracts:
+- standard tuning `E A D G B e` maps to MIDI open notes **40,45,50,55,59,64**
+- wrong capture identity is rejected
+- simultaneous duplicate same-pitch reference events remain visible in ambiguity accounting
+- predictions are clipped to the frozen scoring interval; there is no favorable-window search
+- pitch+onset and pitch+onset+offset matching is one-to-one
+- Basic Pitch thresholds are frozen at onset **0.5**, frame **0.3**, minimum note length **127.70 ms**
+- optimizer remains **0**
+
+### Frozen Basic Pitch identity
+
+- package: **basic-pitch 0.4.0**
+- Linux runtime model: `nmp.tflite`
+- model bytes: **204448**
+- model SHA-256: `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+
+Execution boundary:
+- real P1/P2 media accessed: **no**
+- optimizer steps: **0**
+- threshold search: **no**
+- P3 opened: **no**
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. The request-only real feasibility scope is now synthetic-verified, but **not authorized**.
+2. Do not create a real launch until Stephen explicitly authorizes the Stage-A feasibility run.
+3. Requested real ceiling remains: the same exact 4 P1 + 4 P2 direct-input captures only; Basic Pitch 0.4.0 + exact model SHA above; 0 optimizer steps; frozen thresholds 0.5/0.3/127.70 ms; max 45 CPU minutes; zero retries; zero paid compute; P3 sealed.
+4. Real scoring is pitch/onset first, with pitch/onset+offset secondary. It does **not** score string/fret identity.
+5. If the real gate passes all frozen criteria, next work is design-only for Stage B string/fret assignment. If it fails, stop Basic Pitch without threshold tuning on these eight examples.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
