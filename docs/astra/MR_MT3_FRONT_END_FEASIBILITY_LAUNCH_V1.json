@@ -1,30 +1,35 @@
 {
-  "schema": "astra-mr-mt3-front-end-feasibility-launch-v1",
+  "schema": "astra-mr-mt3-front-end-feasibility-launch-v2",
   "date": "2026-09-27",
-  "status": "authorized_single_launch",
+  "status": "authorized_single_repaired_runtime_rerun",
   "singleLaunch": true,
-  "authorizedHeadBeforeLaunch": "8255de5774056ee913e18ad263172c1cfdb7dd84",
-  "sourceIdentities": {
-    "runnerGitBlob": "34de05bb609a1a018412dba50c55667eba489feb",
-    "scorerGitBlob": "3fc1e1f2c379d75fc6e697d7578fa3b0b2b12380",
-    "workflowGitBlob": "bd3705606b6a3c493a415eac9ea2ac5617b59138",
-    "authorizationGitBlob": "d498395b1db8665346df4486d191870b9cddc4c3",
-    "syntheticVerificationGitBlob": "b2ec76d917e79338853ebd525432761eb2b19cf2",
-    "provenanceGitBlob": "eb59ad9fbe78867dea123b23146b4ebb6293f929",
-    "designGitBlob": "d59b539903cb54204d76953f11bcaab9d95f62b4"
+  "rerunOf": {
+    "runId": 36340278435,
+    "reason": "infrastructure failure before first scientific score"
   },
-  "frozenStack": {
-    "mt3InferVersion": "0.2.0",
-    "checkpointBytes": 183672643,
-    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f"
+  "prerequisiteSmoke": {
+    "runId": 36355209501,
+    "jobId": 108721473357,
+    "conclusion": "success"
   },
-  "scope": {
+  "authorization": "docs/astra/MR_MT3_REPAIRED_RUNTIME_REAL_RERUN_AUTHORIZATION_V1.json",
+  "authorizedHeadBeforeLaunch": "c1e966e0156f02b92a219c82fd1e9116ccf42caa",
+  "runtime": {
+    "python": "3.10.15",
+    "mt3Infer": "0.2.0",
+    "transformers": "4.57.5",
+    "torch": "2.7.1",
+    "torchaudio": "2.7.1",
+    "torchvision": "0.22.1"
+  },
+  "frozenScience": {
     "captures": 8,
+    "checkpointSha256": "b8a3807ed265059abd25ad7f68142c06c35e8f6144dcaa45bd55946a3745398f",
+    "programs": "24-31",
+    "pitches": "40-83",
     "optimizerSteps": 0,
     "thresholdSearch": false,
     "modelMutation": false,
-    "acceptedProgramsZeroBased": "24-31",
-    "acceptedPitchRange": "40-83",
     "maxCpuMinutes": 60,
     "checkpointDownloads": 1,
     "automaticRetries": 0,
