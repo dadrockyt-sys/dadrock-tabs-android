@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DECODER V2 CHECK V1 FAILED ON OVERSTRICT FEATURE-BYTE IDENTITY; 0 OPTIMIZER STEPS; SEMANTIC REPRODUCTION REPAIR STAGED; NO RETRY AUTHORIZED**  
+Status: **DECODER V2 CHECK V1 FAILURE PRESERVED; SEMANTIC REPRODUCTION REPAIR VERIFIED GREEN; RETRY V2 REQUEST FROZEN; NO RETRY AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -599,4 +599,24 @@ Repair: feature SHA remains recorded provenance, but the gate now requires exact
 Frozen failure: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_FAILURE_V1.json`.
 
 No retry is authorized. After tests pass, freeze a new request-only repaired decoder V2 check.
+
+## Repaired decoder V2 zero-optimizer P1 check retry V2 — REQUEST ONLY
+
+Check V1 run **36283779556** stopped before decoder V2 interpretation because all four re-prepared CQT feature byte hashes differed from frozen V3, despite exact crop/target reproduction and the same runner image/pinned software. It executed **0 optimizer steps**.
+
+Repair:
+- feature SHA is retained as provenance, not semantic equality;
+- exact non-feature source/crop/target identity is still required;
+- decoder V1 boundary-corrected totals must reproduce diagnostic V2 exactly;
+- decoder V1 boundary-corrected minimum F1 must reproduce diagnostic V2 exactly;
+- only after those semantic guards pass may decoder V2 be interpreted.
+
+Repair code run **36284377888**: SUCCESS.  
+Regression/test run **36284381574**: SUCCESS.
+
+Frozen V1 failure: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_FAILURE_V1.json`.  
+Retry V2 request: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_AUTHORIZATION_REQUEST_V2.json`.  
+Dormant retry workflow: `.github/workflows/astra-tiny-fit-v3-decoder-v2-check-v2.yml`.
+
+No V2 authorization or launch exists. **Fresh explicit authorization is required before any new P1 media access or inference.** Scope remains exact frozen V3 model, same four P1 crops, decoder V2, unchanged 0.50/0.50 thresholds, 0 optimizer steps, no P2/P3, no automatic retry.
 
