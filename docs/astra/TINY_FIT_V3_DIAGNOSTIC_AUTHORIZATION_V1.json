@@ -1,0 +1,42 @@
+{
+  "schema": "astra-tiny-fit-v3-diagnostic-authorization-v1",
+  "date": "2026-09-26",
+  "status": "authorized_zero_optimizer_diagnostic_only",
+  "userInstruction": "Run the diagnostic",
+  "authorization": {
+    "p1MediaAccessAuthorized": true,
+    "optimizerStepsAuthorized": 0,
+    "frozenV3ModelInferenceAuthorized": true,
+    "thresholdRetuningAuthorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "crossPerformerScreenAuthorized": false
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "jobId": 108511412597,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "resultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647"
+  },
+  "sourceIdentities": {
+    "diagnosticGitBlob": "bae343e7e17ade040410ac1399e106e267d286a2",
+    "diagnosticTestsGitBlob": "f0dd8b19c9b30e8df7343a661527040d31629ee2",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "preparedEventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractV2GitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "v3ResultReceiptGitBlob": "eb777edb898b18365cb66963d36216edf5f63c57",
+    "workflowGitBlob": "933b17a772843bf7cbb57af25046762ab23ed06a",
+    "designGitBlob": "932e91006006e46271c4e77667497a9d4431340a"
+  },
+  "guards": {
+    "optimizerMustRemainZero": true,
+    "thresholdsFrozen": true,
+    "P2P3Closed": true,
+    "noGeneralizationClaim": true
+  }
+}

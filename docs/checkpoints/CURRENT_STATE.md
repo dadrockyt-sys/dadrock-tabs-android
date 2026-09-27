@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V3 WORKFLOW GREEN; 200-STEP P1 FIT COMPLETED; ENGINEERING ADVANCEMENT GATE FAILED ON PRECISION/F1; RESULT FROZEN; NO RERUN OR BROADER TRAINING AUTHORIZED**  
+Status: **V3 RESULT FROZEN; ZERO-OPTIMIZER BOUNDARY DIAGNOSTIC AUTHORIZED BY USER AND STAGED; NOT YET LAUNCHED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -312,4 +312,24 @@ Result JSON SHA-256: `1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3
 Model SHA-256: `fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f`.
 
 **Stop here.** Do not rerun V3, add optimizer steps, retune thresholds, open P2/P3, start a cross-performer screen, or restart full training. Cheapest next work: repair the evaluator boundary contract offline and design a zero-optimizer diagnostic that records decoded prediction events. Any new P1 media access or optimizer work requires fresh explicit authorization.
+
+## V3 zero-optimizer boundary diagnostic — AUTHORIZED, PRE-LAUNCH
+
+User instruction: **"Run the diagnostic."**
+
+Authorized scope only:
+- reprepare the same four frozen P1 crops;
+- load the exact frozen V3 200-step model artifact;
+- execute inference/scoring only, **0 optimizer steps**;
+- reproduce the raw V3 score exactly;
+- rescore with whole-event carry-in/carry-out boundary exclusions through the existing Event-v2 exclusion contract;
+- record each remaining unmatched prediction with decoder probabilities and target/reference context.
+
+No threshold retuning, model mutation, P2/P3, cross-performer screen, automatic retry, or full training is authorized.
+
+Design: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_DESIGN_V1.json`.  
+Authorization: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_AUTHORIZATION_V1.json`.  
+Dormant workflow: `.github/workflows/astra-tiny-fit-v3-diagnostic.yml`.
+
+The diagnostic workflow remains inert until exactly one `docs/astra/TINY_FIT_V3_DIAGNOSTIC_LAUNCH_V1.json` is committed after tests/source pins are verified.
 

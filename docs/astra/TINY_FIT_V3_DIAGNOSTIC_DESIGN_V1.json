@@ -1,0 +1,33 @@
+{
+  "schema": "astra-tiny-fit-v3-zero-optimizer-diagnostic-design-v1",
+  "date": "2026-09-26",
+  "purpose": "Diagnose V3 precision failure without retraining by correcting preregistered crop-boundary scoring and recording exact remaining unmatched decoded events.",
+  "sourceV3": {
+    "runId": 36280547470,
+    "jobId": 108511412597,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "resultSha256": "1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647"
+  },
+  "scope": {
+    "performer": "P1",
+    "captureKeys": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "reprepareSameFrozenCrops": true,
+    "optimizerSteps": 0,
+    "thresholdRetuning": false,
+    "modelWeightsChanged": false,
+    "p2": false,
+    "p3": false
+  },
+  "scoring": {
+    "rawV3ScoreMustReproduceExactly": true,
+    "boundaryRule": "derive whole-event intervals from prepared carryIn/carryOut eventId occupancy and pass those preregistered intervals to event_contract_v2.score_events on both prediction and reference sides",
+    "detailedOutput": "record boundary-excluded predictions plus every remaining false-positive event with decoder probabilities, target onset/state, and nearest reference timing"
+  },
+  "decisionBoundary": "Diagnostic output is evidence only. It cannot authorize retraining, threshold changes, P2/P3, cross-performer screening or full training."
+}
