@@ -99,8 +99,26 @@ def _match(preds,refs,require_offset):
     return {"referenceCount":len(refs),"predictionCount":len(preds),"truePositive":tp,"falsePositive":fp,"falseNegative":fn,
             "precision":precision,"recall":recall,"f1":f1,"matchedPairs":matched}
 
+def collapse_same_pitch_ambiguity(refs):
+    """Collapse exact simultaneous same-pitch duplicates for pitch-only scoring.
+
+    String/fret ambiguity remains separately reportable from reference_pitch_events().
+    """
+    seen={}
+    for e in refs:
+        key=(e.pitch,round(e.start,9),round(e.end,9))
+        if key not in seen:
+            seen[key]=e
+    return sorted(seen.values(),key=lambda e:(e.pitch,e.start,e.end,e.id))
+
 def score_pitch_events(preds,refs):
-    return {"pitchOnset":_match(preds,refs,False),"pitchOnsetOffset":_match(preds,refs,True)}
+    scored_refs=collapse_same_pitch_ambiguity(refs)
+    return {
+      "pitchOnset":_match(preds,scored_refs,False),
+      "pitchOnsetOffset":_match(preds,scored_refs,True),
+      "rawReferenceCount":len(refs),
+      "ambiguityCollapsedReferenceCount":len(scored_refs),
+    }
 
 def run_basic_pitch(audio_path):
     import basic_pitch

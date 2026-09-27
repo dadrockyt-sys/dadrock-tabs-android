@@ -21,6 +21,14 @@ class FrontEndSyntheticTests(unittest.TestCase):
         refs,amb=reference_pitch_events(m)
         self.assertEqual([e.pitch for e in refs],[45,45])
         self.assertEqual(amb,[["a","b"]])
+    def test_duplicate_pitch_is_collapsed_for_pitch_only_score(self):
+        refs=[PitchEvent("a",45,.1,.4),PitchEvent("b",45,.1,.4)]
+        preds=[PitchEvent("p",45,.1,.4)]
+        s=score_pitch_events(preds,refs)
+        self.assertEqual(s["rawReferenceCount"],2)
+        self.assertEqual(s["ambiguityCollapsedReferenceCount"],1)
+        self.assertEqual(s["pitchOnset"]["truePositive"],1)
+        self.assertEqual(s["pitchOnset"]["f1"],1.0)
     def test_crop_boundary_clips_without_favorable_window(self):
         notes=[(-1.0,0.2,40,1,None),(0.95,1.2,45,1,None),(1.2,1.4,50,1,None)]
         got=basic_pitch_to_crop_events(notes,0.0,1.0)
