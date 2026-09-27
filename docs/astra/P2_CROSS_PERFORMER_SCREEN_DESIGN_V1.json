@@ -1,0 +1,55 @@
+{
+  "schema": "astra-v3-decoder-v2-p2-cross-performer-screen-design-v1",
+  "date": "2026-09-26",
+  "status": "design_only_no_media_authorization",
+  "purpose": "Run the smallest source-disjoint P2 screen capable of falsifying the four-example P1 engineering success before spending any more optimizer budget.",
+  "sourceModel": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "decoderV2Result": "docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_RESULT_V2.json"
+  },
+  "population": {
+    "performer": "P2",
+    "captureView": "directinput",
+    "exactCaptureKeys": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ],
+    "rationale": "Exact homologous performance names and same capture view as the P1 engineering examples isolate performer shift while holding content category/name and input modality fixed.",
+    "framesPerExample": 200,
+    "cropRule": "independent deterministic source-only earliest launch-ready crop; no model-output selection",
+    "substitutionAllowed": false,
+    "missingOrUnresolvedPolicy": "fail closed before evaluation"
+  },
+  "execution": {
+    "optimizerSteps": 0,
+    "modelWeightsFrozen": true,
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "decoder": "event_decoder_v2 rising-edge same-fret reattack rule",
+    "thresholdRetuning": false,
+    "p1MediaAccess": false,
+    "p2MediaAccessRequiresFreshAuthorization": true,
+    "p3Sealed": true
+  },
+  "screenThresholds": {
+    "aggregatePrecisionMin": 0.75,
+    "aggregateRecallMin": 0.6,
+    "aggregateF1Min": 0.67,
+    "eachExampleF1Min": 0.55,
+    "repeatedAttackRecallMinWhenPresent": 0.6,
+    "unresolvedLabelCountMax": 0,
+    "syntheticSilenceFalsePositiveCountMax": 0,
+    "source": "docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json",
+    "note": "This tiny screen reuses only event thresholds that are computable on four cropped examples; it is not the full historical development fold acceptance test."
+  },
+  "outcomes": {
+    "green": "Evidence supports designing a broader P1/P2 development evaluation. Does not authorize P3 or full training.",
+    "red": "Stop broader training and diagnose performer-shift failure first.",
+    "inconclusive": "Missing/unresolved selected capture or non-finite metric fails closed; redesign before further compute."
+  },
+  "hardClaimBoundary": "This four-example P2 screen cannot establish final generalization, customer readiness, production eligibility, or justify opening P3."
+}
