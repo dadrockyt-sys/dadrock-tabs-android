@@ -1,0 +1,115 @@
+{
+  "schema": "astra-pretrained-note-front-end-feasibility-design-v1",
+  "date": "2026-09-27",
+  "status": "offline_design_only_not_authorized",
+  "decision": "preferred_next_path",
+  "problemStatement": "The eight-crop supervised models can fit training folds but fail held-out-content transfer. The next test should replace from-scratch acoustic note detection with a frozen pretrained AMT front end before spending more optimizer budget.",
+  "hypothesis": "A frozen pretrained polyphonic note-transcription model can recover pitch/onset events from the same direct-input guitar audio substantially better and more consistently across P1/P2 than the tiny from-scratch event models, making modular note-detection -> string/fret assignment a viable path.",
+  "selectedFrontEnd": {
+    "name": "Spotify Basic Pitch",
+    "role": "frozen audio-to-note-event front end only",
+    "trainingAuthorized": false,
+    "fineTuningAuthorized": false,
+    "reason": [
+      "lightweight pretrained polyphonic AMT",
+      "instrument-agnostic and documented as working best on one instrument at a time",
+      "provides note and onset outputs directly",
+      "cheap zero-optimizer feasibility test separates acoustic note detection from guitar fingering assignment"
+    ],
+    "frozenDefaults": {
+      "onsetThreshold": 0.5,
+      "frameThreshold": 0.3,
+      "minimumNoteLengthMs": 127.7,
+      "thresholdSearch": false,
+      "melodiaTrick": true
+    },
+    "versionRule": "Pin an exact released package/model version and model hash before any real-media execution; do not use a moving main-branch model."
+  },
+  "researchBasis": [
+    {
+      "work": "SynthTab: Leveraging Synthesized Data for Guitar Tablature Transcription",
+      "finding": "Large synthesized pretraining was proposed specifically to mitigate overfitting and improve cross-dataset guitar-tab transcription.",
+      "url": "https://arxiv.org/abs/2309.09085"
+    },
+    {
+      "work": "TART: A Modular Tool for Technique-Aware Audio-to-Tablature Guitar Transcription",
+      "finding": "Recent modular guitar-tab work separates audio-to-MIDI from later string/fret assignment and technique modeling.",
+      "url": "https://arxiv.org/abs/2609.11904"
+    },
+    {
+      "work": "Basic Pitch",
+      "finding": "Lightweight pretrained polyphonic audio-to-MIDI model with explicit note/onset outputs and fixed default decoding parameters.",
+      "url": "https://github.com/spotify/basic-pitch"
+    },
+    {
+      "work": "Noise2Fret",
+      "finding": "Recent work emphasizes playability-aware string/fret modeling after acoustic evidence; this supports separating pitch evidence from fingering constraints rather than forcing one tiny per-frame classifier to learn both.",
+      "url": "https://arxiv.org/abs/2608.30854"
+    }
+  ],
+  "stageA": {
+    "name": "frozen_note_front_end_zero_optimizer_gate",
+    "executionStatus": "not_authorized",
+    "dataScope": "same exact 4 P1 + 4 homologous P2 direct-input captures already used in the combined diagnostic; P3 excluded",
+    "cropRule": "Use the same frozen 200-frame crop time bounds for scoring. Front-end inference may require model-native padding/context, but only reference/predicted events intersecting the frozen scoring interval count.",
+    "targetTransformation": {
+      "purpose": "Score pitch/onset before string/fret assignment.",
+      "standardTuningMidiOpenStrings": "derive from existing string-order contract and freeze explicitly in implementation",
+      "collapseRule": "Convert each scorable source string/fret event to MIDI pitch. Simultaneous duplicate same-pitch events are retained in a separate ambiguity accounting field and are not silently double-counted by a monophonic-per-pitch scorer.",
+      "noStringFretCredit": "Stage A gives no credit for string/fret identity."
+    },
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetries": 0,
+    "p3": false,
+    "paidComputeDollars": 0,
+    "maxCpuMinutes": 45
+  },
+  "metrics": {
+    "primary": [
+      "pitch+onset event precision/recall/F1 at frozen 50 ms onset tolerance",
+      "pitch+onset+offset event F1 with frozen offset tolerance",
+      "per-performer aggregate event F1",
+      "per-content pair macro F1 across P1/P2"
+    ],
+    "secondary": [
+      "raw prediction count vs reference count",
+      "duplicate-same-pitch ambiguity count",
+      "onset-only recall",
+      "offset-within-tolerance rate",
+      "P1 vs P2 absolute F1 gap",
+      "runtime"
+    ]
+  },
+  "advancementCriteria": {
+    "allRequired": true,
+    "criteria": [
+      "aggregate pitch+onset F1 >= 0.70",
+      "aggregate pitch+onset recall >= 0.70",
+      "P1 aggregate pitch+onset F1 >= 0.60",
+      "P2 aggregate pitch+onset F1 >= 0.60",
+      "each content pair macro pitch+onset F1 >= 0.50",
+      "absolute P1-vs-P2 aggregate F1 gap <= 0.15",
+      "zero optimizer steps and zero threshold search",
+      "all eight frozen capture/crop/source identities verified and unresolved selected labels = 0"
+    ],
+    "interpretation": "Passing establishes only that pretrained note evidence is promising enough to justify designing a separate string/fret assignment stage. It does not establish tablature accuracy."
+  },
+  "failureBranches": {
+    "frontEndFails": "Stop Basic Pitch as the selected front end. Do not tune thresholds on these eight examples. Next offline review should compare one alternative frozen/pretrained front end or synthetic-pretraining strategy.",
+    "frontEndPasses": "Do not immediately train end-to-end. Design Stage B: a small string/fret assignment layer conditioned on frozen note/pitch evidence plus guitar constraints, with content-grouped validation.",
+    "identityOrScoringFails": "Stop without scientific interpretation and fix only the offline adapter/scorer."
+  },
+  "explicitNonGoals": [
+    "no string/fret model in Stage A",
+    "no expressive-technique model",
+    "no threshold tuning",
+    "no Basic Pitch fine-tuning",
+    "no large temporal model",
+    "no P3 access",
+    "no production deployment",
+    "no customer-readiness claim"
+  ],
+  "whyThisIsMateriallyDifferent": "It imports broad pretrained acoustic knowledge and decomposes pitch/onset detection from string/fret assignment instead of asking a tiny model to learn acoustic representation, onset detection, state classification, and fingering from eight 200-frame crops."
+}

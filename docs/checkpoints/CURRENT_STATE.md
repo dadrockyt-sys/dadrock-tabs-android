@@ -444,6 +444,80 @@ The evidence now points away from simple incremental repairs:
 6. Do not automatically widen context or introduce a larger temporal architecture; that would be an untested new hypothesis requiring its own design.
 7. No production/customer-readiness claims are supported.
 
+## Post-temporal failure offline design review — PRETRAINED NOTE FRONT END SELECTED
+
+Completed 2026-09-27. No real media was reopened, no optimizer steps ran, no thresholds changed, and P3 remains sealed.
+
+Frozen design:
+- `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_DESIGN_V1.json`
+- request-only scope: `docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_AUTHORIZATION_REQUEST_V1.json`
+
+### Decision
+
+Do **not** spend more optimizer budget trying to learn acoustic note detection from the same eight 200-frame crops.
+
+Preferred next path: a **frozen pretrained note front-end feasibility gate**, followed only if successful by a separately designed string/fret assignment stage.
+
+Selected Stage-A front end: **Spotify Basic Pitch**, pinned to an exact released package/model identity before any real-media execution.
+
+Why:
+- the temporal candidate and equal-capacity comparator both fit training folds to very low loss but transfer poorly;
+- this pattern is consistent with insufficient representation/data coverage under the tiny crop regime;
+- recent guitar-tab research explicitly addresses low-resource overfitting with large-scale synthetic pretraining (SynthTab);
+- recent modular guitar-tab systems separate audio-to-MIDI from string/fret assignment (TART);
+- Basic Pitch supplies pretrained polyphonic note/onset evidence and is lightweight enough for a zero-optimizer feasibility gate.
+
+This is materially different from V1-V5, head repair, decoder repair and ±1 temporal context: it imports broad pretrained acoustic knowledge instead of trying to learn the representation from eight crops.
+
+### Frozen Stage-A experiment
+
+Use only the same exact four P1 + four homologous P2 direct-input captures and the same frozen crop scoring intervals.
+
+Stage A scores **pitch/onset only**, not tablature:
+- convert frozen reference string/fret events to MIDI pitch using an explicitly frozen standard-tuning mapping;
+- account separately for simultaneous duplicate same-pitch ambiguity;
+- run Basic Pitch with its pinned defaults: onset **0.5**, frame **0.3**, minimum note length **127.7 ms**;
+- **0 optimizer steps**;
+- no threshold search or retuning;
+- no model mutation;
+- max 45 CPU minutes;
+- zero retries;
+- zero paid compute;
+- P3 sealed.
+
+Because Basic Pitch may use native model context/padding, inference may extend outside the selected crop, but **only events intersecting the frozen 200-frame scoring interval count**. This must not become a favorable-window search.
+
+### Frozen advancement gate
+
+All required:
+- aggregate pitch+onset F1 >= **0.70**
+- aggregate pitch+onset recall >= **0.70**
+- P1 aggregate pitch+onset F1 >= **0.60**
+- P2 aggregate pitch+onset F1 >= **0.60**
+- each content pair macro F1 >= **0.50**
+- absolute P1-vs-P2 aggregate F1 gap <= **0.15**
+- zero optimizer steps / zero threshold search
+- all eight identities verified and unresolved selected labels = 0
+
+A pass means only that pretrained note evidence is promising enough to justify **designing** Stage B string/fret assignment. It is not a tablature pass.
+
+If Basic Pitch fails, stop it without tuning thresholds on these eight examples. The next review may consider one alternative frozen front end or a synthetic-pretraining strategy; do not automatically train another large model.
+
+### Research evidence recorded in the frozen design
+
+- SynthTab (2023/ICASSP 2024): large-scale synthesized tablature pretraining was introduced to mitigate overfitting and improve cross-dataset transfer.
+- TART (2026): modular audio-to-MIDI then string/fret assignment pipeline.
+- Basic Pitch: lightweight pretrained polyphonic AMT with explicit note/onset outputs.
+- Noise2Fret (2026): reinforces that playability/string-fret assignment deserves dedicated modeling rather than being conflated with raw note detection.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Offline implementation only: build the Stage-A adapter/scorer and synthetic tests for pitch mapping, duplicate-pitch ambiguity, crop boundaries, exact identity guards, and zero-optimizer enforcement.
+2. Pin an exact Basic Pitch release/model artifact and hash before any real-media run.
+3. Run synthetic verification only.
+4. Do **not** reopen P1/P2 media until synthetic is green and Stephen separately explicitly authorizes the request-only real feasibility run.
+5. No string/fret fitting, no threshold tuning, no P3, no production mutation.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

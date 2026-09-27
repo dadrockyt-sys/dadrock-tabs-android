@@ -1,0 +1,26 @@
+{
+  "schema": "astra-pretrained-note-front-end-feasibility-authorization-request-v1",
+  "date": "2026-09-27",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "design": "docs/astra/PRETRAINED_NOTE_FRONT_END_FEASIBILITY_DESIGN_V1.json",
+  "requestedScope": {
+    "realMediaAccess": "same exact eight P1/P2 direct-input captures only",
+    "optimizerSteps": 0,
+    "modelMutation": false,
+    "thresholdSearch": false,
+    "thresholds": "Basic Pitch pinned package defaults only: onset 0.5, frame 0.3, min note length 127.7 ms",
+    "maxCpuMinutes": 45,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3Authorized": false
+  },
+  "implementationOrder": [
+    "offline adapter/scorer implementation",
+    "synthetic identity/pitch-mapping/duplicate-pitch/boundary tests",
+    "pin exact Basic Pitch release/model identity",
+    "synthetic green receipt",
+    "only then single-use real-media launch if separately explicitly authorized"
+  ],
+  "claimBoundary": "Zero-optimizer pitch/onset feasibility only. No tablature/string-fret performance claim."
+}
