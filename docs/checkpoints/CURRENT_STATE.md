@@ -322,6 +322,50 @@ The design is now implementation-verified, but the real controlled fit has **not
 3. After explicit real-fit confirmation, freeze authorization/launch identities and run once.
 4. No onset-head probe in parallel.
 
+## Temporal-context controlled intervention — AUTHORIZED AND LAUNCHED ONCE
+
+Stephen explicitly authorized the exact real fit ceiling on 2026-09-27.
+
+Preflight:
+- implementation commit: `eafa8dbb8d31074e8dfb1b9703ec780b9445114a`
+- backend preflight run **36332828303**: **SUCCESS**
+- complete Astra backend suite: PASS
+- focused evaluation suite: PASS
+
+Single-use launch:
+- launch artifact: `docs/astra/TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_LAUNCH_V1.json`
+- launch commit: `01abec205826525d35d19e2657f9e120d2062685`
+- launch blob: `647fee8ff8d7e11bd577347011ad661046d60d9f`
+
+Canonical real-fit run:
+- run **36332898065**
+- job **108658126314**
+- status at checkpoint: **in progress**
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36332898065
+
+Frozen execution ceiling:
+- four leave-one-content-group-out folds
+- one temporal-triplet candidate + one equal-capacity repeated-current comparator per fold
+- max **125 optimizer steps/model/fold**
+- max **1000 optimizer steps total**
+- one CPU job <= **60 minutes**
+- unchanged **0.50/0.50** state/onset thresholds
+- no threshold search or rescue
+- zero automatic retries
+- zero paid compute
+- P3 sealed
+- no onset-head probe in parallel
+- no production/customer-readiness claim
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. Inspect **only** run **36332898065**, job **108658126314**. Do not rerun automatically.
+2. If preparation/identity/fit fails, preserve the exact failure and stop. Do not substitute captures, extend steps, alter LR, alter context width, lower thresholds, retry, or open P3.
+3. If it completes, freeze the result artifact and source identities, then evaluate every predeclared criterion exactly as written in `TEMPORAL_CONTEXT_CONTROLLED_INTERVENTION_DESIGN_V1.json`.
+4. A workflow-green result is not automatically a scientific pass. The controlled hypothesis passes only if **all** advancement criteria are true.
+5. If it fails the criteria, record and stop this temporal-triplet hypothesis under the frozen budget.
+6. If it passes, the next action is design-only for a separately authorized performer-generalization evaluation. P3 remains sealed.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

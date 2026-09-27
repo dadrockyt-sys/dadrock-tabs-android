@@ -3,27 +3,17 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-Temporal-context controlled intervention synthetic verification is GREEN.
+## Active canonical run
 
-Canonical:
-- run **36332570200**
-- job **108657200907**
-- receipt: `docs/astra/TEMPORAL_CONTEXT_SYNTHETIC_VERIFICATION_V1.json`
+Temporal-context controlled intervention real fit is authorized and launched once.
 
-No real media was accessed and no real optimizer steps ran.
+- run **36332898065**
+- job **108658126314**
+- launch commit: `01abec205826525d35d19e2657f9e120d2062685`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36332898065
 
-The saved authorization artifact conservatively authorized implementation + synthetic verification only. Therefore do **not** launch the real fit yet.
+Inspect only that run. Do not rerun automatically.
 
-Obtain explicit confirmation for the real fit ceiling:
-- 4 leave-one-content-group-out folds
-- candidate + equal-capacity comparator
-- max 125 steps/model/fold
-- max 1000 optimizer steps total
-- <=60 CPU minutes
-- unchanged 0.50/0.50 thresholds
-- no sweep
-- no automatic retry
-- zero paid compute
-- P3 sealed
+Frozen ceiling: 4 leave-one-content-group-out folds, candidate + equal-capacity comparator, 125 steps/model/fold, 1000 steps total maximum, <=60 CPU minutes, unchanged 0.50/0.50 thresholds, no sweep, no threshold rescue, no retries, zero paid compute, P3 sealed.
 
-After confirmation, create one single-use launch and run exactly once.
+If the run completes, freeze the result and evaluate every predeclared criterion. Workflow success alone is not a scientific pass. If any required criterion fails, stop this fixed temporal-triplet hypothesis. If all pass, next work is design-only for a separately authorized performer-generalization evaluation. P3 remains sealed.
