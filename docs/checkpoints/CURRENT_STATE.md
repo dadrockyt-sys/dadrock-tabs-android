@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **DECODER V2 ZERO-OPTIMIZER P1 CHECK AUTHORIZED AND LAUNCHED ONCE; RUN 36283779556 IN PROGRESS; NO SECOND LAUNCH/RERUN AUTHORIZED**  
+Status: **DECODER V2 CHECK V1 FAILED ON OVERSTRICT FEATURE-BYTE IDENTITY; 0 OPTIMIZER STEPS; SEMANTIC REPRODUCTION REPAIR STAGED; NO RETRY AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -584,4 +584,19 @@ Authorized scope remains:
 - no cross-performer screen or full training.
 
 **Do not create another decoder V2 launch or rerun this workflow.** Inspect run **36283779556** only. On completion, freeze the exact V1 reproduction, decoder V2 metrics, remaining FP/FN evidence, repeated-attack recall, offset fraction, and engineering training-only gate. A pass does not establish generalization.
+
+## Decoder V2 zero-optimizer P1 check V1 — FEATURE-BYTE IDENTITY FAILURE
+
+Run **36283779556**, job **108520534718** passed authorization/source pins, frozen V3 artifact hashes, and preparation of all four exact P1 crops. It executed **0 optimizer steps** and failed before decoder V2 could be interpreted.
+
+Failure:
+`RuntimeError: prepared examples differ from frozen V3 target set`
+
+All crop selections and target hashes reproduced exactly, but all four CQT feature byte hashes differed from the frozen V3 hashes. The successful diagnostic V2 and this failed check used the same Ubuntu runner image and pinned Python/NumPy/SciPy/librosa/Torch versions, so feature SHA byte equality is not a reliable semantic invariant for the hosted preprocessing path.
+
+Repair: feature SHA remains recorded provenance, but the gate now requires exact non-feature source/crop/target identity and then requires decoder V1's boundary-corrected totals and minimum F1 to reproduce frozen diagnostic V2 exactly before decoder V2 may be interpreted.
+
+Frozen failure: `docs/astra/TINY_FIT_V3_DECODER_V2_CHECK_FAILURE_V1.json`.
+
+No retry is authorized. After tests pass, freeze a new request-only repaired decoder V2 check.
 
