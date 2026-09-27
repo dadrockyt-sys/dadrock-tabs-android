@@ -1,0 +1,34 @@
+{
+  "schema": "astra-pretrained-note-front-end-feasibility-launch-v1",
+  "date": "2026-09-27",
+  "status": "authorized_single_launch",
+  "singleLaunch": true,
+  "authorizedHeadBeforeLaunch": "a42754d4937fc995cb16c072f7b75a016d4357f0",
+  "sourceIdentities": {
+    "runnerGitBlob": "ded0db28e173c08cd0496695f221426388c5d396",
+    "scorerGitBlob": "235604085e0098043271ba6525ef9fd9211fbc58",
+    "workflowGitBlob": "f7b88132637745e9743f74f190ed0a5d2df468ba",
+    "authorizationGitBlob": "bfcce3328b0ff25c3c144f83caa7d96d8d7b2b9f",
+    "syntheticVerificationV2GitBlob": "b7a706e390d7f837a69f12718b0461531a604369",
+    "designGitBlob": "1a65247c284a4d7da7ff17358586ccff80ac04eb"
+  },
+  "frontEnd": {
+    "package": "basic-pitch==0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
+  },
+  "scope": {
+    "captures": 8,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "modelMutation": false,
+    "thresholds": {
+      "onset": 0.5,
+      "frame": 0.3,
+      "minimumNoteLengthMs": 127.7
+    },
+    "maxCpuMinutes": 45,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3": false
+  }
+}
