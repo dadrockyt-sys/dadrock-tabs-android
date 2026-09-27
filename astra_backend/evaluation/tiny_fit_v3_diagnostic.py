@@ -18,7 +18,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from event_contract_v2 import Event, _match, score_events, validate_events
+from evaluation.event_contract_v2 import Event, _match, score_events, validate_events
 from tiny_fit_pilot_v1 import (
     FROZEN_CAPTURE_KEYS,
     NUM_CLASSES,

@@ -1,0 +1,34 @@
+{
+  "schema": "astra-tiny-fit-v3-diagnostic-failure-v1",
+  "date": "2026-09-26",
+  "run": {
+    "runId": 36281561748,
+    "jobId": 108514239716,
+    "headSha": "f581e98c0999ca9e4ef4ece2cea103df462b3800",
+    "conclusion": "failure"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "authorizationVerified": true,
+    "frozenV3ArtifactDownloaded": true,
+    "frozenV3ArtifactHashesVerified": true,
+    "allFourP1ExamplesReprepared": true,
+    "diagnosticOutputUploaded": false,
+    "cleanupCompleted": true
+  },
+  "failure": {
+    "step": "Run zero-optimizer boundary diagnostic",
+    "exception": "ValueError: events require unique nonempty IDs",
+    "classification": "python_module_identity_mismatch",
+    "rootCause": "tiny_fit_pilot_v1 imported Event from evaluation.event_contract_v2 while the diagnostic imported Event from top-level event_contract_v2. Python created two distinct Event class objects from the same source file; validate_events rejected otherwise valid decoded events because isinstance used the other class.",
+    "actualDuplicateEventIdsObserved": false,
+    "modelFailure": false,
+    "dataFailure": false
+  },
+  "guards": {
+    "automaticRetryExecuted": false,
+    "p2Opened": false,
+    "p3Opened": false,
+    "trainingExecuted": false
+  }
+}

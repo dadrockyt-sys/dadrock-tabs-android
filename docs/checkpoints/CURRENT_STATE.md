@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **V3 ZERO-OPTIMIZER BOUNDARY DIAGNOSTIC LAUNCHED ONCE; RUN 36281561748 IN PROGRESS; NO SECOND DIAGNOSTIC LAUNCH AUTHORIZED**  
+Status: **DIAGNOSTIC V1 FAILED IN EVALUATOR NAMESPACE CHECK; 0 OPTIMIZER STEPS; OFFLINE REPAIR STAGED; NO RETRY AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -350,4 +350,23 @@ Authorized execution remains:
 - no full training or cross-performer screen.
 
 **Do not create another diagnostic launch or rerun this workflow.** Inspect run **36281561748** only. On completion, freeze the diagnostic JSON and exact remaining false-positive event evidence.
+
+## V3 zero-optimizer diagnostic V1 — EVALUATOR INSTRUMENTATION FAILURE
+
+Run **36281561748**, job **108514239716** failed inside the diagnostic evaluator after:
+- authorization/source-pin verification: PASS;
+- exact frozen V3 artifact download/hash verification: PASS;
+- same four P1 examples re-prepared: PASS;
+- optimizer steps executed: **0**.
+
+Failure:
+`ValueError: events require unique nonempty IDs`
+
+Root cause is a Python module-identity mismatch, not duplicate IDs: `tiny_fit_pilot_v1.py` creates events using `evaluation.event_contract_v2.Event`, while the diagnostic imported the same source file as top-level `event_contract_v2.Event`. Those are different Python class objects, so `validate_events()` rejected valid decoder events at its `isinstance` check.
+
+Offline repair: use the canonical `evaluation.event_contract_v2` namespace in the diagnostic and add a regression that sends actual `decode_event_list()` events through `detailed_score()`.
+
+Frozen failure receipt: `docs/astra/TINY_FIT_V3_DIAGNOSTIC_FAILURE_V1.json`.
+
+**Do not rerun diagnostic V1.** The original diagnostic authorization specified zero automatic retries. After backend tests pass, prepare a new request-only V2 diagnostic gate; a second diagnostic run requires new explicit authorization.
 

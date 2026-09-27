@@ -1,7 +1,8 @@
 import unittest
 
-from event_contract_v2 import Event
-from tiny_fit_v3_diagnostic import boundary_exclusions, detailed_score
+from evaluation.event_contract_v2 import Event
+from evaluation.tiny_fit_v3_diagnostic import boundary_exclusions, detailed_score
+from tiny_fit_pilot_v1 import decode_event_list
 
 
 class TinyFitV3DiagnosticTests(unittest.TestCase):
@@ -29,6 +30,20 @@ class TinyFitV3DiagnosticTests(unittest.TestCase):
         self.assertEqual([x["id"] for x in out["excludedPredictions"]], ["p-boundary"])
         self.assertEqual([x["id"] for x in out["falsePositives"]], ["p-extra"])
         self.assertEqual(out["falseNegatives"], [])
+
+    def test_decoder_events_share_event_contract_type(self):
+        import torch
+        state = torch.full((6, 6, 21), -8.0)
+        state[:, :, 20] = 8.0
+        onset = torch.full((6, 6), -8.0)
+        state[1:4, 0, 20] = -8.0
+        state[1:4, 0, 5] = 8.0
+        onset[1, 0] = 8.0
+        pred = decode_event_list(state.reshape(6, -1), onset, hop_seconds=0.01)
+        ref = [Event("r", 0, 5, 0.01, 0.04)]
+        out = detailed_score(pred, ref, excluded_intervals=[])
+        self.assertEqual(len(out["matches"]), 1)
+        self.assertEqual(out["falsePositives"], [])
 
     def test_carry_in_boundary_uses_frame_grid_occupancy(self):
         event_id = [[None] * 8 for _ in range(6)]
