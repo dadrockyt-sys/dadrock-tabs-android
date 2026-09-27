@@ -1,0 +1,65 @@
+{
+  "schema": "astra-p1-p2-activation-diagnostic-authorization-v1",
+  "date": "2026-09-27",
+  "status": "authorized_single_zero_optimizer_activation_domain_diagnostic",
+  "userInstruction": "Run the diagnostic",
+  "authorization": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "frozenV3ModelInferenceAuthorized": true,
+    "decoderV2Authorized": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "fullTrainingAuthorized": false,
+    "productionMutationAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "sourceIdentities": {
+    "designGitBlob": "f3495e7cca9ebdc57c3ac57ef91dcaf3cbee5b56",
+    "diagnosticScriptGitBlob": "d177cff148c8a9ecaa12f341b3ea2a17826a31af",
+    "diagnosticTestsGitBlob": "9f14c62d132fd3b0046498a18b112dab92e525cf",
+    "p2ScreenScriptGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "eventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "eventContractGitBlob": "ccac46803046ae784e78c740dce0e9ee7f895321",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "p1EngineeringResultGitBlob": "03e0dd727d510decfb4b8e82dd88c267e616f50e",
+    "p2ScreenResultGitBlob": "b281dbf82f2205c3d64f73827ad4331a466b6973",
+    "workflowGitBlob": "fd7aaecce83c2b29816e4f5a8c4a7d43695e3acf"
+  },
+  "sourceV3": {
+    "runId": 36280547470,
+    "artifactId": 10918434248,
+    "modelSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "stateActiveThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "population": {
+    "p1": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "p2": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ]
+  },
+  "guards": {
+    "optimizerMustRemainZero": true,
+    "thresholdsFrozen": true,
+    "thresholdSearchForbidden": true,
+    "p3Sealed": true,
+    "noAutomaticRetry": true
+  },
+  "meaning": "Authorize exactly one P1-vs-P2 activation/domain-shift diagnostic run for inference/statistics only. This does not authorize training, threshold changes, P3, or production use."
+}
