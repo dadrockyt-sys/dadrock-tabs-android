@@ -1,0 +1,26 @@
+{
+  "schema": "astra-temporal-context-controlled-intervention-real-fit-authorization-v1",
+  "date": "2026-09-27",
+  "status": "explicit_user_authorization",
+  "userInstruction": "I authorize",
+  "scope": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "folds": 4,
+    "modelsPerFold": 2,
+    "maxStepsPerModelPerFold": 125,
+    "maxOptimizerStepsTotal": 1000,
+    "maxCpuMinutes": 60,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "automaticRetries": 0,
+    "paidComputeDollars": 0,
+    "p3Authorized": false
+  },
+  "designGitBlob": "086c1647f44824e25e2eed68087d411bbe4bc259",
+  "syntheticVerificationCommit": "00c5a2c3d2d1ecb2c79761bfcee1fb1430a8768d",
+  "claimBoundary": "One development-only unseen-content temporal-context controlled fit. No P3, production mutation, threshold rescue, retry, or customer-readiness claim."
+}
