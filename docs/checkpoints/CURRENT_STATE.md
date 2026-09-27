@@ -2,7 +2,7 @@
 
 Updated: 2026-09-26 UTC  
 Branch: `astra-work`  
-Status: **REPAIRED V3 CAPPED P1 RETRY AUTHORIZED AND LAUNCHED ONCE; RUN 36280547470 IN PROGRESS; NO SECOND V3 LAUNCH/RERUN AUTHORIZED**  
+Status: **V3 WORKFLOW GREEN; 200-STEP P1 FIT COMPLETED; ENGINEERING ADVANCEMENT GATE FAILED ON PRECISION/F1; RESULT FROZEN; NO RERUN OR BROADER TRAINING AUTHORIZED**  
 Next-chat guide: `docs/astra/NEXT_CHAT.md`
 
 ## Direction
@@ -270,4 +270,46 @@ Scope remains exactly frozen: four specified P1 training performances, one view 
 **Do not create another V3 launch, rerun this workflow, extend optimizer steps, retune thresholds, open P2/P3, or restart full training without new explicit authorization.**
 
 Next action: inspect only run **36280547470**. If it fails before/during optimizer work, preserve and diagnose that single run only. If it completes training, preserve exact metrics/evidence and stop; no cross-performer screen or broader training is authorized.
+
+## V3 capped P1 result — WORKFLOW GREEN, ENGINEERING GATE NOT MET
+
+Canonical run **36280547470**, job **108511412597**, launch head `70e0cdb2440357dbcb61005b8a5ca1b49ff32329`: **GitHub Actions SUCCESS**.
+
+All four P1 examples prepared successfully with zero unresolved selected-crop labels. The one authorized candidate completed exactly **200 optimizer steps** and stopped at `requested_steps_reached`.
+
+Fit evidence:
+- total loss: **5.8937435 -> 0.0399992**
+- state loss: **3.0180442 -> 0.0124796**
+- onset loss: **0.7189248 -> 0.0068799**
+
+Engineering screen:
+- recall on every example: **1.0**
+- repeated-attack recall: **1.0**
+- matched offsets within 50 ms: **0.9375** (passes 0.90)
+- unresolved selected-crop labels: **0**
+- minimum per-example event F1: **0.50** (fails required 0.95)
+- `engineeringAdvancementThresholdsMet=false`
+
+Per-example F1:
+- Drop3_7 chord: **0.705882**
+- Ab scale: **0.941176**
+- allsinglenotes: **0.50**
+- PalmMute: **0.666667**
+
+Totals: **16 references, 25 predictions, 16 true positives, 9 false positives, 0 false negatives**. This is a precision/extra-attack failure, not a recall failure.
+
+### Boundary scoring mismatch
+
+The preparation contract retains carry-out attacks as positive onset targets but excludes carry-out events from `scorableEvents`. The evaluator decodes all model events and scores them only against `scorableEvents`.
+
+These four crops contain **7 carry-out positive target attacks**. `onsetAdmissionRecall=1.0` on every example. Therefore boundary scoring explains **7 of the 9 observed false positives** under the current evaluator; **2 non-boundary extra attacks remain**.
+
+This does not convert the pilot into a pass: even boundary-adjusted diagnostic accounting still leaves the minimum example below the frozen 0.95 F1 gate. No thresholds were retuned and no rerun occurred.
+
+Frozen result: `docs/astra/TINY_FIT_PILOT_REAL_RESULT_V3.json`.  
+Actions artifact: **10918434248**, digest `sha256:4b62ad7336a216cbee0bf8a52c3c9c56d51eca7f963702c95bba7be320a7c573`.  
+Result JSON SHA-256: `1bda3d5b7c790641742a99c07685c8d477938cd7426ad48f58d84928a3328647`.  
+Model SHA-256: `fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f`.
+
+**Stop here.** Do not rerun V3, add optimizer steps, retune thresholds, open P2/P3, start a cross-performer screen, or restart full training. Cheapest next work: repair the evaluator boundary contract offline and design a zero-optimizer diagnostic that records decoded prediction events. Any new P1 media access or optimizer work requires fresh explicit authorization.
 
