@@ -3,34 +3,26 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-Read `AGENTS.md`, then the **GPT-5.6 handoff review — 2026-09-27 — READ THIS FIRST** section at the TOP of `docs/checkpoints/CURRENT_STATE.md`. That section is the active direction. Older checkpoint sections are historical evidence and contain superseded next steps.
+Read `AGENTS.md`, then the **GPT-5.6 handoff review — 2026-09-27 — READ THIS FIRST** section at the top of `docs/checkpoints/CURRENT_STATE.md`.
 
-## Verified position
+## Current active task
 
-- The capped P1 model completed 200 optimizer steps; decoder V2 subsequently passed the four-example training-only engineering gate.
-- The P2 cross-performer screen failed: no decoded events.
-- Activation diagnostic run **36325297420**, job **108636792679**, completed successfully with **0 optimizer steps**. Its receipt reports **0/15 P2 onset passes and 9/15 state passes**.
-- State failures include **chords (1/4 passes)** as well as **PalmMute (0/2)**.
-- Onset-admission collapse is observed; its causal origin is NOT isolated. Do not infer a head-only fix from the diagnostic class name or embedding cosine similarity.
-- P3 remains sealed. Full training remains stopped.
+The combined offline diagnostic package requested by the handoff review has been implemented. **Do not run real media yet.**
 
-## Exact next task for GPT-5.6
+First inspect the automatic workflow **Astra P1-P2 combined diagnostic offline tests v1** for the package commit. If it fails, repair only offline code/tests and re-run synthetic verification. If it passes, freeze a synthetic-verification receipt and update the checkpoint.
 
-Prepare the combined **offline diagnostic package** specified in the top checkpoint review: design, implementation, meaningful synthetic tests, and a request-only workflow. This ordinary offline work is already permitted; complete it before asking for real-data authorization.
+After a green synthetic receipt, the next step is to present `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_AUTHORIZATION_REQUEST_V1.json` for explicit user authorization. There is intentionally no authorization artifact and no launch artifact yet.
 
-It must cover:
-1. Frozen identity/reproduction guards and raw-versus-scored boundary accounting.
-2. Valid event correspondence, with unmatched events retained.
-3. Attack, sustain and silence controls.
-4. Frozen head projections/margins and state errors for chords and PalmMute.
-5. Descriptive temporal-feature evidence, without fitting or threshold search.
-6. Explicit inconclusive outcomes; no automatic causal conclusion from embedding distances.
-7. One bounded execution request and durable evidence/expiry planning.
+## Boundaries
 
-A later fit must test one capped hypothesis using a predeclared split and comparator. Training on P1+P2 leaves no performer holdout among those two. Already-examined P2 examples are development data. Keep whole performances/views together and distinguish unseen-content from unseen-performer claims.
+- no P1/P2 media access until explicit authorization;
+- no optimizer steps or fitting;
+- no threshold search/change;
+- no P3 access;
+- no full V1-V5 restart;
+- no production/deployment mutation;
+- no customer-readiness claim.
 
-## Execution boundary
+The future diagnostic ceiling remains eight frozen P1/P2 captures, 200 frames each, frozen V3 model, 0 optimizer steps, thresholds 0.50/0.50, <=90-minute CPU job, zero retries, zero paid compute, P3 sealed.
 
-This review authorized documentation and offline preparation only. Do not create a real launch artifact, reopen corpus media, fit a model, change thresholds, access P3, restart V1–V5, deploy, or claim customer readiness. Existing single-run authorizations are historical, not reusable grants.
-
-Read the full top checkpoint section for the exact proposed diagnostic ceiling, decision rules, evidence limitations and next milestone. Preserve frozen receipts and verify the remote branch after saving.
+Frozen V3 artifact 10918434248 expires 2026-10-03T23:51:34Z. Preserve durable authorized evidence before expiry; never retrain merely to recreate it.

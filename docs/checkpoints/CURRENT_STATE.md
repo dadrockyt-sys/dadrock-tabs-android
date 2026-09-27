@@ -60,6 +60,32 @@ Do not multiply workflows and approvals for ordinary offline fixes. Preserve his
 
 **Next response from GPT-5.6 should implement the offline package above and report its tests, remaining uncertainty, and exact proposed execution scope.** No new real-media access, fitting, launch artifact, deployment or production change is authorized by this review. Update this checkpoint after the milestone and verify the remote branch. The historical log below is evidence, not the active task queue.
 
+## Offline combined diagnostic package — IMPLEMENTED, SYNTHETIC VERIFICATION PENDING
+
+Prepared on 2026-09-27 under the GPT-5.6 handoff review. No new corpus media was opened, no optimizer steps were run, no thresholds changed, and P3 remains sealed.
+
+New package:
+- `astra_backend/evaluation/p1_p2_combined_diagnostic_v1.py`
+- `astra_backend/evaluation/test_p1_p2_combined_diagnostic_v1.py`
+- `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_DESIGN_V1.json`
+- `docs/astra/P1_P2_COMBINED_DIAGNOSTIC_AUTHORIZATION_REQUEST_V1.json`
+- `.github/workflows/astra-p1-p2-combined-diagnostic-v1.yml` (request-only: no launch artifact exists)
+- `.github/workflows/astra-p1-p2-combined-diagnostic-offline-tests-v1.yml`
+
+The implementation covers exact eight-capture allowlists, 200x192 finite feature guards, zero unresolved labels, raw versus boundary-corrected scoring, exclusion records, conservative source-identity/string/fret correspondence with unmatched events retained, exact-center versus fixed +/-2 attack probes, sustain and silence controls, onset `w·h + b` decomposition, bias-cancellation identity, true-fret versus silence/strongest-incorrect state margins, and fixed adjacent-frame feature deltas. It deliberately does not infer a causal repair from embedding or projection geometry.
+
+Frozen V3 model artifact **10918434248** is currently available and expires **2026-10-03T23:51:34Z**. The prior activation diagnostic artifact expires **2026-10-04T14:52:03Z**. Durable retention / manifest preservation must be handled before expiry if later execution is authorized; do not retrain merely to recreate an expired artifact.
+
+### EXACT NEXT STEPS
+
+1. Inspect the automatic offline synthetic test workflow triggered by this package commit. It must pass before any real-data authorization is requested.
+2. If the synthetic workflow fails, repair only the offline package and rerun synthetic verification. Do not open P1/P2/P3 media.
+3. If it passes, freeze a synthetic-verification receipt and update this checkpoint.
+4. Then present the already-created **request-only** scope for explicit user authorization. Do not create `P1_P2_COMBINED_DIAGNOSTIC_AUTHORIZATION_V1.json` or `...LAUNCH_V1.json` until the user explicitly authorizes it.
+5. A future authorized execution is capped at the same eight P1/P2 captures, 200 frames each, frozen V3 model, 0 optimizer steps, unchanged 0.50/0.50 thresholds, one <=90-minute CPU job, zero retries, zero paid compute, P3 sealed.
+6. No fitting, threshold search, P3 access, full-training restart, production mutation, or customer-readiness claim is authorized.
+
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

@@ -1,0 +1,53 @@
+{
+  "schema": "astra-p1-p2-combined-offline-diagnostic-design-v1",
+  "date": "2026-09-27",
+  "status": "offline_preparation_complete_pending_synthetic_verification",
+  "purpose": "One bounded zero-optimizer package to reproduce frozen scoring, preserve valid correspondence, measure attacks/sustain/silence, expose frozen head projections/state margins, and assess fixed neighboring-frame evidence without causal overclaim.",
+  "scope": {
+    "p1": [
+      "P1|chords|Drop3_7|directinput",
+      "P1|scales|Ab|directinput",
+      "P1|singlenotes|allsinglenotes|directinput",
+      "P1|techniques|PalmMute|directinput"
+    ],
+    "p2": [
+      "P2|chords|Drop3_7|directinput",
+      "P2|scales|Ab|directinput",
+      "P2|singlenotes|allsinglenotes|directinput",
+      "P2|techniques|PalmMute|directinput"
+    ],
+    "framesPerExample": 200,
+    "model": "frozen V3",
+    "optimizerSteps": 0,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "automaticRetries": 0,
+    "p3Sealed": true
+  },
+  "requiredEvidence": [
+    "exact capture allowlist, performer/view, 200x192 shape, finite arrays, source/crop/target identities and zero unresolved labels",
+    "raw and identical boundary-corrected score paths with exclusion records",
+    "non-positional source-event correspondence with unmatched events retained",
+    "exact-center and fixed +/-2 attack probes kept separate",
+    "active non-attack sustain controls and silence controls",
+    "onset logits, w dot h, constant bias, and matched projected deltas",
+    "true-fret versus silence and strongest-incorrect state margins and admission outcomes",
+    "fixed adjacent-frame feature deltas as descriptive temporal evidence",
+    "explicit reproduction_failure, insufficient_correspondence and inconclusive outcomes"
+  ],
+  "numericalReproducibility": "If original prepared arrays are unavailable, numerical feature/logit equivalence remains explicitly unverified; equal aggregate metrics are not treated as numerical equivalence.",
+  "decisionPolicy": "Observational geometry cannot prove a causal repair. A later fit, if justified, must be one separately frozen capped intervention with a predeclared split and comparator.",
+  "executionCeiling": {
+    "cpuJobMinutesMax": 90,
+    "paidComputeDollars": 0,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "modelMutation": false,
+    "p3Access": false
+  },
+  "evidenceRetention": {
+    "activationDiagnosticArtifactExpiresAt": "2026-10-04T14:52:03Z",
+    "frozenV3ModelArtifactExpiresAt": "2026-10-03T23:51:34Z",
+    "plan": "Before execution, preserve authorized durable model/derived evidence and manifest hashes; never retrain merely to recreate an expired artifact."
+  }
+}

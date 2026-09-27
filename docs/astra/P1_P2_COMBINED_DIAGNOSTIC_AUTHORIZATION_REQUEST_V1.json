@@ -1,0 +1,29 @@
+{
+  "schema": "astra-p1-p2-combined-diagnostic-authorization-request-v1",
+  "date": "2026-09-27",
+  "status": "request_only_not_authorization",
+  "authorizationGranted": false,
+  "purpose": "Request one bounded real-data execution of the already-prepared combined diagnostic after synthetic verification is green.",
+  "requestedAuthorization": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "frozenV3ModelInferenceAuthorized": true,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "modelMutationAuthorized": false,
+    "p3Authorized": false,
+    "automaticRetryAuthorized": false,
+    "paidComputeDollars": 0
+  },
+  "limits": {
+    "captures": 8,
+    "framesPerCapture": 200,
+    "cpuJobMinutesMax": 90,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    }
+  },
+  "noLaunchArtifactExists": true,
+  "claimBoundary": "Execution would provide descriptive evidence only. It cannot authorize fitting, threshold changes, P3, production mutation, or customer readiness."
+}
