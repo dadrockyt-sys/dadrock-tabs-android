@@ -206,5 +206,18 @@
     "eventWeightedSummaries": true,
     "captureBalancedSummaries": true,
     "causalClaimsAllowed": false
+  },
+  "implementationPins": {
+    "auditRunnerGitBlob": "3f33b967aee9d80dddddf35e4b7eda6922ff09df",
+    "auditTestsGitBlob": "3377ceccda1602105a4453f567df6fc0a4a7f262",
+    "offlineWorkflowGitBlob": "4544647991f0cd41b834904c39aed4b53488ad59",
+    "gatedRealWorkflowGitBlob": "a9673b97bf81724ee3d2e6819245d9105f4e9d69",
+    "localizationRunnerWithTimestampFixGitBlob": "79edc00b46c180ee71e1c8be411e6d5a2e7f2099",
+    "localizationTestsWithTimestampRegressionGitBlob": "b94cdf44aaf904697478f07e822b98c6caa79e33"
+  },
+  "timestampBookkeepingFix": {
+    "priorFrozenResultMutated": false,
+    "change": "Synthetic descriptive start timestamps now use frozen HOP_LENGTH_SAMPLES/SAMPLE_RATE_HZ (512/22050) rather than 256/22050.",
+    "causalClaim": "none; frozen frame-index diagnostics and prior results remain historical and unchanged"
   }
 }
