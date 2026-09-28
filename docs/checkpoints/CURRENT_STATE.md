@@ -3,13 +3,52 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S2 FAILED; OFFLINE REVIEW COMPLETE; S3 ONSET-POSITIVE-WEIGHT HYPOTHESIS FROZEN — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
+Status: **S3 DESIGN FROZEN; ROUTINE GITHUB RUNS STANDING-AUTHORIZED; MODEL/CODESPACES/VERCEL-COST WORK STILL REQUIRES EXPLICIT AUTHORIZATION; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — S3 decision boundary
+## Authoritative GPT-5.6 instructions — standing authorization policy
 
-Corrected S2 run **36372725350** / job **108772201562** is frozen as a scientific fail.
+Stephen explicitly instructed:
 
-### S2 facts retained
+> "I authorize any github runs i only require authorization when model runs, codespaces, and Vercel costs may be necessary"
+
+Interpret this as the standing authorization policy for work on `astra-work`:
+
+### Pre-authorized
+
+Do **not** stop to ask for approval for ordinary GitHub operations or GitHub Actions runs that are:
+
+- code-only, lint, unit-test, static-analysis, fixture, metadata, packaging, manifest, hash, or documentation workflows;
+- offline diagnostics that do **not** execute a model;
+- artifact inspection / receipt freezing / workflow status inspection;
+- source-only implementation, review, commit, and branch updates;
+- zero-cost and do not use Codespaces or Vercel.
+
+Routine GitHub workflow reruns needed to correct an implementation/test-fixture failure are also pre-authorized **provided they do not execute a model and do not introduce Codespaces/Vercel cost**. Preserve the failure receipt and avoid open-ended retries.
+
+### Explicit authorization still required
+
+Ask Stephen before any action that involves **any** of:
+
+1. **Model execution**
+   - training / optimizer steps;
+   - inference/evaluation through a model;
+   - running a pretrained or locally trained model;
+   - model artifact generation or model-based benchmark/diagnostic;
+   - any workflow whose material purpose is to execute a model, even if GitHub Actions itself is free.
+
+2. **Codespaces**
+   - creating, starting, resizing, or otherwise using a Codespace when usage/cost may be incurred.
+
+3. **Vercel cost**
+   - any deploy/build/operation that may create billable Vercel usage or requires paid Vercel resources.
+
+If a planned workflow mixes ordinary tests with model execution, treat the whole workflow as requiring explicit authorization before launch.
+
+This standing policy supersedes older handoff language that asked for approval before every GitHub run. It does **not** loosen historical experimental gates, media/data access restrictions, P1/P2/P3 boundaries, deployment restrictions, or scientific stop criteria.
+
+## Current technical state
+
+Corrected S2 run **36372725350** / job **108772201562** remains frozen as a scientific fail.
 
 Weight 6.0 versus weight 1.5:
 - onset recall **0.5581 vs 0.4574**
@@ -19,57 +58,32 @@ Weight 6.0 versus weight 1.5:
 - onset+offset F1 **0.5561 vs 0.4767**
 - repeated-note recall **0.5000 vs 0.5000**
 
-Weight 6.0 helped, but five frozen S2 criteria failed. No P1/P2/P3 access occurred.
-
-### Offline S2 failure review
-
-Changing state weight improved state/joint admission but did **not** improve exact onset admission:
-- control exact onset admission **0.5736**
-- weight-6 exact onset admission **0.5736**
-
-Repeated-note recall also remained **0.5000**.
-
-Under the frozen onset-aware sampler:
-- positive onset frames per batch: **32 / 128**
-- mean positive strings per positive-onset frame: **1.228571**
-- expected positive onset string/tokens per batch: **39.3143 / 768 = 5.119%**
-- current pos_weight 8 gives about **30.15%** of expected weighted onset-loss mass to positive tokens
-- pos_weight 16 gives about **46.33%**
-
-This supports one bounded next hypothesis; it does not prove the cause.
-
-Analysis:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_FAILURE_ANALYSIS_V1.md`
-
-### Frozen S3 design
-
+S3 design is frozen in:
 - `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_DESIGN_V1.md`
 
-Exactly two identical S2-style models:
-1. control onset BCE pos_weight **8**
-2. intervention onset BCE pos_weight **16**
+S3 changes only onset BCE positive weight:
+- control **8**
+- intervention **16**
 
-Everything else is fixed:
+Everything else remains fixed:
 - state active weight **6.0**
 - onset-aware 32/32/32/32 sampler
-- identical data, initialization and minibatch plan
+- identical generated data, initialization and minibatch plan
 - five-frame architecture
 - onset loss multiplier 4.0
 - lr 0.003
 - 500 steps/model
 - thresholds 0.50/0.50
 - decoder V2
-- no threshold search.
+- no threshold search
 
-S3 adds repeated-reference onset diagnostics, including the preceding-frame onset probability needed to distinguish general missed attacks from rising-edge/plateau behavior without changing the decoder.
+### EXACT NEXT STEP
 
-### EXACT NEXT STEP — fresh authorization required
+Because S3 is a **model run**, the standing GitHub authorization does **not** authorize launching it.
 
-**Do not execute S3.**
+Do not execute S3 until Stephen explicitly authorizes the S3 model experiment.
 
-No rendering, optimizer work, threshold changes, P1/P2 access, P3 access, deployment or main mutation is authorized now.
-
-Fresh explicit authorization is required for the bounded S3 synthetic-only onset-positive-weight experiment.
+Meanwhile, any routine GitHub-only code/tests/docs/metadata work that does not run a model and does not involve Codespaces/Vercel cost may proceed without another approval.
 
 
 ---
