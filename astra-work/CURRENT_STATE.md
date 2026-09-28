@@ -282,3 +282,70 @@ Do not:
 - mutate main/Production.
 
 **Resume instruction:** Stop at the project-decision boundary. The next empirical step requires explicit user authorization for a new independent real-development evidence program; a new architecture-identification/A2 project likewise requires its own explicit decision. Do not infer either authorization from a generic “continue.”
+
+
+## Independent real-development evidence program authorized and intake package frozen — 2026-09-28
+
+The user explicitly selected **option 1** and authorized a new independent real-development evidence program.
+
+This authorization opens the **program design/intake scope**. It does not reopen P1/P2/P3, does not open A2, and does not authorize training, tuning, paid inference, deployment, or main/Production changes.
+
+Prospective design/spec now frozen:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.json`
+
+Intake package:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`
+- `astra_backend/synthetic/independent_real_development_intake_validator_v1.py`
+- `astra_backend/synthetic/test_independent_real_development_intake_validator_v1.py`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_PACKAGE_VERIFICATION_V1.json`
+
+The frozen V1 first-tranche contract requires:
+- **24 new clips** total;
+- at least **18 positive** clips;
+- at least **6 negative-only** clips;
+- at least **90 s positive audio**;
+- at least **30 s negative-only audio**;
+- clips created or sourced only after this design freeze;
+- explicit no-overlap with P1/P2/P3 and previously inspected/tuned audio;
+- prospectively frozen annotations before model output;
+- fixed historical thresholds **0.50 / 0.50**;
+- no threshold, decoder, frontend, candidate, seed, architecture, loss or sampler tuning from these clips.
+
+Required coverage includes single notes, repeated attacks, legato, palm mute, dyad/chord material, clean capture, and distorted/overdriven capture.
+
+The intake validator fails closed on independence declarations, clip counts/durations, coverage, annotation presence, candidate/runtime pins, summary consistency, zero pre-verification inference, zero optimizer steps, and continued P1/P2/P3 closure.
+
+Focused local model-free verification:
+- command: `python -m unittest -v test_independent_real_development_intake_validator_v1.py`
+- result: **10/10 passed**
+- model imports/inference: **0**
+- optimizer steps: **0**
+- real clips accessed: **0**
+- workflow dispatches: **0**
+- P1/P2/P3 access: **none**
+- main/Production mutation: **none**
+
+### Current blocking dependency
+
+No genuinely new independent real-development clip set is currently present in the authorized intake package.
+
+Do not fill the manifest using P1, P2, P3, previously examined audio, synthetic renders, or clips selected after looking at model output.
+
+A durable frozen candidate weight identity must also be available before inference. If A1 weights are unavailable, record that as missing evidence; **do not retrain A1** to recreate them.
+
+### Exact next task
+
+Acquire or receive a genuinely new real-development clip set that satisfies the frozen V1 intake contract. Then:
+1. hash every clip;
+2. record durations/provenance/coverage;
+3. freeze annotations before model output;
+4. pin exactly one eligible frozen candidate and evaluator/frontend/runtime identity;
+5. populate `INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`;
+6. run the pure intake validator;
+7. freeze a zero-inference offline verification receipt;
+8. stop before any model inference if any intake criterion fails.
+
+If the user supplies or identifies qualifying new audio, intake/annotation work is within the authorized program. P1/P2 and P3 remain excluded.
+
+**Resume instruction:** Continue only with the independent real-development intake package. Do not train, tune, dispatch model inference, open A2, reuse P1/P2, or access P3. The next empirical inference may occur only after a complete new clip set passes the frozen pre-inference intake verification.
