@@ -1,0 +1,10 @@
+name: Astra synthetic S12 onset-transition robustness v1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo S12_PLACEHOLDER
