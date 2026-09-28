@@ -1,0 +1,39 @@
+{
+  "schema": "astra-architecture-research-a1-offline-verification-frozen-v1",
+  "date": "2026-09-28",
+  "status": "passed",
+  "workflow": {
+    "run": 36492512434,
+    "job": 109164198506,
+    "head": "e532603789a27bac19a8f42f9df2c98bc0b7406d",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11002241343,
+    "name": "astra-architecture-a1-offline-verification-v1",
+    "digest": "sha256:ab4efd46bc6522d1fb1a0ae1ad0f08767adb0dbb37c7cde1f6aead7295923c17",
+    "receiptSha256": "55b3b48bc4f47ff3bc34850b53bf7913026f2091a4193c77727efcf8348e3a1c"
+  },
+  "sourceGitBlobs": {
+    "runner": "c88fab40cb550663d84423b3394a974ee90c9bd0",
+    "tests": "683006f84bce6f33cf65b17aefb7bd4730ef0285",
+    "s11": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "design": "83735d26324757e16dc0b9c89b2749f1b960516d",
+    "spec": "9caa62d0a6d09e6e77b162a9ca08aa56924e38aa"
+  },
+  "execution": {
+    "fitCalls": 0,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "decision": "verified-one-a1-synthetic-execution-may-run"
+}
