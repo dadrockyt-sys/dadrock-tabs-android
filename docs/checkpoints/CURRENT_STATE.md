@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **SOURCE-DOMAIN SIMULATOR MODEL-FREE ADMISSION/PREPARATION PASSED; PROSPECTIVE TRAINING DESIGN/SPEC FROZEN; NEXT: OFFLINE FAIL-CLOSED EXECUTION PACKAGE ONLY — NO TRAINING YET; P1/P2 CLOSED; P3 SEALED**
+Status: **SOURCE-DOMAIN TRAINING PACKAGE OFFLINE VERIFIED — ONE BOUNDED SYNTHETIC-ONLY LAUNCH BOUNDARY REACHED; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1462,3 +1462,63 @@ Implement and verify the prospective source-domain training execution package **
 5. zero optimizer steps during package verification.
 
 **Resume instruction:** Implement and verify the source-domain training execution package offline. Do not launch a model yet. Keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
+
+
+## Source-domain training offline execution package verified — 2026-09-28
+
+The prospective source-domain training execution package is now fail-closed and verified without optimizer work.
+
+Frozen verification:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_OFFLINE_VERIFICATION_V1.json`
+
+Package:
+- runner: `astra_backend/synthetic/source_domain_simulator_training_v1.py`
+- focused tests: `astra_backend/synthetic/test_source_domain_simulator_training_v1.py`
+- run scope: `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_RUN_SCOPE_V1.json`
+- durable ledger: `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_EXECUTION_HISTORY_V1.json`
+- disabled launch request: `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_LAUNCH_REQUEST_V1.json`
+- launch-marker-only execution workflow: `.github/workflows/astra-source-domain-training-execution-v1.yml`
+
+Offline verification:
+- run **36476387279**
+- job **109111039398**
+- head `2589a201a535d3689400d11824d35315b7398984`
+- conclusion **SUCCESS**
+- focused tests **15 passed**
+- artifact **10993852045**
+- digest `sha256:6a18f375c550938ad2816e91bceec8107d4d4ac4cfa7dc2e258be4e3c2dfad59`
+- model run **false**
+- optimizer steps **0**
+- P1/P2/P3 access **false**
+
+Verification independently downloaded preparation artifact **10993531230** and matched:
+- control feature hash `b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749`
+- intervention feature hash `a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a`
+- challenge feature hash `c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640`
+- exact dataset file hashes;
+- 210 train rows / 42 test rows;
+- 30 historical S9 truncated training-chord metadata rows preserved;
+- complete frozen source pins;
+- no launch marker present at verification time.
+
+### Launch boundary
+
+The standing branch policy pre-authorizes bounded inexpensive synthetic GitHub model runs. This exact package now satisfies the prerequisite offline verification.
+
+Exactly one synthetic-only launch may now be armed under that standing authorization:
+- seeds 20260927 / 20260928 / 20260929;
+- 6 models maximum;
+- 500 optimizer steps/model;
+- 3,000 optimizer steps total;
+- CPU-only;
+- <=90 fit/eval minutes;
+- $0 paid compute;
+- thresholds 0.50 / 0.50;
+- no threshold search/retuning;
+- no automatic retry;
+- no P1/P2/P3 access;
+- no Codespaces/Vercel/main/Production mutation.
+
+After that one run, freeze workflow and scientific pass/fail and stop. No parameter rescue, seed selection, P1/P2 transfer, P3 access, or follow-on model experiment may occur automatically.
+
+**Immediate next action:** create exactly one unique armed source-domain training launch marker, let the already-frozen workflow execute once, freeze its result, consume the launch identity, and stop.
