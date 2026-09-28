@@ -187,7 +187,7 @@ def _coverage(training,challenge):
         for d in DESCRIPTORS:
             tv=np.asarray([float(r[d]) for r in tr])
             cv=np.asarray([float(r[d]) for r in ch])
-            lo,hi=np.quantile(tv,[.05,.95],method="linear")
+            lo,hi=np.quantile(tv,[.05,.95],interpolation="linear")
             med=float(np.median(cv))
             checks.append({"family":fam,"descriptor":d,"trainP05":float(lo),"trainP95":float(hi),
                            "challengeMedian":med,"passed":bool(float(lo)<=med<=float(hi))})
