@@ -26,10 +26,12 @@ MAX_AUDIO_SECONDS=1800.0
 MAX_PERSISTED_BYTES=500*1024*1024
 MAX_WALL_SECONDS=45*60.0
 
-def _template_and_variant(family,template_id,occurrence):
+def _template_and_variant(family,template_id,occurrence,s9_slot=None):
     fam=str(family); tid=str(template_id)
-    if fam=="chords" and tid.startswith("s9-chords:"):
-        slot=int(tid.split(":",1)[1])
+    if s9_slot is not None:
+        slot=int(s9_slot)
+        if fam!="chords" or not 0<=slot<30:
+            raise RuntimeError("invalid S9 chord slot")
         return intervention_chord_template(slot),slot%3
     if ":" not in tid:
         raise RuntimeError("unexpected template id: "+tid)
@@ -54,6 +56,11 @@ def build_source_domain_datasets(control_path,intervention_out,challenge_out,rec
     qa={k:np.array(c[k],copy=True) for k in c.files}
 
     occurrences={}
+    chord_train_rows=np.flatnonzero((c["family"]=="chords")&(c["split"]=="train"))
+    if len(chord_train_rows)!=30:
+        raise RuntimeError("expected 30 frozen S9 training chord rows")
+    chord_slot_for_row={int(row):slot for slot,row in enumerate(chord_train_rows.tolist())}
+    historical_truncated_chord_refs=0
     rendered=0
     changed_intervention=[]
     changed_challenge=[]
@@ -63,9 +70,10 @@ def build_source_domain_datasets(control_path,intervention_out,challenge_out,rec
         tid=str(c["template_id"][i]); fam=str(c["family"][i]); split=str(c["split"][i])
         occ=occurrences.get(tid,0)
         occurrences[tid]=occ+1
-        template,variant=_template_and_variant(fam,tid,occ)
+        s9_slot=chord_slot_for_row.get(int(i))
+        template,variant=_template_and_variant(fam,tid,occ,s9_slot=s9_slot)
 
-        # Verify reconstructed source template yields the exact frozen labels/references
+        # Verify reconstructed source template yields the exact frozen state/onset
         # before it is permitted to provide a replacement waveform.
         state,onset,refs=targets_for_template(template,c["features"][i].shape[0])
         refs_json=json.dumps(refs,separators=(",",":"),sort_keys=True)
@@ -73,8 +81,20 @@ def build_source_domain_datasets(control_path,intervention_out,challenge_out,rec
             raise RuntimeError(f"reconstructed state mismatch row {i}")
         if not np.array_equal(onset,c["onset"][i]):
             raise RuntimeError(f"reconstructed onset mismatch row {i}")
-        if refs_json!=str(c["refs_json"][i]):
-            raise RuntimeError(f"reconstructed references mismatch row {i}")
+        frozen_refs=str(c["refs_json"][i])
+        if s9_slot is None:
+            if refs_json!=frozen_refs:
+                raise RuntimeError(f"reconstructed references mismatch row {i}")
+        else:
+            # Historical S9 storage copied the S0 fixed-width Unicode dtypes before
+            # assigning longer S9 chord IDs. Training-chord template IDs and refs were
+            # therefore truncated. Preserve those bytes as historical control identity;
+            # require the stored value to be an exact prefix of the reconstructed refs.
+            if not (len(frozen_refs)<len(refs_json) and refs_json.startswith(frozen_refs)):
+                raise RuntimeError(f"S9 historical reference truncation mismatch row {i}")
+            if not template["templateId"].startswith(tid):
+                raise RuntimeError(f"S9 historical template-id truncation mismatch row {i}")
+            historical_truncated_chord_refs+=1
 
         if split=="train":
             feat=_render_features(template,variant,"intervention"); rendered+=1
@@ -162,7 +182,15 @@ def build_source_domain_datasets(control_path,intervention_out,challenge_out,rec
         "allNonFeatureArraysBitIdentical":True,
         "changedInterventionRowsExactlyTrain":True,
         "changedChallengeRowsExactlyTest":True,
-        "reconstructedTargetsAndReferencesMatchEveryRow":True,
+        "reconstructedStateOnsetMatchEveryRow":True,
+        "heldoutAndNonS9ReferencesMatchExactly":True,
+        "historicalS9TrainChordReferencePrefixesVerified":historical_truncated_chord_refs==30,
+      },
+      "historicalS9StringStorage":{
+        "trainingChordRowsWithTruncatedTemplateIdAndRefs":int(historical_truncated_chord_refs),
+        "preservedUnchangedInAllArms":True,
+        "repairAttempted":False,
+        "note":"Frozen S9 training-chord template_id/refs_json fields are fixed-width-truncated; state/onset are intact. New arms preserve these historical fields byte-identically."
       },
       "rowRecords":row_records,
       "ceilings":{
