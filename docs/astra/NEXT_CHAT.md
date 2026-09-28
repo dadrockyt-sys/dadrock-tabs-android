@@ -1,21 +1,11 @@
 # Next chat: start here
 
-Corrected S9 completed and is the strongest current controlled synthetic result.
+S10 completed and failed its integrated gate.
 
-30 unique chord voicings versus 10:
-- chord F1 +0.1864
-- chord recall +0.2500
-- overall recall +0.1318
-- overall F1 +0.0793
-- joint admission +0.0698
-- state admission +0.0310 to 0.4109
+Width 192 improved exact state/joint admission by +0.0465 but missed the absolute state/joint floors and degraded precision/onset+offset/family stability enough that width 192 is rejected.
 
-S9 passed 14/16 frozen criteria. It is still a formal fail because state admission missed the +0.05 gain and 0.42 absolute floors.
+The important new signal is seed sensitivity: S10's width-128 control was much weaker than S9's 30-voicing model despite using the same diversified dataset/training recipe class.
 
-S10 is frozen around one final bounded state-capacity question while preserving the successful diversified dataset:
-- control nonlinear state hidden width 128;
-- intervention width 192;
-- widening is identity-preserving with extra output columns zero-initialized;
-- pre-update state/onset logits must match exactly.
+S11 is frozen as a robustness confirmation of the S9 data-diversity effect across exactly three seeds (20260927/28/29), 10 voicings vs 30 voicings within each seed.
 
-S10 model execution requires fresh explicit authorization.
+S11 requires 6 models total and fresh explicit authorization. P1/P2/P3 remain sealed.

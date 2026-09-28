@@ -1,0 +1,89 @@
+{
+  "schema": "astra-synthetic-data-diversity-s10-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_state_width_192_integrated_gate",
+  "run": {
+    "runId": 36379983316,
+    "jobId": 108793560697,
+    "headSha": "c467a9ec3eab08262b43852a621d4e497c031ca8",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10952511057,
+    "name": "astra-synthetic-data-diversity-s10-v1",
+    "digest": "sha256:82752c9f3b0067f4bdadc81e5aa3c7f8e50486a3590dbadad92a7d3713409a31",
+    "expiresAt": "2026-10-28T05:01:14Z",
+    "files": {
+      "control-render-receipt.json": "742afdf16295fa787321f4b769e2fe67469e70601a67495d277b913a68a67f92",
+      "dataset-receipt.json": "3aa5c4352c46d84520b22dc8174a13e3ad8c82f2ed12d7c481c16c9b16fbc70f",
+      "identity.json": "bc2ec48046fa3e37496eb3f39c3024a71adb36be0b8ba24798af266cd102f065",
+      "result.json": "cbe27352160f47e7bb89a706b7818c4a0d8bcc439d48b877e786badbd303f9ba",
+      "control128.pt": "9c46db35bcbb3468c3b9fabd30451f7371e4e76e85d61cd42f9f66e6945346fc",
+      "wide192.pt": "8fa390fc9b43049894edfe43ffde0ff1a27e1386019d086413a3f420cb81c33b"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 3,
+    "focusedTestsTotal": 3,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 5.978063041000013,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "preUpdateStateLogitsIdentical": true,
+    "preUpdateOnsetLogitsIdentical": true,
+    "first128HiddenAndOutputIdentity": true,
+    "extra64OutputExactlyZero": true
+  },
+  "control128": {
+    "precision": 0.8390804597701149,
+    "recall": 0.5658914728682171,
+    "f1": 0.6759259259259259,
+    "onsetOffsetF1": 0.625,
+    "repeatedRecall": 0.5952380952380952,
+    "stateAdmission": 0.27906976744186046,
+    "jointAdmission": 0.27906976744186046,
+    "chordF1": 0.3018867924528302,
+    "chordRecall": 0.2222222222222222
+  },
+  "wide192": {
+    "precision": 0.7735849056603774,
+    "recall": 0.6356589147286822,
+    "f1": 0.6978723404255319,
+    "onsetOffsetF1": 0.5892116182572614,
+    "repeatedRecall": 0.6428571428571429,
+    "stateAdmission": 0.32558139534883723,
+    "jointAdmission": 0.32558139534883723,
+    "chordF1": 0.39344262295081966,
+    "chordRecall": 0.3333333333333333,
+    "extra64ParameterNormAfterTraining": 12.988929615329907
+  },
+  "comparison": {
+    "stateAdmissionGain": 0.04651162790697677,
+    "jointAdmissionGain": 0.04651162790697677,
+    "onsetF1Gain": 0.021946414499605993,
+    "onsetOffsetF1Change": -0.03578838174273857
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 7,
+    "totalCount": 16
+  },
+  "interpretation": {
+    "supported": "Identity-preserving widening produced a real state/joint admission gain and the extra 64-unit pathway learned.",
+    "rejected": "Width 192 is not supported as the integrated configuration because absolute state/joint floors, recall/F1/chord/precision floors, onset+offset preservation and family stability did not all hold.",
+    "caution": "The S10 width-128 control performed much worse than the earlier S9 30-voicing intervention despite the same diversified dataset/training recipe, showing meaningful initialization sensitivity."
+  }
+}
