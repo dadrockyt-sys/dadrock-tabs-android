@@ -1,0 +1,60 @@
+{
+  "schema": "astra-source-domain-v2-corrected-stage-a-adjudication-result-v1",
+  "date": "2026-09-28",
+  "status": "passed",
+  "workflow": {
+    "run": 36488493592,
+    "job": 109151112276,
+    "head": "b9988270b3cb553a741bedcd30f1c3dfad101255",
+    "attempt": 1,
+    "conclusion": "success",
+    "focusedTestsPassed": 3
+  },
+  "artifact": {
+    "id": 10999984993,
+    "name": "astra-source-domain-v2-corrected-stage-a-adjudication-v1",
+    "digest": "sha256:eec6c162e2b1e3a4303b5524ebebd4a35fea6e1184e6bad073d182367f6e9f51",
+    "resultJsonSha256": "5a15ce7a2fd6ea7e4e2072a3a215a9eccd90d0258d811ca0b6cd47775f2e659a"
+  },
+  "originalStageAFailurePreserved": true,
+  "correctedStageAPassed": true,
+  "retainedOriginalCriteria": {
+    "audioSecondsCeiling": true,
+    "cqtChangedEveryPositiveSelectedRow": true,
+    "deterministicRerenderIdentity": true,
+    "finiteAudioAndFeatures": true,
+    "manifestBindingExact": true,
+    "noUnlabeledTransientInjection": true,
+    "onsetIdentity": true,
+    "peakUnder0_999": true,
+    "referenceIdentity": true,
+    "renderCeiling": true,
+    "selectedRowsExact": true,
+    "stateIdentity": true,
+    "wallTimeCeiling": true
+  },
+  "replacementPitchCriteria": {
+    "isolatedAdmissionPassed": true,
+    "allIsolatedMeasurableWithin15Cents": true,
+    "allOriginalMeasurableEventsRetained": true,
+    "isolatedMeasurableEventsExactly86": true,
+    "maxAbsoluteIsolatedCentsAtMost15": true,
+    "missingOriginalMeasurableEventsZero": true,
+    "originalMeasurableEventsExactly86": true,
+    "outside15CentsZero": true
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "audioSeconds": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdWork": false,
+    "automaticRetry": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "productionMutation": false
+  },
+  "nextAction": "model-free-stage-b-preparation-and-coverage-only"
+}
