@@ -1,0 +1,59 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-preexecution-failure-v1",
+  "date": "2026-09-28",
+  "status": "preexecution-focused-test-failed-stage-a-not-run",
+  "branch": "astra-work",
+  "attemptedWorkflow": {
+    "run": 36482951827,
+    "job": 109132814201,
+    "head": "fc3c31d8a604336bef85406f1f579e5a3d3cacb4",
+    "runAttempt": 1,
+    "conclusion": "failure"
+  },
+  "frozenInputs": {
+    "controlFileSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469",
+    "designPath": "docs/astra/SOURCE_DOMAIN_V2_WAVEFORM_PREPARED_FEATURE_ADMISSION_DESIGN_V1.md",
+    "specPath": "docs/astra/SOURCE_DOMAIN_V2_WAVEFORM_PREPARED_FEATURE_ADMISSION_SPEC_V1.json"
+  },
+  "preflight": {
+    "frozenArtifactIdentityCheckPassed": true,
+    "focusedTestsPassed": 4,
+    "focusedTestsFailed": 1,
+    "failingTest": "test_manifest_override_changes_only_frozen_v2_clip_axes_and_categoricals",
+    "failureReason": "The synthetic unit-test row at position 0 sets humActive=true and humFundamentalHz=50, while the test incorrectly expected humFundamentalHz to be absent from the override. The implementation includes humFundamentalHz exactly when humActive is true, consistent with the frozen V2 categorical protocol.",
+    "scientificParameterChanged": false,
+    "rendererExecuted": false
+  },
+  "execution": {
+    "stageAAcousticAdmissionExecuted": false,
+    "waveformRenders": 0,
+    "audioSeconds": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "artifact": {
+    "uploaded": false,
+    "reason": "Stage A output directory was never created because focused tests failed before execution."
+  },
+  "interpretation": {
+    "scientificStageAOutcome": "not_measured",
+    "established": "The first workflow attempt failed in a pre-execution unit-test expectation. No acoustic admission result exists.",
+    "notEstablished": [
+      "No claim can be made about waveform validity.",
+      "No claim can be made about fundamental preservation.",
+      "No claim can be made about prepared-CQT propagation.",
+      "No claim can be made about Stage A pass/fail scientifically."
+    ]
+  },
+  "stopRule": "Freeze this technical pre-execution failure. Do not rerun Stage A automatically. Review the test contract separately; any new execution attempt must be explicitly versioned/authorized by the next checkpoint."
+}
