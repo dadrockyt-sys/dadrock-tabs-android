@@ -1,0 +1,109 @@
+{
+  "schema": "astra-p2-attack-preparation-integrity-audit-frozen-result-v2",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "p2_attack_transient_energy_is_weaker_on_eligible_examples_without_gross_timing_or_downmix_attenuation_evidence",
+  "run": {
+    "runId": 36408179090,
+    "jobId": 108881796729,
+    "headSha": "0e4e5c56ce49eebb0447ed9f467071578112e962",
+    "conclusion": "success",
+    "startedAt": "2026-09-28T10:11:15Z",
+    "completedAt": "2026-09-28T10:54:22Z"
+  },
+  "artifact": {
+    "artifactId": 10964618513,
+    "name": "astra-p2-attack-preparation-integrity-audit-v2",
+    "digest": "sha256:763c700a20c0688879953b909ac32d476138b863555c7e5349315118f5019fc2",
+    "resultJsonSha256": "4d97c4993031f1362cd349c91068f19156311e22642b6f6f0fd12eeaa57e6edc",
+    "expiresAt": "2026-10-28T10:54:17Z"
+  },
+  "execution": {
+    "p1Accessed": true,
+    "p2Accessed": true,
+    "p3Opened": false,
+    "exactCaptureCount": 8,
+    "optimizerSteps": 0,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "populations": {
+    "P1": {
+      "captureCount": 4,
+      "eligibleAcousticAttackCount": 16,
+      "excludedNoteEventCount": 0,
+      "eventWeighted": {
+        "rawPostRmsMedian": 0.03764503338800151,
+        "rawFirstDifferenceEnergyMedian": 0.00011976188166225565,
+        "preparedCqtPositiveFluxMedian": 12.989048063755035,
+        "rawPeakOffsetSecondsMedian": -0.0030911281179148986,
+        "cqtPeakOffsetSecondsMedian": 0
+      },
+      "captureBalanced": {
+        "rawPostRmsMedianOfCaptureMedians": 0.0245967960726678,
+        "rawFirstDifferenceEnergyMedianOfCaptureMedians": 0.000013546726959932515,
+        "preparedCqtPositiveFluxMedianOfCaptureMedians": 9.976323544979095,
+        "rawPeakOffsetSecondsMedianOfCaptureMedians": -0.008906391723356055,
+        "cqtPeakOffsetSecondsMedianOfCaptureMedians": -0.02321995464852608
+      }
+    },
+    "P2": {
+      "captureCount": 4,
+      "eligibleAcousticAttackCount": 11,
+      "excludedNoteEventCount": 4,
+      "excludedCapture": "P2|chords|Drop3_7|directinput",
+      "exclusionReason": "all four chord note events occur too near crop/source start for the prospectively frozen raw +/-120 ms and prepared-CQT +/-4-frame peak windows",
+      "eventWeighted": {
+        "rawPostRmsMedian": 0.020222919039864937,
+        "rawFirstDifferenceEnergyMedian": 0.00001133661128880449,
+        "preparedCqtPositiveFluxMedian": 11.309329390525818,
+        "rawPeakOffsetSecondsMedian": -0.004705215419502196,
+        "cqtPeakOffsetSecondsMedian": 0
+      },
+      "captureBalanced": {
+        "eligibleCaptureCount": 3,
+        "rawPostRmsMedianOfCaptureMedians": 0.022113629346014834,
+        "rawFirstDifferenceEnergyMedianOfCaptureMedians": 0.000010735212449528088,
+        "preparedCqtPositiveFluxMedianOfCaptureMedians": 9.50126188993454,
+        "rawPeakOffsetSecondsMedianOfCaptureMedians": -0.0034297052154199648,
+        "cqtPeakOffsetSecondsMedianOfCaptureMedians": -0.01160997732426304
+      }
+    }
+  },
+  "comparisons": {
+    "p2ToP1EventMedianRawPostRmsRatio": 0.537191108301063,
+    "p2ToP1EventMedianRawFirstDifferenceEnergyRatio": 0.0946609618453482,
+    "p2ToP1EventMedianPreparedCqtPositiveFluxRatio": 0.870683499882669,
+    "rawPeakMedianDifferenceSeconds": -0.0016140873015872976,
+    "cqtPeakMedianDifferenceSeconds": 0
+  },
+  "channelAndResamplingEvidence": {
+    "p1DirectInputChannels": 1,
+    "p2DirectInputChannels": 2,
+    "p2EligibleStereoChannelAttackMetricsIdentical": true,
+    "p2FrozenMonoToNativeMeanMixPostRmsRatioApprox": 1.414,
+    "interpretation": "The frozen ffmpeg stereo-to-mono path boosts the duplicated P2 channels by about sqrt(2) rather than attenuating them. Existing RMS normalization occurs before CQT extraction, so this fixed global gain does not explain weaker P2 prepared attack novelty."
+  },
+  "interpretation": {
+    "established": [
+      "On the eligible bounded examples, P2 raw attack transitions are substantially weaker than P1 by first-difference energy and moderately weaker by post-attack RMS and prepared-CQT positive flux.",
+      "The eligible P1 and P2 transient peaks remain close to the frozen annotations; event-weighted raw peak medians differ by about 1.6 ms and prepared-CQT peak medians are both 0 frames.",
+      "The P2 stereo downmix is not an attenuation mechanism in these captures; it produces roughly a +3 dB amplitude increase before the existing RMS normalization."
+    ],
+    "heterogeneity": [
+      "The weakness is not uniform: P2 PalmMute contains strong attack energy, while P2 scales are weaker and the selected P2 single-note attack is especially weak in prepared-CQT novelty."
+    ],
+    "limitation": [
+      "The P2 Drop3_7 chord cannot enter the prospective population summary because its four note events sit near the beginning of the source/crop and fail the fixed full-window eligibility rules. Descriptive values exist in the artifact but were not promoted into the frozen aggregate."
+    ],
+    "notEstablished": [
+      "This audit does not prove a single causal mechanism for the failed synthetic candidate and does not justify threshold rescue, P1/P2 tuning, model selection, training, or P3 access."
+    ],
+    "decision": "Treat weak/variable real attack-envelope contrast as a supported domain-mismatch factor; do not attribute the P2 failure to a gross timestamp shift or stereo/downmix attenuation. Freeze this result and stop before any parameter selection or training."
+  }
+}
