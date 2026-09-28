@@ -1,0 +1,68 @@
+{
+  "schema": "astra-source-domain-joint-coverage-v3-final-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-final-model-free-coverage-version",
+  "trainingSupport": {
+    "source": "frozen-v2-stage-b-train-records",
+    "stageBArtifact": 10999695803,
+    "rows": 210,
+    "rowsPerFamily": 30,
+    "regenerated": false
+  },
+  "challenge": {
+    "totalRows": 84,
+    "rowsPerFamily": 12,
+    "frozenSourceTestRowsPerFamily": 6,
+    "replicatesPerSourceRow": 2,
+    "slotOrder": "rowIndex-ascending-then-replicate-ascending",
+    "namespace": "astra-source-domain-joint-v3|challenge|<family>|<axis>",
+    "continuousQuantiles": "(k+0.5)/12",
+    "nonlinearActivePerFamily": 6,
+    "humActivePerFamily": 4,
+    "hum50PerFamily": 2,
+    "hum60PerFamily": 2
+  },
+  "descriptors": [
+    "waveformRms",
+    "spectralCentroid",
+    "rmsNormalizedFirstDifferenceEnergy",
+    "preparedCqtPositiveFlux",
+    "preparedCqtRowDisplacement"
+  ],
+  "rawFirstDifference": "report-only",
+  "normalizedFirstDifferenceFormula": "rawFirstDifferenceEnergy/(waveformRms^2); zero for no labeled attack",
+  "coverage": {
+    "trainingQuantiles": [
+      0.05,
+      0.95
+    ],
+    "quantileInterpolation": "linear",
+    "challengeStatistic": "median-of-12",
+    "inclusive": true,
+    "totalChecks": 35,
+    "requiredChecks": 35
+  },
+  "determinism": {
+    "challengeRendersPerPass": 84,
+    "passes": 2,
+    "totalRenderOperations": 168,
+    "exactWaveformHashes": true,
+    "exactFeatureHashes": true
+  },
+  "ceilings": {
+    "renderOperationsMax": 200,
+    "audioSecondsMax": 400,
+    "wallMinutesMax": 30,
+    "persistedBytesMax": 262144000,
+    "modelLoads": 0,
+    "optimizerSteps": 0,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "stopIfFail": "no-further-source-domain-coverage-redesign",
+  "nextIfPass": "prospective-bounded-synthetic-training-design"
+}
