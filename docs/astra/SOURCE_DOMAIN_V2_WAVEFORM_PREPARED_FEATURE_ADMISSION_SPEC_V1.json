@@ -1,0 +1,106 @@
+{
+  "schema": "astra-source-domain-v2-waveform-prepared-feature-admission-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-design-frozen-no-render-executed-no-model",
+  "inputs": {
+    "protocolMdBlob": "887498676915d5231d9574b7c5a9d8dc1d7d2613",
+    "protocolJsonBlob": "f78b3c9d0b3f7ade040c39b4792a65bddb9c1888",
+    "manifestResultBlob": "3b06b8ab09e62a33af1db0f05a40ab40f1e692a6",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469",
+    "controlFileSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+  },
+  "stageA": {
+    "sourceDomainRows": 28,
+    "controlRows": 28,
+    "families": 7,
+    "trainLocalPositions": [
+      0,
+      29
+    ],
+    "challengeLocalPositions": [
+      0,
+      5
+    ],
+    "deterministicRerenderRequired": true,
+    "hardCriteria": {
+      "labelsReferencesBitIdentical": true,
+      "finiteAudioAndFeatures": true,
+      "peakAbsMaxExclusive": 0.999,
+      "fundamentalToleranceCents": 15,
+      "noUnlabeledTransientInjection": true,
+      "cqtChangedForEveryPositiveSelectedRow": true,
+      "manifestParameterBindingExact": true
+    },
+    "ceilings": {
+      "waveformRendersMax": 112,
+      "audioSecondsMax": 224,
+      "wallMinutesMax": 20,
+      "persistedBytesMax": 157286400
+    }
+  },
+  "stageB": {
+    "allowedOnlyAfterStageAPass": true,
+    "examplesPerArm": 294,
+    "interventionChangedRows": 210,
+    "challengeChangedRows": 42,
+    "descriptors": [
+      "waveformRms",
+      "spectralCentroid",
+      "firstDifferenceEnergy",
+      "preparedCqtPositiveFlux",
+      "preparedCqtRowDisplacement"
+    ],
+    "coverage": {
+      "perFamilyTrainingInterval": [
+        0.05,
+        0.95
+      ],
+      "challengeStatistic": "median-of-six-primary-challenge-rows",
+      "requiredRelation": "inclusive-inside-training-p05-p95",
+      "families": 7,
+      "checksPerFamily": 5,
+      "totalChecks": 35,
+      "requiredPassed": 35
+    },
+    "riseTime": "report-only-after-stageA-physical-validity",
+    "identity": {
+      "interventionValidationTestFeaturesBitIdentical": true,
+      "challengeTrainValidationFeaturesBitIdentical": true,
+      "allNonFeatureArraysBitIdentical": true,
+      "changedRowsExact": true,
+      "reconstructedStateOnsetExact": true,
+      "historicalS9MetadataPreserved": true,
+      "deterministicRepeatArrayHashes": true
+    },
+    "ceilings": {
+      "fullRenderOperationsMax": 900,
+      "audioSecondsMax": 1800,
+      "wallMinutesMax": 45,
+      "persistedBytesMax": 524288000
+    }
+  },
+  "oldV1Challenge": {
+    "gateEligible": false,
+    "reusePreparedArraysOnly": true,
+    "waveformRerenderAuthorized": false,
+    "diagnosticOnly": true
+  },
+  "globalExecution": {
+    "cpuOnly": true,
+    "paidComputeDollars": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "nextAction": "implement-stage-a-only-and-freeze-pass-or-failure"
+}
