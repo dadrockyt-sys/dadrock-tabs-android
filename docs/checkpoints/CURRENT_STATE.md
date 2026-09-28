@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S5 COMPLETE — STATE WEIGHT 9 REJECTED; FROZEN GATE FAILED; OFFLINE REVIEW NEXT; P1/P2/P3 SEALED**
+Status: **S5 FAILED; OFFLINE REVIEW COMPLETE; S6 STATE-HEAD CAPACITY HYPOTHESIS FROZEN — MODEL EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
@@ -12,66 +12,59 @@ Routine GitHub-only code/tests/docs/metadata work is pre-authorized.
 
 Explicit approval is required for model execution, Codespaces, and potentially billable Vercel operations.
 
-## Canonical S5 execution
+## S5 conclusion retained
 
-- run **36375196849**
-- job **108779493106**
-- launch head `1b0c481ba8fba60df34b52e193a7a54b797fbf86`
-- workflow conclusion **SUCCESS**
-- artifact **10949759498**
-- artifact digest `sha256:5b68a700603d62d1b77930c34ba22fb930cdac1fd8551c435c7259a216f417ce`
-- focused tests **4 / 4 passed**
-- 294 clips / 588 s
-- optimizer **500 + 500 = 1,000**
-- no threshold search/retuning
-- no automatic retry
-- no P1/P2/P3, Codespaces, or Vercel
+Canonical S5 run **36375196849** / job **108779493106**:
+- weight 6 onset F1 **0.7196**, recall **0.5969**, state admission **0.3333**
+- weight 9 onset F1 **0.7364**, recall **0.6279**, state admission **0.3333**
+- joint admission **0.3178 -> 0.3333**
+- repeated recall **0.5952 -> 0.6190**
+- onset+offset F1 **0.4821 -> 0.5470**
+- precision remained high **0.9059 -> 0.8901**
+- frozen gate **7 / 14 passed; S5 FAIL**
 
-Frozen result:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S5_RESULT_V1.json`
+Weight 9 is not supported as a sufficient state-side fix, and further automatic state-weight escalation is rejected.
 
-## Scientific result — S5 FAIL
+## Offline S5 review
 
-Weight 6 control:
-- precision **0.9059**
-- recall **0.5969**
-- F1 **0.7196**
-- onset+offset F1 **0.4821**
-- repeated recall **0.5952**
-- onset admission **0.5659**
-- state admission **0.3333**
-- joint admission **0.3178**
+At weight 9, exact positive-reference state statistics still show strong silence competition:
+- median true-state probability **~0.1478**
+- median silence probability **~0.5387**
+- median strongest incorrect active probability **~0.0395**
+- median true-minus-silence margin **~-0.3248**
 
-Weight 9 intervention:
-- precision **0.8901**
-- recall **0.6279**
-- F1 **0.7364**
-- onset+offset F1 **0.5470**
-- repeated recall **0.6190**
-- onset admission **0.6124**
-- state admission **0.3333**
-- joint admission **0.3333**
+The current state branch is only a linear projection from the 128-dimensional shared encoder.
 
-Key changes:
-- state admission **+0.0000**
-- joint admission **+0.0155**
-- recall **+0.0310**
-- F1 **+0.0167**
-- onset admission **+0.0465**
-- onset+offset F1 **+0.0649**
+Analysis:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S5_FAILURE_ANALYSIS_V1.md`
 
-Only **7 / 14** frozen criteria passed. `s5GatePassed=false`.
+## Frozen S6 design
 
-Do not round F1 0.7364 into the 0.74 absolute requirement.
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S6_DESIGN_V1.md`
 
-## Interpretation
+Exactly two models with identical shared encoder and onset head initialization:
 
-Weight 9 produced modest event-level improvements but did not move exact state admission at all. It therefore does not support further automatic active-state weighting as the primary path.
+1. control state head: **Linear(128,126)**
+2. intervention state head: **Linear(128,128) -> ReLU -> Linear(128,126)**
 
-Per the frozen S5 decision branch, the next offline review should consider one bounded **state-representation architectural** hypothesis rather than another weight increase.
+Everything else fixed:
+- state active weight 9
+- onset pos_weight 8
+- onset multiplier 4
+- onset-aware sampler
+- lr 0.003
+- 500 steps/model
+- thresholds 0.50/0.50
+- decoder V2
+- identical data and minibatches
+- no threshold search.
+
+Because the state-head architectures differ, whole-model pre-update state logits are not required to match. Shared encoder and onset-head initialization plus pre-update onset logits must match exactly.
 
 ## Exact next step
 
-Offline review/design only.
+**Do not execute S6 yet.**
 
-No further model execution, P1/P2 transfer, P3, Codespaces, Vercel, threshold rescue, or extra optimizer steps without explicit authorization where required.
+S6 is a model experiment and requires fresh explicit authorization.
+
+No P1/P2/P3, Codespaces, Vercel, deployment, main mutation, threshold rescue, or extra optimizer steps are authorized.

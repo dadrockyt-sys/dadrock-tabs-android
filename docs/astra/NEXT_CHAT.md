@@ -1,16 +1,17 @@
 # Next chat: start here
 
-S5 completed and failed its frozen gate.
+S5 is frozen as a scientific fail. Weight 9 modestly improved event metrics but exact state admission stayed 0.3333, so further automatic state-weight escalation is rejected.
 
-Weight 9 vs weight 6:
-- state admission 0.3333 vs 0.3333
-- joint admission 0.3333 vs 0.3178
-- onset recall 0.6279 vs 0.5969
-- onset F1 0.7364 vs 0.7196
-- repeated recall 0.6190 vs 0.5952
-- onset+offset F1 0.5470 vs 0.4821
-- precision 0.8901 vs 0.9059
+Offline review froze S6:
 
-Seven of fourteen criteria passed. Do not call it a pass and do not continue state-weight escalation automatically.
+- control state head: Linear(128,126)
+- intervention: Linear(128,128) -> ReLU -> Linear(128,126)
 
-Next task: offline review of one state-representation architectural hypothesis. Model execution still requires explicit authorization.
+Everything else stays fixed at the S5 weight-9 configuration.
+
+The rationale is that correct-state probability still loses mainly to silence, and the current state branch is only linear after the shared encoder.
+
+Frozen design:
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S6_DESIGN_V1.md`
+
+Routine non-model GitHub work remains pre-authorized. **S6 model execution requires fresh explicit authorization.**
