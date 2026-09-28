@@ -1,0 +1,53 @@
+{
+  "schema": "astra-synthetic-data-diversity-s8-authorization-v1",
+  "date": "2026-09-28",
+  "status": "authorized_single_synthetic_token_balanced_positive_sampling_pilot",
+  "userInstruction": "I authorize",
+  "authorization": {
+    "maxExamples": 294,
+    "maxAudioSeconds": 588,
+    "maxModels": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "maxRenderCpuMinutes": 20,
+    "maxFitEvalCpuMinutes": 60,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "externalAudioAssetsAuthorized": false,
+    "p1Authorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "codespacesAuthorized": false,
+    "vercelAuthorized": false,
+    "productionMutationAuthorized": false,
+    "mainMutationAuthorized": false
+  },
+  "experiment": {
+    "onlyChangedVariable": "positive-onset frame sampling probability",
+    "control": "uniform over positive-onset frames",
+    "intervention": "probability proportional to count of positive onset strings in frame",
+    "fixedArchitecture": "S6 nonlinear replacement state head",
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "positiveFramesPerBatch": 32,
+    "pairedIdenticalNonPositiveFramesPerBatch": 96,
+    "requestedOptimizerStepsPerModel": 500,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "rootSeed": 20260927
+  },
+  "sourceIdentities": {
+    "designGitBlob": "d8cb1cec068915cd01860c5a59f014e15eb6cea7",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "samplingGitBlob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "diagnosticsGitBlob": "e07d52099ed624ba5d996368f5e0d21735e67642",
+    "repeatedDiagnosticsGitBlob": "599293154e1525d5517fb889ceaf8340d55ee178",
+    "s6ModelGitBlob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "runnerGitBlob": "0606169ca1ae0c1685ab4cc5d88695eb22494ae6",
+    "testsGitBlob": "fce71e5e5a750d3043bf8e620873381f988bd5c9",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "584464e69dd9d7deec57bd98c344f0068ec6e8ec"
+  }
+}
