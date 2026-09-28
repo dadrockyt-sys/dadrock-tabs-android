@@ -1,0 +1,105 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-result-v1",
+  "date": "2026-09-28",
+  "status": "scientific-admission-failed",
+  "launchIdentity": "source-domain-v2-stage-a-20260928-canonical-01",
+  "workflow": {
+    "run": 36484128430,
+    "job": 109136731820,
+    "head": "2ff47ea2fefcf9fbb6bf8d070905d816bde9968b",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "artifact": {
+    "id": 10997847232,
+    "name": "astra-source-domain-v2-stage-a-admission-v3",
+    "digest": "sha256:1e918e7b5a95dc692f5a81761fe7cdcba4b76dd6b34f29a56cc4cec86e8a8343",
+    "stageAResultSha256": "5778104fe505f5a38b4e2a0ed3e049a9993db92a9a1a3a078851c6cb7df8e0c2"
+  },
+  "preflight": {
+    "launchMarkerValidated": true,
+    "frozenInputsValidated": true,
+    "correctedFocusedTestsPassed": 6
+  },
+  "frozenInputs": {
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "scientificGate": {
+    "passed": false,
+    "criteria": {
+      "deterministicRerenderIdentity": true,
+      "stateIdentity": true,
+      "onsetIdentity": true,
+      "referenceIdentity": true,
+      "finiteAudioAndFeatures": true,
+      "peakUnder0_999": true,
+      "fundamentalWithin15Cents": false,
+      "noUnlabeledTransientInjection": true,
+      "cqtChangedEveryPositiveSelectedRow": true,
+      "manifestBindingExact": true,
+      "selectedRowsExact": true,
+      "renderCeiling": true,
+      "audioSecondsCeiling": true,
+      "wallTimeCeiling": true
+    },
+    "maximumAbsoluteFundamentalErrorCents": 205.8039142782652,
+    "measurableAttackedEvents": 86,
+    "eventsOutside15Cents": 4,
+    "allOutOfToleranceEventsFamily": "chords",
+    "maximumAbsoluteNonChordFundamentalErrorCents": 8.089781187576872,
+    "outOfToleranceEvents": [
+      {
+        "family": "chords",
+        "kind": "train",
+        "rowIndex": 84,
+        "eventIndex": 4,
+        "fundamentalCents": -205.8039142782652
+      },
+      {
+        "family": "chords",
+        "kind": "train",
+        "rowIndex": 84,
+        "eventIndex": 5,
+        "fundamentalCents": -199.49704373647077
+      },
+      {
+        "family": "chords",
+        "kind": "challenge",
+        "rowIndex": 120,
+        "eventIndex": 1,
+        "fundamentalCents": 195.39739210995364
+      },
+      {
+        "family": "chords",
+        "kind": "challenge",
+        "rowIndex": 120,
+        "eventIndex": 4,
+        "fundamentalCents": 103.39896180324811
+      }
+    ]
+  },
+  "execution": {
+    "waveformRenders": 84,
+    "audioSeconds": 168,
+    "elapsedSeconds": 6.035544485999992,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "stopRule": {
+    "stageBBlocked": true,
+    "automaticRetryForbidden": true,
+    "gateRelaxationForbidden": true,
+    "rowSubstitutionForbidden": true,
+    "nextAllowedAction": "model-free measurement-validity review using frozen result/source only"
+  }
+}
