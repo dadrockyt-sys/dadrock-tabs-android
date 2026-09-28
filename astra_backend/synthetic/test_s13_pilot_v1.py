@@ -6,7 +6,7 @@ import torch
 
 from synthetic.s13_pilot_v1 import (
     RETAIN_FRACTION, transformed_training_rows, build_datasets, evaluate_gate,
-    validate_launch, validate_dataset_hashes, run_experiment
+    validate_scope, validate_launch, validate_dataset_hashes, run_experiment, git_blob_sha
 )
 from synthetic.s11_pilot_v1 import initialize_model, module_sha, paired_batches, weighted_loss
 from synthetic.s13_transform_design_review_v1 import BINS
@@ -147,3 +147,36 @@ def test_dataset_hash_validation_fails_closed(tmp_path):
     bad["datasetArrayHashes"]["intervention"]["features"]="0"*64
     with pytest.raises(RuntimeError,match="intervention"):
         validate_dataset_hashes(bad,c,i,q)
+
+
+def test_scope_rejects_changed_fixed_ceiling(tmp_path):
+    root=tmp_path
+    (root/"docs/astra").mkdir(parents=True)
+    spec=root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"
+    design=root/"docs/astra/SYNTHETIC_S13_DESIGN_V1.md"
+    history=root/"history.json"; scope=root/"scope.json"; src=root/"source.py"
+    spec.write_text(json.dumps({
+      "intervention":{"retainFraction":0.5},
+      "training":{"seeds":[20260927,20260928,20260929],"optimizerStepsPerModel":500,"maxModels":6,"maxTotalOptimizerSteps":3000},
+      "decoder":{"stateThreshold":0.5,"onsetThreshold":0.5,"thresholdSearch":False,"thresholdRetuning":False}
+    }))
+    design.write_text("design")
+    history.write_text(json.dumps({"schema":"astra-synthetic-s13-execution-history-v1","consumedLaunchIdentities":[]}))
+    src.write_text("source")
+    fixed={
+      "retainFraction":0.5,"stateThreshold":0.5,"onsetThreshold":0.5,
+      "thresholdSearch":False,"thresholdRetuning":False,
+      "runSeeds":[20260927,20260928,20260929],
+      "maxModels":6,"optimizerStepsPerModel":500,"maxTotalOptimizerSteps":3000,
+      "maxFitEvalMinutes":90,"automaticRetry":False,"paidComputeDollars":0,
+      "p1Access":False,"p2Access":False,"p3Access":False,
+    }
+    payload={"schema":"astra-synthetic-s13-run-scope-v1",
+      "specGitBlob":git_blob_sha(spec),"designGitBlob":git_blob_sha(design),"historyGitBlob":git_blob_sha(history),
+      "sourcePaths":{"x":"source.py"},"sourceGitBlobs":{"x":git_blob_sha(src)},"fixed":fixed}
+    scope.write_text(json.dumps(payload))
+    assert validate_scope(root,scope,history)[1]["fixed"]["maxModels"]==6
+    payload["fixed"]["maxModels"]=7
+    scope.write_text(json.dumps(payload))
+    with pytest.raises(RuntimeError,match="maxModels"):
+        validate_scope(root,scope,history)
