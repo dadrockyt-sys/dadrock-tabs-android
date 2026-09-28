@@ -1,0 +1,15 @@
+{
+  "schema": "astra-architecture-research-a1-verification-launch-v1",
+  "date": "2026-09-28",
+  "status": "armed",
+  "launchIdentity": "architecture-a1-verify-20260928-canonical-01",
+  "optimizerSteps": 0,
+  "fitCalls": 0,
+  "modelInference": false,
+  "automaticRetry": false,
+  "p1Access": false,
+  "p2Access": false,
+  "p3Access": false,
+  "paidComputeDollars": 0,
+  "productionMutation": false
+}
