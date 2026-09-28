@@ -1,17 +1,18 @@
-# Next chat: start here
+# Next chat
 
-Synthetic tuning is closed.
+P1/P2 transfer completed and failed.
 
-The exact prospective P1/P2 transfer workflow is now implemented and frozen offline, but not launched.
+- Candidate P1: 0 TP / 10 FP / 16 FN.
+- Candidate P2: 0 TP / 1 FP / 15 FN.
+- Historical V3 P1 baseline: 16 TP / 7 FP / 0 FN.
+- Transfer gate: 0/5.
+- P3 remains sealed.
 
-It compares:
-- frozen historical V3 baseline;
-- one predeclared S9/S11 synthetic candidate (seed 20260927, 500 steps);
+Frozen evidence:
+- `docs/astra/P1_P2_TRANSFER_EVALUATION_RESULT_V1.json`
+- `docs/astra/P1_P2_TRANSFER_FAILURE_ANALYSIS_V1.md`
 
-on the exact same four P1 + four P2 direct-input crops under evaluator V2 with a symmetric 50 ms crop-edge guard.
+Next design-only proposal:
+- `docs/astra/SYNTHETIC_REAL_DOMAIN_DIAGNOSTIC_PROPOSAL_V1.md`
 
-P2 is the primary transfer population. P1 is compatibility context only.
-
-No P1/P2 data has been accessed by this preparation step. P3 remains sealed.
-
-Next action requires explicit authorization for P1/P2 real-development access.
+Do not run the new real-data diagnostic until its access boundary is explicitly opened.
