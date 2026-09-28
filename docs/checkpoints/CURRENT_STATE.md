@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **JOINT-COVERAGE V2 ZERO-RENDER MANIFEST ADMISSION PASSED — NEXT: MODEL-FREE WAVEFORM/PREPARED-FEATURE ADMISSION DESIGN ONLY; NO DATASET RENDER OR MODEL YET; P1/P2 CLOSED; P3 SEALED**
+Status: **V2 WAVEFORM/PREPARED-FEATURE ADMISSION DESIGN FROZEN — NEXT: IMPLEMENT + RUN STAGE A SMALL MODEL-FREE ACOUSTIC ADMISSION ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1798,3 +1798,81 @@ Next work is design/review only for a bounded **model-free waveform and prepared
 6. only after that design is frozen may a bounded model-free V2 waveform preparation be implemented.
 
 **Resume instruction:** Continue with model-free V2 waveform/prepared-feature admission design only. No dataset rendering, model execution, optimizer work, P1/P2 access or P3 access.
+
+
+## V2 waveform / prepared-feature admission design frozen — 2026-09-28
+
+Created:
+- `docs/astra/SOURCE_DOMAIN_V2_WAVEFORM_PREPARED_FEATURE_ADMISSION_DESIGN_V1.md`
+- `docs/astra/SOURCE_DOMAIN_V2_WAVEFORM_PREPARED_FEATURE_ADMISSION_SPEC_V1.json`
+
+No waveform was rendered by the design step. No model was loaded or run. Optimizer steps **0**. P1/P2/P3 access **none**.
+
+### Stage A — next allowed execution
+
+Implement and run only the small deterministic acoustic admission.
+
+Frozen sample:
+- seven families;
+- training manifest local positions **0 and 29** per family = **14** V2 training rows;
+- primary-challenge manifest local positions **0 and 5** per family = **14** V2 challenge rows;
+- paired clean controls for all selected rows.
+
+Base Stage-A set:
+- **28** V2 source-domain renders;
+- **28** paired controls;
+- **56** base renders / **112 synthetic seconds**.
+
+Deterministic V2 rerender checks are required and the total hard Stage-A ceiling is:
+- <= **112 waveform renders**;
+- <= **224 synthetic audio seconds**;
+- <= **20 minutes**;
+- <= **150 MB** persisted artifacts;
+- CPU only;
+- $0 paid compute.
+
+Frozen Stage-A hard gates:
+- deterministic rerender identity;
+- exact state/onset/reference identity versus paired control;
+- finite waveform/CQT;
+- final peak < **0.999**;
+- attacked-event stable fundamental within **±15 cents**;
+- no transient injection on unlabeled/nonattack events;
+- every positive selected V2 row changes prepared CQT versus paired control;
+- exact binding to frozen manifest content SHA-256 `2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469`.
+
+If Stage A fails, freeze failure and stop. Do not substitute rows or relax gates.
+
+### Stage B — explicitly blocked until Stage A passes
+
+If and only if Stage A passes and is frozen, a later bounded full model-free V2 preparation may be implemented.
+
+Prospective Stage-B feature-coverage gate is already frozen:
+- five descriptors:
+  - waveform RMS;
+  - spectral centroid;
+  - first-difference energy;
+  - prepared-CQT positive onset flux;
+  - prepared-CQT row displacement;
+- evaluated separately in all seven families;
+- primary-challenge median must lie inside the inclusive V2-training **5th–95th percentile** interval;
+- **35/35** family/descriptor checks required.
+
+Rise time is report-only in Stage B after the stricter Stage-A physical-validity gate.
+
+The old V1 fixed challenge is secondary diagnostic only. It is not V2 gate-eligible and must not be re-rendered for this step.
+
+### Standing prohibitions
+
+Do not:
+- render the full V2 dataset before Stage-A pass;
+- train or load a model;
+- run inference;
+- perform optimizer steps;
+- search/retune thresholds;
+- change architecture, loss, sampler, renderer equations, marginal ranges or V2 challenge;
+- access P1/P2;
+- open P3;
+- mutate main/Production.
+
+**Resume instruction:** Implement the frozen Stage-A V2 acoustic admission package and run it once under the stated model-free ceilings. Freeze pass/failure and stop before Stage B.
