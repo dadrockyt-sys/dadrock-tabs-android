@@ -73,6 +73,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg unzip
 
+      - name: Verify frozen ffmpeg resampler version before any P1/P2 source access
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          s=json.load(open('docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json'))
+          ff=subprocess.check_output(['ffmpeg','-version'],text=True).splitlines()[0].strip()
+          fp=subprocess.check_output(['ffprobe','-version'],text=True).splitlines()[0].strip()
+          assert ff==s['dependencyVersions']['ffmpegVersionLine'],(ff,s['dependencyVersions']['ffmpegVersionLine'])
+          assert fp==s['dependencyVersions']['ffprobeVersionLine'],(fp,s['dependencyVersions']['ffprobeVersionLine'])
+          print('FROZEN_FFMPEG_VERSION_OK')
+          PY
+
       - name: Run focused synthetic tests before any P1/P2 source access
         run: |
           PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py
