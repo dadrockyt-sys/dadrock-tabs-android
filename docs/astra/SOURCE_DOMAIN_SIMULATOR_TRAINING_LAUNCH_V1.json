@@ -1,0 +1,29 @@
+{
+  "schema": "astra-source-domain-simulator-training-launch-v1",
+  "status": "armed",
+  "launchIdentity": "source-domain-v1-20260928-canonical-01",
+  "branch": "astra-work",
+  "scopeGitBlob": "33eda5d8f891b6d3500f5914fb0832a193b8acb3",
+  "specGitBlob": "723dc5f675b4c30f5d9fb76a619a623ab2732802",
+  "preparation": {
+    "workflowRun": 36475263654,
+    "artifact": 10993531230,
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953"
+  },
+  "execution": {
+    "maxModels": 6,
+    "optimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false
+  },
+  "authorizationBasis": "standing branch policy for bounded inexpensive synthetic GitHub model runs after frozen offline verification",
+  "singleLaunch": true
+}
