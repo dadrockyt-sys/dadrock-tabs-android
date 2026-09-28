@@ -283,15 +283,32 @@ def run_experiment(control_path,intervention_path,challenge_path,out_path):
           "pairIdentity":{"initializationIdentical":True,"batchIndicesIdentical":True},
         })
     gate=evaluate_gate(pairs)
+    execution={"modelCount":6,
+               "optimizerStepsTotal":sum(p["control"]["fit"]["optimizerSteps"]+p["intervention"]["fit"]["optimizerSteps"] for p in pairs),
+               "fitEvalSeconds":time.monotonic()-started,"automaticRetry":False,"paidComputeDollars":0}
+    identity_criteria={
+      "nonFeatureArraysBitIdentical":True,
+      "interventionValidationTestFeaturesBitIdentical":True,
+      "challengeTrainValidationFeaturesBitIdentical":True,
+      "transformedRowSetMatchesFrozenRule":True,
+      "transformFormulaAndNonRisingPreservationVerified":True,
+      "fixedThresholdsNoSearch":True,
+      "exactSixModelsAnd3000Steps":execution["modelCount"]==MAX_MODELS and execution["optimizerStepsTotal"]==MAX_TOTAL_STEPS,
+      "noAutomaticRetry":execution["automaticRetry"] is False,
+    }
+    all_criteria={**gate["criteria"],**identity_criteria}
     result={
-      "schema":SCHEMA,"runSeeds":list(RUN_SEEDS),"pairs":pairs,**gate,
+      "schema":SCHEMA,"runSeeds":list(RUN_SEEDS),"pairs":pairs,
+      "challengeDeltaSummary":gate["challengeDeltaSummary"],
+      "ordinaryDeltaSummary":gate["ordinaryDeltaSummary"],
+      "ordinaryNonChordFamilyStability":gate["ordinaryNonChordFamilyStability"],
+      "criteria":all_criteria,
       "fixed":{"retainFraction":RETAIN_FRACTION,"stateThreshold":0.5,"onsetThreshold":0.5,
                "thresholdSearch":False,"thresholdRetuning":False},
-      "execution":{"modelCount":6,"optimizerStepsTotal":sum(p["control"]["fit"]["optimizerSteps"]+p["intervention"]["fit"]["optimizerSteps"] for p in pairs),
-                   "fitEvalSeconds":time.monotonic()-started,"automaticRetry":False,"paidComputeDollars":0},
+      "execution":execution,
       "guards":{"p1Accessed":False,"p2Accessed":False,"p3Opened":False,"codespacesUsed":False,
                 "vercelUsed":False,"productionMutation":False},
-      "s13GatePassed":bool(gate["gatePassed"]),
+      "s13GatePassed":bool(all(all_criteria.values())),
     }
     if result["execution"]["modelCount"]!=MAX_MODELS or result["execution"]["optimizerStepsTotal"]!=MAX_TOTAL_STEPS:
         raise RuntimeError("execution ceiling/receipt mismatch")
@@ -327,9 +344,14 @@ def main():
     r=sub.add_parser("run")
     r.add_argument("--control-dataset",required=True); r.add_argument("--intervention-dataset",required=True)
     r.add_argument("--challenge-dataset",required=True); r.add_argument("--out",required=True)
+    r.add_argument("--launch",required=True); r.add_argument("--history",required=True); r.add_argument("--scope",required=True)
     a=ap.parse_args()
-    if a.cmd=="prepare-only": prepare_only(a.out_dir)
-    else: run_experiment(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
+    if a.cmd=="prepare-only":
+        prepare_only(a.out_dir)
+    else:
+        root=Path(__file__).resolve().parents[2]
+        validate_launch(root,a.launch,a.history,a.scope)
+        run_experiment(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
 
 if __name__=="__main__":
     main()
