@@ -551,3 +551,103 @@ The next safe step is offline design/review only:
 - P3 remains sealed until a separately defined and authorized gate is met.
 
 **Resume instruction:** Continue from the frozen V2 integrity result. Treat weaker/variable real attack-envelope contrast as supported evidence, but do not collapse the problem into onset energy alone because P1 still shows a separate candidate state-representation failure. Keep the next phase synthetic-only and prospectively specified unless the user explicitly authorizes another real-data action.
+
+
+## S12 synthetic onset-transition robustness result — 2026-09-28
+
+The user gave broad authorization to continue. The only prospectively frozen executable package at that point was the **S12 synthetic-only** robustness experiment. No new P1/P2/P3 action had been defined, so the broad authorization was used only for this already-specified S12 run.
+
+### Execution
+
+- workflow: **Astra synthetic S12 entry v2**
+- run **36447341941**
+- job **109012933088**
+- launch head `b0381c7bf92c6ed5e7ea984fad716d0cc83c0432`
+- workflow conclusion: **SUCCESS**
+- artifact **10980364991**
+- artifact digest `sha256:b4c610134c0a2e8398e30b697b0cefc2cf820259df6f6b9d317e98f100714db4`
+- exact artifact `result.json` SHA256 `6cf96ad22f35d9bfd6bcf7880e0abd97c7772f64299ebf30833f21c081798800`
+- artifact expiry `2026-12-27T15:56:11Z`
+
+Frozen repository summary:
+- `docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_RESULT_V1.json`
+
+Launch-head Astra backend tests also passed:
+- run **36447341885**
+- conclusion **SUCCESS**
+
+Execution remained bounded:
+- models: **6**
+- seeds: **20260927, 20260928, 20260929**
+- optimizer steps: **500/model, 3,000 total**
+- thresholds fixed **0.50 / 0.50**
+- threshold search/retuning: **none**
+- automatic retry: **none**
+- paid compute: **$0**
+- P1 accessed: **no**
+- P2 accessed: **no**
+- P3 opened: **no**
+- Codespaces/Vercel/Production mutation: **none**
+
+### Frozen S12 outcome: gate failed
+
+The training-only CQT onset-transition softening was directionally helpful on the separately frozen soft-onset synthetic challenge:
+
+- challenge onset F1 gain was positive in **3/3** seeds;
+- challenge onset recall gain was positive in **3/3** seeds;
+- mean challenge onset F1 delta: **+0.0370**;
+- mean challenge onset recall delta: **+0.0413**.
+
+However, those gains missed the preregistered floors:
+- required mean challenge F1 gain: **+0.05**;
+- required mean challenge recall gain: **+0.08**.
+
+More importantly, ordinary synthetic competence regressed in all three seeds:
+- mean ordinary onset F1 delta: **-0.0508**;
+- mean ordinary onset recall delta: **-0.0698**;
+- mean ordinary state-admission delta: **-0.0775**;
+- mean ordinary joint-admission delta: **-0.0646**.
+
+Frozen gate failures:
+- mean challenge onset F1 gain >= +0.05: **FAIL**
+- mean challenge onset recall gain >= +0.08: **FAIL**
+- no ordinary onset-F1 loss >0.03: **FAIL**
+- no ordinary state-admission loss >0.03: **FAIL**
+- no ordinary joint-admission loss >0.04: **FAIL**
+
+Passed:
+- challenge F1 gain positive 3/3;
+- challenge recall gain positive 3/3;
+- challenge precision-loss guard;
+- challenge negative-only FP guard;
+- non-chord family stability count guard;
+- all six 500-step finite paired/fixed-threshold execution checks.
+
+### Interpretation
+
+S12 demonstrates that the fixed synthetic model can trade ordinary competence for somewhat better tolerance to softened onset transitions. That supports the relevance of onset-domain robustness as an engineering factor, but **this particular intervention is not acceptable** because its challenge benefit is too small and its ordinary-domain cost is too large.
+
+Do not:
+- widen the blend range after seeing S12;
+- weaken the frozen S12 challenge;
+- lower thresholds;
+- add more seeds to search for a favorable result;
+- retry S12 automatically;
+- reinterpret the gate failure as a pass.
+
+This result also does not erase the separate real-domain state-representation problem observed on P1.
+
+### Current boundary / next step
+
+Freeze S12 as a failed intervention.
+
+No P1/P2/P3 access is currently needed. The user's broad authorization does not by itself define a scientifically valid new real-data action. **P3 remains sealed because no development gate for opening P3 has been prospectively defined.**
+
+Before another model run, require a new finite prospective design that:
+1. addresses both onset-domain robustness and ordinary state/joint competence rather than optimizing only the S12 challenge;
+2. does not choose transformation strength, thresholds, seed, or architecture from P1/P2 outcomes;
+3. defines one bounded hypothesis, fixed seeds/budget, success/stop rules, and no automatic retry;
+4. remains synthetic-only unless a separately specified real-data evaluation is required;
+5. does not reopen P3 until a specific P3 gate is written and met.
+
+**Resume instruction:** Continue from the frozen S12 gate failure. Do not rerun or tune S12. Preserve the V2 P1/P2 integrity result and the P1 state-representation failure as separate evidence. The next action should be prospective design/review only unless a concrete bounded experiment is first frozen.
