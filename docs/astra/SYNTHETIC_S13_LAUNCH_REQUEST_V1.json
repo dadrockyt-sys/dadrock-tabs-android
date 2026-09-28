@@ -1,8 +1,27 @@
 {
   "schema": "astra-synthetic-s13-launch-request-v1",
-  "status": "disabled-awaiting-offline-package-verification",
+  "status": "offline-package-verified-launch-marker-not-created",
   "launchIdentity": null,
-  "note": "This is not a launch authorization or marker. Do not arm until focused tests, dataset identities, source pins, launch rejection controls and CURRENT_STATE checkpoint are verified.",
+  "note": "Package is reviewable and fail-closed. No SYNTHETIC_S13_LAUNCH_V1.json exists. A future continuation may create exactly one armed launch marker under the standing bounded synthetic GitHub authorization, then execute once; do not ask again for routine bounded synthetic preparation.",
   "modelRun": false,
-  "optimizerSteps": 0
+  "optimizerSteps": 0,
+  "scopeGitBlob": "1e5812bfc1b96bfec6a85e81894ae08dba9439e4",
+  "specGitBlob": "9da9ba1657d452faf667119320d3a7285d4cdb67",
+  "canonicalPreparation": {
+    "workflowRun": 36458911022,
+    "artifact": 10985624417,
+    "artifactDigest": "sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1"
+  },
+  "verification": {
+    "focusedTestsPassed": 15,
+    "independentDeterministicPreparationsMatched": [
+      36458866017,
+      36458911022
+    ],
+    "modelRun": false,
+    "optimizerSteps": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false
+  }
 }
