@@ -1,0 +1,8 @@
+{
+  "schema": "astra-synthetic-s13-launch-request-v1",
+  "status": "disabled-awaiting-offline-package-verification",
+  "launchIdentity": null,
+  "note": "This is not a launch authorization or marker. Do not arm until focused tests, dataset identities, source pins, launch rejection controls and CURRENT_STATE checkpoint are verified.",
+  "modelRun": false,
+  "optimizerSteps": 0
+}
