@@ -1,0 +1,55 @@
+{
+  "schema": "astra-synthetic-data-diversity-s1-authorization-v1",
+  "date": "2026-09-27",
+  "status": "authorized_single_synthetic_only_sampling_pilot",
+  "userInstruction": "I authorize",
+  "authorization": {
+    "syntheticRenderingAuthorized": true,
+    "syntheticOptimizerWorkAuthorized": true,
+    "maxExamples": 294,
+    "maxAudioSeconds": 588,
+    "maxModels": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "maxRenderCpuMinutes": 20,
+    "maxFitEvalCpuMinutes": 60,
+    "paidComputeDollarsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "externalAudioAssetsAuthorized": false,
+    "p1Authorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "productionMutationAuthorized": false,
+    "mainMutationAuthorized": false,
+    "customerDeliveryAuthorized": false
+  },
+  "experiment": {
+    "onlyChangedVariable": "training frame sampling policy",
+    "controlSampler": "uniform",
+    "interventionSampler": "32 positive-onset + 32 active-non-onset + 32 negative-structure-inactive + 32 other-inactive",
+    "architecture": "five-frame 960->128 ReLU",
+    "learningRate": 0.003,
+    "requestedOptimizerStepsPerModel": 500,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "rootSeed": 20260927
+  },
+  "sourceIdentities": {
+    "designGitBlob": "f2dce369d945d1debfdcc30dfd37696f79f7c374",
+    "s0GeneratorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s1RunnerGitBlob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s1TestsGitBlob": "9f3f1c241924ce6026a989d8e489b13b9e49e9ab",
+    "preprocessingGitBlob": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "719967bc5f97af6bdb2de21e81cb12c13f7317ba"
+  },
+  "guards": {
+    "singleLaunch": true,
+    "noAutomaticRetry": true,
+    "noThresholdRescue": true,
+    "p1p2p3Sealed": true,
+    "historicalResultsUnchanged": true
+  }
+}
