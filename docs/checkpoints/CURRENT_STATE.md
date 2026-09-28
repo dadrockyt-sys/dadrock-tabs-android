@@ -2638,3 +2638,52 @@ P3 remains sealed.
 Main/Production remain unchanged.
 
 **Resume instruction:** Do not resume an experiment. Stop at the project-decision boundary. New real-development evidence requires explicit authorization for its access/evaluation scope. A2 or another architecture-identification study requires a separate explicit project decision. Generic “continue” does not authorize either.
+
+
+## Independent real-development evidence program — authorized 2026-09-28
+
+The user selected **option 1** and authorized the new independent real-development evidence program.
+
+Frozen prospective design:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.json`
+
+Frozen intake package:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`
+- `astra_backend/synthetic/independent_real_development_intake_validator_v1.py`
+- `astra_backend/synthetic/test_independent_real_development_intake_validator_v1.py`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_PACKAGE_VERIFICATION_V1.json`
+
+First-tranche contract:
+- 24 newly created/sourced real-development clips;
+- >=18 positive, >=6 negative-only;
+- >=90 s positive audio, >=30 s negative-only;
+- no P1/P2/P3 or previously inspected/tuned audio;
+- annotations frozen before inference;
+- fixed 0.50/0.50 thresholds and frozen frontend/evaluator;
+- no tuning, retraining, candidate selection, or decoder adjustment from this set.
+
+Required coverage:
+- single-note;
+- repeated attacks;
+- legato;
+- palm mute;
+- dyad/chord;
+- clean capture;
+- distorted/overdriven capture.
+
+Model-free intake verification:
+- exact command: `python -m unittest -v test_independent_real_development_intake_validator_v1.py`
+- **10/10 passed**
+- model imports/inference **0**
+- optimizer steps **0**
+- real clips accessed **0**
+- workflow dispatches **0**
+- P1/P2/P3 **none**
+- main/Production unchanged.
+
+Current blocker: no genuinely new qualifying real-development clip set has yet been added to the intake package. Do not substitute P1/P2/P3 or old examined audio.
+
+A1 must not be retrained to recreate weights. Before eventual inference, pin one durable already-frozen candidate identity; if the preferred candidate weights are unavailable, freeze that limitation rather than reconstructing them.
+
+**Resume instruction:** Continue with intake only after qualifying new real audio is supplied or identified. Hash, annotate, pin provenance and candidate/runtime identities, validate the complete manifest, and freeze a zero-inference verification receipt. Only a fully passed pre-inference intake may advance to one bounded real-development evaluation. Do not train/tune, open A2, reuse P1/P2, or access P3.
