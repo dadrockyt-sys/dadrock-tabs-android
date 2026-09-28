@@ -1,8 +1,7 @@
 name: Astra synthetic S13 positive-increment robustness V1
 
-# Intentionally fail-closed until a separately committed launch identity exists.
-# There is no workflow_dispatch trigger. Creating the future launch file is the
-# only push event that can admit the one bounded execution.
+# Dormant until docs/astra/SYNTHETIC_S13_LAUNCH_V1.json is created.
+# There is deliberately no workflow_dispatch trigger.
 on:
   push:
     branches: [astra-work]
@@ -25,15 +24,89 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-      - name: Fail closed on rerun attempt
-        run: test "${GITHUB_RUN_ATTEMPT}" = "1"
-      - name: Preparation placeholder
+          fetch-depth: 1
+
+      - name: Create unique evidence directory
         run: |
-          echo "S13 execution remains disabled pending final source/data pins and launch receipt."
-          exit 1
-      - uses: actions/upload-artifact@v4
-        if: always()
+          set -euo pipefail
+          test "${GITHUB_RUN_ATTEMPT}" = "1"
+          EVIDENCE="/tmp/astra-s13-v1-${GITHUB_RUN_ID}"
+          test ! -e "$EVIDENCE"
+          mkdir -p "$EVIDENCE"
+          printf '{"schema":"astra-s13-workflow-receipt-v1","runId":%s,"runAttempt":%s,"status":"started"}\n'             "${GITHUB_RUN_ID}" "${GITHUB_RUN_ATTEMPT}" > "$EVIDENCE/workflow-receipt.json"
+          echo "EVIDENCE_DIR=$EVIDENCE" >> "$GITHUB_ENV"
+
+      - name: Reject any prior S13 execution workflow run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api --method GET "repos/${GITHUB_REPOSITORY}/actions/workflows/astra-synthetic-s13-v1.yml/runs"             -f branch=astra-work -f per_page=100 > "$EVIDENCE_DIR/workflow-runs.json"
+          python - <<'PY'
+          import json, os
+          rows=json.load(open(os.environ["EVIDENCE_DIR"]+"/workflow-runs.json"))["workflow_runs"]
+          current=int(os.environ["GITHUB_RUN_ID"])
+          prior=[int(x["id"]) for x in rows if int(x["id"])!=current]
+          if prior:
+              raise SystemExit("prior S13 execution workflow run exists: "+",".join(map(str,prior)))
+          print("S13_FIRST_WORKFLOW_RUN_OK")
+          PY
+
+      - uses: actions/setup-python@v5
         with:
-          name: astra-s13-v1-failure-receipt
-          path: /tmp/astra-s13-v1
-          if-no-files-found: warn
+          python-version: '3.10.15'
+
+      - name: Install frozen runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+
+      - name: Validate source/spec/scope/launch before dataset generation
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.s13_pilot_v1 verify-scope             --scope docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json             --history docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json
+          python - <<'PY'
+          from pathlib import Path
+          from synthetic.s13_pilot_v1 import validate_launch
+          root=Path.cwd()
+          validate_launch(
+              root,
+              root/'docs/astra/SYNTHETIC_S13_LAUNCH_V1.json',
+              root/'docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json',
+              root/'docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json',
+          )
+          print("S13_LAUNCH_PREFLIGHT_OK")
+          PY
+
+      - name: Regenerate exact frozen datasets
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.s13_pilot_v1 prepare-only --out-dir "$EVIDENCE_DIR/preparation"
+
+      - name: Run one bounded S13 execution
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set +e
+          python -m synthetic.s13_pilot_v1 run             --control-dataset "$EVIDENCE_DIR/preparation/datasets/s9-control.npz"             --intervention-dataset "$EVIDENCE_DIR/preparation/datasets/s13-intervention.npz"             --challenge-dataset "$EVIDENCE_DIR/preparation/datasets/s13-challenge.npz"             --out "$EVIDENCE_DIR/result.json"             --launch docs/astra/SYNTHETIC_S13_LAUNCH_V1.json             --history docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json             --scope docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json
+          code=$?
+          python - "$code" <<'PY'
+          import json, os, pathlib, sys
+          p=pathlib.Path(os.environ["EVIDENCE_DIR"])/"workflow-receipt.json"
+          x=json.loads(p.read_text())
+          x["status"]="execution_completed" if int(sys.argv[1])==0 else "execution_failed"
+          x["exitCode"]=int(sys.argv[1])
+          p.write_text(json.dumps(x,indent=2,sort_keys=True)+"\n")
+          PY
+          exit "$code"
+
+      - name: Upload S13 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-synthetic-s13-v1-${{ github.run_id }}
+          path: ${{ env.EVIDENCE_DIR }}
+          if-no-files-found: error
+          retention-days: 30
