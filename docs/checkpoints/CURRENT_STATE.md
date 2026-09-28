@@ -3,94 +3,73 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **CORRECTED S2 COMPLETE — WEIGHT 6 HELPED BUT FROZEN GATE FAILED; STOP; P1/P2/P3 SEALED**
+Status: **S2 FAILED; OFFLINE REVIEW COMPLETE; S3 ONSET-POSITIVE-WEIGHT HYPOTHESIS FROZEN — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — post-S2 result
+## Authoritative GPT-5.6 instructions — S3 decision boundary
 
-Stephen freshly authorized one corrected S2 launch after the first launch stopped in preflight with 0 optimizer steps.
+Corrected S2 run **36372725350** / job **108772201562** is frozen as a scientific fail.
 
-### Canonical corrected execution
+### S2 facts retained
 
-- run **36372725350**
-- job **108772201562**
-- launch head `e1d59b7dcb9556852914930728a5385bf72aface`
-- workflow conclusion **SUCCESS**
-- artifact **10950105894**
-- artifact digest `sha256:be788f89a6e2ade86835c5b5f31bd54146f0ba99d4b84300bcbf4717751074ca`
-- artifact expires **2026-10-28T03:12:20Z**
-- focused S2 tests **5 / 5 passed**
-- render **294 clips / 588 s**
-- optimizer **500 + 500 = 1,000 steps**
-- thresholds unchanged **0.50 / 0.50**
-- automatic retries **0**
-- P1/P2/P3 access **none**
+Weight 6.0 versus weight 1.5:
+- onset recall **0.5581 vs 0.4574**
+- onset F1 **0.67925 vs 0.62434**
+- state admission **0.3101 vs 0.2403**
+- joint admission **0.3023 vs 0.2403**
+- onset+offset F1 **0.5561 vs 0.4767**
+- repeated-note recall **0.5000 vs 0.5000**
 
-Frozen result:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_RESULT_V1.json`
+Weight 6.0 helped, but five frozen S2 criteria failed. No P1/P2/P3 access occurred.
 
-The earlier preflight-only failure remains frozen separately and is not counted as an optimizer experiment.
+### Offline S2 failure review
 
-### Strong experimental control
+Changing state weight improved state/joint admission but did **not** improve exact onset admission:
+- control exact onset admission **0.5736**
+- weight-6 exact onset admission **0.5736**
 
-Both S2 arms used:
-- identical initialization hash `20a7de142c47c2022d234f9856111ea4509e009b0c8f5d6168c15ad2fa671554`
-- identical precomputed 500-batch plan hash `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`
-- identical generated arrays; uncompressed array-content hashes are frozen in the result receipt.
+Repeated-note recall also remained **0.5000**.
 
-Only active-state token weight changed: **1.5 -> 6.0**.
+Under the frozen onset-aware sampler:
+- positive onset frames per batch: **32 / 128**
+- mean positive strings per positive-onset frame: **1.228571**
+- expected positive onset string/tokens per batch: **39.3143 / 768 = 5.119%**
+- current pos_weight 8 gives about **30.15%** of expected weighted onset-loss mass to positive tokens
+- pos_weight 16 gives about **46.33%**
 
-### Scientific result — S2 FAIL
+This supports one bounded next hypothesis; it does not prove the cause.
 
-Control weight 1.5 test:
-- onset precision **0.9833**
-- recall **0.4574**
-- F1 **0.6243**
-- onset+offset F1 **0.4767**
-- repeated-note recall **0.5000**
-- state admission **0.2403**
-- joint admission **0.2403**
+Analysis:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_FAILURE_ANALYSIS_V1.md`
 
-Weight 6.0 test:
-- onset precision **0.8675**
-- recall **0.5581**
-- F1 **0.67925**
-- onset+offset F1 **0.5561**
-- repeated-note recall **0.5000**
-- state admission **0.3101**
-- joint admission **0.3023**
-- negative-only FP **0.0 events/s**
+### Frozen S3 design
 
-Observed gains:
-- state admission **+0.0698**
-- joint admission **+0.0620**
-- onset recall **+0.1008**
-- onset F1 **+0.0549**
-- onset+offset F1 **+0.0794**
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_DESIGN_V1.md`
 
-Seven frozen criteria passed, five failed. Failed:
-- state-admission gain >= +0.20
-- joint-admission gain >= +0.20
-- onset-F1 gain >= +0.08
-- absolute onset F1 >= 0.68 (**observed 0.67925**)
-- repeated-note recall >= 0.55 (**observed 0.50**)
+Exactly two identical S2-style models:
+1. control onset BCE pos_weight **8**
+2. intervention onset BCE pos_weight **16**
 
-Do not round 0.67925 into a pass. `s2GatePassed=false`.
+Everything else is fixed:
+- state active weight **6.0**
+- onset-aware 32/32/32/32 sampler
+- identical data, initialization and minibatch plan
+- five-frame architecture
+- onset loss multiplier 4.0
+- lr 0.003
+- 500 steps/model
+- thresholds 0.50/0.50
+- decoder V2
+- no threshold search.
 
-### Interpretation
+S3 adds repeated-reference onset diagnostics, including the preceding-frame onset probability needed to distinguish general missed attacks from rising-edge/plateau behavior without changing the decoder.
 
-The controlled intervention establishes that stronger active-state weighting **helps** under this synthetic setup: state/joint admission and event recall/F1 all improved, and offset F1 improved too.
+### EXACT NEXT STEP — fresh authorization required
 
-It does **not** support weight 6.0 as a sufficient fix. The largest preregistered state/joint gains were not achieved, and repeated-note recall did not move.
+**Do not execute S3.**
 
-Validation remained substantially stronger than test, so do not tune the experiment to validation after seeing these results.
+No rendering, optimizer work, threshold changes, P1/P2 access, P3 access, deployment or main mutation is authorized now.
 
-### EXACT NEXT STEP
-
-**Stop optimizer work.**
-
-No retry, threshold rescue, extra steps, P1/P2 transfer, P3 access, deployment or main mutation.
-
-Only offline review is allowed next. Any further synthetic optimizer experiment must first isolate one new variable, freeze its design and gates prospectively, and obtain fresh explicit authorization.
+Fresh explicit authorization is required for the bounded S3 synthetic-only onset-positive-weight experiment.
 
 
 ---

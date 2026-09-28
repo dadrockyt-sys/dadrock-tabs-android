@@ -1,20 +1,21 @@
 # Next chat: start here
 
-Corrected S2 is complete.
+S2 is frozen as a scientific fail, although state weight 6.0 helped.
 
-Run 36372725350 / job 108772201562 succeeded operationally but failed the frozen S2 scientific gate.
+Offline review found:
+- state admission improved to 0.3101;
+- exact onset admission stayed at 0.5736;
+- repeated-note recall stayed at 0.5000.
 
-Weight 6.0 versus weight 1.5 under identical initialization and identical sampled batches:
-- onset recall 0.5581 vs 0.4574 (+0.1008)
-- onset F1 0.67925 vs 0.62434 (+0.0549)
-- state admission 0.3101 vs 0.2403 (+0.0698)
-- joint admission 0.3023 vs 0.2403 (+0.0620)
-- onset+offset F1 0.5561 vs 0.4767
-- repeated-note recall 0.5000 vs 0.5000
-- negative-only FP 0.0 events/s
+Under the frozen onset-aware sampler, positive onset string/tokens are only about 5.119% of batch onset tokens. BCE pos_weight 8 gives them about 30.15% of expected weighted onset-loss mass.
 
-The absolute recall floor passed, but five S2 criteria failed, including the preregistered state/joint gain floors and repeated-note floor. Do not round F1 0.67925 into the 0.68 pass requirement.
+One S3 hypothesis is now frozen:
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_DESIGN_V1.md`
 
-No P1/P2/P3, threshold search or retry.
+S3 changes only onset BCE positive weight:
+- control 8
+- intervention 16
 
-Exact next task: **offline review only**. Freeze a new single-variable design and obtain fresh explicit authorization before any further optimizer work.
+State weight stays 6.0 and all data/sampler/architecture/lr/threshold/step settings remain fixed. It also reports repeated-reference preceding-frame onset probabilities to distinguish missed attacks from rising-edge/plateau behavior.
+
+**S3 execution is not authorized. Fresh explicit authorization is required before rendering or optimizer work.**
