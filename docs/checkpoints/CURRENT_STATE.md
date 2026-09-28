@@ -3,67 +3,32 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S3 FAILED; OFFLINE REVIEW COMPLETE; S4 GRADIENT-COUPLING HYPOTHESIS FROZEN — MODEL EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
+Status: **S4 MODEL EXPERIMENT EXPLICITLY AUTHORIZED — SOURCE FREEZE IN PROGRESS; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
-Routine GitHub-only code/tests/docs/metadata work is pre-authorized. Explicit approval remains required for:
-- model execution;
-- Codespaces;
-- potentially billable Vercel operations.
+Routine GitHub-only workflows are pre-authorized. Model execution, Codespaces and potentially billable Vercel operations require explicit approval.
 
-## S3 conclusion retained
+Stephen explicitly said **"I authorize"** for the frozen S4 model experiment.
 
-S3 pos_weight 16 versus 8:
-- exact onset admission **0.6744 vs 0.5891**
-- event recall **0.5814 vs 0.5814**
-- event F1 **0.6977 vs 0.7075**
-- state/joint admission **0.2868 vs 0.3333**
-- repeated-note recall **0.5238 vs 0.5714**
+## Frozen S4 boundary
 
-Increasing onset weight moved onset admission but did not move event recall and reduced state/joint admission.
+- 294 deterministic synthetic clips / 588 s;
+- exactly two identical five-frame models;
+- control: state + onset losses both update shared encoder;
+- intervention: onset branch consumes detached encoder activations, so onset loss cannot update encoder;
+- state weight 6.0, onset pos_weight 8.0, onset multiplier 4.0 fixed;
+- same 32/32/32/32 sampler and identical 500 minibatches;
+- identical initialization;
+- lr 0.003, 500 optimizer steps/model;
+- thresholds 0.50/0.50, no threshold search;
+- gradient-contract checks before optimization;
+- zero automatic retries;
+- no P1/P2/P3, Codespaces or Vercel.
 
-Repeated-reference preceding-frame onset probabilities remained below threshold, so rising-edge plateau suppression is not supported as the dominant repeated-note cause.
+### Exact next task
 
-## Offline S3 review
-
-The S2/S3 pattern is compatible with shared-encoder task competition:
-
-- stronger state weighting improved state/joint admission and event recall;
-- stronger onset weighting improved onset admission while state/joint moved down and event recall stayed flat.
-
-This is not causal proof.
-
-Analysis:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_FAILURE_ANALYSIS_V1.md`
-
-## Frozen S4 design
-
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_DESIGN_V1.md`
-
-Exactly two identical five-frame models using the S3-control loss settings:
-- state active weight 6.0;
-- onset pos_weight 8.0;
-- onset loss multiplier 4.0;
-- same onset-aware sampler;
-- same lr, 500-step cap, thresholds and decoder.
-
-Only changed variable:
-
-1. **control:** onset + state losses both backpropagate through the shared encoder;
-2. **intervention:** onset head receives a detached encoder representation, so onset loss trains the onset head but contributes zero gradient to the shared encoder. State loss still trains the encoder.
-
-No extra encoder and no parameter-count change.
-
-The design requires explicit gradient-contract checks inside the eventual model workflow before optimization.
-
-### EXACT NEXT STEP — explicit model authorization required
-
-Do not execute S4 yet.
-
-Ordinary GitHub source/docs work remains pre-authorized, but the S4 checks and experiment execute models. Stephen must explicitly authorize S4 before launch.
-
-No P1/P2/P3, Codespaces, Vercel, threshold tuning, deployment or main mutation.
+Freeze exact source identities and authorization, launch S4 once, inspect that one run, freeze the result, then stop model work.
 
 
 ---

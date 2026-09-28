@@ -1,0 +1,92 @@
+name: Astra synthetic S4 gradient-coupling pilot v1
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_LAUNCH_V1.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: astra-synthetic-s4-gradient-coupling-v1
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 85
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: ${{ github.sha }}}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.10.15'}
+      - name: Verify authorization and pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_LAUNCH_V1.json'))
+          assert a['schema']=='astra-synthetic-data-diversity-s4-authorization-v1'
+          assert a['userInstruction']=='I authorize'
+          z=a['authorization']; assert z['maxModels']==2 and z['maxOptimizerStepsPerModel']==500
+          assert not z['automaticRetryAuthorized'] and not z['thresholdSearchAuthorized']
+          assert not z['p1Authorized'] and not z['p2Authorized'] and not z['p3Authorized']
+          assert not z['codespacesAuthorized'] and not z['vercelAuthorized']
+          paths={
+            'designGitBlob':'docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_DESIGN_V1.md',
+            'generatorGitBlob':'astra_backend/synthetic/s0_pilot_v1.py',
+            'samplingGitBlob':'astra_backend/synthetic/s1_pilot_v1.py',
+            'diagnosticsGitBlob':'astra_backend/synthetic/s2_pilot_v1.py',
+            'repeatedDiagnosticsGitBlob':'astra_backend/synthetic/s3_pilot_v1.py',
+            'runnerGitBlob':'astra_backend/synthetic/s4_pilot_v1.py',
+            'testsGitBlob':'astra_backend/synthetic/test_s4_pilot_v1.py',
+            'runtimeLockGitBlob':'astra_backend/tabcnn_runtime/requirements.lock.txt',
+            'workflowGitBlob':'.github/workflows/astra-synthetic-s4-gradient-coupling-v1.yml',
+          }
+          for k,p in paths.items():
+              assert a['sourceIdentities'][k]==blob(p),(k,'auth')
+              assert l['sourceIdentities'][k]==blob(p),(k,'launch')
+          assert l['authorizationGitBlob']==blob('docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_AUTHORIZATION_V1.json')
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Run authorized gradient-contract tests
+        run: PYTHONPATH=astra_backend python astra_backend/synthetic/test_s4_pilot_v1.py
+      - name: Regenerate bounded synthetic corpus
+        run: |
+          mkdir -p /tmp/astra-s4
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s0_pilot_v1.py generate --out /tmp/astra-s4/dataset.npz --receipt /tmp/astra-s4/render-receipt.json
+      - name: Run exactly two capped S4 arms
+        run: |
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s4_pilot_v1.py             --dataset /tmp/astra-s4/dataset.npz --out /tmp/astra-s4/result.json --identity-out /tmp/astra-s4/identity.json             --control-model /tmp/astra-s4/control.pt --intervention-model /tmp/astra-s4/detached.pt
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-s4/result.json'))
+          assert x['execution']['modelCount']==2 and x['execution']['optimizerStepsTotal']<=1000
+          assert x['control']['fit']['initialModelSha256']==x['detachedOnset']['fit']['initialModelSha256']
+          assert x['gradientContract']['preUpdateControl']['onsetEncoderGradNorm']>0
+          assert x['gradientContract']['preUpdateDetached']['onsetEncoderGradNorm']==0
+          assert x['fixed']['thresholdSearch'] is False and x['execution']['automaticRetry'] is False
+          assert not x['guards']['p1Accessed'] and not x['guards']['p2Accessed'] and not x['guards']['p3Opened']
+          assert not x['guards']['codespacesUsed'] and not x['guards']['vercelUsed']
+          PY
+      - name: Upload bounded S4 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-synthetic-data-diversity-s4-v1
+          path: |
+            /tmp/astra-s4/render-receipt.json
+            /tmp/astra-s4/identity.json
+            /tmp/astra-s4/result.json
+            /tmp/astra-s4/control.pt
+            /tmp/astra-s4/detached.pt
+          if-no-files-found: error
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/astra-s4
