@@ -1,18 +1,20 @@
 # Next chat: start here
 
-Standing authorization policy from Stephen:
+S3 is complete and failed its frozen gate.
 
-- Routine GitHub operations and GitHub Actions runs are pre-authorized when they do **not** execute a model and do not involve Codespaces or potential Vercel cost.
-- Explicit authorization is still required before:
-  1. any model execution (training, optimizer, inference/evaluation, pretrained/local model runs);
-  2. Codespaces usage when cost may be incurred;
-  3. Vercel operations that may incur cost.
+pos_weight 16 versus 8:
+- exact onset admission 0.6744 vs 0.5891
+- event recall 0.5814 vs 0.5814
+- event F1 0.6977 vs 0.7075
+- repeated-note recall 0.5238 vs 0.5714
+- state/joint admission 0.2868 vs 0.3333
 
-This supersedes older instructions to ask before every GitHub run.
+So higher onset weighting moved onset admission but did not improve event recall and slightly harmed state/joint admission.
 
-Current experiment state:
-- S2 is frozen as a scientific fail.
-- S3 design is frozen in `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_DESIGN_V1.md`.
-- S3 changes only onset BCE pos_weight 8 -> 16 with all other settings fixed.
+Repeated-reference preceding-frame onset probabilities stayed below the 0.50 threshold, so rising-edge plateau gating is not supported as the dominant repeated-attack bottleneck.
 
-Because S3 executes models, **explicit S3 authorization is still required before launch**.
+Standing policy:
+- routine GitHub-only non-model workflows are pre-authorized;
+- model execution, Codespaces, and potentially billable Vercel work require explicit authorization.
+
+Next: offline review only. Do not run another model until a new one-variable design is frozen and explicitly authorized.

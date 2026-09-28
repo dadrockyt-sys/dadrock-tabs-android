@@ -1,0 +1,121 @@
+{
+  "schema": "astra-synthetic-data-diversity-s3-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_onset_weight_gate_onset_admission_up_event_recall_flat",
+  "run": {
+    "runId": 36373550895,
+    "jobId": 108774667718,
+    "headSha": "b4c755d7aabdb1c569f1c73db06193cdf5110224",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10949783844,
+    "name": "astra-synthetic-data-diversity-s3-v1",
+    "digest": "sha256:be0d9268042518f43088b5f55e655e77714025071de773b8009ba7a2266ccd57",
+    "expiresAt": "2026-10-28T03:25:21Z",
+    "files": {
+      "array-identity.json": "023bdfd8da97dbb06ddc6ce73b643ba3701b27604561e469a86aed6dce9e327e",
+      "pos-weight-16.pt": "430245ab191b1f3b0a35463ceee3bbd2f02d96e0c8d38a67f37fb869f0f53d92",
+      "pos-weight-8.pt": "f3f73ee624a13fe3af7f53f41db02afc49f72534b466c30e01be570d71d8cc64",
+      "render-receipt.json": "6c343d0472a65d2e4eee0d90b8512efe99b263dc44995c3d2398de447ba8f079",
+      "result.json": "55450690356063b161c295c028c051313c395dd0c03ed85a23f9b4409442681b"
+    }
+  },
+  "controlledIdentity": {
+    "initialModelSha256": "df26a0091676b1009a30dcd7a76734172feb30a62fe70553aca98ad3807ac4b6",
+    "identicalInitialization": true,
+    "identicalBatchPlan": true,
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd"
+  },
+  "controlPosWeight8": {
+    "optimizerSteps": 500,
+    "test": {
+      "onsetPrecision": 0.9036144578313253,
+      "onsetRecall": 0.5813953488372093,
+      "onsetF1": 0.7075471698113207,
+      "onsetOffsetF1": 0.5575221238938054,
+      "repeatedRecall": 0.5714285714285714,
+      "onsetAdmission": 0.5891472868217055,
+      "stateAdmission": 0.3333333333333333,
+      "jointAdmission": 0.3333333333333333,
+      "repeatedReferenceOnsetAdmission": 0.5,
+      "repeatedReferencePrecedingFrameOnsetProbabilityMean": 0.029742043187856452,
+      "negativeOnlyFpPerSecond": 0
+    }
+  },
+  "interventionPosWeight16": {
+    "optimizerSteps": 500,
+    "test": {
+      "onsetPrecision": 0.872093023255814,
+      "onsetRecall": 0.5813953488372093,
+      "onsetF1": 0.6976744186046513,
+      "onsetOffsetF1": 0.5263157894736842,
+      "repeatedRecall": 0.5238095238095238,
+      "onsetAdmission": 0.6744186046511628,
+      "stateAdmission": 0.2868217054263566,
+      "jointAdmission": 0.2868217054263566,
+      "repeatedReferenceOnsetAdmission": 0.6212121212121212,
+      "repeatedReferencePrecedingFrameOnsetProbabilityMean": 0.03325854390393504,
+      "negativeOnlyFpPerSecond": 0
+    }
+  },
+  "comparison": {
+    "onsetAdmissionGain": 0.0852713178294573,
+    "onsetRecallGain": 0,
+    "onsetF1Gain": -0.009872751206669417,
+    "repeatedRecallGain": -0.04761904761904756,
+    "stateAdmissionDecline": 0.046511627906976716,
+    "jointAdmissionDecline": 0.046511627906976716,
+    "onsetOffsetF1Decline": 0.031206334420121218
+  },
+  "frozenCriteria": {
+    "passed": false,
+    "passedCriteria": [
+      "onsetPrecisionAtLeast0_82",
+      "stateAdmissionDeclineAtMost0_05",
+      "jointAdmissionDeclineAtMost0_05",
+      "onsetOffsetDeclineAtMost0_05",
+      "negativeOnlyFalsePositiveRateAtMost0_10PerSecond",
+      "noFamilyF1LossOver0_15",
+      "finiteBoth500StepsIdentityZeroThresholdSearch"
+    ],
+    "failed": [
+      "onsetAdmissionGainAtLeast0_10",
+      "onsetRecallGainAtLeast0_08",
+      "onsetF1GainAtLeast0_05",
+      "repeatedRecallGainAtLeast0_10",
+      "absoluteOnsetRecallAtLeast0_65",
+      "absoluteOnsetF1AtLeast0_72",
+      "absoluteRepeatedRecallAtLeast0_60"
+    ]
+  },
+  "interpretation": {
+    "supported": "Increasing onset positive-token weight raised exact-reference onset admission and repeated-reference onset admission under identical initialization and minibatches.",
+    "notSupported": "The higher onset weight did not improve event recall, reduced event F1 slightly, reduced repeated-note event recall, and reduced exact state/joint admission.",
+    "repeatedEdgeObservation": "Preceding-frame onset probability stayed low on repeated-reference attacks (mean about 0.03 and intervention max below 0.50), so the decoder's same-fret rising-edge plateau rule is not supported as the dominant cause of these repeated-reference misses.",
+    "causalCaveat": "The observed onset/state tradeoff is compatible with shared-encoder task competition but does not prove gradient interference."
+  },
+  "execution": {
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 5.626257097999996,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "decision": {
+    "noRetry": true,
+    "noThresholdRescue": true,
+    "noExtraSteps": true,
+    "p1p2TransferNotAuthorized": true,
+    "p3MustRemainSealed": true,
+    "nextWork": "Offline review only. Do not continue onset-weight escalation automatically."
+  }
+}
