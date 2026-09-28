@@ -9,7 +9,7 @@ def test_standard_template_occurrence_maps_to_variant():
     assert v==2
 
 def test_s9_chord_slot_reconstructs_unique_frozen_template_and_control_variant():
-    t,v=_template_and_variant("chords","s9-chords:17",0)
+    t,v=_template_and_variant("chords","s9-chords:0",0,s9_slot=17)
     assert t["templateId"]=="s9-chords:17"
     assert t["split"]=="train"
     assert v==2
@@ -22,3 +22,7 @@ def test_invalid_standard_occurrence_rejected():
 def test_unexpected_template_id_rejected():
     with pytest.raises(RuntimeError):
         _template_and_variant("isolated","bad-template-id",0)
+
+def test_invalid_s9_slot_rejected():
+    with pytest.raises(RuntimeError):
+        _template_and_variant("chords","s9-chords:0",0,s9_slot=30)
