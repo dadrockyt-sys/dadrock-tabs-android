@@ -18,15 +18,22 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-      - run: pip install -r astra_backend/requirements.txt pytest
-      - name: Focused model-free diagnostics
-        working-directory: astra_backend
+          python-version: '3.10.15'
+      - name: Install pinned runtime
         run: |
-          pytest -q synthetic/test_s13_preimplementation_review_v1.py
-          python -m synthetic.s13_preimplementation_review_v1 --out ../s13-preimplementation-evidence.json
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+      - name: Focused model-free diagnostics
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_s13_preimplementation_review_v1.py
+          python -m synthetic.s13_preimplementation_review_v1 --out s13-preimplementation-evidence.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
