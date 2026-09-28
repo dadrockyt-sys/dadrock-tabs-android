@@ -1,0 +1,85 @@
+{
+  "schema": "astra-independent-real-development-evaluation-v1",
+  "date": "2026-09-28",
+  "status": "prospective-design-frozen-before-real-data-access",
+  "authorization": "user-selected-independent-real-development-evidence-program",
+  "projectType": "real-development-evaluation",
+  "notA2": true,
+  "data": {
+    "newAfterDesignFreeze": true,
+    "forbidP1": true,
+    "forbidP2": true,
+    "forbidP3": true,
+    "minimumClips": 24,
+    "minimumPositiveClips": 18,
+    "minimumNegativeOnlyClips": 6,
+    "minimumPositiveAudioSeconds": 90,
+    "minimumNegativeAudioSeconds": 30,
+    "targetClipSeconds": [4, 10],
+    "requiredCoverage": [
+      "single-note",
+      "repeated-attacks",
+      "legato",
+      "palm-mute",
+      "dyad-or-chord",
+      "clean-capture",
+      "distorted-or-overdriven-capture"
+    ]
+  },
+  "annotation": {
+    "freezeBeforeInference": true,
+    "required": ["clipSha256", "eventStart", "pitch", "confidence"],
+    "stringFretOnlyWhenUnambiguous": true,
+    "noPostOutputRelabeling": true
+  },
+  "primaryMetrics": [
+    "pitchOnsetPrecision",
+    "pitchOnsetRecall",
+    "pitchOnsetF1",
+    "negativeOnlyFalsePositiveEventsPerSecond"
+  ],
+  "secondaryMetrics": [
+    "exactStringFretTop1",
+    "pitchOnlyTop1",
+    "repeatedAttackRecall",
+    "onsetTimingError",
+    "pitchOnsetOffsetF1"
+  ],
+  "fixed": {
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "decoderTuning": false,
+    "candidateSelectionAfterResults": false
+  },
+  "preInferenceRequirements": [
+    "intakeManifestFrozen",
+    "fileHashesVerified",
+    "durationsVerified",
+    "provenanceNoOverlapDeclared",
+    "annotationsFrozen",
+    "candidateIdentityPinned",
+    "evaluatorIdentityPinned",
+    "pureIntakeValidatorPassed",
+    "offlineVerificationReceiptZeroInference"
+  ],
+  "allowed": {
+    "hashing": true,
+    "annotationTooling": true,
+    "modelFreeValidation": true,
+    "boundedCpuInferenceAfterVerifiedIntake": true
+  },
+  "forbiddenWithoutNewDecision": {
+    "training": true,
+    "finetuning": true,
+    "a2": true,
+    "p1Reuse": true,
+    "p2Reuse": true,
+    "p3Access": true,
+    "paidInference": true,
+    "productionDeployment": true,
+    "mainMutation": true
+  },
+  "nextAction": "build-intake-package-only-no-real-audio-access-or-inference-yet"
+}
