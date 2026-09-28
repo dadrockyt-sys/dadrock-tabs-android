@@ -857,3 +857,69 @@ The inspected S12 code checks a `singleLaunch` boolean, but that is not a consum
 After one authorized S13 execution, freeze pass/fail, all seed results, source/data identities, compute and artifact checksums. No automatic S14, threshold rescue or favorable-seed selection. A failed S13 requires a project-level review of the simulator/representation strategy before more architecture or loss experiments. A pass requires a separately specified development-transfer plan; P1/P2 remain exposed development data and P3 stays sealed. Respect the current explicit real-data access boundary.
 
 **GPT-5.6's immediate next task:** complete the small, model-free S12 transform/target validity review and its focused tests, then freeze one justified S13 design or an explicit no-go. Save actual findings and exact next action here on `astra-work`, verify the remote commit, and retain main/Production unchanged.
+
+## S13 preimplementation transform/target validity review — 2026-09-28
+
+The required small, model-free review after S12 is complete. **No model was trained or loaded, optimizer steps = 0, the full synthetic corpus was not regenerated, P1/P2 were not reopened, P3 remains sealed, and main/Production were unchanged.**
+
+Frozen review:
+- `docs/astra/SYNTHETIC_S13_PREIMPLEMENTATION_REVIEW_V1.md`
+
+New diagnostics:
+- `astra_backend/synthetic/s13_preimplementation_review_v1.py`
+- `astra_backend/synthetic/test_s13_preimplementation_review_v1.py`
+- `.github/workflows/astra-s13-preimplementation-review-v1.yml`
+
+Focused workflow:
+- successful run **36453347122**
+- job **109033319204**
+- head **94c4a66cd06044fbf063dad8d1e5716f2ccf279b**
+- artifact **10984880391**
+- artifact digest `sha256:df859c6f93bbe88c864d04e005ed70b9f37001ee8a7fe4a49ae9691d50a45bee`
+- test result: **11 passed**
+- model run: **no**
+- optimizer steps: **0**
+
+Two concrete preparation failures were fixed before the passing run:
+1. the first review workflow referenced a nonexistent `astra_backend/requirements.txt`; it was corrected to use the frozen tabcnn runtime lockfile;
+2. the first adjacent-onset expected-value assertion was arithmetically wrong; the actual recursive mutation is `[0.0, 0.5, 0.425, 0.7125, 1.0]`, and the test/review were corrected. These were implementation/test defects only; the scientific interpretation was not changed to obtain a pass.
+
+### Actual model-free findings
+
+The existing S12 transform is **not justified as a label/identity-preserving clean-vs-soft consistency view**:
+
+- isolated new pitch, blend 0.70:
+  - before `[0.0, 1.0, 1.0, 1.0]`
+  - after approximately `[0.0, 0.3, 0.51, 1.0]`;
+- repeated same pitch, blend 0.70:
+  - before `[0.8, 1.0, 1.0, 0.9, 0.8]`
+  - after approximately `[0.8, 0.86, 0.902, 0.9, 0.8]`;
+- attack over another changing/sustaining component changes unrelated spectral bins because all 192 bins are blended;
+- adjacent onsets are mutation-order coupled:
+  - before `[0.0, 1.0, 0.2, 1.0, 1.0]`
+  - after approximately `[0.0, 0.5, 0.425, 0.7125, 1.0]`;
+- frame-zero onset labels are ignored by the transform and final-frame onsets receive asymmetric treatment;
+- `context5` spreads these local feature changes into overlapping five-frame model inputs while the state/onset targets remain unchanged.
+
+This does **not** prove that the S12 transform alone caused all ordinary-domain regression, and it does not modify the frozen S12 failure. It establishes that the prerequisite for stacking a clean/soft consistency loss on this transform is not met.
+
+### Frozen decision: explicit NO-GO for that S13 path
+
+Do **not** implement or train S13 using the existing S12 soft view as a supposedly identity-preserving augmentation/consistency view.
+
+Per the supervisory stop rule, no `SYNTHETIC_S13_DESIGN_V1` model package was created after this no-go. Do not substitute a new loss, sampler or architecture in the same step.
+
+### Exact next action
+
+The next scientific action, if continuing, is **offline transform-design work only**:
+
+1. define one separately versioned onset-robustness transform with a physical/representation rationale;
+2. demonstrate preservation behavior first on isolated, repeated, polyphonic/overlapping and adjacent-onset handcrafted cases;
+3. keep the S9/S11 model, thresholds 0.50/0.50, P1/P2 boundary and P3 seal unchanged while doing that review;
+4. treat any transform correction itself as the single intervention;
+5. only after a transform passes a prospective preservation review may a new S13 design/spec be written and frozen before optimizer work.
+
+Do not run S13, do not rerun S12, do not search transform strengths against P1/P2, and do not chain into S14.
+
+**Resume instruction:** Continue from this explicit no-go. The immediate task is model-free prospective transform design/review only. Preserve S12 as failed, keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
+
