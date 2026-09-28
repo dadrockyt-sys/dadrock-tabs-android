@@ -1,6 +1,22 @@
 {
   "schema": "astra-synthetic-s13-execution-history-v1",
-  "status": "no-s13-execution-yet",
-  "consumedLaunchIdentities": [],
-  "notes": "Durable repository ledger. A launch identity must be absent here before execution and appended after any consumed run before another launch can be frozen."
+  "status": "s13-execution-consumed-failed",
+  "consumedLaunchIdentities": [
+    "s13-v1-20260928-canonical-01"
+  ],
+  "executions": [
+    {
+      "launchIdentity": "s13-v1-20260928-canonical-01",
+      "launchCommit": "c3644cb2566e25a92ec1cd0aa4859e76c3930f3c",
+      "workflowRun": 36463727631,
+      "workflowJob": 109068446982,
+      "runAttempt": 1,
+      "workflowConclusion": "success",
+      "scientificGatePassed": false,
+      "artifact": 10988304586,
+      "artifactDigest": "sha256:964248c795d534cf44062b80de5319108cf8dc9477fe44067a554238f5acf162",
+      "frozenResult": "docs/astra/SYNTHETIC_S13_RESULT_V1.json"
+    }
+  ],
+  "notes": "Launch identity is consumed. No rerun, S14, threshold rescue, favorable-seed selection, or automatic P1/P2/P3 follow-up is authorized by this ledger."
 }
