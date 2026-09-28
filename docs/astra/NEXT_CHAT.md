@@ -1,18 +1,21 @@
 # Next chat: start here
 
-S6 completed and failed its frozen gate, but the nonlinear state head materially improved the state representation:
-- state admission 0.3178 -> 0.3798
-- median true-state probability 0.094 -> 0.218
-- median silence probability 0.633 -> 0.481
+S7 completed and failed. The zero-initialized residual learned strongly but reduced state/joint admission.
 
-Joint/event gains were too small and repeated recall declined, so S6 is not a pass.
+Offline review froze S8 around the persistent polyphonic sampling imbalance.
 
-Offline review froze S7:
-- keep the exact linear state head;
-- add a nonlinear residual branch;
-- zero-initialize the residual output so pre-update state logits are exactly identical to control.
+Training:
+- 525 positive-onset frames
+- 645 positive string-onset tokens
+- chord attacks = 11.43% of positive frames but 27.91% of positive tokens
+
+S8 fixes the S6 nonlinear state head and changes only positive-frame sampling:
+- control: uniform positive frames
+- intervention: frame probability proportional to number of positive onset strings
+
+The other 96 minibatch positions remain paired-identical.
 
 Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S7_DESIGN_V1.md`
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S8_DESIGN_V1.md`
 
-Routine non-model GitHub work remains pre-authorized. **S7 model execution requires fresh explicit authorization.**
+S8 executes models and therefore requires fresh explicit authorization.

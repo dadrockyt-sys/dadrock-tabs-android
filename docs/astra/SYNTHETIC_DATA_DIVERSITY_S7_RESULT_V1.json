@@ -1,0 +1,100 @@
+{
+  "schema": "astra-synthetic-data-diversity-s7-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_zero_initialized_residual_state_capacity_gate",
+  "run": {
+    "runId": 36377220039,
+    "jobId": 108785403550,
+    "headSha": "87e6f2c3fd2f658ff34ae3357ea74412257a7a47",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10951013712,
+    "name": "astra-synthetic-data-diversity-s7-v1",
+    "digest": "sha256:c39c2789814d8b1b2dc0f8198e7dbc360900ff5344b01c9e862547258ea942f3",
+    "expiresAt": "2026-10-28T04:20:59Z",
+    "files": {
+      "control.pt": "39b96d829fb4cc85d42054210438ceee6144ea894a100f5cdfbe3108fb8b5cd9",
+      "identity.json": "e2ff744da173be2d31231035cd207fcdb44b307a41fbd6e3e6e60193db2db252",
+      "render-receipt.json": "04a1bff3e57dd3f1b4eb5f6e96a3db15decf81eadcfc5fe2ab62aa41f243f2e2",
+      "residual.pt": "1cec50b2fe05cad8bdde22434a376f13981715347ecefb67ee7c5e61e1a6b510",
+      "result.json": "9b69bf78dd8471d09904be2d377c2b98abe058c5df1c3cb44f073f667f56bb75"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 3,
+    "focusedTestsTotal": 3,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 6.072264127000011,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "sharedEncoderInitSha256": "ad2de5ccfe8f1ac9f42e70522f4267e2ee74601ad528781c3bd9b3fd15070fdc",
+    "onsetHeadInitSha256": "a35a81e189c1583bf2c3249b7b73d826dad781c3039842cf58f343b2ecf414ee",
+    "baseStateHeadInitSha256": "88dd50da8ef2079f86916ecc557f7ad2251b3f4b57215e5f794531c9d54a49b1",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "preUpdateStateLogitsIdentical": true,
+    "preUpdateOnsetLogitsIdentical": true,
+    "residualOutputExactlyZeroAtInit": true
+  },
+  "control": {
+    "precision": 0.9166666666666666,
+    "recall": 0.5968992248062015,
+    "f1": 0.7230046948356806,
+    "onsetOffsetF1": 0.6036036036036037,
+    "repeatedRecall": 0.5714285714285714,
+    "onsetAdmission": 0.5581395348837209,
+    "stateAdmission": 0.32558139534883723,
+    "jointAdmission": 0.3178294573643411,
+    "trueStateMedian": 0.1382150948047638,
+    "silenceMedian": 0.6562087535858154,
+    "trueMinusSilenceMedian": -0.4409436285495758,
+    "chordF1": 0.38297872340425526,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "intervention": {
+    "precision": 0.8850574712643678,
+    "recall": 0.5968992248062015,
+    "f1": 0.7129629629629628,
+    "onsetOffsetF1": 0.5929203539823009,
+    "repeatedRecall": 0.5952380952380952,
+    "onsetAdmission": 0.5968992248062015,
+    "stateAdmission": 0.29457364341085274,
+    "jointAdmission": 0.2868217054263566,
+    "trueStateMedian": 0.05034967139363289,
+    "silenceMedian": 0.8106030225753784,
+    "trueMinusSilenceMedian": -0.7425307035446167,
+    "chordF1": 0.3404255319148936,
+    "negativeOnlyFpPerSecond": 0,
+    "residualParameterNormAfterTraining": 17.671873504139427
+  },
+  "comparison": {
+    "stateAdmissionGain": -0.031007751937984496,
+    "jointAdmissionGain": -0.031007751937984496,
+    "onsetRecallGain": 0,
+    "onsetF1Gain": -0.01004173187271784,
+    "repeatedRecallGain": 0.023809523809523836,
+    "onsetAdmissionGain": 0.03875968992248058,
+    "onsetOffsetF1Decline": 0.010683249621302737
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 6,
+    "totalCount": 15
+  },
+  "interpretation": {
+    "rejected": "The zero-initialized residual branch learned substantially but reduced state/joint admission and state confidence, did not improve event recall, slightly reduced F1, and violated family stability.",
+    "boundary": "S7 rejects adding nonlinear residual state capacity beside the direct linear state path under this setup. It does not invalidate S6's observation that a replacement nonlinear state head can improve state confidence."
+  }
+}
