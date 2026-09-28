@@ -182,9 +182,11 @@ def git_blob_sha(path):
 
 def workflow(out_dir):
     root=Path(__file__).resolve().parents[2]
-    auth=json.loads((root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V1.json").read_text())
-    launch=json.loads((root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V1.json").read_text())
-    if auth["schema"]!="astra-synthetic-onset-envelope-s12-authorization-v1":
+    ap=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V2.json"
+    lp=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V2.json"
+    auth=json.loads(ap.read_text())
+    launch=json.loads(lp.read_text())
+    if auth["schema"]!="astra-synthetic-onset-envelope-s12-authorization-v2":
         raise RuntimeError("authorization schema mismatch")
     z=auth["authorization"]
     if not (z["maxModels"]==6 and z["maxOptimizerStepsPerModel"]==500 and z["maxTotalOptimizerSteps"]==3000):
@@ -196,7 +198,7 @@ def workflow(out_dir):
         actual=git_blob_sha(root/p)
         if launch["sourceIdentities"][k]!=actual or auth["sourceIdentities"][k]!=actual:
             raise RuntimeError("source pin mismatch "+k)
-    if launch["authorizationGitBlob"]!=git_blob_sha(root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V1.json"):
+    if launch["authorizationGitBlob"]!=git_blob_sha(ap):
         raise RuntimeError("authorization pin mismatch")
 
     out=Path(out_dir); work=out.parent/"astra-s12-work"
