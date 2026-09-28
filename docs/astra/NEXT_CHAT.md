@@ -3,23 +3,33 @@
 Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 Updated: 2026-09-27.
 
-## Active canonical run
+## Current verified position
 
-MR-MT3 repaired-runtime Stage-A rerun is authorized and launched once.
+MR-MT3 repaired-runtime Stage-A run **36356352219**, job **108724744341** was workflow GREEN but **scientifically FAILED** the frozen gate.
 
-- run **36356352219**
-- job **108724744341**
-- launch commit `4899207e0470a605cad873b6243c8ef34ce12773`
-- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/36356352219
+Frozen result:
+- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_RESULT_V1.json`
+- artifact **10944877326**
+- projected TP/FP/FN **0 / 0 / 31**
+- projected F1 **0.0**
 
-The original run's failure was infrastructure-only. The repaired runtime passed synthetic inference:
-- mt3-infer 0.2.0
-- Transformers 4.57.5
-- Torch 2.7.1
-- Torchaudio 2.7.1
-- Torchvision 0.22.1
+Important nuance:
+- MR-MT3 emitted **1,777** note events across the eight captures
+- **1,772** were rejected as non-guitar programs
+- **5** as percussion
+- **0** for pitch range
+- **0** survived the frozen accepted-program contract 24-31
 
-Scientific design is unchanged:
-same 8 captures, same checkpoint/projection, 0 optimizer, no threshold search, <=60 CPU minutes, zero retries, P3 sealed.
+Do not post-hoc remap program IDs from these outcomes.
 
-Inspect only this rerun. If it completes, freeze the artifact and evaluate every predeclared advancement criterion. If infrastructure fails again, stop MR-MT3. If scientific gate fails, move offline to commercial-safe synthetic/data diversity. If it passes, next work is Stage-B design only.
+The generic frozen-pretrained-front-end branch is stopped:
+- Basic Pitch: strong recall, poor precision
+- MR-MT3: abundant notes but incompatible instrument-program semantics under the frozen guitar projection
+
+## Exact next task
+
+Offline design only for a **commercial-safe synthetic/data-diversity strategy**.
+
+The next design should directly address representation overfitting and guitar-specific supervision while keeping storage/training bounded and licenses commercially usable.
+
+No optimizer work, no third generic AMT front end, no threshold/program tuning on these eight captures, and no P3.

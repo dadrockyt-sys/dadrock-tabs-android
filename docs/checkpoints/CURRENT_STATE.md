@@ -1045,6 +1045,101 @@ Advancement gate remains exactly:
 7. If scientific gate passes, next work is design-only for Stage B string/fret assignment.
 8. P3 remains sealed.
 
+## MR-MT3 repaired-runtime Stage-A — WORKFLOW GREEN, SCIENTIFIC GATE FAILED
+
+Canonical repaired-runtime run **36356352219**, job **108724744341** completed **SUCCESS** at the workflow level. The frozen MR-MT3 Stage-A advancement gate **FAILED**.
+
+Frozen artifact:
+- artifact ID **10944877326**
+- artifact digest `sha256:a0f30fc0ee5df91f1fafda8375b3fe287002b01af5c3ff2cc6a7dda47b9c62de`
+- expires **2026-10-27T23:33:39Z**
+- result.json SHA-256 `62b2067c600853b1a6333ecbedcdaae5c899b6f68dd5a26b5a8cbb0e1cb40d95`
+- frozen receipt: `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_RESULT_V1.json`
+
+Execution boundaries held:
+- optimizer steps **0**
+- threshold search **no**
+- model mutation **no**
+- automatic retry **no**
+- P3 opened **no**
+
+### Scientific result
+
+Frozen guitar-projected pitch+onset score:
+- TP **0**
+- FP **0**
+- FN **31**
+- precision **0.0**
+- recall **0.0**
+- F1 **0.0**
+
+P1 F1 **0.0**
+P2 F1 **0.0**
+All four content-pair macro F1 values **0.0**
+
+### Critical interpretation
+
+MR-MT3 did **not** emit empty output.
+
+Across the eight full direct-input captures, the model reported **1,777 detected note events**.
+
+The frozen product-domain projection then rejected:
+- **1,772** as non-guitar General MIDI programs
+- **5** as percussion
+- **0** for pitch range
+- **0** were accepted as programs 24-31 within pitches 40-83
+
+Therefore this result is best described as **instrument-program semantic mismatch under the frozen projection**, not absence of acoustic note activity.
+
+The program contract was frozen before the real evaluation:
+- accept zero-based General MIDI guitar family programs **24-31**
+- reject percussion and all other programs
+
+Do **not** now inspect the observed program IDs and remap/relax them to rescue the result. That would be post-hoc tuning on the eight development captures and would invalidate the gate.
+
+### Frozen criteria
+
+PASS:
+- absolute P1/P2 F1 gap <=0.15
+- aggregate FP <=31
+- zero optimizer / zero threshold search / exact identity guards
+
+FAIL:
+- aggregate F1 >=0.70
+- aggregate precision >=0.60
+- aggregate recall >=0.70
+- P1 F1 >=0.60
+- P2 F1 >=0.60
+- every content-pair macro F1 >=0.50
+
+Therefore **positiveGate=false**.
+
+### Decision
+
+The generic frozen-pretrained-front-end branch is now **stopped**:
+- Basic Pitch failed due high false positives
+- MR-MT3 failed the frozen guitar-program projection despite emitting abundant note activity
+- do not test a third generic AMT front end automatically
+
+Next work must be **offline design for a commercial-safe synthetic/data-diversity strategy** that is guitar-specific enough to learn useful acoustic representations without relying on ambiguous generic instrument-program semantics.
+
+P3 remains sealed.
+
+### EXACT NEXT STEPS — RESUME HERE
+
+1. No Basic Pitch threshold tuning.
+2. No MR-MT3 program remapping or projection relaxation on these eight captures.
+3. No third generic pretrained AMT front end.
+4. P3 remains sealed.
+5. Next task is offline design only for a commercial-safe synthetic/data-diversity path.
+6. That design must address:
+   - representation overfitting on the tiny eight-crop regime
+   - guitar-specific note/string/fret supervision
+   - commercial-safe licensing/provenance
+   - bounded storage and training cost
+   - genuine grouped validation before P3
+7. Do not start real optimizer work until that synthetic/data-diversity design is frozen and separately authorized.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction

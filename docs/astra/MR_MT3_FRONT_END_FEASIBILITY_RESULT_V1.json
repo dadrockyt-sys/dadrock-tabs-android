@@ -1,0 +1,89 @@
+{
+  "schema": "astra-mr-mt3-front-end-feasibility-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_advancement_gate",
+  "run": {
+    "runId": 36356352219,
+    "jobId": 108724744341,
+    "headSha": "4899207e0470a605cad873b6243c8ef34ce12773"
+  },
+  "artifact": {
+    "artifactId": 10944877326,
+    "name": "astra-mr-mt3-front-end-feasibility-v1",
+    "digest": "sha256:a0f30fc0ee5df91f1fafda8375b3fe287002b01af5c3ff2cc6a7dda47b9c62de",
+    "expiresAt": "2026-10-27T23:33:39Z",
+    "resultJsonSha256": "62b2067c600853b1a6333ecbedcdaae5c899b6f68dd5a26b5a8cbb0e1cb40d95"
+  },
+  "execution": {
+    "optimizerStepsExecuted": 0,
+    "thresholdSearchExecuted": false,
+    "modelMutation": false,
+    "automaticRetry": false,
+    "p3Opened": false
+  },
+  "aggregate": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "truePositive": 0,
+    "falsePositive": 0,
+    "falseNegative": 31
+  },
+  "byPerformer": {
+    "P1": {
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 16
+    },
+    "P2": {
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 15
+    }
+  },
+  "contentPairMacroF1": {
+    "chords": 0,
+    "scales": 0,
+    "singlenotes": 0,
+    "techniques": 0
+  },
+  "absoluteP1P2F1Gap": 0,
+  "rawModelOutput": {
+    "detectedNotesAcrossEightCaptures": 1777,
+    "acceptedByFrozenGuitarProjection": 0,
+    "rejectedNonGuitarProgram": 1772,
+    "rejectedPercussion": 5,
+    "rejectedPitchRange": 0
+  },
+  "criteria": {
+    "aggregatePitchOnsetF1AtLeast0_70": false,
+    "aggregatePitchOnsetPrecisionAtLeast0_60": false,
+    "aggregatePitchOnsetRecallAtLeast0_70": false,
+    "p1AggregatePitchOnsetF1AtLeast0_60": false,
+    "p2AggregatePitchOnsetF1AtLeast0_60": false,
+    "eachContentPairMacroPitchOnsetF1AtLeast0_50": false,
+    "absoluteP1P2F1GapAtMost0_15": true,
+    "aggregateFalsePositivesAtMost31": true,
+    "zeroOptimizerZeroThresholdSearchExactCheckpointUnresolvedZero": true
+  },
+  "interpretation": {
+    "conclusion": "MR-MT3 fails the frozen Stage-A gate under the predeclared guitar-program projection.",
+    "keyPattern": "The model produced many note events, but none were labeled with accepted guitar-family programs 24-31; therefore the frozen projection admitted zero predictions.",
+    "caveat": "This does not show MR-MT3 failed to detect acoustic note activity. It shows its emitted instrument-program semantics are incompatible with the predeclared guitar-only projection on this data.",
+    "postHocChangeProhibited": "Do not relax or remap accepted program IDs using these eight outcomes; that would invalidate the predeclared gate."
+  },
+  "decision": {
+    "stopGenericFrozenFrontEndBranch": true,
+    "noThirdGenericAmtFrontEnd": true,
+    "thresholdOrProgramRemapTuningAuthorized": false,
+    "p3MustRemainSealed": true,
+    "nextPermissibleWork": "Offline design for a commercial-safe synthetic/data-diversity strategy."
+  }
+}
