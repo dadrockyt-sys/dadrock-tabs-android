@@ -290,10 +290,31 @@ def summarize_capture(c):
             "rawPeakOffsetSeconds":sm(["rawTransientPeak","offsetSeconds"]),
             "cqtPeakOffsetSeconds":sm(["preparedCqtNoveltyPeak","offsetSeconds"])}
 
-def run(args):
-    spec=json.loads(Path(args.spec).read_text())
+def validate_spec(spec):
     if spec.get("schema")!="astra-p2-attack-preparation-integrity-audit-spec-v1":
         raise RuntimeError("spec schema mismatch")
+    caps=spec.get("captures",[])
+    keys=[x.get("captureKey") for x in caps]
+    if len(caps)!=8 or len(set(keys))!=8:
+        raise RuntimeError("spec must freeze exactly eight unique captures")
+    if sum(x.get("performer")=="P1" for x in caps)!=4 or sum(x.get("performer")=="P2" for x in caps)!=4:
+        raise RuntimeError("spec performer population mismatch")
+    if any("|P3|" in ("|"+str(k)+"|") or str(k).startswith("P3|") for k in keys):
+        raise RuntimeError("P3 is sealed")
+    ceiling=spec.get("executionCeiling",{})
+    if ceiling.get("optimizerSteps")!=0 or ceiling.get("modelsLoaded")!=0 or ceiling.get("modelInference") is not False:
+        raise RuntimeError("model-free execution ceiling changed")
+    if ceiling.get("thresholdSearch") is not False or ceiling.get("thresholdRetuning") is not False:
+        raise RuntimeError("threshold behavior changed")
+    if ceiling.get("p3Opened") is not False:
+        raise RuntimeError("P3 execution forbidden")
+    return True
+
+def run(args):
+    spec=json.loads(Path(args.spec).read_text())
+    validate_spec(spec)
+    if Path(args.out).exists():
+        raise RuntimeError("refusing to overwrite an existing audit result")
     p1=load_prepared(args.p1_dir,"P1",spec); p2=load_prepared(args.p2_dir,"P2",spec)
     caps=[]
     for performer,pop,root in (("P1",p1,args.p1_source_root),("P2",p2,args.p2_source_root)):
