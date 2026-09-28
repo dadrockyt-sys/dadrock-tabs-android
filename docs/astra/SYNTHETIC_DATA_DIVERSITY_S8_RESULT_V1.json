@@ -1,0 +1,110 @@
+{
+  "schema": "astra-synthetic-data-diversity-s8-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_token_balanced_positive_sampling_gate",
+  "run": {
+    "runId": 36378097322,
+    "jobId": 108787949275,
+    "headSha": "7fbefd629c4827818cd79cd86e6819f1471c4639",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10951214111,
+    "name": "astra-synthetic-data-diversity-s8-v1",
+    "digest": "sha256:f4291e10aa04a29c68f9a7455cf5e20a53f568cdbcd4a5e7d25bb2beb895a5ab",
+    "expiresAt": "2026-10-28T04:32:45Z",
+    "files": {
+      "control.pt": "c8e255efd0419a8c98e800403dff1df14673639e2001b5cc9294afeea27433ca",
+      "identity.json": "34e311f13f78524de4d88b2dbf64def9ef406123b8e004322918c7062a4e1141",
+      "render-receipt.json": "d7119ecf965493f664ab87fd98ee0cd7e765471d6ea6c9f710e49c9f82cbdcb1",
+      "result.json": "fddfa78f0baf5b8280198e938769045b80049fbef4e6b534bb79583164cd2eb6",
+      "weighted.pt": "0f7cc15224b8dd61dd377e16bda01ebd9954dc2349b852c0b627180234fc1ae0"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 4,
+    "focusedTestsTotal": 4,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 3.1718543119999936,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "sampling": {
+    "pairedNonPositiveIndicesIdentical": true,
+    "controlBatchPlanSha256": "114a3349b45900554f82718efbe5e1b35392285979afec3a8b7e517bdf9b9d69",
+    "weightedBatchPlanSha256": "b2873b32f50c70fe291e9f858af4ce0e19744c990d6c2f4bb2f165d24943f436",
+    "positiveFrames": 525,
+    "positiveStringTokens": 645,
+    "controlMeanPositiveStringsPerSelectedFrame": 1.228875,
+    "weightedMeanPositiveStringsPerSelectedFrame": 1.557,
+    "controlSelectedMultiplicityCounts": {
+      "1": 14169,
+      "3": 1831
+    },
+    "weightedSelectedMultiplicityCounts": {
+      "1": 11544,
+      "3": 4456
+    }
+  },
+  "control": {
+    "onsetPrecision": 0.8181818181818182,
+    "onsetRecall": 0.627906976744186,
+    "onsetF1": 0.7105263157894738,
+    "onsetOffsetF1": 0.5901639344262295,
+    "repeatedRecall": 0.5952380952380952,
+    "onsetAdmission": 0.5736434108527132,
+    "stateAdmission": 0.4108527131782946,
+    "jointAdmission": 0.35658914728682173,
+    "chordPrecision": 0.5,
+    "chordRecall": 0.2222222222222222,
+    "chordF1": 0.30769230769230765,
+    "trueStateMedian": 0.1484149843454361,
+    "silenceMedian": 0.44780343770980835,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "tokenBalanced": {
+    "onsetPrecision": 0.9069767441860465,
+    "onsetRecall": 0.6046511627906976,
+    "onsetF1": 0.7255813953488371,
+    "onsetOffsetF1": 0.5803571428571429,
+    "repeatedRecall": 0.6904761904761905,
+    "onsetAdmission": 0.5581395348837209,
+    "stateAdmission": 0.3798449612403101,
+    "jointAdmission": 0.34108527131782945,
+    "chordPrecision": 0.6666666666666666,
+    "chordRecall": 0.16666666666666666,
+    "chordF1": 0.26666666666666666,
+    "trueStateMedian": 0.0892193540930748,
+    "silenceMedian": 0.48581600189208984,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "comparison": {
+    "chordOnsetF1Gain": -0.04102564102564099,
+    "chordRecallGain": -0.05555555555555555,
+    "stateAdmissionGain": -0.031007751937984496,
+    "jointAdmissionGain": -0.015503875968992276,
+    "onsetRecallGain": -0.023255813953488413,
+    "onsetF1Gain": 0.01505507955936336,
+    "onsetOffsetF1Decline": 0.009806791569086593
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 6,
+    "totalCount": 15
+  },
+  "interpretation": {
+    "rejected": "Multiplicity-weighted positive-frame sampling did not improve chord performance or state/joint admission despite materially increasing multi-string positive-token exposure.",
+    "nuance": "Overall F1 and precision rose modestly because false positives fell, but recall, chord recall and state/joint admission all moved in the wrong direction.",
+    "next": "Do not repeat or intensify multiplicity weighting. Offline review should test chord voicing diversity rather than repeated exposure to the same training voicings."
+  }
+}

@@ -1,21 +1,17 @@
 # Next chat: start here
 
-S7 completed and failed. The zero-initialized residual learned strongly but reduced state/joint admission.
+S8 completed and failed.
 
-Offline review froze S8 around the persistent polyphonic sampling imbalance.
+Multiplicity weighting successfully increased multi-string positive-frame exposure, but chord F1/recall and state/joint admission all declined. Repeating the same chord frames more often is rejected.
 
-Training:
-- 525 positive-onset frames
-- 645 positive string-onset tokens
-- chord attacks = 11.43% of positive frames but 27.91% of positive tokens
-
-S8 fixes the S6 nonlinear state head and changes only positive-frame sampling:
-- control: uniform positive frames
-- intervention: frame probability proportional to number of positive onset strings
-
-The other 96 minibatch positions remain paired-identical.
+S9 is frozen around chord voicing diversity:
+- control: 10 unique training chord voicings x 3 timbres = 30 clips;
+- intervention: 30 unique voicings = 30 clips;
+- exact same 30 paired timbre RNG keys;
+- validation/test and non-chord examples bit-identical;
+- same S6 nonlinear state model and identical minibatch indices.
 
 Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S8_DESIGN_V1.md`
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S9_DESIGN_V1.md`
 
-S8 executes models and therefore requires fresh explicit authorization.
+S9 executes models and requires fresh explicit authorization.
