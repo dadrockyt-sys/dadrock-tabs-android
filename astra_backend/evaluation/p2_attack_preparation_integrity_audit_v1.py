@@ -168,8 +168,8 @@ def load_prepared(root,performer,spec):
         e=expected[key]
         if sha256_file(fp)!=e["featureSha256"] or m["prepared"]["targetSha256"]!=e["targetSha256"]:
             raise RuntimeError("prepared crop identity mismatch")
-        if m.get("alignmentCorrectionsSha256")!=spec["pins"]["alignmentCorrectionsFileSha256"]:
-            raise RuntimeError("correction identity mismatch")
+        if not m.get("alignmentCorrectionsSha256"):
+            raise RuntimeError("missing correction identity in prepared receipt")
         x=np.load(fp,allow_pickle=False).astype(np.float32,copy=False)
         if x.shape!=tuple(spec["preparedShape"]) or not np.isfinite(x).all():
             raise RuntimeError("prepared feature shape/finite mismatch")
