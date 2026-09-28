@@ -1,0 +1,61 @@
+{
+  "schema": "astra-synthetic-data-diversity-s11-authorization-v1",
+  "date": "2026-09-28",
+  "status": "authorized_under_standing_inexpensive_github_model_run_policy",
+  "userInstruction": "You do not need my authorization for these inexpensive runs going forward please continue",
+  "standingPolicy": {
+    "inexpensiveGitHubModelRunsPreauthorized": true,
+    "routineGitHubWorkPreauthorized": true,
+    "codespacesStillRequireExplicitBoundary": true,
+    "vercelPotentialCostStillRequiresExplicitBoundary": true,
+    "p1p2p3StillRequireExplicitBoundary": true,
+    "productionDeploymentStillRequiresExplicitBoundary": true
+  },
+  "authorization": {
+    "maxDatasets": 2,
+    "maxExamplesPerDataset": 294,
+    "maxAudioSecondsPerDataset": 588,
+    "maxModels": 6,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 3000,
+    "maxRenderCpuMinutes": 20,
+    "maxFitEvalCpuMinutes": 90,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "externalAudioAssetsAuthorized": false,
+    "p1Authorized": false,
+    "p2Authorized": false,
+    "p3Authorized": false,
+    "codespacesAuthorized": false,
+    "vercelAuthorized": false,
+    "productionMutationAuthorized": false,
+    "mainMutationAuthorized": false
+  },
+  "experiment": {
+    "comparison": "S9 10 unique chord voicings vs 30 unique chord voicings",
+    "runSeeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "fixedArchitecture": "S9/S6 nonlinear replacement state head",
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "sampler": "uniform onset-aware 32/32/32/32",
+    "learningRate": 0.003,
+    "requestedOptimizerStepsPerModel": 500,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "sourceIdentities": {
+    "designGitBlob": "b9b215ebb3298e60e8dd8be618b8535dca18b6e0",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s9DatasetGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runnerGitBlob": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "testsGitBlob": "4d58d72e7f304d359abd9854c003d81adc7b0f78",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "e625a4a3275194da0c4a3de2ca4e2bb540ee818c"
+  }
+}
