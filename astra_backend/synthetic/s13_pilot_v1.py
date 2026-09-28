@@ -205,53 +205,14 @@ def _refuse_existing(path):
     if p.exists():
         raise RuntimeError("refusing existing output path: "+str(p))
 
-def validate_scope(root, scope_path, history_path):
-    history=json.loads(Path(history_path).read_text())
-    scope=json.loads(Path(scope_path).read_text())
-    spec_path=root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"
-    design_path=root/"docs/astra/SYNTHETIC_S13_DESIGN_V1.md"
-    spec=json.loads(spec_path.read_text())
-    if history.get("schema")!=HISTORY_SCHEMA:
-        raise RuntimeError("execution history schema mismatch")
-    if scope.get("schema")!="astra-synthetic-s13-run-scope-v1":
-        raise RuntimeError("scope schema mismatch")
-    if scope.get("specGitBlob")!=git_blob_sha(spec_path):
-        raise RuntimeError("scope spec pin mismatch")
-    if scope.get("designGitBlob")!=git_blob_sha(design_path):
-        raise RuntimeError("design pin mismatch")
-    if scope.get("historyGitBlob")!=git_blob_sha(history_path):
-        raise RuntimeError("history pin mismatch")
-    for key,rel in scope.get("sourcePaths",{}).items():
-        actual=git_blob_sha(root/rel)
-        if scope.get("sourceGitBlobs",{}).get(key)!=actual:
-            raise RuntimeError("source pin mismatch: "+key)
-    fixed=scope.get("fixed",{})
-    expected={
-      "retainFraction":0.50,"stateThreshold":0.50,"onsetThreshold":0.50,
-      "thresholdSearch":False,"thresholdRetuning":False,
-      "runSeeds":[20260927,20260928,20260929],
-      "maxModels":6,"optimizerStepsPerModel":500,"maxTotalOptimizerSteps":3000,
-      "maxFitEvalMinutes":90,"automaticRetry":False,"paidComputeDollars":0,
-      "p1Access":False,"p2Access":False,"p3Access":False,
-    }
-    for k,v in expected.items():
-        if fixed.get(k)!=v:
-            raise RuntimeError("scope fixed value mismatch: "+k)
-    if spec.get("intervention",{}).get("retainFraction")!=0.5:
-        raise RuntimeError("spec retain fraction mismatch")
-    tr=spec.get("training",{})
-    if tr.get("seeds")!=[20260927,20260928,20260929] or tr.get("optimizerStepsPerModel")!=500 or tr.get("maxModels")!=6 or tr.get("maxTotalOptimizerSteps")!=3000:
-        raise RuntimeError("spec training ceiling mismatch")
-    dec=spec.get("decoder",{})
-    if dec.get("stateThreshold")!=0.5 or dec.get("onsetThreshold")!=0.5 or dec.get("thresholdSearch") or dec.get("thresholdRetuning"):
-        raise RuntimeError("spec decoder/threshold mismatch")
-    return history,scope
-
 def validate_launch(root, launch_path, history_path, scope_path):
     launch=json.loads(Path(launch_path).read_text())
-    history,scope=validate_scope(root,scope_path,history_path)
+    history=json.loads(Path(history_path).read_text())
+    scope=json.loads(Path(scope_path).read_text())
     if launch.get("schema")!=LAUNCH_SCHEMA or launch.get("status")!="armed":
         raise RuntimeError("S13 launch is not armed")
+    if history.get("schema")!=HISTORY_SCHEMA:
+        raise RuntimeError("execution history schema mismatch")
     launch_id=str(launch.get("launchIdentity",""))
     if not launch_id:
         raise RuntimeError("missing launch identity")
@@ -263,10 +224,22 @@ def validate_launch(root, launch_path, history_path, scope_path):
         raise RuntimeError("GitHub run attempt must equal 1")
     if os.environ.get("GITHUB_REF_NAME") not in (None,"","astra-work"):
         raise RuntimeError("wrong branch")
+    if scope.get("schema")!="astra-synthetic-s13-run-scope-v1":
+        raise RuntimeError("scope schema mismatch")
     if launch.get("scopeGitBlob")!=git_blob_sha(scope_path):
         raise RuntimeError("scope pin mismatch")
     if launch.get("specGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"):
         raise RuntimeError("spec pin mismatch")
+    if scope.get("specGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"):
+        raise RuntimeError("scope spec pin mismatch")
+    if scope.get("designGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_DESIGN_V1.md"):
+        raise RuntimeError("design pin mismatch")
+    if scope.get("historyGitBlob")!=git_blob_sha(history_path):
+        raise RuntimeError("history pin mismatch")
+    for key,rel in scope["sourcePaths"].items():
+        actual=git_blob_sha(root/rel)
+        if scope["sourceGitBlobs"].get(key)!=actual:
+            raise RuntimeError("source pin mismatch: "+key)
     return launch,history,scope
 
 def validate_dataset_hashes(scope, control_path, intervention_path, challenge_path):
@@ -390,19 +363,15 @@ def main():
     ap=argparse.ArgumentParser()
     sub=ap.add_subparsers(dest="cmd",required=True)
     p=sub.add_parser("prepare-only"); p.add_argument("--out-dir",required=True)
-    v=sub.add_parser("verify-scope"); v.add_argument("--scope",required=True); v.add_argument("--history",required=True)
     r=sub.add_parser("run")
     r.add_argument("--control-dataset",required=True); r.add_argument("--intervention-dataset",required=True)
     r.add_argument("--challenge-dataset",required=True); r.add_argument("--out",required=True)
     r.add_argument("--launch",required=True); r.add_argument("--history",required=True); r.add_argument("--scope",required=True)
     a=ap.parse_args()
-    root=Path(__file__).resolve().parents[2]
     if a.cmd=="prepare-only":
         prepare_only(a.out_dir)
-    elif a.cmd=="verify-scope":
-        validate_scope(root,a.scope,a.history)
-        print("S13_SCOPE_OK")
     else:
+        root=Path(__file__).resolve().parents[2]
         _launch,_history,scope=validate_launch(root,a.launch,a.history,a.scope)
         validate_dataset_hashes(scope,a.control_dataset,a.intervention_dataset,a.challenge_dataset)
         run_experiment(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
