@@ -1,0 +1,121 @@
+{
+  "schema": "astra-source-domain-simulator-diversity-preparation-result-v1",
+  "date": "2026-09-28",
+  "status": "model-free-admission-and-preparation-passed",
+  "branch": "astra-work",
+  "head": "fd52262738a626b7131fcf96ca930dda36442d3a",
+  "frozenDesign": {
+    "designPath": "docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_DESIGN_V1.md",
+    "designGitBlob": "17df1d6405f71d1c8102053672a6e7cd6b8ccfc3",
+    "specPath": "docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_SPEC_V1.json",
+    "specGitBlob": "c5bb49c15181b09d5cf596a2cc8ed52b06703e63"
+  },
+  "sourcePins": {
+    "simulatorGitBlob": "347741d64a633e89b54b5916f790ef569b9d0699",
+    "simulatorTestsGitBlob": "f01dc3f69591234cf34b64347fb571fa240a578a",
+    "preparationGitBlob": "af24cc8a61468e6660e762cd6ee4142aa8293009",
+    "preparationTestsGitBlob": "60afb4736dd7a688c020507373b526d59d0e14ff",
+    "reviewWorkflowGitBlob": "16eee49ceeee88bc75ffd5a1ceea70a4cf96104b",
+    "preparationWorkflowGitBlob": "ca0b16787bed2bf7d58f7102c48e7e01c1957592"
+  },
+  "modelFreeAdmission": {
+    "successfulRun": 36474090090,
+    "job": 109103325464,
+    "artifact": 10992965604,
+    "artifactDigest": "sha256:f4a74eca7b619e96740200284aca60ed92ef3752704dafb3b905b2b68cd1fe7a",
+    "focusedTestsPassed": 15,
+    "fixtureRenderCount": 23,
+    "attackRiseSpanRatio": 14.602564102564102,
+    "maxAbsoluteFundamentalErrorCents": 6.786934302905624,
+    "allAdmissionCriteriaPassed": true,
+    "modelRun": false,
+    "optimizerSteps": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false
+  },
+  "preparation": {
+    "successfulRun": 36475263654,
+    "job": 109107267996,
+    "artifact": 10993531230,
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953",
+    "focusedTestsPassed": {
+      "simulator": 15,
+      "preparation": 5
+    },
+    "repositoryAstraTestRun": 36475263505,
+    "repositoryAstraTestConclusion": "success",
+    "examples": 294,
+    "interventionChangedTrainingRows": 210,
+    "challengeChangedTestRows": 42,
+    "fullPreparationRenderedClips": 576,
+    "fullPreparationAudioSeconds": 1152,
+    "preparationSeconds": 52.07057244500001,
+    "persistedDatasetBytesTotal": 25733042,
+    "arrayHashes": {
+      "controlFeatures": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+      "interventionFeatures": "a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a",
+      "challengeFeatures": "c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640"
+    },
+    "datasetFileSha256": {
+      "control": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+      "intervention": "b46fa80121c43705708bfe786715456be535f6e39d31835b2fa611629024e94e",
+      "challenge": "0d40ab89291f4c19cf44bddb3c1c2adb4926ce3363eeb67f45770940ae03a010"
+    },
+    "identityChecks": {
+      "interventionValidationTestFeaturesBitIdentical": true,
+      "challengeTrainValidationFeaturesBitIdentical": true,
+      "allNonFeatureArraysBitIdentical": true,
+      "changedInterventionRowsExactlyTrain": true,
+      "changedChallengeRowsExactlyTest": true,
+      "reconstructedStateOnsetMatchEveryRow": true,
+      "heldoutAndNonS9ReferencesMatchExactly": true,
+      "historicalS9TrainChordReferencePrefixesVerified": true
+    },
+    "execution": {
+      "modelRun": false,
+      "modelsLoaded": 0,
+      "modelInference": false,
+      "optimizerSteps": 0,
+      "thresholdSearch": false,
+      "thresholdRetuning": false,
+      "automaticRetry": false,
+      "p1Accessed": false,
+      "p2Accessed": false,
+      "p3Opened": false,
+      "paidComputeDollars": 0,
+      "productionMutation": false
+    }
+  },
+  "repairHistory": [
+    {
+      "run": 36473922064,
+      "outcome": "focused-review-failed-on-final-output-peak-bound",
+      "defect": "polyphase resampling could overshoot pre-resample 0.78 normalization slightly",
+      "correction": "reapply same frozen 0.78 bound after resampling",
+      "scientificParametersChanged": false
+    },
+    {
+      "run": 36474542704,
+      "outcome": "preparation-failed-on-historical-s9-reference-identity",
+      "defect": "frozen S9 training chord template_id and refs_json use fixed-width Unicode inherited from S0 and are truncated",
+      "correction": "preserve frozen historical strings byte-identically; reconstruct S9 chord by row slot, require exact state/onset and exact stored-prefix verification",
+      "scientificParametersChanged": false
+    },
+    {
+      "run": 36474949892,
+      "outcome": "dataset-preparation-completed-but-workflow-postcheck-failed",
+      "defect": "receipt rewrite used literal backslash-n after JSON",
+      "correction": "write a real newline terminator",
+      "scientificParametersChanged": false
+    }
+  ],
+  "historicalS9StringStorage": {
+    "affectedTrainingChordRows": 30,
+    "templateIdAndRefsTruncated": true,
+    "stateOnsetIntact": true,
+    "preservedUnchangedInAllArms": true,
+    "historicalDatasetRewritten": false
+  },
+  "decision": "Model-free simulator admission and bounded deterministic preparation pass. This does not authorize model training. Next step is one prospective synthetic-only training design/spec with the frozen S11 architecture and the source-domain data package as the only intervention."
+}
