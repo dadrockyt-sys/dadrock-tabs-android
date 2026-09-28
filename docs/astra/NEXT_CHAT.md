@@ -1,14 +1,17 @@
 # Next chat: start here
 
-S11 completed successfully as a workflow but failed its robustness gate.
+Synthetic tuning is closed.
 
-The 30-voicing intervention improved chord F1, chord recall, onset F1 and onset recall in all 3 seeds, so the diversity direction is consistent. But average gains were below the frozen robustness floors, joint admission was nearly flat, and one seed lost 0.1185 precision.
+The exact prospective P1/P2 transfer workflow is now implemented and frozen offline, but not launched.
 
-Synthetic tuning is now closed under the S11 preregistered mixed/seed-sensitive branch.
+It compares:
+- frozen historical V3 baseline;
+- one predeclared S9/S11 synthetic candidate (seed 20260927, 500 steps);
 
-Standing inexpensive GitHub model-run authorization remains active, but there is no justified next synthetic tuning run.
+on the exact same four P1 + four P2 direct-input crops under evaluator V2 with a symmetric 50 ms crop-edge guard.
 
-The next scientifically meaningful boundary is P1/P2 real-development transfer. A proposal exists at:
-`docs/astra/P1_P2_TRANSFER_EVALUATION_PROPOSAL_V1.md`
+P2 is the primary transfer population. P1 is compatibility context only.
 
-P1/P2 access still requires explicit authorization. P3 remains sealed.
+No P1/P2 data has been accessed by this preparation step. P3 remains sealed.
+
+Next action requires explicit authorization for P1/P2 real-development access.

@@ -1,0 +1,23 @@
+{
+  "schema": "astra-p1-p2-transfer-evaluation-authorization-request-v1",
+  "date": "2026-09-28",
+  "status": "awaiting_explicit_real_development_access_authorization",
+  "request": {
+    "p1MediaAccess": true,
+    "p2MediaAccess": true,
+    "p3Access": false,
+    "exactCaptureCount": 8,
+    "candidateSyntheticModels": 1,
+    "candidateOptimizerSteps": 500,
+    "baselineOptimizerSteps": 0,
+    "evaluationOptimizerSteps": 0,
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "cpuOnlyGitHubActions": true,
+    "maxJobMinutes": 120,
+    "codespaces": false,
+    "vercel": false,
+    "production": false
+  },
+  "hardBoundary": "Standing inexpensive synthetic-run authorization does not authorize P1/P2 real-data access."
+}

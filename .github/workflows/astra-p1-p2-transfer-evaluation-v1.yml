@@ -1,0 +1,119 @@
+name: Astra P1-P2 prospective transfer evaluation v1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/P1_P2_TRANSFER_EVALUATION_LAUNCH_V1.json'
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: astra-p1-p2-transfer-evaluation-v1
+  cancel-in-progress: false
+
+jobs:
+  transfer:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - name: Require explicit P1/P2 authorization and exact source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          a=json.load(open('docs/astra/P1_P2_TRANSFER_EVALUATION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/P1_P2_TRANSFER_EVALUATION_LAUNCH_V1.json'))
+          assert a['authorization']['p1MediaAccessAuthorized'] is True
+          assert a['authorization']['p2MediaAccessAuthorized'] is True
+          assert a['authorization']['p3Authorized'] is False
+          assert a['authorization']['candidateOptimizerStepsAuthorized']==500
+          assert a['authorization']['thresholdSearchAuthorized'] is False
+          assert a['authorization']['automaticRetryAuthorized'] is False
+          assert l['singleLaunch'] is True
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceIdentities'][k]==blob(p)
+              assert a['sourceIdentities'][k]==blob(p)
+          PY
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10.15' }
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          sudo apt-get update && sudo apt-get install -y ffmpeg unzip
+      - name: Download frozen V3 baseline
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-tiny-fit-capped-p1-pilot-v3
+          path: /tmp/v3
+          github-token: "${{ github.token }}"
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 36280547470
+      - name: Verify frozen V3 baseline
+        run: test "$(sha256sum /tmp/v3/tiny-fit-model.pt | awk '{print $1}')" = "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f"
+      - name: Train one frozen synthetic candidate before real-data access
+        shell: bash
+        run: |
+          mkdir -p /tmp/transfer
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s0_pilot_v1.py generate --out /tmp/transfer/control.npz --receipt /tmp/transfer/control-receipt.json
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s9_pilot_v1.py build-intervention --control-dataset /tmp/transfer/control.npz --out /tmp/transfer/candidate-data.npz --receipt /tmp/transfer/candidate-data-receipt.json
+          PYTHONPATH=astra_backend python astra_backend/evaluation/p1_p2_transfer_candidate_v1.py --dataset /tmp/transfer/candidate-data.npz --out /tmp/transfer/candidate.pt
+      - name: Prepare exact eight authorized P1/P2 captures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/p1 /tmp/p2 /tmp/sel
+          while IFS=$'\t' read -r performer file bytes md5 sha capture; do
+            rm -rf /tmp/sel/*
+            curl --fail --location --connect-timeout 30 --max-time 1500 --user-agent 'Astra-P1P2-Transfer/1.0' -o "/tmp/$file" "https://zenodo.org/records/14963133/files/$file?download=1"
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            if [ "$performer" = P1 ]; then
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/tiny_fit_pilot_v1.py extract-selected-source --archive "/tmp/$file" --capture-key "$capture" --output-dir /tmp/sel
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/tiny_fit_pilot_v1.py prepare-capture --root /tmp/sel --capture-key "$capture" --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir /tmp/p1
+            else
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/cross_performer_screen_v1.py extract-selected-source --archive "/tmp/$file" --capture-key "$capture" --output-dir /tmp/sel
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/cross_performer_screen_v1.py prepare-capture --root /tmp/sel --capture-key "$capture" --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir /tmp/p2
+            fi
+            rm -f "/tmp/$file"
+          done <<'EOF'
+          P1	P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1|chords|Drop3_7|directinput
+          P1	P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1|scales|Ab|directinput
+          P1	P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1|singlenotes|allsinglenotes|directinput
+          P1	P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1|techniques|PalmMute|directinput
+          P2	P2_chords.zip	1150819056	eb6f74dd19162237189281688ad7ad2e	9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce	P2|chords|Drop3_7|directinput
+          P2	P2_scales.zip	471254783	96664853872f51e5f8aa4447313b7cf5	d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17	P2|scales|Ab|directinput
+          P2	P2_singlenotes.zip	116133457	40fbf03d8b04bb2cf42df20f36dc2254	d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9	P2|singlenotes|allsinglenotes|directinput
+          P2	P2_techniques.zip	395839610	f4189251ce50be25f06a173b2c2bba00	05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816	P2|techniques|PalmMute|directinput
+          EOF
+      - name: Evaluate baseline and candidate prospectively
+        run: |
+          PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py --p1-dir /tmp/p1 --p2-dir /tmp/p2 --baseline-model /tmp/v3/tiny-fit-model.pt --candidate-model /tmp/transfer/candidate.pt --out /tmp/transfer/result.json
+      - name: Verify sealed boundary
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/transfer/result.json'))
+          assert x['execution']['optimizerStepsExecutedDuringEvaluation']==0
+          assert x['execution']['thresholdSearchExecuted'] is False
+          assert x['execution']['p3Opened'] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-p1-p2-transfer-evaluation-v1
+          path: |
+            /tmp/transfer/result.json
+            /tmp/transfer/candidate.pt
+            /tmp/transfer/candidate-data-receipt.json
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/p1 /tmp/p2 /tmp/sel /tmp/v3 /tmp/transfer /tmp/P1_*.zip /tmp/P2_*.zip

@@ -4,82 +4,47 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S11 COMPLETE — ROBUSTNESS GATE FAILED; DIVERSITY EFFECT DIRECTIONALLY CONSISTENT BUT MAGNITUDE/JOINT EFFECT SEED-SENSITIVE; SYNTHETIC TUNING CLOSED; P1/P2/P3 SEALED**
+Status: **SYNTHETIC TUNING CLOSED; P1/P2 PROSPECTIVE TRANSFER IMPLEMENTATION FROZEN OFFLINE; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
-User standing instruction: **"You do not need my authorization for these inexpensive runs going forward please continue"**.
+Routine GitHub work and bounded inexpensive synthetic GitHub model runs are pre-authorized.
 
-Effective policy:
-- routine GitHub work: pre-authorized;
-- bounded inexpensive GitHub Actions model runs in the current synthetic workflow: pre-authorized;
-- Codespaces and potentially billable Vercel work still require an explicit boundary decision;
-- P1/P2/P3 real-data access still requires explicit authorization;
-- production/deployment/main mutation remains outside the standing run authorization.
+P1/P2/P3 real-data access, Codespaces, potentially billable Vercel work, production/deployment and main mutation remain separate authorization boundaries.
 
-## Canonical S11 execution
+## S11 retained
 
-- run **36380767479**
-- job **108795887577**
-- launch head `38d04c96afbc76e17cc12f6244a8a3cc59f89a66`
-- workflow **SUCCESS**
-- artifact **10952457629**
-- artifact digest `sha256:3116ffec405cd5c86d068a2ee6c662a6fe03f337f08224501687b932258f1377`
-- exactly 6 models
-- optimizer **3,000 total = 500 x 6**
-- no threshold search/retry
-- no P1/P2/P3/Codespaces/Vercel
+S11 failed robustness magnitude criteria despite directionally positive diversity deltas in all three seeds for chord F1/recall and overall onset F1/recall.
 
-Frozen result:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S11_RESULT_V1.json`
+No more synthetic tuning should run automatically.
 
-## S11 result
+## P1/P2 transfer preparation completed offline
 
-30-voicing intervention had positive paired gains in all 3 seeds for:
-- chord F1;
-- chord recall;
-- overall onset F1;
-- overall onset recall.
+Design:
+- `docs/astra/P1_P2_TRANSFER_EVALUATION_DESIGN_V1.md`
 
-Mean paired gains:
-- chord F1 **+0.0649**
-- chord recall **+0.1019**
-- onset F1 **+0.0190**
-- onset recall **+0.0543**
-- state admission **+0.0258**
-- joint admission **+0.0026**
-- precision **-0.0458**
+Implementation:
+- `astra_backend/evaluation/p1_p2_transfer_candidate_v1.py`
+- `astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py`
+- focused tests
+- `.github/workflows/astra-p1-p2-transfer-evaluation-v1.yml`
 
-S11 robustness gate **FAILED**.
+Authorization request:
+- `docs/astra/P1_P2_TRANSFER_EVALUATION_AUTHORIZATION_REQUEST_V1.json`
 
-Failed frozen criteria:
-- mean chord F1 gain >= +0.10;
-- mean chord recall gain >= +0.12;
-- mean onset F1 gain >= +0.04;
-- mean onset recall gain >= +0.06;
-- mean joint admission gain >= +0.03;
-- no seed precision loss > 0.05.
+Key frozen choices:
+- P2 is primary transfer population; P1 is compatibility context only.
+- baseline is exact frozen V3 checkpoint; no baseline retraining.
+- candidate is one S9/S11 128-unit nonlinear-state model, synthetic-only, seed **20260927**, 500 steps.
+- evaluator V2 with symmetric 50 ms crop-edge eligibility guard.
+- thresholds fixed at 0.50 / 0.50.
+- no seed selection, threshold tuning, architecture sweep, retry, P3 or production claim.
+- if the V3 artifact expires, stop; do not retrain it merely to recreate provenance.
 
-Worst precision delta was **-0.1185**.
+## Exact next step
 
-## Interpretation
+**Do not create an authorization or launch file yet. Do not access P1/P2.**
 
-Chord-voicing diversity is directionally consistent across the three seeds, but the effect magnitude and integrated state/joint behavior are not robust enough under the frozen S11 criteria.
+The implementation is ready. Explicit authorization is still required for P1/P2 real-development access and the one 500-step synthetic candidate training that accompanies the transfer workflow.
 
-Per the preregistered mixed/seed-sensitive branch:
-- do not promote S9 as seed-robust;
-- stop synthetic architecture/data tuning;
-- document instability honestly.
-
-Analysis:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S11_ROBUSTNESS_ANALYSIS_V1.md`
-
-## Next boundary
-
-A proposal for a tightly scoped P1/P2 transfer evaluation is prepared at:
-- `docs/astra/P1_P2_TRANSFER_EVALUATION_PROPOSAL_V1.md`
-
-**P1/P2 access is not authorized by the standing inexpensive synthetic-run policy.**
 P3 remains sealed.
-
-No more synthetic model tuning should run automatically from S11.
