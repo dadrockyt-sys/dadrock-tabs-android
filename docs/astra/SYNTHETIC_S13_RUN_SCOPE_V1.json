@@ -65,5 +65,56 @@
     "optimizerSteps": 0,
     "required": "focused tests plus deterministic S0/S9/S13 dataset generation and canonical per-array hashes"
   },
-  "datasetArrayHashes": null
+  "datasetArrayHashes": {
+    "control": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "6d12754ba68360090d70408c8a2de8b5f99273d5bc51c003a2bf76a1ea79d113"
+    },
+    "intervention": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "f24cc621cf33787c8c2fff95dcb25d848c09662a9e6753d6bd66458fc8f9d496"
+    },
+    "challenge": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "6e57fca063e291f6c06c5ed60f4fd4b92d2e6647cee79133a8a0120755992440"
+    }
+  },
+  "datasetFileSha256": {
+    "control": "74452ccc4c25c8f6c94eca47b4ec35e886ed5db9fa99e4091081e3d4ec56cfc8",
+    "intervention": "3d0fedf52c9ad437d4b6d9897567a744591d5febdcafff5c86d00e39eb87921c",
+    "challenge": "29b76a7660b14b4bc519fbf072a6a20b6f2d65840fcb377c315c98218ae26855"
+  },
+  "preparationEvidence": {
+    "workflowRun": 36457851085,
+    "job": 109048659765,
+    "head": "8791459194eb7499581cc22b07f9893f433d0623",
+    "focusedTestsPassed": 14,
+    "artifact": 10986472095,
+    "artifactDigest": "sha256:80086816efb36b9cb76e24f4b31d62abdd32c7c15a136ac7eaef241c57a82ec1",
+    "transformedTrainingRows": 105,
+    "challengeTestRows": 42,
+    "modelRun": false,
+    "optimizerSteps": 0
+  }
 }
