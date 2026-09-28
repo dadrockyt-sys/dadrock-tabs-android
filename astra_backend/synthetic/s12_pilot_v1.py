@@ -182,24 +182,25 @@ def git_blob_sha(path):
 
 def workflow(out_dir):
     root=Path(__file__).resolve().parents[2]
-    ap=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_APPROVAL_V2.json"
+    sp=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_RUN_SCOPE_V2.json"
     lp=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V2.json"
-    auth=json.loads(ap.read_text())
+    scope=json.loads(sp.read_text())
     launch=json.loads(lp.read_text())
-    if auth["schema"]!="astra-synthetic-onset-envelope-s12-authorization-v2":
-        raise RuntimeError("authorization schema mismatch")
-    z=auth["authorization"]
+    if scope.get("schema")!="astra-synthetic-onset-envelope-s12-run-scope-v2":
+        raise RuntimeError("scope schema mismatch")
+    z=scope["execution"]
     if not (z["maxModels"]==6 and z["maxOptimizerStepsPerModel"]==500 and z["maxTotalOptimizerSteps"]==3000):
         raise RuntimeError("execution ceiling mismatch")
-    if z["p1Authorized"] or z["p2Authorized"] or z["p3Authorized"] or z["thresholdSearchAuthorized"] or z["automaticRetryAuthorized"]:
-        raise RuntimeError("authorization guard mismatch")
-    if not launch.get("singleLaunch"): raise RuntimeError("single launch required")
+    if z["p1Access"] or z["p2Access"] or z["p3Access"] or z["thresholdSearch"] or z["automaticRetry"]:
+        raise RuntimeError("scope guard mismatch")
+    if not launch.get("singleLaunch"):
+        raise RuntimeError("single launch required")
     for k,p in launch["sourcePaths"].items():
         actual=git_blob_sha(root/p)
-        if launch["sourceIdentities"][k]!=actual or auth["sourceIdentities"][k]!=actual:
+        if launch["sourceIdentities"][k]!=actual or scope["sourceIdentities"][k]!=actual:
             raise RuntimeError("source pin mismatch "+k)
-    if launch["authorizationGitBlob"]!=git_blob_sha(ap):
-        raise RuntimeError("authorization pin mismatch")
+    if launch["scopeGitBlob"]!=git_blob_sha(sp):
+        raise RuntimeError("scope pin mismatch")
 
     out=Path(out_dir); work=out.parent/"astra-s12-work"
     shutil.rmtree(out,ignore_errors=True); shutil.rmtree(work,ignore_errors=True)
