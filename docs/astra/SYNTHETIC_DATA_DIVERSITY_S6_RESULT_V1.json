@@ -1,0 +1,118 @@
+{
+  "schema": "astra-synthetic-data-diversity-s6-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_state_head_capacity_gate_partial_state_gain",
+  "run": {
+    "runId": 36376438006,
+    "jobId": 108783145192,
+    "headSha": "d8472f0731e8ffb0c8c56ebe804756ec25ae8002",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10950664804,
+    "name": "astra-synthetic-data-diversity-s6-v1",
+    "digest": "sha256:c89284c3937018a6b871eab2c29d3154c0ac0e9bd24f625c9d030cf2aad8ac48",
+    "expiresAt": "2026-10-28T04:10:00Z",
+    "files": {
+      "identity.json": "d75363fd00ee89c46a95f92955745f0152627ca3c72ac5e9963eea4c132281c2",
+      "linear.pt": "b8c06ac99c7bf7acd64ebf2cea54184827cff6e80650f1095970e58f6f49e78e",
+      "nonlinear.pt": "c07d3f04c5fd07bea0a377fbdc9003815abb6866c22b99863c26b73fcd712b33",
+      "render-receipt.json": "f7f753f983a8cce6fb686f55148b26275e47cd6f72c0dc5d88ce46d11aa05c71",
+      "result.json": "48f07301767fa5cd9433ecab538b130f97bd4400eb11eaf69516ff8f6b74b1b6"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 3,
+    "focusedTestsTotal": 3,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 5.784691844999998,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "sharedEncoderInitSha256": "e2051bf0b0cbde662cc7b1470a0162d8e403713637a0f5a65a85f2d9cfdb2ee0",
+    "onsetHeadInitSha256": "03f76cc32a15ffe1f696b37654a9deca56c1356ba14136348ee2ccc322fef53d",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "sharedEncoderIdentical": true,
+    "onsetHeadIdentical": true,
+    "preUpdateOnsetLogitsIdentical": true
+  },
+  "control": {
+    "stateHead": "Linear(128,126)",
+    "stateHeadParameters": 16254,
+    "totalParameters": 140036,
+    "precision": 0.9358974358974359,
+    "recall": 0.5658914728682171,
+    "f1": 0.7053140096618358,
+    "onsetOffsetF1": 0.6082949308755761,
+    "repeatedRecall": 0.5714285714285714,
+    "onsetAdmission": 0.5581395348837209,
+    "stateAdmission": 0.3178294573643411,
+    "jointAdmission": 0.31007751937984496,
+    "trueStateMedian": 0.09424139559268951,
+    "silenceMedian": 0.632967472076416,
+    "trueMinusSilenceMedian": -0.4466106537729502,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "intervention": {
+    "stateHead": "Linear(128,128)->ReLU->Linear(128,126)",
+    "stateHeadParameters": 32766,
+    "totalParameters": 156548,
+    "precision": 0.8666666666666667,
+    "recall": 0.6046511627906976,
+    "f1": 0.7123287671232877,
+    "onsetOffsetF1": 0.6079295154185023,
+    "repeatedRecall": 0.5238095238095238,
+    "onsetAdmission": 0.5426356589147286,
+    "stateAdmission": 0.3798449612403101,
+    "jointAdmission": 0.32558139534883723,
+    "trueStateMedian": 0.21804484724998474,
+    "silenceMedian": 0.48117056488990784,
+    "trueMinusSilenceMedian": -0.11953142285346985,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "comparison": {
+    "stateAdmissionGain": 0.06201550387596899,
+    "jointAdmissionGain": 0.015503875968992276,
+    "onsetRecallGain": 0.03875968992248058,
+    "onsetF1Gain": 0.00701475746145197,
+    "onsetAdmissionDecline": 0.015503875968992276,
+    "onsetOffsetF1Decline": 0.0003654154570738033
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCriteria": [
+      "onsetPrecisionAtLeast0_84",
+      "onsetAdmissionDeclineAtMost0_05",
+      "onsetOffsetDeclineAtMost0_03",
+      "negativeOnlyFalsePositiveRateAtMost0_10PerSecond",
+      "noFamilyF1LossOver0_15",
+      "finiteBoth500StepsIdentityZeroThresholdSearch"
+    ],
+    "failed": [
+      "stateAdmissionGainAtLeast0_08",
+      "jointAdmissionGainAtLeast0_08",
+      "onsetRecallGainAtLeast0_04",
+      "onsetF1GainAtLeast0_03",
+      "absoluteStateAdmissionAtLeast0_42",
+      "absoluteOnsetRecallAtLeast0_67",
+      "absoluteOnsetF1AtLeast0_76",
+      "repeatedRecallAtLeast0_62"
+    ]
+  },
+  "interpretation": {
+    "supported": "The nonlinear state head materially improved state confidence/admission and reduced silence dominance.",
+    "insufficient": "The state gain remained below the preregistered +0.08 threshold, joint gain was small, event F1 barely moved, and repeated recall declined.",
+    "decision": "State-specific nonlinear capacity is promising but the replacement head is not sufficient under S6. Do not rerun or tune thresholds."
+  }
+}

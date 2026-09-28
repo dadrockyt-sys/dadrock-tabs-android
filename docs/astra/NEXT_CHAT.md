@@ -1,17 +1,18 @@
 # Next chat: start here
 
-S5 is frozen as a scientific fail. Weight 9 modestly improved event metrics but exact state admission stayed 0.3333, so further automatic state-weight escalation is rejected.
+S6 completed and failed its frozen gate, but the nonlinear state head materially improved the state representation:
+- state admission 0.3178 -> 0.3798
+- median true-state probability 0.094 -> 0.218
+- median silence probability 0.633 -> 0.481
 
-Offline review froze S6:
+Joint/event gains were too small and repeated recall declined, so S6 is not a pass.
 
-- control state head: Linear(128,126)
-- intervention: Linear(128,128) -> ReLU -> Linear(128,126)
-
-Everything else stays fixed at the S5 weight-9 configuration.
-
-The rationale is that correct-state probability still loses mainly to silence, and the current state branch is only linear after the shared encoder.
+Offline review froze S7:
+- keep the exact linear state head;
+- add a nonlinear residual branch;
+- zero-initialize the residual output so pre-update state logits are exactly identical to control.
 
 Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S6_DESIGN_V1.md`
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S7_DESIGN_V1.md`
 
-Routine non-model GitHub work remains pre-authorized. **S6 model execution requires fresh explicit authorization.**
+Routine non-model GitHub work remains pre-authorized. **S7 model execution requires fresh explicit authorization.**
