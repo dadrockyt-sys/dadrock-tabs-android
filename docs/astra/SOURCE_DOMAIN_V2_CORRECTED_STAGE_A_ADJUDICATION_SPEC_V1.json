@@ -1,0 +1,54 @@
+{
+  "schema": "astra-source-domain-v2-corrected-stage-a-adjudication-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-zero-render",
+  "inputs": {
+    "originalStageAResult": "docs/astra/SOURCE_DOMAIN_V2_STAGE_A_RESULT_V1.json",
+    "originalStageAFullResultSha256": "5778104fe505f5a38b4e2a0ed3e049a9993db92a9a1a3a078851c6cb7df8e0c2",
+    "measurementReview": "docs/astra/SOURCE_DOMAIN_V2_STAGE_A_MEASUREMENT_VALIDITY_REVIEW_V1.json",
+    "isolatedPitchResult": "docs/astra/SOURCE_DOMAIN_V2_SOURCE_ISOLATING_PITCH_RESULT_V1.json",
+    "isolatedPitchFullResultSha256": "3e3cc594a58a9ab29ae9dbbed8bf1f3107b71b9e2076e3b25e7924b031cf5561",
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "retainOriginalCriteria": [
+    "deterministicRerenderIdentity",
+    "stateIdentity",
+    "onsetIdentity",
+    "referenceIdentity",
+    "finiteAudioAndFeatures",
+    "peakUnder0_999",
+    "noUnlabeledTransientInjection",
+    "cqtChangedEveryPositiveSelectedRow",
+    "manifestBindingExact",
+    "selectedRowsExact",
+    "renderCeiling",
+    "audioSecondsCeiling",
+    "wallTimeCeiling"
+  ],
+  "replaceCriterion": {
+    "old": "fundamentalWithin15Cents",
+    "new": [
+      "isolated.allIsolatedMeasurableWithin15Cents",
+      "isolated.allOriginalMeasurableEventsRetained",
+      "isolated.outside15Cents==0",
+      "isolated.originalMeasurableEvents==86",
+      "isolated.isolatedMeasurableEvents==86"
+    ],
+    "toleranceCents": 15
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "audioSeconds": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdWork": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "automaticRetry": false
+  },
+  "onPass": "model-free-stage-b-preparation-and-coverage-only",
+  "onFail": "freeze-and-stop"
+}
