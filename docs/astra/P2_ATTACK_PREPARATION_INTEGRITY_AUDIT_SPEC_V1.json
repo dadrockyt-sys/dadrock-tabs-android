@@ -33,7 +33,16 @@
     "nativeStage": "decode original stream sample rate/channels; per-channel RMS and arithmetic-mean mix are descriptive only",
     "rmsNormalizedStage": "existing rms_normalize on frozen 22050-Hz mono; descriptive only",
     "preparedCqtStage": "reuse exact stored 200x192 crop prepared by frozen full-source CQT-before-crop path",
-    "unitsWarning": "Do not compare absolute raw/STFT/CQT values across representations as if units were interchangeable."
+    "unitsWarning": "Do not compare absolute raw/STFT/CQT values across representations as if units were interchangeable.",
+    "eligibilityRules": [
+      "Reference must be a frozen prepared.scorableEvents event.",
+      "Frozen decoded/resampled raw audio must contain the complete RMS pre/post windows.",
+      "Frozen decoded/resampled raw audio must contain the complete raw transient search window.",
+      "Prepared 200-frame CQT crop must contain the complete +/- cqtPeakSearchFrames search window.",
+      "If any rule fails, record the note event and exclusion reason but exclude it from acoustic-attack summaries."
+    ],
+    "simultaneousAttackRule": "Group eligible note events with source annotation starts equal within 1 microsecond; count one acoustic attack, retain all note IDs.",
+    "peakMissingRule": "No qualified peak is recorded as null/unresolved; do not widen windows or lower the fixed MAD criterion."
   },
   "frozenPreprocessing": {
     "sampleRateHz": 22050,
@@ -179,6 +188,16 @@
     "p3Opened": false,
     "codespaces": false,
     "vercel": false,
-    "mainMutation": false
+    "mainMutation": false,
+    "maxDownloadBytes": 4004045267,
+    "maxArchiveBytesAtOnce": 1150819056,
+    "realSourcePasses": 1
+  },
+  "reporting": {
+    "perCaptureBeforePopulationSummary": true,
+    "distinguishNoteEventsAndAcousticAttacks": true,
+    "eventWeightedSummaries": true,
+    "captureBalancedSummaries": true,
+    "causalClaimsAllowed": false
   }
 }
