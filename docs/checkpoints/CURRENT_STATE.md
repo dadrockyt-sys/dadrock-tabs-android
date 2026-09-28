@@ -4,7 +4,9 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **LOCALIZATION RESULTS FROZEN — CANDIDATE TRANSFER FAILURE OBSERVED; P2 CAUSE UNRESOLVED; PREPARE MODEL-FREE INTEGRITY AUDIT OFFLINE; P3 SEALED**
+Status: **S12 GATE FAILED AND FROZEN — NEXT: MODEL-FREE TRANSFORM/TARGET REVIEW, THEN ONE JUSTIFIED S13 DESIGN; P1/P2 CLOSED; P3 SEALED**
+
+Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -795,3 +797,63 @@ Do not chain immediately into S14 after a failed S13. First write an analysis ex
 ### 10. Resume command
 
 **Resume from here by drafting and reviewing the S13 prospective design only. Do not launch a model until that design, exact gate, code/test plan, source pins and hard execution ceiling are frozen. Keep P1/P2 closed and P3 sealed.**
+
+
+## Supervisory review after S12 — 2026-09-28 (canonical next action)
+
+This section supersedes the earlier broad S13 recommendations where they differ. Historical results, gates, source and launch records remain unchanged.
+
+### Review performed and assessment
+
+Reviewed connected GitHub head `057f67e5dfa23a2724bc2c618fb478e5a5736359`, AGENTS.md, this handoff, V2 integrity summary, S12 design/result/scope, S12 runner/tests/workflow and imported S11 training/evaluation code. GitHub job `109012933088` reports successful tests, execution and artifact upload. No artifacts were downloaded/recomputed, no corpus was reopened, no model was run, and no new test result is claimed by this documentation review. Preserve the stale local checkout and its untracked files; use the connected remote as the current source.
+
+GPT-5.6 correctly retained the fixed thresholds, paired seeds and negative S12 gate. S12 is a completed, rejected intervention, not a successful model. The next useful work is a short implementation-validity review followed by ONE prospective design; do not launch an open-ended sequence of synthetic experiments.
+
+### Corrections that must carry forward
+
+1. **Report capture-balanced evidence alongside event-weighted evidence.** The frozen V2 summary already contains these numbers; no new real-data access is needed:
+
+   | P2/P1 ratio of medians | Event-weighted | Capture-balanced |
+   |---|---:|---:|
+   | raw post-attack RMS | 0.537 | approximately 0.899 |
+   | raw first-difference energy | 0.0947 | approximately 0.792 |
+   | prepared CQT positive flux | 0.871 | approximately 0.952 |
+
+   Capture-balanced here means ratio of the two populations' medians of capture medians, not a paired effect estimate. P1 has four eligible captures, P2 only three, with its chord excluded. The strong event-weighted first-difference contrast is therefore highly sensitive to event/category composition. Lower/variable contrast is observed on these examples; a roughly tenfold performer-wide weakness or a demonstrated cause of P2 onset collapse is NOT established. Preserve the frozen JSON; qualify its interpretation in future reports. Peak medians also do not establish every event's alignment or rule out errors outside the fixed search windows.
+
+2. **S12 is feature corruption, not a validated physical attack-envelope simulator.** `soften_features` blends all 192 bins at each onset toward the preceding frame. The following frame blends toward the already-modified onset frame. Adjacent onsets can interact because the array is mutated in order. It does not merely reduce an onset scalar: pitch/harmonic evidence, another string's sustain and context can change while labels stay fixed. At blend 1 the two frames can become the preceding state. This is a plausible contributor to ordinary-state regression, not a proven explanation. Do not describe bit-identical labels as proof that observable note identity/timing survived the transform.
+
+3. **Keep metric names honest.** S12's `onsetF1` comes from `pitchOnset.f1`: it is pitch-plus-onset event F1, not a pitch-independent attack detector score. State/joint admission diagnostics are distinct. P1's earlier global-top-1 diagnostic remains subject to the chord/global-softmax limitations recorded above. Failed real transfer is supported; a unique internal representation mechanism is still unresolved.
+
+4. **Three model seeds are not three new datasets or real-domain replications.** They share the fixed generated corpus and challenge. The S12 challenge has now informed the S13 design and is development evidence. Reusing it is useful for comparison but cannot be called untouched confirmation or proof of real-audio improvement. Preserving ordinary synthetic competence does not by itself repair the P1 real-domain failure.
+
+### Exact authorized offline work, in order
+
+1. Write `docs/astra/SYNTHETIC_S13_PREIMPLEMENTATION_REVIEW_V1.md`. Use only existing source/results and small handcrafted arrays. Trace the S12 transform through `context5`, target layout, and the S11 loss. Add focused non-training tests/diagnostics for: isolated new pitch; repeated same pitch; one string attacking over another sustaining; adjacent onsets; frame-zero and final-frame behavior; input immutability; mismatched shapes/nonfinite input. Record the actual before/after feature values and unchanged targets. Do not regenerate the full corpus or run an optimizer merely to do this review. Keep S12 source/results frozen; place new diagnostics in a separate module.
+
+2. Make a concrete **go/no-go design decision** from that review. Do not claim that consistency or clean-view mixing is guaranteed to work. If preserving labels under the proposed soft view cannot be justified even in simple constructed cases, stop and document that issue rather than stacking a consistency loss on it. A transform correction would itself be the intervention and must be versioned; do not silently combine a new transform, new loss and new sampler.
+
+3. If justified, choose exactly ONE S13 method and write `docs/astra/SYNTHETIC_S13_DESIGN_V1.md` plus a machine-readable spec. A clean-supervised path with a separately bounded soft-view objective is a reasonable hypothesis, not a selected winner. Specify the exact loss equation, coefficients, reduction/normalization, which state/onset outputs receive supervision or consistency, gradient/stop-gradient direction, view pairing and random-number streams. State precisely whether the clean loss weight remains unchanged. No unrecorded defaults and no comparison of several methods followed by selection.
+
+4. Keep the frozen S9/S11 control, three seeds 20260927/20260928/20260929, architecture, optimizer, decoder and 0.50/0.50 thresholds. At most six trained models and 3,000 optimizer steps. Paired clean/soft views may double forward/backward work per step: declare view counts, examples processed and wall-clock limit as well as steps. Label that additional work explicitly instead of calling the arms compute-identical. Use identical control/intervention initialization and clean minibatch indices, with a separate fixed augmentation RNG.
+
+5. Keep the S12 numerical benefit floors and ordinary-regression limits as the minimum comparison gate: challenge mean pitch-onset F1 gain >=0.05 and recall gain >=0.08; both positive in all three seeds; each seed ordinary F1 loss <=0.03, state-admission loss <=0.03 and joint-admission loss <=0.04; challenge precision loss <=0.05; challenge negative-only FP <=0.10 events/s. Predeclare ordinary precision/negative-only and family guards too. Do not lower gates to make a new run attractive. Report absolute control/intervention scores, TP/FP/FN and denominators, not only deltas. A pass is synthetic development evidence only. No automatic P1/P2/P3 evaluation or production promotion follows.
+
+6. Before launch, test dataset split/label identity, paired initialization and batches, loss/gradient routing on tiny tensors, exact gate boundary cases and every launch rejection path. No optimizer pilot, tuning sweep or extra seed may hide inside a unit test. Pin the complete imported source dependency closure, including preprocessing, decoder, metric and sampler modules, rather than only top-level runners. Record canonical per-array dataset hashes and verify both arms against the frozen common corpus; equal row counts alone are insufficient. Assert the challenge's non-test features are unchanged at the execution entry point.
+
+### Execution controls to improve in S13
+
+The inspected S12 code checks a `singleLaunch` boolean, but that is not a consumed-run ledger. Its workflow can be rerun; the runner deletes existing output directories with `shutil.rmtree`; several guard fields are recorded constants. These observations do not prove an unauthorized S12 rerun occurred. They identify controls not to copy into S13.
+
+- Prepare disabled first. Validate exact branch, launch/spec/source identities and run attempt before expensive work. Reject GitHub run attempts greater than 1 and reused launch identities using a durable execution receipt/history check. Concurrency control alone is not single-use enforcement.
+- Refuse existing evidence/output paths; use a unique launch/run directory. Never delete earlier evidence to make a new execution fit.
+- Use read-only repository permissions, bounded CPU/time, no corpus/network acquisition in the experiment, no retry loop and no model/Codespaces/Vercel costs outside the standing authorization.
+- Validate all declared ceilings and thresholds against actual runtime settings. Check finiteness of every required per-arm/per-seed metric and fail closed on missing data. The inherited aggregate-mean finiteness check is not complete validation.
+- Save failure receipts and upload partial diagnostics with an always-run artifact step. A workflow success and a scientific gate pass must remain separate fields.
+- Commit design/spec/code/tests and an in-progress checkpoint before the one launch. Once the concrete package passes its offline checks, the existing standing authorization for bounded inexpensive synthetic GitHub work applies; do not ask repeatedly for routine preparation. A genuinely new paid/model-cost scope still needs the user's required approval. This review itself launches nothing.
+
+### Stop rule and next handoff
+
+After one authorized S13 execution, freeze pass/fail, all seed results, source/data identities, compute and artifact checksums. No automatic S14, threshold rescue or favorable-seed selection. A failed S13 requires a project-level review of the simulator/representation strategy before more architecture or loss experiments. A pass requires a separately specified development-transfer plan; P1/P2 remain exposed development data and P3 stays sealed. Respect the current explicit real-data access boundary.
+
+**GPT-5.6's immediate next task:** complete the small, model-free S12 transform/target validity review and its focused tests, then freeze one justified S13 design or an explicit no-go. Save actual findings and exact next action here on `astra-work`, verify the remote commit, and retain main/Production unchanged.
