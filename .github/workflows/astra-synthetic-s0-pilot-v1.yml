@@ -1,0 +1,157 @@
+name: Astra synthetic S0 pilot v1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-synthetic-s0-pilot-v1
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 85
+    steps:
+      - name: Checkout exact authorized launch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify authorization, launch and exact source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path],text=True).strip()
+          auth=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_AUTHORIZATION_V1.json'))
+          launch=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_LAUNCH_V1.json'))
+          assert auth['schema']=='astra-synthetic-data-diversity-s0-authorization-v1'
+          assert auth['status']=='authorized_single_synthetic_only_pilot'
+          assert auth['userInstruction']=='I authorize please continue'
+          assert auth['authorization']['syntheticRenderingAuthorized'] is True
+          assert auth['authorization']['maxExamples']==3000
+          assert auth['authorization']['maxAudioSeconds']==6000
+          assert auth['authorization']['maxOptimizerStepsPerModel']==500
+          assert auth['authorization']['maxModels']==2
+          assert auth['authorization']['p1Authorized'] is False
+          assert auth['authorization']['p2Authorized'] is False
+          assert auth['authorization']['p3Authorized'] is False
+          assert auth['authorization']['automaticRetryAuthorized'] is False
+          assert launch['schema']=='astra-synthetic-data-diversity-s0-launch-v1'
+          assert launch['singleLaunch'] is True
+          expected={
+            'designGitBlob':'docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md',
+            'runnerGitBlob':'astra_backend/synthetic/s0_pilot_v1.py',
+            'testsGitBlob':'astra_backend/synthetic/test_s0_pilot_v1.py',
+            'evaluationProtocolGitBlob':'astra_backend/evaluation/evaluation_protocol_v2.py',
+            'preprocessingGitBlob':'astra_backend/tabcnn_runtime/preprocessing.py',
+            'runtimeLockGitBlob':'astra_backend/tabcnn_runtime/requirements.lock.txt',
+            'workflowGitBlob':'.github/workflows/astra-synthetic-s0-pilot-v1.yml',
+          }
+          for key,path in expected.items():
+              actual=blob(path)
+              assert auth['sourceIdentities'][key]==actual,(key,'auth')
+              assert launch['sourceIdentities'][key]==actual,(key,'launch')
+          assert launch['authorizationGitBlob']==blob('docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_AUTHORIZATION_V1.json')
+          PY
+          echo "P1_ACCESSED=false"
+          echo "P2_ACCESSED=false"
+          echo "P3_OPENED=false"
+          echo "AUTOMATIC_RETRY=false"
+
+      - name: Install exact CPU runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check             --extra-index-url https://download.pytorch.org/whl/cpu             --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import numpy, torch
+          assert numpy.__version__=='1.21.6'
+          assert torch.__version__=='1.11.0+cpu'
+          PY
+
+      - name: Run focused synthetic package tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend python astra_backend/synthetic/test_s0_pilot_v1.py
+
+      - name: Render bounded procedural corpus
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-s0
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s0_pilot_v1.py generate             --out /tmp/astra-s0/dataset.npz             --receipt /tmp/astra-s0/render-receipt.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-s0/render-receipt.json'))
+          assert x['withinCeilings'] is True
+          assert x['examples']<=3000
+          assert x['audioSeconds']<=6000
+          assert x['persistedDatasetBytes']<=350*1024*1024
+          assert x['renderSeconds']<=1200
+          assert x['externalAudioAssets'] is False
+          assert x['guards']['p1Accessed'] is False
+          assert x['guards']['p2Accessed'] is False
+          assert x['guards']['p3Opened'] is False
+          PY
+
+      - name: Run exactly two capped synthetic fits
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend python astra_backend/synthetic/s0_pilot_v1.py run             --dataset /tmp/astra-s0/dataset.npz             --out /tmp/astra-s0/result.json             --candidate /tmp/astra-s0/candidate.pt             --comparator /tmp/astra-s0/comparator.pt
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-s0/result.json'))
+          assert x['execution']['modelCount']==2
+          assert x['models']['candidate']['fit']['optimizerSteps']<=500
+          assert x['models']['comparator']['fit']['optimizerSteps']<=500
+          assert x['execution']['optimizerStepsTotal']<=1000
+          assert x['thresholds']['thresholdSearch'] is False
+          assert x['thresholds']['thresholdRetuning'] is False
+          assert x['execution']['automaticRetry'] is False
+          assert x['guards']['p1Accessed'] is False
+          assert x['guards']['p2Accessed'] is False
+          assert x['guards']['p3Opened'] is False
+          PY
+          echo "P1_ACCESSED=false"
+          echo "P2_ACCESSED=false"
+          echo "P3_OPENED=false"
+          echo "THRESHOLD_SEARCH=false"
+
+      - name: Upload bounded synthetic evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-synthetic-data-diversity-s0-v1
+          path: |
+            /tmp/astra-s0/render-receipt.json
+            /tmp/astra-s0/result.json
+            /tmp/astra-s0/candidate.pt
+            /tmp/astra-s0/comparator.pt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Cleanup
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/astra-s0
+          echo "P1_ACCESSED=false"
+          echo "P2_ACCESSED=false"
+          echo "P3_OPENED=false"

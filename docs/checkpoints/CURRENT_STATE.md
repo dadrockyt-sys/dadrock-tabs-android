@@ -3,80 +3,42 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)  
 Branch: `astra-work`  
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`  
-Status: **OFFLINE EVALUATOR AUDIT + PHASE S0 DESIGN COMPLETE — WAITING FOR EXPLICIT S0 PILOT AUTHORIZATION; NO REAL MEDIA/TRAINING RUN; P3 SEALED**
+Status: **S0 SYNTHETIC-ONLY PILOT AUTHORIZED — RUNNER/WORKFLOW FREEZE IN PROGRESS; NO P1/P2/P3 ACCESS**
 
-## Authoritative GPT-5.6 instructions — post-audit handoff
+## Authoritative GPT-5.6 instructions — authorized S0 execution
 
-This section is the sole active next-task queue. Everything below the historical divider is evidence only.
+Stephen explicitly instructed **"I authorize please continue"** after reviewing the frozen Phase S0 design. Authorization applies only to the bounded synthetic-only S0 pilot in `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`.
 
-### Completed offline work
+### Frozen execution boundary
 
-1. **Evaluation protocol audit complete**
-   - frozen V1 scorer/receipts remain unchanged;
-   - confirmed asymmetric crop-boundary eligibility between prediction adapters and prepared references;
-   - confirmed nearest-error greedy matching can lose valid cardinality;
-   - separated onset versus onset+offset same-pitch ambiguity policy;
-   - added strict frozen-manifest binding helper for future runners;
-   - malformed/nonfinite prospective events fail closed;
-   - MR-MT3 remains a frozen failed gate; program-semantic cause remains unresolved and no remap is authorized.
-
-2. **Prospective V2 evaluator core added**
-   - `astra_backend/evaluation/evaluation_protocol_v2.py`
-   - isolated from frozen V1 workflows;
-   - preserves original source times and carry-in/carry-out flags;
-   - separate onset/offset eligibility;
-   - deterministic maximum-cardinality then minimum-error one-to-one matching;
-   - separate onset/offset ambiguity rules;
-   - future real runner must provide boundary-aware references and one frozen identity manifest.
-
-3. **Focused synthetic verification**
-   - `astra_backend/evaluation/test_evaluation_protocol_v2.py`
-   - **7 tests passed, 0 failed** in local isolated execution;
-   - no real media, optimizer, threshold search, model rerun or P3.
-
-4. **Phase S0 synthetic diversity design complete**
-   - `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`
-   - exact eight-capture inventory uses committed evidence only; missing full durations/event totals/window counts are labeled **unknown** rather than invented;
-   - recommended one repo-owned Karplus-Strong / short digital-waveguide generator with no external sample/IR assets;
-   - future pilot ceiling: <=3,000 examples, <=6,000 s audio, <=350 MB, fixed seed 20260927, <=20 CPU min render;
-   - one 5-frame temporal-context MLP candidate versus current per-frame MLP comparator;
-   - future fit ceiling: <=500 optimizer steps/model, two models total, <=60 CPU min, $0, zero retries, frozen thresholds;
-   - numeric synthetic and later real-development gates are frozen in the design;
-   - P1/P2 remain development transfer checks and require separate authorization for any new access;
-   - P3 remains sealed.
-
-### Evidence interpretation
-
-Historical results remain unchanged:
-
-- temporal triplet failed its advancement criterion;
-- Basic Pitch frozen result remains 27 TP / 52 FP / 4 FN, F1 0.4909 **under its frozen V1 accounting**;
-- MR-MT3 remains 0 projected TP / 0 FP / 31 FN under the frozen program projection;
-- no product-quality or unseen-performer pass exists.
-
-The audit means the old evaluation protocol should not be reused prospectively without V2 accounting. It does **not** retroactively rescore or reverse any historical gate.
-
-### EXACT NEXT STEP — authorization required
-
-**Stop here.**
-
-The next action requiring Stephen's explicit authorization is the bounded **synthetic-only Phase S0 pilot** defined in `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`.
-
-If authorized, the launch must remain within that frozen ceiling:
-
-- render only repo-owned procedural audio; no P1/P2/P3 access;
-- <=3,000 examples / <=6,000 s / <=350 MB;
-- candidate + comparator only;
-- <=500 optimizer steps each;
-- <=60 CPU minutes total fit/eval plus <=20 CPU minutes render;
+- procedural repo-owned audio only; no external audio assets;
+- actual planned corpus: **294 examples x 2.0 s = 588 s**, below the 3,000 / 6,000 s ceilings;
+- 196 underlying template identities, 3 timbre variants each, split by template identity before rendering;
+- persisted synthetic dataset <=350 MB;
+- render <=20 CPU min;
+- exactly two models: current per-frame comparator and fixed five-frame temporal candidate;
+- <=500 optimizer steps/model, <=1,000 total;
+- fit/eval <=60 CPU min;
 - $0 paid compute;
 - zero automatic retries;
-- no threshold search or rescue;
-- no production/main mutation.
+- frozen 0.50 / 0.50 decoder thresholds; no threshold search or rescue;
+- **P1, P2 and P3 access forbidden**;
+- no deployment, main mutation, production mutation or customer delivery.
 
-Do **not** create a launch, render the corpus, run optimizer steps, reopen P1/P2, open P3, deploy, or modify main before authorization.
+### In-progress package
 
-A later P1/P2 transfer check is a separate authorization after the synthetic pilot, and must use a frozen V2 runner/manifest.
+Files being frozen together:
+
+- `astra_backend/synthetic/s0_pilot_v1.py`
+- `astra_backend/synthetic/test_s0_pilot_v1.py`
+- `.github/workflows/astra-synthetic-s0-pilot-v1.yml`
+- authorization and single-launch receipts will pin exact blob identities before execution.
+
+The workflow must run focused synthetic tests before rendering and must verify corpus ceilings before the first optimizer step.
+
+### Exact next task
+
+Freeze exact source identities, write the explicit authorization receipt from Stephen's instruction, create exactly one launch, inspect that one run, freeze the result, then stop. Do not retry automatically on failure.
 
 
 ---
