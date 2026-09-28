@@ -1,21 +1,16 @@
 # Next chat: start here
 
-S1 is frozen as a scientific fail: nine of ten criteria passed, but absolute test onset recall was 0.4651 < 0.55.
+S2's first authorized launch stopped in preflight before rendering or training.
 
-Offline review shows the onset-aware model's exact positive-frame admission was:
-- onset 0.5814
-- correct state 0.2093
-- joint 0.2093
+Run 36372148839 / job 108770545143:
+- focused tests: 4 passed, 1 failed
+- render: not started
+- optimizer steps: 0
+- artifact: none
+- P1/P2/P3: untouched
 
-The frozen S1 sampler still exposes only about 10.44% active state tokens per batch; state active weight 1.5 gives them only about 14.9% of expected weighted state-loss contribution.
+Failure was a test-tolerance issue only: mathematically equal float32 weighted losses differed by 7.15e-7 while the test used a 6-decimal-place equality assertion.
 
-One S2 hypothesis is frozen:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`
+The test is corrected offline to accept absolute difference <= 2e-6. The S2 runner and scientific design are unchanged.
 
-S2 changes only active-state weight:
-- control 1.5
-- intervention 6.0
-
-All other data/model/sampler/loss/lr/threshold/step settings stay fixed.
-
-**S2 execution is not authorized. Fresh explicit authorization is required.**
+Because the previous authorization was single-launch / zero-retry, **fresh explicit authorization is required before one corrected S2 launch**.

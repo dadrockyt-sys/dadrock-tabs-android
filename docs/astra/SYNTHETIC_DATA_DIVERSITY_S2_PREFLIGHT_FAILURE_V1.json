@@ -1,0 +1,42 @@
+{
+  "schema": "astra-synthetic-data-diversity-s2-preflight-failure-v1",
+  "date": "2026-09-27",
+  "runId": 36372148839,
+  "jobId": 108770545143,
+  "launchHeadSha": "cd1178b13937f1ec17477cd42587c279e77db807",
+  "workflowConclusion": "failure",
+  "failureStage": "focused_s2_tests_before_render",
+  "failedTest": "test_weight6_increases_active_state_contribution",
+  "observed": {
+    "controlLoss": 3.044522762298584,
+    "interventionLoss": 3.0445220470428467,
+    "absoluteDifference": 7.152557373046875e-7
+  },
+  "rootCause": "The test used assertAlmostEqual(..., places=6), which rejected a sub-micro float32 rounding difference even though the uniform-logit weighted means are mathematically equal.",
+  "executionEvidence": {
+    "sourcePinVerificationPassed": true,
+    "runtimeInstallPassed": true,
+    "focusedTestsPassed": 4,
+    "focusedTestsFailed": 1,
+    "syntheticRenderStarted": false,
+    "optimizerStepsControl": 0,
+    "optimizerStepsIntervention": 0,
+    "artifactProduced": false,
+    "automaticRetry": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false
+  },
+  "correction": {
+    "testOnly": true,
+    "runnerChanged": false,
+    "designChanged": false,
+    "newTolerance": "absolute loss difference <= 2e-6",
+    "rationale": "Treat expected float32 accumulation noise as numerically equivalent without weakening any experiment gate."
+  },
+  "decision": {
+    "priorAuthorizationConsumedBySingleLaunch": true,
+    "rerunUnderPriorAuthorization": false,
+    "freshAuthorizationRequired": true
+  }
+}

@@ -60,7 +60,7 @@ class S2Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             weighted_loss(state_logits,onset_logits,state,onset,3.0)
 
-    def test_weight6_increases_active_state_contribution(self):
+    def test_weight6_preserves_uniform_logit_state_loss_with_float_tolerance(self):
         state_logits=torch.zeros((2,6*21))
         onset_logits=torch.zeros((2,6))
         state=torch.full((2,6),20,dtype=torch.long)
@@ -68,9 +68,10 @@ class S2Tests(unittest.TestCase):
         onset=torch.zeros((2,6),dtype=torch.long)
         _,control,_=weighted_loss(state_logits,onset_logits,state,onset,CONTROL_WEIGHT)
         _,heavy,_=weighted_loss(state_logits,onset_logits,state,onset,INTERVENTION_WEIGHT)
-        # Uniform logits make all token CE equal, so normalized mean is equal.
-        self.assertAlmostEqual(float(control),float(heavy),places=6)
-        # The implementation contract is tested by accepted weights and end-to-end arm isolation.
+        # Uniform logits give identical per-token CE mathematically. The normalized
+        # weighted means may differ by sub-micro float32 rounding, which is not a
+        # semantic failure of the weighting implementation.
+        self.assertLessEqual(abs(float(control)-float(heavy)),2e-6)
         self.assertEqual(CONTROL_WEIGHT,1.5)
         self.assertEqual(INTERVENTION_WEIGHT,6.0)
 

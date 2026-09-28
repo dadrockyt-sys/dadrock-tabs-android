@@ -3,34 +3,54 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S2 SYNTHETIC-ONLY STATE-WEIGHT PILOT AUTHORIZED — SOURCE FREEZE IN PROGRESS; P1/P2/P3 SEALED**
+Status: **S2 FIRST LAUNCH STOPPED IN PREFLIGHT; 0 RENDER / 0 OPTIMIZER STEPS; TEST FIXED OFFLINE; FRESH AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — authorized S2 execution
+## Authoritative GPT-5.6 instructions — corrected S2 preflight boundary
 
-Stephen explicitly said **"I authorize"** after the frozen S2 design requested fresh authorization.
+Stephen authorized the frozen S2 state-weight experiment. Exactly one launch was made:
 
-Authorization applies only to `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`.
+- run **36372148839**
+- job **108770545143**
+- launch head `cd1178b13937f1ec17477cd42587c279e77db807`
+- workflow conclusion **FAILURE**
+- failure occurred in focused S2 tests before rendering
+- synthetic render: **not started**
+- control optimizer steps: **0**
+- intervention optimizer steps: **0**
+- artifact: **none**
+- automatic retry: **none**
+- P1/P2/P3 access: **none**
 
-### Frozen boundary
+Frozen failure receipt:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_PREFLIGHT_FAILURE_V1.json`
 
-- exact deterministic synthetic generator/split only: 294 clips / 588 s;
-- exactly two identical onset-aware five-frame models;
-- same initialization and same 500 precomputed minibatches across both arms;
-- control active-state weight 1.5;
-- intervention active-state weight 6.0;
-- all other architecture/sampler/loss/lr/threshold/decoder settings fixed;
-- 500 optimizer steps/model, 1,000 total;
-- uncompressed array-content hashes written before optimizer work;
-- zero threshold search/retuning;
-- zero automatic retries;
-- $0 paid compute;
-- no external audio assets;
-- no P1/P2/P3;
-- no deployment/main/customer delivery.
+### Failure cause
 
-### Exact next task
+One test compared mathematically equal uniform-logit weighted losses using a 6-decimal-place assertion:
 
-Freeze runner/tests/workflow, record authorization with exact source identities, launch exactly once, inspect that run, freeze the result, and stop. No automatic retry.
+- control 1.5 loss: **3.044522762298584**
+- weight 6.0 loss: **3.0445220470428467**
+- absolute difference: **7.152557373046875e-7**
+
+This is normal float32 accumulation noise, not evidence that the S2 loss implementation is wrong.
+
+The offline-only correction changes that test to require absolute difference <= **2e-6**. The S2 runner and frozen S2 scientific design are unchanged.
+
+### S2 scientific design remains unchanged
+
+Exactly two identical onset-aware five-frame models:
+1. active-state weight **1.5**
+2. active-state weight **6.0**
+
+Same generated data, array hashes, initialization, batch plan, sampler, architecture, onset loss, lr 0.003, 500 steps/model, thresholds 0.50/0.50 and decoder V2.
+
+### EXACT NEXT STEP — fresh authorization required
+
+The prior grant was explicitly single-launch with zero automatic retries and has been consumed.
+
+**Do not launch the corrected S2 workflow yet.**
+
+Fresh explicit authorization is required for one corrected S2 launch. No P1/P2/P3, threshold tuning, deployment or main mutation is authorized.
 
 
 ---
