@@ -3,88 +3,59 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S1 COMPLETE — SAMPLING HELPED STRONGLY BUT FROZEN GATE FAILED ON ABSOLUTE RECALL; NO RETRY; P1/P2/P3 SEALED**
+Status: **S1 FAILED ONE ABSOLUTE RECALL CRITERION; OFFLINE REVIEW COMPLETE; S2 STATE-WEIGHT HYPOTHESIS DESIGNED — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — post-S1 result
+## Authoritative GPT-5.6 instructions — S2 decision boundary
 
-Stephen explicitly authorized the single bounded S1 synthetic-only sampling experiment. It ran once and is complete.
+S1 run **36370848921** / job **108766686822** completed once. Workflow success does not change the scientific result: `s1GatePassed=false`.
 
-### Canonical execution
+### S1 result
 
-- run **36370848921**
-- job **108766686822**
-- launch head `a4d3addbbb2b1bc262562d7e3580954f7c83994f`
-- workflow conclusion **SUCCESS**
-- artifact **10948194295**
-- artifact digest `sha256:7ea1e3324481e0dfed3263ee985e1d24a15b20ff6e7f5b9e1113cfd301779976`
-- artifact expires **2026-10-28T02:44:05Z**
-- raw result SHA-256 `37494d413a0b14fa36fb0b96ab85abddfd5a8ccf66b3c32294577b1b3234b34c`
-- onset-aware model SHA-256 `6b73d9871fae16f26cc742a5722f9bf71bc8c5c7a2f7fb4bb788097e8b25216e`
-- uniform model SHA-256 `e8e5a8c87cc42c7f2cfa5e5ad3b08bfcda2e31fb63186cbbb0d5b64d60c6ee5e`
+Onset-aware versus uniform five-frame:
+- onset F1 **0.6283 vs 0.3226**
+- onset recall **0.4651 vs 0.1938**
+- repeated-note recall **0.5000 vs 0.1429**
+- precision **0.9677 vs 0.9615**
+- negative-only FP **0.0 events/s**
 
-Frozen result: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_RESULT_V1.json`
+Nine of ten criteria passed. Absolute onset recall **0.4651 < 0.55** failed.
 
-### Boundary compliance
+### Offline state-admission review
 
-- focused S1 sampling tests: **5 / 5 passed**
-- synthetic clips: **294 / 588 s**
-- models: exactly **2**
-- optimizer steps: **500 + 500 = 1,000**
-- thresholds: **0.50 / 0.50**, unchanged
-- threshold search: **none**
-- automatic retry: **0**
-- paid compute: **$0**
-- external audio assets: **none**
-- P1/P2/P3 access: **none**
-- production/main mutation: **none**
+At exact positive test reference string/frames for the onset-aware model:
+- onset admission **0.5814**
+- correct-state admission **0.2093**
+- joint admission **0.2093**
 
-### Scientific result — S1 FAILS because all criteria were required
+Exact frozen target accounting:
+- active state tokens **11,145 / 109,620 = 10.1669%**
+- S1's 32/32/32/32 sampler still yields about **10.4414%** active state tokens per minibatch because most active frames contain one active string and five silent strings.
+- current active-state weight 1.5 gives about **14.9%** expected weighted state-loss contribution to active tokens.
+- proposed weight 6.0 gives about **41.2%**.
 
-Uniform five-frame control:
-- onset precision **0.9615**
-- recall **0.1938**
-- F1 **0.3226**
-- repeated-note recall **0.1429**
+This supports one bounded hypothesis; it does not prove the cause.
 
-Onset-aware intervention:
-- onset precision **0.9677**
-- recall **0.4651**
-- F1 **0.6283**
-- onset+offset F1 **0.5128**
-- repeated-note recall **0.5000**
-- negative-only FP rate **0.0 events/s**
+Analysis: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_FAILURE_ANALYSIS_V1.md`
 
-Relative gains:
-- onset F1 **+0.3057**
-- onset recall **+0.2713**
-- repeated-note recall **+0.3571**
-- precision did not deteriorate.
+### Frozen S2 design
 
-Nine of ten frozen S1 criteria passed. The single failed criterion:
-- absolute onset recall **0.4651 < 0.55**
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`
 
-Therefore `s1GatePassed=false`. Do not reinterpret a near-pass as a pass.
+Exactly two identical S1 onset-aware five-frame models:
+1. control active-state weight **1.5**;
+2. intervention active-state weight **6.0**.
 
-### Important diagnostic
+Everything else is fixed, including sampler, generator, split, architecture, onset loss, lr 0.003, 500 steps/model, thresholds 0.50/0.50 and decoder V2.
 
-At exact positive reference string/frame locations for the onset-aware model:
-- onset admission: **0.5814**
-- correct state admission: **0.2093**
-- joint admission: **0.2093**
+S2 also requires uncompressed array-content hashes before optimizer work so future regenerated-corpus identity claims are explicit rather than based on NPZ container hashes.
 
-The frozen intervention improved event metrics substantially, but correct state admission is now the tighter exact-frame bottleneck than onset admission. This is descriptive evidence, not proof of why the state head misses.
+### EXACT NEXT STEP — fresh authorization required
 
-Validation was stronger than test (onset F1 0.7299, recall 0.5969), confirming the test split remains necessary; do not tune to validation after this result.
+**Do not execute S2.**
 
-### Reproducibility caveat
+No rendering, optimizer work, threshold changes, P1/P2 access, P3 access, deployment or main mutation is authorized now.
 
-The S1 regenerated NPZ container SHA differs from the S0 container SHA. The exact same pinned generator code, seed and split were used, but the S0 dataset arrays were not retained in its artifact. Therefore exact cross-run numerical array identity is **not independently verified**. Do not claim byte/numerical equality merely from matching generator semantics.
-
-### EXACT NEXT STEP
-
-No automatic retry, threshold rescue, extra steps, P1/P2 transfer, or P3.
-
-Do offline review only. If another synthetic intervention is justified, isolate **one** remaining cause (state admission is the leading observed bottleneck), freeze it prospectively, and require fresh explicit authorization before optimizer work.
+Fresh explicit authorization is required for the bounded S2 synthetic-only state-weight experiment.
 
 
 ---

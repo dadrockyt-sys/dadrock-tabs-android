@@ -1,20 +1,21 @@
 # Next chat: start here
 
-S1 synthetic-only sampling experiment is complete.
+S1 is frozen as a scientific fail: nine of ten criteria passed, but absolute test onset recall was 0.4651 < 0.55.
 
-Run 36370848921 / job 108766686822: workflow SUCCESS, S1 scientific gate FAILED because all criteria were required and absolute test recall was 0.4651 < 0.55.
+Offline review shows the onset-aware model's exact positive-frame admission was:
+- onset 0.5814
+- correct state 0.2093
+- joint 0.2093
 
-Onset-aware vs uniform five-frame:
-- F1: 0.6283 vs 0.3226
-- recall: 0.4651 vs 0.1938
-- repeated-note recall: 0.5000 vs 0.1429
-- precision: 0.9677 vs 0.9615
-- negative-only FP rate: 0.0 events/s
+The frozen S1 sampler still exposes only about 10.44% active state tokens per batch; state active weight 1.5 gives them only about 14.9% of expected weighted state-loss contribution.
 
-Nine of ten S1 criteria passed. Do not call it a pass.
+One S2 hypothesis is frozen:
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`
 
-At exact positive reference frames the onset-aware model had onset admission 0.5814 but correct-state admission only 0.2093, making state admission the leading observed remaining bottleneck.
+S2 changes only active-state weight:
+- control 1.5
+- intervention 6.0
 
-No P1/P2/P3, no threshold search, no retry.
+All other data/model/sampler/loss/lr/threshold/step settings stay fixed.
 
-Exact next task: offline review only; freeze one state-admission hypothesis before asking for any new optimizer authorization.
+**S2 execution is not authorized. Fresh explicit authorization is required.**
