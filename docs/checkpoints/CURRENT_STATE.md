@@ -1,103 +1,58 @@
 # Astra — current handoff
 
-Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)  
-Branch: `astra-work`  
-Canonical file: `docs/checkpoints/CURRENT_STATE.md`  
-Status: **S0 SYNTHETIC PILOT COMPLETE — WORKFLOW GREEN, ABSOLUTE GATE FAILED; NO RETRY; P1/P2/P3 SEALED**
+Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
+Branch: `astra-work`
+Canonical file: `docs/checkpoints/CURRENT_STATE.md`
+Status: **S0 FAILED; OFFLINE REVIEW COMPLETE; S1 ONSET-SAMPLING HYPOTHESIS DESIGNED — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — post-S0 result
+## Authoritative GPT-5.6 instructions — S1 decision boundary
 
-Stephen explicitly authorized the single bounded synthetic-only S0 pilot. It executed once and is complete.
+S0 run 36369999876 / job 108764124344 completed workflow-green but failed the absolute synthetic gate.
 
-### Canonical execution
+### S0 facts
 
-- run: **36369999876**
-- job: **108764124344**
-- launch head: `6ccd56cd9d9a93118f98e6f474a0ba6bfe73d537`
-- workflow conclusion: **SUCCESS**
-- artifact: **10948454237**
-- artifact digest: `sha256:d5f7fa8ba39c93526db793697ca9eeaabad3e971254d3c9872aeb1cb674aa115`
-- artifact expires: **2026-10-28T02:30:37Z**
-- raw result SHA-256: `92d4d8eb8dbe28825b98567fbbb9e902d38b2276a5e70392fb21ec8e084d4ea3`
-- render receipt SHA-256: `753e8e6f777e918509f1578294bcc906c6457e0905ececadbdcb621f2616da36`
-- candidate model SHA-256: `00920d87ff1b3ae6fc88029c7b212e225c738b658a98c707dacd4260f569ac57`
-- comparator model SHA-256: `3af93705c5bbb04b652ee4a95e67b2c7b6c67c48612e6e0d2fd90842b5fded44`
+Five-frame model:
+- onset precision 0.8780
+- recall 0.2791
+- F1 0.4235
+- onset+offset F1 0.2941
+- repeated-note onset recall 0.2143
+- negative-only FP rate 0.0 events/s
 
-Frozen evidence:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_RESULT_V1.json`
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_RAW_RESULT_V1.json`
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_RENDER_RECEIPT_V1.json`
+Per-frame comparator:
+- onset F1 0.1304
+- repeated-note onset recall 0.0476
 
-### Boundary compliance
+No P1/P2/P3 access occurred.
 
-- focused S0 tests: **6 / 6 passed**
-- examples rendered: **294**
-- audio rendered: **588 s**
-- actual unique template identities: **98**, with 3 timbre variants each
-- split: **210 train / 42 validation / 42 test**
-- persisted dataset: **8,976,743 bytes**
-- render time: **15.80 s**
-- negative-structure fraction: **42.86%**
-- external audio assets: **none**
-- comparator optimizer steps: **500**
-- candidate optimizer steps: **500**
-- total optimizer steps: **1,000**
-- automatic retries: **0**
-- threshold search/retuning: **none**
-- paid compute: **$0**
-- P1 accessed: **no**
-- P2 accessed: **no**
-- P3 opened: **no**
-- production/main mutation: **no**
+### Offline failure review
 
-Correction to the pre-run note: the frozen implementation contains **98 underlying template identities**, not 196. With three variants each this yields 294 examples. The result receipt is authoritative.
+The frozen training split contains:
+- 109,620 string/frame onset target positions;
+- 645 positive onset positions = 0.5884%;
+- 525 / 18,270 = 2.8736% clip-frames with at least one positive onset target.
 
-### Scientific result — FAIL absolute S0 gate
+S0 sampled frames uniformly. Sparse positive-onset exposure is therefore a plausible next hypothesis, not a proven cause.
 
-The five-frame candidate beat the per-frame comparator on the predeclared relative comparison:
+Review: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_FAILURE_ANALYSIS_V1.md`
 
-- onset F1: **0.4235** vs **0.1304** (delta **+0.2931**)
-- repeated-attack recall: **0.2143** vs **0.0476** (delta **+0.1667**)
-- candidate negative-only FP rate: **0.0 events/s** over 6 s
+### Frozen S1 design
 
-However the absolute synthetic gate failed badly:
+Design: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_DESIGN_V1.md`
 
-- candidate pitch-onset precision: **0.8780** < 0.90
-- recall: **0.2791** < 0.90
-- F1: **0.4235** < 0.90
-- onset+offset F1: **0.2941** < 0.80
-- repeated-attack recall: **0.2143** < 0.85
-- each-family F1 >=0.80: **false**
+Compare exactly two identical five-frame temporal models:
+1. uniform frame sampling;
+2. onset-aware 32/32/32/32 stratified sampling.
 
-Candidate family onset F1:
-- scales **0.8000**
-- legato **0.6667**
-- mixed **0.5000**
-- repeated **0.5000**
-- chords **0.2326**
-- PalmMute **0.1667**
-- isolated notes **0.0000**
+Everything else remains fixed: generator, split, architecture, loss weights, lr 0.003, 500 steps/model, thresholds 0.50/0.50, decoder V2.
 
-This is a **scientific stop**, not a workflow failure.
+### EXACT NEXT STEP — fresh authorization required
 
-### Interpretation
+Do not execute S1 yet.
 
-Supported:
-- explicit five-frame temporal context materially helps relative to the same-budget per-frame comparator on this synthetic split;
-- negative-only specificity was clean in the small 6-second negative-only test denominator.
+No more rendering, optimizer work, threshold changes, P1/P2 access, P3 access, launch, deployment, or main mutation is authorized by the completed S0 grant.
 
-Not established:
-- the candidate is not synthetically competent enough for real-transfer evaluation;
-- the result does not isolate whether low recall is driven by optimization budget, class imbalance, target construction, generator acoustics, model capacity, or frozen decoder admission;
-- no real-guitar, unseen-performer, product, bass, source-separation or customer-readiness claim follows.
-
-### EXACT NEXT STEP
-
-**Do not access P1/P2 and do not open P3. Do not rerun S0, add epochs, lower thresholds, or launch an S1 fit automatically.**
-
-The next work is **offline result/design review only**. A prospective S1 should be justified from the frozen S0 evidence, with one bounded hypothesis, predeclared training/validation diagnostics and no threshold rescue. Any new optimizer experiment requires a new frozen design and fresh explicit authorization.
-
-P3 remains sealed.
+Fresh explicit authorization is required for the bounded S1 synthetic-only sampling experiment.
 
 
 ---

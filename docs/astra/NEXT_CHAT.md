@@ -1,31 +1,16 @@
 # Next chat: start here
 
-Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
+S0 is complete and failed its absolute synthetic gate.
 
-## Current position
+Offline review found only 525 / 18,270 training clip-frames (2.8736%) contain a positive onset target, with 645 positive string-onset positions out of 109,620 (0.5884%).
 
-Synthetic-only S0 ran once with explicit authorization.
+One S1 hypothesis is frozen in:
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_DESIGN_V1.md`
 
-Run **36369999876**, job **108764124344**: workflow SUCCESS, scientific advancement **FAILED**.
+S1 changes only minibatch sampling:
+- uniform frame sampling;
+- onset-aware 32/32/32/32 stratified sampling.
 
-Candidate (5-frame temporal context):
-- onset precision 0.8780
-- recall 0.2791
-- F1 0.4235
-- onset+offset F1 0.2941
-- repeated-attack recall 0.2143
-- negative-only FP rate 0.0 events/s
+All architecture/loss/lr/threshold/step limits remain fixed. No P1/P2/P3.
 
-Comparator:
-- onset F1 0.1304
-- repeated-attack recall 0.0476
-
-Relative candidate-vs-comparator gate passed (+0.2931 onset F1), but the absolute S0 synthetic gate failed.
-
-No P1/P2/P3 media was accessed. No threshold search, retry, extra epochs, production mutation or deployment occurred.
-
-## Exact next task
-
-Offline result/design review only.
-
-Do **not** run another optimizer experiment, reopen P1/P2, change thresholds, or open P3. If an S1 hypothesis is prepared, freeze one bounded design first and obtain fresh explicit authorization before execution.
+Execution is not authorized. Fresh explicit authorization is required before S1 rendering or optimizer work.
