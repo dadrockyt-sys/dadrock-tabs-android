@@ -1,0 +1,100 @@
+{
+  "schema": "astra-architecture-research-a1-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-design-frozen-before-optimizer",
+  "authorization": "user-approved-new-architecture-research-version",
+  "architecture": {
+    "baseline": "S11 shared encoder",
+    "intervention": "dual independent state/onset encoders",
+    "inputDim": 960,
+    "stateEncoder": [
+      960,
+      128
+    ],
+    "onsetEncoder": [
+      960,
+      128
+    ],
+    "stateHead": [
+      128,
+      128,
+      126
+    ],
+    "onsetHead": [
+      128,
+      6
+    ],
+    "onlyDeliberateChange": "shared encoder -> two disjoint encoders"
+  },
+  "training": {
+    "datasetSha256": "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b",
+    "seeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "sampler": "onset-aware-32-32-32-32",
+    "optimizer": "Adam",
+    "learningRate": 0.003,
+    "batchSize": 128,
+    "stepsPerModel": 500,
+    "models": 3,
+    "totalSteps": 1500,
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4
+  },
+  "evaluation": {
+    "ordinaryControlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "challengeSha256": "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce",
+    "challengeRows": 84,
+    "frozenComparator": "docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_RESULT_V1.json",
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false
+  },
+  "structuralAdmission": {
+    "parameterSetsDisjoint": true,
+    "crossEncoderGradientIsolation": true,
+    "exactBatchHashes": true,
+    "unchangedEvaluator": true,
+    "optimizerStepsDuringVerification": 0
+  },
+  "gates": {
+    "ordinaryStateGainVsS11InterventionPositiveSeeds": 3,
+    "meanOrdinaryStateGainVsS11InterventionMin": 0.04,
+    "ordinaryJointGainVsS11InterventionPositiveSeeds": 3,
+    "meanOrdinaryJointGainVsS11InterventionMin": 0.04,
+    "maxChallengeF1LossVsS11InterventionPerSeed": 0.03,
+    "maxChallengeRecallLossVsS11InterventionPerSeed": 0.03,
+    "maxOrdinaryF1LossVsS11InterventionPerSeed": 0.03,
+    "maxOrdinaryPrecisionLossVsS11InterventionPerSeed": 0.03,
+    "maxChallengeNegativeFpPerSecond": 0.1,
+    "maxOrdinaryNegativeFpPerSecond": 0.1,
+    "maxOrdinaryStateLossVsS11ControlPerSeed": 0.03,
+    "maxOrdinaryJointLossVsS11ControlPerSeed": 0.04,
+    "challengeF1GainVsS11ControlPositiveSeeds": 3,
+    "meanChallengeF1GainVsS11ControlMin": 0.05,
+    "challengeRecallGainVsS11ControlPositiveSeeds": 3
+  },
+  "ceilings": {
+    "cpuOnly": true,
+    "maxModels": 3,
+    "maxStepsPerModel": 500,
+    "maxTotalSteps": 1500,
+    "maxFitEvalSeconds": 2700,
+    "oneLaunchAttempt": true,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "onPass": "freeze-and-stop-before-real-data-or-further-architecture",
+  "onFail": "freeze-a1-failure-no-automatic-a2"
+}
