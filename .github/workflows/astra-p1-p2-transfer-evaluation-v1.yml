@@ -48,6 +48,8 @@ jobs:
           python -m pip install --disable-pip-version-check 'pip==24.0'
           python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
           sudo apt-get update && sudo apt-get install -y ffmpeg unzip
+      - name: Run focused transfer tests before any P1/P2 access
+        run: PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_p1_p2_transfer_evaluation_v1.py
       - name: Download frozen V3 baseline
         uses: actions/download-artifact@v4
         with:
