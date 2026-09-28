@@ -1,0 +1,175 @@
+{
+  "schema": "astra-source-domain-v3-synthetic-training-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "scientific-gate-failed",
+  "scientificOutcome": "v3-source-domain-training-improves-onset-f1-and-recall-on-challenge-but-misses-recall-floor-and-regresses-state-joint-admission",
+  "launchIdentity": "source-domain-v3-training-20260928-canonical-01",
+  "launchCommit": "4416964897ab8846fb91748737e9f7cc03752349",
+  "workflow": {
+    "run": 36489648572,
+    "job": 109154913563,
+    "runAttempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11000187208,
+    "name": "astra-source-domain-v3-synthetic-training-v1",
+    "digest": "sha256:84f2566c656c37d5fe20bdc26bfdaa699d5e2c4089c0c91f99434d8f0282e3f3",
+    "resultJsonSha256": "5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d"
+  },
+  "frozenData": {
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "interventionSha256": "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b",
+    "challengeSha256": "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce",
+    "challengeRows": 84,
+    "challengeRowsPerFamily": 12
+  },
+  "execution": {
+    "modelCount": 6,
+    "optimizerStepsPerModel": 500,
+    "optimizerStepsTotal": 3000,
+    "fitEvalSeconds": 18.547113534999994,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false,
+    "productionMutation": false
+  },
+  "aggregateDeltas": {
+    "challengeOnsetF1": {
+      "mean": 0.06113630546455425,
+      "minimum": 0.056706163496963,
+      "median": 0.058311794261838745,
+      "maximum": 0.068390958634861,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetRecall": {
+      "mean": 0.01808785529715758,
+      "minimum": 0.007751937984496138,
+      "median": 0.011627906976744096,
+      "maximum": 0.03488372093023251,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetPrecision": {
+      "mean": 0.1143840006204756,
+      "minimum": 0.08318584070796464,
+      "median": 0.1106972123921276,
+      "maximum": 0.14926894876133456,
+      "positiveSeeds": 3
+    },
+    "challengeStateAdmission": {
+      "mean": -0.036175710594315236,
+      "minimum": -0.06589147286821706,
+      "median": -0.027131782945736427,
+      "maximum": -0.01550387596899222,
+      "positiveSeeds": 0
+    },
+    "challengeJointAdmission": {
+      "mean": -0.045219638242894065,
+      "minimum": -0.054263565891472854,
+      "median": -0.054263565891472854,
+      "maximum": -0.027131782945736482,
+      "positiveSeeds": 0
+    },
+    "ordinaryOnsetF1": {
+      "mean": 0.020662699290978786,
+      "minimum": 0.0048132780082986715,
+      "median": 0.025129285577475402,
+      "maximum": 0.03204553428716228,
+      "positiveSeeds": 3
+    },
+    "ordinaryOnsetRecall": {
+      "mean": 0.03100775193798444,
+      "minimum": 0.03100775193798444,
+      "median": 0.03100775193798444,
+      "maximum": 0.03100775193798444,
+      "positiveSeeds": 3
+    },
+    "ordinaryOnsetPrecision": {
+      "mean": 0.006319478059352734,
+      "minimum": -0.02737603305785119,
+      "median": 0.014144271570014189,
+      "maximum": 0.032190195665895205,
+      "positiveSeeds": 2
+    },
+    "ordinaryStateAdmission": {
+      "mean": -0.07751937984496125,
+      "minimum": -0.09302325581395349,
+      "median": -0.07751937984496127,
+      "maximum": -0.06201550387596899,
+      "positiveSeeds": 0
+    },
+    "ordinaryJointAdmission": {
+      "mean": -0.06718346253229973,
+      "minimum": -0.07751937984496121,
+      "median": -0.06201550387596899,
+      "maximum": -0.06201550387596899,
+      "positiveSeeds": 0
+    }
+  },
+  "challengeNegativeOnlyFalsePositiveEventsPerSecond": {
+    "seed20260927": {
+      "control": 0.16666666666666666,
+      "intervention": 0
+    },
+    "seed20260928": {
+      "control": 0.16666666666666666,
+      "intervention": 0.16666666666666666
+    },
+    "seed20260929": {
+      "control": 0.16666666666666666,
+      "intervention": 0.08333333333333333
+    }
+  },
+  "ordinaryNonChordFamilyLossOver0_15Count": {
+    "isolated": 1,
+    "legato": 1,
+    "mixed": 0,
+    "palmmute": 0,
+    "repeated": 0,
+    "scales": 0
+  },
+  "failedCriteria": [
+    "challengeNegativeOnlyFpAtMost0_10EverySeed",
+    "meanChallengeOnsetRecallGainAtLeast0_08",
+    "noOrdinaryJointAdmissionLossOver0_04",
+    "noOrdinaryStateAdmissionLossOver0_03"
+  ],
+  "passedCriteria": [
+    "allRequiredMetricsFinite",
+    "allSix500Steps",
+    "challengeOnsetF1GainPositive3of3",
+    "challengeOnsetRecallGainPositive3of3",
+    "controlInterventionNonFeatureArraysBitIdentical",
+    "exactFrozenDatasetHashesVerified",
+    "exactSixModelsAnd3000Steps",
+    "fixedThresholdsNoSearch",
+    "historicalS9TrainingChordStringsPreserved",
+    "interventionChangedRowsExactlyTrain",
+    "interventionValidationTestFeaturesBitIdentical",
+    "meanChallengeOnsetF1GainAtLeast0_05",
+    "noAutomaticRetry",
+    "noChallengePrecisionLossOver0_05",
+    "noOrdinaryOnsetF1LossOver0_03",
+    "noOrdinaryPrecisionLossOver0_03",
+    "ordinaryNegativeOnlyFpAtMost0_10EverySeed",
+    "ordinaryNonChordFamilyLossOver0_15InAtMostOneSeed",
+    "pairedInitializationAndBatches",
+    "v3ChallengeExactly12RowsPerFamily",
+    "v3ChallengeExactly84Rows",
+    "v3ChallengeSourceRowsOnlyFrozenControlTest"
+  ],
+  "interpretation": {
+    "supported": "The V2 source-domain training support produced positive V3 challenge onset-F1 and recall deltas in all three seeds, with mean F1 gain above the frozen +0.05 floor and substantial precision gains.",
+    "failed": "Mean challenge recall gain remained far below +0.08, one seed exceeded the V3 negative-only FP guard, and ordinary state/joint admission regressed beyond preservation gates in every seed.",
+    "decision": "Reject this exact final V3 source-domain training experiment. Preserve the positive onset result as descriptive synthetic evidence only. Do not run V4/V5 source-domain coverage, seed-select, lower thresholds, retune loss/sampler, or change architecture directly from this result."
+  },
+  "stopRule": "Freeze failure and return to project-level representation/data-strategy review. No further source-domain coverage redesign or automatic model run. P1/P2 remain closed and P3 sealed."
+}
