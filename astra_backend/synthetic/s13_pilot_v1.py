@@ -230,6 +230,12 @@ def validate_launch(root, launch_path, history_path, scope_path):
         raise RuntimeError("scope pin mismatch")
     if launch.get("specGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"):
         raise RuntimeError("spec pin mismatch")
+    if scope.get("specGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_SPEC_V1.json"):
+        raise RuntimeError("scope spec pin mismatch")
+    if scope.get("designGitBlob")!=git_blob_sha(root/"docs/astra/SYNTHETIC_S13_DESIGN_V1.md"):
+        raise RuntimeError("design pin mismatch")
+    if scope.get("historyGitBlob")!=git_blob_sha(history_path):
+        raise RuntimeError("history pin mismatch")
     for key,rel in scope["sourcePaths"].items():
         actual=git_blob_sha(root/rel)
         if scope["sourceGitBlobs"].get(key)!=actual:
