@@ -1,5 +1,7 @@
 name: Astra source-domain joint coverage review V1
 
+# Frozen model-free review trigger.
+
 on:
   push:
     branches: [astra-work]
