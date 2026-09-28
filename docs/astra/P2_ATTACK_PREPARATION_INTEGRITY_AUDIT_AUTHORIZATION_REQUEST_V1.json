@@ -1,0 +1,47 @@
+{
+  "schema": "astra-p2-attack-preparation-integrity-audit-authorization-request-v1",
+  "date": "2026-09-28",
+  "status": "awaiting_fresh_explicit_user_authorization",
+  "purpose": "One zero-model, zero-training integrity audit on the exact frozen four P1 and four P2 direct-input captures to distinguish weak raw attacks, preparation/resampling sensitivity, and source-to-crop timing discrepancies.",
+  "authorizationRequested": {
+    "p1MediaAccess": true,
+    "p2MediaAccess": true,
+    "p3": false,
+    "exactCaptureCount": 8,
+    "optimizerSteps": 0,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "cpuOnlyGithubActions": true,
+    "maxJobMinutes": 120,
+    "maxDownloadBytes": 4004045267,
+    "codespaces": false,
+    "vercel": false,
+    "production": false,
+    "mainMutation": false
+  },
+  "fixedExecution": {
+    "specPath": "docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json",
+    "runnerPath": "astra_backend/evaluation/p2_attack_preparation_integrity_audit_v1.py",
+    "testsPath": "astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py",
+    "workflowPath": ".github/workflows/astra-p2-attack-preparation-integrity-audit-v1.yml",
+    "specGitBlob": "5356ea218027d595c08b9f46491f0abf1f5259c1",
+    "runnerGitBlob": "3f33b967aee9d80dddddf35e4b7eda6922ff09df",
+    "testsGitBlob": "3377ceccda1602105a4453f567df6fc0a4a7f262",
+    "workflowGitBlob": "a9673b97bf81724ee3d2e6819245d9105f4e9d69"
+  },
+  "safety": {
+    "p3Sealed": true,
+    "noModelDownloads": true,
+    "noModelInference": true,
+    "noTraining": true,
+    "noThresholdChanges": true,
+    "noParameterSelectionFromP1P2": true,
+    "noAutomaticRetry": true,
+    "launchMarkerNotCreated": true,
+    "authorizationFileNotCreated": true
+  },
+  "userActionNeeded": "Fresh explicit authorization permitting this exact single P1/P2 source-access audit while keeping P3 sealed."
+}
