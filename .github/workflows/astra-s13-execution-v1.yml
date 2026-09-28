@@ -44,6 +44,27 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check 'pip==24.0'
           python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+      - name: Reserve unique run directory
+        env:
+          S13_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="/tmp/astra-s13-${S13_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          if [ -e "$ROOT" ]; then
+            echo "Refusing pre-existing S13 run directory: $ROOT" >&2
+            exit 1
+          fi
+          mkdir -p "$ROOT"
+      - name: Download exact frozen S13 preparation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-s13-offline-preparation-v1
+          path: /tmp/astra-s13-${{ github.run_id }}-${{ github.run_attempt }}/preparation
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36458911022'
       - name: Execute one frozen S13 package
         env:
           PYTHONPATH: astra_backend
@@ -54,18 +75,19 @@ jobs:
         run: |
           set -euo pipefail
           ROOT="/tmp/astra-s13-${S13_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          if [ -e "$ROOT" ]; then
-            echo "Refusing pre-existing S13 run directory: $ROOT" >&2
-            exit 1
-          fi
-          mkdir -p "$ROOT"
           trap 'code=$?; if [ "$code" -ne 0 ]; then printf "{\"schema\":\"astra-s13-failure-receipt-v1\",\"runId\":\"%s\",\"runAttempt\":\"%s\",\"exitCode\":%s}\n" "$S13_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$code" > "$ROOT/failure-receipt.json"; fi' EXIT
 
-          python -m synthetic.s13_pilot_v1 prepare-only --out-dir "$ROOT/preparation"
+          python -m synthetic.s13_pilot_v1 run \
+            --control-dataset "$ROOT/preparation/datasets/s9-control.npz" \
+            --intervention-dataset "$ROOT/preparation/datasets/s13-intervention.npz" \
+            --challenge-dataset "$ROOT/preparation/datasets/s13-challenge.npz" \
+            --out "$ROOT/result.json" \
+            --launch docs/astra/SYNTHETIC_S13_LAUNCH_V1.json \
+            --history docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json \
+            --scope docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json
 
-          python -m synthetic.s13_pilot_v1 run             --control-dataset "$ROOT/preparation/datasets/s9-control.npz"             --intervention-dataset "$ROOT/preparation/datasets/s13-intervention.npz"             --challenge-dataset "$ROOT/preparation/datasets/s13-challenge.npz"             --out "$ROOT/result.json"             --launch docs/astra/SYNTHETIC_S13_LAUNCH_V1.json             --history docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json             --scope docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json
-
-          printf '{"schema":"astra-s13-workflow-receipt-v1","runId":"%s","runAttempt":"%s","workflowSuccess":true}\n'             "$S13_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$ROOT/workflow-receipt.json"
+          printf '{"schema":"astra-s13-workflow-receipt-v1","runId":"%s","runAttempt":"%s","workflowSuccess":true}\n' \
+            "$S13_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$ROOT/workflow-receipt.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
