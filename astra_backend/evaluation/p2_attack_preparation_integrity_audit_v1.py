@@ -140,6 +140,9 @@ def decode_native_channels(path):
     if x.size%ch: raise RuntimeError("native decode channel alignment mismatch")
     return x.reshape(-1,ch),meta
 
+def ffmpeg_version_line():
+    return subprocess.check_output(["ffmpeg","-version"],text=True).splitlines()[0].strip()
+
 def decode_frozen_mono(path):
     cmd=["ffmpeg","-nostdin","-hide_banner","-loglevel","error","-i",str(path),"-vn",
          "-ac","1","-ar",str(SAMPLE_RATE_HZ),"-f","f32le","-acodec","pcm_f32le","pipe:1"]
@@ -200,6 +203,7 @@ def audit_capture(meta,features,source_root,spec):
     if sha256_file(midi)!=meta["midiSourceSha256"] or sha256_file(audio)!=meta["audioSourceSha256"]:
         raise RuntimeError("selected member hash differs from frozen prepared receipt")
     native,nmeta=decode_native_channels(audio)
+    native_mono=mean_mix(native)
     frozen=decode_frozen_mono(audio)
     norm=rms_normalize(frozen.copy())
     hop=float(meta["hopSeconds"])
@@ -222,22 +226,47 @@ def audit_capture(meta,features,source_root,spec):
         source_t=cand["sourceStart"]; aligned_t=cand["alignedStart"]
         coord=crop_coordinate(source_t,meta["lagMs"],meta["prepared"]["crop"]["startFrame"],hop)
         ref_frame=int(round(float(e["start"])/hop))
-        raw=attack_metrics(frozen,SAMPLE_RATE_HZ,aligned_t,spec["measurement"])
-        raw_norm=attack_metrics(norm,SAMPLE_RATE_HZ,aligned_t,spec["measurement"])
-        flux,times=stft_positive_flux(frozen,SAMPLE_RATE_HZ,spec["measurement"])
-        peak=qualified_nearest_peak(flux,times,aligned_t,spec["measurement"]["rawPeakSearchSeconds"],
-                                    spec["measurement"]["rawPeakContextSeconds"],spec["measurement"]["peakMadMultiplier"])
+        msp=spec["measurement"]
+        reasons=[]
+        pre=float(msp["rmsPreSeconds"]); post=float(msp["rmsPostSeconds"]); search=float(msp["rawPeakSearchSeconds"])
+        if aligned_t-pre < 0 or aligned_t+post > len(frozen)/SAMPLE_RATE_HZ:
+            reasons.append("raw_rms_window_out_of_range")
+        if aligned_t-search < 0 or aligned_t+search > len(frozen)/SAMPLE_RATE_HZ:
+            reasons.append("raw_peak_search_window_out_of_range")
+        if ref_frame-int(msp["cqtPeakSearchFrames"]) < 0 or ref_frame+int(msp["cqtPeakSearchFrames"]) >= len(features):
+            reasons.append("cqt_peak_search_window_out_of_range")
+        eligible=not reasons
+        native_raw=attack_metrics(native_mono,nmeta["sampleRate"],aligned_t,msp)
+        native_flux,native_times=stft_positive_flux(native_mono,nmeta["sampleRate"],msp)
+        native_peak=qualified_nearest_peak(native_flux,native_times,aligned_t,msp["rawPeakSearchSeconds"],
+                                           msp["rawPeakContextSeconds"],msp["peakMadMultiplier"])
+        native_channels=[]
+        for ci in range(native.shape[1]):
+            ca=attack_metrics(native[:,ci],nmeta["sampleRate"],aligned_t,msp)
+            cf0,ct0=stft_positive_flux(native[:,ci],nmeta["sampleRate"],msp)
+            cp=qualified_nearest_peak(cf0,ct0,aligned_t,msp["rawPeakSearchSeconds"],
+                                      msp["rawPeakContextSeconds"],msp["peakMadMultiplier"])
+            native_channels.append({"channel":ci,"attack":ca,"transientPeak":cp})
+        raw=attack_metrics(frozen,SAMPLE_RATE_HZ,aligned_t,msp)
+        raw_norm=attack_metrics(norm,SAMPLE_RATE_HZ,aligned_t,msp)
+        flux,times=stft_positive_flux(frozen,SAMPLE_RATE_HZ,msp)
+        peak=qualified_nearest_peak(flux,times,aligned_t,msp["rawPeakSearchSeconds"],
+                                    msp["rawPeakContextSeconds"],msp["peakMadMultiplier"])
         cf,cl2=cqt_novelty(features)
         cpeak=nearest_cqt_peak(features,ref_frame,hop,spec["measurement"])
         row={"id":e["id"],"string":int(e["string"]),"fret":int(e["fret"]),
              "sourceAnnotationSeconds":source_t,"alignedAnnotationSeconds":aligned_t,
              "cropLocalAnnotationSeconds":float(e["start"]),"preparedFrame":ref_frame,
-             "coordinate":coord,"rawResampled":raw,"rmsNormalizedResampled":raw_norm,
+             "coordinate":coord,"measurementEligible":eligible,"exclusionReasons":reasons,
+             "nativeMeanMix":native_raw,"nativeMeanMixTransientPeak":native_peak,
+             "nativeChannels":native_channels,
+             "rawResampled":raw,"rmsNormalizedResampled":raw_norm,
              "rawTransientPeak":peak,"preparedCqtPositiveFluxAtReference":float(cf[ref_frame]),
              "preparedCqtFrameDifferenceL2AtReference":float(cl2[ref_frame]),"preparedCqtNoveltyPeak":cpeak}
         per_note.append(row)
+    eligible_notes=[r for r in per_note if r["measurementEligible"]]
     attacks=group_simultaneous_events(
-        [{"id":r["id"],"sourceStart":r["sourceAnnotationSeconds"],"row":r} for r in per_note],
+        [{"id":r["id"],"sourceStart":r["sourceAnnotationSeconds"],"row":r} for r in eligible_notes],
         spec["measurement"]["simultaneousToleranceSeconds"])
     per_attack=[]
     for g in attacks:
@@ -245,6 +274,9 @@ def audit_capture(meta,features,source_root,spec):
         first=min(rows,key=lambda r:r["id"])
         per_attack.append({"sourceAnnotationSeconds":g["sourceStart"],"noteCount":len(rows),
                            "eventIds":sorted(r["id"] for r in rows),
+                           "nativeMeanMix":first["nativeMeanMix"],
+                           "nativeMeanMixTransientPeak":first["nativeMeanMixTransientPeak"],
+                           "nativeChannels":first["nativeChannels"],
                            "rawResampled":first["rawResampled"],
                            "rmsNormalizedResampled":first["rmsNormalizedResampled"],
                            "rawTransientPeak":first["rawTransientPeak"],
@@ -253,7 +285,8 @@ def audit_capture(meta,features,source_root,spec):
                            "preparedCqtNoveltyPeak":first["preparedCqtNoveltyPeak"]})
     # Native channels are descriptive only; report channel and mixed global levels, never model inputs.
     native_rms=[rms(native[:,i]) for i in range(native.shape[1])]
-    mono_native=mean_mix(native)
+    mono_native=native_mono
+    excluded=[{"id":r["id"],"reasons":r["exclusionReasons"]} for r in per_note if not r["measurementEligible"]]
     return {"captureKey":key,"performer":meta["performer"],"category":meta["category"],
             "source":{"midiSha256":sha256_file(midi),"audioSha256":sha256_file(audio),
                       **nmeta,"nativeFrames":int(native.shape[0]),"nativeChannelRms":native_rms,
@@ -265,7 +298,7 @@ def audit_capture(meta,features,source_root,spec):
                            "cropEndSeconds":meta["prepared"]["crop"]["endSeconds"],
                            "featureSha256":meta["featureSha256"],
                            "targetSha256":meta["prepared"]["targetSha256"]},
-            "perNoteEvents":per_note,"acousticAttacks":per_attack}
+            "perNoteEvents":per_note,"excludedEvents":excluded,"acousticAttacks":per_attack}
 
 def _vals(rows,path):
     out=[]
@@ -282,7 +315,10 @@ def summarize_capture(c):
         return {"count":len(v),"median":float(np.median(v)) if v else None,
                 "mean":float(np.mean(v)) if v else None,
                 "min":min(v) if v else None,"max":max(v) if v else None}
-    return {"captureKey":c["captureKey"],"attackCount":len(a),"noteEventCount":len(c["perNoteEvents"]),
+    return {"captureKey":c["captureKey"],"performer":c["performer"],"category":c["category"],
+            "attackCount":len(a),"noteEventCount":len(c["perNoteEvents"]),
+            "excludedNoteEventCount":len(c["excludedEvents"]),
+            "nativeMeanMixPostRms":sm(["nativeMeanMix","postRms"]),
             "postRms":sm(["rawResampled","postRms"]),
             "postToPreRmsRatio":sm(["rawResampled","postToPreRmsRatio"]),
             "firstDifferenceEnergy":sm(["rawResampled","firstDifferenceEnergy"]),
@@ -324,6 +360,39 @@ def validate_spec(spec):
             raise RuntimeError("missing or malformed frozen source pin: "+k)
     return True
 
+
+def summarize_population(captures,summaries,performer):
+    cs=[c for c in captures if c["performer"]==performer]
+    ss=[s for s in summaries if s["performer"]==performer]
+    attacks=[a for c in cs for a in c["acousticAttacks"]]
+    def event_summary(path):
+        v=_vals(attacks,path)
+        return {"count":len(v),"median":float(np.median(v)) if v else None,
+                "mean":float(np.mean(v)) if v else None}
+    def balanced(metric):
+        vals=[s[metric]["median"] for s in ss if s[metric]["median"] is not None]
+        return {"captureCount":len(vals),"meanOfCaptureMedians":float(np.mean(vals)) if vals else None,
+                "medianOfCaptureMedians":float(np.median(vals)) if vals else None}
+    return {
+      "performer":performer,"captureCount":len(cs),
+      "eligibleAcousticAttackCount":sum(len(c["acousticAttacks"]) for c in cs),
+      "excludedNoteEventCount":sum(len(c["excludedEvents"]) for c in cs),
+      "eventWeighted":{
+        "rawPostRms":event_summary(["rawResampled","postRms"]),
+        "rawFirstDifferenceEnergy":event_summary(["rawResampled","firstDifferenceEnergy"]),
+        "preparedCqtPositiveFlux":event_summary(["preparedCqtPositiveFluxAtReference"]),
+        "rawPeakOffsetSeconds":event_summary(["rawTransientPeak","offsetSeconds"]),
+        "cqtPeakOffsetSeconds":event_summary(["preparedCqtNoveltyPeak","offsetSeconds"]),
+      },
+      "captureBalanced":{
+        "rawPostRms":balanced("postRms"),
+        "rawFirstDifferenceEnergy":balanced("firstDifferenceEnergy"),
+        "preparedCqtPositiveFlux":balanced("preparedCqtPositiveFlux"),
+        "rawPeakOffsetSeconds":balanced("rawPeakOffsetSeconds"),
+        "cqtPeakOffsetSeconds":balanced("cqtPeakOffsetSeconds"),
+      }
+    }
+
 def run(args):
     spec=json.loads(Path(args.spec).read_text())
     validate_spec(spec)
@@ -333,8 +402,11 @@ def run(args):
     for performer,pop,root in (("P1",p1,args.p1_source_root),("P2",p2,args.p2_source_root)):
         for m,x in pop: caps.append(audit_capture(m,x,root,spec))
     summaries=[summarize_capture(c) for c in caps]
-    result={"schema":SCHEMA,"specSha256":sha256_file(args.spec),"captures":caps,
-            "captureSummaries":summaries,
+    result={"schema":SCHEMA,"specSha256":sha256_file(args.spec),
+            "toolchain":{"ffmpegVersion":ffmpeg_version_line()},
+            "captures":caps,"captureSummaries":summaries,
+            "populationSummaries":{"P1":summarize_population(caps,summaries,"P1"),
+                                   "P2":summarize_population(caps,summaries,"P2")},
             "execution":{"optimizerSteps":0,"modelsLoaded":0,"modelInference":False,
                          "thresholdSearch":False,"thresholdRetuning":False,
                          "p1Accessed":True,"p2Accessed":True,"p3Opened":False},
