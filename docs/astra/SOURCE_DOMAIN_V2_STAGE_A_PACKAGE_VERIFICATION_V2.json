@@ -1,0 +1,52 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-package-verification-v2",
+  "date": "2026-09-28",
+  "status": "offline-package-statically-verified-disabled-no-execution",
+  "files": {
+    "correctedTest": {
+      "path": "astra_backend/synthetic/test_source_domain_v2_stage_a_admission_v2.py",
+      "gitBlob": "78c6988e307242f27b31ff973ca7388b7cfeb5f5"
+    },
+    "disabledWorkflow": {
+      "path": ".github/workflows/astra-source-domain-v2-stage-a-admission-v2.yml",
+      "gitBlob": "bb87c113acc85b2f7e45b66cd618f044a89f95b3"
+    },
+    "scientificRunner": {
+      "path": "astra_backend/synthetic/source_domain_v2_stage_a_admission_v1.py",
+      "unchanged": true
+    }
+  },
+  "staticSafety": {
+    "workflowDispatchOnly": true,
+    "pushTrigger": false,
+    "pullRequestTrigger": false,
+    "scheduleTrigger": false,
+    "workflowRunTrigger": false,
+    "hardDisabledJobGuard": "${{ false }}",
+    "autoRunPossible": false,
+    "stageAV2CheckRunObservedAfterCommit": false
+  },
+  "frozenInputs": {
+    "preparationRun": 36475263654,
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestRun": 36481373445,
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "scientificConfigChanged": false,
+  "execution": {
+    "waveformRenders": 0,
+    "audioSeconds": 0,
+    "stageARunnerExecutions": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "productionMutation": false
+  },
+  "decision": "offline-package-pass-not-scientific-stage-a-pass",
+  "nextAction": "future-checkpoint-may-decide-whether-to-arm-one-separately-versioned-stage-a-v2-attempt"
+}
