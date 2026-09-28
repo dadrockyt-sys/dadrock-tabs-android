@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V2 WAVEFORM/PREPARED-FEATURE ADMISSION DESIGN FROZEN — NEXT: IMPLEMENT + RUN STAGE A SMALL MODEL-FREE ACOUSTIC ADMISSION ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
+Status: **V2 STAGE A FIRST ATTEMPT STOPPED IN PRE-EXECUTION TEST — ACOUSTIC ADMISSION NOT RUN; ZERO WAVEFORM RENDERS; NEXT: DESIGN/TEST-CONTRACT REVIEW ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1876,3 +1876,83 @@ Do not:
 - mutate main/Production.
 
 **Resume instruction:** Implement the frozen Stage-A V2 acoustic admission package and run it once under the stated model-free ceilings. Freeze pass/failure and stop before Stage B.
+
+
+## V2 Stage A first attempt — pre-execution test failure frozen — 2026-09-28
+
+The first and only Stage-A workflow attempt under the prior checkpoint did **not** reach acoustic admission.
+
+Frozen failure:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_PREEXECUTION_FAILURE_V1.json`
+
+Workflow:
+- run **36482951827**
+- job **109132814201**
+- head `fc3c31d8a604336bef85406f1f579e5a3d3cacb4`
+- run attempt **1**
+- conclusion **FAILURE**
+
+Frozen artifact identity verification succeeded before the failure:
+- S9 control SHA-256 `16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894`;
+- V2 manifest content SHA-256 `2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469`.
+
+Focused preflight tests:
+- **4 passed**
+- **1 failed**
+
+Failing test:
+- `test_manifest_override_changes_only_frozen_v2_clip_axes_and_categoricals`
+
+### Exact technical cause
+
+The synthetic test helper creates its position-0 row with:
+- `humActive=true`;
+- `humFundamentalHz=50`.
+
+The implementation correctly includes `humFundamentalHz` in the renderer override when hum is active, as required by the frozen V2 categorical manifest protocol.
+
+The test incorrectly expected that key to be absent for that active-hum fixture.
+
+This is a **test-contract defect**, not a measured waveform/scientific failure.
+
+### What did not happen
+
+Because the focused test failed first:
+- Stage-A acoustic runner **not executed**;
+- waveform renders **0**;
+- synthetic audio seconds **0**;
+- no Stage-A result artifact exists;
+- model loads **0**;
+- inference **false**;
+- optimizer steps **0**;
+- threshold search/retuning **none**;
+- P1/P2/P3 access **none**;
+- paid compute **$0**;
+- main/Production mutation **none**.
+
+Therefore there is **no scientific Stage-A pass/fail result** yet.
+
+### Mandatory stop
+
+The prior checkpoint explicitly required one attempt, freezing pass/failure, and no automatic retry. That condition is honored.
+
+Do not:
+- silently correct the test and rerun the same Stage-A workflow;
+- run Stage B;
+- train/load a model;
+- change scientific gates, manifest rows, renderer ranges or equations;
+- access P1/P2/P3.
+
+### Exact next action
+
+Perform **design/test-contract review only**.
+
+The next review may:
+1. verify that active hum rows must carry the manifest-selected 50/60 Hz categorical value;
+2. verify inactive hum rows leave frequency behavior irrelevant/unoverridden;
+3. determine whether correcting the unit-test expectation changes any scientific parameter (expected: no);
+4. define a separately versioned Stage-A execution attempt if justified.
+
+No waveform execution is authorized by this checkpoint.
+
+**Resume instruction:** Review and freeze the Stage-A test-contract correction only. Do not rerun Stage A yet.
