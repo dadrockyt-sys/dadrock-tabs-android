@@ -34,12 +34,12 @@ jobs:
       - name: Generate canonical S13 datasets without optimizer work
         env:
           PYTHONPATH: astra_backend
-        run: python -m synthetic.s13_pilot_v1 prepare --out-dir /tmp/astra-s13-preparation-v1
+        run: python -m synthetic.s13_pilot_v1 prepare-only --out-dir /tmp/astra-s13-preparation-v1
       - name: Assert preparation is model-free
         run: |
           python - <<'PY'
           import json
-          p=json.load(open('/tmp/astra-s13-preparation-v1/preparation-result.json'))
+          p=json.load(open('/tmp/astra-s13-preparation-v1/preparation-summary.json'))
           assert p['optimizerSteps']==0
           assert p['modelRun'] is False
           assert not any(p['guards'].values())
