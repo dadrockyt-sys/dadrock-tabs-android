@@ -69,9 +69,9 @@ def _validate_common_arrays(c,a,b):
         if not np.array_equal(c[k],a[k]) or not np.array_equal(c[k],b[k]):
             raise RuntimeError("non-feature identity mismatch: "+k)
 
-def build_datasets(control_path,intervention_out,challenge_out,receipt_out):
+def build_datasets(control_path,intervention_out,challenge_out,receipt_out,expected_examples=294):
     c=np.load(control_path,allow_pickle=False)
-    if len(c["features"])!=294:
+    if len(c["features"])!=int(expected_examples):
         raise RuntimeError("unexpected S13 control size")
     ia={k:np.array(c[k],copy=True) for k in c.files}
     qa={k:np.array(c[k],copy=True) for k in c.files}
