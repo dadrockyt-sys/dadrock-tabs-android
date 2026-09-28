@@ -3,7 +3,7 @@
 Updated: 2026-09-28 UTC  
 Branch: `astra-work`
 
-Latest instructions: **Supervisory review for GPT-5.6 after A1** at the end of this file. Start with its bounded model-free evidence review.
+Latest instructions: **Post-A1 supervisory evidence reconciliation complete** at the end of this file. Stop at the new project-decision boundary.
 
 ## Current status
 
@@ -218,3 +218,67 @@ Preserve thresholds, loss, sampler, decoder and frozen data identities unless th
 P1/P2 remain closed and P3 sealed. Any new real development program requires its own explicit access and evaluation scope. Main/Production stay unchanged.
 
 **Resume instruction:** Complete the model-free post-A1 evidence reconciliation and concrete decision brief above. Do not rerun A1 or open A2. Keep favorable synthetic findings qualified, preserve failed gates, and ask for a new project decision only after the reviewable brief is saved.
+
+
+## Post-A1 supervisory evidence reconciliation complete — 2026-09-28
+
+This section supersedes the earlier instruction to perform the evidence reconciliation. That bounded task is now complete.
+
+Created:
+- `docs/astra/POST_A1_SUPERVISORY_EVIDENCE_REVIEW_V1.md`
+- `docs/astra/POST_A1_SUPERVISORY_EVIDENCE_REVIEW_V1.json`
+- `astra_backend/synthetic/post_a1_result_validator_v1.py`
+- `astra_backend/synthetic/test_post_a1_result_validator_v1.py`
+
+Artifact verification:
+- A1 artifact **11002106213** still reports digest `sha256:ed013e7d35237f7b6d998a742b7cac45116d1b8ceb038400dc81edc4947b2054`.
+- Downloaded A1 `result.json` SHA-256 = `090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3`, exactly matching the frozen record.
+- V3 training artifact **11000187208** still reports digest `sha256:84f2566c656c37d5fe20bdc26bfdaa699d5e2c4089c0c91f99434d8f0282e3f3`.
+- Downloaded V3 `result.json` SHA-256 = `5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d`, exactly matching the frozen record.
+
+The evidence review now restores all available per-seed absolute state/joint/onset metrics, deltas, TP/FP/FN counts, negative-only event counts and negative duration for both comparators. It also preserves the qualifications that:
+- A1 has **279,556** parameters vs S11 **156,548** (**+123,008 / +78.6%**);
+- same seeds and batch plans do not mean paired downstream initialization because A1 initializes an extra encoder;
+- A1 remains a frozen scientific **FAIL**;
+- ordinary joint admission remains below the clean S11 control in every seed;
+- reused S9/V3 populations are development evidence, not independent confirmation;
+- zero A1 negative-only events were observed only on the bounded synthetic durations (**6 s ordinary, 12 s challenge per seed**), not in real-world use.
+
+Prospective pure result validator:
+- rejects duplicate/missing/extra seeds;
+- rejects missing metrics, booleans as numbers, NaN/infinity, impossible fractions, inconsistent deltas, inconsistent FP rates, mismatched identities and step totals;
+- does not import torch or instantiate a model;
+- is prospective only and does not modify A1/V3 frozen outputs.
+
+Focused model-free check:
+- exact command: `python -m unittest -v astra_backend.synthetic.test_post_a1_result_validator_v1`
+- result: **10/10 tests passed**
+- model imports **0**
+- optimizer steps **0**
+- workflow dispatches **0**
+- P1/P2/P3 access **none**
+
+### Concrete decision brief
+
+Existing evidence establishes that the dual-encoder **package** improves several fixed synthetic measurements relative to the source-domain-trained S11 intervention. It does not isolate encoder sharing from capacity/initialization effects, does not pass A1's prospective gate, and does not establish independent real-domain/product performance.
+
+The smallest direct evidence for product relevance would be a new prospectively frozen **independent real-development evaluation**, separate from P3 and not a silent reuse of closed P1/P2. A capacity/initialization-controlled architecture-identification study would answer only the narrower causal architecture question.
+
+**Current recommendation: pause model research.** If the user explicitly opens a new project, prefer independent real-development evidence before another synthetic architecture iteration.
+
+### Current authorization boundary
+
+No A2 is open.
+P1/P2 remain closed.
+P3 remains sealed.
+Main/Production remain unchanged.
+
+Do not:
+- run A1 again;
+- create/train A2 automatically;
+- run another synthetic model experiment from this review;
+- access P1/P2 or P3;
+- dispatch a model workflow;
+- mutate main/Production.
+
+**Resume instruction:** Stop at the project-decision boundary. The next empirical step requires explicit user authorization for a new independent real-development evidence program; a new architecture-identification/A2 project likewise requires its own explicit decision. Do not infer either authorization from a generic “continue.”
