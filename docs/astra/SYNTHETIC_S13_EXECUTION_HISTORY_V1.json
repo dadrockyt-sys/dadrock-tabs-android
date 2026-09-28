@@ -1,0 +1,6 @@
+{
+  "schema": "astra-synthetic-s13-execution-history-v1",
+  "status": "no-s13-execution-yet",
+  "consumedLaunchIdentities": [],
+  "notes": "Durable repository ledger. A launch identity must be absent here before execution and appended after any consumed run before another launch can be frozen."
+}
