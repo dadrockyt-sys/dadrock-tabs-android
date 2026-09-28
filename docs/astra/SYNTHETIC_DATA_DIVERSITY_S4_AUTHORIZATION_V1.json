@@ -2,14 +2,22 @@
   "schema": "astra-synthetic-data-diversity-s4-authorization-v1",
   "date": "2026-09-27",
   "status": "authorized_single_corrected_synthetic_gradient_coupling_pilot",
-  "userInstruction": "I authorize please continue 🙏",
-  "authorizationSequence": 2,
-  "priorAttempt": {
-    "runId": 36374078304,
-    "jobsCreated": 0,
-    "modelExecutionStarted": false,
-    "optimizerSteps": 0
-  },
+  "userInstruction": "I authorize",
+  "authorizationSequence": 3,
+  "priorAttempts": [
+    {
+      "runId": 36374078304,
+      "jobsCreated": 0,
+      "modelExecutionStarted": false,
+      "optimizerSteps": 0
+    },
+    {
+      "runId": 36374389465,
+      "jobId": 108777122117,
+      "modelExecutionStarted": false,
+      "optimizerSteps": 0
+    }
+  ],
   "authorization": {
     "maxExamples": 294,
     "maxAudioSeconds": 588,
@@ -37,6 +45,6 @@
     "runnerGitBlob": "3b24fd1739359a5d55bed8c6c1fbd9e6e9c74f11",
     "testsGitBlob": "81814aebf878102ec20d1cbb4abc8be54ddce5c9",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
-    "workflowGitBlob": "501c82f2627a0b6aae0108b91cff4e7cb22c3a54"
+    "workflowGitBlob": "8212042846c493064acd5034c76db33a38f1e288"
   }
 }
