@@ -1,0 +1,64 @@
+{
+  "schema": "astra-source-domain-joint-coverage-manifest-result-v2",
+  "date": "2026-09-28",
+  "status": "zero-render-parameter-manifest-admission-passed",
+  "branch": "astra-work",
+  "design": {
+    "path": "docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.md",
+    "gitBlob": "887498676915d5231d9574b7c5a9d8dc1d7d2613"
+  },
+  "spec": {
+    "path": "docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.json",
+    "gitBlob": "f78b3c9d0b3f7ade040c39b4792a65bddb9c1888"
+  },
+  "implementation": {
+    "generatorPath": "astra_backend/synthetic/source_domain_joint_coverage_manifest_v2.py",
+    "generatorGitBlob": "3336615cf15f7d5bad003b1927ff67855b1ef351",
+    "testsPath": "astra_backend/synthetic/test_source_domain_joint_coverage_manifest_v2.py",
+    "testsGitBlob": "057d205cfc2d1416eafac6f9ff2c2d11ac632bfd",
+    "workflowPath": ".github/workflows/astra-source-domain-joint-coverage-manifest-v2.yml"
+  },
+  "workflow": {
+    "run": 36481373445,
+    "job": 109127570036,
+    "head": "4ebd5a9f3d4c78a6493372d2642e67f77eb8ec4c",
+    "conclusion": "success",
+    "focusedTestsPassed": 4
+  },
+  "frozenInput": {
+    "preparationRun": 36475263654,
+    "preparationArtifact": 10993531230,
+    "controlFileSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+  },
+  "artifact": {
+    "id": 10997033182,
+    "name": "astra-source-domain-joint-coverage-manifest-v2",
+    "digest": "sha256:69fb45f4c5cfa20a18a5a3dda75c5ff835da38c08549d64fc929daaaba1b30ee",
+    "manifestJsonSha256": "a0d7786b1f459d348efef151f7ef8d4f5b1cf412b27ad61e7a4e052c4559e24d",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "admission": {
+    "trainRows": 210,
+    "challengeRows": 42,
+    "trainRowsPerFamily": 30,
+    "challengeRowsPerFamily": 6,
+    "allContinuousMarginalStrataExact": true,
+    "categoricalCountsExact": true,
+    "trainChallengeFullVectorDuplicates": 0,
+    "historicalS9MetadataPreserved": true
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "decision": "Zero-render V2 parameter-manifest admission passed. This does not authorize waveform rendering or model training. Next step is model-free waveform/prepared-feature admission design only."
+}
