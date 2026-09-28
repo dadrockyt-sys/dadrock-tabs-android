@@ -1,20 +1,24 @@
 # Next chat: start here
 
-S3 is complete and failed its frozen gate.
+S3 failed its frozen gate.
 
-pos_weight 16 versus 8:
-- exact onset admission 0.6744 vs 0.5891
-- event recall 0.5814 vs 0.5814
-- event F1 0.6977 vs 0.7075
-- repeated-note recall 0.5238 vs 0.5714
-- state/joint admission 0.2868 vs 0.3333
+Offline review supports one S4 hypothesis: shared-encoder task competition.
 
-So higher onset weighting moved onset admission but did not improve event recall and slightly harmed state/joint admission.
+S4 changes exactly one variable:
+- control: both state and onset losses update the shared encoder;
+- intervention: onset loss trains the onset head but its encoder activation is detached, so onset loss contributes zero encoder gradient.
 
-Repeated-reference preceding-frame onset probabilities stayed below the 0.50 threshold, so rising-edge plateau gating is not supported as the dominant repeated-attack bottleneck.
+Everything else uses the S3 control configuration:
+- state weight 6
+- onset pos_weight 8
+- onset-aware sampler
+- same five-frame architecture
+- lr 0.003
+- 500 steps/model
+- thresholds 0.50 / 0.50
+- decoder V2
 
-Standing policy:
-- routine GitHub-only non-model workflows are pre-authorized;
-- model execution, Codespaces, and potentially billable Vercel work require explicit authorization.
+Frozen design:
+`docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_DESIGN_V1.md`
 
-Next: offline review only. Do not run another model until a new one-variable design is frozen and explicitly authorized.
+Standing policy still applies: routine GitHub work is pre-authorized, but **S4 model execution requires explicit authorization**. P1/P2/P3 remain sealed.

@@ -3,98 +3,67 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S3 COMPLETE — ONSET ADMISSION IMPROVED BUT EVENT RECALL DID NOT; S3 GATE FAILED; OFFLINE REVIEW NEXT; P1/P2/P3 SEALED**
+Status: **S3 FAILED; OFFLINE REVIEW COMPLETE; S4 GRADIENT-COUPLING HYPOTHESIS FROZEN — MODEL EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
-Routine GitHub-only code/tests/docs/metadata workflows are pre-authorized. Explicit approval remains required for model execution, Codespaces use, and potentially billable Vercel operations.
+Routine GitHub-only code/tests/docs/metadata work is pre-authorized. Explicit approval remains required for:
+- model execution;
+- Codespaces;
+- potentially billable Vercel operations.
 
-## S3 canonical result
+## S3 conclusion retained
 
-- run **36373550895**
-- job **108774667718**
-- launch head `b4c755d7aabdb1c569f1c73db06193cdf5110224`
-- workflow conclusion **SUCCESS**
-- artifact **10949783844**
-- artifact digest `sha256:be0d9268042518f43088b5f55e655e77714025071de773b8009ba7a2266ccd57`
-- artifact expires **2026-10-28T03:25:21Z**
-- focused tests **5 / 5 passed**
-- 294 synthetic clips / 588 s
-- 500 + 500 optimizer steps
-- no threshold search
-- no automatic retry
-- no P1/P2/P3
-- no Codespaces
-- no Vercel
+S3 pos_weight 16 versus 8:
+- exact onset admission **0.6744 vs 0.5891**
+- event recall **0.5814 vs 0.5814**
+- event F1 **0.6977 vs 0.7075**
+- state/joint admission **0.2868 vs 0.3333**
+- repeated-note recall **0.5238 vs 0.5714**
 
-Frozen result:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_RESULT_V1.json`
+Increasing onset weight moved onset admission but did not move event recall and reduced state/joint admission.
 
-### Controlled comparison
+Repeated-reference preceding-frame onset probabilities remained below threshold, so rising-edge plateau suppression is not supported as the dominant repeated-note cause.
 
-Only onset BCE positive-token weight changed: **8 -> 16**.
+## Offline S3 review
 
-Both arms used identical:
-- generated arrays within the run;
-- initialization hash `df26a0091676b1009a30dcd7a76734172feb30a62fe70553aca98ad3807ac4b6`;
-- batch plan hash `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`;
-- state weight 6.0, sampler, architecture, lr, step count and thresholds.
+The S2/S3 pattern is compatible with shared-encoder task competition:
 
-### Scientific result — S3 FAIL
+- stronger state weighting improved state/joint admission and event recall;
+- stronger onset weighting improved onset admission while state/joint moved down and event recall stayed flat.
 
-Control pos_weight 8:
-- onset precision **0.9036**
-- recall **0.5814**
-- F1 **0.7075**
-- onset+offset F1 **0.5575**
-- repeated-note recall **0.5714**
-- exact onset admission **0.5891**
-- exact state/joint admission **0.3333**
-- repeated-reference onset admission **0.5000**
+This is not causal proof.
 
-Intervention pos_weight 16:
-- onset precision **0.8721**
-- recall **0.5814**
-- F1 **0.6977**
-- onset+offset F1 **0.5263**
-- repeated-note recall **0.5238**
-- exact onset admission **0.6744**
-- exact state/joint admission **0.2868**
-- repeated-reference onset admission **0.6212**
+Analysis:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S3_FAILURE_ANALYSIS_V1.md`
 
-Key changes:
-- exact onset admission **+0.0853**
-- event recall **+0.0000**
-- event F1 **-0.0099**
-- repeated-note recall **-0.0476**
-- state/joint admission **-0.0465**
+## Frozen S4 design
 
-Seven frozen criteria passed and seven failed. `s3GatePassed=false`.
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_DESIGN_V1.md`
 
-### Repeated-edge diagnostic
+Exactly two identical five-frame models using the S3-control loss settings:
+- state active weight 6.0;
+- onset pos_weight 8.0;
+- onset loss multiplier 4.0;
+- same onset-aware sampler;
+- same lr, 500-step cap, thresholds and decoder.
 
-For repeated references, preceding-frame onset probability stayed low:
-- control mean **0.0297**
-- intervention mean **0.0333**
-- intervention maximum remained below the 0.50 onset threshold.
+Only changed variable:
 
-Therefore the decoder's same-fret rising-edge plateau suppression is **not supported as the dominant cause** of the repeated-reference misses in this run.
+1. **control:** onset + state losses both backpropagate through the shared encoder;
+2. **intervention:** onset head receives a detached encoder representation, so onset loss trains the onset head but contributes zero gradient to the shared encoder. State loss still trains the encoder.
 
-### Interpretation
+No extra encoder and no parameter-count change.
 
-Increasing onset-positive weight clearly moved onset probabilities/admission, but the extra onset admission did not translate into more matched events because state/joint admission moved in the opposite direction and event recall stayed flat.
+The design requires explicit gradient-contract checks inside the eventual model workflow before optimization.
 
-Do not continue escalating onset weight automatically.
+### EXACT NEXT STEP — explicit model authorization required
 
-The onset/state tradeoff is compatible with shared-encoder task competition, but this run does not prove gradient interference.
+Do not execute S4 yet.
 
-### EXACT NEXT STEP
+Ordinary GitHub source/docs work remains pre-authorized, but the S4 checks and experiment execute models. Stephen must explicitly authorize S4 before launch.
 
-Only offline review/design is authorized automatically.
-
-No further model execution, P1/P2 transfer, P3 access, Codespaces, Vercel-cost operation, threshold rescue, or retry.
-
-If offline review supports another synthetic model experiment, freeze exactly one new variable and ask Stephen explicitly before execution.
+No P1/P2/P3, Codespaces, Vercel, threshold tuning, deployment or main mutation.
 
 
 ---
