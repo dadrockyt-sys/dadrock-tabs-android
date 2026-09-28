@@ -1,0 +1,65 @@
+{
+  "schema": "astra-real-domain-failure-localization-authorization-v1",
+  "date": "2026-09-28",
+  "status": "explicitly_authorized_single_zero_training_p1_p2_localization_diagnostic",
+  "userInstruction": "I authorize",
+  "authorization": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "p3Authorized": false,
+    "exactCaptureCountAuthorized": 8,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "normalizationFedToModelAuthorized": false,
+    "modelSelectionAuthorized": false,
+    "seedSelectionAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "cpuOnlyGithubActions": true,
+    "maxJobMinutes": 120,
+    "codespacesAuthorized": false,
+    "vercelAuthorized": false,
+    "productionAuthorized": false,
+    "mainMutationAuthorized": false
+  },
+  "scientificContract": {
+    "baselineCheckpointSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "candidateCheckpointSha256": "7d9785b73de73674a5c6c2305fd8666e7f2163fa9de4831d67810bb221807e91",
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "fixedOnsetWindowsFrames": [
+      1,
+      2,
+      4
+    ],
+    "p1Diagnostic": "pitch/string/fret error geometry",
+    "p2Diagnostic": "onset timing and attack novelty geometry",
+    "p3Sealed": true
+  },
+  "sourcePaths": {
+    "proposalGitBlob": "docs/astra/REAL_DOMAIN_FAILURE_LOCALIZATION_PROPOSAL_V1.md",
+    "runnerGitBlob": "astra_backend/evaluation/real_domain_failure_localization_v1.py",
+    "testsGitBlob": "astra_backend/evaluation/test_real_domain_failure_localization_v1.py",
+    "transferEvaluatorGitBlob": "astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py",
+    "tinyFitHarnessGitBlob": "astra_backend/tiny_fit_pilot_v1.py",
+    "p2PreparationGitBlob": "astra_backend/evaluation/cross_performer_screen_v1.py",
+    "syntheticGeneratorGitBlob": "astra_backend/synthetic/s0_pilot_v1.py",
+    "syntheticDiversityGitBlob": "astra_backend/synthetic/s9_pilot_v1.py",
+    "runtimeLockGitBlob": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "alignmentCorrectionsGitBlob": "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json",
+    "workflowGitBlob": ".github/workflows/astra-real-domain-failure-localization-v1.yml"
+  },
+  "sourceIdentities": {
+    "proposalGitBlob": "586d5e29b885e95ff370b84013b56e29b27f0389",
+    "runnerGitBlob": "0d246d0adabd057691f07529d2b8c57daefeb855",
+    "testsGitBlob": "f72124487a9894739676dca7ad97d15b43e0b9eb",
+    "transferEvaluatorGitBlob": "a6743669510c0b35529ea07f20071e24187f7b55",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "p2PreparationGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "syntheticGeneratorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "syntheticDiversityGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "workflowGitBlob": "ea09a8245937873ff33763fa8ce65de003797b81"
+  }
+}
