@@ -1,0 +1,88 @@
+{
+  "schema": "astra-synthetic-s13-positive-increment-design-v1",
+  "status": "prospective-design-frozen-no-model-execution",
+  "intervention": {
+    "name": "positive-onset-increment-compression-family-balanced-mixture",
+    "retainFraction": 0.5,
+    "formula": "soft[f]=x[f]-(1-retainFraction)*max(x[f]-x[f-1],0)",
+    "changesOnlyLabeledOnsetFrames": true,
+    "followingFrameMutation": false,
+    "immutableSource": true,
+    "familySelection": {
+      "scope": "train rows within each family",
+      "rankKey": "sha256('astra-s13-soft-subset-v1|<rowIndex>')",
+      "transformedCount": "floor(n_family/2)",
+      "runtimeRandomChoice": false
+    },
+    "newLoss": false,
+    "newSampler": false,
+    "newArchitecture": false,
+    "newDecoder": false
+  },
+  "challenge": {
+    "source": "clean control corpus",
+    "scope": "all test rows only",
+    "retainFraction": 0.5,
+    "transform": "same admitted nonrecursive positive-onset-increment compression",
+    "trainValidationFeaturesUnchanged": true
+  },
+  "training": {
+    "seeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "optimizer": "Adam",
+    "learningRate": 0.003,
+    "batchSize": 128,
+    "optimizerStepsPerModel": 500,
+    "maxModels": 6,
+    "maxTotalOptimizerSteps": 3000,
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossMultiplier": 4,
+    "sampler": "frozen 32/32/32/32 onset-aware sampler",
+    "pairedInitialization": true,
+    "pairedBatchIndices": true
+  },
+  "decoder": {
+    "version": "V2",
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false
+  },
+  "gate": {
+    "challenge": {
+      "f1PositiveSeeds": 3,
+      "recallPositiveSeeds": 3,
+      "meanF1GainMin": 0.05,
+      "meanRecallGainMin": 0.08,
+      "maxPrecisionLossPerSeed": 0.05,
+      "maxNegativeOnlyFpEventsPerSecond": 0.1
+    },
+    "ordinary": {
+      "maxF1LossPerSeed": 0.03,
+      "maxPrecisionLossPerSeed": 0.03,
+      "maxStateAdmissionLossPerSeed": 0.03,
+      "maxJointAdmissionLossPerSeed": 0.04,
+      "maxNegativeOnlyFpEventsPerSecond": 0.1,
+      "nonChordFamilyLossThreshold": 0.15,
+      "maxSeedsOverFamilyLossThreshold": 1
+    },
+    "allCriteriaRequired": true
+  },
+  "ceilings": {
+    "cpuOnlyGitHubActions": true,
+    "maxFitEvalMinutes": 90,
+    "paidComputeDollars": 0,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "productionMutation": false
+  },
+  "next": "implement runner/tests/launch controls offline; no optimizer work until source/data pins and all admission tests are frozen"
+}
