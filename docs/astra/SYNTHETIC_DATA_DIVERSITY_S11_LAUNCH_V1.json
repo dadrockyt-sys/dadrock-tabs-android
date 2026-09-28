@@ -1,0 +1,36 @@
+{
+  "schema": "astra-synthetic-data-diversity-s11-launch-v1",
+  "date": "2026-09-28",
+  "singleLaunch": true,
+  "authorizationCommit": "a3d08e77fd4aa30134e496c583ea851e48046e0b",
+  "authorizationGitBlob": "2225fe0d7559e40f1f3365ef202aeb492a9d1062",
+  "sourceIdentities": {
+    "designGitBlob": "b9b215ebb3298e60e8dd8be618b8535dca18b6e0",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s9DatasetGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runnerGitBlob": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "testsGitBlob": "4d58d72e7f304d359abd9854c003d81adc7b0f78",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "e625a4a3275194da0c4a3de2ca4e2bb540ee818c"
+  },
+  "executionIntent": {
+    "datasets": 2,
+    "examplesPerDataset": 294,
+    "audioSecondsPerDataset": 588,
+    "models": 6,
+    "maxOptimizerStepsPerModel": 500,
+    "totalOptimizerStepCeiling": 3000,
+    "runSeeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false
+  }
+}
