@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V2 REAL-DOMAIN AUDIT + S12/S13 FAILURES RECONCILED — NEXT: OFFLINE SOURCE-AUDIO SIMULATOR DIVERSITY DESIGN ONLY; P1/P2 CLOSED; P3 SEALED**
+Status: **V2-AWARE STRATEGY RECONCILED — SOURCE-AUDIO SIMULATOR DIVERSITY DESIGN/SPEC FROZEN; NEXT: OFFLINE IMPLEMENTATION + MODEL-FREE ADMISSION TESTS ONLY; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1294,3 +1294,59 @@ Requirements:
 - no model training, threshold changes, architecture change, launch marker, main or Production mutation yet.
 
 **Resume instruction:** Continue with the prospective source-audio simulator diversity design only. No P1/P2 rerun is needed or authorized by this checkpoint.
+
+
+## Source-audio simulator diversity prospective design frozen — 2026-09-28
+
+Continued from the corrected V2-aware strategy review without reopening real media and without model execution.
+
+Created and frozen:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_DESIGN_V1.md`
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_SPEC_V1.json`
+
+This is one waveform-level source-domain randomization package applied **before** frozen CQT preprocessing. It is not fit to P1/P2 and is not claimed to be a physical replica of those captures.
+
+Frozen source-domain axes include:
+- attack rise-time and transient-noise variability;
+- string/body damping and spectral brightness;
+- pick-position variability;
+- bounded pickup/electrical coloration;
+- mild nonlinear/compression-like wet behavior;
+- bounded broadband noise/hum;
+- per-note dynamic variation.
+
+The intervention policy is prospective:
+- all training waveform renders receive the package;
+- validation/test remain bit-identical to control;
+- row count and all labels/references/splits remain unchanged.
+
+A fixed held-out waveform-level challenge profile is also frozen now, before any optimizer work.
+
+### Current authorization boundary
+
+No training is authorized by this design.
+
+Next allowed work:
+1. implement the source-domain waveform generator package in a separate versioned module;
+2. add deterministic model-free fixture diagnostics/tests for isolated, repeated, scale, chord, palm-muted, legato and negative-only cases;
+3. verify label/reference/split identity;
+4. verify waveform finiteness, no unintended clipping and fundamental preservation within the frozen tolerance;
+5. verify attack-envelope span and that intended source changes survive frozen CQT preprocessing;
+6. optionally perform only the bounded model-free deterministic dataset preparation after fixture admission passes;
+7. freeze exact hashes, test results and any defects before proposing a model experiment.
+
+Hard model-free ceiling:
+- models loaded **0**;
+- optimizer steps **0**;
+- P1/P2/P3 access **none**;
+- <=60 diagnostic fixture renders;
+- <=900 total synthetic renders if full preparation occurs;
+- <=1,800 synthetic audio seconds;
+- <=500 MB persisted artifacts;
+- CPU only;
+- <=45 minutes;
+- $0 paid compute;
+- no automatic retry loop;
+- no main/Production mutation.
+
+**Resume instruction:** Implement and verify the frozen source-domain simulator diversity package offline. Do not train a model yet. Keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
