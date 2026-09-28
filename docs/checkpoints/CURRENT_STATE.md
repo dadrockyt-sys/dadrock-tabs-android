@@ -3,56 +3,34 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S0 FAILED; OFFLINE REVIEW COMPLETE; S1 ONSET-SAMPLING HYPOTHESIS DESIGNED — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
+Status: **S1 SYNTHETIC-ONLY SAMPLING PILOT AUTHORIZED — SOURCE FREEZE IN PROGRESS; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — S1 decision boundary
+## Authoritative GPT-5.6 instructions — authorized S1 execution
 
-S0 run 36369999876 / job 108764124344 completed workflow-green but failed the absolute synthetic gate.
+Stephen explicitly said **"I authorize"** after the frozen S1 design requested fresh authorization.
 
-### S0 facts
+Authorization applies only to `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_DESIGN_V1.md`.
 
-Five-frame model:
-- onset precision 0.8780
-- recall 0.2791
-- F1 0.4235
-- onset+offset F1 0.2941
-- repeated-note onset recall 0.2143
-- negative-only FP rate 0.0 events/s
+### Frozen boundary
 
-Per-frame comparator:
-- onset F1 0.1304
-- repeated-note onset recall 0.0476
+- exact deterministic S0 procedural generator/split regenerated only;
+- 294 clips / 588 s;
+- exactly two identical five-frame temporal models;
+- control = uniform frame sampler;
+- intervention = 32 positive-onset / 32 active-non-onset / 32 negative-structure-inactive / 32 other-inactive frames per batch;
+- 500 optimizer steps/model, 1,000 total;
+- lr 0.003; losses unchanged;
+- thresholds 0.50 / 0.50 unchanged;
+- zero threshold search/retuning;
+- zero automatic retries;
+- $0 paid compute;
+- no external audio assets;
+- no P1/P2/P3;
+- no deployment/main/customer delivery.
 
-No P1/P2/P3 access occurred.
+### Exact next task
 
-### Offline failure review
-
-The frozen training split contains:
-- 109,620 string/frame onset target positions;
-- 645 positive onset positions = 0.5884%;
-- 525 / 18,270 = 2.8736% clip-frames with at least one positive onset target.
-
-S0 sampled frames uniformly. Sparse positive-onset exposure is therefore a plausible next hypothesis, not a proven cause.
-
-Review: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_FAILURE_ANALYSIS_V1.md`
-
-### Frozen S1 design
-
-Design: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_DESIGN_V1.md`
-
-Compare exactly two identical five-frame temporal models:
-1. uniform frame sampling;
-2. onset-aware 32/32/32/32 stratified sampling.
-
-Everything else remains fixed: generator, split, architecture, loss weights, lr 0.003, 500 steps/model, thresholds 0.50/0.50, decoder V2.
-
-### EXACT NEXT STEP — fresh authorization required
-
-Do not execute S1 yet.
-
-No more rendering, optimizer work, threshold changes, P1/P2 access, P3 access, launch, deployment, or main mutation is authorized by the completed S0 grant.
-
-Fresh explicit authorization is required for the bounded S1 synthetic-only sampling experiment.
+Freeze the S1 runner/tests/workflow, record authorization with exact blob pins, launch exactly once, inspect that run, freeze the result, and stop. No automatic retry.
 
 
 ---
