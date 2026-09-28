@@ -1,0 +1,184 @@
+{
+  "schema": "astra-p2-attack-preparation-integrity-audit-spec-v1",
+  "date": "2026-09-28",
+  "status": "frozen_offline_spec_real_execution_not_authorized",
+  "purpose": "Distinguish weak source attacks from preparation/resampling representation effects or source-to-crop timing errors without loading a model.",
+  "population": {
+    "exactCaptureCount": 8,
+    "exactUniqueCapturesPerPerformer": 4,
+    "captureView": "directinput",
+    "p3Allowed": false
+  },
+  "preparedShape": [
+    200,
+    192
+  ],
+  "measurement": {
+    "rmsPreSeconds": 0.04,
+    "rmsPreGapSeconds": 0.005,
+    "rmsPostSeconds": 0.06,
+    "stftNfft": 1024,
+    "stftHopSamples": 256,
+    "stftWindow": "numpy.hanning",
+    "stftCenter": false,
+    "rawPeakSearchSeconds": 0.12,
+    "rawPeakContextSeconds": 0.5,
+    "cqtPeakSearchFrames": 4,
+    "cqtPeakContextFrames": 20,
+    "peakMadMultiplier": 3,
+    "simultaneousToleranceSeconds": 0.000001,
+    "peakRule": "strict-left/non-strict-right local maximum above median + 3*MAD in fixed context; otherwise unresolved",
+    "timeRounding": "round-to-nearest sample/frame using Python round",
+    "rawComparisonStage": "frozen ffmpeg mono decoded/resampled 22050 Hz",
+    "nativeStage": "decode original stream sample rate/channels; per-channel RMS and arithmetic-mean mix are descriptive only",
+    "rmsNormalizedStage": "existing rms_normalize on frozen 22050-Hz mono; descriptive only",
+    "preparedCqtStage": "reuse exact stored 200x192 crop prepared by frozen full-source CQT-before-crop path",
+    "unitsWarning": "Do not compare absolute raw/STFT/CQT values across representations as if units were interchangeable."
+  },
+  "frozenPreprocessing": {
+    "sampleRateHz": 22050,
+    "hopLengthSamples": 512,
+    "cqtBins": 192,
+    "binsPerOctave": 24,
+    "fminNote": "C1",
+    "gamma": 0,
+    "cqtAmplitudeDbReference": "per-capture max",
+    "cqtScaling": "amplitude_to_db / 80 + 1",
+    "fullSourceBeforeCrop": true,
+    "rmsNormalizeBeforeCqt": true,
+    "ffmpegMonoResample": true,
+    "cropFrames": 200
+  },
+  "captures": [
+    {
+      "performer": "P1",
+      "captureKey": "P1|chords|Drop3_7|directinput",
+      "archive": "P1_chords.zip",
+      "archiveBytes": 981741162,
+      "archiveMd5": "be9ef8bbdceb1912d565254e607a6d94",
+      "archiveSha256": "de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326",
+      "lagMs": -19,
+      "featureSha256": "6af1fac638fbcf1ab007d9ec717c004dbd10e9963abf18601d49bdb65013b263",
+      "targetSha256": "561ed7e9b6bd54742de973c4f33d8b84cbb6dd02215843daa44b048307d7d8d3"
+    },
+    {
+      "performer": "P1",
+      "captureKey": "P1|scales|Ab|directinput",
+      "archive": "P1_scales.zip",
+      "archiveBytes": 453349723,
+      "archiveMd5": "9c0b98e8fb42a522df727ea8bf545e4f",
+      "archiveSha256": "79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509",
+      "lagMs": -24,
+      "featureSha256": "0362bb1684632ecf7a1da2049d61c9080b7885b83e0f5add6eebef6d5c4f9b6e",
+      "targetSha256": "b1f3bb14b9f69cf119e86095bf05dbf8c5c820bf8a24f2e2017d963c7f88a41b"
+    },
+    {
+      "performer": "P1",
+      "captureKey": "P1|singlenotes|allsinglenotes|directinput",
+      "archive": "P1_singlenotes.zip",
+      "archiveBytes": 108626613,
+      "archiveMd5": "ca0c4674dde3805574685a313f7c39eb",
+      "archiveSha256": "130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4",
+      "lagMs": -24,
+      "featureSha256": "164db60823e00e9efab9c86154ef2c9df75fe464431fdd0b6cec86d809c9f806",
+      "targetSha256": "d8accc5ffaa70514d336c2d154ad0cb1360015b28d6f9118ea16a38fb0b9ccd7"
+    },
+    {
+      "performer": "P1",
+      "captureKey": "P1|techniques|PalmMute|directinput",
+      "archive": "P1_techniques.zip",
+      "archiveBytes": 326280863,
+      "archiveMd5": "18634a41a6db5a8de10d07eb3122a872",
+      "archiveSha256": "1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e",
+      "lagMs": -24,
+      "featureSha256": "90400c99f792c60a79f8ddbdb8176d6d4aa7e6a32e689647deaefe1d9359ffc9",
+      "targetSha256": "4bc74be8b0e1b84b0a4b7b9c6adf7baea1c79e3e5cdcc7e83606dc52fcb210f2"
+    },
+    {
+      "performer": "P2",
+      "captureKey": "P2|chords|Drop3_7|directinput",
+      "archive": "P2_chords.zip",
+      "archiveBytes": 1150819056,
+      "archiveMd5": "eb6f74dd19162237189281688ad7ad2e",
+      "archiveSha256": "9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce",
+      "lagMs": 47,
+      "featureSha256": "216168bd91e12e18a84c6697a533bc51af72cd12b93e007903126d3b2d7ad417",
+      "targetSha256": "3508bac1a566a1104233c66d583f01eaa089e0eb398de3d65eff436d656f0c75"
+    },
+    {
+      "performer": "P2",
+      "captureKey": "P2|scales|Ab|directinput",
+      "archive": "P2_scales.zip",
+      "archiveBytes": 471254783,
+      "archiveMd5": "96664853872f51e5f8aa4447313b7cf5",
+      "archiveSha256": "d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17",
+      "lagMs": -15,
+      "featureSha256": "f5ed92957e36d22867bb4b3cb83b30ab4440d7a334a772cde52f8e7d6eb0520f",
+      "targetSha256": "9a9507b60765c9bb2d3d21bb6775a7a4be065b9046ae0aead182e4a1cbd650e9"
+    },
+    {
+      "performer": "P2",
+      "captureKey": "P2|singlenotes|allsinglenotes|directinput",
+      "archive": "P2_singlenotes.zip",
+      "archiveBytes": 116133457,
+      "archiveMd5": "40fbf03d8b04bb2cf42df20f36dc2254",
+      "archiveSha256": "d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9",
+      "lagMs": -16,
+      "featureSha256": "926aa76b85012763aff14e72d3b668b78f7aae480b3e93a9901fe14d6abd3857",
+      "targetSha256": "e2eb414127cb87b2d09d99097a4e1df0895e3544a36ef9dbe7326a3d2ddf0d2b"
+    },
+    {
+      "performer": "P2",
+      "captureKey": "P2|techniques|PalmMute|directinput",
+      "archive": "P2_techniques.zip",
+      "archiveBytes": 395839610,
+      "archiveMd5": "f4189251ce50be25f06a173b2c2bba00",
+      "archiveSha256": "05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816",
+      "lagMs": -17,
+      "featureSha256": "5d068ff2f61c9b36c822b75cc89f9677d9f4be68f44887059475494774a75ce4",
+      "targetSha256": "1c8d216a844b9a2f4be54c57cf7ec6e65bdfd6e5a26fe03d109471d89d283be5"
+    }
+  ],
+  "pins": {
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "preprocessingGitBlob": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "p1PreparationGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "p2PreparationGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "eventAdapterGitBlob": "c07a8e94ebf511041b0b8b3afe988ffa4c3f3ce2",
+    "realTrainingGitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "sourceArchiveRecord": "Zenodo 14963133",
+    "transferEvaluationArtifactId": 10953563527,
+    "transferEvaluationResultSha256": "40be5720f840d02aca588d3901158b1c7a6f375831c1a73647b8044a1bf14f10"
+  },
+  "dependencyVersions": {
+    "python": "3.10.15",
+    "ffmpeg": "Ubuntu 22.04 apt package",
+    "numpy": "1.21.6",
+    "librosa": "0.9.1",
+    "resampy": "0.4.3",
+    "scipy": "1.8.1",
+    "soundfile": "0.12.1"
+  },
+  "admission": {
+    "requireExactArchiveHashes": true,
+    "requireExactPreparedFeatureAndTargetHashes": true,
+    "requireExactlyFourUniqueCapturesPerPerformer": true,
+    "rejectP3": true,
+    "rejectOverwriteOfFrozenResult": true,
+    "automaticRetry": false
+  },
+  "executionCeiling": {
+    "optimizerSteps": 0,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "cpuOnly": true,
+    "maxJobMinutes": 120,
+    "p3Opened": false,
+    "codespaces": false,
+    "vercel": false,
+    "mainMutation": false
+  }
+}
