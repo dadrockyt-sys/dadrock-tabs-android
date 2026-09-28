@@ -1,0 +1,26 @@
+{
+  "schema": "astra-source-domain-simulator-training-launch-request-v1",
+  "status": "offline-execution-package-not-yet-verified",
+  "launchIdentity": null,
+  "trainingAuthorized": false,
+  "note": "Prospective training design is frozen, but no launch marker exists. Complete offline package verification before any bounded synthetic-only execution.",
+  "preparation": {
+    "workflowRun": 36475263654,
+    "artifact": 10993531230,
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953"
+  },
+  "executionCeiling": {
+    "maxModels": 6,
+    "optimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false
+  }
+}
