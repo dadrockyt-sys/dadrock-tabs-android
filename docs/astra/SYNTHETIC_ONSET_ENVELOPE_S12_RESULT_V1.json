@@ -1,0 +1,181 @@
+{
+  "schema": "astra-synthetic-onset-envelope-s12-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "synthetic_soft_onset_robustness_improved_directionally_but_gate_failed_due_insufficient_gain_and_ordinary_regression",
+  "run": {
+    "runId": 36447341941,
+    "jobId": 109012933088,
+    "headSha": "b0381c7bf92c6ed5e7ea984fad716d0cc83c0432",
+    "conclusion": "success",
+    "createdAt": "2026-09-28T15:56:11Z",
+    "completedAt": "2026-09-28T15:58:21Z"
+  },
+  "artifact": {
+    "artifactId": 10980364991,
+    "name": "astra-synthetic-onset-envelope-s12-v1",
+    "digest": "sha256:b4c610134c0a2e8398e30b697b0cefc2cf820259df6f6b9d317e98f100714db4",
+    "resultJsonSha256": "6cf96ad22f35d9bfd6bcf7880e0abd97c7772f64299ebf30833f21c081798800",
+    "datasetReceiptSha256": "d5ee46ffa3ee88f95ef1f0c3ea4c91e6057d1228b7955b53d8427899b19083ee",
+    "s9ReceiptSha256": "ba33b6d5bbb2baa25d8ebbab9a31c3979cc0fa9a28c238cd6f22842734913bb7",
+    "s0ReceiptSha256": "a5059f0102a71f34fd221dccb3a99688c1ede021667b76516b3db46911363b3f",
+    "expiresAt": "2026-12-27T15:56:11Z"
+  },
+  "execution": {
+    "modelCount": 6,
+    "optimizerStepsTotal": 3000,
+    "fitEvalSeconds": 17.303743686000004,
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false,
+    "productionMutation": false
+  },
+  "fixed": {
+    "blendRange": [
+      0.25,
+      0.75
+    ],
+    "challengeBlend": 0.7,
+    "seeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdRetuning": false
+  },
+  "challengeDeltaSummary": {
+    "onsetF1": {
+      "mean": 0.037033933667502406,
+      "median": 0.03801137405980548,
+      "minimum": 0.021249555182756286,
+      "positiveCount": 3
+    },
+    "onsetRecall": {
+      "mean": 0.041343669250645955,
+      "median": 0.054263565891472854,
+      "minimum": 0.015503875968992165,
+      "positiveCount": 3
+    },
+    "onsetPrecision": {
+      "mean": 0.03576702801366279,
+      "median": 0.012192885955262134,
+      "minimum": -0.021296296296296258,
+      "positiveCount": 2
+    },
+    "stateAdmission": {
+      "mean": 0.007751937984496138,
+      "median": 0.015503875968992276,
+      "minimum": -0.031007751937984496,
+      "positiveCount": 2
+    },
+    "jointAdmission": {
+      "mean": 0.031007751937984496,
+      "median": 0.054263565891472854,
+      "minimum": -0.031007751937984496,
+      "positiveCount": 2
+    }
+  },
+  "ordinaryDeltaSummary": {
+    "onsetF1": {
+      "mean": -0.050843160925879594,
+      "median": -0.051656920077972734,
+      "minimum": -0.06250000000000022,
+      "positiveCount": 0
+    },
+    "onsetRecall": {
+      "mean": -0.06976744186046517,
+      "median": -0.07751937984496127,
+      "minimum": -0.07751937984496127,
+      "positiveCount": 0
+    },
+    "onsetPrecision": {
+      "mean": -0.016347599991911193,
+      "median": 0.002089864158829613,
+      "minimum": -0.0736842105263158,
+      "positiveCount": 2
+    },
+    "stateAdmission": {
+      "mean": -0.07751937984496125,
+      "median": -0.09302325581395349,
+      "minimum": -0.09302325581395351,
+      "positiveCount": 0
+    },
+    "jointAdmission": {
+      "mean": -0.06459948320413436,
+      "median": -0.06201550387596899,
+      "minimum": -0.07751937984496124,
+      "positiveCount": 0
+    }
+  },
+  "perSeed": [
+    {
+      "seed": 20260927,
+      "challenge": {
+        "onsetF1": 0.05184087175994545,
+        "onsetRecall": 0.015503875968992165
+      },
+      "ordinary": {
+        "onsetF1": -0.051656920077972734,
+        "stateAdmission": -0.09302325581395351,
+        "jointAdmission": -0.07751937984496124
+      }
+    },
+    {
+      "seed": 20260928,
+      "challenge": {
+        "onsetF1": 0.03801137405980548,
+        "onsetRecall": 0.054263565891472854
+      },
+      "ordinary": {
+        "onsetF1": -0.06250000000000022,
+        "stateAdmission": -0.09302325581395349,
+        "jointAdmission": -0.054263565891472854
+      }
+    },
+    {
+      "seed": 20260929,
+      "challenge": {
+        "onsetF1": 0.021249555182756286,
+        "onsetRecall": 0.054263565891472854
+      },
+      "ordinary": {
+        "onsetF1": -0.038372562699665824,
+        "stateAdmission": -0.04651162790697677,
+        "jointAdmission": -0.06201550387596899
+      }
+    }
+  ],
+  "frozenGate": {
+    "passed": false,
+    "passedCriteria": [
+      "challengeOnsetF1GainPositive3of3",
+      "challengeOnsetRecallGainPositive3of3",
+      "noChallengePrecisionLossOver0_05",
+      "challengeNegativeOnlyFpAtMost0_10EverySeed",
+      "ordinaryNonChordFamilyLossOver0_15InAtMostOneSeed",
+      "allSix500StepsFinitePairedFixedThresholds"
+    ],
+    "failedCriteria": [
+      "meanChallengeOnsetF1GainAtLeast0_05",
+      "meanChallengeOnsetRecallGainAtLeast0_08",
+      "noOrdinaryOnsetF1LossOver0_03",
+      "noOrdinaryStateAdmissionLossOver0_03",
+      "noOrdinaryJointAdmissionLossOver0_04"
+    ]
+  },
+  "interpretation": {
+    "supported": "Training-time CQT onset-transition softening improved soft-onset challenge onset F1 and recall in all three paired seeds.",
+    "insufficient": "The mean challenge gains were below the preregistered floors (+0.037 F1 vs +0.05 required; +0.041 recall vs +0.08 required).",
+    "regression": "The intervention degraded ordinary synthetic competence in all three seeds: mean onset F1 -0.0508, state admission -0.0775, joint admission -0.0646.",
+    "decision": "Reject this S12 intervention as an unstable robustness tradeoff. Freeze the result and do not automatically widen the blend range, alter the challenge, retune thresholds, or retry seeds."
+  }
+}
