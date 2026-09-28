@@ -1,0 +1,180 @@
+{
+  "schema": "astra-synthetic-real-domain-diagnostic-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "mixed_feature_domain_and_representation_alignment_failure",
+  "run": {
+    "runId": 36386315576,
+    "jobId": 108812332904,
+    "headSha": "72a35e694b468f8f7811934fd97ae3f215d0a576",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10955243031,
+    "name": "astra-synthetic-real-domain-diagnostic-v1",
+    "digest": "sha256:6f1e13f86c3e6f5a0db4428a67add945ea03f21e0bade3e662afd7045f88aecc",
+    "expiresAt": "2026-10-28T06:50:59Z",
+    "files": {
+      "result.json": "0aa0f754ed2f4ba4acd8935bdfd2d07a467fc16904598dd3dacf1e3ae6d613f9",
+      "synthetic-receipt.json": "4ca5e89da3de7285de9e2627ac33fadf3afe9fc041128b82a73b5590eb623a3f"
+    }
+  },
+  "execution": {
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "modelWeightsChanged": false,
+    "p1Accessed": true,
+    "p2Accessed": true,
+    "p3Opened": false,
+    "automaticRetry": false
+  },
+  "models": {
+    "baselineSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "candidateSha256": "7d9785b73de73674a5c6c2305fd8666e7f2163fa9de4831d67810bb221807e91"
+  },
+  "rawFeatureDomain": {
+    "synthetic": {
+      "mean": 0.1822834643641515,
+      "std": 0.22971067418417163,
+      "rms": 0.29324777103115984
+    },
+    "p1": {
+      "mean": 0.14385602660787603,
+      "std": 0.21114969966641323,
+      "rms": 0.25549706859496923
+    },
+    "p2": {
+      "mean": 0.1382785974671909,
+      "std": 0.19978129281917678,
+      "rms": 0.24296817791224237
+    },
+    "centroidDistances": {
+      "syntheticToP1": {
+        "l2": 1.16165725502378,
+        "cosineDistance": 0.07400912583235175
+      },
+      "syntheticToP2": {
+        "l2": 1.190597278689401,
+        "cosineDistance": 0.08334326915757717
+      },
+      "p1ToP2": {
+        "l2": 0.6698434071160291,
+        "cosineDistance": 0.038086787346986894
+      }
+    }
+  },
+  "candidateEncoder": {
+    "synthetic": {
+      "mean": 1.158562692022726,
+      "std": 2.0009456484964954,
+      "zeroFraction": 0.5251201594143404
+    },
+    "p1": {
+      "mean": 0.8648108894266988,
+      "std": 1.7377013725604977,
+      "zeroFraction": 0.568076171875
+    },
+    "p2": {
+      "mean": 0.7474949854313582,
+      "std": 1.29932401456517,
+      "zeroFraction": 0.53787109375
+    },
+    "centroidDistances": {
+      "syntheticToP1": {
+        "l2": 5.710358140195107,
+        "cosineDistance": 0.03984723782934285
+      },
+      "syntheticToP2": {
+        "l2": 7.01859699015028,
+        "cosineDistance": 0.03548917572125909
+      },
+      "p1ToP2": {
+        "l2": 4.2763802729695675,
+        "cosineDistance": 0.03136332290172883
+      }
+    }
+  },
+  "exactReferenceAdmission": {
+    "baseline": {
+      "synthetic": {
+        "onset": 0.4263565891472868,
+        "state": 0.015503875968992248,
+        "joint": 0.015503875968992248
+      },
+      "p1": {
+        "onset": 0.625,
+        "state": 0.625,
+        "joint": 0.5625
+      },
+      "p2": {
+        "onset": 0,
+        "state": 0.26666666666666666,
+        "joint": 0
+      }
+    },
+    "candidate": {
+      "synthetic": {
+        "onset": 0.6744186046511628,
+        "state": 0.32558139534883723,
+        "joint": 0.31007751937984496
+      },
+      "p1": {
+        "onset": 0.0625,
+        "state": 0,
+        "joint": 0
+      },
+      "p2": {
+        "onset": 0,
+        "state": 0.26666666666666666,
+        "joint": 0
+      }
+    }
+  },
+  "candidateReferenceGeometry": {
+    "synthetic": {
+      "onsetProbabilityMean": 0.6582589094750873,
+      "trueStateProbabilityMean": 0.33545660613568995,
+      "silenceProbabilityMean": 0.4725470620258265,
+      "trueStateRankMean": 5.465116279069767
+    },
+    "p1": {
+      "onsetProbabilityMean": 0.0748213056502442,
+      "trueStateProbabilityMean": 0.03050097539274414,
+      "silenceProbabilityMean": 0.7171142365550622,
+      "trueStateRankMean": 5.0625
+    },
+    "p2": {
+      "onsetProbabilityMean": 0.04413436467663049,
+      "trueStateProbabilityMean": 0.2672457565720897,
+      "silenceProbabilityMean": 0.3917391570440183,
+      "trueStateRankMean": 4.533333333333333
+    }
+  },
+  "candidateGlobalBehavior": {
+    "synthetic": {
+      "onsetProbabilityMean": 0.011907101213790293,
+      "bestActiveProbabilityMean": 0.11680958658006002,
+      "silenceProbabilityMean": 0.8704218103560428,
+      "decodedEvents": 111
+    },
+    "p1": {
+      "onsetProbabilityMean": 0.05189772390700213,
+      "bestActiveProbabilityMean": 0.17197700982541733,
+      "silenceProbabilityMean": 0.7686079519738708,
+      "decodedEvents": 10
+    },
+    "p2": {
+      "onsetProbabilityMean": 0.024135643332001768,
+      "bestActiveProbabilityMean": 0.2481544179859326,
+      "silenceProbabilityMean": 0.679386187116091,
+      "decodedEvents": 1
+    }
+  },
+  "interpretation": {
+    "featureShift": "Synthetic raw-feature centroids are farther from each real population than P1 and P2 are from each other, with higher synthetic mean/RMS energy.",
+    "mislocalization": "The candidate is not globally suppressed on real data: global onset and active-state probabilities are higher on real than on synthetic, while probabilities at true reference attacks collapse. This indicates misplaced activation rather than a simple global threshold/calibration problem.",
+    "p1Mechanism": "On P1 both onset admission and exact state admission collapse for the synthetic candidate, while the V3 baseline remains healthy.",
+    "p2Mechanism": "On P2 both models have zero onset admission while retaining 0.2667 exact state admission, identifying onset/attack localization as the immediate shared P2 bottleneck.",
+    "decision": "Freeze as mixed domain/representation failure. Do not threshold-rescue, normalize model inputs post hoc, tune on the eight crops, seed-pick, or open P3."
+  }
+}
