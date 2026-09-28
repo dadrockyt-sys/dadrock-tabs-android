@@ -58,6 +58,31 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check 'pip==24.0'
           python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Freeze observed offline toolchain receipt
+        run: |
+          {
+            python --version
+            ffmpeg -version | head -n 1
+            ffprobe -version | head -n 1
+            python - <<'PY'
+          import numpy, librosa, scipy, resampy, soundfile
+          print("numpy="+numpy.__version__)
+          print("librosa="+librosa.__version__)
+          print("scipy="+scipy.__version__)
+          print("resampy="+resampy.__version__)
+          print("soundfile="+soundfile.__version__)
+          PY
+          } > /tmp/astra-p2-integrity-toolchain.txt
+          cat /tmp/astra-p2-integrity-toolchain.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-p2-integrity-offline-toolchain
+          path: /tmp/astra-p2-integrity-toolchain.txt
+          retention-days: 30
 
       - name: Run focused integrity-audit synthetic tests
         run: PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py
