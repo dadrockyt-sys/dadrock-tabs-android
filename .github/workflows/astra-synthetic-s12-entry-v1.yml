@@ -1,0 +1,24 @@
+name: Astra synthetic S12 entry v1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V1.json'
+
+jobs:
+  pilot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - run: python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+      - run: PYTHONPATH=astra_backend python astra_backend/synthetic/test_s12_pilot_v1.py
+      - run: PYTHONPATH=astra_backend python astra_backend/synthetic/s12_entry_v1.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-synthetic-onset-envelope-s12-v1
+          path: astra-s12-evidence
