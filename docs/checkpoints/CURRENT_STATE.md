@@ -217,3 +217,136 @@ The next task is implementation and synthetic verification of the audit, not ano
 - Any later modeling work needs a separate finite development plan, budget and success/stop rule. P1/P2 are now exposed development evidence; P3 remains untouched until a new gate and separate authorization. No indefinite synthetic seed/architecture search.
 
 **Resume instruction:** Implement and test the model-free preparation-integrity audit offline, then save the concrete execution package. Keep the candidate/result frozen, thresholds 0.50/0.50, P3 sealed and main/Production unchanged.
+
+
+## Preparation-integrity audit implementation checkpoint — 2026-09-28
+
+The offline preparation requested by the supervisory review is now implemented and synthetically verified. **No P1/P2 source was reopened by this preparation work. P3 remains sealed. No model was loaded or run. No optimizer/training, threshold search, Codespaces, Vercel, main, or Production mutation occurred.**
+
+### Concrete execution package now frozen on `astra-work`
+
+- model-free runner: `astra_backend/evaluation/p2_attack_preparation_integrity_audit_v1.py`
+  - Git blob `3f33b967aee9d80dddddf35e4b7eda6922ff09df`
+- focused synthetic/admission tests: `astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py`
+  - Git blob `3377ceccda1602105a4453f567df6fc0a4a7f262`
+- frozen machine-readable spec: `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json`
+  - Git blob `5356ea218027d595c08b9f46491f0abf1f5259c1`
+- offline test workflow: `.github/workflows/astra-p2-attack-preparation-integrity-audit-offline-tests-v1.yml`
+  - Git blob `4544647991f0cd41b834904c39aed4b53488ad59`
+- disabled-by-default authorization-gated real workflow: `.github/workflows/astra-p2-attack-preparation-integrity-audit-v1.yml`
+  - Git blob `a9673b97bf81724ee3d2e6819245d9105f4e9d69`
+- authorization request, **not an authorization**: `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_REQUEST_V1.json`
+  - status: `awaiting_fresh_explicit_user_authorization`
+  - no authorization file and no launch marker have been created.
+
+### Frozen audit semantics
+
+The audit has no model imports/loads/inference. It preserves and reports four preparation stages:
+1. native decoded source audio, including channel metadata, per-channel attack measurements and arithmetic-mean channel mix;
+2. the frozen ffmpeg mono 22,050 Hz decoded/resampled audio;
+3. the existing RMS-normalized 22,050 Hz audio, descriptive only;
+4. the already-prepared 200 x 192 CQT crop, preserving full-source preprocessing-before-cropping.
+
+Fixed measurements include:
+- 40 ms RMS pre-window, ending 5 ms before the annotation;
+- 60 ms RMS post-window;
+- waveform first-difference energy;
+- raw STFT positive flux with n_fft 1024, hop 256, Hann window, center=false;
+- raw transient search +/-120 ms inside a 500 ms fixed context;
+- prepared-CQT frame difference and positive flux;
+- prepared-CQT peak search +/-4 frames inside a fixed +/-20-frame context;
+- peak qualification: local maximum above context median + 3 MAD; no qualifying peak => null/unresolved, never widen the window;
+- simultaneous notes within 1 microsecond are one acoustic attack for attack-weighted summaries;
+- per-note records are retained separately;
+- per-capture summaries precede P1/P2 population summaries;
+- both event-weighted and capture-balanced summaries are emitted.
+
+Eligibility is frozen before real access. A reference must be a frozen prepared scorable event and must have the full raw RMS window, full raw peak-search window, and full prepared-CQT +/-4-frame search window. Ineligible events are recorded with reasons and excluded from acoustic-attack summaries rather than repaired.
+
+Exact archive downloads are bounded to **4,004,045,267 bytes total**, sequentially, one archive at a time; the largest single archive is 1,150,819,056 bytes. The eight archive byte/MD5/SHA256 identities, exact capture keys, lags, frozen feature hashes, target hashes, source/preparation Git blobs, and dependency pins are frozen in the spec.
+
+The observed Ubuntu 22.04 toolchain is also frozen before source access:
+- Python 3.10.15
+- ffmpeg `4.4.2-0ubuntu0.22.04.1`
+- ffprobe `4.4.2-0ubuntu0.22.04.1`
+- NumPy 1.21.6
+- librosa 0.9.1
+- SciPy 1.8.1
+- resampy 0.4.3
+- soundfile 0.12.1
+
+Toolchain observation:
+- offline run **36398621201**
+- artifact **10958999311**
+- digest `sha256:6967c04f04644c642a00377d7fba175d179697c587247d84fc123a93f0e45596`
+
+The real workflow verifies the exact ffmpeg/ffprobe version lines **before** any P1/P2 source access.
+
+### Synthetic/admission verification
+
+Final focused offline verification:
+- workflow run **36398953237**
+- job **108852033523**
+- tested head `4cd69a6c0a996e351987bc3b65afe797ec7975ec`
+- conclusion **SUCCESS**
+
+Successful steps included:
+- frozen source-pin verification;
+- frozen CPU runtime installation;
+- frozen ffmpeg toolchain verification;
+- focused preparation-integrity synthetic tests;
+- localization timestamp bookkeeping regression.
+
+The focused tests cover:
+- known signed lag and crop-offset transform;
+- sample rounding;
+- stereo cancellation/channel handling;
+- raw gain scaling versus gain-invariant RMS ratio behavior;
+- silence/no-qualified-peak behavior;
+- known impulse peak localization;
+- prepared-CQT novelty peak localization;
+- repeated/chord attack grouping;
+- out-of-range/no-valid-peak behavior;
+- nonfinite input rejection;
+- clipped finite input;
+- peak tie rule;
+- duplicate/missing/extra capture-spec rejection;
+- P3 rejection;
+- changed model/optimizer execution ceiling rejection;
+- missing source-pin rejection;
+- existing result overwrite rejection.
+
+Repository-wide Astra backend tests also passed for the final implementation state used by the package:
+- run **36398953268**
+- job **108851974933**
+- conclusion **SUCCESS**
+
+### Bookkeeping defect fixed offline without rewriting history
+
+`real_domain_failure_localization_v1.py::_synthetic_refs` previously wrote descriptive synthetic event start times with `256/22050`. It now uses the frozen preprocessing constants `HOP_LENGTH_SAMPLES/SAMPLE_RATE_HZ = 512/22050`, with a regression test.
+
+This does **not** alter the historical frozen localization result, does **not** explain the real-domain failure, and does **not** justify rerunning inference. The old diagnostic consumed stored frame indices for the relevant novelty/model lookups; preserve the old result as historical evidence.
+
+### Next executable step — requires fresh explicit authorization
+
+The package is now reviewable and its offline tests pass. The next step is exactly one authorization-gated P1/P2 source-access run using the frozen package above.
+
+Required scope:
+- exact four frozen P1 + exact four frozen P2 direct-input captures only;
+- optimizer steps **0**;
+- models loaded **0**;
+- model inference **false**;
+- threshold search/retuning **false**;
+- one CPU GitHub Actions execution, <=120 minutes;
+- total source downloads <=4,004,045,267 bytes;
+- automatic retry **false**;
+- Codespaces **false**;
+- Vercel **false**;
+- main/Production mutation **false**;
+- P3 **sealed**.
+
+Do **not** create `P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V1.json` or `P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_LAUNCH_V1.json` until the user gives fresh explicit authorization for this exact P1/P2 source-access audit.
+
+After authorization, create a source-pinned authorization file and one single-use launch marker, execute once, freeze the exact result/artifact hashes, update this handoff, and stop. Do not automatically tune or train from the outcome.
+
+**Resume instruction:** Await the user's fresh explicit authorization for the single frozen P1/P2 preparation-integrity audit. Until then, P1/P2 source access is closed and P3 remains sealed.
