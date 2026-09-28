@@ -1,0 +1,154 @@
+name: Astra source-domain V3 synthetic training V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  train:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Validate one-shot launch
+        run: |
+          python - <<'PY'
+          import json,os
+          x=json.load(open('docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_LAUNCH_V1.json'))
+          assert x['schema']=='astra-source-domain-v3-synthetic-training-launch-v1'
+          assert x['status']=='armed'
+          assert x['launchIdentity']=='source-domain-v3-training-20260928-canonical-01'
+          assert x['maxModels']==6
+          assert x['optimizerStepsPerModel']==500
+          assert x['maxTotalOptimizerSteps']==3000
+          assert x['stateThreshold']==0.5 and x['onsetThreshold']==0.5
+          assert x['thresholdSearch'] is False and x['thresholdRetuning'] is False
+          assert x['automaticRetry'] is False
+          assert x['p1Access'] is False and x['p2Access'] is False and x['p3Access'] is False
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          print('V3_TRAINING_LAUNCH_OK')
+          PY
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+
+      - name: Download exact frozen control
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-control
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+
+      - name: Download exact V2 training support
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v2-stage-b-v1
+          path: /tmp/astra-source-domain-v2-stage-b
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36485375684'
+
+      - name: Download exact V3 challenge
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v3-final-coverage-v2
+          path: /tmp/astra-source-domain-v3-final
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36487005586'
+
+      - name: Verify frozen files and package source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTROL=/tmp/astra-source-domain-control/datasets/s9-control.npz
+          INTERVENTION=/tmp/astra-source-domain-v2-stage-b/v2-intervention.npz
+          CHALLENGE=/tmp/astra-source-domain-v3-final/v3-primary-challenge.npz
+          test "$(sha256sum "$CONTROL" | awk '{print $1}')" = "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+          test "$(sha256sum "$INTERVENTION" | awk '{print $1}')" = "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b"
+          test "$(sha256sum "$CHALLENGE" | awk '{print $1}')" = "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce"
+          python - <<'PY'
+          import hashlib,pathlib
+          def blob(p):
+              b=pathlib.Path(p).read_bytes()
+              return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+          assert blob('astra_backend/synthetic/source_domain_v3_synthetic_training_v1.py')=='4200536e693da7fbd0bb8980ebc6a0fd98cf273f'
+          assert blob('astra_backend/synthetic/s11_pilot_v1.py')=='d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8'
+          assert blob('astra_backend/synthetic/source_domain_simulator_training_v1.py')=='3c9e92d6386707369ef071b60cd9d5d5d5b8558d'
+          print('V3_TRAINING_PINS_OK')
+          PY
+
+      - name: Re-run focused package tests
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_source_domain_v3_synthetic_training_v1.py
+
+      - name: Re-verify exact datasets
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.source_domain_v3_synthetic_training_v1 verify \
+            --control /tmp/astra-source-domain-control/datasets/s9-control.npz \
+            --intervention /tmp/astra-source-domain-v2-stage-b/v2-intervention.npz \
+            --challenge /tmp/astra-source-domain-v3-final/v3-primary-challenge.npz
+
+      - name: Run final V3 synthetic training exactly once
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-v3-training
+          python -m synthetic.source_domain_v3_synthetic_training_v1 run \
+            --control /tmp/astra-source-domain-control/datasets/s9-control.npz \
+            --intervention /tmp/astra-source-domain-v2-stage-b/v2-intervention.npz \
+            --challenge /tmp/astra-source-domain-v3-final/v3-primary-challenge.npz \
+            --out /tmp/astra-v3-training/result.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/astra-v3-training/result.json'))
+          e=r['execution']
+          assert e['modelCount']==6
+          assert e['optimizerStepsPerModel']==500
+          assert e['optimizerStepsTotal']==3000
+          assert e['automaticRetry'] is False
+          assert e['p1Accessed'] is False and e['p2Accessed'] is False and e['p3Opened'] is False
+          assert r['fixed']['stateThreshold']==0.5 and r['fixed']['onsetThreshold']==0.5
+          assert r['fixed']['thresholdSearch'] is False and r['fixed']['thresholdRetuning'] is False
+          print('V3_TRAINING_EXECUTION_COMPLETE')
+          print('SCIENTIFIC_GATE='+str(r['v3SyntheticTrainingGatePassed']))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-source-domain-v3-synthetic-training-v1
+          path: /tmp/astra-v3-training
+          if-no-files-found: warn
+          retention-days: 30
