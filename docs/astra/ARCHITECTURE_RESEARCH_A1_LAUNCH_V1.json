@@ -1,0 +1,29 @@
+{
+  "schema": "astra-architecture-research-a1-launch-v1",
+  "date": "2026-09-28",
+  "status": "armed",
+  "launchIdentity": "architecture-a1-20260928-canonical-01",
+  "design": "docs/astra/ARCHITECTURE_RESEARCH_A1_DESIGN_V1.md",
+  "spec": "docs/astra/ARCHITECTURE_RESEARCH_A1_SPEC_V1.json",
+  "offlineVerificationRun": 36492512434,
+  "offlineVerificationArtifact": 11002241343,
+  "offlineVerificationReceiptSha256": "55b3b48bc4f47ff3bc34850b53bf7913026f2091a4193c77727efcf8348e3a1c",
+  "seeds": [
+    20260927,
+    20260928,
+    20260929
+  ],
+  "maxModels": 3,
+  "stepsPerModel": 500,
+  "maxTotalOptimizerSteps": 1500,
+  "stateThreshold": 0.5,
+  "onsetThreshold": 0.5,
+  "thresholdSearch": false,
+  "thresholdRetuning": false,
+  "automaticRetry": false,
+  "paidComputeDollars": 0,
+  "p1Access": false,
+  "p2Access": false,
+  "p3Access": false,
+  "productionMutation": false
+}
