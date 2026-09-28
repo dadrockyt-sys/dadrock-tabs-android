@@ -176,6 +176,12 @@ def render_source_domain(template,variant,*,profile="intervention",override=None
     want=int(round(CLIP_SECONDS*OUTPUT_SR))
     out=np.pad(out,(0,max(0,want-len(out))))[:want]
     if not np.isfinite(out).all(): raise RuntimeError("nonfinite source-domain audio")
+    # Polyphase resampling can overshoot the pre-resample peak slightly. The frozen
+    # admission rule is on final output, so enforce the same deterministic peak
+    # bound once more after resampling rather than weakening the test.
+    final_peak=float(np.max(np.abs(out)))
+    if final_peak>FINAL_PEAK:
+        out=(out*(FINAL_PEAK/final_peak)).astype(np.float32,copy=False)
     if float(np.max(np.abs(out)))>=.999: raise RuntimeError("source-domain clipping guard")
     return (out,meta) if return_metadata else out
 
