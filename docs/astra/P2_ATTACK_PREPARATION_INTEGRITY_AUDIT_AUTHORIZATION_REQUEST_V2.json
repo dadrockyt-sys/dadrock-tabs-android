@@ -1,0 +1,64 @@
+{
+  "schema": "astra-p2-attack-preparation-integrity-audit-authorization-request-v2",
+  "date": "2026-09-28",
+  "status": "awaiting_fresh_explicit_user_authorization_after_failed_v1_execution",
+  "priorExecution": {
+    "runId": 36399552501,
+    "jobId": 108853905409,
+    "outcome": "failed_before_measurement",
+    "failureRecord": "docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_FAILED_EXECUTION_V1.json",
+    "automaticRetryPerformed": false,
+    "reasonFreshAuthorizationRequired": "The prior authorization was for one single execution and automatic retry was explicitly false."
+  },
+  "purpose": "Run one corrected zero-model P1/P2 preparation-integrity audit using the exact deterministic prepared feature identities observed in the authorized failed execution.",
+  "authorizationRequested": {
+    "p1MediaAccess": true,
+    "p2MediaAccess": true,
+    "p3": false,
+    "exactCaptureCount": 8,
+    "optimizerSteps": 0,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "cpuOnlyGithubActions": true,
+    "maxJobMinutes": 120,
+    "maxDownloadBytes": 4004045267,
+    "codespaces": false,
+    "vercel": false,
+    "production": false,
+    "mainMutation": false
+  },
+  "fixedExecution": {
+    "specPath": "docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json",
+    "runnerPath": "astra_backend/evaluation/p2_attack_preparation_integrity_audit_v1.py",
+    "testsPath": "astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py",
+    "workflowPath": ".github/workflows/astra-p2-attack-preparation-integrity-audit-v2.yml",
+    "specGitBlob": "06c966b37e65a1e0a93ab8112f439dd87073b042",
+    "runnerGitBlob": "3f33b967aee9d80dddddf35e4b7eda6922ff09df",
+    "testsGitBlob": "3377ceccda1602105a4453f567df6fc0a4a7f262",
+    "workflowGitBlob": "29cf152667b3e53c46c5c8a33416aeb8641d8714",
+    "priorFailureRecordGitBlob": "385448bd51666e93dfbc32a169ef90beeb37deb1"
+  },
+  "correctionScope": {
+    "preparedFeatureHashesOnly": true,
+    "targetHashesChanged": false,
+    "measurementDefinitionsChanged": false,
+    "modelOrThresholdChanges": false,
+    "sourcePopulationChanged": false,
+    "p3Opened": false
+  },
+  "safety": {
+    "noModelDownloads": true,
+    "noModelInference": true,
+    "noTraining": true,
+    "noThresholdChanges": true,
+    "noParameterSelectionFromP1P2": true,
+    "noAutomaticRetry": true,
+    "authorizationV2FileNotCreated": true,
+    "launchV2MarkerNotCreated": true,
+    "p3Sealed": true
+  },
+  "userActionNeeded": "Fresh explicit authorization for exactly one corrected P1/P2 source-access audit v2."
+}
