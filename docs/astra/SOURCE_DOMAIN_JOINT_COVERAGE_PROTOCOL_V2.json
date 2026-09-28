@@ -1,0 +1,113 @@
+{
+  "schema": "astra-source-domain-joint-coverage-protocol-v2",
+  "date": "2026-09-28",
+  "status": "design-only-no-render-no-training",
+  "unchangedMarginalPriors": {
+    "attackBaseRiseSeconds": {
+      "distribution": "log_uniform",
+      "min": 0.0015,
+      "max": 0.05
+    },
+    "transientNoiseGain": {
+      "distribution": "uniform",
+      "min": 0,
+      "max": 0.2
+    },
+    "transientDecaySeconds": {
+      "distribution": "log_uniform",
+      "min": 0.003,
+      "max": 0.02
+    },
+    "dampingMultiplier": {
+      "distribution": "log_uniform",
+      "min": 0.6,
+      "max": 1.8
+    },
+    "brightness": {
+      "distribution": "uniform",
+      "min": 0.55,
+      "max": 0.92
+    },
+    "pickPosition": {
+      "distribution": "uniform",
+      "min": 0.08,
+      "max": 0.48
+    },
+    "lowpassCutoffHz": {
+      "distribution": "log_uniform",
+      "min": 2800,
+      "max": 12000
+    },
+    "spectralTiltDb": {
+      "distribution": "uniform",
+      "min": -6,
+      "max": 6
+    },
+    "highpassCornerHz": {
+      "distribution": "uniform",
+      "min": 20,
+      "max": 80
+    },
+    "nonlinearDrive": {
+      "distribution": "uniform",
+      "min": 1,
+      "max": 2.5
+    },
+    "nonlinearWet": {
+      "distribution": "uniform",
+      "min": 0,
+      "max": 0.3
+    },
+    "broadbandNoiseRmsRelative": {
+      "distribution": "log_uniform",
+      "min": 0.00001,
+      "max": 0.003
+    }
+  },
+  "training": {
+    "rowsPerFamily": 30,
+    "families": 7,
+    "totalRows": 210,
+    "continuousQuantiles": "(k+0.5)/30",
+    "namespace": "astra-source-domain-joint-v2|train|<family>|<axis>",
+    "nonlinearActivePerFamily": 15,
+    "humActivePerFamily": 11,
+    "humFrequencyBalance": "difference at most one"
+  },
+  "primaryChallenge": {
+    "rowsPerFamily": 6,
+    "families": 7,
+    "totalRows": 42,
+    "continuousQuantiles": "(k+0.5)/6",
+    "namespace": "astra-source-domain-joint-v2|challenge|<family>|<axis>",
+    "nonlinearActivePerFamily": 3,
+    "humActivePerFamily": 2,
+    "humFrequencyBalance": "1/1 among active rows when two active",
+    "insideSameMarginalSupport": true
+  },
+  "secondaryStress": {
+    "source": "frozen V1 fixed challenge profile",
+    "gateEligible": false,
+    "diagnosticOnly": true
+  },
+  "admission": {
+    "exactMarginalStrataCoverage": true,
+    "exactCategoricalCounts": true,
+    "trainChallengeFullVectorDuplicates": 0,
+    "deterministicManifest": true,
+    "labelSplitIdentityRequired": true,
+    "historicalS9MetadataPreserved": true
+  },
+  "currentCeiling": {
+    "waveformRenders": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
