@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **SOURCE-DOMAIN TRAINING PACKAGE OFFLINE VERIFIED — ONE BOUNDED SYNTHETIC-ONLY LAUNCH BOUNDARY REACHED; P1/P2 CLOSED; P3 SEALED**
+Status: **SOURCE-DOMAIN TRAINING V1 SCIENTIFIC GATE FAILED AND FROZEN — NO RERUN/TUNING; NEXT: MODEL-FREE JOINT-COVERAGE REVIEW ONLY; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1522,3 +1522,95 @@ Exactly one synthetic-only launch may now be armed under that standing authoriza
 After that one run, freeze workflow and scientific pass/fail and stop. No parameter rescue, seed selection, P1/P2 transfer, P3 access, or follow-on model experiment may occur automatically.
 
 **Immediate next action:** create exactly one unique armed source-domain training launch marker, let the already-frozen workflow execute once, freeze its result, consume the launch identity, and stop.
+
+
+## Source-domain simulator training V1 — single execution failed scientifically — 2026-09-28
+
+The one bounded synthetic-only source-domain training execution completed and the launch identity is consumed.
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_RESULT_V1.json`
+
+Frozen failure analysis:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_FAILURE_ANALYSIS_V1.md`
+
+Execution:
+- run **36476678125**
+- job **109112023738**
+- launch head `a47bd80c71e275c9523744c348c7c559a557dcbf`
+- run attempt **1**
+- workflow conclusion **SUCCESS**
+- scientific gate **FAIL**
+- artifact **10993997488**
+- artifact digest `sha256:06015a175a2e84b5094b4ffe9dbd58196be14c39b8e25025fbdf3efb65007c3a`
+- artifact result SHA-256 `3e769072bf5bd906318bfd78ae2f7b126e81f6f0d39dd183dbf4b1f9a33fdacf`
+- models **6**
+- optimizer steps **3,000**
+- fit/eval about **13.25 s**
+- thresholds fixed **0.50 / 0.50**
+- threshold search/retuning **none**
+- automatic retry **none**
+- P1/P2/P3 access **none**
+- paid compute **$0**
+- main/Production mutation **none**
+
+The durable ledger now consumes:
+- `source-domain-v1-20260928-canonical-01`
+
+### Scientific outcome
+
+Challenge onset F1 increased in all three seeds, but only slightly:
+- deltas **+0.0129, +0.00066, +0.0450**
+- mean **+0.0195**, below the frozen +0.05 floor.
+
+Challenge precision increased strongly:
+- mean delta **+0.1083**.
+
+But challenge recall decreased in all three seeds:
+- deltas **-0.0543, -0.0465, -0.0465**
+- mean **-0.0491**.
+
+Ordinary-domain performance also became more conservative:
+- onset F1 mean delta **-0.0303**
+- onset recall mean delta **-0.0568**
+- joint admission mean delta **-0.0388**
+- ordinary legato F1 loss exceeded 0.15 in two seeds.
+
+Prediction counts show fewer false positives **and** fewer true positives on the challenge. This is a precision/recall tradeoff, not the preregistered robustness improvement.
+
+### Post-hoc synthetic feature description
+
+Using only the frozen synthetic arrays:
+- intervention-training median onset positive flux was about **74–86%** of clean control across families;
+- fixed challenge median onset positive flux was about **38–59%** of clean control across families.
+
+The challenge therefore produces a substantially stronger onset-feature shift than the typical randomized training examples.
+
+This is descriptive only and does not authorize range/challenge tuning.
+
+### Mandatory stop
+
+Do not:
+- rerun the source-domain V1 training;
+- select the favorable seed;
+- lower thresholds;
+- weaken the challenge;
+- widen simulator ranges;
+- change loss/sampler weights;
+- change architecture in the same follow-up;
+- reopen P1/P2;
+- open P3.
+
+### Exact next action
+
+Perform **model-free source-domain joint-coverage review only**.
+
+Use the existing deterministic parameter draws and frozen synthetic arrays to report:
+- marginal parameter coverage;
+- joint occupancy relative to the fixed challenge profile;
+- family-conditioned coverage;
+- challenge onset-flux positions relative to intervention training distributions.
+
+Do not choose new ranges or a new challenge from this review. No model execution, optimizer step or real-data access is allowed.
+
+**Resume instruction:** Continue with the model-free joint-coverage review only. Preserve all V2/S12/S13/source-domain V1 results, keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
