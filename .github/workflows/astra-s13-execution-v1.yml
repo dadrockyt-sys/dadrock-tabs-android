@@ -12,6 +12,13 @@ permissions:
   contents: read
   actions: read
 
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
 concurrency:
   group: astra-s13-v1-${{ github.sha }}
   cancel-in-progress: false
