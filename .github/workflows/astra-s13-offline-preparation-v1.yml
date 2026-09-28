@@ -12,6 +12,13 @@ on:
 permissions:
   contents: read
 
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
 jobs:
   prepare:
     runs-on: ubuntu-22.04
@@ -35,7 +42,18 @@ jobs:
       - name: Generate and hash frozen datasets without models
         env:
           PYTHONPATH: astra_backend
-        run: python -m synthetic.s13_pilot_v1 prepare-only --out-dir /tmp/astra-s13-preparation
+        run: |
+          python -m synthetic.s13_pilot_v1 prepare-only --out-dir /tmp/astra-s13-preparation
+          python -m synthetic.s13_pilot_v1 prepare-only --out-dir /tmp/astra-s13-repeat
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('/tmp/astra-s13-preparation/s13-dataset-receipt.json').read_text())
+          b=json.loads(Path('/tmp/astra-s13-repeat/s13-dataset-receipt.json').read_text())
+          if a['arrayHashes'] != b['arrayHashes']:
+              raise SystemExit('S13 repeated preparation array hashes differ')
+          print('S13_REPEATABILITY_ARRAY_HASHES_MATCH=true')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
