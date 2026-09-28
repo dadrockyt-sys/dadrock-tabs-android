@@ -20,7 +20,7 @@
     "requirementsLock": "astra_backend/tabcnn_runtime/requirements.lock.txt"
   },
   "sourceGitBlobs": {
-    "s13Runner": "2ca9c2a42e7f31af0ab7af22daa5a625182f5ff2",
+    "s13Runner": "92017456cb039809dd3668a1de57dee39b334577",
     "transformReview": "f9ccbca8f692c7db01e71d7d497c9df34b82c15f",
     "s0": "c05b6f986186dbe96245875833ab9564df99d4fb",
     "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
@@ -64,5 +64,6 @@
     "modelRun": false,
     "optimizerSteps": 0,
     "required": "focused tests plus deterministic S0/S9/S13 dataset generation and canonical per-array hashes"
-  }
+  },
+  "datasetArrayHashes": null
 }
