@@ -1,0 +1,34 @@
+name: Astra S13 preimplementation review V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/synthetic/s13_preimplementation_review_v1.py'
+      - 'astra_backend/synthetic/test_s13_preimplementation_review_v1.py'
+      - '.github/workflows/astra-s13-preimplementation-review-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-review:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -r astra_backend/requirements.txt pytest
+      - name: Focused model-free diagnostics
+        working-directory: astra_backend
+        run: |
+          pytest -q synthetic/test_s13_preimplementation_review_v1.py
+          python -m synthetic.s13_preimplementation_review_v1 --out ../s13-preimplementation-evidence.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-s13-preimplementation-review-v1
+          path: s13-preimplementation-evidence.json
