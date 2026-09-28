@@ -1,17 +1,17 @@
 # Next chat: start here
 
-S4's first authorized launch did not create a job.
+S4 has still not executed a model.
 
-Run 36374078304:
-- workflow failure before job creation
-- 0 model execution
-- 0 rendering
-- 0 optimizer steps
+Second launch:
+- run 36374389465 / job 108777122117
+- stopped at authorization guard
+- runtime install/model tests/render/training never started
+- optimizer steps 0
 - no artifact
 - P1/P2/P3 untouched
 
-Cause: the workflow checkout used an inline flow-style YAML mapping containing an unquoted GitHub expression. It has been corrected offline to block-style YAML. S4 runner/design are unchanged.
+Cause: workflow expected the exact string "I authorize" while the fresh receipt stored "I authorize please continue 🙏".
 
-Standing routine GitHub authorization covers the source correction, but the prior S4 single-launch grant is consumed.
+The guard is fixed offline to accept explicit authorization strings beginning with "I authorize". Runner/design unchanged.
 
-**Fresh explicit authorization is required before launching the corrected S4 model workflow.**
+Because the model launch is single-attempt/no-retry, fresh explicit model authorization is required before another launch.

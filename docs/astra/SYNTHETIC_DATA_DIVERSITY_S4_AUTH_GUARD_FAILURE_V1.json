@@ -1,0 +1,38 @@
+{
+  "schema": "astra-synthetic-data-diversity-s4-authorization-guard-failure-v1",
+  "date": "2026-09-27",
+  "runId": 36374389465,
+  "jobId": 108777122117,
+  "launchHeadSha": "94f114649dc007b42fcc8cb81cbfaa26ae365b3c",
+  "workflowConclusion": "failure",
+  "failureStage": "authorization_source_pin_guard_before_runtime_install",
+  "observedCause": "Workflow asserted userInstruction == 'I authorize' but fresh authorization receipt stored 'I authorize please continue 🙏'.",
+  "executionEvidence": {
+    "checkoutPassed": true,
+    "pythonSetupPassed": true,
+    "authorizationGuardFailed": true,
+    "runtimeInstallStarted": false,
+    "gradientContractTestsStarted": false,
+    "renderStarted": false,
+    "modelExecutionStarted": false,
+    "optimizerSteps": 0,
+    "artifactProduced": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "correction": {
+    "workflowGuardOnly": true,
+    "runnerChanged": false,
+    "scientificDesignChanged": false,
+    "newGuard": "userInstruction starts with 'I authorize'",
+    "rationale": "Accept the user's explicit authorization wording while retaining exact source/status/limit pin checks."
+  },
+  "boundary": {
+    "singleLaunchConsumed": true,
+    "automaticModelRetry": false,
+    "freshExplicitModelAuthorizationRequired": true
+  }
+}

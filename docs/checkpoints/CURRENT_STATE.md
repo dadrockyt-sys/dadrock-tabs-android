@@ -3,59 +3,58 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S4 FIRST LAUNCH FAILED BEFORE JOB CREATION; 0 MODEL EXECUTION; WORKFLOW YAML CORRECTED OFFLINE; FRESH MODEL AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
+Status: **S4 SECOND LAUNCH STOPPED AT AUTH GUARD; 0 MODEL EXECUTION / 0 OPTIMIZER STEPS; GUARD FIXED OFFLINE; FRESH MODEL AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
 Routine GitHub-only code/tests/docs/metadata work is pre-authorized. Explicit approval remains required for model execution, Codespaces, and potentially billable Vercel operations.
 
-## S4 launch failure
+## S4 second pre-model stop
 
-Stephen authorized the frozen S4 model experiment. One launch artifact was committed at:
+Fresh authorization was recorded from Stephen's instruction **"I authorize please continue 🙏"** and one corrected launch was made:
 
-- launch head `11c57c60afdb10ff36e07c4a86902c6d9f81d8b8`
-- GitHub workflow run **36374078304**
-- conclusion **FAILURE**
-- jobs created: **0**
-- model execution: **none**
-- render: **none**
+- run **36374389465**
+- job **108777122117**
+- launch head `94f114649dc007b42fcc8cb81cbfaa26ae365b3c`
+- checkout: passed
+- Python setup: passed
+- authorization/source-pin guard: failed
+- runtime dependency install: not started
+- model tests: not started
+- render: not started
+- model execution: none
 - optimizer steps: **0**
-- artifact: **none**
+- artifact: none
 - P1/P2/P3: untouched
 - Codespaces/Vercel: unused
 
-Frozen failure receipt:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_WORKFLOW_PARSE_FAILURE_V1.json`
+Receipt:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_AUTH_GUARD_FAILURE_V1.json`
 
-### Cause and offline correction
+### Cause
 
-The workflow used an inline flow-style mapping containing an unquoted GitHub expression:
+The workflow guard still asserted:
 
-`with: {ref: ${{ github.sha }}}`
+`a['userInstruction'] == 'I authorize'`
 
-That source shape is invalid/unsafe YAML for GitHub workflow parsing because the nested braces appear inside a flow mapping. The workflow never reached job creation.
+The fresh receipt correctly preserved the user's actual instruction:
 
-Offline correction only:
-- replace checkout `with` with block-style `with:\n  ref: ...`;
-- normalize setup-python `with` to block style as well.
+`I authorize please continue 🙏`
 
-The S4 runner and scientific design are unchanged.
+So the fail-closed guard rejected the wording before any model-related work.
 
-## Frozen S4 experiment remains
+### Offline correction
 
-Exactly two identical models:
-1. control: state + onset losses update shared encoder;
-2. intervention: onset head consumes detached encoder activations, so onset loss cannot update encoder.
+Workflow guard only:
+- now requires `userInstruction` to start with `I authorize`;
+- all source-identity, model-count, step-cap, no-retry, P1/P2/P3, Codespaces and Vercel checks remain;
+- S4 runner and scientific design are unchanged.
 
-All S4 data/model/loss/sampler/threshold/step settings remain unchanged.
+### EXACT NEXT STEP
 
-### EXACT NEXT STEP — fresh explicit model authorization required
+Do not relaunch S4 automatically. The single launch authorized by the latest grant has been consumed by this fail-closed attempt.
 
-The previous grant was used for the single launch attempt and there is no automatic model retry.
-
-The corrected workflow source may remain committed under standing routine GitHub authorization, but **do not create a new S4 launch until Stephen explicitly authorizes the corrected model run**.
-
-No P1/P2/P3, Codespaces, Vercel, threshold tuning, deployment or main mutation.
+Fresh explicit authorization is required before another S4 model launch.
 
 
 ---

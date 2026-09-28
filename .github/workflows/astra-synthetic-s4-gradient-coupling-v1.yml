@@ -31,7 +31,7 @@ jobs:
           a=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_AUTHORIZATION_V1.json'))
           l=json.load(open('docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_LAUNCH_V1.json'))
           assert a['schema']=='astra-synthetic-data-diversity-s4-authorization-v1'
-          assert a['userInstruction']=='I authorize'
+          assert str(a['userInstruction']).startswith('I authorize')
           z=a['authorization']; assert z['maxModels']==2 and z['maxOptimizerStepsPerModel']==500
           assert not z['automaticRetryAuthorized'] and not z['thresholdSearchAuthorized']
           assert not z['p1Authorized'] and not z['p2Authorized'] and not z['p3Authorized']
