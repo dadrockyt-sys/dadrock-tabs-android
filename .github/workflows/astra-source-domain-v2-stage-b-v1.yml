@@ -1,0 +1,114 @@
+name: Astra source-domain V2 Stage B model-free preparation
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SOURCE_DOMAIN_V2_STAGE_B_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  stage-b:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Validate one-shot Stage B marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('docs/astra/SOURCE_DOMAIN_V2_STAGE_B_LAUNCH_V1.json'))
+          assert x['schema']=='astra-source-domain-v2-stage-b-launch-v1'
+          assert x['status']=='armed'
+          assert x['launchIdentity']=='source-domain-v2-stage-b-20260928-canonical-01'
+          assert x['manifestContentSha256']=='2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469'
+          assert x['controlSha256']=='16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894'
+          assert x['automaticRetry'] is False
+          assert x['p1Access'] is False and x['p2Access'] is False and x['p3Access'] is False
+          print('STAGE_B_LAUNCH_OK')
+          PY
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+
+      - name: Download exact frozen V1 preparation
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-v1
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+
+      - name: Download exact frozen V2 manifest
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-joint-coverage-manifest-v2
+          path: /tmp/astra-source-domain-v2-manifest
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36481373445'
+
+      - name: Verify exact frozen inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTROL=/tmp/astra-source-domain-v1/datasets/s9-control.npz
+          MANIFEST=/tmp/astra-source-domain-v2-manifest/manifest.json
+          test "$(sha256sum "$CONTROL" | awk '{print $1}')" = "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+          python - <<'PY'
+          import hashlib,json
+          m=json.load(open('/tmp/astra-source-domain-v2-manifest/manifest.json'))
+          x=dict(m); x.pop('manifestContentSha256',None)
+          h=hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+          assert h=='2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469'
+          assert m['manifestContentSha256']==h
+          print('STAGE_B_INPUTS_OK')
+          PY
+
+      - name: Focused Stage B tests
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_source_domain_v2_stage_b_preparation_v1.py
+
+      - name: Run Stage B exactly once
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m synthetic.source_domain_v2_stage_b_preparation_v1 \
+            --control /tmp/astra-source-domain-v1/datasets/s9-control.npz \
+            --manifest /tmp/astra-source-domain-v2-manifest/manifest.json \
+            --out-dir /tmp/astra-source-domain-v2-stage-b
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-source-domain-v2-stage-b-v1
+          path: /tmp/astra-source-domain-v2-stage-b
+          if-no-files-found: warn
+          retention-days: 30
