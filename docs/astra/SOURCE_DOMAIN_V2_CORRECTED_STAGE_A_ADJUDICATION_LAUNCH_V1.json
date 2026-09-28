@@ -1,0 +1,14 @@
+{
+  "schema": "astra-source-domain-v2-corrected-stage-a-adjudication-launch-v1",
+  "date": "2026-09-28",
+  "status": "armed",
+  "launchIdentity": "source-domain-v2-corrected-stage-a-20260928-canonical-01",
+  "waveformRenders": 0,
+  "audioSeconds": 0,
+  "modelLoads": 0,
+  "optimizerSteps": 0,
+  "p1Access": false,
+  "p2Access": false,
+  "p3Access": false,
+  "automaticRetry": false
+}
