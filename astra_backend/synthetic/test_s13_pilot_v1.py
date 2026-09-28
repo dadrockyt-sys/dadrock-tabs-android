@@ -38,7 +38,7 @@ def test_family_balanced_subset_is_deterministic_and_half():
 def test_dataset_builder_preserves_nonfeatures_and_scopes(tmp_path):
     c=tmp_path/"c.npz"; tiny_dataset(c)
     i=tmp_path/"i.npz"; q=tmp_path/"q.npz"; r=tmp_path/"receipt.json"
-    receipt=build_datasets(c,i,q,r)
+    receipt=build_datasets(c,i,q,r,expected_examples=14)
     cd=np.load(c,allow_pickle=False); id_=np.load(i,allow_pickle=False); qd=np.load(q,allow_pickle=False)
     for k in cd.files:
         if k!="features":
