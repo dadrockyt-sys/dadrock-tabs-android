@@ -4,47 +4,80 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **SYNTHETIC TUNING CLOSED; P1/P2 PROSPECTIVE TRANSFER IMPLEMENTATION FROZEN OFFLINE; P1/P2/P3 SEALED**
+Status: **P1/P2 TRANSFER COMPLETE — FAILED 0/5; SYNTHETIC CANDIDATE REJECTED FOR REAL DEVELOPMENT; P3 SEALED**
 
-## Standing authorization policy
+## Standing policy
 
-Routine GitHub work and bounded inexpensive synthetic GitHub model runs are pre-authorized.
+Routine GitHub work and bounded inexpensive synthetic GitHub model runs remain pre-authorized.
 
-P1/P2/P3 real-data access, Codespaces, potentially billable Vercel work, production/deployment and main mutation remain separate authorization boundaries.
+P1/P2/P3 real-data access remains a separate boundary.
 
-## S11 retained
+## Canonical P1/P2 transfer run
 
-S11 failed robustness magnitude criteria despite directionally positive diversity deltas in all three seeds for chord F1/recall and overall onset F1/recall.
+- run **36381769369**
+- job **108798822867**
+- head `b9f9109c22152ea23613d829b74c59b5ddc6dcf6`
+- workflow **SUCCESS**
+- artifact **10953563527**
+- digest `sha256:ef571953b8872902407e375b0f673d3590fe96534e2d77a1c3be0fb6a0c67aae`
+- candidate synthetic training: exactly 500 steps
+- evaluation optimizer steps: 0
+- thresholds fixed 0.50 / 0.50
+- P1 accessed: yes
+- P2 accessed: yes
+- P3 opened: **no**
+- automatic retry: no
 
-No more synthetic tuning should run automatically.
+Frozen result:
+- `docs/astra/P1_P2_TRANSFER_EVALUATION_RESULT_V1.json`
 
-## P1/P2 transfer preparation completed offline
+## Result
 
-Design:
-- `docs/astra/P1_P2_TRANSFER_EVALUATION_DESIGN_V1.md`
+P1 baseline:
+- TP/FP/FN **16 / 7 / 0**
+- F1 **0.8205**
+- recall **1.0**
 
-Implementation:
-- `astra_backend/evaluation/p1_p2_transfer_candidate_v1.py`
-- `astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py`
-- focused tests
-- `.github/workflows/astra-p1-p2-transfer-evaluation-v1.yml`
+P1 synthetic candidate:
+- TP/FP/FN **0 / 10 / 16**
+- F1 **0**
 
-Authorization request:
-- `docs/astra/P1_P2_TRANSFER_EVALUATION_AUTHORIZATION_REQUEST_V1.json`
+P2 baseline:
+- TP/FP/FN **0 / 0 / 15**
+- F1 **0**
 
-Key frozen choices:
-- P2 is primary transfer population; P1 is compatibility context only.
-- baseline is exact frozen V3 checkpoint; no baseline retraining.
-- candidate is one S9/S11 128-unit nonlinear-state model, synthetic-only, seed **20260927**, 500 steps.
-- evaluator V2 with symmetric 50 ms crop-edge eligibility guard.
-- thresholds fixed at 0.50 / 0.50.
-- no seed selection, threshold tuning, architecture sweep, retry, P3 or production claim.
-- if the V3 artifact expires, stop; do not retrain it merely to recreate provenance.
+P2 synthetic candidate:
+- TP/FP/FN **0 / 1 / 15**
+- F1 **0**
 
-## Exact next step
+Transfer gate: **FAILED 0/5**.
 
-**Do not create an authorization or launch file yet. Do not access P1/P2.**
+## Interpretation
 
-The implementation is ready. Explicit authorization is still required for P1/P2 real-development access and the one 500-step synthetic candidate training that accompanies the transfer workflow.
+The synthetic candidate failed on both real P1 and P2.
+
+Because the historical V3 baseline remains strong on P1, this is not merely a P1-to-P2 performer-shift failure. It is a broader synthetic-to-real transfer failure for the current candidate.
+
+Do not:
+- threshold-rescue;
+- select another seed after seeing P1/P2;
+- reopen synthetic tuning against these eight examples;
+- open P3.
+
+Analysis:
+- `docs/astra/P1_P2_TRANSFER_FAILURE_ANALYSIS_V1.md`
+
+## Next proposal
+
+A zero-optimizer domain diagnostic is designed at:
+- `docs/astra/SYNTHETIC_REAL_DOMAIN_DIAGNOSTIC_PROPOSAL_V1.md`
+
+It would compare fixed synthetic/P1/P2 feature and activation distributions without changing weights or thresholds.
+
+**Do not execute it yet. New P1/P2 access requires fresh explicit authorization.**
 
 P3 remains sealed.
+
+## Repository note
+
+After the completed run, the workflow/auth source pins were hardened to add a focused-test-before-real-access step. That hardening did not rerun the transfer and is not retroactively claimed as part of run 36381769369.
