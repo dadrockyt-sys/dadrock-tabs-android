@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V2 STAGE A FIRST ATTEMPT STOPPED IN PRE-EXECUTION TEST — ACOUSTIC ADMISSION NOT RUN; ZERO WAVEFORM RENDERS; NEXT: DESIGN/TEST-CONTRACT REVIEW ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
+Status: **V2 STAGE A TEST-CONTRACT CORRECTION REVIEW FROZEN — SCIENTIFIC CONFIG UNCHANGED; NEXT: BUILD SEPARATELY VERSIONED CORRECTED STAGE-A PACKAGE OFFLINE ONLY, DO NOT RUN; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1956,3 +1956,78 @@ The next review may:
 No waveform execution is authorized by this checkpoint.
 
 **Resume instruction:** Review and freeze the Stage-A test-contract correction only. Do not rerun Stage A yet.
+
+
+## V2 Stage-A test-contract correction review frozen — 2026-09-28
+
+Completed the required design/test-contract review after the pre-execution Stage-A failure.
+
+Frozen review:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_TEST_CONTRACT_REVIEW_V1.md`
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_TEST_CONTRACT_REVIEW_V1.json`
+
+No waveform was rendered. Stage A was not rerun. Model loads/inference/optimizer steps remained zero. P1/P2/P3 remained closed.
+
+### Contract decision
+
+The frozen V2 hum categorical contract is:
+
+Active hum:
+- `humActive=true`;
+- `humFundamentalHz` must be included in the renderer override;
+- value must equal the manifest-selected **50 Hz or 60 Hz**.
+
+Inactive hum:
+- `humActive=false`;
+- `humFundamentalHz` must not be overridden.
+
+For both cases:
+- `humCombinedRmsRelative` is **not** a V2 manifest override;
+- it remains on the unchanged deterministic V1 source-parameter substream.
+
+This matches the frozen V2 protocol and the existing Stage-A runner.
+
+The failed V1 focused test was wrong because its position-0 synthetic row had active 50-Hz hum while its assertion expected no `humFundamentalHz` key.
+
+### Scientific-change audit
+
+Correcting that test expectation changes:
+- no manifest content/hash;
+- no selected Stage-A row;
+- no parameter value/range;
+- no categorical assignment;
+- no waveform equation;
+- no deterministic V1 substream;
+- no frontend;
+- no label/reference/timing;
+- no Stage-A or Stage-B gate;
+- no threshold/model setting.
+
+Classification:
+**technical verification-contract correction only; scientific configuration unchanged.**
+
+### Versioning / execution boundary
+
+Do not edit history to make the first attempt disappear.
+
+Any future Stage-A attempt must be separately versioned.
+
+Reserved next-package paths:
+- `astra_backend/synthetic/test_source_domain_v2_stage_a_admission_v2.py`
+- `.github/workflows/astra-source-domain-v2-stage-a-admission-v2.yml`
+
+The original V1 test/workflow remain historical evidence.
+
+### Exact next action
+
+Build the corrected Stage-A V2 execution package **offline only**:
+1. add a corrected V2 focused-test file that separately tests active and inactive hum;
+2. add a separately versioned V2 workflow in a **disabled/non-triggering state**;
+3. pin the same frozen S9 control and V2 manifest hashes;
+4. keep the same Stage-A runner scientific logic, selected rows, gates and ceilings;
+5. verify statically that the package cannot auto-run;
+6. freeze package verification.
+
+Do **not** run the new workflow yet.
+
+**Resume instruction:** Construct and verify the separately versioned corrected Stage-A package offline only. No waveform execution is authorized by this checkpoint.
