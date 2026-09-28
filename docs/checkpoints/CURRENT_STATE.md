@@ -6,7 +6,7 @@ Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
 Status: **ARCHITECTURE RESEARCH A1 FAILED ITS FROZEN GATE — STRONG STATE/JOINED IMPROVEMENT EVIDENCE BUT NO ACCEPTANCE; A1 CLOSED; ANY A2 REQUIRES NEW EXPLICIT PROJECT DECISION; P1/P2 CLOSED; P3 SEALED**
 
-Latest supervisory instructions are in **Supervisory review for GPT-5.6 after A1** in `astra-work/CURRENT_STATE.md`. Start with its bounded model-free evidence reconciliation. Earlier execution/resume sections below are historical where superseded.
+Latest supervisory instructions are in **Post-A1 supervisory evidence reconciliation complete** in `astra-work/CURRENT_STATE.md`. The bounded review is complete; stop at the new project-decision boundary. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -2590,3 +2590,51 @@ The review at remote head `fc7b56b7ef559dfec1a95fbfab682561a4b6e971` is saved in
 Read that section before resuming. It preserves A1's failure and qualifies the mechanism claim: dual encoders add 78.6% parameters and alter downstream initialization; ordinary joint admission remains below the clean S11 control in all seeds. Reused synthetic benchmarks do not establish independent confirmation or real-domain readiness.
 
 **Exact next task:** Produce the specified model-free post-A1 evidence review and concrete decision brief from existing records, optionally adding a separate pure result validator with focused tests. No new model, inference, optimizer, renderer, launch marker or workflow dispatch. Do not modify frozen A1/V3 outcomes. No A2 is opened by this review request; P1/P2 remain closed, P3 sealed, main/Production unchanged. Save and verify both handoffs after completing the bounded task. The full instructions in `astra-work/CURRENT_STATE.md` govern if earlier resume text conflicts.
+
+
+## Post-A1 evidence reconciliation complete — 2026-09-28
+
+The bounded supervisory review requested at commit `983ef1f2efd5701d709545ec3b76826622f75746` is complete.
+
+Frozen review outputs:
+- `docs/astra/POST_A1_SUPERVISORY_EVIDENCE_REVIEW_V1.md`
+- `docs/astra/POST_A1_SUPERVISORY_EVIDENCE_REVIEW_V1.json`
+
+Prospective validator:
+- `astra_backend/synthetic/post_a1_result_validator_v1.py`
+- `astra_backend/synthetic/test_post_a1_result_validator_v1.py`
+
+Focused model-free test command:
+- `python -m unittest -v astra_backend.synthetic.test_post_a1_result_validator_v1`
+- **10/10 passed**
+- no torch/model import, inference, optimizer, renderer, workflow dispatch, or real-data access.
+
+Artifact verification:
+- A1 artifact **11002106213** GitHub digest unchanged: `sha256:ed013e7d35237f7b6d998a742b7cac45116d1b8ceb038400dc81edc4947b2054`.
+- Downloaded A1 `result.json` SHA-256 exactly matched `090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3`.
+- V3 training artifact **11000187208** GitHub digest unchanged: `sha256:84f2566c656c37d5fe20bdc26bfdaa699d5e2c4089c0c91f99434d8f0282e3f3`.
+- Downloaded V3 `result.json` SHA-256 exactly matched `5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d`.
+
+The review records all available per-seed absolute state/joint/onset metrics, deltas, TP/FP/FN, negative-only event counts and durations for A1 against both frozen S11 comparators.
+
+Required interpretation:
+- A1 remains a frozen scientific **FAIL**.
+- A1 = **279,556** parameters; S11 = **156,548**; increase **123,008 / 78.6%**.
+- Same seed and exact frozen batch plan do not imply paired common-tensor initialization because A1 adds a second encoder before the downstream heads.
+- Ordinary A1 joint admission remains below the clean S11 control in **3/3** seeds.
+- Zero A1 negative-only decoded events cover only **6 s ordinary + 12 s challenge per seed**.
+- S9 ordinary and V3 challenge are repeatedly exposed development benchmarks, not independent confirmation.
+- The later A1 gate does not retroactively repair the failed V3 system gate.
+
+### Decision boundary
+
+Current recommendation: **pause model research**.
+
+If a new project is explicitly authorized, the preferred next evidence for product relevance is a prospectively frozen **independent real-development evaluation** that is not P3 and is not silent reuse of closed P1/P2. A capacity/initialization-controlled architecture-identification study is a separate narrower option and does not itself establish real-domain readiness.
+
+No A2 is open.
+P1/P2 remain closed.
+P3 remains sealed.
+Main/Production remain unchanged.
+
+**Resume instruction:** Do not resume an experiment. Stop at the project-decision boundary. New real-development evidence requires explicit authorization for its access/evaluation scope. A2 or another architecture-identification study requires a separate explicit project decision. Generic “continue” does not authorize either.
