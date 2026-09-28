@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V2-AWARE STRATEGY RECONCILED — SOURCE-AUDIO SIMULATOR DIVERSITY DESIGN/SPEC FROZEN; NEXT: OFFLINE IMPLEMENTATION + MODEL-FREE ADMISSION TESTS ONLY; P1/P2 CLOSED; P3 SEALED**
+Status: **SOURCE-DOMAIN SIMULATOR MODEL-FREE ADMISSION/PREPARATION PASSED; PROSPECTIVE TRAINING DESIGN/SPEC FROZEN; NEXT: OFFLINE FAIL-CLOSED EXECUTION PACKAGE ONLY — NO TRAINING YET; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1350,3 +1350,115 @@ Hard model-free ceiling:
 - no main/Production mutation.
 
 **Resume instruction:** Implement and verify the frozen source-domain simulator diversity package offline. Do not train a model yet. Keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
+
+
+## Source-domain simulator model-free implementation/preparation complete — 2026-09-28
+
+The frozen waveform-level source-domain simulator package has now passed model-free admission and bounded deterministic preparation.
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_PREPARATION_RESULT_V1.json`
+
+### Model-free fixture admission
+
+Successful run:
+- workflow run **36474090090**
+- job **109103325464**
+- head `1cf92163ebdabbdc577536c85d72d04ee3eb336e`
+- **15 focused tests passed**
+- artifact **10992965604**
+- artifact digest `sha256:f4a74eca7b619e96740200284aca60ed92ef3752704dafb3b905b2b68cd1fe7a`
+
+Admission:
+- all frozen criteria passed;
+- fixture renders **23**;
+- measured fast/slow attack-rise ratio approximately **14.60x**;
+- maximum absolute stable-fundamental error approximately **6.79 cents**, within the frozen 15-cent limit;
+- labels/references preserved on fixtures;
+- CQT effects present on all positive fixtures;
+- no unlabeled transient injection;
+- model run **no**;
+- optimizer steps **0**;
+- P1/P2/P3 access **none**.
+
+One concrete implementation defect was fixed before the successful run: polyphase resampling could slightly overshoot the pre-resample 0.78 peak normalization. The same frozen 0.78 bound is now re-applied deterministically after resampling. No simulator parameter range or admission criterion was changed.
+
+### Full bounded deterministic preparation
+
+Successful run:
+- workflow run **36475263654**
+- job **109107267996**
+- head `fd52262738a626b7131fcf96ca930dda36442d3a`
+- focused tests: **15 simulator + 5 preparation passed**
+- repository Astra test run **36475263505** also succeeded
+- artifact **10993531230**
+- artifact digest `sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953`
+
+Prepared corpus:
+- control examples **294**
+- source-domain intervention changes exactly **210 training rows**
+- fixed source-domain challenge changes exactly **42 test rows**
+- total preparation renders **576**
+- total synthetic audio **1,152 seconds**
+- persisted three-arm dataset bytes **25,733,042**
+- preparation core time approximately **52.07 seconds**
+
+Frozen feature hashes:
+- control `b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749`
+- intervention `a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a`
+- challenge `c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640`
+
+Frozen dataset file SHA-256:
+- control `16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894`
+- intervention `b46fa80121c43705708bfe786715456be535f6e39d31835b2fa611629024e94e`
+- challenge `0d40ab89291f4c19cf44bddb3c1c2adb4926ce3363eeb67f45770940ae03a010`
+
+All non-feature arrays are bit-identical across arms; intervention validation/test features are control-identical; challenge train/validation features are control-identical.
+
+### Historical S9 fixed-width string defect surfaced and preserved
+
+Preparation discovered a pre-existing S9 bookkeeping defect on the 30 training chord rows:
+- `template_id` and `refs_json` were assigned into fixed-width Unicode arrays inherited from S0 and are truncated;
+- training chord `refs_json` is therefore malformed historical metadata;
+- state/onset arrays are intact;
+- held-out/test references are unaffected.
+
+This was **not repaired in one arm**. The new preparation:
+- reconstructs each S9 training chord from its frozen row slot;
+- requires exact state/onset identity;
+- verifies each historical stored reference is an exact prefix truncation of the reconstructed reference;
+- preserves the frozen historical strings byte-identically in all arms.
+
+A second concrete workflow-only defect was fixed after preparation completed: a receipt rewrite emitted literal `\\n` after JSON rather than an actual newline. No dataset/scientific setting changed.
+
+### Prospective source-domain training design frozen
+
+Created:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_DESIGN_V1.md`
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_SPEC_V1.json`
+
+The future experiment, if later authorized after execution-package verification:
+- keeps the frozen S11 architecture;
+- seeds **20260927 / 20260928 / 20260929**;
+- paired initialization and batches;
+- **500 optimizer steps/model**;
+- maximum **6 models / 3,000 steps total**;
+- state/onset thresholds **0.50 / 0.50**;
+- no threshold search/retuning;
+- source-domain training data package is the **only intervention**;
+- P1/P2/P3 remain closed.
+
+The frozen gate retains the established challenge benefit floors and ordinary-regression limits rather than weakening criteria after S12/S13.
+
+**Training is not authorized by this checkpoint.**
+
+### Exact next action
+
+Implement and verify the prospective source-domain training execution package **offline only**:
+1. fail-closed runner using the exact frozen preparation artifact/hashes;
+2. focused tests for dataset identity, historical S9 metadata handling, paired initialization/batches, gate boundaries and every launch rejection path;
+3. complete source dependency pins;
+4. durable single-use execution ledger and disabled launch boundary;
+5. zero optimizer steps during package verification.
+
+**Resume instruction:** Implement and verify the source-domain training execution package offline. Do not launch a model yet. Keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
