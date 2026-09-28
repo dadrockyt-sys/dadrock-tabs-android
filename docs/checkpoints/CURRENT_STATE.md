@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S4 COMPLETE — FULL ONSET-GRADIENT DETACH REJECTED; FROZEN GATE FAILED; OFFLINE REVIEW NEXT; P1/P2/P3 SEALED**
+Status: **S4 FAILED; OFFLINE REVIEW COMPLETE; S5 STATE-WEIGHT 6→9 HYPOTHESIS FROZEN — MODEL EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
@@ -15,83 +15,67 @@ Explicit approval is required for:
 - Codespaces;
 - potentially billable Vercel operations.
 
-## Canonical S4 execution
+## S4 conclusion retained
 
+Canonical S4:
 - run **36374576717**
 - job **108777670719**
-- launch head `66bd45674bff2b23a75b97338d64f1d7a8b52982`
-- workflow conclusion **SUCCESS**
-- artifact **10949743734**
-- artifact digest `sha256:3285576d3c58c150aa99d58bc40c7e0a7318f3d40dcb359bcf8c0ccdcf3ecc47`
-- gradient-contract tests **3 / 3 passed**
-- 294 synthetic clips / 588 s
-- optimizer steps **500 + 500 = 1,000**
-- threshold search **none**
-- automatic retry **0**
-- P1/P2/P3 **not accessed**
-- Codespaces/Vercel **not used**
+- control F1 **0.7156**, recall **0.6047**, precision **0.8764**
+- detached-onset F1 **0.5545**, recall **0.6512**, precision **0.4828**
+- state/joint admission **0.3411 → 0.3411**
+- repeated recall **0.5476 → 0.6905**
+- false positives **11 → 90**
+- frozen gate **5 / 14 passed; S4 FAIL**
+
+Gradient isolation was verified exactly. Full onset-gradient detachment is rejected as the primary remedy.
 
 Frozen result:
 - `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_RESULT_V1.json`
 
-The two earlier S4 launch failures were pre-model failures with **0 optimizer steps** and remain preserved in Git history and their receipts.
+## Offline S4 review
 
-## Gradient contract
+S2-S4 now support one narrower remaining hypothesis:
 
-Before optimization:
-- control onset -> encoder grad norm **0.3063**
-- detached onset -> encoder grad norm **0.0000**
-- both onset-head grad norms **0.1389**
-- both state -> encoder grad norms **0.6286**
-- pre-update forward logits identical.
+- S2: state active-weight 1.5 → 6 improved state/joint admission and event metrics.
+- S3: stronger onset weighting increased onset admission but did not improve event recall.
+- S4: removing onset gradients from the encoder did not improve state/joint admission and collapsed precision.
 
-The intervention therefore isolated the intended variable.
+Under the frozen onset-aware sampler, active state tokens are about **10.4414%** of state tokens.
 
-## Scientific result — S4 FAIL
+Expected weighted active-state loss share:
+- weight 6: **~41.16%**
+- equal-mass crossover: **~8.58**
+- weight 9: **~51.20%**
 
-Control:
-- onset precision **0.8764**
-- recall **0.6047**
-- F1 **0.7156**
-- onset+offset F1 **0.5351**
-- repeated recall **0.5476**
-- onset admission **0.6279**
-- state/joint admission **0.3411**
+Weight 9 is therefore the smallest integer weight above equal-mass contribution.
 
-Detached onset-gradient intervention:
-- onset precision **0.4828**
-- recall **0.6512**
-- F1 **0.5545**
-- onset+offset F1 **0.3323**
-- repeated recall **0.6905**
-- onset admission **0.5581**
-- state/joint admission **0.3411**
+Analysis:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_FAILURE_ANALYSIS_V1.md`
 
-Key deltas:
-- state admission **+0.0000**
-- joint admission **+0.0000**
-- recall **+0.0465**
-- F1 **-0.1611**
-- repeated recall **+0.1429**
-- onset admission **-0.0698**
-- onset+offset F1 **-0.2028**
+## Frozen S5 design
 
-Only **5 / 14** frozen S4 criteria passed. `s4GatePassed=false`.
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S5_DESIGN_V1.md`
 
-The repeated-recall increase is not a clean win: test onset false positives rose from **11 to 90**, collapsing precision below 0.50.
+Exactly two identical five-frame models:
+1. control active-state weight **6.0**
+2. intervention active-state weight **9.0**
 
-## Interpretation
-
-Full onset-gradient detachment is rejected under this setup.
-
-It did not improve the state/joint bottleneck and sharply degraded precision, F1, onset+offset quality, and family stability.
-
-This does **not** prove shared-encoder gradient competition is absent. It shows that fully removing onset supervision from the shared encoder is not supported as the primary remedy.
+Everything else fixed:
+- ordinary shared multitask backprop
+- onset-aware 32/32/32/32 sampler
+- onset pos_weight 8
+- onset loss multiplier 4
+- lr 0.003
+- 500 optimizer steps/model
+- thresholds 0.50/0.50
+- decoder V2
+- identical generated arrays, initialization, and minibatch plan
+- no threshold search
 
 ## Exact next step
 
-Only offline review/design is authorized automatically.
+**Do not execute S5 yet.**
 
-Do not run another model, P1/P2 transfer, P3, Codespaces, Vercel, threshold rescue, or extra optimizer steps without the required explicit authorization.
+S5 is a model experiment and requires fresh explicit authorization.
 
-Historical checkpoints remain available in Git history.
+No P1/P2/P3, Codespaces, Vercel, deployment, main mutation, threshold rescue, or extra optimizer steps are authorized.
