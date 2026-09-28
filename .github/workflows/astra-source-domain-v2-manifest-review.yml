@@ -1,0 +1,70 @@
+name: Astra source-domain V2 manifest review
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-source-domain-v2-manifest-review.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  review:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Install model-free runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check 'numpy==1.21.6' pytest
+      - name: Run manifest-only tests
+        env:
+          PYTHONPATH: astra_backend
+        run: pytest -q astra_backend/synthetic/test_source_domain_joint_coverage_manifest_v2.py
+      - name: Download exact frozen preparation
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-v2-control
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+      - name: Build one deterministic parameter manifest
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.source_domain_joint_coverage_manifest_v2             --control /tmp/astra-source-domain-v2-control/datasets/s9-control.npz             --out /tmp/source-domain-joint-coverage-manifest-v2.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/source-domain-joint-coverage-manifest-v2.json'))
+          a=x['admission']
+          assert a['trainRowCount']==210 and a['challengeRowCount']==42
+          assert a['rowsPerFamilyTrain']==30 and a['rowsPerFamilyChallenge']==6
+          assert a['allContinuousMarginalStrataExact'] is True
+          assert a['categoricalCountsExact'] is True
+          assert a['trainChallengeFullVectorDuplicates']==0
+          assert a['historicalS9MetadataPreserved'] is True
+          assert a['waveformRenders']==0 and a['modelLoads']==0 and a['optimizerSteps']==0
+          assert a['p1Access'] is False and a['p2Access'] is False and a['p3Access'] is False
+          print('SOURCE_DOMAIN_V2_MANIFEST_ADMISSION_OK')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-source-domain-v2-manifest-review
+          path: /tmp/source-domain-joint-coverage-manifest-v2.json
+          retention-days: 30
