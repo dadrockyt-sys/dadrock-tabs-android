@@ -1036,3 +1036,73 @@ Standing bounded GitHub authorization may cover the eventual one synthetic-only 
 
 **Resume instruction:** Implement and verify the frozen S13 package offline. Do not train a model yet. Preserve S12 as failed, keep thresholds 0.50/0.50, P1/P2 closed, P3 sealed and main/Production unchanged.
 
+## S13 offline execution package verified — 2026-09-28
+
+The frozen S13 implementation/preparation package is now complete and reconciled to the canonical package already present on `astra-work`. No S13 model has been trained yet at this checkpoint.
+
+Canonical package:
+- runner: `astra_backend/synthetic/s13_pilot_v1.py` — blob `3400dfa2113ec34a72bbc517ba4b6c6f5935027a`
+- focused tests: `astra_backend/synthetic/test_s13_pilot_v1.py`
+- deterministic preparation workflow: `.github/workflows/astra-s13-offline-preparation-v1.yml`
+- disabled-by-default execution workflow: `.github/workflows/astra-s13-execution-v1.yml` — blob `7eaae50131800563317ec270b82536fd5eaff4bb`
+- frozen run scope: `docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json` — blob `1e5812bfc1b96bfec6a85e81894ae08dba9439e4`
+- durable execution history: `docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json` — blob `c0cecbc58966a38ed7acd35439c439c74fcd8fbd`
+- launch request only: `docs/astra/SYNTHETIC_S13_LAUNCH_REQUEST_V1.json`
+- actual launch marker `docs/astra/SYNTHETIC_S13_LAUNCH_V1.json`: **not present at this checkpoint**
+
+All pinned design/spec/source identities in the frozen scope were rechecked against the connected remote and match exactly.
+
+### Deterministic preparation evidence
+
+The canonical preparation froze single-thread numerical settings:
+- `PYTHONHASHSEED=0`
+- `OMP_NUM_THREADS=1`
+- `OPENBLAS_NUM_THREADS=1`
+- `MKL_NUM_THREADS=1`
+- `NUMEXPR_NUM_THREADS=1`
+
+This was necessary because earlier cross-run CQT feature hashes varied before thread determinism was frozen. The execution workflow therefore downloads the exact frozen preparation artifact and independently checks the pinned per-array hashes before optimizer work.
+
+Canonical preparation remains:
+- run **36458911022**
+- job **109052218872**
+- artifact **10985624417**
+- digest `sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1`
+
+A fresh reconciliation replay after restoring the canonical package also passed:
+- run **36463015424**
+- job **109066035904**
+- head **06bc39a67119c066f851e0945b79ec082677e4f1**
+- focused tests **15 passed**
+- two independent preparations in the same frozen environment matched exactly
+- `S13_REPEATABILITY_ARRAY_HASHES_MATCH=true`
+- model run **false**
+- optimizer steps **0**
+- P1/P2/P3 access **false**
+- replay artifact **10988745088**
+- replay artifact ZIP digest `sha256:f8bf1fc6b69b2461db2e970d6ce28698a8de440d3a5cc8a109d069a3a8d340f0`
+
+The replay reproduced the canonical frozen dataset identities exactly:
+- control feature hash `b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749`
+- intervention feature hash `182a9e64a1ea5a275fc79c3f8c0840b8f99a16b4649df118d107abdb458005db`
+- challenge feature hash `293ab2701b53b941c4567a0defc2fecd12ec611456d368996421e4f674649c3d`
+- transformed training rows **105**
+- challenge test rows **42**
+
+### Launch boundary now reached
+
+The offline package is fully frozen and verified. The prior handoff explicitly permits exactly one bounded inexpensive synthetic-only S13 launch under the standing authorization once this condition is met.
+
+The one launch must:
+- create exactly one unique armed `SYNTHETIC_S13_LAUNCH_V1.json`;
+- use run attempt 1 only;
+- use the exact frozen preparation artifact and hashes;
+- train at most 6 models / 3,000 optimizer steps total;
+- keep thresholds fixed at 0.50 / 0.50;
+- use no P1/P2/P3;
+- use no automatic retry;
+- preserve all failure evidence;
+- stop after the one execution and freeze pass/fail before any further experiment.
+
+**Immediate next action:** create the one unique armed S13 launch marker and allow the already-frozen execution workflow to run exactly once. Then freeze the scientific gate result, update the durable execution history, and stop. No S14 and no real-data follow-up may occur automatically.
+
