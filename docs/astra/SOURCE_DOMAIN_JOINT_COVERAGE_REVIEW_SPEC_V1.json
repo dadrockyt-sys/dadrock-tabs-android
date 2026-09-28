@@ -1,0 +1,96 @@
+{
+  "schema": "astra-source-domain-joint-coverage-review-spec-v1",
+  "date": "2026-09-28",
+  "status": "frozen-model-free-review",
+  "preparation": {
+    "run": 36475263654,
+    "artifact": 10993531230,
+    "digest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953"
+  },
+  "numericAxes": [
+    "attackBaseRiseSeconds",
+    "transientNoiseGain",
+    "transientDecaySeconds",
+    "dampingMultiplier",
+    "brightness",
+    "pickPosition",
+    "lowpassCutoffHz",
+    "spectralTiltDb",
+    "highpassCornerHz",
+    "nonlinearDrive",
+    "nonlinearWet",
+    "broadbandNoiseRmsRelative"
+  ],
+  "categoricalAxes": [
+    "nonlinearActive",
+    "humActive",
+    "humFundamentalHz"
+  ],
+  "conjunction": [
+    {
+      "axis": "attackBaseRiseSeconds",
+      "op": ">=",
+      "value": 0.045
+    },
+    {
+      "axis": "transientNoiseGain",
+      "op": "<=",
+      "value": 0.03
+    },
+    {
+      "axis": "dampingMultiplier",
+      "op": ">=",
+      "value": 1.45
+    },
+    {
+      "axis": "brightness",
+      "op": "<=",
+      "value": 0.6
+    },
+    {
+      "axis": "pickPosition",
+      "op": ">=",
+      "value": 0.42
+    },
+    {
+      "axis": "lowpassCutoffHz",
+      "op": "<=",
+      "value": 3500
+    },
+    {
+      "axis": "spectralTiltDb",
+      "op": "<=",
+      "value": -4
+    },
+    {
+      "axis": "broadbandNoiseRmsRelative",
+      "op": ">=",
+      "value": 0.001
+    },
+    {
+      "axis": "nonlinearComposite",
+      "op": "active_and_wet_at_least",
+      "value": 0.2
+    }
+  ],
+  "featureMetrics": {
+    "onsetPositiveFlux": "sum(max(x[f]-x[f-1],0)) at labeled attack f>0",
+    "rowMeanAbsoluteDisplacement": "mean(abs(changed-control))",
+    "empiricalPercentile": "fraction of same-family intervention-training values <= challenge value"
+  },
+  "ceiling": {
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "waveformRenders": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "cpuOnly": true,
+    "maxMinutes": 10,
+    "paidComputeDollars": 0,
+    "automaticRetry": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
