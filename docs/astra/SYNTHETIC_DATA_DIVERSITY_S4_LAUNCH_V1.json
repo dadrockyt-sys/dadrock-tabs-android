@@ -2,9 +2,9 @@
   "schema": "astra-synthetic-data-diversity-s4-launch-v1",
   "date": "2026-09-27",
   "singleLaunch": true,
-  "launchSequence": 2,
-  "authorizationCommit": "0fb078c4e1e7fdf7314ff55f48b22cfb2ee565b3",
-  "authorizationGitBlob": "b9626c2e1e2042a72ab10c0dccd0a9e936e5a15f",
+  "launchSequence": 3,
+  "authorizationCommit": "71c1afda84b1ea2e5ee479f316cc371664113cee",
+  "authorizationGitBlob": "a7fca4f3a523479dca0fec5b71a859cbb86d8451",
   "sourceIdentities": {
     "designGitBlob": "97b80ce33e3eb62e3c012330ff001b3953c1e913",
     "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
@@ -14,7 +14,7 @@
     "runnerGitBlob": "3b24fd1739359a5d55bed8c6c1fbd9e6e9c74f11",
     "testsGitBlob": "81814aebf878102ec20d1cbb4abc8be54ddce5c9",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
-    "workflowGitBlob": "501c82f2627a0b6aae0108b91cff4e7cb22c3a54"
+    "workflowGitBlob": "8212042846c493064acd5034c76db33a38f1e288"
   },
   "executionIntent": {
     "models": 2,
