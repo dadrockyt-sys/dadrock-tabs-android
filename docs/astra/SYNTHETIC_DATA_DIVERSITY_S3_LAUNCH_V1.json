@@ -1,0 +1,31 @@
+{
+  "schema": "astra-synthetic-data-diversity-s3-launch-v1",
+  "date": "2026-09-27",
+  "singleLaunch": true,
+  "authorizationCommit": "80fd68caf6253c8780d43ae64a9a726c2b5b1386",
+  "authorizationGitBlob": "51d6b780107c1746b6af3f92d4af61c201a273c2",
+  "sourceIdentities": {
+    "designGitBlob": "07ceedace2d69d362e342d0d1957b8354d273c4d",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "samplingGitBlob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "stateWeightGitBlob": "e07d52099ed624ba5d996368f5e0d21735e67642",
+    "runnerGitBlob": "599293154e1525d5517fb889ceaf8340d55ee178",
+    "testsGitBlob": "27659644215814c02ecd1e03b4d80417dd716f9c",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "cabb5b80eaa8d088fcccc9a07762fb46435e6c1d"
+  },
+  "executionIntent": {
+    "examples": 294,
+    "audioSeconds": 588,
+    "models": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "onlyChangedVariable": "onset BCE positive-token weight",
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false
+  }
+}
