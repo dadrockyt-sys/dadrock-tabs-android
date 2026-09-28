@@ -236,6 +236,17 @@ def validate_launch(root, launch_path, history_path, scope_path):
             raise RuntimeError("source pin mismatch: "+key)
     return launch,history,scope
 
+def validate_dataset_hashes(scope, control_path, intervention_path, challenge_path):
+    expected=scope.get("datasetArrayHashes")
+    if not isinstance(expected,dict):
+        raise RuntimeError("frozen dataset array hashes missing from scope")
+    for name,path in (("control",control_path),("intervention",intervention_path),("challenge",challenge_path)):
+        d=np.load(path,allow_pickle=False)
+        actual=dataset_array_hashes(d)
+        if actual!=expected.get(name):
+            raise RuntimeError("dataset array hash mismatch: "+name)
+    return True
+
 def run_experiment(control_path,intervention_path,challenge_path,out_path):
     _refuse_existing(out_path)
     started=time.monotonic(); deadline=started+MAX_FIT_EVAL_SECONDS
@@ -256,6 +267,11 @@ def run_experiment(control_path,intervention_path,challenge_path,out_path):
             if not np.array_equal(exp,i["features"][idx]): raise RuntimeError("intervention transform mismatch")
         elif not np.array_equal(c["features"][idx],i["features"][idx]):
             raise RuntimeError("unexpected intervention feature change")
+    test_rows=np.flatnonzero(c["split"]=="test")
+    for idx in test_rows.tolist():
+        exp=compress_positive_onset_increments(c["features"][idx],c["onset"][idx],RETAIN_FRACTION)
+        if not np.array_equal(exp,q["features"][idx]):
+            raise RuntimeError("challenge transform mismatch")
 
     pairs=[]
     for seed in RUN_SEEDS:
@@ -350,7 +366,8 @@ def main():
         prepare_only(a.out_dir)
     else:
         root=Path(__file__).resolve().parents[2]
-        validate_launch(root,a.launch,a.history,a.scope)
+        _launch,_history,scope=validate_launch(root,a.launch,a.history,a.scope)
+        validate_dataset_hashes(scope,a.control_dataset,a.intervention_dataset,a.challenge_dataset)
         run_experiment(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
 
 if __name__=="__main__":
