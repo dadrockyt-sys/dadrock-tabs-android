@@ -1,0 +1,67 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-test-contract-review-v1",
+  "date": "2026-09-28",
+  "status": "technical-test-contract-correction-frozen-no-rerun-authorized",
+  "preexecutionFailure": {
+    "resultPath": "docs/astra/SOURCE_DOMAIN_V2_STAGE_A_PREEXECUTION_FAILURE_V1.json",
+    "workflowRun": 36482951827,
+    "job": 109132814201,
+    "waveformRenders": 0,
+    "scientificOutcome": "not-measured"
+  },
+  "contract": {
+    "activeHum": {
+      "humActive": true,
+      "humFundamentalHzRequired": true,
+      "allowedFundamentalsHz": [
+        50,
+        60
+      ],
+      "humCombinedRmsRelativeOverride": false
+    },
+    "inactiveHum": {
+      "humActive": false,
+      "humFundamentalHzOverride": false,
+      "humCombinedRmsRelativeOverride": false
+    }
+  },
+  "scientificChangeAudit": {
+    "manifestChanged": false,
+    "selectedRowsChanged": false,
+    "continuousParametersChanged": false,
+    "categoricalAssignmentsChanged": false,
+    "waveformEquationsChanged": false,
+    "v1SubstreamsChanged": false,
+    "frontendChanged": false,
+    "labelsChanged": false,
+    "stageAGatesChanged": false,
+    "ceilingsChanged": false,
+    "stageBGatesChanged": false,
+    "thresholdsChanged": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "classification": "technical-verification-contract-correction-only"
+  },
+  "futureVersioning": {
+    "originalV1WorkflowPreserved": true,
+    "originalV1TestPreserved": true,
+    "futureTestPath": "astra_backend/synthetic/test_source_domain_v2_stage_a_admission_v2.py",
+    "futureWorkflowPath": ".github/workflows/astra-source-domain-v2-stage-a-admission-v2.yml",
+    "futureRunnerScientificLogic": "same-v1-stage-a-runner-unless-separately-reviewed",
+    "automaticRetry": false,
+    "oneAttemptOnly": true,
+    "executionAuthorizedNow": false
+  },
+  "currentExecution": {
+    "waveformRenders": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0
+  },
+  "nextAction": "construct-corrected-versioned-stage-a-package-offline-only-do-not-run"
+}
