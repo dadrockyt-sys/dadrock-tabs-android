@@ -33,7 +33,7 @@
     "decoder": "dca8499b81661de1251196cad72e3be753f7c5a6",
     "metrics": "0541c3adf2ebfe78137e7c44719f619171f6eaa7",
     "requirementsLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
-    "executionWorkflow": "c7b2ab8c414ef91aa1cb1910f009e0619d43739b"
+    "executionWorkflow": "7eaae50131800563317ec270b82536fd5eaff4bb"
   },
   "execution": {
     "maxModels": 6,
@@ -52,7 +52,14 @@
     "p3Access": false,
     "codespaces": false,
     "vercel": false,
-    "productionMutation": false
+    "productionMutation": false,
+    "preparedDatasetSource": {
+      "type": "github-actions-artifact",
+      "workflowRun": 36458911022,
+      "artifact": 10985624417,
+      "artifactName": "astra-s13-offline-preparation-v1",
+      "digest": "sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1"
+    }
   },
   "launchControls": {
     "exactBranch": "astra-work",
@@ -67,14 +74,68 @@
     "optimizerSteps": 0,
     "required": "focused tests plus deterministic S0/S9/S13 dataset generation and canonical per-array hashes"
   },
-  "datasetArrayHashes": null,
-  "datasetFileSha256": null,
+  "datasetArrayHashes": {
+    "control": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749"
+    },
+    "intervention": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "182a9e64a1ea5a275fc79c3f8c0840b8f99a16b4649df118d107abdb458005db"
+    },
+    "challenge": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "715141147db6682e460d081b43fe960e00ffb53b669fdc8b56080e40d694bae8",
+      "refs_json": "91e082749d5a4e6ad0dfd4733751bdad86faad37bb88d9e569dbdf0665a0d758",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "c6facdf3ebba8d2056b544c5c1f1bd5d577942e3aa8d049b808f5a4dab9be922",
+      "template_id": "32bed1a3dcc71423528036e6ba4c8b1df1b6090a0bab401b54fe2896ab2999d7",
+      "features": "293ab2701b53b941c4567a0defc2fecd12ec611456d368996421e4f674649c3d"
+    }
+  },
+  "datasetFileSha256": {
+    "control": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "intervention": "0087134e47f4992d6506f5d1ef9f2adbff4ec368954507cd98983a0de78179e6",
+    "challenge": "5e6a7ab507634ad443a7621c0a88fa98ba03eaba598065e7486358de0bf4d857"
+  },
   "preparationEvidence": {
-    "status": "repeatability-revalidation-pending-after-deterministic-thread-freeze",
-    "priorRuns": [
-      36457851085,
-      36458492595
-    ],
-    "note": "Prior independent preparations produced different feature hashes. Launch remains fail-closed until repeated preparations under frozen single-thread environment match."
+    "status": "verified-model-free",
+    "workflowRun": 36458911022,
+    "job": 109052218872,
+    "head": "9d1e6adceb40fe1cdaa47f01d5c1c348b93e4762",
+    "focusedTestsPassed": 15,
+    "sameRunIndependentPreparationsMatched": true,
+    "transformedTrainingRows": 105,
+    "challengeTestRows": 42,
+    "artifact": 10985624417,
+    "artifactName": "astra-s13-offline-preparation-v1",
+    "artifactDigest": "sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1",
+    "artifactExpiresAt": "2026-10-28T17:35:09Z",
+    "modelRun": false,
+    "optimizerSteps": 0,
+    "deterministicThreadEnvironment": {
+      "PYTHONHASHSEED": "0",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    },
+    "note": "Earlier cross-run feature hashes varied before the deterministic thread environment was frozen. Execution therefore downloads this exact frozen preparation artifact and independently validates the pinned per-array hashes before optimizer work."
   }
 }
