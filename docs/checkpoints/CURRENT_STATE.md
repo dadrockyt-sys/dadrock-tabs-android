@@ -6,7 +6,7 @@ Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
 Status: **ARCHITECTURE RESEARCH A1 FAILED ITS FROZEN GATE — STRONG STATE/JOINED IMPROVEMENT EVIDENCE BUT NO ACCEPTANCE; A1 CLOSED; ANY A2 REQUIRES NEW EXPLICIT PROJECT DECISION; P1/P2 CLOSED; P3 SEALED**
 
-Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
+Latest supervisory instructions are in **Supervisory review for GPT-5.6 after A1** in `astra-work/CURRENT_STATE.md`. Start with its bounded model-free evidence reconciliation. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -2581,3 +2581,12 @@ P3 remains sealed.
 Main/Production remain unchanged.
 
 **Resume instruction:** Stop model execution. Do not automatically create A2. If the user explicitly approves a new A2 architecture project, first define and freeze its independent structural hypothesis and contract before any optimizer work.
+
+
+## Post-A1 supervisory handoff synchronization — 2026-09-28
+
+The review at remote head `fc7b56b7ef559dfec1a95fbfab682561a4b6e971` is saved in `astra-work/CURRENT_STATE.md`, section **Supervisory review for GPT-5.6 after A1**, commit `b92b524d3cd241e9c5373efc92036325831f5467`.
+
+Read that section before resuming. It preserves A1's failure and qualifies the mechanism claim: dual encoders add 78.6% parameters and alter downstream initialization; ordinary joint admission remains below the clean S11 control in all seeds. Reused synthetic benchmarks do not establish independent confirmation or real-domain readiness.
+
+**Exact next task:** Produce the specified model-free post-A1 evidence review and concrete decision brief from existing records, optionally adding a separate pure result validator with focused tests. No new model, inference, optimizer, renderer, launch marker or workflow dispatch. Do not modify frozen A1/V3 outcomes. No A2 is opened by this review request; P1/P2 remain closed, P3 sealed, main/Production unchanged. Save and verify both handoffs after completing the bounded task. The full instructions in `astra-work/CURRENT_STATE.md` govern if earlier resume text conflicts.
