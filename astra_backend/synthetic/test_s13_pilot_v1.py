@@ -52,12 +52,14 @@ def test_pair_initialization_and_batches_are_exact():
     assert module_sha(m1)==module_sha(m2)
     n=2; t=4
     s=np.full((n,6,t),-1,dtype=np.int64); o=np.zeros((n,6,t),dtype=np.int64)
-    # populate all sampler strata
-    o[0,0,1]=1; s[0,0,1]=0
+    # positive onset + active non-onset on both clips; inactive frames split across
+    # negative-structure and ordinary clips so all four frozen strata are present.
+    o[:,0,1]=1; s[:,0,1]=0; s[:,0,2]=0
     split=np.array(["train","train"]); neg=np.array([True,False])
-    # paired_batches may reject incomplete strata; equality itself is tested on realistic S11 elsewhere.
-    with pytest.raises(Exception):
-        paired_batches(s,o,split,neg,20260927)
+    b1,strata1=paired_batches(s,o,split,neg,20260927)
+    b2,strata2=paired_batches(s,o,split,neg,20260927)
+    assert strata1==strata2
+    assert np.array_equal(b1,b2)
 
 def test_weighted_loss_gradient_path_is_finite_and_unchanged():
     m=initialize_model(20260927,960)
