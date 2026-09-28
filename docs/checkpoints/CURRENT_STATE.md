@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **CORRECTED STAGE-A V2 PACKAGE STATICALLY VERIFIED AND HARD-DISABLED — NO WAVEFORM EXECUTION; NEXT: SEPARATE ARMING DECISION ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
+Status: **FINAL V3 SOURCE-DOMAIN SYNTHETIC TRAINING FAILED — SOURCE-DOMAIN TUNING LINE CLOSED; NEXT EMPIRICAL ACTION REQUIRES NEW INDEPENDENT DEVELOPMENT EVIDENCE OR A SEPARATELY APPROVED NEW ARCHITECTURE PROJECT VERSION; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -2114,3 +2114,280 @@ Until such a checkpoint explicitly arms the attempt:
 - P3 remains sealed.
 
 **Resume instruction:** Continue with the Stage-A V2 arming decision only. Do not execute waveform admission yet.
+
+
+## Superseding continuation — corrected Stage A through final V3 training — 2026-09-28
+
+This section supersedes the older Stage-A resume instructions above. Historical failures and package reviews remain preserved.
+
+### Corrected Stage-A V2 acoustic admission
+
+First corrected acoustic execution:
+- workflow run **36484128430**
+- job **109136731820**
+- artifact **10997847232**
+- artifact digest `sha256:1e918e7b5a95dc692f5a81761fe7cdcba4b76dd6b34f29a56cc4cec86e8a8343`
+- full Stage-A result SHA-256 `5778104fe505f5a38b4e2a0ed3e049a9993db92a9a1a3a078851c6cb7df8e0c2`
+- **84 waveform renders / 168 synthetic seconds**
+- models **0**
+- optimizer steps **0**
+- P1/P2/P3 **none**
+
+Original Stage-A result failed only the mixed-waveform per-note fundamental gate:
+- maximum reported error **205.8039 cents**
+- exactly **4/86** measurable attacked-event checks outside ±15 cents
+- all four failures were chord events
+- maximum non-chord absolute error **8.0898 cents**
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_RESULT_V1.json`
+
+### Polyphonic pitch-measurement defect and isolated diagnostic
+
+Model-free measurement review showed the mixed-waveform FFT helper was not source-separating. In each failed chord case, a simultaneous note fundamental or harmonic occupied the target search band and could become the strongest peak.
+
+Frozen review:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_MEASUREMENT_VALIDITY_REVIEW_V1.md`
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_MEASUREMENT_VALIDITY_REVIEW_V1.json`
+
+A prospectively frozen source-isolating diagnostic then rendered exactly the same attacked events with one musical note component per probe, preserving the exact row/event parameters and post chain.
+
+One-shot isolated diagnostic:
+- run **36488106137**
+- job **109149841945**
+- artifact **10999874443**
+- artifact digest `sha256:00550e6c0bf84d20eb0c65208556abe7435ab04584e672b49b840c0253976caa`
+- result SHA-256 `3e3cc594a58a9ab29ae9dbbed8bf1f3107b71b9e2076e3b25e7924b031cf5561`
+- **172 probe renders / 344 synthetic seconds**
+- **86/86** original measurable attacked events retained
+- **0** outside ±15 cents
+- maximum absolute isolated error **8.0898 cents**
+- models/optimizer/P1/P2/P3 **0 / 0 / none**
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_V2_SOURCE_ISOLATING_PITCH_RESULT_V1.json`
+
+A zero-render corrected Stage-A adjudication retained every original non-pitch gate and replaced only the invalid mixed-chord measurement with the source-isolating evidence.
+
+Adjudication:
+- run **36488493592**
+- job **109151112276**
+- artifact **10999984993**
+- digest `sha256:eec6c162e2b1e3a4303b5524ebebd4a35fea6e1184e6bad073d182367f6e9f51`
+- result SHA-256 `5a15ce7a2fd6ea7e4e2072a3a215a9eccd90d0258d811ca0b6cd47775f2e659a`
+- corrected Stage A **PASS**
+- new waveform renders **0**
+
+Frozen corrected result:
+- `docs/astra/SOURCE_DOMAIN_V2_CORRECTED_STAGE_A_RESULT_V1.json`
+
+The historical original Stage-A failure remains preserved and is not rewritten.
+
+### V2 Stage-B full model-free preparation
+
+V2 Stage B then executed under its prospectively frozen 35-check family/descriptor gate.
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_B_RESULT_V1.json`
+- run **36485375684**
+- job **109140893933**
+- artifact **10999695803**
+- artifact digest `sha256:a38a2a2a400cc3e2c470c9fd8ccf46ac8e6b9a346ffb57292aa4384b2615e6ca`
+- result SHA-256 `d1f4ee0580ca98094fb12adabf76f437e6e3769c85b1fbc7f741205c9a3b13d2`
+- V2 intervention NPZ SHA-256 `a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b`
+- **504** deterministic render operations / **1,008 synthetic seconds**
+- model loads **0**
+- optimizer **0**
+- P1/P2/P3 **none**
+
+Stage B passed **34/35** checks.
+
+Only failure:
+- family **repeated**
+- descriptor **raw firstDifferenceEnergy**
+- train p05 **0.0001275503051**
+- train p95 **0.0026163426368**
+- challenge median **0.0028062511494**
+- ~**7.26%** above frozen p95.
+
+Failure analysis showed raw first-difference energy is globally amplitude-sensitive while the frozen model frontend RMS-normalizes audio. The already-existing real-domain V2 audit had also prospectively used RMS-normalized first-difference evidence.
+
+Frozen analysis:
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_B_FAILURE_ANALYSIS_V1.md`
+
+V2 remained failed; the gate was not waived.
+
+### Final V3 model-free coverage
+
+One final source-domain coverage version was prospectively frozen:
+- training support = exact V2 Stage-B 210-row intervention support;
+- new independent challenge = **84 rows / 12 per family**;
+- RMS-normalized first-difference became the gated attack descriptor;
+- raw first-difference became report-only;
+- unchanged source-domain marginal ranges and waveform equations;
+- no model.
+
+A first V3 workflow attempt failed before rendering due a NumPy API compatibility issue and was preserved as a pre-execution technical failure.
+
+Corrected final V3 execution:
+- run **36487005586**
+- job **109146224786**
+- artifact **10999342888**
+- artifact digest `sha256:29868ae9595cd530ee7d3d25226da2a006f01dce16b9b570b2e5c2708ca59855`
+- result SHA-256 `05dbd9558afa1d63721351e6d2b9fffa44f32ccb4a231eaba3e228583a42a3ca`
+- V3 challenge manifest SHA-256 `2ba557e93692e18cf7a22807d36400ca3e22f87e6c9a4b12ee99534721d693ee`
+- V3 challenge NPZ SHA-256 `368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce`
+- **168** challenge render operations / **336 synthetic seconds**
+- **35/35** model-free coverage checks **PASS**
+- models/optimizer/P1/P2/P3 **0 / 0 / none**
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_V3_FINAL_RESULT_V1.json`
+
+This was declared the final source-domain coverage iteration.
+
+### Final V3 synthetic training package
+
+A separately preregistered final synthetic training design then reused the exact frozen S11 training/model protocol:
+
+- seeds **20260927 / 20260928 / 20260929**
+- control-trained + V2-source-domain-trained model per seed
+- **6 models**
+- **500 optimizer steps/model**
+- **3,000 optimizer steps total**
+- S11 architecture unchanged
+- state active weight **9**
+- onset positive weight **8**
+- onset loss multiplier **4**
+- sampler **32/32/32/32**
+- Adam **0.003**
+- batch **128**
+- state/onset thresholds **0.50 / 0.50**
+- zero threshold search/retuning
+- ordinary evaluation = frozen clean S9 test
+- challenge evaluation = exact 84-row V3 challenge
+- exact V1 source-domain scientific gate reused without weakening.
+
+Design/spec:
+- `docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_DESIGN_V1.md`
+- `docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_SPEC_V1.json`
+
+Runner:
+- `astra_backend/synthetic/source_domain_v3_synthetic_training_v1.py`
+
+Offline package verification:
+- run **36489377119**
+- job **109154011434**
+- artifact **11001326153**
+- digest `sha256:e0bf086ef504c8f750eb9461b27f3d66427f0457b6911a2cd11dce4f458fa1a9`
+- receipt SHA-256 `02ea4fa1928024a010b790fce66514961212cd65be0b05df98dfe6fcaccedf41`
+- optimizer steps **0**
+- model fit calls **0**
+- exact dataset/source pins verified.
+
+### Final V3 synthetic training outcome — FAILED
+
+One-shot execution:
+- run **36489648572**
+- job **109154913563**
+- head `4416964897ab8846fb91748737e9f7cc03752349`
+- run attempt **1**
+- workflow conclusion **SUCCESS**
+- artifact **11000187208**
+- digest `sha256:84f2566c656c37d5fe20bdc26bfdaa699d5e2c4089c0c91f99434d8f0282e3f3`
+- result JSON SHA-256 `5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d`
+- six models / **3,000 steps**
+- fit/eval **18.547 s**
+- automatic retry **false**
+- thresholds fixed **0.50/0.50**
+- P1/P2/P3 **none**
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_V3_SYNTHETIC_TRAINING_RESULT_V1.json`
+
+Scientific gate: **FALSE**
+
+Challenge deltas, intervention minus control:
+- onset F1 mean **+0.0611363**, positive **3/3**, minimum **+0.0567062**
+- onset recall mean **+0.0180879**, positive **3/3**
+- onset precision mean **+0.1143840**, positive **3/3**
+- state admission mean **-0.0361757**
+- joint admission mean **-0.0452196**
+
+Ordinary clean deltas:
+- onset F1 mean **+0.0206627**, positive **3/3**
+- onset recall mean **+0.0310078**, positive **3/3**
+- onset precision mean **+0.00631948**
+- state admission mean **-0.0775194**
+- joint admission mean **-0.0671835**
+
+Failed criteria:
+1. `meanChallengeOnsetRecallGainAtLeast0_08`
+   - observed **+0.0180879**
+2. `challengeNegativeOnlyFpAtMost0_10EverySeed`
+   - intervention seed 20260928 = **0.166667 events/sec**
+3. `noOrdinaryStateAdmissionLossOver0_03`
+   - every seed lost >= **0.0620**
+4. `noOrdinaryJointAdmissionLossOver0_04`
+   - every seed lost >= **0.0620**
+
+Notable passed criteria:
+- challenge onset F1 gain positive **3/3**
+- challenge recall gain positive **3/3**
+- mean challenge F1 gain >= **+0.05**
+- no challenge precision loss >0.05
+- ordinary onset F1/precision guards passed
+- ordinary negative-only FP guard passed
+- non-chord family stability guard passed
+- exact paired initialization/batches, six models, 3,000 steps and fixed dataset identities passed.
+
+Interpretation:
+- broader admitted source-domain training can improve onset F1/precision and produces positive recall movement;
+- it does **not** satisfy the full recall/state/joint/negative-control contract;
+- the final system is not accepted as a generally stronger transcription model.
+
+### Post-V3 strategy boundary
+
+Frozen project-level review:
+- `docs/astra/POST_V3_REPRESENTATION_DATA_STRATEGY_REVIEW_V1.md`
+
+Decision:
+**NO-GO for further source-domain synthetic tuning/model execution from this evidence.**
+
+Do not:
+- run V4/V5 source-domain coverage;
+- rerun V3;
+- select a favorable seed;
+- lower thresholds;
+- weaken gates;
+- retune loss/sampler/state weights;
+- widen decoder windows;
+- directly swap architecture and retry;
+- reopen P1/P2 for the failed V3 candidate;
+- open P3.
+
+The earlier architecture boundary required a source-domain candidate to pass its synthetic robustness gate before architecture follow-up. That condition was not met.
+
+### Exact current boundary
+
+The remaining ambiguity cannot be resolved reliably with another iteration of the same repo-owned synthetic evidence.
+
+Next empirical work requires one of:
+
+1. **New broader real development evidence**
+   - independent of P3;
+   - broader than the already-exposed P1/P2 captures;
+   - prospectively frozen capture/annotation/preprocessing/evaluation contract;
+   - requires fresh explicit authorization before accessing/using new real data.
+
+2. **A genuinely new architecture research project version**
+   - not a V3 rescue;
+   - independent prospective architectural hypotheses and evaluation contract;
+   - no simultaneous threshold/loss/sampler tuning;
+   - requires a separate explicit project decision before optimizer work.
+
+P1/P2 remain **closed**.
+P3 remains **sealed**.
+Main/Production remain unchanged.
+
+**Resume instruction:** Stop empirical/model execution. Ask for explicit authorization before any new real development-data program, or explicit approval before opening a new architecture research version. Do not run another source-domain synthetic experiment automatically.
