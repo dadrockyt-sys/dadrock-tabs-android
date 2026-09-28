@@ -1140,6 +1140,122 @@ P3 remains sealed.
    - genuine grouped validation before P3
 7. Do not start real optimizer work until that synthetic/data-diversity design is frozen and separately authorized.
 
+## EXPLICIT NEXT STEPS — COMMERCIAL-SAFE SYNTHETIC / DATA-DIVERSITY PATH
+
+Resume from here. This section supersedes older task queues.
+
+Current scientific position:
+- tiny eight-crop supervised models can fit training folds but do not transfer reliably
+- Basic Pitch recovered many real notes but failed precision
+- MR-MT3 emitted abundant note activity but failed the frozen guitar-program projection
+- generic pretrained front-end exploration is now stopped
+- P3 remains sealed
+
+### Phase S0 — offline design only
+
+1. Inventory every existing source of supervised guitar data already present or previously authorized in the repository:
+   - full P1/P2 direct-input capture durations, not just the frozen 200-frame crops
+   - existing MIDI / string / fret / onset / technique labels
+   - any synthetic fixtures already in `astra_backend`
+   - any existing augmentation/rendering utilities
+   Do not process new real media during this inventory.
+
+2. Quantify how much labeled material is being discarded by the current 200-frame preparation:
+   - total labeled duration per approved P1/P2 capture
+   - number of valid note/onset/string/fret events outside the first frozen crop
+   - potential number of non-overlapping supervised windows
+   This is code/document inspection only until separately authorized.
+
+3. Define a **commercial-safe synthetic source contract** before generating any data:
+   - no CC BY-NC datasets
+   - no unverified copyrighted sample libraries
+   - prefer procedural / physically modeled / permissively licensed guitar synthesis
+   - record source code, license, version, sample provenance and hashes
+   - require that every generated label is known exactly from the generator
+
+4. Freeze a bounded pilot corpus design before any rendering:
+   - target **small pilot**, not large-scale training
+   - include single notes, repeated notes, dyads/chords, scales, palm-muted notes and silence
+   - cover all six strings and frets 0-19
+   - vary timing, note lengths, dynamics, picking position / timbre where the generator allows
+   - include explicit negative/silence segments to target the Basic Pitch false-positive failure mode
+   - keep train/validation generation seeds and content templates disjoint
+
+5. Freeze grouped validation rules:
+   - no window from the same generated phrase/template may appear in both train and validation
+   - reserve at least one synthetic content family entirely for validation
+   - keep P1/P2 as external development transfer only, never training data for the first synthetic pilot
+   - P3 remains completely unavailable
+
+### Phase S1 — synthetic infrastructure
+
+6. Implement a deterministic synthetic manifest format containing at minimum:
+   - generator version / commit
+   - license/provenance
+   - seed
+   - tuning
+   - string
+   - fret
+   - MIDI pitch
+   - onset
+   - offset
+   - technique
+   - rendered audio SHA-256
+   - label SHA-256
+   - split assignment
+
+7. Build synthetic-only tests for:
+   - exact string/fret -> MIDI mapping
+   - onset/offset label integrity
+   - repeated-note identity
+   - chord simultaneity
+   - silence / negative examples
+   - deterministic regeneration from seed
+   - train/validation leakage prevention
+
+8. Run only synthetic verification first.
+   - zero real P1/P2 media access
+   - zero P3 access
+   - no large training job
+   - no automatic retries
+
+### Phase S2 — bounded synthetic pilot design
+
+9. Only after synthetic infrastructure is green, freeze one small training pilot:
+   - exact architecture
+   - exact synthetic example count
+   - exact optimizer-step ceiling
+   - exact CPU/GPU/time/cost ceiling
+   - exact validation split
+   - exact advancement criteria
+   - no hyperparameter sweep
+
+10. Preferred first modeling question:
+    **Can a guitar-specific model trained only on commercially safe synthetic data learn robust pitch/onset evidence that transfers to held-out synthetic content and then shows non-zero, balanced transfer on P1/P2 without tuning on them?**
+
+11. Advancement must require both:
+    - strong grouped synthetic validation, and
+    - meaningful P1/P2 transfer without threshold or architecture tuning on P1/P2
+
+12. If synthetic validation is weak, stop and fix the generator/representation before touching P1/P2.
+
+13. If synthetic validation is strong but P1/P2 transfer is weak, diagnose the synthetic-to-real domain gap before scaling model size or epochs.
+
+14. Do not return to 2,000-epoch V1-V5-style runs. Any pilot must remain capped and diagnostic.
+
+### Hard boundaries
+
+- no third generic AMT front end
+- no Basic Pitch threshold tuning on the eight development crops
+- no MR-MT3 program remapping based on observed P1/P2 outputs
+- no P3 access
+- no production/customer-readiness claim
+- no large corpus download/rendering or optimizer spend without a frozen design and explicit authorization
+
+### Immediate next action
+
+Perform **Phase S0 only**: inspect the repository and existing approved data-preparation code to quantify available supervised diversity and propose one commercial-safe synthetic generator strategy. Then freeze that design before implementing rendering or training.
+
 ## Historical direction and execution log (superseded as task queue)
 
 ## Direction
