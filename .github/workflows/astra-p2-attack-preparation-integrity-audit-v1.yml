@@ -1,0 +1,160 @@
+name: Astra P2 preparation integrity audit v1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_LAUNCH_V1.json'
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: astra-p2-preparation-integrity-audit-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+
+      - name: Verify fresh explicit authorization, launch, and frozen pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          ap=Path('docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V1.json')
+          lp=Path('docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_LAUNCH_V1.json')
+          if not ap.exists() or not lp.exists():
+              raise SystemExit('fresh authorization and single-use launch files are required')
+          a=json.loads(ap.read_text()); l=json.loads(lp.read_text())
+          z=a['authorization']
+          assert a['schema']=='astra-p2-attack-preparation-integrity-audit-authorization-v1'
+          assert a['status']=='explicitly_authorized_single_zero_model_p1_p2_integrity_audit'
+          assert z['p1MediaAccessAuthorized'] is True
+          assert z['p2MediaAccessAuthorized'] is True
+          assert z['p3Authorized'] is False
+          assert z['exactCaptureCountAuthorized']==8
+          assert z['optimizerStepsAuthorized']==0
+          assert z['modelsLoadedAuthorized']==0
+          assert z['modelInferenceAuthorized'] is False
+          assert z['thresholdSearchAuthorized'] is False
+          assert z['thresholdRetuningAuthorized'] is False
+          assert z['automaticRetryAuthorized'] is False
+          assert z['cpuOnlyGithubActions'] is True
+          assert z['maxJobMinutes']<=120
+          assert z['codespacesAuthorized'] is False
+          assert z['vercelAuthorized'] is False
+          assert z['productionAuthorized'] is False
+          assert z['mainMutationAuthorized'] is False
+          assert l['singleLaunch'] is True
+          assert l['authorizationFile']=='docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V1.json'
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          for key,path in l['sourcePaths'].items():
+              actual=blob(path)
+              assert l['sourceIdentities'][key]==actual,(key,'launch',actual)
+              assert a['sourceIdentities'][key]==actual,(key,'authorization',actual)
+          print('AUTHORIZATION_AND_PINS_OK')
+          PY
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10.15' }
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Run focused synthetic tests before any P1/P2 source access
+        run: |
+          PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py
+          PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_real_domain_failure_localization_v1.py
+
+      - name: Create bounded working directories
+        run: mkdir -p /tmp/audit/source/P1 /tmp/audit/source/P2 /tmp/audit/prepared/P1 /tmp/audit/prepared/P2 /tmp/audit/download
+
+      - name: Acquire and prepare exact eight authorized captures once
+        shell: bash
+        run: |
+          set -euo pipefail
+          total=0
+          ceiling=4004045267
+          while IFS=$'\t' read -r performer file bytes md5 sha capture; do
+            total=$((total + bytes))
+            test "$total" -le "$ceiling"
+            archive="/tmp/audit/download/$file"
+            curl --fail --location --connect-timeout 30 --max-time 1500 --user-agent 'Astra-Preparation-Integrity-Audit/1.0' \
+              -o "$archive" "https://zenodo.org/records/14963133/files/$file?download=1"
+            test "$(stat -c '%s' "$archive")" = "$bytes"
+            test "$(md5sum "$archive" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "$archive" | awk '{print $1}')" = "$sha"
+
+            src="/tmp/audit/source/$performer"
+            prep="/tmp/audit/prepared/$performer"
+            if [ "$performer" = P1 ]; then
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/tiny_fit_pilot_v1.py extract-selected-source \
+                --archive "$archive" --capture-key "$capture" --output-dir "$src"
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/tiny_fit_pilot_v1.py prepare-capture \
+                --root "$src" --capture-key "$capture" \
+                --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir "$prep"
+            else
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/cross_performer_screen_v1.py extract-selected-source \
+                --archive "$archive" --capture-key "$capture" --output-dir "$src"
+              PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/cross_performer_screen_v1.py prepare-capture \
+                --root "$src" --capture-key "$capture" \
+                --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json --output-dir "$prep"
+            fi
+            rm -f "$archive"
+          done <<'EOF'
+          P1	P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1|chords|Drop3_7|directinput
+          P1	P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1|scales|Ab|directinput
+          P1	P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1|singlenotes|allsinglenotes|directinput
+          P1	P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1|techniques|PalmMute|directinput
+          P2	P2_chords.zip	1150819056	eb6f74dd19162237189281688ad7ad2e	9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce	P2|chords|Drop3_7|directinput
+          P2	P2_scales.zip	471254783	96664853872f51e5f8aa4447313b7cf5	d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17	P2|scales|Ab|directinput
+          P2	P2_singlenotes.zip	116133457	40fbf03d8b04bb2cf42df20f36dc2254	d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9	P2|singlenotes|allsinglenotes|directinput
+          P2	P2_techniques.zip	395839610	f4189251ce50be25f06a173b2c2bba00	05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816	P2|techniques|PalmMute|directinput
+          EOF
+          test "$total" -eq "$ceiling"
+
+      - name: Run one zero-model integrity audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e /tmp/audit/result.json
+          PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/p2_attack_preparation_integrity_audit_v1.py \
+            --spec docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json \
+            --p1-source-root /tmp/audit/source/P1 --p2-source-root /tmp/audit/source/P2 \
+            --p1-dir /tmp/audit/prepared/P1 --p2-dir /tmp/audit/prepared/P2 \
+            --out /tmp/audit/result.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/audit/result.json'))
+          e=x['execution']
+          assert e['optimizerSteps']==0
+          assert e['modelsLoaded']==0
+          assert e['modelInference'] is False
+          assert e['thresholdSearch'] is False
+          assert e['thresholdRetuning'] is False
+          assert e['p1Accessed'] is True and e['p2Accessed'] is True
+          assert e['p3Opened'] is False
+          assert len(x['captures'])==8
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-p2-attack-preparation-integrity-audit-v1
+          path: /tmp/audit/result.json
+          retention-days: 30
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/audit
