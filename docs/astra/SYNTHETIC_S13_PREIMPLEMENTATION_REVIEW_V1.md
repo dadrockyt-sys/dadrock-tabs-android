@@ -60,7 +60,7 @@ Because the transform is frame-wide, a string-specific onset changes spectral ev
 
 Before: `[0.0, 1.0, 0.2, 1.0, 1.0]`
 
-After: approximately `[0.0, 0.5, 0.3, 0.65, 1.0]`
+After: approximately `[0.0, 0.5, 0.425, 0.7125, 1.0]`
 
 Frame 2 is changed first as the following frame of onset 1, then changed again as its own onset. Thus the transform is order-coupled for adjacent attacks.
 
