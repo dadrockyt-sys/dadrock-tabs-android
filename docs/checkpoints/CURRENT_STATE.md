@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V2 STAGE A TEST-CONTRACT CORRECTION REVIEW FROZEN — SCIENTIFIC CONFIG UNCHANGED; NEXT: BUILD SEPARATELY VERSIONED CORRECTED STAGE-A PACKAGE OFFLINE ONLY, DO NOT RUN; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
+Status: **CORRECTED STAGE-A V2 PACKAGE STATICALLY VERIFIED AND HARD-DISABLED — NO WAVEFORM EXECUTION; NEXT: SEPARATE ARMING DECISION ONLY; STAGE B/MODELS BLOCKED; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -2031,3 +2031,86 @@ Build the corrected Stage-A V2 execution package **offline only**:
 Do **not** run the new workflow yet.
 
 **Resume instruction:** Construct and verify the separately versioned corrected Stage-A package offline only. No waveform execution is authorized by this checkpoint.
+
+
+## Corrected Stage-A V2 package statically verified — 2026-09-28
+
+Built the separately versioned corrected package required by the frozen test-contract review.
+
+Created:
+- `astra_backend/synthetic/test_source_domain_v2_stage_a_admission_v2.py`
+- `.github/workflows/astra-source-domain-v2-stage-a-admission-v2.yml`
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_PACKAGE_VERIFICATION_V2.md`
+- `docs/astra/SOURCE_DOMAIN_V2_STAGE_A_PACKAGE_VERIFICATION_V2.json`
+
+### Corrected focused-test contract
+
+The new V2 test file separately checks:
+
+Active hum:
+- `humActive=true`;
+- manifest-selected `humFundamentalHz` is included;
+- both 50 Hz and 60 Hz cases are represented;
+- `humCombinedRmsRelative` is not overridden.
+
+Inactive hum:
+- `humActive=false`;
+- `humFundamentalHz` is not overridden;
+- `humCombinedRmsRelative` is not overridden.
+
+The original V1 failed test/workflow remain unchanged historical evidence.
+
+### Workflow is deliberately disabled
+
+The V2 workflow:
+- has **only** `workflow_dispatch`;
+- has no push / pull-request / schedule / workflow-run trigger;
+- hard-disables its only job with:
+  `if: ${{ false }}`.
+
+Static inspection after the workflow commit showed no Stage-A V2 check run. Only the unrelated Cloudflare Pages check appeared.
+
+Therefore the package cannot auto-run and cannot execute Stage A even if manually dispatched while the hard-false guard remains.
+
+### Frozen inputs unchanged
+
+The disabled package still pins:
+- V1 preparation run **36475263654**;
+- S9 control SHA-256 `16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894`;
+- V2 manifest run **36481373445**;
+- manifest content SHA-256 `2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469`.
+
+Scientific runner logic, selected rows, acoustic gates and ceilings remain unchanged.
+
+### Execution accounting
+
+During this package-build/static-verification step:
+- waveform renders **0**;
+- Stage-A runner executions **0**;
+- model loads **0**;
+- inference **false**;
+- optimizer steps **0**;
+- P1/P2/P3 access **none**;
+- main/Production mutation **none**.
+
+This is an **offline package pass**, not a scientific Stage-A pass.
+
+### Exact next action
+
+Do not edit the disabled workflow guard casually and do not dispatch it yet.
+
+The next checkpoint may perform only a **separate arming decision**:
+1. decide whether one corrected Stage-A V2 acoustic attempt is justified;
+2. if yes, create a uniquely versioned armed workflow/marker rather than rewriting the historical disabled package;
+3. preserve the same frozen hashes, rows, gates and ceilings;
+4. allow exactly one attempt with no automatic retry;
+5. freeze pass/failure and stop before Stage B.
+
+Until such a checkpoint explicitly arms the attempt:
+- Stage A remains unexecuted scientifically;
+- Stage B remains blocked;
+- model execution remains blocked;
+- P1/P2 remain closed;
+- P3 remains sealed.
+
+**Resume instruction:** Continue with the Stage-A V2 arming decision only. Do not execute waveform admission yet.
