@@ -1,0 +1,22 @@
+name: Astra S13 synthetic execution V1
+
+# Deliberately disabled: no trigger exists until a separately frozen launch marker
+# is added after offline package verification.
+on:
+  workflow_dispatch:
+    inputs:
+      disabled:
+        description: 'This workflow is preparation-only and must remain unusable until launch is frozen.'
+        required: true
+        default: 'true'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  refuse-unfrozen-launch:
+    if: ${{ inputs.disabled == 'never-allowed-without-source-edit' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - run: exit 1
