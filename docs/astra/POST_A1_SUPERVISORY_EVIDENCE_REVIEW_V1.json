@@ -1,0 +1,69 @@
+{
+  "schema": "astra-post-a1-supervisory-evidence-review-v1",
+  "date": "2026-09-28",
+  "status": "model-free-evidence-reconciliation-complete",
+  "sourceCommit": "983ef1f2efd5701d709545ec3b76826622f75746",
+  "frozenResultsPreserved": true,
+  "artifactVerification": {
+    "a1": {
+      "artifactId": 11002106213,
+      "reportedDigest": "sha256:ed013e7d35237f7b6d998a742b7cac45116d1b8ceb038400dc81edc4947b2054",
+      "expectedResultJsonSha256": "090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3",
+      "downloadedResultJsonSha256": "090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3"
+    },
+    "v3": {
+      "artifactId": 11000187208,
+      "reportedDigest": "sha256:84f2566c656c37d5fe20bdc26bfdaa699d5e2c4089c0c91f99434d8f0282e3f3",
+      "expectedResultJsonSha256": "5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d",
+      "downloadedResultJsonSha256": "5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d"
+    }
+  },
+  "population": {
+    "ordinary": {"testExamples": 42, "positiveReferenceStringFrames": 129, "negativeOnlySeconds": 6.0},
+    "challenge": {"testExamples": 84, "positiveReferenceStringFrames": 258, "negativeOnlySeconds": 12.0}
+  },
+  "parameterCounts": {
+    "s11": 156548,
+    "a1": 279556,
+    "increase": 123008,
+    "increasePercent": 78.6
+  },
+  "frozenGate": {
+    "passed": false,
+    "failedCriteria": [
+      "meanOrdinaryJointGainVsS11InterventionAtLeast0_04",
+      "challengeRecallGainVsS11ControlPositive3of3"
+    ],
+    "meanOrdinaryJointGainVsS11Intervention": 0.03875968992248061,
+    "challengeRecallPositiveSeedsVsS11Control": 2
+  },
+  "absoluteReference": {
+    "ordinaryJointDeltaVsCleanControlBySeed": {
+      "20260927": -0.023255813953488358,
+      "20260928": -0.031007751937984496,
+      "20260929": -0.031007751937984496
+    }
+  },
+  "qualifications": {
+    "capacityAndInitialization": "A1 adds a second encoder, increasing trainable parameters by 78.6% and changing initialization order; same seed and paired batch plans do not isolate encoder-sharing causality.",
+    "benchmarkReuse": "Ordinary S9 and V3 challenge populations are reused development benchmarks, not independent confirmation.",
+    "negativeOnly": "Zero A1 negative-only decoded events were observed only over 6 ordinary seconds and 12 challenge seconds per seed; this is not a real-world zero-FP claim."
+  },
+  "focusedValidator": {
+    "path": "astra_backend/synthetic/post_a1_result_validator_v1.py",
+    "testPath": "astra_backend/synthetic/test_post_a1_result_validator_v1.py",
+    "command": "python -m unittest -v astra_backend.synthetic.test_post_a1_result_validator_v1",
+    "testsPassed": 10,
+    "testsTotal": 10,
+    "modelImports": false,
+    "optimizerSteps": 0
+  },
+  "decisionBrief": {
+    "recommendation": "pause-model-research",
+    "preferredNextProjectIfExplicitlyAuthorized": "independent-real-development-evidence",
+    "a2Opened": false,
+    "p1p2Closed": true,
+    "p3Sealed": true,
+    "mainProductionUnchanged": true
+  }
+}
