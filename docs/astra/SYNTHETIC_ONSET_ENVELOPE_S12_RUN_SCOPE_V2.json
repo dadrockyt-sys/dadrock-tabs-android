@@ -1,0 +1,45 @@
+{
+  "schema": "astra-synthetic-onset-envelope-s12-run-scope-v2",
+  "date": "2026-09-28",
+  "userMessage": "I authorize all actions",
+  "purpose": "Execute the already-frozen single S12 synthetic-only robustness experiment. No additional real-data action is defined by this scope.",
+  "execution": {
+    "maxModels": 6,
+    "maxOptimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "cpuOnlyGithubActions": true,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "production": false,
+    "mainMutation": false
+  },
+  "sourcePaths": {
+    "designGitBlob": "docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_DESIGN_V1.md",
+    "runnerGitBlob": "astra_backend/synthetic/s12_pilot_v1.py",
+    "testsGitBlob": "astra_backend/synthetic/test_s12_pilot_v1.py",
+    "entryGitBlob": "astra_backend/synthetic/s12_entry_v1.py",
+    "generatorGitBlob": "astra_backend/synthetic/s0_pilot_v1.py",
+    "s9DatasetGitBlob": "astra_backend/synthetic/s9_pilot_v1.py",
+    "s11RunnerGitBlob": "astra_backend/synthetic/s11_pilot_v1.py",
+    "runtimeLockGitBlob": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflowGitBlob": ".github/workflows/astra-synthetic-s12-entry-v2.yml"
+  },
+  "sourceIdentities": {
+    "designGitBlob": "e02aaafc96d0d93df781fdd459e7762abf3e624b",
+    "runnerGitBlob": "ceb0eb5eca97a0b7f0b8c2d3fad7b79bc841abc7",
+    "testsGitBlob": "f259ec05e591c4ee02a6b08c1c9af2d04cf9576b",
+    "entryGitBlob": "d541ac7db5c7673313875c0e38f49c6cd658536c",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s9DatasetGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "s11RunnerGitBlob": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "117d82ecaac3926ce4d72500afea13e0f1868709"
+  },
+  "note": "The user's broad authorization covers continuation, but this launch is limited to the specific frozen S12 package because no new P1/P2/P3 action has been prospectively defined."
+}
