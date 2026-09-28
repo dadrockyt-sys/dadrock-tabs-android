@@ -7,6 +7,9 @@ on:
       - 'astra_backend/synthetic/s13_pilot_v1.py'
       - 'astra_backend/synthetic/test_s13_pilot_v1.py'
       - '.github/workflows/astra-s13-offline-package-verification-v1.yml'
+      - 'docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json'
+      - 'docs/astra/SYNTHETIC_S13_SPEC_V1.json'
+      - 'docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json'
 
 permissions:
   contents: read
@@ -31,6 +34,13 @@ jobs:
         env:
           PYTHONPATH: astra_backend
         run: pytest -q astra_backend/synthetic/test_s13_pilot_v1.py
+      - name: Verify frozen scope and complete source pins
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.s13_pilot_v1 verify-scope \
+            --scope docs/astra/SYNTHETIC_S13_RUN_SCOPE_V1.json \
+            --history docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json
       - name: Generate canonical S13 datasets without optimizer work
         env:
           PYTHONPATH: astra_backend
