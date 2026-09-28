@@ -923,3 +923,116 @@ Do not run S13, do not rerun S12, do not search transform strengths against P1/P
 
 **Resume instruction:** Continue from this explicit no-go. The immediate task is model-free prospective transform design/review only. Preserve S12 as failed, keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
 
+## S13 transform-design review and prospective design freeze — 2026-09-28
+
+Continued from the explicit S12-view no-go with model-free transform design only.
+
+### Prospective replacement transform reviewed
+
+One replacement transform was defined and reviewed:
+
+**positive-onset-increment compression**
+
+At labeled onset frames only, using immutable source features:
+
+`positive_delta = max(x[f] - x[f-1], 0)`
+
+`x_soft[f] = x[f] - (1-r) * positive_delta`
+
+Key properties:
+- only positive increments can change;
+- flat/decreasing bins are preserved exactly;
+- no following-frame mutation;
+- no recursive coupling between adjacent onsets;
+- simultaneous string onsets at one frame transform the frame once;
+- frame zero remains unchanged;
+- transform is representation-local, **not** string-source-selective and is not claimed to be a physical attack-envelope simulator.
+
+Model-free review files:
+- `docs/astra/SYNTHETIC_S13_TRANSFORM_DESIGN_REVIEW_V1.md`
+- `astra_backend/synthetic/s13_transform_design_review_v1.py`
+  - blob `f9ccbca8f692c7db01e71d7d497c9df34b82c15f`
+- `astra_backend/synthetic/test_s13_transform_design_review_v1.py`
+  - blob `547b749bb7da3e0673cfe5a0d41f959ca24f2c38`
+- `.github/workflows/astra-s13-transform-design-review-v1.yml`
+  - blob `bba8b5aeedb0bffb533253842fe35efbfb1edee4`
+
+Focused review:
+- workflow run **36456672322**
+- job **109044647114**
+- head **4d9438b8b6524314ad08f3dad0daee81340e20cc**
+- result: **17 passed**
+- artifact **10986610039**
+- artifact digest `sha256:b7f7f46064b42700391a5675119a1fdd08dd5008e32543efa2195565176a5f69`
+- model run: **no**
+- optimizer steps: **0**
+- P1/P2 access: **no**
+- P3 opened: **no**
+
+Handcrafted admission findings at demonstration retain fraction 0.50:
+- isolated new pitch `[0,1,1,1,1] -> [0,0.5,1,1,1]`;
+- repeated pitch `[0.8,1,1,0.9,0.8] -> [0.8,0.9,1,0.9,0.8]`;
+- decaying/sustaining bins remain unchanged while a new positive attack rise is compressed;
+- adjacent onset case `[0,1,0.2,1,1] -> [0,0.5,0.2,1,1]`, with no recursive order coupling;
+- an unrelated bin rising at the same frame is also compressed, retained as an explicit non-source-selective limitation.
+
+Decision: **GO for prospective S13 design work only.** This does not authorize or imply a model pass.
+
+### S13 prospective design/spec now frozen
+
+Created:
+- `docs/astra/SYNTHETIC_S13_DESIGN_V1.md`
+  - blob `2e48f3ff9af79323b34a3f41124d9d2b56f3553a`
+- `docs/astra/SYNTHETIC_S13_SPEC_V1.json`
+  - blob `9da9ba1657d452faf667119320d3a7285d4cdb67`
+
+Single intervention package:
+- retain fraction exactly **0.50**;
+- transform exactly `floor(n_family/2)` training rows inside each family;
+- deterministic per-family transformed subset ranked by SHA-256 of `astra-s13-soft-subset-v1|<rowIndex>`;
+- clean rows remain present;
+- no row-count change;
+- no sampler change;
+- no new loss/consistency objective;
+- no architecture, decoder or threshold change.
+
+Corrected evaluation challenge:
+- all test rows transformed with the same admitted nonrecursive transform at retain fraction **0.50**;
+- training/validation challenge features stay clean;
+- all labels/references remain identical;
+- this replaces the S12 recursive challenge for S13, so absolute S12/S13 challenge scores are not directly comparable.
+
+Frozen training scope:
+- seeds **20260927, 20260928, 20260929**;
+- frozen S9/S11 model and onset-aware 32/32/32/32 sampler;
+- Adam lr **0.003**;
+- batch size **128**;
+- **500 optimizer steps/model**;
+- at most **6 models / 3,000 steps total**;
+- state/onset thresholds **0.50 / 0.50**;
+- no threshold search/retuning;
+- CPU-only GitHub Actions;
+- <=90 fit/eval minutes;
+- $0 paid compute;
+- no automatic retry;
+- no P1/P2/P3 access;
+- no Codespaces/Vercel/main/Production mutation.
+
+The S13 gate keeps the S12 minimum benefit/regression floors and adds ordinary precision, ordinary negative-only and identity/runtime admission checks. A scientific pass requires all frozen criteria; workflow success alone cannot count as a gate pass.
+
+### Exact next action
+
+**Do not launch S13 yet.**
+
+Next authorized work is offline implementation/preparation only:
+1. implement the S13 runner using the frozen design/spec exactly;
+2. add focused tests for transformed-subset identity, formula invariants, challenge identity, paired initialization/batches, loss/gradient path unchanged, exact gate boundaries and every launch rejection path;
+3. pin the complete imported source dependency closure and canonical per-array dataset hashes;
+4. implement single-use launch controls, durable launch-identity receipt/history, run-attempt rejection, unique output path and failure receipts;
+5. run only focused offline tests needed for this package;
+6. update this handoff with actual test results, blobs, hashes and execution ceiling before any optimizer work.
+
+Standing bounded GitHub authorization may cover the eventual one synthetic-only launch **only after** that concrete execution package is fully frozen and verified. Do not reopen P1/P2 or P3.
+
+**Resume instruction:** Implement and verify the frozen S13 package offline. Do not train a model yet. Preserve S12 as failed, keep thresholds 0.50/0.50, P1/P2 closed, P3 sealed and main/Production unchanged.
+
