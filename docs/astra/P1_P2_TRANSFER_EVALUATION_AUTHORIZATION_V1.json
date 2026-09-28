@@ -20,7 +20,8 @@
     "codespacesAuthorized": false,
     "vercelAuthorized": false,
     "productionAuthorized": false,
-    "mainMutationAuthorized": false
+    "mainMutationAuthorized": false,
+    "seedSelectionAfterRealDataAuthorized": false
   },
   "sourcePaths": {
     "designGitBlob": "docs/astra/P1_P2_TRANSFER_EVALUATION_DESIGN_V1.md",
@@ -54,6 +55,16 @@
     "s11TrainingGitBlob": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
     "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
-    "workflowGitBlob": "f9bf163d97e5fdebb20bbb3bb01d292d02109730"
+    "workflowGitBlob": "f2d57b471cc66c66f0df1004e798ec28f40fc5d8"
+  },
+  "scientificContract": {
+    "p2PrimaryTransferPopulation": true,
+    "p1CompatibilityContextOnly": true,
+    "candidateRunSeed": 20260927,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "evaluator": "prospective evaluator V2 with symmetric 50 ms crop-edge guard",
+    "focusedTestsRunBeforeRealMediaAccess": true,
+    "p3Sealed": true
   }
 }
