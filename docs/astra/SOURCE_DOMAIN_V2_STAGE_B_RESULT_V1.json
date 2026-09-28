@@ -1,0 +1,74 @@
+{
+  "schema": "astra-source-domain-v2-stage-b-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "scientific-admission-failed-34-of-35",
+  "workflow": {
+    "run": 36485375684,
+    "job": 109140893933,
+    "head": "951417c465070f09efa3590b483760f5adf021d7",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "artifact": {
+    "id": 10999695803,
+    "name": "astra-source-domain-v2-stage-b-v1",
+    "digest": "sha256:a38a2a2a400cc3e2c470c9fd8ccf46ac8e6b9a346ffb57292aa4384b2615e6ca",
+    "resultSha256": "d1f4ee0580ca98094fb12adabf76f437e6e3769c85b1fbc7f741205c9a3b13d2",
+    "interventionSha256": "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b",
+    "primaryChallengeSha256": "eeb7da72ffc029b265aa3e9c4bcb1906c266335e653fc3b15197ea8f6b6a52c8"
+  },
+  "gate": {
+    "required": 35,
+    "passed": 34,
+    "failed": 1,
+    "admissionPassed": false,
+    "failedCheck": {
+      "family": "repeated",
+      "descriptor": "firstDifferenceEnergy",
+      "trainP05": 0.00012755030510573105,
+      "trainP95": 0.002616342636808816,
+      "challengeMedian": 0.0028062511494023105,
+      "relativeAboveP95": 0.0725847272329922
+    }
+  },
+  "otherCriteria": {
+    "allNonFeatureArraysBitIdentical": true,
+    "challengeChangedRowsExactlyTest": true,
+    "challengeTrainValidationFeaturesBitIdentical": true,
+    "deterministicRepeatFeatureHashes": true,
+    "deterministicRepeatWaveformHashes": true,
+    "interventionChangedRowsExactlyTrain": true,
+    "interventionValidationTestFeaturesBitIdentical": true,
+    "reconstructedOnsetIdentity": true,
+    "reconstructedStateIdentity": true,
+    "referenceIdentityIncludingHistoricalPrefixes": true,
+    "renderCeiling": true,
+    "audioSecondsCeiling": true,
+    "wallTimeCeiling": true,
+    "persistedBytesCeiling": true
+  },
+  "execution": {
+    "renderOperations": 504,
+    "audioSeconds": 1008,
+    "elapsedSeconds": 168.411920312,
+    "persistedBytes": 16805036,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "stopRule": {
+    "noRetry": true,
+    "noGateRelaxation": true,
+    "noModelTraining": true,
+    "noRowSubstitution": true,
+    "nextAllowed": "frozen-artifact-only-model-free-localization-and-project-level-decision"
+  }
+}
