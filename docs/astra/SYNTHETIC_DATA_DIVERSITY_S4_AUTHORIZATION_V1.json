@@ -1,16 +1,21 @@
 {
   "schema": "astra-synthetic-data-diversity-s4-authorization-v1",
   "date": "2026-09-27",
-  "status": "authorized_single_synthetic_only_gradient_coupling_pilot",
-  "userInstruction": "I authorize",
+  "status": "authorized_single_corrected_synthetic_gradient_coupling_pilot",
+  "userInstruction": "I authorize please continue 🙏",
+  "authorizationSequence": 2,
+  "priorAttempt": {
+    "runId": 36374078304,
+    "jobsCreated": 0,
+    "modelExecutionStarted": false,
+    "optimizerSteps": 0
+  },
   "authorization": {
     "maxExamples": 294,
     "maxAudioSeconds": 588,
     "maxModels": 2,
     "maxOptimizerStepsPerModel": 500,
     "maxOptimizerStepsTotal": 1000,
-    "maxRenderCpuMinutes": 20,
-    "maxFitEvalCpuMinutes": 60,
     "thresholdSearchAuthorized": false,
     "thresholdRetuningAuthorized": false,
     "automaticRetryAuthorized": false,
@@ -21,25 +26,7 @@
     "codespacesAuthorized": false,
     "vercelAuthorized": false,
     "productionMutationAuthorized": false,
-    "mainMutationAuthorized": false,
-    "customerDeliveryAuthorized": false
-  },
-  "experiment": {
-    "onlyChangedVariable": "onset-loss gradient coupling into shared encoder",
-    "control": "state and onset losses both update shared encoder",
-    "intervention": "onset head receives detached encoder activations; onset loss cannot update encoder",
-    "stateActiveWeight": 6,
-    "onsetPositiveWeight": 8,
-    "onsetLossWeight": 4,
-    "sampler": "onset-aware 32/32/32/32",
-    "architecture": "five-frame 960->128 ReLU",
-    "learningRate": 0.003,
-    "requestedOptimizerStepsPerModel": 500,
-    "stateThreshold": 0.5,
-    "onsetThreshold": 0.5,
-    "identicalInitialization": true,
-    "identicalBatchPlan": true,
-    "rootSeed": 20260927
+    "mainMutationAuthorized": false
   },
   "sourceIdentities": {
     "designGitBlob": "97b80ce33e3eb62e3c012330ff001b3953c1e913",
@@ -50,6 +37,6 @@
     "runnerGitBlob": "3b24fd1739359a5d55bed8c6c1fbd9e6e9c74f11",
     "testsGitBlob": "81814aebf878102ec20d1cbb4abc8be54ddce5c9",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
-    "workflowGitBlob": "0e4a5cf496aa65b4f27a7e4e5f56769deccfbeec"
+    "workflowGitBlob": "501c82f2627a0b6aae0108b91cff4e7cb22c3a54"
   }
 }
