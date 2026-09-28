@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S13 SCIENTIFIC GATE FAILED AND FROZEN — STOP MODEL EXPERIMENTS; PROJECT-LEVEL SIMULATOR/REPRESENTATION REVIEW NEXT; P1/P2 CLOSED; P3 SEALED**
+Status: **S13 FAILED AND STRATEGY REVIEW FROZEN — NO MORE MODEL TUNING; NEXT INFORMATIVE ACTION IS THE PREPARED ZERO-MODEL P1/P2 INTEGRITY AUDIT, REQUIRING FRESH EXPLICIT SOURCE-ACCESS AUTHORIZATION; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1186,3 +1186,53 @@ Per the preregistered S13 stop rule:
 The next scientific step, if the project continues, is a **project-level review of the simulator/representation strategy**, using the frozen S12 and S13 failures plus the prior real-domain localization evidence. That review must be analysis/design only before any new model experiment is proposed.
 
 **Resume instruction:** Begin with project-level simulator/representation strategy review only. Preserve S12 and S13 as failed frozen interventions. Keep thresholds 0.50/0.50, P1/P2 closed, P3 sealed, and main/Production unchanged. Do not launch any model or real-data workflow from this checkpoint.
+
+
+## Project-level simulator/representation strategy review — 2026-09-28
+
+Completed the mandatory post-S13 project-level review without reopening P1/P2 media, P3, or any model execution.
+
+Frozen review:
+- `docs/astra/SIMULATOR_REPRESENTATION_STRATEGY_REVIEW_V1.md`
+
+No model was loaded or trained. Optimizer steps **0**. Thresholds remain **0.50 / 0.50**. Main/Production unchanged.
+
+### Review conclusion
+
+The combined evidence does **not** justify another synthetic model experiment.
+
+- S12 produced directional soft-challenge gains but failed the preregistered benefit floors and caused substantial ordinary-domain regression; later model-free review also showed its recursive frame-wide transform was not a clean identity-preserving view.
+- S13 used the corrected narrower positive-increment transform, but challenge pitch-onset F1 mean delta was **-0.0121**, recall mean delta **-0.0233**, F1 improved in only **1/3** seeds and recall in **0/3**.
+- The frozen synthetic corpus is a small controlled procedural surrogate (**294 clips / 7 families**) and should not be treated as a validated real-guitar distribution.
+- The frozen S11 model is a five-frame flattened CQT MLP with limited explicit time-frequency/source-separation inductive structure. This is a plausible transfer-risk factor, not a proven root cause.
+- Existing P1/P2 prepared-feature evidence cannot distinguish raw attack strength, capture/articulation, preprocessing sensitivity and coordinate alignment.
+
+Therefore:
+- **NO-GO for S14 or any further transform/loss/sampler/architecture/threshold search from S12/S13.**
+- **GO only for the already-prepared zero-model P1/P2 attack/preparation integrity audit as the next empirical information-gathering step.**
+
+That audit remains behind the existing explicit source-access boundary. The generic continuation instruction was **not** treated as fresh permission to reopen P1/P2 media.
+
+Prepared authorization request remains:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_REQUEST_V1.json`
+
+Exact requested scope:
+- eight frozen P1/P2 direct-input captures only;
+- P1 media access **yes**;
+- P2 media access **yes**;
+- P3 **no**;
+- models loaded **0**;
+- inference **no**;
+- optimizer steps **0**;
+- threshold changes/search **none**;
+- automatic retry **no**;
+- CPU-only GitHub Actions;
+- <=120 minutes;
+- <=4,004,045,267 download bytes;
+- no Codespaces/Vercel/main/Production mutation.
+
+### Resume instruction
+
+Do not launch another synthetic model experiment.
+
+The next executable empirical action requires **fresh explicit user authorization** for the exact frozen zero-model P1/P2 preparation-integrity audit above. If that authorization is not provided, remain in analysis/documentation mode. P3 stays sealed.
