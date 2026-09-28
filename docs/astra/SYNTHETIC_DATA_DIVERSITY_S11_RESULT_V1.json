@@ -1,0 +1,110 @@
+{
+  "schema": "astra-synthetic-data-diversity-s11-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "mixed_seed_sensitive_robustness_gate_failed",
+  "run": {
+    "runId": 36380767479,
+    "jobId": 108795887577,
+    "headSha": "38d04c96afbc76e17cc12f6244a8a3cc59f89a66",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10952457629,
+    "name": "astra-synthetic-data-diversity-s11-v1",
+    "digest": "sha256:3116ffec405cd5c86d068a2ee6c662a6fe03f337f08224501687b932258f1377",
+    "expiresAt": "2026-10-28T05:12:30Z",
+    "files": {
+      "control-render-receipt.json": "f6fdee4e97ac3b6b2d17da50f9fa00d8e5aa974d007d555d9e3e7d9c19012cc2",
+      "intervention-receipt.json": "2c3162c58872f844ea4ca862a3d3d2dbd35bb1e4d5dbac35bc5a6e3f73b817a8",
+      "result.json": "16c9fa6bc0ddbdeb0d641929c25021822bca3c1ca6f1cf07b463e09367192006"
+    }
+  },
+  "execution": {
+    "modelCount": 6,
+    "optimizerStepsTotal": 3000,
+    "fitEvalSeconds": 16.535225321000013,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "runSeeds": [
+    20260927,
+    20260928,
+    20260929
+  ],
+  "pairedDeltaSummary": {
+    "chordF1": {
+      "mean": 0.06493769885707174,
+      "median": 0.04113475177304954,
+      "minimum": 0.01614035087719301,
+      "positiveCount": 3
+    },
+    "chordRecall": {
+      "mean": 0.10185185185185186,
+      "median": 0.1111111111111111,
+      "minimum": 0.055555555555555525,
+      "positiveCount": 3
+    },
+    "onsetF1": {
+      "mean": 0.018955091950996834,
+      "median": 0.005186721991701448,
+      "minimum": 0.00233644859813098,
+      "positiveCount": 3
+    },
+    "onsetRecall": {
+      "mean": 0.05426356589147293,
+      "median": 0.054263565891472965,
+      "minimum": 0.03100775193798455,
+      "positiveCount": 3
+    },
+    "jointAdmission": {
+      "mean": 0.002583979328165361,
+      "median": -0.007751937984496138,
+      "minimum": -0.015503875968992276,
+      "positiveCount": 1
+    },
+    "stateAdmission": {
+      "mean": 0.02583979328165374,
+      "median": 0.007751937984496138,
+      "minimum": 0,
+      "positiveCount": 2
+    },
+    "precision": {
+      "mean": -0.045847298111897215,
+      "median": -0.056965944272445834,
+      "minimum": -0.11853448275862066,
+      "positiveCount": 1
+    }
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCriteria": [
+      "chordF1GainPositive3of3",
+      "chordRecallGainPositive3of3",
+      "onsetF1GainPositive3of3",
+      "onsetRecallGainPositive3of3",
+      "negativeOnlyFpAtMost0_10EverySeed",
+      "nonChordFamilyLossOver0_15InAtMostOneSeed",
+      "allSix500StepsFinitePairedFixedThresholds"
+    ],
+    "failedCriteria": [
+      "meanChordF1GainAtLeast0_10",
+      "meanChordRecallGainAtLeast0_12",
+      "meanOnsetF1GainAtLeast0_04",
+      "meanOnsetRecallGainAtLeast0_06",
+      "meanJointAdmissionGainAtLeast0_03",
+      "noSeedPrecisionLossOver0_05"
+    ]
+  },
+  "interpretation": {
+    "supported": "Chord voicing diversity produced positive chord F1, chord recall, overall onset F1 and onset recall deltas in all three paired seeds.",
+    "notRobust": "The mean gains missed the preregistered robustness floors, joint admission was essentially flat on average, and one seed lost 0.1185 precision.",
+    "decision": "Do not promote the S9 diversity effect as seed-robust. Stop synthetic architecture/data tuning under the frozen S11 mixed/seed-sensitive branch."
+  }
+}

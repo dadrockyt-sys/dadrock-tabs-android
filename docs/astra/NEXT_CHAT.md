@@ -1,11 +1,14 @@
 # Next chat: start here
 
-S10 completed and failed its integrated gate.
+S11 completed successfully as a workflow but failed its robustness gate.
 
-Width 192 improved exact state/joint admission by +0.0465 but missed the absolute state/joint floors and degraded precision/onset+offset/family stability enough that width 192 is rejected.
+The 30-voicing intervention improved chord F1, chord recall, onset F1 and onset recall in all 3 seeds, so the diversity direction is consistent. But average gains were below the frozen robustness floors, joint admission was nearly flat, and one seed lost 0.1185 precision.
 
-The important new signal is seed sensitivity: S10's width-128 control was much weaker than S9's 30-voicing model despite using the same diversified dataset/training recipe class.
+Synthetic tuning is now closed under the S11 preregistered mixed/seed-sensitive branch.
 
-S11 is frozen as a robustness confirmation of the S9 data-diversity effect across exactly three seeds (20260927/28/29), 10 voicings vs 30 voicings within each seed.
+Standing inexpensive GitHub model-run authorization remains active, but there is no justified next synthetic tuning run.
 
-S11 requires 6 models total and fresh explicit authorization. P1/P2/P3 remain sealed.
+The next scientifically meaningful boundary is P1/P2 real-development transfer. A proposal exists at:
+`docs/astra/P1_P2_TRANSFER_EVALUATION_PROPOSAL_V1.md`
+
+P1/P2 access still requires explicit authorization. P3 remains sealed.
