@@ -84,6 +84,16 @@ jobs:
           path: /tmp/astra-p2-integrity-toolchain.txt
           retention-days: 30
 
+      - name: Verify frozen ffmpeg toolchain pin
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          s=json.load(open('docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json'))
+          assert subprocess.check_output(['ffmpeg','-version'],text=True).splitlines()[0].strip()==s['dependencyVersions']['ffmpegVersionLine']
+          assert subprocess.check_output(['ffprobe','-version'],text=True).splitlines()[0].strip()==s['dependencyVersions']['ffprobeVersionLine']
+          print('FROZEN_FFMPEG_VERSION_OK')
+          PY
+
       - name: Run focused integrity-audit synthetic tests
         run: PYTHONPATH=astra_backend:astra_backend/evaluation python astra_backend/evaluation/test_p2_attack_preparation_integrity_audit_v1.py
 
