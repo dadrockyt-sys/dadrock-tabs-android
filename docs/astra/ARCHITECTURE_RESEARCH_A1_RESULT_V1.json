@@ -1,0 +1,184 @@
+{
+  "schema": "astra-architecture-research-a1-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "scientific-gate-failed",
+  "hypothesis": "Decoupling the shared state/onset encoder can reduce task interference while retaining source-domain onset robustness.",
+  "architecture": {
+    "name": "A1-decoupled-state-onset-encoders",
+    "parameterCount": 279556,
+    "onlyDeliberateChange": "shared S11 Linear(960,128)+ReLU encoder replaced by two disjoint Linear(960,128)+ReLU encoders"
+  },
+  "workflow": {
+    "run": 36492748299,
+    "job": 109164963801,
+    "head": "c8841c47363073bb4f82891ea49a86577fa3010a",
+    "runAttempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11002106213,
+    "name": "astra-architecture-a1-result-v1",
+    "digest": "sha256:ed013e7d35237f7b6d998a742b7cac45116d1b8ceb038400dc81edc4947b2054",
+    "resultJsonSha256": "090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3"
+  },
+  "execution": {
+    "modelCount": 3,
+    "optimizerStepsPerModel": 500,
+    "optimizerStepsTotal": 1500,
+    "fitEvalSeconds": 6.810889334999956,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "productionMutation": false
+  },
+  "architectureEffectVsFrozenS11Intervention": {
+    "ordinaryStateAdmission": {
+      "mean": 0.0930232558139535,
+      "minimum": 0.06976744186046513,
+      "median": 0.0852713178294574,
+      "maximum": 0.12403100775193798,
+      "positiveSeeds": 3
+    },
+    "ordinaryJointAdmission": {
+      "mean": 0.03875968992248061,
+      "minimum": 0.031007751937984496,
+      "median": 0.038759689922480633,
+      "maximum": 0.046511627906976716,
+      "positiveSeeds": 3
+    },
+    "ordinaryOnsetF1": {
+      "mean": 0.03317663514025149,
+      "minimum": 0.0027150981471292246,
+      "median": 0.012932950733540838,
+      "maximum": 0.0838818565400844,
+      "positiveSeeds": 3
+    },
+    "challengeStateAdmission": {
+      "mean": 0.07235142118863051,
+      "minimum": 0.027131782945736482,
+      "median": 0.06589147286821706,
+      "maximum": 0.12403100775193798,
+      "positiveSeeds": 3
+    },
+    "challengeJointAdmission": {
+      "mean": 0.028423772609819136,
+      "minimum": 0.015503875968992276,
+      "median": 0.01937984496124029,
+      "maximum": 0.05038759689922484,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetF1": {
+      "mean": 0.051304876321575876,
+      "minimum": 0.009011489649302873,
+      "median": 0.07030079825195168,
+      "maximum": 0.07460234106347308,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetRecall": {
+      "mean": 0.024547803617571067,
+      "minimum": -0.015503875968992165,
+      "median": 0.04263565891472865,
+      "maximum": 0.046511627906976716,
+      "positiveSeeds": 2
+    },
+    "challengeOnsetPrecision": {
+      "mean": 0.0906692458875639,
+      "minimum": 0.05418290938665615,
+      "median": 0.1078094199555425,
+      "maximum": 0.11001540832049306,
+      "positiveSeeds": 3
+    }
+  },
+  "absoluteVsFrozenS11Control": {
+    "ordinaryStateAdmission": {
+      "mean": 0.015503875968992257,
+      "minimum": -0.023255813953488358,
+      "median": 0.007751937984496138,
+      "maximum": 0.06201550387596899,
+      "positiveSeeds": 2
+    },
+    "ordinaryJointAdmission": {
+      "mean": -0.028423772609819115,
+      "minimum": -0.031007751937984496,
+      "median": -0.031007751937984496,
+      "maximum": -0.023255813953488358,
+      "positiveSeeds": 0
+    },
+    "ordinaryOnsetF1": {
+      "mean": 0.05383933443123027,
+      "minimum": 0.027844383724604627,
+      "median": 0.04497848502070312,
+      "maximum": 0.08869513454838307,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetF1": {
+      "mean": 0.11244118178613012,
+      "minimum": 0.07740244828416387,
+      "median": 0.12700696174891468,
+      "maximum": 0.13291413532531182,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetRecall": {
+      "mean": 0.04263565891472865,
+      "minimum": -0.003875968992248069,
+      "median": 0.054263565891472854,
+      "maximum": 0.07751937984496116,
+      "positiveSeeds": 2
+    },
+    "challengeOnsetPrecision": {
+      "mean": 0.2050532465080395,
+      "minimum": 0.19099526066350714,
+      "median": 0.20345185814799072,
+      "maximum": 0.22071262071262066,
+      "positiveSeeds": 3
+    }
+  },
+  "failedCriteria": [
+    "meanOrdinaryJointGainVsS11InterventionAtLeast0_04",
+    "challengeRecallGainVsS11ControlPositive3of3"
+  ],
+  "passedCriteria": [
+    "ordinaryStateGainVsS11InterventionPositive3of3",
+    "meanOrdinaryStateGainVsS11InterventionAtLeast0_04",
+    "ordinaryJointGainVsS11InterventionPositive3of3",
+    "noChallengeF1LossVsS11InterventionOver0_03",
+    "noChallengeRecallLossVsS11InterventionOver0_03",
+    "noOrdinaryF1LossVsS11InterventionOver0_03",
+    "noOrdinaryPrecisionLossVsS11InterventionOver0_03",
+    "a1ChallengeNegativeFpAtMost0_10EverySeed",
+    "a1OrdinaryNegativeFpAtMost0_10EverySeed",
+    "ordinaryStateLossVsS11ControlAtMost0_03EverySeed",
+    "ordinaryJointLossVsS11ControlAtMost0_04EverySeed",
+    "challengeF1GainVsS11ControlPositive3of3",
+    "meanChallengeF1GainVsS11ControlAtLeast0_05",
+    "allRequiredMetricsFinite",
+    "threeModels500Steps",
+    "fixedThresholdsNoSearch",
+    "exactFrozenBatchPlans",
+    "noAutomaticRetry"
+  ],
+  "negativeOnlyFpPerSecond": {
+    "ordinary": [
+      0,
+      0,
+      0
+    ],
+    "challenge": [
+      0,
+      0,
+      0
+    ]
+  },
+  "interpretation": {
+    "supported": "Encoder decoupling materially improved state admission and improved joint admission in all three seeds while preserving or improving challenge F1 and eliminating negative-only false positives in this run.",
+    "notEstablished": "A1 did not satisfy its full prospective architecture gate: mean ordinary joint-admission gain missed the +0.04 threshold and challenge recall was not positive versus the frozen S11 control in all three seeds.",
+    "decision": "Reject A1 under the frozen gate. Do not rerun, relax gates, or automatically create A2."
+  },
+  "stopRule": "A1 line stops. Any A2 architecture requires a new explicit project decision and prospective rationale. P1/P2 remain closed; P3 remains sealed."
+}
