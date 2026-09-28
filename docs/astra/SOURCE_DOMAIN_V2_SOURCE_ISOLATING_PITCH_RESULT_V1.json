@@ -1,0 +1,65 @@
+{
+  "schema": "astra-source-domain-v2-source-isolating-pitch-result-v1",
+  "date": "2026-09-28",
+  "status": "passed",
+  "launchIdentity": "source-domain-v2-isolated-pitch-20260928-canonical-01",
+  "workflow": {
+    "run": 36488106137,
+    "job": 109149841945,
+    "head": "5938e4680f8d37ab9b512d60807865b1927cedd9",
+    "attempt": 1,
+    "conclusion": "success",
+    "focusedTestsPassed": 5
+  },
+  "artifact": {
+    "id": 10999874443,
+    "name": "astra-source-domain-v2-source-isolating-pitch-v2",
+    "digest": "sha256:00550e6c0bf84d20eb0c65208556abe7435ab04584e672b49b840c0253976caa",
+    "resultJsonSha256": "3e3cc594a58a9ab29ae9dbbed8bf1f3107b71b9e2076e3b25e7924b031cf5561"
+  },
+  "frozenInputs": {
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469",
+    "failedStageAResultSha256": "5778104fe505f5a38b4e2a0ed3e049a9993db92a9a1a3a078851c6cb7df8e0c2"
+  },
+  "summary": {
+    "admissionPassed": true,
+    "attackedProbeEvents": 86,
+    "originalMeasurableEvents": 86,
+    "isolatedMeasurableEvents": 86,
+    "missingOriginalMeasurableEvents": 0,
+    "outside15Cents": 0,
+    "maxAbsoluteIsolatedCents": 8.089781187576872,
+    "criteria": {
+      "allIsolatedMeasurableWithin15Cents": true,
+      "allOriginalMeasurableEventsRetained": true,
+      "audioSecondsCeiling": true,
+      "deterministicRerender": true,
+      "exactSelectedRows": true,
+      "finiteAndPeakBounded": true,
+      "renderCeiling": true,
+      "wallTimeCeiling": true
+    }
+  },
+  "interpretation": {
+    "originalStageAFailureRewritten": false,
+    "polyphonicEstimatorConfoundSupported": true,
+    "rendererPitchCorruptionSupported": false,
+    "toleranceRelaxationNeeded": false,
+    "nextScientificStep": "separately-versioned corrected Stage-A admission replacing only pitch-measurement method"
+  },
+  "execution": {
+    "waveformRenders": 172,
+    "audioSeconds": 344,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdWork": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  }
+}
