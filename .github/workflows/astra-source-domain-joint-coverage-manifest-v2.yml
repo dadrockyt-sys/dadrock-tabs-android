@@ -1,0 +1,106 @@
+name: Astra source-domain joint coverage manifest V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/synthetic/source_domain_joint_coverage_manifest_v2.py'
+      - 'astra_backend/synthetic/test_source_domain_joint_coverage_manifest_v2.py'
+      - 'docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.md'
+      - 'docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.json'
+      - '.github/workflows/astra-source-domain-joint-coverage-manifest-v2.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  manifest:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+
+      - name: Download exact frozen source-domain preparation
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-v1
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+
+      - name: Verify exact frozen control identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTROL=/tmp/astra-source-domain-v1/datasets/s9-control.npz
+          test -f "$CONTROL"
+          test "$(sha256sum "$CONTROL" | awk '{print $1}')" = "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+
+      - name: Focused zero-render manifest tests
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_source_domain_joint_coverage_manifest_v2.py
+
+      - name: Generate deterministic zero-render manifest
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-source-domain-joint-v2
+          python -m synthetic.source_domain_joint_coverage_manifest_v2 \
+            --control /tmp/astra-source-domain-v1/datasets/s9-control.npz \
+            --out /tmp/astra-source-domain-joint-v2/manifest.json
+          python - <<'PY'
+          import json
+          p='/tmp/astra-source-domain-joint-v2/manifest.json'
+          x=json.load(open(p))
+          a=x['admission']
+          assert x['schema']=='astra-source-domain-joint-coverage-manifest-v2'
+          assert a['trainRowCount']==210
+          assert a['challengeRowCount']==42
+          assert a['rowsPerFamilyTrain']==30
+          assert a['rowsPerFamilyChallenge']==6
+          assert a['allContinuousMarginalStrataExact'] is True
+          assert a['categoricalCountsExact'] is True
+          assert a['trainChallengeFullVectorDuplicates']==0
+          assert a['historicalS9MetadataPreserved'] is True
+          assert a['waveformRenders']==0
+          assert a['modelLoads']==0
+          assert a['modelInference'] is False
+          assert a['optimizerSteps']==0
+          assert a['p1Access'] is False
+          assert a['p2Access'] is False
+          assert a['p3Access'] is False
+          print('SOURCE_DOMAIN_V2_ZERO_RENDER_ADMISSION_OK')
+          print('MANIFEST_CONTENT_SHA256='+x['manifestContentSha256'])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-source-domain-joint-coverage-manifest-v2
+          path: /tmp/astra-source-domain-joint-v2/manifest.json
+          if-no-files-found: error
+          retention-days: 30
