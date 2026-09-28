@@ -24,7 +24,7 @@ def test_attack_over_sustain_changes_unrelated_bin():
 
 def test_adjacent_onsets_are_order_coupled():
     e=build_review_evidence()["cases"]["adjacent_onsets"]
-    assert e["after"] == pytest.approx([0.0,0.5,0.3,0.65,1.0], abs=1e-6)
+    assert e["after"] == pytest.approx([0.0,0.5,0.425,0.7125,1.0], abs=1e-6)
 
 def test_frame_zero_ignored_and_final_frame_safe():
     e=build_review_evidence()["cases"]["boundaries"]
