@@ -3,54 +3,94 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S2 FIRST LAUNCH STOPPED IN PREFLIGHT; 0 RENDER / 0 OPTIMIZER STEPS; TEST FIXED OFFLINE; FRESH AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
+Status: **CORRECTED S2 COMPLETE — WEIGHT 6 HELPED BUT FROZEN GATE FAILED; STOP; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — corrected S2 preflight boundary
+## Authoritative GPT-5.6 instructions — post-S2 result
 
-Stephen authorized the frozen S2 state-weight experiment. Exactly one launch was made:
+Stephen freshly authorized one corrected S2 launch after the first launch stopped in preflight with 0 optimizer steps.
 
-- run **36372148839**
-- job **108770545143**
-- launch head `cd1178b13937f1ec17477cd42587c279e77db807`
-- workflow conclusion **FAILURE**
-- failure occurred in focused S2 tests before rendering
-- synthetic render: **not started**
-- control optimizer steps: **0**
-- intervention optimizer steps: **0**
-- artifact: **none**
-- automatic retry: **none**
-- P1/P2/P3 access: **none**
+### Canonical corrected execution
 
-Frozen failure receipt:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_PREFLIGHT_FAILURE_V1.json`
+- run **36372725350**
+- job **108772201562**
+- launch head `e1d59b7dcb9556852914930728a5385bf72aface`
+- workflow conclusion **SUCCESS**
+- artifact **10950105894**
+- artifact digest `sha256:be788f89a6e2ade86835c5b5f31bd54146f0ba99d4b84300bcbf4717751074ca`
+- artifact expires **2026-10-28T03:12:20Z**
+- focused S2 tests **5 / 5 passed**
+- render **294 clips / 588 s**
+- optimizer **500 + 500 = 1,000 steps**
+- thresholds unchanged **0.50 / 0.50**
+- automatic retries **0**
+- P1/P2/P3 access **none**
 
-### Failure cause
+Frozen result:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_RESULT_V1.json`
 
-One test compared mathematically equal uniform-logit weighted losses using a 6-decimal-place assertion:
+The earlier preflight-only failure remains frozen separately and is not counted as an optimizer experiment.
 
-- control 1.5 loss: **3.044522762298584**
-- weight 6.0 loss: **3.0445220470428467**
-- absolute difference: **7.152557373046875e-7**
+### Strong experimental control
 
-This is normal float32 accumulation noise, not evidence that the S2 loss implementation is wrong.
+Both S2 arms used:
+- identical initialization hash `20a7de142c47c2022d234f9856111ea4509e009b0c8f5d6168c15ad2fa671554`
+- identical precomputed 500-batch plan hash `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`
+- identical generated arrays; uncompressed array-content hashes are frozen in the result receipt.
 
-The offline-only correction changes that test to require absolute difference <= **2e-6**. The S2 runner and frozen S2 scientific design are unchanged.
+Only active-state token weight changed: **1.5 -> 6.0**.
 
-### S2 scientific design remains unchanged
+### Scientific result — S2 FAIL
 
-Exactly two identical onset-aware five-frame models:
-1. active-state weight **1.5**
-2. active-state weight **6.0**
+Control weight 1.5 test:
+- onset precision **0.9833**
+- recall **0.4574**
+- F1 **0.6243**
+- onset+offset F1 **0.4767**
+- repeated-note recall **0.5000**
+- state admission **0.2403**
+- joint admission **0.2403**
 
-Same generated data, array hashes, initialization, batch plan, sampler, architecture, onset loss, lr 0.003, 500 steps/model, thresholds 0.50/0.50 and decoder V2.
+Weight 6.0 test:
+- onset precision **0.8675**
+- recall **0.5581**
+- F1 **0.67925**
+- onset+offset F1 **0.5561**
+- repeated-note recall **0.5000**
+- state admission **0.3101**
+- joint admission **0.3023**
+- negative-only FP **0.0 events/s**
 
-### EXACT NEXT STEP — fresh authorization required
+Observed gains:
+- state admission **+0.0698**
+- joint admission **+0.0620**
+- onset recall **+0.1008**
+- onset F1 **+0.0549**
+- onset+offset F1 **+0.0794**
 
-The prior grant was explicitly single-launch with zero automatic retries and has been consumed.
+Seven frozen criteria passed, five failed. Failed:
+- state-admission gain >= +0.20
+- joint-admission gain >= +0.20
+- onset-F1 gain >= +0.08
+- absolute onset F1 >= 0.68 (**observed 0.67925**)
+- repeated-note recall >= 0.55 (**observed 0.50**)
 
-**Do not launch the corrected S2 workflow yet.**
+Do not round 0.67925 into a pass. `s2GatePassed=false`.
 
-Fresh explicit authorization is required for one corrected S2 launch. No P1/P2/P3, threshold tuning, deployment or main mutation is authorized.
+### Interpretation
+
+The controlled intervention establishes that stronger active-state weighting **helps** under this synthetic setup: state/joint admission and event recall/F1 all improved, and offset F1 improved too.
+
+It does **not** support weight 6.0 as a sufficient fix. The largest preregistered state/joint gains were not achieved, and repeated-note recall did not move.
+
+Validation remained substantially stronger than test, so do not tune the experiment to validation after seeing these results.
+
+### EXACT NEXT STEP
+
+**Stop optimizer work.**
+
+No retry, threshold rescue, extra steps, P1/P2 transfer, P3 access, deployment or main mutation.
+
+Only offline review is allowed next. Any further synthetic optimizer experiment must first isolate one new variable, freeze its design and gates prospectively, and obtain fresh explicit authorization.
 
 
 ---

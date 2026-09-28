@@ -1,16 +1,20 @@
 # Next chat: start here
 
-S2's first authorized launch stopped in preflight before rendering or training.
+Corrected S2 is complete.
 
-Run 36372148839 / job 108770545143:
-- focused tests: 4 passed, 1 failed
-- render: not started
-- optimizer steps: 0
-- artifact: none
-- P1/P2/P3: untouched
+Run 36372725350 / job 108772201562 succeeded operationally but failed the frozen S2 scientific gate.
 
-Failure was a test-tolerance issue only: mathematically equal float32 weighted losses differed by 7.15e-7 while the test used a 6-decimal-place equality assertion.
+Weight 6.0 versus weight 1.5 under identical initialization and identical sampled batches:
+- onset recall 0.5581 vs 0.4574 (+0.1008)
+- onset F1 0.67925 vs 0.62434 (+0.0549)
+- state admission 0.3101 vs 0.2403 (+0.0698)
+- joint admission 0.3023 vs 0.2403 (+0.0620)
+- onset+offset F1 0.5561 vs 0.4767
+- repeated-note recall 0.5000 vs 0.5000
+- negative-only FP 0.0 events/s
 
-The test is corrected offline to accept absolute difference <= 2e-6. The S2 runner and scientific design are unchanged.
+The absolute recall floor passed, but five S2 criteria failed, including the preregistered state/joint gain floors and repeated-note floor. Do not round F1 0.67925 into the 0.68 pass requirement.
 
-Because the previous authorization was single-launch / zero-retry, **fresh explicit authorization is required before one corrected S2 launch**.
+No P1/P2/P3, threshold search or retry.
+
+Exact next task: **offline review only**. Freeze a new single-variable design and obtain fresh explicit authorization before any further optimizer work.

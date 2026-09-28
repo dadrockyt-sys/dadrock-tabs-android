@@ -1,0 +1,147 @@
+{
+  "schema": "astra-synthetic-data-diversity-s2-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_state_weight_gate_mixed_improvement",
+  "run": {
+    "runId": 36372725350,
+    "jobId": 108772201562,
+    "headSha": "e1d59b7dcb9556852914930728a5385bf72aface",
+    "conclusion": "success",
+    "runNumber": 2
+  },
+  "priorPreflightAttempt": {
+    "runId": 36372148839,
+    "jobId": 108770545143,
+    "optimizerSteps": 0,
+    "renderStarted": false
+  },
+  "artifact": {
+    "artifactId": 10950105894,
+    "name": "astra-synthetic-data-diversity-s2-v1",
+    "digest": "sha256:be788f89a6e2ade86835c5b5f31bd54146f0ba99d4b84300bcbf4717751074ca",
+    "expiresAt": "2026-10-28T03:12:20Z",
+    "files": {
+      "array-identity.json": "e0ed8d6785f326280c01ab80cd6fd48f9680b495e36feff63b6fbc62126a753c",
+      "control-1p5.pt": "454f139d61f330d613528111890b00a3c11ca5aa19cc099d566ac02528398a07",
+      "render-receipt.json": "0f26e0fb5986e8e5a26f3bae6cf05617feb78ee1bbf638cf7e9ea895ee10ef9d",
+      "result.json": "baa449df410c34b49d6e9bb0a45b9b67d95ae0ae88d0b32fef6d4946c473857c",
+      "weight-6.pt": "f18c7c4676eaf7fcf803ae355b14397a5cd329dc8dc724885dc39d37bda8f4b6"
+    }
+  },
+  "dataset": {
+    "examples": 294,
+    "audioSeconds": 588,
+    "splitCounts": {
+      "train": 210,
+      "validation": 42,
+      "test": 42
+    },
+    "npzContainerSha256": "87313d5a6f1654a1b8d47bf6569ac92ab907cd579ac6a062e5946a6ec4bfdc75",
+    "renderSeconds": 11.090036383999987,
+    "arrayContentSha256": {
+      "family": "d0e71ef1d76dd9ea00fb7e8adbcfb1e6b79b3e1f35756a456742069487a7fd3b",
+      "features": "a9603d7997c6d8bc3d553f3605369bb0c6e02cecaf15475ca2c7db4fc3ef09ad",
+      "has_negative_structure": "e3bc3893609429d046e4245abcd8c5e3875f05c2797c2ebc78a9eb00d107e47f",
+      "negative_only": "bb464f579efcbf9fd1be6db1389519c35ca13edea3866f56537c0043f8c345f6",
+      "onset": "3ee6a06c844518caae0f34ac7a4bc041e0f3a0bc126fdb52b2e54d69142795e5",
+      "refs_json": "0b27f09eddaeb20e0ab82720b037bb9a5a3faa4a0868563170060ea725c507d3",
+      "split": "226e3117d3130be4bb1624d31199aadbffb5be61aa0309192f44ad3ca2877a85",
+      "state": "fe47ee1e5320c1931164add3a8e54d1b86480316b703123f09c9b735facb9470",
+      "template_id": "feeca49edc7a104e7d5eee24893d7ee8176802c55d583a2f159ef9d1fad33668"
+    }
+  },
+  "controlledIdentity": {
+    "initialModelSha256": "20a7de142c47c2022d234f9856111ea4509e009b0c8f5d6168c15ad2fa671554",
+    "identicalInitialization": true,
+    "identicalBatchPlan": true,
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd"
+  },
+  "controlWeight1p5": {
+    "optimizerSteps": 500,
+    "test": {
+      "onsetPrecision": 0.9833333333333333,
+      "onsetRecall": 0.4573643410852713,
+      "onsetF1": 0.6243386243386243,
+      "onsetOffsetF1": 0.4766839378238342,
+      "repeatedRecall": 0.5,
+      "stateAdmission": 0.24031007751937986,
+      "jointAdmission": 0.24031007751937986,
+      "negativeOnlyFpPerSecond": 0
+    }
+  },
+  "interventionWeight6": {
+    "optimizerSteps": 500,
+    "test": {
+      "onsetPrecision": 0.8674698795180723,
+      "onsetRecall": 0.5581395348837209,
+      "onsetF1": 0.679245283018868,
+      "onsetOffsetF1": 0.5560538116591929,
+      "repeatedRecall": 0.5,
+      "stateAdmission": 0.31007751937984496,
+      "jointAdmission": 0.3023255813953488,
+      "negativeOnlyFpPerSecond": 0
+    },
+    "validation": {
+      "onsetPrecision": 0.8648648648648649,
+      "onsetRecall": 0.7441860465116279,
+      "onsetF1": 0.8,
+      "repeatedRecall": 0.9761904761904762,
+      "stateAdmission": 0.49612403100775193,
+      "jointAdmission": 0.49612403100775193
+    }
+  },
+  "comparison": {
+    "stateAdmissionGain": 0.0697674418604651,
+    "jointAdmissionGain": 0.062015503875968964,
+    "onsetRecallGain": 0.10077519379844962,
+    "onsetF1Gain": 0.05490665868024369,
+    "onsetOffsetF1Change": 0.07936987383535865
+  },
+  "frozenCriteria": {
+    "passed": false,
+    "failed": [
+      "stateAdmissionGainAtLeast0_20",
+      "jointAdmissionGainAtLeast0_20",
+      "onsetF1GainAtLeast0_08",
+      "absoluteOnsetF1AtLeast0_68",
+      "repeatedRecallAtLeast0_55"
+    ],
+    "passedCriteria": [
+      "onsetRecallGainAtLeast0_10",
+      "absoluteOnsetRecallAtLeast0_55",
+      "onsetPrecisionAtLeast0_85",
+      "onsetOffsetDeclineAtMost0_05",
+      "negativeOnlyFalsePositiveRateAtMost0_10PerSecond",
+      "noFamilyF1LossOver0_15",
+      "finiteBoth500StepsZeroThresholdSearch"
+    ]
+  },
+  "interpretation": {
+    "supported": "Weight 6.0 improved correct-state admission, joint admission, onset recall, onset F1, and onset+offset F1 under identical initialization and identical sampled minibatches.",
+    "insufficient": "The state/joint gains were much smaller than the preregistered +0.20 requirement, onset F1 gain was below +0.08, absolute F1 narrowly missed 0.68, and repeated-note recall did not improve beyond 0.50.",
+    "conclusion": "Active-state under-weighting contributes, but weight 6.0 alone is insufficient under the frozen S2 criteria."
+  },
+  "execution": {
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 2.7693281180000042,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "externalAudioAssets": false,
+    "productionMutation": false
+  },
+  "decision": {
+    "noRetry": true,
+    "noThresholdRescue": true,
+    "noExtraSteps": true,
+    "p1p2TransferNotAuthorized": true,
+    "p3MustRemainSealed": true,
+    "nextWork": "Stop. Offline review only. Any further synthetic optimizer experiment requires a newly frozen single-variable design and fresh explicit authorization."
+  }
+}
