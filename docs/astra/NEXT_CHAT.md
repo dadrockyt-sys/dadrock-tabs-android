@@ -1,17 +1,16 @@
 # Next chat: start here
 
-S8 completed and failed.
+S9 has not produced a scientific result yet.
 
-Multiplicity weighting successfully increased multi-string positive-frame exposure, but chord F1/recall and state/joint admission all declined. Repeating the same chord frames more often is rejected.
+First authorized S9 launch:
+- run 36378668073 / job 108789638589
+- datasets and identity checks passed
+- failure: missing `context5` import in the pre-update identity path
+- model fitting never started
+- optimizer steps 0
+- no artifact
+- P1/P2/P3 untouched
 
-S9 is frozen around chord voicing diversity:
-- control: 10 unique training chord voicings x 3 timbres = 30 clips;
-- intervention: 30 unique voicings = 30 clips;
-- exact same 30 paired timbre RNG keys;
-- validation/test and non-chord examples bit-identical;
-- same S6 nonlinear state model and identical minibatch indices.
+The runner import is corrected offline and a regression test was added. S9 design itself is unchanged.
 
-Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S9_DESIGN_V1.md`
-
-S9 executes models and requires fresh explicit authorization.
+Because the launch was single-attempt/no-retry, **fresh explicit model authorization is required before relaunching corrected S9**.

@@ -18,7 +18,7 @@ import torch
 from synthetic.s0_pilot_v1 import (
     ROOT_SEED, INTERNAL_SR, OUTPUT_SR, CLIP_SECONDS, OPEN_MIDI,
     EXAMPLES, AUDIO_SECONDS, HOP_LENGTH_SAMPLES, SAMPLE_RATE_HZ,
-    CQT_BINS, _seed, _event, _plucked_component, build_template,
+    CQT_BINS, context5, _seed, _event, _plucked_component, build_template,
     targets_for_template, extract_cqt_features, rms_normalize,
 )
 from synthetic.s1_pilot_v1 import build_sampling_strata

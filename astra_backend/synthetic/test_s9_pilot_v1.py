@@ -4,7 +4,7 @@ import torch
 
 from synthetic.s0_pilot_v1 import build_template, ROOT_SEED, _seed
 from synthetic.s6_pilot_v1 import initialize_arm, module_sha
-from synthetic.s9_pilot_v1 import intervention_chord_template, chord_signature
+from synthetic.s9_pilot_v1 import intervention_chord_template, chord_signature, context5
 
 class S9Tests(unittest.TestCase):
     def test_control_has_ten_unique_train_chord_signatures(self):
@@ -28,6 +28,10 @@ class S9Tests(unittest.TestCase):
             variants.append(variant)
         self.assertEqual(variants.count(0),10); self.assertEqual(variants.count(1),10); self.assertEqual(variants.count(2),10)
         self.assertEqual(len(set(keys)),30)
+
+    def test_context5_is_available_for_preupdate_identity(self):
+        x=np.zeros((1,87,192),dtype=np.float32)
+        self.assertEqual(context5(x).shape,(1,87,960))
 
     def test_model_initialization_identical(self):
         a=initialize_arm(960,True); b=initialize_arm(960,True)

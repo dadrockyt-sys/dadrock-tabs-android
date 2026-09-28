@@ -1,0 +1,56 @@
+{
+  "schema": "astra-synthetic-data-diversity-s9-pre-model-runner-failure-v1",
+  "date": "2026-09-28",
+  "runId": 36378668073,
+  "jobId": 108789638589,
+  "launchHeadSha": "4c2de01679866745cfba54e787262c92b5c2c217",
+  "workflowConclusion": "failure",
+  "failureStage": "pre-update identity check before fit_arm",
+  "exception": "NameError: name 'context5' is not defined",
+  "executionEvidence": {
+    "authorizationGuardPassed": true,
+    "focusedTestsPassed": "4/4",
+    "controlDatasetGenerated": true,
+    "interventionDatasetGenerated": true,
+    "validationTestBitIdentical": true,
+    "nonChordBitIdentical": true,
+    "samplerStrataIdentical": true,
+    "controlUniqueTrainChordVoicings": 10,
+    "interventionUniqueTrainChordVoicings": 30,
+    "replacementChordClipsRendered": 30,
+    "modelFitStarted": false,
+    "optimizerSteps": 0,
+    "artifactProduced": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "datasetReceiptObserved": {
+    "controlExamples": 294,
+    "interventionExamples": 294,
+    "audioSecondsPerArm": 588,
+    "pairedTimbreVariantCounts": {
+      "0": 10,
+      "1": 10,
+      "2": 10
+    },
+    "controlSignatureSha256": "099ded262a7b47c1cd60b3327b75287d729d8594dcfd772316413b353dc9397e",
+    "interventionSignatureSha256": "de7a34d3dc51afa5ef5adc9105fe8796b00724ac5fceac61ab8083ea34dbda1d"
+  },
+  "correction": {
+    "runnerImportOnly": true,
+    "addedImport": "context5 from synthetic.s0_pilot_v1",
+    "addedRegressionTest": "context5 availability/shape for S9 pre-update identity path",
+    "scientificDesignChanged": false,
+    "datasetDesignChanged": false,
+    "thresholdsChanged": false,
+    "optimizerBudgetChanged": false
+  },
+  "authorizationBoundary": {
+    "priorSingleLaunchConsumed": true,
+    "automaticModelRetry": false,
+    "freshExplicitModelAuthorizationRequiredBeforeNewLaunch": true
+  }
+}
