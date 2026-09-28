@@ -3,59 +3,34 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S1 FAILED ONE ABSOLUTE RECALL CRITERION; OFFLINE REVIEW COMPLETE; S2 STATE-WEIGHT HYPOTHESIS DESIGNED — EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
+Status: **S2 SYNTHETIC-ONLY STATE-WEIGHT PILOT AUTHORIZED — SOURCE FREEZE IN PROGRESS; P1/P2/P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — S2 decision boundary
+## Authoritative GPT-5.6 instructions — authorized S2 execution
 
-S1 run **36370848921** / job **108766686822** completed once. Workflow success does not change the scientific result: `s1GatePassed=false`.
+Stephen explicitly said **"I authorize"** after the frozen S2 design requested fresh authorization.
 
-### S1 result
+Authorization applies only to `docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`.
 
-Onset-aware versus uniform five-frame:
-- onset F1 **0.6283 vs 0.3226**
-- onset recall **0.4651 vs 0.1938**
-- repeated-note recall **0.5000 vs 0.1429**
-- precision **0.9677 vs 0.9615**
-- negative-only FP **0.0 events/s**
+### Frozen boundary
 
-Nine of ten criteria passed. Absolute onset recall **0.4651 < 0.55** failed.
+- exact deterministic synthetic generator/split only: 294 clips / 588 s;
+- exactly two identical onset-aware five-frame models;
+- same initialization and same 500 precomputed minibatches across both arms;
+- control active-state weight 1.5;
+- intervention active-state weight 6.0;
+- all other architecture/sampler/loss/lr/threshold/decoder settings fixed;
+- 500 optimizer steps/model, 1,000 total;
+- uncompressed array-content hashes written before optimizer work;
+- zero threshold search/retuning;
+- zero automatic retries;
+- $0 paid compute;
+- no external audio assets;
+- no P1/P2/P3;
+- no deployment/main/customer delivery.
 
-### Offline state-admission review
+### Exact next task
 
-At exact positive test reference string/frames for the onset-aware model:
-- onset admission **0.5814**
-- correct-state admission **0.2093**
-- joint admission **0.2093**
-
-Exact frozen target accounting:
-- active state tokens **11,145 / 109,620 = 10.1669%**
-- S1's 32/32/32/32 sampler still yields about **10.4414%** active state tokens per minibatch because most active frames contain one active string and five silent strings.
-- current active-state weight 1.5 gives about **14.9%** expected weighted state-loss contribution to active tokens.
-- proposed weight 6.0 gives about **41.2%**.
-
-This supports one bounded hypothesis; it does not prove the cause.
-
-Analysis: `docs/astra/SYNTHETIC_DATA_DIVERSITY_S1_FAILURE_ANALYSIS_V1.md`
-
-### Frozen S2 design
-
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S2_DESIGN_V1.md`
-
-Exactly two identical S1 onset-aware five-frame models:
-1. control active-state weight **1.5**;
-2. intervention active-state weight **6.0**.
-
-Everything else is fixed, including sampler, generator, split, architecture, onset loss, lr 0.003, 500 steps/model, thresholds 0.50/0.50 and decoder V2.
-
-S2 also requires uncompressed array-content hashes before optimizer work so future regenerated-corpus identity claims are explicit rather than based on NPZ container hashes.
-
-### EXACT NEXT STEP — fresh authorization required
-
-**Do not execute S2.**
-
-No rendering, optimizer work, threshold changes, P1/P2 access, P3 access, deployment or main mutation is authorized now.
-
-Fresh explicit authorization is required for the bounded S2 synthetic-only state-weight experiment.
+Freeze runner/tests/workflow, record authorization with exact source identities, launch exactly once, inspect that run, freeze the result, and stop. No automatic retry.
 
 
 ---
