@@ -1,0 +1,92 @@
+name: Astra source-domain training offline verification V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_RUN_SCOPE_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Install pinned CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+      - name: Run focused no-optimizer package tests
+        env:
+          PYTHONPATH: astra_backend
+        run: pytest -q astra_backend/synthetic/test_source_domain_simulator_training_v1.py
+      - name: Download exact frozen preparation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-training-verify
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+      - name: Verify source pins, data hashes, and disabled launch boundary
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, hashlib, subprocess
+          from pathlib import Path
+          scope=json.loads(Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_RUN_SCOPE_V1.json').read_text())
+          assert scope['schema']=='astra-source-domain-simulator-training-run-scope-v1'
+          assert scope['verification']['modelRun'] is False
+          assert scope['verification']['optimizerSteps']==0
+          assert not Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_LAUNCH_V1.json').exists()
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          for key,path in scope['sourcePaths'].items():
+              assert blob(path)==scope['sourceGitBlobs'][key],(key,path)
+          spec=Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_SPEC_V1.json')
+          design=Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_DESIGN_V1.md')
+          history=Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_EXECUTION_HISTORY_V1.json')
+          assert blob(spec)==scope['specGitBlob']
+          assert blob(design)==scope['designGitBlob']
+          assert blob(history)==scope['historyGitBlob']
+          print('SOURCE_DOMAIN_TRAINING_SOURCE_PINS_OK')
+          PY
+          python -m synthetic.source_domain_simulator_training_v1 verify-datasets             --control /tmp/astra-source-domain-training-verify/datasets/s9-control.npz             --intervention /tmp/astra-source-domain-training-verify/datasets/source-domain-intervention.npz             --challenge /tmp/astra-source-domain-training-verify/datasets/source-domain-challenge.npz
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          req=json.loads(Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_LAUNCH_REQUEST_V1.json').read_text())
+          hist=json.loads(Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_EXECUTION_HISTORY_V1.json').read_text())
+          assert req['trainingAuthorized'] is False
+          assert hist['consumedLaunchIdentities']==[]
+          print('SOURCE_DOMAIN_TRAINING_DISABLED_BOUNDARY_OK')
+          PY
+      - name: Write verification receipt
+        run: |
+          cat > /tmp/source-domain-training-offline-verification.json <<'EOF'
+          {"schema":"astra-source-domain-training-offline-verification-v1","modelRun":false,"optimizerSteps":0,"p1Accessed":false,"p2Accessed":false,"p3Opened":false}
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-source-domain-training-offline-verification-v1
+          path: /tmp/source-domain-training-offline-verification.json
+          retention-days: 30
