@@ -6,7 +6,7 @@ import torch
 
 from synthetic.s13_pilot_v1 import (
     RETAIN_FRACTION, transformed_training_rows, build_datasets, evaluate_gate,
-    validate_launch, run_experiment
+    validate_launch, validate_dataset_hashes, run_experiment
 )
 from synthetic.s11_pilot_v1 import initialize_model, module_sha, paired_batches, weighted_loss
 from synthetic.s13_transform_design_review_v1 import BINS
@@ -133,3 +133,17 @@ def test_launch_rejects_unarmed_reused_attempt_and_wrong_branch(tmp_path,monkeyp
 
 def test_retain_fraction_is_frozen():
     assert RETAIN_FRACTION==0.50
+
+
+def test_dataset_hash_validation_fails_closed(tmp_path):
+    c=tmp_path/"c.npz"; tiny_dataset(c)
+    i=tmp_path/"i.npz"; q=tmp_path/"q.npz"; r=tmp_path/"receipt.json"
+    receipt=build_datasets(c,i,q,r,expected_examples=14)
+    with pytest.raises(RuntimeError,match="missing"):
+        validate_dataset_hashes({},c,i,q)
+    scope={"datasetArrayHashes":receipt["arrayHashes"]}
+    assert validate_dataset_hashes(scope,c,i,q) is True
+    bad=json.loads(json.dumps(scope))
+    bad["datasetArrayHashes"]["intervention"]["features"]="0"*64
+    with pytest.raises(RuntimeError,match="intervention"):
+        validate_dataset_hashes(bad,c,i,q)
