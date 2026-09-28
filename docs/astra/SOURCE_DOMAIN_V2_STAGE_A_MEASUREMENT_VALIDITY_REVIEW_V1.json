@@ -1,0 +1,102 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-measurement-validity-review-v1",
+  "date": "2026-09-28",
+  "status": "polyphonic-fundamental-estimator-confound-confirmed",
+  "frozenStageA": {
+    "run": 36484128430,
+    "job": 109136731820,
+    "artifact": 10997847232,
+    "artifactDigest": "sha256:1e918e7b5a95dc692f5a81761fe7cdcba4b76dd6b34f29a56cc4cec86e8a8343",
+    "waveformRenders": 84,
+    "audioSeconds": 168,
+    "failedCriteria": [
+      "fundamentalWithin15Cents"
+    ],
+    "measurableAttackedEvents": 86,
+    "outsideTolerance": 4,
+    "maximumAbsoluteCents": 205.8039142782652,
+    "maximumAbsoluteNonChordCents": 8.089781187576872
+  },
+  "estimator": {
+    "searchBandRelative": [
+      0.85,
+      1.15
+    ],
+    "sourceSeparated": false,
+    "operation": "largest FFT magnitude peak inside target-relative band on mixed waveform"
+  },
+  "failedCases": [
+    {
+      "family": "chords",
+      "kind": "train",
+      "rowIndex": 84,
+      "eventIndex": 4,
+      "targetMidi": 56,
+      "reportedCents": -205.8039142782652,
+      "simultaneousMidi": [
+        54,
+        56,
+        68
+      ],
+      "confound": "simultaneous MIDI 54 fundamental lies inside target band"
+    },
+    {
+      "family": "chords",
+      "kind": "train",
+      "rowIndex": 84,
+      "eventIndex": 5,
+      "targetMidi": 68,
+      "reportedCents": -199.49704373647077,
+      "simultaneousMidi": [
+        54,
+        56,
+        68
+      ],
+      "confound": "second harmonic of simultaneous MIDI 54 is MIDI 66 and lies inside target band"
+    },
+    {
+      "family": "chords",
+      "kind": "challenge",
+      "rowIndex": 120,
+      "eventIndex": 1,
+      "targetMidi": 57,
+      "reportedCents": 195.39739210995364,
+      "simultaneousMidi": [
+        55,
+        57,
+        59
+      ],
+      "confound": "simultaneous MIDI 59 fundamental lies inside target band"
+    },
+    {
+      "family": "chords",
+      "kind": "challenge",
+      "rowIndex": 120,
+      "eventIndex": 4,
+      "targetMidi": 64,
+      "reportedCents": 103.39896180324811,
+      "simultaneousMidi": [
+        53,
+        64,
+        65
+      ],
+      "confound": "simultaneous MIDI 65 fundamental lies inside target band"
+    }
+  ],
+  "interpretation": {
+    "measurementValidForPolyphonicPerNoteGate": false,
+    "pitchCorruptionEstablished": false,
+    "thresholdRelaxationJustified": false,
+    "rendererEquationChangeJustified": false
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false
+  },
+  "nextAction": "design-corrected-source-isolating-fundamental-preservation-protocol-offline-only"
+}
