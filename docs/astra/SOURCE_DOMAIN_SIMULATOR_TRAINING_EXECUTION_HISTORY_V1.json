@@ -1,0 +1,6 @@
+{
+  "schema": "astra-source-domain-simulator-training-execution-history-v1",
+  "status": "no-source-domain-training-execution-yet",
+  "consumedLaunchIdentities": [],
+  "notes": "Durable single-use ledger. Offline verification performs zero optimizer steps. Any future launch identity must be absent here before execution and consumed after the one run."
+}
