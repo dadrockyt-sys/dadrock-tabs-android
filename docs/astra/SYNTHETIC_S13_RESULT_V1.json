@@ -1,0 +1,310 @@
+{
+  "schema": "astra-synthetic-s13-result-freeze-v1",
+  "status": "scientific-gate-failed",
+  "s13GatePassed": false,
+  "launchIdentity": "s13-v1-20260928-canonical-01",
+  "branch": "astra-work",
+  "launchCommit": "c3644cb2566e25a92ec1cd0aa4859e76c3930f3c",
+  "workflow": {
+    "run": 36463727631,
+    "job": 109068446982,
+    "runAttempt": 1,
+    "workflowConclusion": "success"
+  },
+  "artifact": {
+    "id": 10988304586,
+    "name": "astra-s13-execution-v1-36463727631-1",
+    "zipDigest": "sha256:964248c795d534cf44062b80de5319108cf8dc9477fe44067a554238f5acf162",
+    "resultJsonSha256": "aef0af7892029cc86ab3a04fcf8073c3f0f749d86e8754576ca496d25803e67f",
+    "workflowReceiptSha256": "6e23807b910806d3b18c8997af8e565d396f5d2f630a1a3f02cf8a4f400093b0"
+  },
+  "frozenInputs": {
+    "scopeGitBlob": "1e5812bfc1b96bfec6a85e81894ae08dba9439e4",
+    "specGitBlob": "9da9ba1657d452faf667119320d3a7285d4cdb67",
+    "preparationRun": 36458911022,
+    "preparationArtifact": 10985624417,
+    "preparationArtifactDigest": "sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1",
+    "controlFeatureHash": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+    "interventionFeatureHash": "182a9e64a1ea5a275fc79c3f8c0840b8f99a16b4649df118d107abdb458005db",
+    "challengeFeatureHash": "293ab2701b53b941c4567a0defc2fecd12ec611456d368996421e4f674649c3d"
+  },
+  "execution": {
+    "seeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "models": 6,
+    "optimizerStepsTotal": 3000,
+    "optimizerStepsPerModel": 500,
+    "fitEvalSeconds": 58.34580821399999,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false,
+    "productionMutation": false
+  },
+  "aggregateDeltas": {
+    "challengeOnsetF1": {
+      "mean": -0.012081069653527362,
+      "minimum": -0.033166973119691856,
+      "maximum": 0.025720164609053464,
+      "positiveSeeds": 1
+    },
+    "challengeOnsetRecall": {
+      "mean": -0.023255813953488375,
+      "minimum": -0.054263565891472854,
+      "maximum": -0.007751937984496138,
+      "positiveSeeds": 0
+    },
+    "challengeOnsetPrecision": {
+      "mean": 0.0018401037620042748,
+      "minimum": -0.06769281694803053,
+      "maximum": 0.07273036961335377,
+      "positiveSeeds": 2
+    },
+    "ordinaryOnsetF1": {
+      "mean": -0.012284512379739154,
+      "minimum": -0.01569092367237357,
+      "maximum": -0.00794524858401513,
+      "positiveSeeds": 0
+    },
+    "ordinaryOnsetPrecision": {
+      "mean": -0.015476471510025144,
+      "minimum": -0.04728390166534491,
+      "maximum": 0.006015037593985029,
+      "positiveSeeds": 1
+    },
+    "ordinaryStateAdmission": {
+      "mean": -0.005167958656330758,
+      "minimum": -0.031007751937984496,
+      "maximum": 0.023255813953488358,
+      "positiveSeeds": 1
+    },
+    "ordinaryJointAdmission": {
+      "mean": -0.012919896640826878,
+      "minimum": -0.038759689922480633,
+      "maximum": 0.023255813953488358,
+      "positiveSeeds": 1
+    }
+  },
+  "seedResults": [
+    {
+      "seed": 20260927,
+      "controlOrdinary": {
+        "onsetF1": 0.7256637168141593,
+        "precision": 0.845360824742268,
+        "recall": 0.6356589147286822,
+        "tp": 82,
+        "fp": 15,
+        "fn": 47,
+        "stateAdmission": 0.32558139534883723,
+        "jointAdmission": 0.31007751937984496,
+        "negativeFpPerSec": 0
+      },
+      "interventionOrdinary": {
+        "onsetF1": 0.7124463519313305,
+        "precision": 0.7980769230769231,
+        "recall": 0.6434108527131783,
+        "tp": 83,
+        "fp": 21,
+        "fn": 46,
+        "stateAdmission": 0.3488372093023256,
+        "jointAdmission": 0.3333333333333333,
+        "negativeFpPerSec": 0
+      },
+      "controlChallenge": {
+        "onsetF1": 0.7574468085106383,
+        "precision": 0.839622641509434,
+        "recall": 0.689922480620155,
+        "tp": 89,
+        "fp": 17,
+        "fn": 40,
+        "stateAdmission": 0.37209302325581395,
+        "jointAdmission": 0.3488372093023256,
+        "negativeFpPerSec": 0
+      },
+      "interventionChallenge": {
+        "onsetF1": 0.7242798353909464,
+        "precision": 0.7719298245614035,
+        "recall": 0.6821705426356589,
+        "tp": 88,
+        "fp": 26,
+        "fn": 41,
+        "stateAdmission": 0.3488372093023256,
+        "jointAdmission": 0.3333333333333333,
+        "negativeFpPerSec": 0
+      },
+      "ordinaryDelta": {
+        "onsetF1": -0.013217364882828764,
+        "precision": -0.04728390166534491,
+        "recall": 0.007751937984496138,
+        "stateAdmission": 0.023255813953488358,
+        "jointAdmission": 0.023255813953488358
+      },
+      "challengeDelta": {
+        "onsetF1": -0.033166973119691856,
+        "precision": -0.06769281694803053,
+        "recall": -0.007751937984496138,
+        "stateAdmission": -0.023255813953488358,
+        "jointAdmission": -0.015503875968992276
+      }
+    },
+    {
+      "seed": 20260928,
+      "controlOrdinary": {
+        "onsetF1": 0.7400881057268723,
+        "precision": 0.8571428571428571,
+        "recall": 0.6511627906976745,
+        "tp": 84,
+        "fp": 14,
+        "fn": 45,
+        "stateAdmission": 0.4108527131782946,
+        "jointAdmission": 0.34108527131782945,
+        "negativeFpPerSec": 0
+      },
+      "interventionOrdinary": {
+        "onsetF1": 0.7321428571428572,
+        "precision": 0.8631578947368421,
+        "recall": 0.6356589147286822,
+        "tp": 82,
+        "fp": 13,
+        "fn": 47,
+        "stateAdmission": 0.40310077519379844,
+        "jointAdmission": 0.3023255813953488,
+        "negativeFpPerSec": 0
+      },
+      "controlChallenge": {
+        "onsetF1": 0.7242798353909464,
+        "precision": 0.7719298245614035,
+        "recall": 0.6821705426356589,
+        "tp": 88,
+        "fp": 26,
+        "fn": 41,
+        "stateAdmission": 0.4263565891472868,
+        "jointAdmission": 0.3023255813953488,
+        "negativeFpPerSec": 0
+      },
+      "interventionChallenge": {
+        "onsetF1": 0.7499999999999999,
+        "precision": 0.8446601941747572,
+        "recall": 0.6744186046511628,
+        "tp": 87,
+        "fp": 16,
+        "fn": 42,
+        "stateAdmission": 0.3875968992248062,
+        "jointAdmission": 0.3178294573643411,
+        "negativeFpPerSec": 0
+      },
+      "ordinaryDelta": {
+        "onsetF1": -0.00794524858401513,
+        "precision": 0.006015037593985029,
+        "recall": -0.015503875968992276,
+        "stateAdmission": -0.007751937984496138,
+        "jointAdmission": -0.038759689922480633
+      },
+      "challengeDelta": {
+        "onsetF1": 0.025720164609053464,
+        "precision": 0.07273036961335377,
+        "recall": -0.007751937984496138,
+        "stateAdmission": -0.03875968992248058,
+        "jointAdmission": 0.015503875968992276
+      }
+    },
+    {
+      "seed": 20260929,
+      "controlOrdinary": {
+        "onsetF1": 0.7551867219917013,
+        "precision": 0.8125,
+        "recall": 0.7054263565891473,
+        "tp": 91,
+        "fp": 21,
+        "fn": 38,
+        "stateAdmission": 0.3488372093023256,
+        "jointAdmission": 0.3333333333333333,
+        "negativeFpPerSec": 0
+      },
+      "interventionOrdinary": {
+        "onsetF1": 0.7394957983193278,
+        "precision": 0.8073394495412844,
+        "recall": 0.6821705426356589,
+        "tp": 88,
+        "fp": 21,
+        "fn": 41,
+        "stateAdmission": 0.3178294573643411,
+        "jointAdmission": 0.31007751937984496,
+        "negativeFpPerSec": 0
+      },
+      "controlChallenge": {
+        "onsetF1": 0.7716535433070866,
+        "precision": 0.784,
+        "recall": 0.7596899224806202,
+        "tp": 98,
+        "fp": 27,
+        "fn": 31,
+        "stateAdmission": 0.3953488372093023,
+        "jointAdmission": 0.35658914728682173,
+        "negativeFpPerSec": 0
+      },
+      "interventionChallenge": {
+        "onsetF1": 0.7428571428571429,
+        "precision": 0.7844827586206896,
+        "recall": 0.7054263565891473,
+        "tp": 91,
+        "fp": 25,
+        "fn": 38,
+        "stateAdmission": 0.3023255813953488,
+        "jointAdmission": 0.29457364341085274,
+        "negativeFpPerSec": 0
+      },
+      "ordinaryDelta": {
+        "onsetF1": -0.01569092367237357,
+        "precision": -0.0051605504587155515,
+        "recall": -0.023255813953488413,
+        "stateAdmission": -0.031007751937984496,
+        "jointAdmission": -0.023255813953488358
+      },
+      "challengeDelta": {
+        "onsetF1": -0.028796400449943693,
+        "precision": 0.00048275862068958286,
+        "recall": -0.054263565891472854,
+        "stateAdmission": -0.09302325581395349,
+        "jointAdmission": -0.06201550387596899
+      }
+    }
+  ],
+  "failedCriteria": [
+    "meanChallengeOnsetF1GainAtLeast0_05",
+    "meanChallengeOnsetRecallGainAtLeast0_08",
+    "challengeOnsetF1GainPositive3of3",
+    "challengeOnsetRecallGainPositive3of3",
+    "noChallengePrecisionLossOver0_05",
+    "noOrdinaryPrecisionLossOver0_03",
+    "noOrdinaryStateAdmissionLossOver0_03"
+  ],
+  "passedSafetyAndIdentityChecks": [
+    "allRequiredMetricsFinite",
+    "allSix500Steps",
+    "challengeNegativeOnlyFpAtMost0_10EverySeed",
+    "challengeTrainValidationFeaturesBitIdentical",
+    "exactSixModelsAnd3000Steps",
+    "fixedThresholdsNoSearch",
+    "interventionValidationTestFeaturesBitIdentical",
+    "noOrdinaryJointAdmissionLossOver0_04",
+    "noOrdinaryOnsetF1LossOver0_03",
+    "nonFeatureArraysBitIdentical",
+    "ordinaryNegativeOnlyFpAtMost0_10EverySeed",
+    "ordinaryNonChordFamilyLossOver0_15InAtMostOneSeed",
+    "pairedInitializationAndBatches",
+    "transformFormulaAndNonRisingPreservationVerified",
+    "transformedRowSetMatchesFrozenRule"
+  ],
+  "stopRule": "S13 failed the preregistered gate. Freeze failure. No S14, no threshold rescue, no favorable-seed selection, and no automatic real-data follow-up. Next action requires project-level simulator/representation strategy review only."
+}
