@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **SOURCE-DOMAIN TRAINING V1 SCIENTIFIC GATE FAILED AND FROZEN — NO RERUN/TUNING; NEXT: MODEL-FREE JOINT-COVERAGE REVIEW ONLY; P1/P2 CLOSED; P3 SEALED**
+Status: **SOURCE-DOMAIN TRAINING V1 FAILED; MODEL-FREE JOINT-COVERAGE REVIEW FROZEN — FIXED CHALLENGE IS MARGINALLY IN-RANGE BUT JOINTLY UNREPRESENTED; NEXT: DESIGN-ONLY JOINT-COVERAGE PROTOCOL; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1614,3 +1614,98 @@ Use the existing deterministic parameter draws and frozen synthetic arrays to re
 Do not choose new ranges or a new challenge from this review. No model execution, optimizer step or real-data access is allowed.
 
 **Resume instruction:** Continue with the model-free joint-coverage review only. Preserve all V2/S12/S13/source-domain V1 results, keep P1/P2 closed, P3 sealed, thresholds 0.50/0.50, and main/Production unchanged.
+
+
+## Source-domain joint-coverage review — frozen model-free result — 2026-09-28
+
+Completed the prospective model-free joint-coverage review after the failed source-domain training V1.
+
+Frozen files:
+- `docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_RESULT_V1.json`
+- `docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_ANALYSIS_V1.md`
+
+Execution:
+- run **36477515197**
+- job **109114818877**
+- head `6d8a9e71e36b862ce7324088bb1e99c6ff4b7d99`
+- conclusion **SUCCESS**
+- focused tests **4 passed**
+- artifact **10993409802**
+- digest `sha256:bfb07fbae8cd7d2b1f59228362104abca0c55240cf89e388ef9ad1b94b77b56b`
+- result SHA-256 `89ec82452ed3440af9d7935696f3bc66b0076c4c63c584b815780f9ea6f650ba`
+- model run **false**
+- optimizer steps **0**
+- waveform renders **0**
+- P1/P2/P3 access **none**
+
+### Parameter-space result
+
+Every fixed challenge scalar lies inside the frozen marginal simulator ranges, but several are tail-like among the 210 training draws:
+- attack rise: **96.2nd percentile**
+- transient-noise gain: **13.8th percentile**
+- damping: **79.0th percentile**
+- brightness: **14.8th percentile**
+- pick position: **85.2nd percentile**
+- low-pass cutoff: **11.4th percentile**
+- spectral tilt: **15.2nd percentile**
+- broadband noise: **81.4th percentile**
+
+The prospectively frozen challenge-side conjunction shows the joint coverage failure:
+- attack-rise condition only: **8/210**
+- plus low transient gain: **1/210**
+- plus high damping: **0/210**
+- all later cumulative conditions: **0/210**
+- full conjunction: **0 rows in every family**
+
+The V1 fixed challenge is therefore marginally in-range but jointly unrepresented by the training sample.
+
+### Prepared-feature result
+
+Pooled prepared-CQT onset positive flux:
+- intervention-training median **20.658**
+- challenge-test median **12.749**
+- median challenge event is at about the **13.3rd percentile** of intervention-training flux.
+
+Family median challenge onset-flux percentiles:
+- chords **26.7%**
+- isolated **3.3%**
+- legato **3.3%**
+- mixed **0%**
+- palmmute **14.3%**
+- repeated **10.8%**
+- scales **1.25%**
+
+Row-level feature displacement:
+- intervention-training median **0.0410**
+- challenge-test median **0.0578**
+- median challenge row is at about the **83.3rd percentile** of intervention-training displacement.
+
+Most families have challenge displacement medians around the 85th–97th percentile.
+
+### Interpretation
+
+Joint train/challenge coverage mismatch is now a supported **experimental-design limitation** of source-domain V1.
+
+It does not prove that coverage alone caused the failed precision/recall tradeoff and does not authorize:
+- widening simulator ranges;
+- oversampling the failed challenge corner;
+- weakening the challenge;
+- lowering thresholds;
+- changing loss/sampler/architecture;
+- another model run.
+
+The V1 training result remains failed and frozen.
+
+### Exact next action
+
+Design-only work may define a new independent protocol for **joint** source-domain coverage while preserving the same already-frozen marginal engineering ranges.
+
+Any such design must:
+- be a new experiment version, not a V1 rescue;
+- leave V1 failure unchanged;
+- select its space-filling method without using V1 model scores;
+- keep architecture changes out;
+- define model-free coverage admission before any optimizer work;
+- keep P1/P2 closed and P3 sealed.
+
+**Resume instruction:** Continue with design-only joint-coverage protocol work. Do not train or render a new dataset yet.
