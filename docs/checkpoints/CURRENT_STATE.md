@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **FINAL V3 SOURCE-DOMAIN SYNTHETIC TRAINING FAILED — SOURCE-DOMAIN TUNING LINE CLOSED; NEXT EMPIRICAL ACTION REQUIRES NEW INDEPENDENT DEVELOPMENT EVIDENCE OR A SEPARATELY APPROVED NEW ARCHITECTURE PROJECT VERSION; P1/P2 CLOSED; P3 SEALED**
+Status: **ARCHITECTURE RESEARCH A1 FAILED ITS FROZEN GATE — STRONG STATE/JOINED IMPROVEMENT EVIDENCE BUT NO ACCEPTANCE; A1 CLOSED; ANY A2 REQUIRES NEW EXPLICIT PROJECT DECISION; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -2391,3 +2391,193 @@ P3 remains **sealed**.
 Main/Production remain unchanged.
 
 **Resume instruction:** Stop empirical/model execution. Ask for explicit authorization before any new real development-data program, or explicit approval before opening a new architecture research version. Do not run another source-domain synthetic experiment automatically.
+
+
+## Architecture Research A1 — decoupled state/onset encoders — 2026-09-28
+
+The user explicitly approved opening a new architecture research version.
+
+A1 was defined as a new project version, not a V3 rescue.
+
+### Frozen hypothesis
+
+S11 used one shared:
+- Linear(960,128) + ReLU encoder
+
+for both:
+- state classification;
+- onset detection.
+
+A1 changed **only** encoder sharing:
+- independent state encoder: Linear(960,128) + ReLU;
+- independent onset encoder: Linear(960,128) + ReLU.
+
+Everything else stayed fixed:
+- context5 / 960 input;
+- state/onset heads;
+- loss weights 9 / 8 / 4;
+- sampler 32/32/32/32;
+- Adam 0.003;
+- batch 128;
+- seeds 20260927/28/29;
+- 500 steps/model;
+- thresholds 0.50/0.50;
+- decoder/evaluator;
+- V2 intervention training data;
+- ordinary S9 control test;
+- V3 84-row challenge.
+
+Design/spec:
+- `docs/astra/ARCHITECTURE_RESEARCH_A1_DESIGN_V1.md`
+- `docs/astra/ARCHITECTURE_RESEARCH_A1_SPEC_V1.json`
+
+Runner/tests:
+- `astra_backend/synthetic/architecture_research_a1_v1.py`
+- `astra_backend/synthetic/test_architecture_research_a1_v1.py`
+
+### Structural / offline verification
+
+A1 structural tests proved:
+- S11-compatible output shapes;
+- state/onset encoder parameter sets disjoint;
+- state-path backward does not touch onset encoder;
+- onset-path backward does not touch state encoder;
+- deterministic seed behavior;
+- exact three-model / 1,500-step budget.
+
+Offline verification:
+- run **36492512434**
+- job **109164198506**
+- artifact **11002241343**
+- digest `sha256:ab4efd46bc6522d1fb1a0ae1ad0f08767adb0dbb37c7cde1f6aead7295923c17`
+- receipt SHA-256 `55b3b48bc4f47ff3bc34850b53bf7913026f2091a4193c77727efcf8348e3a1c`
+- fit calls **0**
+- optimizer steps **0**
+- P1/P2/P3 **none**
+
+Frozen verification:
+- `docs/astra/ARCHITECTURE_RESEARCH_A1_OFFLINE_VERIFICATION_V1.json`
+
+### One-shot A1 execution
+
+Run:
+- workflow **36492748299**
+- job **109164963801**
+- head `c8841c47363073bb4f82891ea49a86577fa3010a`
+- run attempt **1**
+- workflow conclusion **SUCCESS**
+- artifact **11002106213**
+- artifact digest `sha256:ed013e7d35237f7b6d998a742b7cac45116d1b8ceb038400dc81edc4947b2054`
+- result JSON SHA-256 `090f0718b3da1cad6c1913af6d2113d18386dfc0323e77c846c509de00abb1c3`
+
+Execution:
+- models **3**
+- optimizer steps/model **500**
+- total optimizer steps **1,500**
+- fit/eval **6.811 s**
+- thresholds fixed **0.50 / 0.50**
+- threshold search/retuning **false**
+- automatic retry **false**
+- P1/P2/P3 **none**
+- main/Production unchanged.
+
+Frozen result:
+- `docs/astra/ARCHITECTURE_RESEARCH_A1_RESULT_V1.json`
+
+Analysis:
+- `docs/astra/ARCHITECTURE_RESEARCH_A1_ANALYSIS_V1.md`
+
+### A1 scientific gate — FAILED
+
+Exactly two frozen criteria failed.
+
+1. Mean ordinary joint-admission gain versus frozen S11 intervention:
+   - observed **+0.0387597**
+   - required **>= +0.0400000**
+   - shortfall approximately **0.0012403**
+   - positive in **3/3** seeds.
+
+2. V3 challenge recall gain versus frozen S11 control:
+   - seed 20260927 **-0.003876**
+   - seed 20260928 **+0.077519**
+   - seed 20260929 **+0.054264**
+   - required positive **3/3**
+   - observed positive **2/3**.
+
+The gate is not rounded, relaxed or reinterpreted.
+
+### Strong positive structural evidence
+
+Versus the frozen shared-encoder S11 intervention:
+
+Ordinary state admission:
+- mean **+0.0930233**
+- minimum **+0.0697674**
+- positive **3/3**
+
+V3 challenge state admission:
+- mean **+0.0723514**
+- minimum **+0.0271318**
+- positive **3/3**
+
+Ordinary joint admission:
+- mean **+0.0387597**
+- positive **3/3**
+
+Challenge joint admission:
+- mean **+0.0284238**
+- positive **3/3**
+
+Ordinary onset F1:
+- mean **+0.0331766**
+- positive **3/3**
+
+Challenge onset F1:
+- mean **+0.0513049**
+- positive **3/3**
+
+Challenge onset precision:
+- mean **+0.0906692**
+- positive **3/3**
+
+Negative-only FP:
+- ordinary **0.0 events/sec in every seed**
+- challenge **0.0 events/sec in every seed**
+
+Versus frozen S11 control:
+- challenge onset F1 mean **+0.112441**
+- positive **3/3**
+- challenge precision mean **+0.205053**
+- positive **3/3**
+
+Interpretation:
+- the synthetic evidence supports encoder sharing as a meaningful state/onset tradeoff factor;
+- A1 still does not satisfy its complete prospective acceptance contract;
+- this does not establish real-domain readiness or a real-domain causal mechanism.
+
+### Current stop rule
+
+Do not:
+- rerun A1;
+- relax the +0.04 joint gate;
+- drop seed 20260927;
+- lower thresholds;
+- retune loss/sampler;
+- widen/deepen A1 automatically;
+- add convolution/recurrent/context changes automatically;
+- reopen P1/P2;
+- open P3.
+
+**A1 is closed.**
+
+Any A2 architecture is a **new project decision** and requires:
+1. fresh explicit user approval for A2;
+2. a new structural hypothesis frozen before optimizer work;
+3. one-variable or otherwise clearly isolated architectural change;
+4. a newly preregistered synthetic evaluation contract.
+
+P1/P2 remain closed.
+P3 remains sealed.
+Main/Production remain unchanged.
+
+**Resume instruction:** Stop model execution. Do not automatically create A2. If the user explicitly approves a new A2 architecture project, first define and freeze its independent structural hypothesis and contract before any optimizer work.
