@@ -453,3 +453,101 @@ The requested V2 scope remains:
 - P3 **sealed**.
 
 **Resume instruction:** Await a new explicit `I authorize` for the corrected single V2 P1/P2 preparation-integrity audit. If received, create source-pinned V2 authorization + one single-use V2 launch marker, execute exactly once, freeze the exact result or failure, update this handoff, and stop. Do not tune or train automatically from the outcome.
+
+
+## Corrected V2 P1/P2 preparation-integrity audit — successful frozen result — 2026-09-28
+
+The user gave fresh explicit authorization for exactly one corrected V2 P1/P2 source-access audit. That authorization has now been consumed.
+
+### Execution result
+
+- workflow: **Astra P2 preparation integrity audit v2**
+- run **36408179090**
+- job **108881796729**
+- launch head `0e4e5c56ce49eebb0447ed9f467071578112e962`
+- conclusion: **SUCCESS**
+- started: `2026-09-28T10:11:15Z`
+- completed: `2026-09-28T10:54:22Z`
+- artifact **10964618513**
+- artifact digest `sha256:763c700a20c0688879953b909ac32d476138b863555c7e5349315118f5019fc2`
+- frozen artifact `result.json` SHA256 `4d97c4993031f1362cd349c91068f19156311e22642b6f6f0fd12eeaa57e6edc`
+- artifact expiry: `2026-10-28T10:54:17Z`
+
+Repository summary:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_RESULT_V2.json`
+- Git blob `80c20349fef1252d516aaaed440d105b773ebbf1`
+
+Repository-wide Astra backend tests for the launch head also passed:
+- run **36408179235**
+- conclusion **SUCCESS**
+
+Execution guards remained intact:
+- exact 4 P1 + 4 P2 direct-input captures;
+- optimizer steps **0**;
+- models loaded **0**;
+- model inference **false**;
+- threshold search/retuning **false**;
+- automatic retry **false**;
+- Codespaces/Vercel **not used**;
+- main/Production **not mutated**;
+- **P3 remained sealed**.
+
+### What the model-free audit established
+
+Eligible acoustic attacks:
+- P1: **16** across 4 captures; no excluded note events.
+- P2: **11** across 3 captures; 4 P2 Drop3_7 chord note events were excluded by the already-frozen full-window eligibility rule because the selected chord starts only about 58 ms into the source/crop. Do not silently promote those chord observations into the prospective population aggregate.
+
+Event-weighted medians:
+
+| measure | P1 | P2 | P2 / P1 |
+|---|---:|---:|---:|
+| raw post-attack RMS | 0.0376450 | 0.0202229 | ~0.54 |
+| raw first-difference energy | 1.19762e-4 | 1.13366e-5 | ~0.095 |
+| prepared-CQT positive flux | 12.9890 | 11.3093 | ~0.87 |
+| raw qualified-peak offset | -3.09 ms | -4.71 ms | difference ~-1.61 ms |
+| prepared-CQT peak offset | 0 frames | 0 frames | no median shift |
+
+Interpretation:
+- **Weak/variable real attack-envelope contrast is now a supported domain-mismatch factor.**
+- P2 has substantially weaker raw short-time transition energy on the eligible bounded examples, and moderately weaker post-attack RMS / prepared-CQT positive flux.
+- The weakness is **not uniform**: the selected P2 PalmMute attacks are strong; P2 scales are weaker; the selected P2 single-note attack is especially weak in prepared-CQT novelty.
+- There is **no evidence here of a gross P2 timestamp/preparation shift**. Raw peak medians differ by only about 1.6 ms, and the prepared-CQT median peak lands on the annotated frame for both populations.
+- There is also **no evidence that stereo downmix attenuates P2**. The P2 direct-input files are two-channel with identical measured channel attack metrics. Frozen ffmpeg mono decoding raises eligible P2 post-RMS by about `sqrt(2)` relative to the arithmetic mean of one duplicated channel pair (roughly +3 dB), rather than reducing it. The existing full-file RMS normalization then removes fixed global gain before CQT extraction.
+- Therefore the prior P2 onset failure should **not** be attributed to a simple stereo/downmix attenuation bug or a gross fixed timing offset.
+
+The audit does **not** prove one unique causal mechanism. It does not justify threshold rescue, seed/model selection, or tuning on these eight examples.
+
+### P2 Drop3_7 boundary caveat
+
+The selected P2 Drop3_7 chord begins at source annotation ~11.46 ms and aligned annotation ~58.46 ms with the frozen +47 ms lag. Because the prospective raw peak window is +/-120 ms and prepared-CQT search is +/-4 frames, all four simultaneous note events fail the full-window rule at the beginning of the crop/source.
+
+Descriptive values are preserved in the artifact but excluded from the frozen aggregate. Do not change the eligibility window after seeing the result merely to recover this chord.
+
+### Current scientific direction
+
+The evidence chain is now:
+1. historical V3 baseline is strong on its P1 training-domain crops;
+2. frozen synthetic candidate failed transfer to both P1 and P2;
+3. state representation mismatch is severe on P1 candidate outputs;
+4. onset probabilities collapse on real P2;
+5. model-free integrity audit shows P2 attack timing is not grossly shifted and stereo/downmix is not suppressing amplitude;
+6. eligible P2 real attacks have materially weaker and more variable transient/attack-envelope contrast than P1, especially in raw first-difference energy.
+
+This supports treating **synthetic-to-real attack-envelope/domain mismatch** as a real factor while retaining the separate P1 candidate state-representation failure as another unresolved factor.
+
+### Next-step boundary
+
+**Do not automatically train, tune, rerun, or reopen P1/P2. Do not open P3.**
+
+The V2 authorization was single-use and is consumed.
+
+The next safe step is offline design/review only:
+- preserve this V2 result unchanged;
+- design any future synthetic intervention prospectively, without choosing exact generator parameters by fitting to these eight P1/P2 outcomes;
+- if a future synthetic-only experiment is proposed, predeclare architecture/data intervention, seeds, optimizer budget, metrics and decision criteria before running it;
+- do not use these eight real examples for threshold search, seed selection, model selection or training;
+- any future P1/P2 source access requires a new explicit authorization;
+- P3 remains sealed until a separately defined and authorized gate is met.
+
+**Resume instruction:** Continue from the frozen V2 integrity result. Treat weaker/variable real attack-envelope contrast as supported evidence, but do not collapse the problem into onset energy alone because P1 still shows a separate candidate state-representation failure. Keep the next phase synthetic-only and prospectively specified unless the user explicitly authorizes another real-data action.
