@@ -1,0 +1,157 @@
+{
+  "schema": "astra-source-domain-joint-coverage-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "completed-model-free",
+  "workflow": {
+    "run": 36477515197,
+    "job": 109114818877,
+    "head": "6d8a9e71e36b862ce7324088bb1e99c6ff4b7d99",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 10993409802,
+    "digest": "sha256:bfb07fbae8cd7d2b1f59228362104abca0c55240cf89e388ef9ad1b94b77b56b",
+    "resultJsonSha256": "89ec82452ed3440af9d7935696f3bc66b0076c4c63c584b815780f9ea6f650ba"
+  },
+  "testsPassed": 4,
+  "execution": {
+    "modelRun": false,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "waveformRenders": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false
+  },
+  "marginalChallengePercentiles": {
+    "attackBaseRiseSeconds": 0.9619047619047619,
+    "transientNoiseGain": 0.1380952380952381,
+    "transientDecaySeconds": 0.7,
+    "dampingMultiplier": 0.7904761904761904,
+    "brightness": 0.14761904761904762,
+    "pickPosition": 0.8523809523809524,
+    "lowpassCutoffHz": 0.11428571428571428,
+    "spectralTiltDb": 0.1523809523809524,
+    "highpassCornerHz": 0.3952380952380952,
+    "nonlinearDrive": 0.5523809523809524,
+    "nonlinearWet": 0.6476190476190476,
+    "broadbandNoiseRmsRelative": 0.8142857142857143
+  },
+  "challengeSideConjunctionCumulative": [
+    {
+      "conditions": 1,
+      "count": 8,
+      "fraction": 0.0380952380952381
+    },
+    {
+      "conditions": 2,
+      "count": 1,
+      "fraction": 0.004761904761904762
+    },
+    {
+      "conditions": 3,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 4,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 5,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 6,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 7,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 8,
+      "count": 0,
+      "fraction": 0
+    },
+    {
+      "conditions": 9,
+      "count": 0,
+      "fraction": 0
+    }
+  ],
+  "fullConjunctionCountByFamily": {
+    "isolated": 0,
+    "scales": 0,
+    "chords": 0,
+    "repeated": 0,
+    "legato": 0,
+    "palmmute": 0,
+    "mixed": 0
+  },
+  "featureCoverage": {
+    "pooled": {
+      "interventionTrainOnsetFlux": {
+        "count": 525,
+        "min": 4.487173557281494,
+        "median": 20.658023834228516,
+        "max": 45.400386810302734
+      },
+      "challengeTestOnsetFlux": {
+        "count": 105,
+        "min": 6.011805057525635,
+        "median": 12.749492645263672,
+        "max": 21.318878173828125
+      },
+      "medianChallengeOnsetFluxPercentile": 0.13333333333333333,
+      "interventionTrainRowDisplacement": {
+        "count": 210,
+        "min": 0.013331029564142227,
+        "median": 0.0410158634185791,
+        "max": 0.4646913707256317
+      },
+      "challengeTestRowDisplacement": {
+        "count": 42,
+        "min": 0.030236797407269478,
+        "median": 0.057765547186136246,
+        "max": 0.4106965959072113
+      },
+      "medianChallengeRowDisplacementPercentile": 0.8333333333333334
+    },
+    "medianChallengeOnsetFluxPercentileByFamily": {
+      "chords": 0.26666666666666666,
+      "isolated": 0.03333333333333333,
+      "legato": 0.03333333333333333,
+      "mixed": 0,
+      "palmmute": 0.14333333333333334,
+      "repeated": 0.10833333333333334,
+      "scales": 0.0125
+    },
+    "medianChallengeRowDisplacementPercentileByFamily": {
+      "chords": 0.9,
+      "isolated": 0.8500000000000001,
+      "legato": 0.95,
+      "mixed": 0.5333333333333333,
+      "palmmute": 0.9666666666666667,
+      "repeated": 0.9,
+      "scales": 0.8666666666666667
+    }
+  },
+  "interpretation": {
+    "established": [
+      "Each fixed challenge scalar lies within the frozen marginal simulator ranges, but several sit in training-distribution tails.",
+      "The fixed multi-axis challenge conjunction is not represented among the 210 training rows; zero rows satisfy the first three challenge-side conditions simultaneously and zero satisfy the full conjunction.",
+      "Challenge onset flux is generally low relative to intervention training flux, while challenge row-level feature displacement is generally high relative to intervention training displacement."
+    ],
+    "notEstablished": [
+      "This review does not prove that joint coverage alone caused the failed training gate.",
+      "It does not justify widening ranges, resampling toward the challenge corner, changing the challenge, lowering thresholds, or changing the model."
+    ],
+    "decision": "Treat joint-coverage mismatch as a supported experimental-design limitation of V1. Preserve the failed training result. No further model run until a new prospective protocol is justified independently of the failed scores."
+  }
+}
