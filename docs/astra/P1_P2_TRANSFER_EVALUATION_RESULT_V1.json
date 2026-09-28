@@ -1,0 +1,151 @@
+{
+  "schema": "astra-p1-p2-transfer-evaluation-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_complete_synthetic_to_real_transfer",
+  "run": {
+    "runId": 36381769369,
+    "jobId": 108798822867,
+    "headSha": "b9f9109c22152ea23613d829b74c59b5ddc6dcf6",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10953563527,
+    "name": "astra-p1-p2-transfer-evaluation-v1",
+    "digest": "sha256:ef571953b8872902407e375b0f673d3590fe96534e2d77a1c3be0fb6a0c67aae",
+    "expiresAt": "2026-10-28T05:57:52Z",
+    "files": {
+      "result.json": "40be5720f840d02aca588d3901158b1c7a6f375831c1a73647b8044a1bf14f10",
+      "candidate.pt": "7d9785b73de73674a5c6c2305fd8666e7f2163fa9de4831d67810bb221807e91",
+      "candidate-data-receipt.json": "c39b750be2e5abfc80092305f4cc4c5905ab3d02534fa12d92d6b546641bc7d8"
+    }
+  },
+  "execution": {
+    "p1Accessed": true,
+    "p2Accessed": true,
+    "p3Opened": false,
+    "exactCaptureCount": 8,
+    "candidateSyntheticModels": 1,
+    "candidateOptimizerSteps": 500,
+    "baselineOptimizerSteps": 0,
+    "evaluationOptimizerSteps": 0,
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "candidateDataset": {
+    "controlExamples": 294,
+    "interventionExamples": 294,
+    "audioSecondsPerArm": 588,
+    "interventionUniqueTrainChordVoicings": 30,
+    "interventionSignatureSha256": "de7a34d3dc51afa5ef5adc9105fe8796b00724ac5fceac61ab8083ea34dbda1d",
+    "nonChordBitIdentical": true,
+    "validationTestBitIdentical": true
+  },
+  "p1": {
+    "baseline": {
+      "pitchOnset": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 0,
+        "precision": 0.6956521739130435,
+        "recall": 1,
+        "f1": 0.8205128205128205
+      },
+      "pitchOnsetOffset": {
+        "tp": 15,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9375,
+        "recall": 0.9375,
+        "f1": 0.9375
+      },
+      "repeatedAttackRecall": 1,
+      "examplesWithTruePositive": 4
+    },
+    "candidate": {
+      "pitchOnset": {
+        "tp": 0,
+        "fp": 10,
+        "fn": 16,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "pitchOnsetOffset": {
+        "tp": 0,
+        "fp": 10,
+        "fn": 16,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "repeatedAttackRecall": 0,
+      "examplesWithTruePositive": 0
+    }
+  },
+  "p2": {
+    "baseline": {
+      "pitchOnset": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 15,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "pitchOnsetOffset": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 15,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "repeatedAttackRecall": 0,
+      "examplesWithTruePositive": 0
+    },
+    "candidate": {
+      "pitchOnset": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 15,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "pitchOnsetOffset": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 15,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      "repeatedAttackRecall": 0,
+      "examplesWithTruePositive": 0
+    }
+  },
+  "transferGate": {
+    "passed": false,
+    "passedCount": 0,
+    "totalCount": 5,
+    "criteria": {
+      "candidateP2F1AtLeast0_35": false,
+      "candidateP2RecallAtLeast0_35": false,
+      "candidateP2PrecisionAtLeast0_40": false,
+      "p2F1GainVsBaselineAtLeast0_25": false,
+      "truePositiveInAtLeast3of4P2Examples": false
+    }
+  },
+  "interpretation": {
+    "established": "The frozen synthetic candidate did not transfer to either real P1 or P2 under the prospective evaluator.",
+    "importantContrast": "The historical V3 baseline remains strong on P1 while the synthetic candidate scores zero true positives on the same P1 crops, so the candidate failure is broader than performer shift.",
+    "notEstablished": "The result does not by itself identify whether the dominant cause is synthetic feature-distribution mismatch, state/onset calibration, pitch-state representation, or another training-domain mismatch.",
+    "decision": "Reject this synthetic candidate for real-development advancement. Keep P3 sealed. Do not threshold-rescue or seed-pick on P1/P2."
+  },
+  "postRunRepositoryNote": {
+    "workflowHardeningAfterRun": "A focused-test-before-real-access step was added after the completed run. It was not part of run 36381769369 and did not trigger a rerun."
+  }
+}
