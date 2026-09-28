@@ -350,3 +350,106 @@ Do **not** create `P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V1.json` 
 After authorization, create a source-pinned authorization file and one single-use launch marker, execute once, freeze the exact result/artifact hashes, update this handoff, and stop. Do not automatically tune or train from the outcome.
 
 **Resume instruction:** Await the user's fresh explicit authorization for the single frozen P1/P2 preparation-integrity audit. Until then, P1/P2 source access is closed and P3 remains sealed.
+
+
+## Authorized integrity-audit execution outcome — 2026-09-28
+
+The user gave fresh explicit authorization for the single frozen P1/P2 preparation-integrity audit. That authorization was consumed by exactly one source-access execution.
+
+### V1 authorized run
+
+- workflow: **Astra P2 preparation integrity audit v1**
+- run **36399552501**
+- job **108853905409**
+- head `0d00348ff1faf0aea1accf3958f3a258fd9be255`
+- workflow conclusion: **FAILURE**
+- automatic retry: **not performed**
+- P1 accessed: **yes**
+- P2 accessed: **yes**
+- P3 opened: **no**
+- optimizer steps: **0**
+- models loaded: **0**
+- model inference: **false**
+- threshold search/retuning: **false**
+
+All authorization, source-pin, frozen-toolchain and focused-test guards passed before source access. The workflow then downloaded, hash-verified, extracted and deterministically prepared exactly the authorized eight captures. It failed at the first model-free audit admission step before any attack/preparation measurements were produced.
+
+Exact exception:
+
+`RuntimeError: prepared crop identity mismatch`
+
+The failure came from the eight `featureSha256` values frozen in the initial audit spec. They did not equal the deterministic feature hashes emitted by the already-frozen preparation code. The corresponding eight frozen `targetSha256` values did match. This is a bookkeeping/admission defect in the new audit spec, not evidence about P1/P2 attack strength and not a scientific audit result.
+
+No result artifact was produced. Cleanup ran. Preserve the failed run as historical evidence.
+
+Frozen failure record:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_FAILED_EXECUTION_V1.json`
+- Git blob `385448bd51666e93dfbc32a169ef90beeb37deb1`
+
+### Deterministic feature identities recovered from the authorized run
+
+The preparation logs emitted the exact feature hashes and crop identities before the admission failure:
+
+- P1 chords Drop3_7: feature `278363f1b1129baeadb65dabdfb8353ebbbba23d9aefff188f88e43d73c15a91`, target `561ed7e9b6bd54742de973c4f33d8b84cbb6dd02215843daa44b048307d7d8d3`, start frame 2233
+- P1 scales Ab: feature `e34e9dd87e8be0f65c7758c1f64505656efaf16f4db00aaff4821da52f33615a`, target `b1f3bb14b9f69cf119e86095bf05dbf8c5c820bf8a24f2e2017d963c7f88a41b`, start frame 335
+- P1 allsinglenotes: feature `083c87bfc280f7d97b2f763cff214b4d0efbe607a43451882b1ddee9327c4328`, target `d8accc5ffaa70514d336c2d154ad0cb1360015b28d6f9118ea16a38fb0b9ccd7`, start frame 164
+- P1 PalmMute: feature `bb71d75b85c2db3871390e8a340f9fefccdbfcdddb2343077565b5f59df98e25`, target `4bc74be8b0e1b84b0a4b7b9c6adf7baea1c79e3e5cdcc7e83606dc52fcb210f2`, start frame 162
+- P2 chords Drop3_7: feature `882530529381d7d0268a8a91f7fbe727f27ae2b1ca7a44ddde89fdba8ed510ab`, target `3508bac1a566a1104233c66d583f01eaa089e0eb398de3d65eff436d656f0c75`, start frame 0
+- P2 scales Ab: feature `b5b3f7f049a2c2354d9333ed861f3f1b71f54e0a2d0dbf626d7df0a450c86f6a`, target `9a9507b60765c9bb2d3d21bb6775a7a4be065b9046ae0aead182e4a1cbd650e9`, start frame 336
+- P2 allsinglenotes: feature `bad44048c953b4438bf2a7d2a2c168227af60933b24bad814df0d0dccb4cb27b`, target `e2eb414127cb87b2d09d99097a4e1df0895e3544a36ef9dbe7326a3d2ddf0d2b`, start frame 163
+- P2 PalmMute: feature `6576417076b4767e02ad0240708ee45663792ce5cadd23340a00340b8416332e`, target `1c8d216a844b9a2f4be54c57cf7ec6e65bdfd6e5a26fe03d109471d89d283be5`, start frame 21526
+
+These values are now the corrected frozen prepared identities. Do not infer scientific meaning from them.
+
+### Offline repair completed after the failed single execution
+
+The spec was corrected **only** by replacing the eight bad prepared-feature hashes with the exact deterministic hashes emitted by the authorized run. No measurement windows, population, target hashes, model behavior, threshold behavior, source archives, lags or decision rules were changed.
+
+Corrected spec:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_SPEC_V1.json`
+- Git blob `06c966b37e65a1e0a93ab8112f439dd87073b042`
+- correction commit `14cb5d0b3510ce1dad2c16826dee87c2eff6d523`
+
+Corrected offline focused verification:
+- run **36407736805**
+- job **108880392512**
+- conclusion **SUCCESS**
+- source-pin verification passed
+- frozen toolchain verification passed
+- focused synthetic integrity-audit tests passed
+- localization timestamp regression passed
+
+A new disabled-by-default V2 real workflow is prepared:
+- `.github/workflows/astra-p2-attack-preparation-integrity-audit-v2.yml`
+- Git blob `29cf152667b3e53c46c5c8a33416aeb8641d8714`
+- it requires new `P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V2.json` and `P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_LAUNCH_V2.json`
+- neither file has been created.
+
+Fresh authorization request:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_REQUEST_V2.json`
+- status: **awaiting fresh explicit user authorization after failed V1 execution**
+
+### Authorization boundary now
+
+The prior authorization cannot be reused:
+- it authorized a **single execution**;
+- that execution occurred and accessed P1/P2;
+- `automaticRetryAuthorized` was **false**.
+
+Therefore do **not** rerun V1, do **not** create V2 authorization/launch files, and do **not** reopen P1/P2 until the user gives another fresh explicit authorization for exactly one corrected V2 run.
+
+The requested V2 scope remains:
+- exact four frozen P1 + four frozen P2 direct-input captures only;
+- optimizer steps **0**;
+- models loaded **0**;
+- model inference **false**;
+- threshold search/retuning **false**;
+- one CPU GitHub Actions execution, <=120 minutes;
+- total source downloads <=4,004,045,267 bytes;
+- automatic retry **false**;
+- Codespaces **false**;
+- Vercel **false**;
+- main/Production mutation **false**;
+- P3 **sealed**.
+
+**Resume instruction:** Await a new explicit `I authorize` for the corrected single V2 P1/P2 preparation-integrity audit. If received, create source-pinned V2 authorization + one single-use V2 launch marker, execute exactly once, freeze the exact result or failure, update this handoff, and stop. Do not tune or train automatically from the outcome.
