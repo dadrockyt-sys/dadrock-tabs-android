@@ -1,0 +1,52 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-polyphony-safe-frozen-result-v2",
+  "date": "2026-09-28",
+  "status": "passed",
+  "preservesOriginalFailedStageAResult": true,
+  "workflow": {
+    "run": 36484907416,
+    "job": 109139338608,
+    "head": "6cc16565071a47d459608d1d8cbeb383245e5566",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 10997903401,
+    "name": "astra-source-domain-v2-stage-a-polyphony-safe-v4",
+    "digest": "sha256:7d0457d29083a454d0e35c701c27940ba04d8e77084334276211f456f0b48685",
+    "resultSha256": "213b607fee75145179df615c57d32a9dadfe62e0ccc22a549e28efefd3eae1e3"
+  },
+  "inputs": {
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "tests": {
+    "focusedPassed": 10
+  },
+  "scientificGate": {
+    "passed": true,
+    "maximumAbsoluteGateFundamentalErrorCents": 8.089781187576872,
+    "maximumAbsoluteMixedRowDiagnosticErrorCents": 205.8039142782652,
+    "simultaneousShadowRenders": 24,
+    "pitchToleranceCents": 15,
+    "allCriteriaPassed": true
+  },
+  "execution": {
+    "waveformRenders": 108,
+    "audioSeconds": 216,
+    "elapsedSeconds": 4.463268889999995,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "interpretation": "V2 Stage-A model-free acoustic admission passed under the prospectively frozen polyphony-safe measurement contract. This does not retroactively alter the failed original Stage-A result and does not establish model performance or real-domain transfer.",
+  "nextAction": "implement-and-run-stage-b-model-free-full-preparation-and-35-of-35-family-descriptor-coverage-gate"
+}
