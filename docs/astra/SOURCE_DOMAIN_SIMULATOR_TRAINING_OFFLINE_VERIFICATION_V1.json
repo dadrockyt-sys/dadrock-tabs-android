@@ -1,0 +1,51 @@
+{
+  "schema": "astra-source-domain-training-offline-verification-result-v1",
+  "date": "2026-09-28",
+  "status": "verified-ready-for-one-bounded-synthetic-launch",
+  "branch": "astra-work",
+  "verifiedHead": "2589a201a535d3689400d11824d35315b7398984",
+  "workflowRun": 36476387279,
+  "job": 109111039398,
+  "conclusion": "success",
+  "focusedTestsPassed": 15,
+  "artifact": 10993852045,
+  "artifactDigest": "sha256:6a18f375c550938ad2816e91bceec8107d4d4ac4cfa7dc2e258be4e3c2dfad59",
+  "verification": {
+    "sourcePinsMatched": true,
+    "datasetHashesMatched": true,
+    "historicalS9TruncatedTrainingChordRows": 30,
+    "disabledLaunchBoundaryVerified": true,
+    "modelRun": false,
+    "optimizerSteps": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false
+  },
+  "preparation": {
+    "workflowRun": 36475263654,
+    "artifact": 10993531230,
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953",
+    "featureHashes": {
+      "control": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+      "intervention": "a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a",
+      "challenge": "c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640"
+    }
+  },
+  "executionCeiling": {
+    "maxModels": 6,
+    "optimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "maxFitEvalSeconds": 5400,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false
+  },
+  "authorizationBasis": "standing branch policy pre-authorizing bounded inexpensive synthetic GitHub model runs after frozen offline verification",
+  "decision": "Offline package is verified. Exactly one bounded synthetic-only launch may be armed; freeze result and stop afterward."
+}
