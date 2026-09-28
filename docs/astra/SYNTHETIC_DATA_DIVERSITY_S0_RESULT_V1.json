@@ -1,0 +1,100 @@
+{
+  "schema": "astra-synthetic-data-diversity-s0-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_absolute_synthetic_advancement_gate",
+  "run": {
+    "runId": 36369999876,
+    "jobId": 108764124344,
+    "headSha": "6ccd56cd9d9a93118f98e6f474a0ba6bfe73d537",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10948454237,
+    "name": "astra-synthetic-data-diversity-s0-v1",
+    "digest": "sha256:d5f7fa8ba39c93526db793697ca9eeaabad3e971254d3c9872aeb1cb674aa115",
+    "expiresAt": "2026-10-28T02:30:37Z",
+    "rawResultSha256": "92d4d8eb8dbe28825b98567fbbb9e902d38b2276a5e70392fb21ec8e084d4ea3",
+    "renderReceiptSha256": "753e8e6f777e918509f1578294bcc906c6457e0905ececadbdcb621f2616da36",
+    "candidateModelSha256": "00920d87ff1b3ae6fc88029c7b212e225c738b658a98c707dacd4260f569ac57",
+    "comparatorModelSha256": "3af93705c5bbb04b652ee4a95e67b2c7b6c67c48612e6e0d2fd90842b5fded44"
+  },
+  "render": {
+    "examples": 294,
+    "audioSeconds": 588,
+    "uniqueTemplateCount": 98,
+    "variantsPerTemplate": 3,
+    "splitCounts": {
+      "train": 210,
+      "validation": 42,
+      "test": 42
+    },
+    "persistedDatasetBytes": 8976743,
+    "renderSeconds": 15.796578550000007,
+    "negativeStructureFraction": 0.42857142857142855,
+    "negativeOnlyCount": 21,
+    "withinCeilings": true,
+    "externalAudioAssets": false
+  },
+  "comparator": {
+    "pitchOnset": {
+      "precision": 1,
+      "recall": 0.06976744186046512,
+      "f1": 0.13043478260869565,
+      "tp": 9,
+      "fp": 0,
+      "fn": 120
+    },
+    "pitchOnsetOffsetF1": 0.07246376811594203,
+    "repeatedAttackRecall": 0.047619047619047616,
+    "optimizerSteps": 500
+  },
+  "candidate": {
+    "pitchOnset": {
+      "precision": 0.8780487804878049,
+      "recall": 0.27906976744186046,
+      "f1": 0.42352941176470593,
+      "tp": 36,
+      "fp": 5,
+      "fn": 93
+    },
+    "pitchOnsetOffsetF1": 0.29411764705882354,
+    "repeatedAttackRecall": 0.21428571428571427,
+    "negativeOnlyFalsePositiveEventsPerSecond": 0,
+    "optimizerSteps": 500
+  },
+  "relativeComparison": {
+    "candidateVsComparatorPassed": true,
+    "onsetF1Delta": 0.29309462915601026,
+    "repeatedAttackRecallDelta": 0.16666666666666666,
+    "candidatePrecisionLossVsComparator": 0.12195121951219512
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCriteria": [
+      "finiteAndBounded",
+      "negativeFalsePositiveRateAtMost0_10PerSecond"
+    ],
+    "failedCriteria": [
+      "pitchOnsetPrecisionAtLeast0_90",
+      "pitchOnsetRecallAtLeast0_90",
+      "pitchOnsetF1AtLeast0_90",
+      "pitchOnsetOffsetF1AtLeast0_80",
+      "repeatedAttackRecallAtLeast0_85",
+      "eachSupportedFamilyOnsetF1AtLeast0_80"
+    ]
+  },
+  "interpretation": {
+    "supported": "Five-frame context materially outperformed the per-frame comparator on this synthetic test split while producing zero false positives on the 6 seconds of negative-only test audio.",
+    "notSupported": "The candidate did not meet the absolute synthetic feasibility gate. Its dominant error is low recall, and most family-level F1 values remain far below the required floor.",
+    "causalClaimBlocked": "This single pilot does not isolate whether the remaining failure is caused primarily by optimization budget, class balance, target construction, generator acoustics, model capacity, or decoder admission."
+  },
+  "decision": {
+    "p1p2TransferNotJustified": true,
+    "noAutomaticRetry": true,
+    "noThresholdRescue": true,
+    "noExtraEpochsUnderThisAuthorization": true,
+    "p3MustRemainSealed": true,
+    "nextWork": "Offline result/design review only. Any S1 optimizer experiment requires a new frozen design and fresh explicit authorization."
+  }
+}

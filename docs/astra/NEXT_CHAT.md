@@ -1,48 +1,31 @@
 # Next chat: start here
 
-Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.  
-Updated: 2026-09-27.
+Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
 
 ## Current position
 
-The authoritative offline review task is complete.
+Synthetic-only S0 ran once with explicit authorization.
 
-Created:
+Run **36369999876**, job **108764124344**: workflow SUCCESS, scientific advancement **FAILED**.
 
-- `docs/astra/EVALUATION_PROTOCOL_AUDIT_V1.md`
-- `astra_backend/evaluation/evaluation_protocol_v2.py`
-- `astra_backend/evaluation/test_evaluation_protocol_v2.py`
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`
+Candidate (5-frame temporal context):
+- onset precision 0.8780
+- recall 0.2791
+- F1 0.4235
+- onset+offset F1 0.2941
+- repeated-attack recall 0.2143
+- negative-only FP rate 0.0 events/s
 
-Focused fabricated-event verification: **7/7 tests passed** locally.
+Comparator:
+- onset F1 0.1304
+- repeated-attack recall 0.0476
 
-Main audit findings:
+Relative candidate-vs-comparator gate passed (+0.2931 onset F1), but the absolute S0 synthetic gate failed.
 
-- frozen Basic Pitch / MR-MT3 crop predictions and prepared references do not use symmetric boundary eligibility;
-- frozen greedy matching can undercount true positives;
-- onset and offset same-pitch ambiguity need separate policies;
-- future runners need one frozen manifest binding all crop/source/feature/target identities;
-- MR-MT3 still fails under the frozen program contract; this audit does not prove why its programs were incompatible and does not authorize a remap.
+No P1/P2/P3 media was accessed. No threshold search, retry, extra epochs, production mutation or deployment occurred.
 
-Historical receipts remain frozen.
+## Exact next task
 
-## S0 design
+Offline result/design review only.
 
-Recommended synthetic hypothesis: repo-owned Karplus-Strong / short digital-waveguide guitar generator with no external sample/IR assets.
-
-Hard future pilot ceiling:
-
-- <= 3,000 examples / <= 6,000 s audio / <= 350 MB;
-- one 5-frame temporal-context MLP candidate versus the current per-frame MLP comparator;
-- <= 500 optimizer steps each, two models total, <= 60 CPU minutes, $0 paid compute;
-- fixed seed and thresholds, zero retries;
-- no P1/P2 media during synthetic pilot;
-- P3 sealed.
-
-## Exact next action
-
-**STOP until Stephen explicitly authorizes the bounded synthetic-only S0 pilot.**
-
-Do not create a launch, render the corpus, run optimizer steps, reopen P1/P2, alter thresholds, open P3, deploy, or change main without that authorization.
-
-If the synthetic pilot is later authorized and passes its frozen synthetic gates, real P1/P2 transfer still requires its own separate scoped authorization and a V2 manifest/runner.
+Do **not** run another optimizer experiment, reopen P1/P2, change thresholds, or open P3. If an S1 hypothesis is prepared, freeze one bounded design first and obtain fresh explicit authorization before execution.
