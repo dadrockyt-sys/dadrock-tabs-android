@@ -1,0 +1,102 @@
+{
+  "schema": "astra-p2-attack-preparation-integrity-audit-failed-execution-v1",
+  "date": "2026-09-28",
+  "run": {
+    "runId": 36399552501,
+    "jobId": 108853905409,
+    "headSha": "0d00348ff1faf0aea1accf3958f3a258fd9be255",
+    "conclusion": "failure"
+  },
+  "authorization": {
+    "file": "docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_AUTHORIZATION_V1.json",
+    "singleExecutionConsumed": true,
+    "automaticRetryAuthorized": false,
+    "p1Accessed": true,
+    "p2Accessed": true,
+    "p3Opened": false,
+    "optimizerSteps": 0,
+    "modelsLoaded": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false
+  },
+  "completedBeforeFailure": [
+    "authorization/launch/source-pin verification",
+    "frozen runtime/toolchain verification",
+    "focused synthetic tests",
+    "exact eight authorized archive downloads and hash verification",
+    "exact eight source extractions",
+    "exact eight deterministic preparations"
+  ],
+  "failure": {
+    "step": "Run one zero-model integrity audit",
+    "exception": "RuntimeError: prepared crop identity mismatch",
+    "location": "load_prepared",
+    "cause": "The eight featureSha256 values frozen in the initial audit spec did not match the deterministic prepared feature hashes emitted by the frozen preparation path. All eight targetSha256 values matched; the audit stopped before measurement.",
+    "resultArtifactProduced": false
+  },
+  "observedPreparedIdentities": [
+    {
+      "captureKey": "P1|chords|Drop3_7|directinput",
+      "featureSha256": "278363f1b1129baeadb65dabdfb8353ebbbba23d9aefff188f88e43d73c15a91",
+      "targetSha256": "561ed7e9b6bd54742de973c4f33d8b84cbb6dd02215843daa44b048307d7d8d3",
+      "startFrame": 2233,
+      "referenceEvents": 6
+    },
+    {
+      "captureKey": "P1|scales|Ab|directinput",
+      "featureSha256": "e34e9dd87e8be0f65c7758c1f64505656efaf16f4db00aaff4821da52f33615a",
+      "targetSha256": "b1f3bb14b9f69cf119e86095bf05dbf8c5c820bf8a24f2e2017d963c7f88a41b",
+      "startFrame": 335,
+      "referenceEvents": 8
+    },
+    {
+      "captureKey": "P1|singlenotes|allsinglenotes|directinput",
+      "featureSha256": "083c87bfc280f7d97b2f763cff214b4d0efbe607a43451882b1ddee9327c4328",
+      "targetSha256": "d8accc5ffaa70514d336c2d154ad0cb1360015b28d6f9118ea16a38fb0b9ccd7",
+      "startFrame": 164,
+      "referenceEvents": 1
+    },
+    {
+      "captureKey": "P1|techniques|PalmMute|directinput",
+      "featureSha256": "bb71d75b85c2db3871390e8a340f9fefccdbfcdddb2343077565b5f59df98e25",
+      "targetSha256": "4bc74be8b0e1b84b0a4b7b9c6adf7baea1c79e3e5cdcc7e83606dc52fcb210f2",
+      "startFrame": 162,
+      "referenceEvents": 1
+    },
+    {
+      "captureKey": "P2|chords|Drop3_7|directinput",
+      "featureSha256": "882530529381d7d0268a8a91f7fbe727f27ae2b1ca7a44ddde89fdba8ed510ab",
+      "targetSha256": "3508bac1a566a1104233c66d583f01eaa089e0eb398de3d65eff436d656f0c75",
+      "startFrame": 0,
+      "referenceEvents": 4
+    },
+    {
+      "captureKey": "P2|scales|Ab|directinput",
+      "featureSha256": "b5b3f7f049a2c2354d9333ed861f3f1b71f54e0a2d0dbf626d7df0a450c86f6a",
+      "targetSha256": "9a9507b60765c9bb2d3d21bb6775a7a4be065b9046ae0aead182e4a1cbd650e9",
+      "startFrame": 336,
+      "referenceEvents": 8
+    },
+    {
+      "captureKey": "P2|singlenotes|allsinglenotes|directinput",
+      "featureSha256": "bad44048c953b4438bf2a7d2a2c168227af60933b24bad814df0d0dccb4cb27b",
+      "targetSha256": "e2eb414127cb87b2d09d99097a4e1df0895e3544a36ef9dbe7326a3d2ddf0d2b",
+      "startFrame": 163,
+      "referenceEvents": 1
+    },
+    {
+      "captureKey": "P2|techniques|PalmMute|directinput",
+      "featureSha256": "6576417076b4767e02ad0240708ee45663792ce5cadd23340a00340b8416332e",
+      "targetSha256": "1c8d216a844b9a2f4be54c57cf7ec6e65bdfd6e5a26fe03d109471d89d283be5",
+      "startFrame": 21526,
+      "referenceEvents": 2
+    }
+  ],
+  "repair": {
+    "specCommit": "14cb5d0b3510ce1dad2c16826dee87c2eff6d523",
+    "correctedSpecBlob": "06c966b37e65a1e0a93ab8112f439dd87073b042",
+    "automaticRetryPerformed": false,
+    "freshAuthorizationRequiredForAnySecondSourceAccess": true
+  }
+}
