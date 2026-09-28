@@ -2,14 +2,15 @@
   "schema": "astra-synthetic-data-diversity-s2-launch-v1",
   "date": "2026-09-27",
   "singleLaunch": true,
-  "authorizationCommit": "6a8894646a26e6cbec38289eca75ffbc145b61e3",
-  "authorizationGitBlob": "bb62e0b7c19b0257460ff548d9549d64501b18d0",
+  "launchSequence": 2,
+  "authorizationCommit": "9ed7bdbeed41f062fadb2c091ffb1dd3a78aa183",
+  "authorizationGitBlob": "02deffffc665d443a1196644515f3b6d3b384445",
   "sourceIdentities": {
     "designGitBlob": "006c29a14baeaefd91ebc74b00f46ed7fdf0ad64",
     "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
     "samplingGitBlob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
     "runnerGitBlob": "e07d52099ed624ba5d996368f5e0d21735e67642",
-    "testsGitBlob": "f5bd2429838c1f4900055e96cbd324bff6343e93",
+    "testsGitBlob": "52d63206cfa84ff77ecd5b65c2d7b8e210272692",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
     "workflowGitBlob": "7faa51feb36124be9a4ce8214097485dc70e0da6"
   },
