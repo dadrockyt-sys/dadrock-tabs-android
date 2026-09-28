@@ -1,0 +1,66 @@
+name: Astra source-domain simulator model-free review V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/synthetic/source_domain_simulator_diversity_v1.py'
+      - 'astra_backend/synthetic/test_source_domain_simulator_diversity_v1.py'
+      - 'docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_DESIGN_V1.md'
+      - 'docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_SPEC_V1.json'
+      - '.github/workflows/astra-source-domain-simulator-review-v1.yml'
+
+permissions:
+  contents: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  review:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Install pinned CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+      - name: Verify frozen design/spec and run focused model-free admission
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          d=Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_DESIGN_V1.md')
+          s=Path('docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_SPEC_V1.json')
+          assert d.exists() and s.exists()
+          spec=json.loads(s.read_text())
+          assert spec['status']=='prospective-model-free-design-frozen-no-training'
+          assert spec['ceilings']['modelLoads']==0
+          assert spec['ceilings']['optimizerSteps']==0
+          assert spec['ceilings']['p1Access'] is False
+          assert spec['ceilings']['p2Access'] is False
+          assert spec['ceilings']['p3Access'] is False
+          assert spec['futureModelBoundary']['trainingAuthorized'] is False
+          print('FROZEN_SOURCE_DOMAIN_SPEC_OK')
+          PY
+          pytest -q astra_backend/synthetic/test_source_domain_simulator_diversity_v1.py
+          python -m synthetic.source_domain_simulator_diversity_v1 --out source-domain-simulator-review-v1.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-source-domain-simulator-review-v1
+          path: source-domain-simulator-review-v1.json
+          retention-days: 30
