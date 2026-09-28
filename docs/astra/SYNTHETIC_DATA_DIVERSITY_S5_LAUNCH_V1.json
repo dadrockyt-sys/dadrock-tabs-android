@@ -1,0 +1,32 @@
+{
+  "schema": "astra-synthetic-data-diversity-s5-launch-v1",
+  "date": "2026-09-27",
+  "singleLaunch": true,
+  "authorizationCommit": "31e25a893167538d465e3b785de01eb72a404cfe",
+  "authorizationGitBlob": "23755448f813f8dd0f810024f3f3b1dd9c710d8f",
+  "sourceIdentities": {
+    "designGitBlob": "35514e2837bd86adbfa1e55d2cf63a2896a86846",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "samplingGitBlob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "diagnosticsGitBlob": "e07d52099ed624ba5d996368f5e0d21735e67642",
+    "repeatedDiagnosticsGitBlob": "599293154e1525d5517fb889ceaf8340d55ee178",
+    "runnerGitBlob": "e65d1a67ddd2aa8a7397cb9b87f69280cb70cb0b",
+    "testsGitBlob": "b69f4e3272b43d3a15f1fbd18bd023aae2b16bfe",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "c8fbebdbd8b02c3a78fcafdd8928c492ac564446"
+  },
+  "executionIntent": {
+    "examples": 294,
+    "audioSeconds": 588,
+    "models": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "onlyChangedVariable": "active-state token weight",
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false
+  }
+}
