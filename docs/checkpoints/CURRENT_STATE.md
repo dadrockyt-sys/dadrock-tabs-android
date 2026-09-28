@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S13 FAILED AND STRATEGY REVIEW FROZEN — NO MORE MODEL TUNING; NEXT INFORMATIVE ACTION IS THE PREPARED ZERO-MODEL P1/P2 INTEGRITY AUDIT, REQUIRING FRESH EXPLICIT SOURCE-ACCESS AUTHORIZATION; P3 SEALED**
+Status: **V2 REAL-DOMAIN AUDIT + S12/S13 FAILURES RECONCILED — NEXT: OFFLINE SOURCE-AUDIO SIMULATOR DIVERSITY DESIGN ONLY; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1236,3 +1236,61 @@ Exact requested scope:
 Do not launch another synthetic model experiment.
 
 The next executable empirical action requires **fresh explicit user authorization** for the exact frozen zero-model P1/P2 preparation-integrity audit above. If that authorization is not provided, remain in analysis/documentation mode. P3 stays sealed.
+
+
+## Reconciliation correction after user authorization — 2026-09-28
+
+The user's fresh `I authorize` was received after the post-S13 V1 strategy review requested the zero-model P1/P2 integrity audit.
+
+Before launching anything, repository continuity was rechecked. That revealed the corrected V2 integrity audit had already been executed successfully earlier on this branch and its single-use authorization was already consumed:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_RESULT_V2.json`
+- run **36408179090**
+- job **108881796729**
+- artifact **10964618513**
+- result SHA256 `4d97c4993031f1362cd349c91068f19156311e22642b6f6f0fd12eeaa57e6edc`
+
+Therefore the new authorization was **not** used to reopen or rerun P1/P2. Repeating the same source-access audit would violate the single-use/no-retry discipline and add no new scientific information.
+
+The prior post-S13 strategy review V1 missed this already-frozen V2 evidence because the long handoff contains sections appended out of chronological order. V1 is preserved historically but superseded.
+
+Corrected review:
+- `docs/astra/SIMULATOR_REPRESENTATION_STRATEGY_REVIEW_V2.md`
+
+### Corrected scientific synthesis
+
+The V2 audit established weak/variable real attack-envelope contrast as a supported domain factor on the bounded eligible examples, while not supporting a gross fixed timing shift or stereo/downmix attenuation mechanism.
+
+Capture-balanced evidence must accompany event-weighted evidence:
+- raw post-attack RMS P2/P1: event-weighted **0.537**, capture-balanced approximately **0.899**;
+- raw first-difference energy: event-weighted **0.0947**, capture-balanced approximately **0.792**;
+- prepared-CQT positive flux: event-weighted **0.871**, capture-balanced approximately **0.952**.
+
+This heterogeneity prevents interpreting the event-weighted first-difference ratio as a universal performer-wide weakness.
+
+Combined with:
+- the separate severe P1 candidate state/pitch representation failure;
+- S12's failed tradeoff and invalid recursive feature corruption;
+- S13's failed narrower feature-space intervention;
+
+the next justified step is **not** another feature-space transform or model run.
+
+### Exact next action
+
+Proceed with offline/model-free source-audio simulator diversity design only.
+
+Create prospectively:
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_DESIGN_V1.md`
+- `docs/astra/SOURCE_DOMAIN_SIMULATOR_DIVERSITY_SPEC_V1.json`
+
+Requirements:
+- waveform/source generation before frozen CQT preprocessing;
+- fixed engineering/physical priors, not fit to exposed P1/P2 outcomes;
+- attack-envelope variability plus broader timbre/electrical/noise dimensions;
+- deterministic RNG and exact label preservation;
+- model-free admission diagnostics before optimizer work;
+- prospectively frozen held-out synthetic challenge families;
+- P1/P2 remain closed;
+- P3 remains sealed;
+- no model training, threshold changes, architecture change, launch marker, main or Production mutation yet.
+
+**Resume instruction:** Continue with the prospective source-audio simulator diversity design only. No P1/P2 rerun is needed or authorized by this checkpoint.
