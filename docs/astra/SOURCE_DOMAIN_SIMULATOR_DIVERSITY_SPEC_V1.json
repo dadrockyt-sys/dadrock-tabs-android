@@ -1,0 +1,221 @@
+{
+  "schema": "astra-source-domain-simulator-diversity-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-model-free-design-frozen-no-training",
+  "rootNamespace": "astra-source-domain-diversity-v1",
+  "control": {
+    "source": "frozen-s9-s11-procedural-path",
+    "examples": 294,
+    "families": [
+      "isolated",
+      "scales",
+      "chords",
+      "repeated",
+      "legato",
+      "palmmute",
+      "mixed"
+    ],
+    "clipSeconds": 2,
+    "sampleRateOutputHz": 22050
+  },
+  "intervention": {
+    "scope": "all-training-waveform-renders-only",
+    "validationTest": "bit-identical-control",
+    "rowCountChange": 0,
+    "labelChanges": false,
+    "frontendChange": false,
+    "parameters": {
+      "attackBaseRiseSeconds": {
+        "distribution": "log_uniform",
+        "min": 0.0015,
+        "max": 0.05
+      },
+      "attackPerNoteMultiplier": {
+        "distribution": "log_uniform",
+        "min": 0.75,
+        "max": 1.35,
+        "finalClip": [
+          0.001,
+          0.06
+        ]
+      },
+      "transientNoiseGain": {
+        "distribution": "uniform",
+        "min": 0,
+        "max": 0.2
+      },
+      "transientDecaySeconds": {
+        "distribution": "log_uniform",
+        "min": 0.003,
+        "max": 0.02
+      },
+      "dampingMultiplier": {
+        "distribution": "log_uniform",
+        "min": 0.6,
+        "max": 1.8
+      },
+      "brightness": {
+        "distribution": "uniform",
+        "min": 0.55,
+        "max": 0.92
+      },
+      "pickPosition": {
+        "distribution": "uniform",
+        "min": 0.08,
+        "max": 0.48
+      },
+      "perNoteDampingMultiplier": {
+        "distribution": "log_uniform",
+        "min": 0.85,
+        "max": 1.2
+      },
+      "lowpassCutoffHz": {
+        "distribution": "log_uniform",
+        "min": 2800,
+        "max": 12000
+      },
+      "spectralTiltApproxDbAcrossBand": {
+        "distribution": "uniform",
+        "min": -6,
+        "max": 6
+      },
+      "highpassCornerHz": {
+        "distribution": "uniform",
+        "min": 20,
+        "max": 80
+      },
+      "nonlinearActiveProbability": 0.5,
+      "nonlinearDrive": {
+        "distribution": "uniform",
+        "min": 1,
+        "max": 2.5
+      },
+      "nonlinearWet": {
+        "distribution": "uniform",
+        "min": 0,
+        "max": 0.3
+      },
+      "broadbandNoiseRmsRelative": {
+        "distribution": "log_uniform",
+        "min": 0.00001,
+        "max": 0.003
+      },
+      "humActiveProbability": 0.35,
+      "humFundamentalHz": {
+        "choices": [
+          50,
+          60
+        ],
+        "probabilities": [
+          0.5,
+          0.5
+        ]
+      },
+      "humCombinedRmsRelativeMax": 0.001,
+      "perNoteAmplitudeMultiplier": {
+        "distribution": "log_normal",
+        "logSigma": 0.18,
+        "clip": [
+          0.55,
+          1.6
+        ]
+      }
+    }
+  },
+  "challenge": {
+    "scope": "test-waveforms-only",
+    "trainValidation": "bit-identical-control",
+    "fixedProfile": {
+      "attackBaseRiseSeconds": 0.045,
+      "attackPerNoteMultipliers": [
+        0.9,
+        1.1
+      ],
+      "transientNoiseGain": 0.03,
+      "transientDecaySeconds": 0.012,
+      "dampingMultiplier": 1.45,
+      "brightness": 0.6,
+      "pickPosition": 0.42,
+      "lowpassCutoffHz": 3500,
+      "spectralTiltApproxDbAcrossBand": -4,
+      "highpassCornerHz": 45,
+      "nonlinearDrive": 1.8,
+      "nonlinearWet": 0.2,
+      "broadbandNoiseRmsRelative": 0.001,
+      "hum": false,
+      "perNoteAmplitudeMultipliers": [
+        0.7,
+        1,
+        1.3,
+        0.85
+      ]
+    }
+  },
+  "rng": {
+    "root": "SHA256(root|templateId|variant|source-domain-v1)",
+    "substreams": [
+      "attack",
+      "decay",
+      "brightness",
+      "pickup",
+      "nonlinear",
+      "noise",
+      "dynamics"
+    ],
+    "perNoteIncludesEventIndex": true,
+    "sharedWithSplitsLabelsSamplerOrModel": false
+  },
+  "modelFreeAdmission": {
+    "fixtures": [
+      "isolated",
+      "repeated",
+      "scales",
+      "chords",
+      "palmmute",
+      "legato",
+      "negative-only"
+    ],
+    "requirements": {
+      "deterministicHashes": true,
+      "labelsReferencesBitIdentical": true,
+      "finiteAudio": true,
+      "finalPeakLessThan": 0.999,
+      "noUnlabeledAttacks": true,
+      "stableSustainFundamentalToleranceCents": 15,
+      "minimumAttackRiseSpanRatio": 4,
+      "cqtEffectRequiredPerPositiveFixture": true,
+      "negativeFixtureUnlabeled": true,
+      "splitTemplateIdentityUnchanged": true
+    }
+  },
+  "ceilings": {
+    "modelLoads": 0,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "diagnosticFixtureRendersMax": 60,
+    "fullPreparationRenderedClipsMax": 900,
+    "fullPreparationAudioSecondsMax": 1800,
+    "persistedBytesMax": 524288000,
+    "wallMinutesMax": 45,
+    "cpuOnly": true,
+    "paidComputeDollars": 0,
+    "automaticRetry": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "futureModelBoundary": {
+    "trainingAuthorized": false,
+    "onlyAllowedFutureIntervention": "source-domain-training-data-package",
+    "simultaneousArchitectureChange": false,
+    "simultaneousFrontendChange": false,
+    "simultaneousLossChange": false,
+    "simultaneousSamplerChange": false,
+    "simultaneousDecoderChange": false,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    }
+  }
+}
