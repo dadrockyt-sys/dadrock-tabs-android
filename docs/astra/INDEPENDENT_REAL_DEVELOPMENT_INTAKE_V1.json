@@ -1,0 +1,39 @@
+{
+  "schema": "astra-independent-real-development-intake-v1",
+  "date": null,
+  "status": "template-awaiting-new-independent-real-development-clips",
+  "design": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.json",
+  "independence": {
+    "createdOrSourcedAfterDesignFreeze": false,
+    "noP1Overlap": false,
+    "noP2Overlap": false,
+    "noP3Overlap": false,
+    "noPreviouslyInspectedOrTunedAudio": false,
+    "declaration": null
+  },
+  "candidate": {
+    "name": null,
+    "weightsSha256": null,
+    "sourceCommit": null,
+    "modelSourcePath": null,
+    "frontendSourcePath": null,
+    "evaluatorSourcePath": null,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "clips": [],
+  "summary": {
+    "clipCount": 0,
+    "positiveClipCount": 0,
+    "negativeOnlyClipCount": 0,
+    "positiveAudioSeconds": 0,
+    "negativeAudioSeconds": 0,
+    "coverage": []
+  },
+  "annotationsFrozenBeforeInference": false,
+  "modelInferenceCount": 0,
+  "optimizerSteps": 0,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false
+}
