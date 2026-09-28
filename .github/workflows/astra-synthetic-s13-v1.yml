@@ -1,0 +1,39 @@
+name: Astra synthetic S13 positive-increment robustness V1
+
+# Intentionally fail-closed until a separately committed launch identity exists.
+# There is no workflow_dispatch trigger. Creating the future launch file is the
+# only push event that can admit the one bounded execution.
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/SYNTHETIC_S13_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-s13-v1-single-launch
+  cancel-in-progress: false
+
+jobs:
+  execute:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Fail closed on rerun attempt
+        run: test "${GITHUB_RUN_ATTEMPT}" = "1"
+      - name: Preparation placeholder
+        run: |
+          echo "S13 execution remains disabled pending final source/data pins and launch receipt."
+          exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-s13-v1-failure-receipt
+          path: /tmp/astra-s13-v1
+          if-no-files-found: warn
