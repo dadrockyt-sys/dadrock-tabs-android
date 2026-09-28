@@ -290,6 +290,15 @@ def summarize_capture(c):
             "rawPeakOffsetSeconds":sm(["rawTransientPeak","offsetSeconds"]),
             "cqtPeakOffsetSeconds":sm(["preparedCqtNoveltyPeak","offsetSeconds"])}
 
+REQUIRED_PIN_KEYS=(
+    "alignmentCorrectionsGitBlob","preprocessingGitBlob","p1PreparationGitBlob",
+    "p2PreparationGitBlob","eventAdapterGitBlob","realTrainingGitBlob","runtimeLockGitBlob",
+)
+
+def ensure_output_absent(path):
+    if Path(path).exists():
+        raise RuntimeError("refusing to overwrite an existing audit result")
+
 def validate_spec(spec):
     if spec.get("schema")!="astra-p2-attack-preparation-integrity-audit-spec-v1":
         raise RuntimeError("spec schema mismatch")
@@ -308,13 +317,17 @@ def validate_spec(spec):
         raise RuntimeError("threshold behavior changed")
     if ceiling.get("p3Opened") is not False:
         raise RuntimeError("P3 execution forbidden")
+    pins=spec.get("pins",{})
+    for k in REQUIRED_PIN_KEYS:
+        v=pins.get(k)
+        if not isinstance(v,str) or len(v)!=40 or any(ch not in "0123456789abcdef" for ch in v):
+            raise RuntimeError("missing or malformed frozen source pin: "+k)
     return True
 
 def run(args):
     spec=json.loads(Path(args.spec).read_text())
     validate_spec(spec)
-    if Path(args.out).exists():
-        raise RuntimeError("refusing to overwrite an existing audit result")
+    ensure_output_absent(args.out)
     p1=load_prepared(args.p1_dir,"P1",spec); p2=load_prepared(args.p2_dir,"P2",spec)
     caps=[]
     for performer,pop,root in (("P1",p1,args.p1_source_root),("P2",p2,args.p2_source_root)):
