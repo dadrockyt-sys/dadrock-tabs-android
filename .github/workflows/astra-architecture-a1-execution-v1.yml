@@ -1,0 +1,166 @@
+name: Astra Architecture A1 execution V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/ARCHITECTURE_RESEARCH_A1_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  a1:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Validate one-shot A1 launch
+        run: |
+          python - <<'PY'
+          import json,os
+          x=json.load(open('docs/astra/ARCHITECTURE_RESEARCH_A1_LAUNCH_V1.json'))
+          assert x['schema']=='astra-architecture-research-a1-launch-v1'
+          assert x['status']=='armed'
+          assert x['launchIdentity']=='architecture-a1-20260928-canonical-01'
+          assert x['maxModels']==3
+          assert x['stepsPerModel']==500
+          assert x['maxTotalOptimizerSteps']==1500
+          assert x['stateThreshold']==0.5 and x['onsetThreshold']==0.5
+          assert x['thresholdSearch'] is False and x['thresholdRetuning'] is False
+          assert x['automaticRetry'] is False
+          assert x['p1Access'] is False and x['p2Access'] is False and x['p3Access'] is False
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          print('A1_LAUNCH_OK')
+          PY
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+
+      - name: Download exact frozen control
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-a1-control
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+
+      - name: Download exact V2 intervention
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v2-stage-b-v1
+          path: /tmp/astra-a1-v2
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36485375684'
+
+      - name: Download exact V3 challenge
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v3-final-coverage-v2
+          path: /tmp/astra-a1-v3
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36487005586'
+
+      - name: Download exact frozen V3 comparator
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v3-synthetic-training-v1
+          path: /tmp/astra-a1-comparator
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36489648572'
+
+      - name: Verify exact inputs and source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTROL=/tmp/astra-a1-control/datasets/s9-control.npz
+          INTERVENTION=/tmp/astra-a1-v2/v2-intervention.npz
+          CHALLENGE=/tmp/astra-a1-v3/v3-primary-challenge.npz
+          COMPARATOR=/tmp/astra-a1-comparator/result.json
+          test "$(sha256sum "$CONTROL" | awk '{print $1}')" = "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+          test "$(sha256sum "$INTERVENTION" | awk '{print $1}')" = "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b"
+          test "$(sha256sum "$CHALLENGE" | awk '{print $1}')" = "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce"
+          test "$(sha256sum "$COMPARATOR" | awk '{print $1}')" = "5b5b9be61196d6e40abb2182f5dd0cff4b21f7c9fe927592324bc20df471f36d"
+          python - <<'PY'
+          import hashlib,pathlib
+          def blob(p):
+              b=pathlib.Path(p).read_bytes()
+              return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+          assert blob('astra_backend/synthetic/architecture_research_a1_v1.py')=='c88fab40cb550663d84423b3394a974ee90c9bd0'
+          assert blob('astra_backend/synthetic/s11_pilot_v1.py')=='d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8'
+          assert blob('docs/astra/ARCHITECTURE_RESEARCH_A1_DESIGN_V1.md')=='83735d26324757e16dc0b9c89b2749f1b960516d'
+          assert blob('docs/astra/ARCHITECTURE_RESEARCH_A1_SPEC_V1.json')=='9caa62d0a6d09e6e77b162a9ca08aa56924e38aa'
+          print('A1_EXECUTION_PINS_OK')
+          PY
+
+      - name: Re-run structural tests
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_architecture_research_a1_v1.py
+
+      - name: Re-verify frozen inputs and batch plans
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          python -m synthetic.architecture_research_a1_v1 verify \
+            --control /tmp/astra-a1-control/datasets/s9-control.npz \
+            --intervention /tmp/astra-a1-v2/v2-intervention.npz \
+            --challenge /tmp/astra-a1-v3/v3-primary-challenge.npz \
+            --comparator /tmp/astra-a1-comparator/result.json
+
+      - name: Run A1 exactly once
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-a1-result
+          python -m synthetic.architecture_research_a1_v1 run \
+            --control /tmp/astra-a1-control/datasets/s9-control.npz \
+            --intervention /tmp/astra-a1-v2/v2-intervention.npz \
+            --challenge /tmp/astra-a1-v3/v3-primary-challenge.npz \
+            --comparator /tmp/astra-a1-comparator/result.json \
+            --out /tmp/astra-a1-result/result.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/astra-a1-result/result.json'))
+          assert r['execution']['modelCount']==3
+          assert r['execution']['optimizerStepsTotal']==1500
+          assert r['fixed']['stateThreshold']==0.5 and r['fixed']['onsetThreshold']==0.5
+          assert r['fixed']['thresholdSearch'] is False and r['fixed']['thresholdRetuning'] is False
+          assert r['execution']['automaticRetry'] is False
+          assert r['execution']['p1Accessed'] is False and r['execution']['p2Accessed'] is False and r['execution']['p3Opened'] is False
+          print('A1_EXECUTION_COMPLETE')
+          print('A1_SCIENTIFIC_GATE='+str(r['gate']['gatePassed']))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-architecture-a1-result-v1
+          path: /tmp/astra-a1-result
+          if-no-files-found: warn
+          retention-days: 30
