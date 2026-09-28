@@ -1,15 +1,13 @@
 # Astra synthetic onset-envelope diversity S12 design V1
 
 Date: 2026-09-28
-Status: DESIGN FROZEN BEFORE MODEL EXECUTION
+Status: **DESIGN FROZEN BEFORE MODEL EXECUTION**
 
 ## Question
 
-With model architecture, labels, sampler, optimizer, thresholds, chord-voicing diversity, split membership and held-out baseline data fixed, does training-only onset-envelope randomization improve robustness to a prospectively defined soft-onset synthetic challenge without materially degrading ordinary synthetic competence?
+With model architecture, labels, sampler, optimizer, thresholds, chord-voicing diversity, split membership and ordinary held-out data fixed, does training-only **CQT onset-transition softening** improve robustness to a prospectively defined soft-onset synthetic feature challenge without materially degrading ordinary synthetic competence?
 
-This experiment follows the frozen P1/P2 integrity audit only at the level of a qualitative hypothesis: real-guitar note onsets can be softer and more variable than the original procedural generator. No P1/P2 numeric target, waveform, feature, threshold or capture is used to choose S12 generator parameters or to score S12.
-
-P1/P2/P3 are forbidden inputs.
+The frozen P1/P2 integrity audit motivates only the qualitative hypothesis that real note-onset contrast can be weaker and more variable. **No P1/P2 numeric target, waveform, feature, threshold or capture is used to choose S12 transformation parameters or to score S12.** P1/P2/P3 are forbidden inputs.
 
 ## Common starting dataset
 
@@ -19,35 +17,33 @@ Both arms begin from the frozen S9 diversified synthetic corpus:
 - validation/test arrays fixed;
 - no external audio.
 
-Regenerate the S0 control corpus and then deterministically build the frozen S9 30-voicing intervention corpus. That S9 corpus is the S12 control dataset.
+Regenerate the S0 corpus, then deterministically build the frozen S9 30-voicing corpus. That S9 corpus is the S12 control dataset.
 
 ## Intervention
 
-Only training features are re-rendered. State, onset, references, family, split and negative-structure arrays must remain bit-identical.
+Only **training feature arrays** are changed. State, onset, references, family, split and negative-structure arrays remain bit-identical.
 
-Use the same template/voicing, note timing/duration, timbre RNG key, damping, pick-position, brightness, body filter, phase and noise RNG draws.
+At every labeled onset frame, soften the CQT transition by blending that frame and the following frame toward the immediately preceding frame. For each training clip, draw one deterministic blend factor from a separate RNG:
+- blend factor uniform from **0.25 to 0.75**;
+- transformed frame = (1-blend) * original + blend * previous-frame value;
+- apply at onset frame and onset+1 only;
+- if multiple strings share the same onset frame, transform that feature frame only once;
+- never alter frame 0;
+- clip transformed CQT values to the original frozen range [0,1].
 
-Use a separate deterministic envelope RNG so timbre RNG consumption is unchanged.
+This changes only local onset contrast. It does not alter note identity, timing, sustain labels, voicings, or ordinary held-out examples.
 
-For each training clip with attacked notes, draw one clip-level profile:
-- attacked-note rise time: log-uniform from 2.5 ms to 35 ms;
-- transient burst amplitude: uniform from 0.02 to 0.16.
-
-These bounds are frozen engineering priors spanning crisp through soft note onsets. They were not fit to P1/P2 measurements.
-
-Legato/non-attacked note semantics stay unchanged. Palm-mute damping stays unchanged.
+The bounds are broad frozen engineering priors and are not fit to P1/P2 values.
 
 ## Synthetic soft-onset challenge
 
 Create a third dataset used for evaluation only.
 
-It is identical to the S12 control dataset except test features are re-rendered with one fixed soft-onset profile:
-- attacked-note rise time 30 ms;
-- transient burst amplitude 0.03.
+It is identical to the control dataset except **test feature arrays** receive the same transformation with a fixed blend factor **0.70** at every labeled onset frame and onset+1.
 
-All test labels/references remain bit-identical. Training and validation arrays in the challenge copy are irrelevant and must not be used for optimization or model selection.
+All labels/references are bit-identical. Training and validation arrays in the challenge copy are untouched.
 
-The challenge profile is fixed prospectively and is not a numerical match to any real P1/P2 metric.
+The challenge factor is fixed prospectively and is not matched to any P1/P2 statistic.
 
 ## Model/training
 
@@ -67,18 +63,13 @@ Use exactly the frozen S11/S9 model and regimen:
 - state/onset thresholds 0.50 / 0.50;
 - zero threshold search/retuning.
 
-Use exactly three paired seeds:
-- 20260927
-- 20260928
-- 20260929
+Use exactly three paired seeds: 20260927, 20260928, 20260929.
 
-Within each seed, control/intervention initialization and minibatch indices are identical. Labels are identical. Only training features differ.
-
-Exactly 6 models total / 3,000 optimizer steps.
+Within each seed, control/intervention initialization and minibatch indices are identical. Labels are identical. Exactly 6 models / 3,000 total optimizer steps.
 
 ## Required measurements
 
-For each seed, evaluate both arms on:
+For each seed evaluate both arms on:
 1. ordinary frozen synthetic test set;
 2. frozen soft-onset challenge test set.
 
@@ -99,24 +90,24 @@ All must pass:
 10. no ordinary-test non-chord family loses > 0.15 F1 in more than one seed;
 11. all six models complete exactly 500 steps with finite metrics, paired initialization/batches, fixed thresholds and no threshold search.
 
-The gate tests robustness to a prospectively frozen synthetic domain shift. It does not establish real-guitar transfer.
+Passing is synthetic robustness evidence only, not real-transfer evidence.
 
 ## Decision branches
 
-- Gate passes: onset-envelope diversity is supported as a synthetic robustness intervention. Freeze and stop. Any later real transfer test requires a separate design and fresh P1/P2 authorization.
-- Challenge improves but ordinary synthetic competence regresses: reject the intervention as unstable.
-- No robust challenge gain: reject onset-envelope randomization under this fixed model/training regime.
-- Any identity/runtime failure: freeze and stop; no automatic retry.
+- Gate passes: CQT onset-transition diversity is supported as a synthetic robustness intervention. Freeze and stop.
+- Challenge improves but ordinary competence regresses: reject as unstable.
+- No robust challenge gain: reject this fixed intervention.
+- Identity/runtime failure: freeze and stop; no automatic retry.
+
+Any later P1/P2 transfer test requires a separate design and fresh authorization. P3 remains sealed.
 
 ## Hard execution ceiling
 
 - no P1/P2/P3 access;
 - no external audio;
-- exactly 6 models;
-- exactly 3,000 total optimizer steps;
+- exactly 6 models / 3,000 optimizer steps;
 - CPU-only GitHub Actions;
 - <=90 fit/eval CPU minutes;
-- <=20 render CPU minutes;
 - $0 paid compute;
 - automatic model retries 0;
 - threshold tuning 0;
@@ -126,4 +117,4 @@ The gate tests robustness to a prospectively frozen synthetic domain shift. It d
 
 ## Authorization
 
-The user explicitly authorized continuation on 2026-09-28. This authorization is scoped to one S12 synthetic-only model execution under the frozen design above. It does not authorize P1/P2/P3 access.
+The user explicitly authorized continuation on 2026-09-28. This authorization is scoped to one S12 synthetic-only model execution under this frozen design. It does not authorize P1/P2/P3 access.
