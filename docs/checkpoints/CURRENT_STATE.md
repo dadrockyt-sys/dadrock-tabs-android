@@ -4,65 +4,78 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S9 FIRST LAUNCH FAILED BEFORE MODEL FIT; 0 OPTIMIZER STEPS; RUNNER IMPORT FIXED OFFLINE; FRESH MODEL AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
+Status: **S9 COMPLETE — STRONG 14/16 NEAR-PASS; CHORD DIVERSITY SUPPORTED BUT STATE GATE MISSED; S10 IDENTITY-PRESERVING STATE-WIDTH DESIGN FROZEN — MODEL EXECUTION NOT AUTHORIZED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
 Routine GitHub-only code/tests/docs/metadata work is pre-authorized. Explicit approval is required for model execution, Codespaces, and potentially billable Vercel operations.
 
-## S9 pre-model failure
+## Canonical corrected S9 execution
 
-Authorized launch:
-- run **36378668073**
-- job **108789638589**
-- launch head `4c2de01679866745cfba54e787262c92b5c2c217`
-- workflow conclusion **FAILURE**
-- authorization/source-pin guard: passed
-- focused S9 tests: **4/4 passed**
-- control dataset generation: passed
-- paired intervention dataset generation: passed
-- validation/test bit identity: passed
-- non-chord bit identity: passed
-- sampler-strata identity: passed
-- 10 control vs 30 intervention unique training chord voicings confirmed
-- paired timbre counts: 10/10/10
-- model fitting: **not started**
-- optimizer steps: **0**
-- artifact: none
-- P1/P2/P3: untouched
-- Codespaces/Vercel: unused
+- run **36379258174**
+- job **108791402806**
+- launch head `4e6f92c9cb4f2dc56bc9b983ed33c8e97c3f5810`
+- workflow **SUCCESS**
+- artifact **10952098012**
+- artifact digest `sha256:30b4596731c0445e6c38e046c4e628f75dbd55562a97901966746b2e99d7b596`
+- focused tests **5/5 passed**
+- 2 x 294-clip synthetic datasets / 588 s each
+- optimizer 500 + 500
+- no threshold search/retry/P1/P2/P3/Codespaces/Vercel
 
-Failure:
-`NameError: name 'context5' is not defined`
+Frozen result:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S9_RESULT_V1.json`
 
-The error occurred in the pre-update identity check before either `fit_arm` call.
+The earlier S9 launch failure had 0 optimizer steps and no scientific result.
 
-Frozen failure receipt:
-- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S9_PREMODEL_FAILURE_V1.json`
+## S9 scientific result
 
-## Offline correction
+10-voicing control -> 30-voicing intervention:
+- chord F1 **0.4906 -> 0.6769**
+- chord recall **0.3611 -> 0.6111**
+- onset recall **0.6047 -> 0.7364**
+- onset F1 **0.7123 -> 0.7917**
+- precision **0.8667 -> 0.8559**
+- repeated recall **0.5238 -> 0.6429**
+- onset+offset F1 **0.6079 -> 0.6265**
+- joint admission **0.3256 -> 0.3953**
+- state admission **0.3798 -> 0.4109**
 
-Runner-only correction:
-- import `context5` from the frozen S0 module;
-- add a focused regression test asserting S9 can call `context5` and obtains shape `(1,87,960)`.
+S9 passed **14 / 16** criteria but remains a formal **FAIL**.
 
-S9 scientific design is unchanged:
-- control 10 unique chord voicings x 3 timbres;
-- intervention 30 unique voicings with the same paired control timbre RNG keys;
-- validation/test and non-chord data bit-identical;
-- S6 nonlinear replacement state head;
-- identical batch indices;
-- state weight 9, onset pos_weight 8;
-- fixed thresholds 0.50/0.50;
-- 500 steps/model;
-- zero automatic retries.
+Only failures:
+- state-admission gain **+0.0310 < +0.05**
+- absolute state admission **0.4109 < 0.42**
+
+Chord voicing diversity is strongly supported development evidence, but P1/P2 remain sealed.
+
+## Offline S9 review
+
+Preserve the successful 30-voicing dataset.
+
+Analysis:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S9_RESULT_ANALYSIS_V1.md`
+
+## Frozen S10 design
+
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S10_DESIGN_V1.md`
+
+S10 changes only state-head hidden width:
+1. control = 128 hidden units;
+2. intervention = 192 hidden units.
+
+Identity-preserving widening:
+- first 128 units and their output weights copy control exactly;
+- extra 64 hidden units deterministic;
+- extra 64 output columns initialize zero;
+- pre-update state and onset logits must be bit-identical.
+
+Both arms use the same S9 30-voicing dataset, identical batches, state weight 9, onset weight 8, fixed thresholds and 500 steps/model.
 
 ## Exact next step
 
-**Do not relaunch S9 automatically.**
+**Do not execute S10 yet.**
 
-The prior single-launch model authorization has been consumed by the fail-closed attempt.
+Fresh explicit model authorization is required.
 
-Fresh explicit authorization is required before the corrected S9 model workflow may launch.
-
-No P1/P2/P3, Codespaces, Vercel, deployment, main mutation, threshold rescue, or extra optimizer steps.
+No P1/P2/P3, Codespaces, Vercel, threshold rescue, deployment or main mutation.

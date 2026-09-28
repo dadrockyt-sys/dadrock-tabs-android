@@ -1,16 +1,21 @@
 # Next chat: start here
 
-S9 has not produced a scientific result yet.
+Corrected S9 completed and is the strongest current controlled synthetic result.
 
-First authorized S9 launch:
-- run 36378668073 / job 108789638589
-- datasets and identity checks passed
-- failure: missing `context5` import in the pre-update identity path
-- model fitting never started
-- optimizer steps 0
-- no artifact
-- P1/P2/P3 untouched
+30 unique chord voicings versus 10:
+- chord F1 +0.1864
+- chord recall +0.2500
+- overall recall +0.1318
+- overall F1 +0.0793
+- joint admission +0.0698
+- state admission +0.0310 to 0.4109
 
-The runner import is corrected offline and a regression test was added. S9 design itself is unchanged.
+S9 passed 14/16 frozen criteria. It is still a formal fail because state admission missed the +0.05 gain and 0.42 absolute floors.
 
-Because the launch was single-attempt/no-retry, **fresh explicit model authorization is required before relaunching corrected S9**.
+S10 is frozen around one final bounded state-capacity question while preserving the successful diversified dataset:
+- control nonlinear state hidden width 128;
+- intervention width 192;
+- widening is identity-preserving with extra output columns zero-initialized;
+- pre-update state/onset logits must match exactly.
+
+S10 model execution requires fresh explicit authorization.

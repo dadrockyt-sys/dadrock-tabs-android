@@ -1,0 +1,119 @@
+{
+  "schema": "astra-synthetic-data-diversity-s9-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_gate_but_strong_support_for_chord_voicing_diversity",
+  "run": {
+    "runId": 36379258174,
+    "jobId": 108791402806,
+    "headSha": "4e6f92c9cb4f2dc56bc9b983ed33c8e97c3f5810",
+    "conclusion": "success"
+  },
+  "priorPreModelAttempt": {
+    "runId": 36378668073,
+    "jobId": 108789638589,
+    "optimizerSteps": 0,
+    "scientificResult": false
+  },
+  "artifact": {
+    "artifactId": 10952098012,
+    "name": "astra-synthetic-data-diversity-s9-v1",
+    "digest": "sha256:30b4596731c0445e6c38e046c4e628f75dbd55562a97901966746b2e99d7b596",
+    "expiresAt": "2026-10-28T04:50:19Z",
+    "files": {
+      "control-render-receipt.json": "569f7734569ec8d3eac9b42496b4290ff963125885ecac8e100cf36a621c832a",
+      "control.pt": "d7b4d3a77e2dcd7c107285dc65c48c1e9a89c07f1ffc49a6946dd54d5a6c741e",
+      "identity.json": "cc6f76c0060c33b8218ba795416107bcab3b20f14200b51dbe3468d9b568a3f5",
+      "intervention-receipt.json": "0a886a621e235d112e038ed8a24f0b24b0fcaec1a5b641a1030a0047da6c5981",
+      "intervention.pt": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036",
+      "result.json": "b71c4e99b164713466318a176b7d958096194433cbeaa7b7439df3432786fe79"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 5,
+    "focusedTestsTotal": 5,
+    "datasets": 2,
+    "examplesPerDataset": 294,
+    "audioSecondsPerDataset": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 6.792734097999983,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "controlUniqueTrainChordVoicings": 10,
+    "interventionUniqueTrainChordVoicings": 30,
+    "pairedTimbreVariantCounts": {
+      "0": 10,
+      "1": 10,
+      "2": 10
+    },
+    "validationTestBitIdentical": true,
+    "nonChordBitIdentical": true,
+    "batchIndicesIdentical": true,
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "preUpdateModelInitializationIdentical": true,
+    "preUpdateStateLogitsIdentical": true,
+    "preUpdateOnsetLogitsIdentical": true,
+    "controlSignatureSha256": "099ded262a7b47c1cd60b3327b75287d729d8594dcfd772316413b353dc9397e",
+    "interventionSignatureSha256": "de7a34d3dc51afa5ef5adc9105fe8796b00724ac5fceac61ab8083ea34dbda1d"
+  },
+  "control10Voicings": {
+    "onsetPrecision": 0.8666666666666667,
+    "onsetRecall": 0.6046511627906976,
+    "onsetF1": 0.7123287671232877,
+    "onsetOffsetF1": 0.6079295154185023,
+    "repeatedRecall": 0.5238095238095238,
+    "onsetAdmission": 0.5426356589147286,
+    "stateAdmission": 0.3798449612403101,
+    "jointAdmission": 0.32558139534883723,
+    "chordPrecision": 0.7647058823529411,
+    "chordRecall": 0.3611111111111111,
+    "chordF1": 0.490566037735849,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "intervention30Voicings": {
+    "onsetPrecision": 0.8558558558558559,
+    "onsetRecall": 0.7364341085271318,
+    "onsetF1": 0.7916666666666666,
+    "onsetOffsetF1": 0.6265060240963854,
+    "repeatedRecall": 0.6428571428571429,
+    "onsetAdmission": 0.6201550387596899,
+    "stateAdmission": 0.4108527131782946,
+    "jointAdmission": 0.3953488372093023,
+    "chordPrecision": 0.7586206896551724,
+    "chordRecall": 0.6111111111111112,
+    "chordF1": 0.676923076923077,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "comparison": {
+    "chordOnsetF1Gain": 0.18635703918722796,
+    "chordRecallGain": 0.25000000000000006,
+    "stateAdmissionGain": 0.031007751937984496,
+    "jointAdmissionGain": 0.06976744186046507,
+    "onsetRecallGain": 0.13178294573643412,
+    "onsetF1Gain": 0.07933789954337889,
+    "onsetOffsetF1Gain": 0.018576508677883186
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 14,
+    "totalCount": 16,
+    "failed": [
+      "stateAdmissionGainAtLeast0_05",
+      "absoluteStateAdmissionAtLeast0_42"
+    ]
+  },
+  "interpretation": {
+    "supported": "Increasing unique training chord voicings from 10 to 30, with clip count/timbre exposure/heldout data/model/batches fixed, materially improved chord generalization, joint admission and event metrics.",
+    "insufficient": "Exact state admission improved only +0.0310 to 0.4109, missing both frozen state-admission criteria.",
+    "decision": "Treat chord voicing diversity as strongly supported development evidence but not a gate pass. Preserve the diversified dataset for the next bounded state-representation test; do not open P1/P2."
+  }
+}
