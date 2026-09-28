@@ -1,0 +1,89 @@
+{
+  "schema": "astra-source-domain-simulator-training-run-scope-v1",
+  "status": "frozen-offline-verification-only-training-disabled",
+  "branch": "astra-work",
+  "designGitBlob": "6dfcd87440da01605ea7c3c1dc45fa0cd708a1e6",
+  "specGitBlob": "723dc5f675b4c30f5d9fb76a619a623ab2732802",
+  "historyGitBlob": "3ba6172702c7e7164bf76ec06205bbdb477f3812",
+  "sourcePaths": {
+    "runner": "astra_backend/synthetic/source_domain_simulator_training_v1.py",
+    "tests": "astra_backend/synthetic/test_source_domain_simulator_training_v1.py",
+    "s11": "astra_backend/synthetic/s11_pilot_v1.py",
+    "s0": "astra_backend/synthetic/s0_pilot_v1.py",
+    "s1": "astra_backend/synthetic/s1_pilot_v1.py",
+    "s2": "astra_backend/synthetic/s2_pilot_v1.py",
+    "s3": "astra_backend/synthetic/s3_pilot_v1.py",
+    "preprocessing": "astra_backend/tabcnn_runtime/preprocessing.py",
+    "decoder": "astra_backend/evaluation/event_decoder_v2.py",
+    "metrics": "astra_backend/evaluation/evaluation_protocol_v2.py",
+    "requirementsLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "executionWorkflow": ".github/workflows/astra-source-domain-training-execution-v1.yml",
+    "offlineVerificationWorkflow": ".github/workflows/astra-source-domain-training-offline-verification-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "runner": "3c9e92d6386707369ef071b60cd9d5d5d5b8558d",
+    "tests": "c816b727299d069e5cedba4807d658da57a6451b",
+    "s11": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "s0": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s2": "e07d52099ed624ba5d996368f5e0d21735e67642",
+    "s3": "599293154e1525d5517fb889ceaf8340d55ee178",
+    "preprocessing": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "decoder": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "metrics": "0541c3adf2ebfe78137e7c44719f619171f6eaa7",
+    "requirementsLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "executionWorkflow": "9f77dc973f2735b8228228147a6eaef41c3ffcf6",
+    "offlineVerificationWorkflow": "7fbd46b988cbeeee57514ea5dcf63146a32b5690"
+  },
+  "preparation": {
+    "workflowRun": 36475263654,
+    "job": 109107267996,
+    "artifact": 10993531230,
+    "artifactName": "astra-source-domain-simulator-preparation-v1",
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953",
+    "featureHashes": {
+      "control": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+      "intervention": "a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a",
+      "challenge": "c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640"
+    },
+    "fileSha256": {
+      "control": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+      "intervention": "b46fa80121c43705708bfe786715456be535f6e39d31835b2fa611629024e94e",
+      "challenge": "0d40ab89291f4c19cf44bddb3c1c2adb4926ce3363eeb67f45770940ae03a010"
+    }
+  },
+  "execution": {
+    "maxModels": 6,
+    "maxOptimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "maxFitEvalSeconds": 5400,
+    "cpuOnly": true,
+    "paidComputeDollars": 0,
+    "automaticRetry": false,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "launchControls": {
+    "exactBranch": "astra-work",
+    "requiredRunAttempt": 1,
+    "existingOutputPolicy": "refuse",
+    "reusableLaunchIdentity": false,
+    "durableExecutionHistory": "docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_EXECUTION_HISTORY_V1.json",
+    "launchMarkerPresent": false
+  },
+  "verification": {
+    "modelRun": false,
+    "optimizerSteps": 0,
+    "required": "focused no-optimizer tests plus exact frozen artifact/source/data identity verification"
+  },
+  "trainingAuthorized": false
+}
