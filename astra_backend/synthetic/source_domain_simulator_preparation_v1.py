@@ -196,6 +196,17 @@ def prepare_only(out_dir):
     receipt=build_source_domain_datasets(
         control,intervention,challenge,out/"source-domain-dataset-receipt.json"
     )
+    # Full preparation includes 294 frozen S0 renders, 30 S9 chord replacement
+    # renders, plus the source-domain train/test renders counted above.
+    full_rendered_clips=294+30+int(receipt["renderedClips"])
+    full_audio_seconds=full_rendered_clips*CLIP_SECONDS
+    if full_rendered_clips>MAX_RENDERED_CLIPS or full_audio_seconds>MAX_AUDIO_SECONDS:
+        raise RuntimeError("full preparation render/audio ceiling exceeded")
+    receipt["fullPreparationRenderedClips"]=int(full_rendered_clips)
+    receipt["fullPreparationAudioSeconds"]=float(full_audio_seconds)
+    Path(out/"source-domain-dataset-receipt.json").write_text(
+        json.dumps(receipt,indent=2,sort_keys=True)+"\\n"
+    )
     # S0 is an intermediate input, not part of the frozen three-arm package.
     s0.unlink()
     summary={
