@@ -67,7 +67,7 @@
       "archiveMd5": "be9ef8bbdceb1912d565254e607a6d94",
       "archiveSha256": "de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326",
       "lagMs": -19,
-      "featureSha256": "6af1fac638fbcf1ab007d9ec717c004dbd10e9963abf18601d49bdb65013b263",
+      "featureSha256": "278363f1b1129baeadb65dabdfb8353ebbbba23d9aefff188f88e43d73c15a91",
       "targetSha256": "561ed7e9b6bd54742de973c4f33d8b84cbb6dd02215843daa44b048307d7d8d3"
     },
     {
@@ -78,7 +78,7 @@
       "archiveMd5": "9c0b98e8fb42a522df727ea8bf545e4f",
       "archiveSha256": "79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509",
       "lagMs": -24,
-      "featureSha256": "0362bb1684632ecf7a1da2049d61c9080b7885b83e0f5add6eebef6d5c4f9b6e",
+      "featureSha256": "e34e9dd87e8be0f65c7758c1f64505656efaf16f4db00aaff4821da52f33615a",
       "targetSha256": "b1f3bb14b9f69cf119e86095bf05dbf8c5c820bf8a24f2e2017d963c7f88a41b"
     },
     {
@@ -89,7 +89,7 @@
       "archiveMd5": "ca0c4674dde3805574685a313f7c39eb",
       "archiveSha256": "130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4",
       "lagMs": -24,
-      "featureSha256": "164db60823e00e9efab9c86154ef2c9df75fe464431fdd0b6cec86d809c9f806",
+      "featureSha256": "083c87bfc280f7d97b2f763cff214b4d0efbe607a43451882b1ddee9327c4328",
       "targetSha256": "d8accc5ffaa70514d336c2d154ad0cb1360015b28d6f9118ea16a38fb0b9ccd7"
     },
     {
@@ -100,7 +100,7 @@
       "archiveMd5": "18634a41a6db5a8de10d07eb3122a872",
       "archiveSha256": "1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e",
       "lagMs": -24,
-      "featureSha256": "90400c99f792c60a79f8ddbdb8176d6d4aa7e6a32e689647deaefe1d9359ffc9",
+      "featureSha256": "bb71d75b85c2db3871390e8a340f9fefccdbfcdddb2343077565b5f59df98e25",
       "targetSha256": "4bc74be8b0e1b84b0a4b7b9c6adf7baea1c79e3e5cdcc7e83606dc52fcb210f2"
     },
     {
@@ -111,7 +111,7 @@
       "archiveMd5": "eb6f74dd19162237189281688ad7ad2e",
       "archiveSha256": "9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce",
       "lagMs": 47,
-      "featureSha256": "216168bd91e12e18a84c6697a533bc51af72cd12b93e007903126d3b2d7ad417",
+      "featureSha256": "882530529381d7d0268a8a91f7fbe727f27ae2b1ca7a44ddde89fdba8ed510ab",
       "targetSha256": "3508bac1a566a1104233c66d583f01eaa089e0eb398de3d65eff436d656f0c75"
     },
     {
@@ -122,7 +122,7 @@
       "archiveMd5": "96664853872f51e5f8aa4447313b7cf5",
       "archiveSha256": "d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17",
       "lagMs": -15,
-      "featureSha256": "f5ed92957e36d22867bb4b3cb83b30ab4440d7a334a772cde52f8e7d6eb0520f",
+      "featureSha256": "b5b3f7f049a2c2354d9333ed861f3f1b71f54e0a2d0dbf626d7df0a450c86f6a",
       "targetSha256": "9a9507b60765c9bb2d3d21bb6775a7a4be065b9046ae0aead182e4a1cbd650e9"
     },
     {
@@ -133,7 +133,7 @@
       "archiveMd5": "40fbf03d8b04bb2cf42df20f36dc2254",
       "archiveSha256": "d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9",
       "lagMs": -16,
-      "featureSha256": "926aa76b85012763aff14e72d3b668b78f7aae480b3e93a9901fe14d6abd3857",
+      "featureSha256": "bad44048c953b4438bf2a7d2a2c168227af60933b24bad814df0d0dccb4cb27b",
       "targetSha256": "e2eb414127cb87b2d09d99097a4e1df0895e3544a36ef9dbe7326a3d2ddf0d2b"
     },
     {
@@ -144,7 +144,7 @@
       "archiveMd5": "f4189251ce50be25f06a173b2c2bba00",
       "archiveSha256": "05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816",
       "lagMs": -17,
-      "featureSha256": "5d068ff2f61c9b36c822b75cc89f9677d9f4be68f44887059475494774a75ce4",
+      "featureSha256": "6576417076b4767e02ad0240708ee45663792ce5cadd23340a00340b8416332e",
       "targetSha256": "1c8d216a844b9a2f4be54c57cf7ec6e65bdfd6e5a26fe03d109471d89d283be5"
     }
   ],
@@ -219,5 +219,18 @@
     "priorFrozenResultMutated": false,
     "change": "Synthetic descriptive start timestamps now use frozen HOP_LENGTH_SAMPLES/SAMPLE_RATE_HZ (512/22050) rather than 256/22050.",
     "causalClaim": "none; frozen frame-index diagnostics and prior results remain historical and unchanged"
+  },
+  "repairHistory": {
+    "preparedFeatureHashCorrection": {
+      "date": "2026-09-28",
+      "sourceRunId": 36399552501,
+      "sourceJobId": 108853905409,
+      "outcome": "authorized_run_failed_before_measurement_due_to_prepared_crop_identity_mismatch",
+      "correction": "Replace the eight predeclared prepared feature SHA256 values with the exact deterministic hashes emitted by the frozen P1/P2 preparation steps in the authorized run logs.",
+      "targetHashesChanged": false,
+      "modelOrThresholdChanges": false,
+      "p3Access": false,
+      "note": "The failed run completed exact-source acquisition/preparation once, then stopped before audit measurement. No result artifact was produced and no automatic retry was performed."
+    }
   }
 }
