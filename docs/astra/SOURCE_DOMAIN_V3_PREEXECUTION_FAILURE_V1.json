@@ -1,0 +1,40 @@
+{
+  "schema": "astra-source-domain-v3-preexecution-failure-v1",
+  "date": "2026-09-28",
+  "status": "preexecution-runtime-api-compatibility-failure",
+  "workflow": {
+    "run": 36486715250,
+    "job": 109145280159,
+    "head": "64163e074bb515d08689e9f834dbe14368a0be1f",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "frozenInputsValidated": true,
+  "focusedTests": {
+    "passed": 2,
+    "failed": 2
+  },
+  "failure": {
+    "type": "numpy-api-compatibility",
+    "numpyVersion": "1.21.6",
+    "expression": "np.quantile(..., method='linear')",
+    "error": "TypeError: _quantile_dispatcher() got an unexpected keyword argument 'method'",
+    "scientificRule": "linear quantile interpolation",
+    "scientificRuleChanged": false,
+    "correctedApi": "np.quantile(..., interpolation='linear')"
+  },
+  "execution": {
+    "v3WaveformRenders": 0,
+    "audioSeconds": 0,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "automaticRetry": false,
+    "productionMutation": false
+  },
+  "scientificOutcome": "not_measured",
+  "decision": "one separately versioned corrected execution is justified because no waveform/coverage result was observed and linear interpolation remains unchanged"
+}
