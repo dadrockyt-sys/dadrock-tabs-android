@@ -1,10 +1,14 @@
 import unittest
+import tempfile
+from pathlib import Path
+import copy
+import json
 import numpy as np
 
 from evaluation.p2_attack_preparation_integrity_audit_v1 import (
     attack_metrics, cqt_novelty, crop_coordinate, group_simultaneous_events,
     local_peaks, mean_mix, nearest_cqt_peak, qualified_nearest_peak,
-    seconds_to_index, stft_positive_flux,
+    seconds_to_index, stft_positive_flux, validate_spec, ensure_output_absent,
 )
 
 SPEC={
@@ -79,6 +83,50 @@ class AuditTests(unittest.TestCase):
 
     def test_local_peak_tie_rule_candidate_set(self):
         self.assertEqual(local_peaks(np.array([0.,2.,2.,0.])).tolist(),[1])
+
+    def _valid_spec(self):
+        return {
+          "schema":"astra-p2-attack-preparation-integrity-audit-spec-v1",
+          "captures":[
+            *[{"captureKey":f"P1|x|{i}|directinput","performer":"P1"} for i in range(4)],
+            *[{"captureKey":f"P2|x|{i}|directinput","performer":"P2"} for i in range(4)],
+          ],
+          "executionCeiling":{"optimizerSteps":0,"modelsLoaded":0,"modelInference":False,
+                              "thresholdSearch":False,"thresholdRetuning":False,"p3Opened":False},
+          "pins":{
+            "alignmentCorrectionsGitBlob":"0"*40,"preprocessingGitBlob":"1"*40,
+            "p1PreparationGitBlob":"2"*40,"p2PreparationGitBlob":"3"*40,
+            "eventAdapterGitBlob":"4"*40,"realTrainingGitBlob":"5"*40,
+            "runtimeLockGitBlob":"6"*40,
+          }
+        }
+
+    def test_spec_rejects_duplicate_missing_extra_and_p3(self):
+        s=self._valid_spec()
+        self.assertTrue(validate_spec(s))
+        dup=copy.deepcopy(s); dup["captures"][7]=copy.deepcopy(dup["captures"][0])
+        with self.assertRaises(RuntimeError): validate_spec(dup)
+        missing=copy.deepcopy(s); missing["captures"]=missing["captures"][:-1]
+        with self.assertRaises(RuntimeError): validate_spec(missing)
+        extra=copy.deepcopy(s); extra["captures"].append({"captureKey":"P2|x|extra|directinput","performer":"P2"})
+        with self.assertRaises(RuntimeError): validate_spec(extra)
+        p3=copy.deepcopy(s); p3["captures"][7]={"captureKey":"P3|x|0|directinput","performer":"P2"}
+        with self.assertRaises(RuntimeError): validate_spec(p3)
+
+    def test_spec_rejects_changed_execution_and_missing_pin(self):
+        s=self._valid_spec()
+        bad=copy.deepcopy(s); bad["executionCeiling"]["modelsLoaded"]=1
+        with self.assertRaises(RuntimeError): validate_spec(bad)
+        bad=copy.deepcopy(s); bad["executionCeiling"]["optimizerSteps"]=1
+        with self.assertRaises(RuntimeError): validate_spec(bad)
+        bad=copy.deepcopy(s); bad["pins"].pop("preprocessingGitBlob")
+        with self.assertRaises(RuntimeError): validate_spec(bad)
+
+    def test_existing_result_is_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as td:
+            p=Path(td)/"result.json"; p.write_text("{}")
+            with self.assertRaises(RuntimeError): ensure_output_absent(p)
+            ensure_output_absent(Path(td)/"new.json")
 
 if __name__=="__main__":
     unittest.main()
