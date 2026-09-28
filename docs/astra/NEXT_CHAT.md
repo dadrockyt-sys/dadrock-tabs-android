@@ -1,17 +1,19 @@
 # Next chat: start here
 
-S4 has still not executed a model.
+S4 completed and failed its frozen scientific gate.
 
-Second launch:
-- run 36374389465 / job 108777122117
-- stopped at authorization guard
-- runtime install/model tests/render/training never started
-- optimizer steps 0
-- no artifact
-- P1/P2/P3 untouched
+Control vs detached onset-gradient:
+- state/joint admission: 0.3411 vs 0.3411
+- onset precision: 0.8764 vs 0.4828
+- onset recall: 0.6047 vs 0.6512
+- onset F1: 0.7156 vs 0.5545
+- repeated recall: 0.5476 vs 0.6905
+- onset+offset F1: 0.5351 vs 0.3323
 
-Cause: workflow expected the exact string "I authorize" while the fresh receipt stored "I authorize please continue 🙏".
+Gradient isolation was verified exactly before optimization. Full onset-gradient detachment is rejected as the primary remedy.
 
-The guard is fixed offline to accept explicit authorization strings beginning with "I authorize". Runner/design unchanged.
+Standing policy:
+- routine non-model GitHub work is pre-authorized;
+- model execution, Codespaces, and potentially billable Vercel work require explicit authorization.
 
-Because the model launch is single-attempt/no-retry, fresh explicit model authorization is required before another launch.
+Next task: offline review/design only.

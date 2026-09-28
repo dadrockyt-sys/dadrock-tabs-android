@@ -1,0 +1,86 @@
+{
+  "schema": "astra-synthetic-data-diversity-s4-frozen-result-v1",
+  "date": "2026-09-27",
+  "run": {
+    "runId": 36374576717,
+    "jobId": 108777670719,
+    "headSha": "66bd45674bff2b23a75b97338d64f1d7a8b52982",
+    "workflowConclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10949743734,
+    "digest": "sha256:3285576d3c58c150aa99d58bc40c7e0a7318f3d40dcb359bcf8c0ccdcf3ecc47",
+    "expiresAt": "2026-10-28T03:41:01Z",
+    "files": {
+      "control.pt": "619e1cdd89182987d830a47fa1265f4681730638dd3a6a34b395760f375f7093",
+      "detached.pt": "3fcfdb756167684b227cd2d15d8e6af4bd37c56447aef5230cedd6be4c863145",
+      "identity.json": "9eb3153f9bc3019d6f6d4611474530501275c52f285d77de42ed2cb5df6630fd",
+      "render-receipt.json": "a90d75609fe60c5a550eb1d941c2e008712f25ab491bb08260d96da2486ae166",
+      "result.json": "8ce80fe63e9d022f00d0c1136e34406fc0a276e9deef2a2131eccbe198050059"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 3,
+    "focusedTestsTotal": 3,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 5.259466142999997,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "initialModelSha256": "58b399bffdb0b09a0b49dcfe72bde6650c183990ab69c556ca85f94aa050fc43",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "preUpdateForwardLogitsIdentical": true
+  },
+  "gradientContract": {
+    "controlOnsetEncoderGrad": 0.3063158501000465,
+    "detachedOnsetEncoderGrad": 0,
+    "controlOnsetHeadGrad": 0.13892935301673884,
+    "detachedOnsetHeadGrad": 0.13892935301673884,
+    "controlStateEncoderGrad": 0.628591628706968,
+    "detachedStateEncoderGrad": 0.628591628706968
+  },
+  "control": {
+    "precision": 0.8764044943820225,
+    "recall": 0.6046511627906976,
+    "f1": 0.7155963302752294,
+    "onsetOffsetF1": 0.5350877192982456,
+    "repeatedRecall": 0.5476190476190477,
+    "onsetAdmission": 0.627906976744186,
+    "stateAdmission": 0.34108527131782945,
+    "jointAdmission": 0.34108527131782945
+  },
+  "detached": {
+    "precision": 0.4827586206896552,
+    "recall": 0.6511627906976745,
+    "f1": 0.5544554455445545,
+    "onsetOffsetF1": 0.33228840125391845,
+    "repeatedRecall": 0.6904761904761905,
+    "onsetAdmission": 0.5581395348837209,
+    "stateAdmission": 0.34108527131782945,
+    "jointAdmission": 0.34108527131782945
+  },
+  "comparison": {
+    "stateAdmissionGain": 0,
+    "jointAdmissionGain": 0,
+    "recallGain": 0.04651162790697683,
+    "f1Gain": -0.1611408847306749,
+    "repeatedRecallGain": 0.1428571428571428,
+    "onsetAdmissionDecline": 0.06976744186046513,
+    "onsetOffsetF1Decline": 0.20279931804432716
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 5,
+    "totalCount": 14
+  },
+  "interpretation": "Full onset-gradient detachment is rejected under S4: state/joint admission did not improve and precision/F1/family stability degraded sharply. Repeated-note recall improved only with many extra false positives. This does not prove gradient competition is absent; it rejects full detachment as the primary remedy."
+}
