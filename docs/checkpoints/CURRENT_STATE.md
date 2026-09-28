@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **ZERO-OPTIMIZER SYNTHETIC/REAL DOMAIN DIAGNOSTIC COMPLETE — MIXED FEATURE/REPRESENTATION FAILURE FROZEN; P3 SEALED**
+Status: **REAL-DOMAIN FAILURE LOCALIZATION COMPLETE — P1 STATE REPRESENTATION FAILURE + P2 ATTACK-DOMAIN MISMATCH FROZEN; P3 SEALED**
 
 ## Standing policy
 
@@ -12,70 +12,99 @@ Routine GitHub work and bounded inexpensive synthetic GitHub model runs remain p
 
 P1/P2/P3 real-data access remains a separate boundary.
 
-## Canonical domain diagnostic
+## Canonical localization run
 
-- run **36386315576**
-- job **108812332904**
-- head `72a35e694b468f8f7811934fd97ae3f215d0a576`
+- run **36392740663**
+- job **108832021154**
+- head `a5ecdc519b557849ae98825f8c50b219c15527d4`
 - workflow **SUCCESS**
-- artifact **10955243031**
-- artifact digest `sha256:6f1e13f86c3e6f5a0db4428a67add945ea03f21e0bade3e662afd7045f88aecc`
+- artifact **10957888924**
+- digest `sha256:bc766cf7082bbdc92f82dda9818b2981bf329e67b5b80bdd6f84ac8d27fc7f74`
 - optimizer steps **0**
-- model weights changed **no**
+- thresholds fixed **0.50 / 0.50**
 - threshold search **no**
+- model weights changed **no**
+- normalization fed to model **no**
 - P1 accessed **yes**
 - P2 accessed **yes**
 - P3 opened **no**
 
 Frozen result:
-- `docs/astra/SYNTHETIC_REAL_DOMAIN_DIAGNOSTIC_RESULT_V1.json`
+- `docs/astra/REAL_DOMAIN_FAILURE_LOCALIZATION_RESULT_V1.json`
 
 Analysis:
-- `docs/astra/SYNTHETIC_REAL_DOMAIN_DIAGNOSTIC_ANALYSIS_V1.md`
+- `docs/astra/REAL_DOMAIN_FAILURE_LOCALIZATION_ANALYSIS_V1.md`
 
-## Main findings
+## P1 localization
 
-Raw feature means/std/RMS:
-- synthetic **0.1823 / 0.2297 / 0.2932**
-- P1 **0.1439 / 0.2111 / 0.2555**
-- P2 **0.1383 / 0.1998 / 0.2430**
+Historical V3 baseline:
+- exact string/fret top-1 **56.25%**
+- pitch-only top-1 **56.25%**
+- median absolute semitone error **0**
+- median true-state global rank **1**
+- top-5 true-class rate **87.5%**
 
-Centroid distance:
-- synthetic -> P1: L2 **1.1617**, cosine distance **0.0740**
-- synthetic -> P2: L2 **1.1906**, cosine distance **0.0833**
-- P1 -> P2: L2 **0.6698**, cosine distance **0.0381**
-
-Candidate exact reference admission:
-- synthetic onset/state/joint **0.6744 / 0.3256 / 0.3101**
-- P1 **0.0625 / 0.0000 / 0.0000**
-- P2 **0.0000 / 0.2667 / 0.0000**
-
-Baseline:
-- P1 **0.625 / 0.625 / 0.5625**
-- P2 **0.000 / 0.2667 / 0.000**
+Synthetic candidate:
+- exact string/fret top-1 **6.25%**
+- pitch-only top-1 **31.25%**
+- wrong-string/correct-pitch top-1 **25%**
+- median absolute semitone error **11.5**
+- median true-state global rank **13.5**
+- top-5 true-class rate **31.25%**
 
 Interpretation:
-- a measurable synthetic-to-real feature shift exists;
-- P1 candidate failure includes severe state-identity collapse;
-- P2 is immediately onset/attack-limited for both frozen models;
-- global threshold rescue is contradicted because real inputs are not globally under-active; activation is misplaced relative to references.
+- candidate state/pitch representation is not real-domain compatible;
+- not primarily a simple string-assignment swap.
+
+P1 onset:
+- baseline threshold crossing within +/-1 frame **100%**
+- candidate **18.75%**
+
+## P2 localization
+
+Both models remain onset-limited.
+
+Baseline:
+- reference onset probability mean **0.0049**
+- max within +/-4 mean **0.0190**
+- threshold crossing within +/-4 **0%**
+
+Candidate:
+- reference onset probability mean **0.0441**
+- max within +/-4 mean **0.0642**
+- threshold crossing within +/-4 **0%**
+
+Median local-max offsets are only **0-1 frame**, so a small timing offset does not explain failure.
+
+Attack novelty:
+- synthetic k=1 spectral flux mean **26.54**
+- P1 **14.42**
+- P2 **8.51**
+
+Frame-difference L2 k=1:
+- synthetic **2.923**
+- P1 **1.972**
+- P2 **1.419**
+
+Interpretation:
+- P2 attack/capture domain presents substantially weaker novelty;
+- shared onset failure is more consistent with attack-domain mismatch than one model's threshold or decoder.
 
 ## Do not
 
-- threshold-rescue;
+- lower thresholds;
+- tune on these eight real examples;
+- seed/model-pick;
 - normalize model inputs post hoc;
-- seed-pick;
-- tune on the eight real crops;
-- reopen P3.
+- open P3.
 
 ## Next design-only proposal
 
-- `docs/astra/REAL_DOMAIN_FAILURE_LOCALIZATION_PROPOSAL_V1.md`
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_PROPOSAL_V1.md`
 
-It would localize:
-1. P1 pitch/string/fret error geometry;
-2. P2 onset timing and attack-novelty geometry.
+Purpose:
+- distinguish genuinely weak P2 transients from preprocessing/resampling or source-to-prepared timing issues.
 
-**Do not execute it yet. Fresh explicit P1/P2 access authorization is required.**
+**Do not execute yet. Fresh explicit P1/P2 source access authorization is required.**
 
 P3 remains sealed.
