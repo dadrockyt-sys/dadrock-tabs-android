@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 
 from evaluation.real_domain_failure_localization_v1 import (
-    spectral_novelty, summarize_p1, summarize_onset
+    spectral_novelty, summarize_p1, summarize_onset, _synthetic_refs
 )
 
 class RealDomainFailureLocalizationTests(unittest.TestCase):
@@ -11,6 +11,18 @@ class RealDomainFailureLocalizationTests(unittest.TestCase):
         r=spectral_novelty(x,2,1)
         self.assertAlmostEqual(r["positiveFlux"],3.0)
         self.assertAlmostEqual(r["l2Difference"],(5.0)**0.5)
+
+    def test_synthetic_reference_timestamp_uses_frozen_512_hop(self):
+        d={
+          "split":np.asarray(["test"]),
+          "onset":np.zeros((1,6,4),dtype=np.int16),
+          "state":np.full((1,6,4),20,dtype=np.int16),
+        }
+        d["onset"][0,0,2]=1
+        d["state"][0,0,2]=3
+        rows=_synthetic_refs(d)
+        self.assertEqual(len(rows),1)
+        self.assertAlmostEqual(rows[0]["start"],2*(512/22050))
 
     def test_p1_summary(self):
         rows=[
