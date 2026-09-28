@@ -17,10 +17,11 @@
     "preprocessing": "astra_backend/tabcnn_runtime/preprocessing.py",
     "decoder": "astra_backend/evaluation/event_decoder_v2.py",
     "metrics": "astra_backend/evaluation/evaluation_protocol_v2.py",
-    "requirementsLock": "astra_backend/tabcnn_runtime/requirements.lock.txt"
+    "requirementsLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "executionWorkflow": ".github/workflows/astra-s13-execution-v1.yml"
   },
   "sourceGitBlobs": {
-    "s13Runner": "92017456cb039809dd3668a1de57dee39b334577",
+    "s13Runner": "3400dfa2113ec34a72bbc517ba4b6c6f5935027a",
     "transformReview": "f9ccbca8f692c7db01e71d7d497c9df34b82c15f",
     "s0": "c05b6f986186dbe96245875833ab9564df99d4fb",
     "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
@@ -31,7 +32,8 @@
     "preprocessing": "e1d251a341b811b1b8e2df97d78b754d3379046b",
     "decoder": "dca8499b81661de1251196cad72e3be753f7c5a6",
     "metrics": "0541c3adf2ebfe78137e7c44719f619171f6eaa7",
-    "requirementsLock": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+    "requirementsLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "executionWorkflow": "e7a4917966dbcdc253da5e33e1a6b2b35c6530cf"
   },
   "execution": {
     "maxModels": 6,
