@@ -1,0 +1,106 @@
+{
+  "schema": "astra-source-domain-simulator-training-spec-v1",
+  "date": "2026-09-28",
+  "status": "prospective-design-frozen-training-disabled",
+  "preparation": {
+    "workflowRun": 36475263654,
+    "job": 109107267996,
+    "artifact": 10993531230,
+    "artifactDigest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953",
+    "featureHashes": {
+      "control": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+      "intervention": "a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a",
+      "challenge": "c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640"
+    },
+    "fileSha256": {
+      "control": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+      "intervention": "b46fa80121c43705708bfe786715456be535f6e39d31835b2fa611629024e94e",
+      "challenge": "0d40ab89291f4c19cf44bddb3c1c2adb4926ce3363eeb67f45770940ae03a010"
+    },
+    "examples": 294,
+    "interventionTrainingRowsChanged": 210,
+    "challengeTestRowsChanged": 42
+  },
+  "model": {
+    "architecture": "frozen-s11",
+    "contextFrames": 5,
+    "inputDim": 960,
+    "encoder": [
+      960,
+      128
+    ],
+    "stateHead": [
+      128,
+      128,
+      126
+    ],
+    "onsetHead": [
+      128,
+      6
+    ],
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "sampler": "onset-aware-32-32-32-32",
+    "optimizer": "Adam",
+    "learningRate": 0.003,
+    "batchSize": 128,
+    "optimizerStepsPerModel": 500,
+    "seeds": [
+      20260927,
+      20260928,
+      20260929
+    ],
+    "modelCount": 6,
+    "totalOptimizerSteps": 3000,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false
+  },
+  "gates": {
+    "challengeF1PositiveSeeds": 3,
+    "challengeRecallPositiveSeeds": 3,
+    "meanChallengeF1GainMin": 0.05,
+    "meanChallengeRecallGainMin": 0.08,
+    "maxChallengePrecisionLossPerSeed": 0.05,
+    "maxChallengeNegativeFpPerSecond": 0.1,
+    "maxOrdinaryF1LossPerSeed": 0.03,
+    "maxOrdinaryPrecisionLossPerSeed": 0.03,
+    "maxOrdinaryStateAdmissionLossPerSeed": 0.03,
+    "maxOrdinaryJointAdmissionLossPerSeed": 0.04,
+    "maxOrdinaryNegativeFpPerSecond": 0.1,
+    "maxNonChordFamilyF1Loss": 0.15,
+    "maxSeedsOverFamilyLoss": 1,
+    "allRequiredMetricsFinite": true
+  },
+  "identity": {
+    "nonFeatureArraysBitIdentical": true,
+    "interventionValidationTestFeaturesBitIdentical": true,
+    "challengeTrainValidationFeaturesBitIdentical": true,
+    "interventionChangedRowsExactlyTrain": true,
+    "challengeChangedRowsExactlyTest": true,
+    "pairedInitialization": true,
+    "pairedBatchIndices": true,
+    "preserveHistoricalS9TruncatedTrainingChordStrings": true
+  },
+  "executionCeiling": {
+    "cpuOnly": true,
+    "maxModels": 6,
+    "maxOptimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "maxFitEvalSeconds": 5400,
+    "oneLaunchAttempt": true,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "trainingAuthorized": false,
+  "nextAction": "implement-and-verify-offline-execution-package-no-optimizer"
+}
