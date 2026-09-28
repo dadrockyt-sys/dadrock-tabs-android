@@ -1,0 +1,47 @@
+{
+  "schema": "astra-real-domain-failure-localization-launch-v1",
+  "date": "2026-09-28",
+  "singleLaunch": true,
+  "authorizationCommit": "839ab7cc212c43aa03b9effcaae6f62bf60403ad",
+  "authorizationGitBlob": "001f5f6a03fdd0ec55d66265b3a7d2e265dc17cf",
+  "sourcePaths": {
+    "proposalGitBlob": "docs/astra/REAL_DOMAIN_FAILURE_LOCALIZATION_PROPOSAL_V1.md",
+    "runnerGitBlob": "astra_backend/evaluation/real_domain_failure_localization_v1.py",
+    "testsGitBlob": "astra_backend/evaluation/test_real_domain_failure_localization_v1.py",
+    "transferEvaluatorGitBlob": "astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py",
+    "tinyFitHarnessGitBlob": "astra_backend/tiny_fit_pilot_v1.py",
+    "p2PreparationGitBlob": "astra_backend/evaluation/cross_performer_screen_v1.py",
+    "syntheticGeneratorGitBlob": "astra_backend/synthetic/s0_pilot_v1.py",
+    "syntheticDiversityGitBlob": "astra_backend/synthetic/s9_pilot_v1.py",
+    "runtimeLockGitBlob": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "alignmentCorrectionsGitBlob": "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json",
+    "workflowGitBlob": ".github/workflows/astra-real-domain-failure-localization-v1.yml"
+  },
+  "sourceIdentities": {
+    "proposalGitBlob": "586d5e29b885e95ff370b84013b56e29b27f0389",
+    "runnerGitBlob": "0d246d0adabd057691f07529d2b8c57daefeb855",
+    "testsGitBlob": "f72124487a9894739676dca7ad97d15b43e0b9eb",
+    "transferEvaluatorGitBlob": "a6743669510c0b35529ea07f20071e24187f7b55",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "p2PreparationGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "syntheticGeneratorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "syntheticDiversityGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "workflowGitBlob": "ea09a8245937873ff33763fa8ce65de003797b81"
+  },
+  "executionIntent": {
+    "p1MediaAccess": true,
+    "p2MediaAccess": true,
+    "p3Access": false,
+    "exactCaptureCount": 8,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "modelWeightsChanged": false,
+    "normalizationFedToModel": false,
+    "automaticRetry": false,
+    "codespaces": false,
+    "vercel": false
+  }
+}
