@@ -1,0 +1,30 @@
+{
+  "schema": "astra-synthetic-data-diversity-s10-launch-v1",
+  "date": "2026-09-28",
+  "singleLaunch": true,
+  "authorizationCommit": "2e3b4c4c598eeb0ac66e04f86808195cdf03711f",
+  "authorizationGitBlob": "f5bfb3d468f0c73e09a4fd5cc9e3acb22c7bd66f",
+  "sourceIdentities": {
+    "designGitBlob": "9875c5e2c638e8a1bd1ca5405d8e01c9b2e82daf",
+    "generatorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s9DatasetGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runnerGitBlob": "9fb8cdbd11d8898b76500311fd792b7d445924d6",
+    "testsGitBlob": "a80864a1f2c72afa00c5fca1dc5ad176ae2db3b9",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflowGitBlob": "2984a10ba277e4caf0881050deb30175b82ba0d6"
+  },
+  "executionIntent": {
+    "examples": 294,
+    "audioSeconds": 588,
+    "models": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "onlyChangedVariable": "state-head hidden width 128 vs 192",
+    "thresholdSearch": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "codespaces": false,
+    "vercel": false
+  }
+}
