@@ -1,25 +1,16 @@
 # Next chat: start here
 
-S4 is frozen as a scientific fail. Full onset-gradient detachment did not improve state/joint admission and caused a precision/F1 collapse.
+S5 completed and failed its frozen gate.
 
-Offline review froze one S5 hypothesis:
+Weight 9 vs weight 6:
+- state admission 0.3333 vs 0.3333
+- joint admission 0.3333 vs 0.3178
+- onset recall 0.6279 vs 0.5969
+- onset F1 0.7364 vs 0.7196
+- repeated recall 0.6190 vs 0.5952
+- onset+offset F1 0.5470 vs 0.4821
+- precision 0.8901 vs 0.9059
 
-- control state active weight: 6
-- intervention state active weight: 9
+Seven of fourteen criteria passed. Do not call it a pass and do not continue state-weight escalation automatically.
 
-Why 9:
-- active state tokens are ~10.44% of state tokens under the frozen sampler;
-- weight 6 gives them ~41.16% of weighted state-loss mass;
-- equal-mass crossover is ~8.58;
-- weight 9 is the smallest integer above that crossover.
-
-Everything else remains fixed: shared multitask encoder, onset-aware sampler, onset pos_weight 8, onset multiplier 4, lr 0.003, 500 steps/model, thresholds 0.50/0.50, decoder V2.
-
-Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S5_DESIGN_V1.md`
-
-Standing policy remains:
-- routine non-model GitHub work is pre-authorized;
-- model execution, Codespaces and potentially billable Vercel work require explicit authorization.
-
-**S5 model execution is not authorized yet.**
+Next task: offline review of one state-representation architectural hypothesis. Model execution still requires explicit authorization.

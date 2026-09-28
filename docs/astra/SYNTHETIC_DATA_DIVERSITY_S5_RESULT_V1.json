@@ -1,0 +1,96 @@
+{
+  "schema": "astra-synthetic-data-diversity-s5-frozen-result-v1",
+  "date": "2026-09-27",
+  "workflowConclusion": "success",
+  "scientificOutcome": "failed_state_weight_9_gate_no_state_admission_gain",
+  "run": {
+    "runId": 36375196849,
+    "jobId": 108779493106,
+    "headSha": "1b0c481ba8fba60df34b52e193a7a54b797fbf86",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10949759498,
+    "name": "astra-synthetic-data-diversity-s5-v1",
+    "digest": "sha256:5b68a700603d62d1b77930c34ba22fb930cdac1fd8551c435c7259a216f417ce",
+    "expiresAt": "2026-10-28T03:50:40Z",
+    "files": {
+      "identity.json": "ccea5147e223072266050f2ae1c8cc779769671a5b0ebd2d04f0f81722f798a9",
+      "render-receipt.json": "07ef94a4d23cfd34030eb054186c73bda5270be662b9eecf4709093665f383e2",
+      "result.json": "3f3d01e4d6e374f45852826eb024b3dd8526bedaa5003829cd2b0baead03cb9f",
+      "state-weight-6.pt": "96ecd5374c25e5cfcd57c2d88c745a66620ceee76abe694560d75031bad52c58",
+      "state-weight-9.pt": "9381c24a8a1ca66f5bd7925d85a412bc9ab0eb992c6fb3c615df4b65d7e847c7"
+    }
+  },
+  "execution": {
+    "focusedTestsPassed": 4,
+    "focusedTestsTotal": 4,
+    "examples": 294,
+    "audioSeconds": 588,
+    "modelCount": 2,
+    "optimizerStepsTotal": 1000,
+    "fitEvalSeconds": 5.4961842509999315,
+    "automaticRetry": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false
+  },
+  "identity": {
+    "initialModelSha256": "fae2a694e0de85687386f88e9e5611222fe949e4052b2008ca6d94601dcf2d4b",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "preUpdateForwardLogitsIdentical": true
+  },
+  "controlWeight6": {
+    "precision": 0.9058823529411765,
+    "recall": 0.5968992248062015,
+    "f1": 0.7196261682242989,
+    "onsetOffsetF1": 0.4821428571428571,
+    "repeatedRecall": 0.5952380952380952,
+    "onsetAdmission": 0.5658914728682171,
+    "stateAdmission": 0.3333333333333333,
+    "jointAdmission": 0.3178294573643411,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "interventionWeight9": {
+    "precision": 0.8901098901098901,
+    "recall": 0.627906976744186,
+    "f1": 0.7363636363636363,
+    "onsetOffsetF1": 0.547008547008547,
+    "repeatedRecall": 0.6190476190476191,
+    "onsetAdmission": 0.6124031007751938,
+    "stateAdmission": 0.3333333333333333,
+    "jointAdmission": 0.3333333333333333,
+    "negativeOnlyFpPerSecond": 0
+  },
+  "comparison": {
+    "stateAdmissionGain": 0,
+    "jointAdmissionGain": 0.01550387596899222,
+    "onsetRecallGain": 0.03100775193798455,
+    "onsetF1Gain": 0.016737468139337408,
+    "onsetAdmissionChange": 0.046511627906976716,
+    "onsetOffsetF1Gain": 0.06486568986568986
+  },
+  "frozenGate": {
+    "passed": false,
+    "passedCount": 7,
+    "totalCount": 14,
+    "failed": [
+      "stateAdmissionGainAtLeast0_06",
+      "jointAdmissionGainAtLeast0_06",
+      "onsetRecallGainAtLeast0_05",
+      "onsetF1GainAtLeast0_04",
+      "absoluteStateAdmissionAtLeast0_40",
+      "absoluteOnsetRecallAtLeast0_65",
+      "absoluteOnsetF1AtLeast0_74"
+    ]
+  },
+  "interpretation": {
+    "supported": "Weight 9 modestly improved event recall/F1, onset admission, joint admission and onset+offset F1 while preserving high precision and zero negative-only false positives.",
+    "rejected": "The intervention produced no exact state-admission gain and missed every preregistered state/event gain floor and all three absolute state/recall/F1 floors.",
+    "decision": "Do not continue automatic state-weight escalation. The frozen S5 branch calls for a state-representation architectural hypothesis if offline review supports one."
+  }
+}
