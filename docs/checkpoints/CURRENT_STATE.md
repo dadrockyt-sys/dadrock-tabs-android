@@ -1,61 +1,83 @@
 # Astra — current handoff
 
-Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
-Branch: `astra-work`
-Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **REVIEW COMPLETE — OFFLINE EVALUATOR AUDIT + PHASE S0 DESIGN NEXT; NO NEW REAL RUN OR TRAINING; P3 SEALED**
+Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)  
+Branch: `astra-work`  
+Canonical file: `docs/checkpoints/CURRENT_STATE.md`  
+Status: **OFFLINE EVALUATOR AUDIT + PHASE S0 DESIGN COMPLETE — WAITING FOR EXPLICIT S0 PILOT AUTHORIZATION; NO REAL MEDIA/TRAINING RUN; P3 SEALED**
 
-## Authoritative GPT-5.6 instructions — review of 5044babb247418e45df2a868e6c298be9024d20e
+## Authoritative GPT-5.6 instructions — post-audit handoff
 
-This section is the sole active next-task queue. Every instruction, status, authorization request and “resume here” below the historical divider is historical, including the older review at the beginning of the preserved log. Read AGENTS.md, then this section. NEXT_CHAT.md is a summary; this section governs if they differ. Stephen requested analysis and explicit saved guidance, not another experiment.
+This section is the sole active next-task queue. Everything below the historical divider is evidence only.
 
-### Assessment
+### Completed offline work
 
-GPT-5.6 correctly preserved failed gates, stopped repeated tiny-crop fitting, separated workflow success from scientific success, and kept P3 sealed. Keep that discipline. The current evidence supports investigating supervised diversity; it does not establish that synthetic training will succeed or that data volume alone caused failure.
+1. **Evaluation protocol audit complete**
+   - frozen V1 scorer/receipts remain unchanged;
+   - confirmed asymmetric crop-boundary eligibility between prediction adapters and prepared references;
+   - confirmed nearest-error greedy matching can lose valid cardinality;
+   - separated onset versus onset+offset same-pitch ambiguity policy;
+   - added strict frozen-manifest binding helper for future runners;
+   - malformed/nonfinite prospective events fail closed;
+   - MR-MT3 remains a frozen failed gate; program-semantic cause remains unresolved and no remap is authorized.
 
-Verified in this review: current checkpoint and AGENTS; Basic Pitch and MR-MT3 result receipts; current Stage-A scorer, MIDI projector and prepared-event adapter; MR-MT3 job 108724744341 steps independently all succeeded. Raw real-data artifacts were not downloaded or metrics independently recomputed. The temporal result is reported by the checkpoint, not independently rerun here.
+2. **Prospective V2 evaluator core added**
+   - `astra_backend/evaluation/evaluation_protocol_v2.py`
+   - isolated from frozen V1 workflows;
+   - preserves original source times and carry-in/carry-out flags;
+   - separate onset/offset eligibility;
+   - deterministic maximum-cardinality then minimum-error one-to-one matching;
+   - separate onset/offset ambiguity rules;
+   - future real runner must provide boundary-aware references and one frozen identity manifest.
 
-Recorded results remain unchanged:
-- Temporal triplet: macro F1 improvement about +0.0016 versus required +0.10; failed.
-- Basic Pitch: 27 TP / 52 FP / 4 FN, F1 0.4909 under its implemented scoring protocol; failed.
-- MR-MT3: projected 0 TP / 0 FP / 31 FN; failed. The 1,777 raw notes and 1,772 program + 5 percussion rejections are full-capture counts, not scored-window note accuracy.
-- Eight examined P1/P2 crops are development evidence. P3 remains sealed. No product-quality pass exists.
+3. **Focused synthetic verification**
+   - `astra_backend/evaluation/test_evaluation_protocol_v2.py`
+   - **7 tests passed, 0 failed** in local isolated execution;
+   - no real media, optimizer, threshold search, model rerun or P3.
 
-### Priority 1 — bounded offline evaluator audit before choosing a new training target
+4. **Phase S0 synthetic diversity design complete**
+   - `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`
+   - exact eight-capture inventory uses committed evidence only; missing full durations/event totals/window counts are labeled **unknown** rather than invented;
+   - recommended one repo-owned Karplus-Strong / short digital-waveguide generator with no external sample/IR assets;
+   - future pilot ceiling: <=3,000 examples, <=6,000 s audio, <=350 MB, fixed seed 20260927, <=20 CPU min render;
+   - one 5-frame temporal-context MLP candidate versus current per-frame MLP comparator;
+   - future fit ceiling: <=500 optimizer steps/model, two models total, <=60 CPU min, $0, zero retries, frozen thresholds;
+   - numeric synthetic and later real-development gates are frozen in the design;
+   - P1/P2 remain development transfer checks and require separate authorization for any new access;
+   - P3 remains sealed.
 
-Do this using code, committed metadata and fabricated examples only. Do not rerun old models or revise old receipts. Ordinary reversible offline fixes and synthetic tests are already permitted by AGENTS.md; do not ask permission to write them.
+### Evidence interpretation
 
-1. **Boundary symmetry.** Both `basic_pitch_to_crop_events` and `project_midi_to_guitar_events` use `max(0, start-crop_start)`. A note that began before the crop can acquire an artificial time-zero onset. Meanwhile `prepared_event_adapter_v1.py` excludes boundary-crossing reference events from `scorableEvents`. Trace callers and exclusions end-to-end; explicitly establish whether scoring predictions and references use symmetric eligibility. Keep original source onset/offset and carry-in/carry-out flags. Define separate onset and offset eligibility, with exclusions counted by reason. Do not silently mask arbitrary unmatched predictions or erase real false positives.
+Historical results remain unchanged:
 
-2. **Matching correctness.** `pretrained_note_front_end_v1._match` is nearest-edge greedy, not maximum-cardinality matching. A fabricated same-pitch example verified in this review: references at 0.00/0.05 s, predictions at 0.04/0.09 s, tolerance 0.05 s. Current greedy takes prediction 0 -> reference 1 and returns one TP; assignment 0->0, 1->1 has two valid TPs. For a prospective version use deterministic maximum-cardinality one-to-one matching, then minimum error as a tie-break. Test crowded repeated notes, permutation invariance and exact tolerance boundaries.
+- temporal triplet failed its advancement criterion;
+- Basic Pitch frozen result remains 27 TP / 52 FP / 4 FN, F1 0.4909 **under its frozen V1 accounting**;
+- MR-MT3 remains 0 projected TP / 0 FP / 31 FN under the frozen program projection;
+- no product-quality or unseen-performer pass exists.
 
-3. **Identity and ambiguity.** Current Stage-A validate_meta checks key/view/performer/frame count/unresolved count, but does not by itself bind all crop start, lag, source, target and feature hashes. Trace workflow checks before claiming an actual admission gap; ensure the next runner binds these against a frozen manifest. Define simultaneous same-pitch policy separately for onset and offset scoring: the current collapse key includes offset, so simultaneous unisons with differing durations do not collapse. Preserve string-level multiplicity separately. Reject malformed/nonfinite events rather than silently coercing labels.
+The audit means the old evaluation protocol should not be reused prospectively without V2 accounting. It does **not** retroactively rescore or reverse any historical gate.
 
-4. **MR-MT3 interpretation.** Keep the frozen gate failed and do not remap programs from observed outputs. “Zero accepted guitar-program events” is established; its cause is not isolated. A code-only audit may check upstream program conventions, serialization, channel/track handling and projector assumptions with synthetic multitrack fixtures. Distinguish implementation mismatch from model instrument misclassification; do not assert either without evidence. No third AMT model or real rescoring is part of this task.
+### EXACT NEXT STEP — authorization required
 
-Deliver `docs/astra/EVALUATION_PROTOCOL_AUDIT_V1.md`: exact inspected blob identities, confirmed issues versus open questions, synthetic reproductions, proposed prospective protocol and remaining limitations. Preserve the historical scorer for frozen workflows; isolate any new scorer/version so changes cannot silently alter their protocol. Report only focused tests actually run. Historical model rankings and the 52-FP causal interpretation remain provisional pending accounting audit; no claim that fixes will reverse a gate.
+**Stop here.**
 
-### Priority 2 — finish Phase S0 as one decision-ready design
+The next action requiring Stephen's explicit authorization is the bounded **synthetic-only Phase S0 pilot** defined in `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`.
 
-Do not build a large renderer or train now. Produce one inventory and one recommended design, not another chain of exploratory approvals.
+If authorized, the launch must remain within that frozen ceiling:
 
-- Inventory committed manifests, preparation code and existing authorized summaries for the exact eight captures. Tabulate observed full duration/event totals, selected crop start/duration/counts, unresolved labels, excluded categories and possible additional windows. Label missing totals **unknown**; code alone cannot reveal absent data values. Do not reopen audio/MIDI or download archives merely to fill the table. The selection code chooses earliest launch-ready source-driven repeat/attack windows; these are not necessarily the first 200 frames. Separate potential windows from independently diverse performances.
-- Recommend one small procedural/physically modeled guitar generator as a hypothesis, with alternatives rejected on explicit cost/fidelity/provenance grounds. Check actual source/dependency/sample/output terms before calling it commercially usable; software license alone is not an asset-rights conclusion. Do not adopt a noncommercial corpus for this product path.
-- Generator commands are exact control labels, not automatically exact acoustic labels. Specify excitation/onset latency, ringing tails versus damping offsets, retriggers, polyphony, sample-rate rounding and technique definitions. A shortened envelope alone must not be presented as validated palm-mute realism. Start with pitch/onset feasibility; string/fret labels are provenance unless the sound actually models distinguishable strings. Do not demand recovery of acoustically identical same-pitch string choices.
-- Define negatives beyond digital silence: decays, active sustain without new attacks, muted/percussive attacks and bounded noise where modeled. Randomize timbre independently of pitch/string labels to prevent generator shortcuts.
-- Split by underlying phrase/template and all augmentations before rendering; group transpositions/related variants conservatively. Hold out timbre/physical parameter settings as well as content where feasible. Disjoint RNG seeds alone do not establish independence. Identify covered and unsupported techniques.
-- Specify exact example/audio-duration/storage/render-time ceilings and one architecture/comparator proposal before a pilot. Freeze step/time/cost ceilings, seed, selection rule, numeric advancement gates and stop conditions prospectively. “Non-zero transfer” is too weak; include precision/recall/F1, per-content floors, repeated attacks, offsets and real-negative denominators. Explain why proposed gates answer a bounded engineering question rather than promise product readiness.
-- P1/P2 are external-to-synthetic-training **development transfer checks**, not untouched validation: prior results already influenced this design. Their next access still needs the applicable scoped authorization. A future unseen-performer evaluation must be independently defined without opening P3 during development.
+- render only repo-owned procedural audio; no P1/P2/P3 access;
+- <=3,000 examples / <=6,000 s / <=350 MB;
+- candidate + comparator only;
+- <=500 optimizer steps each;
+- <=60 CPU minutes total fit/eval plus <=20 CPU minutes render;
+- $0 paid compute;
+- zero automatic retries;
+- no threshold search or rescue;
+- no production/main mutation.
 
-Deliver `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md` with the inventory, one recommended generator, fidelity/rights unknowns, split, resource budget and go/no-go table. It is acceptable to conclude feasibility is unresolved and identify one specific missing fact; do not invent counts or guarantee synthetic-to-real transfer.
+Do **not** create a launch, render the corpus, run optimizer steps, reopen P1/P2, open P3, deploy, or modify main before authorization.
 
-### Stop and handoff
+A later P1/P2 transfer check is a separate authorization after the synthetic pilot, and must use a frozen V2 runner/manifest.
 
-Complete the evaluator audit, necessary prospective offline fixes/tests, and S0 design; then stop before corpus rendering, optimizer work, new real-media access or launch creation. Existing one-run authorizations remain historical, not reusable grants. No threshold rescue, automatic retry, third generic front end, P3, deployment or main changes.
-
-Save related code/tests/docs together on astra-work, refresh this active summary and NEXT_CHAT.md, and verify the remote commit/file. Preserve concurrent work: inspect branch/HEAD/working tree and reread remote before writing; never force-push or overwrite another agent's changes. Keep the next task at the top and historical instructions explicitly inactive.
-
-**GPT-5.6's next response should report the audit findings and focused tests, the S0 inventory with unknowns, and one concrete bounded design. Ask only for an action that actually needs new authorization after that work is reviewable.**
 
 ---
 

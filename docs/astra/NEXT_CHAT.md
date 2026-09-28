@@ -1,35 +1,48 @@
 # Next chat: start here
 
-Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.
+Repository: `dadrockyt-sys/dadrock-tabs-android`, branch `astra-work`.  
 Updated: 2026-09-27.
 
-## Current verified position
+## Current position
 
-MR-MT3 repaired-runtime Stage-A run **36356352219**, job **108724744341** was workflow GREEN but **scientifically FAILED** the frozen gate.
+The authoritative offline review task is complete.
 
-Frozen result:
-- `docs/astra/MR_MT3_FRONT_END_FEASIBILITY_RESULT_V1.json`
-- artifact **10944877326**
-- projected TP/FP/FN **0 / 0 / 31**
-- projected F1 **0.0**
+Created:
 
-Important nuance:
-- MR-MT3 emitted **1,777** note events across the eight captures
-- **1,772** were rejected as non-guitar programs
-- **5** as percussion
-- **0** for pitch range
-- **0** survived the frozen accepted-program contract 24-31
+- `docs/astra/EVALUATION_PROTOCOL_AUDIT_V1.md`
+- `astra_backend/evaluation/evaluation_protocol_v2.py`
+- `astra_backend/evaluation/test_evaluation_protocol_v2.py`
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S0_V1.md`
 
-Do not post-hoc remap program IDs from these outcomes.
+Focused fabricated-event verification: **7/7 tests passed** locally.
 
-The generic frozen-pretrained-front-end branch is stopped:
-- Basic Pitch: strong recall, poor precision
-- MR-MT3: abundant notes but incompatible instrument-program semantics under the frozen guitar projection
+Main audit findings:
 
-## Exact next task
+- frozen Basic Pitch / MR-MT3 crop predictions and prepared references do not use symmetric boundary eligibility;
+- frozen greedy matching can undercount true positives;
+- onset and offset same-pitch ambiguity need separate policies;
+- future runners need one frozen manifest binding all crop/source/feature/target identities;
+- MR-MT3 still fails under the frozen program contract; this audit does not prove why its programs were incompatible and does not authorize a remap.
 
-Offline design only for a **commercial-safe synthetic/data-diversity strategy**.
+Historical receipts remain frozen.
 
-The next design should directly address representation overfitting and guitar-specific supervision while keeping storage/training bounded and licenses commercially usable.
+## S0 design
 
-No optimizer work, no third generic AMT front end, no threshold/program tuning on these eight captures, and no P3.
+Recommended synthetic hypothesis: repo-owned Karplus-Strong / short digital-waveguide guitar generator with no external sample/IR assets.
+
+Hard future pilot ceiling:
+
+- <= 3,000 examples / <= 6,000 s audio / <= 350 MB;
+- one 5-frame temporal-context MLP candidate versus the current per-frame MLP comparator;
+- <= 500 optimizer steps each, two models total, <= 60 CPU minutes, $0 paid compute;
+- fixed seed and thresholds, zero retries;
+- no P1/P2 media during synthetic pilot;
+- P3 sealed.
+
+## Exact next action
+
+**STOP until Stephen explicitly authorizes the bounded synthetic-only S0 pilot.**
+
+Do not create a launch, render the corpus, run optimizer steps, reopen P1/P2, alter thresholds, open P3, deploy, or change main without that authorization.
+
+If the synthetic pilot is later authorized and passes its frozen synthetic gates, real P1/P2 transfer still requires its own separate scoped authorization and a V2 manifest/runner.
