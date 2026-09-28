@@ -1,0 +1,59 @@
+{
+  "schema": "astra-source-domain-v2-stage-a-polyphony-safe-design-v2",
+  "date": "2026-09-28",
+  "status": "prospective-new-measurement-version",
+  "preservesOriginalV1Failure": true,
+  "frozenInputs": {
+    "controlSha256": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "manifestContentSha256": "2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469"
+  },
+  "simultaneousDefinitionMicroseconds": 1,
+  "pitchToleranceCents": 15,
+  "pitchMeasurement": {
+    "nonSimultaneous": "unchanged-original-mixed-waveform-estimator",
+    "simultaneous": "event-isolated-shadow-render-then-same-acoustic-estimator",
+    "originalMixedChordEstimate": "report-only"
+  },
+  "shadowInvariants": {
+    "preserveTemplateId": true,
+    "preserveVariant": true,
+    "preserveOriginalEventIndex": true,
+    "preserveManifestOverride": true,
+    "preservePerNoteSubstream": true,
+    "samePostChain": true,
+    "datasetUse": false
+  },
+  "selection": {
+    "trainLocalPositions": [
+      0,
+      29
+    ],
+    "challengeLocalPositions": [
+      0,
+      5
+    ],
+    "selectedRows": 28,
+    "rowSubstitution": false
+  },
+  "renderAccounting": {
+    "controlRenders": 28,
+    "v2Renders": 28,
+    "deterministicRerenders": 28,
+    "chordEventShadowRenders": 24,
+    "total": 108,
+    "audioSeconds": 216
+  },
+  "ceilings": {
+    "waveformRendersMax": 112,
+    "audioSecondsMax": 224,
+    "wallMinutesMax": 20,
+    "persistedBytesMax": 157286400,
+    "modelLoads": 0,
+    "optimizerSteps": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "automaticRetry": false
+  },
+  "stageBBlockedUntilPass": true
+}
