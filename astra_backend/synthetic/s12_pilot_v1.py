@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, json, math, time
+import argparse, hashlib, json, math, shutil, time
 from pathlib import Path
 import numpy as np
 
+from synthetic.s0_pilot_v1 import generate_dataset
+from synthetic.s9_pilot_v1 import build_intervention_dataset
 from synthetic.s11_pilot_v1 import (
     RUN_SEEDS, initialize_model, paired_batches, fit, evaluate, module_sha, batch_sha,
 )
@@ -173,6 +175,45 @@ def run(control_path,intervention_path,challenge_path,out_path):
     Path(out_path).write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
     print("S12_RESULT="+json.dumps(result,sort_keys=True))
 
+
+def git_blob_sha(path):
+    b=Path(path).read_bytes()
+    return hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
+
+def workflow(out_dir):
+    root=Path(__file__).resolve().parents[2]
+    auth=json.loads((root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V1.json").read_text())
+    launch=json.loads((root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V1.json").read_text())
+    if auth["schema"]!="astra-synthetic-onset-envelope-s12-authorization-v1":
+        raise RuntimeError("authorization schema mismatch")
+    z=auth["authorization"]
+    if not (z["maxModels"]==6 and z["maxOptimizerStepsPerModel"]==500 and z["maxTotalOptimizerSteps"]==3000):
+        raise RuntimeError("execution ceiling mismatch")
+    if z["p1Authorized"] or z["p2Authorized"] or z["p3Authorized"] or z["thresholdSearchAuthorized"] or z["automaticRetryAuthorized"]:
+        raise RuntimeError("authorization guard mismatch")
+    if not launch.get("singleLaunch"): raise RuntimeError("single launch required")
+    for k,p in launch["sourcePaths"].items():
+        actual=git_blob_sha(root/p)
+        if launch["sourceIdentities"][k]!=actual or auth["sourceIdentities"][k]!=actual:
+            raise RuntimeError("source pin mismatch "+k)
+    if launch["authorizationGitBlob"]!=git_blob_sha(root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V1.json"):
+        raise RuntimeError("authorization pin mismatch")
+
+    out=Path(out_dir); work=out.parent/"astra-s12-work"
+    shutil.rmtree(out,ignore_errors=True); shutil.rmtree(work,ignore_errors=True)
+    out.mkdir(parents=True); work.mkdir(parents=True)
+    generate_dataset(work/"s0-control.npz",out/"s0-render-receipt.json")
+    build_intervention_dataset(work/"s0-control.npz",work/"control.npz",out/"s9-diverse-receipt.json")
+    build(work/"control.npz",work/"intervention.npz",work/"challenge.npz",out/"s12-dataset-receipt.json")
+    run(work/"control.npz",work/"intervention.npz",work/"challenge.npz",out/"result.json")
+    x=json.loads((out/"result.json").read_text())
+    if x["execution"]["modelCount"]!=6 or x["execution"]["optimizerStepsTotal"]!=3000:
+        raise RuntimeError("execution receipt mismatch")
+    if x["guards"]["p1Accessed"] or x["guards"]["p2Accessed"] or x["guards"]["p3Opened"]:
+        raise RuntimeError("real-data guard violated")
+    shutil.rmtree(work,ignore_errors=True)
+    print("S12_WORKFLOW_OK")
+
 def main():
     ap=argparse.ArgumentParser(); sub=ap.add_subparsers(dest="cmd",required=True)
     b=sub.add_parser("build")
@@ -181,8 +222,10 @@ def main():
     r=sub.add_parser("run")
     r.add_argument("--control-dataset",required=True); r.add_argument("--intervention-dataset",required=True)
     r.add_argument("--challenge-dataset",required=True); r.add_argument("--out",required=True)
+    w=sub.add_parser("workflow"); w.add_argument("--out-dir",required=True)
     a=ap.parse_args()
     if a.cmd=="build": print("S12_DATASET="+json.dumps(build(a.control_dataset,a.intervention_out,a.challenge_out,a.receipt_out),sort_keys=True))
-    else: run(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
+    elif a.cmd=="run": run(a.control_dataset,a.intervention_dataset,a.challenge_dataset,a.out)
+    else: workflow(a.out_dir)
 
 if __name__=="__main__": main()
