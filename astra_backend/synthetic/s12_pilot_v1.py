@@ -182,7 +182,7 @@ def git_blob_sha(path):
 
 def workflow(out_dir):
     root=Path(__file__).resolve().parents[2]
-    ap=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_AUTHORIZATION_V2.json"
+    ap=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_APPROVAL_V2.json"
     lp=root/"docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_LAUNCH_V2.json"
     auth=json.loads(ap.read_text())
     launch=json.loads(lp.read_text())
