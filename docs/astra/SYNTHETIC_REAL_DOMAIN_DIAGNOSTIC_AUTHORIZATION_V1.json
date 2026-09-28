@@ -1,0 +1,61 @@
+{
+  "schema": "astra-synthetic-real-domain-diagnostic-authorization-v1",
+  "date": "2026-09-28",
+  "status": "explicitly_authorized_single_zero_optimizer_p1_p2_domain_diagnostic",
+  "userInstruction": "I authorize",
+  "authorization": {
+    "p1MediaAccessAuthorized": true,
+    "p2MediaAccessAuthorized": true,
+    "p3Authorized": false,
+    "exactCaptureCountAuthorized": 8,
+    "optimizerStepsAuthorized": 0,
+    "thresholdSearchAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "modelSelectionAuthorized": false,
+    "seedSelectionAuthorized": false,
+    "automaticRetryAuthorized": false,
+    "cpuOnlyGithubActions": true,
+    "maxJobMinutes": 120,
+    "codespacesAuthorized": false,
+    "vercelAuthorized": false,
+    "productionAuthorized": false,
+    "mainMutationAuthorized": false
+  },
+  "scientificContract": {
+    "baselineCheckpointSha256": "fba076f8b6e5fe177ba7b15e5d6780269194f530b2648037ac0763a4937eb67f",
+    "candidateCheckpointSha256": "7d9785b73de73674a5c6c2305fd8666e7f2163fa9de4831d67810bb221807e91",
+    "candidateTransferRunId": 36381769369,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "p3Sealed": true,
+    "noModelInputsFromDiagnosticNormalization": true
+  },
+  "sourcePaths": {
+    "proposalGitBlob": "docs/astra/SYNTHETIC_REAL_DOMAIN_DIAGNOSTIC_PROPOSAL_V1.md",
+    "runnerGitBlob": "astra_backend/evaluation/synthetic_real_domain_diagnostic_v1.py",
+    "testsGitBlob": "astra_backend/evaluation/test_synthetic_real_domain_diagnostic_v1.py",
+    "transferEvaluatorGitBlob": "astra_backend/evaluation/p1_p2_transfer_evaluation_v1.py",
+    "decoderV2GitBlob": "astra_backend/evaluation/event_decoder_v2.py",
+    "tinyFitHarnessGitBlob": "astra_backend/tiny_fit_pilot_v1.py",
+    "p2PreparationGitBlob": "astra_backend/evaluation/cross_performer_screen_v1.py",
+    "syntheticGeneratorGitBlob": "astra_backend/synthetic/s0_pilot_v1.py",
+    "syntheticDiversityGitBlob": "astra_backend/synthetic/s9_pilot_v1.py",
+    "runtimeLockGitBlob": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "alignmentCorrectionsGitBlob": "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json",
+    "workflowGitBlob": ".github/workflows/astra-synthetic-real-domain-diagnostic-v1.yml"
+  },
+  "sourceIdentities": {
+    "proposalGitBlob": "ff8a1391554c9f35e093209973330988072e617c",
+    "runnerGitBlob": "51d96060bd657eb307e052f982b8a5540266989f",
+    "testsGitBlob": "120acff9cd383a38443e0765c416aeec1f543820",
+    "transferEvaluatorGitBlob": "a6743669510c0b35529ea07f20071e24187f7b55",
+    "decoderV2GitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "tinyFitHarnessGitBlob": "f7ce7da5cfcdfd91e98f5ae4698b4bf588109c07",
+    "p2PreparationGitBlob": "d8e28dbe702dc7c1399798c0760772c1fb04f947",
+    "syntheticGeneratorGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "syntheticDiversityGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "alignmentCorrectionsGitBlob": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "workflowGitBlob": "06ffc2d120025923e1868fd012003eeb77637f27"
+  }
+}
