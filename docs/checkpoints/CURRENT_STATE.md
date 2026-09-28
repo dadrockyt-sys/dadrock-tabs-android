@@ -651,3 +651,147 @@ Before another model run, require a new finite prospective design that:
 5. does not reopen P3 until a specific P3 gate is written and met.
 
 **Resume instruction:** Continue from the frozen S12 gate failure. Do not rerun or tune S12. Preserve the V2 P1/P2 integrity result and the P1 state-representation failure as separate evidence. The next action should be prospective design/review only unless a concrete bounded experiment is first frozen.
+
+
+## Explicit next steps after S12 — 2026-09-28
+
+These are the canonical resume instructions. Follow them in order. Do not skip directly to another model run.
+
+### 1. Preserve all frozen evidence
+
+Do not modify or reinterpret:
+- `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_RESULT_V2.json`;
+- `docs/astra/SYNTHETIC_ONSET_ENVELOPE_S12_RESULT_V1.json`;
+- historical S0-S11 results;
+- frozen transfer/localization results;
+- thresholds 0.50 / 0.50.
+
+Treat the following as separate established development facts:
+- P1 still exposes a serious candidate state-representation/generalization failure;
+- P2 has weaker/more variable real attack-envelope contrast on the bounded integrity sample;
+- gross fixed timing error and stereo/downmix attenuation were not supported as the main P2 explanation;
+- S12 improved a soft-onset synthetic challenge directionally but sacrificed too much ordinary synthetic onset/state/joint competence.
+
+### 2. Do not execute another model immediately
+
+The next action is **offline prospective design only**.
+
+Do not:
+- rerun S12;
+- change S12 blend strengths;
+- add seeds to S12;
+- lower decoder/model thresholds;
+- search loss weights, hidden widths, samplers, or seeds against P1/P2;
+- reopen P1 or P2;
+- open P3;
+- use Codespaces/Vercel/Production for this work.
+
+Routine GitHub editing, design review, tests that do not train models, and source inspection are allowed.
+
+### 3. Define one bounded S13 hypothesis before implementation
+
+The next experiment must address both failure axes simultaneously:
+1. retain ordinary exact state/joint competence;
+2. improve robustness to weaker onset contrast.
+
+Do **not** optimize only for the S12 soft-onset challenge.
+
+A valid S13 design must predeclare:
+- exactly one intervention variable or one tightly coupled intervention package with a clear causal rationale;
+- unchanged control arm;
+- exact architecture;
+- exact data construction;
+- exact seeds;
+- optimizer, learning rate, batch size and step count;
+- decoder and thresholds;
+- ordinary-test metrics;
+- synthetic soft-onset challenge metrics;
+- state-admission and joint-admission metrics;
+- negative-only false-positive guard;
+- success criteria and stop criteria;
+- hard compute ceiling;
+- zero automatic retry.
+
+Do not choose any S13 numeric setting by fitting to the eight P1/P2 examples.
+
+### 4. Prefer an intervention that preserves ordinary-domain identity
+
+The strongest next design direction is **identity-preserving robustness**, not stronger corruption.
+
+Favor mechanisms where the ordinary synthetic representation remains intact and the model is encouraged to tolerate onset variation without replacing the clean signal.
+
+Examples that are acceptable to evaluate prospectively:
+- paired clean + softened views of the same training event with a consistency objective;
+- a bounded auxiliary representation-consistency loss between clean and softened views;
+- a small fixed mixture of clean and softened training views while keeping all clean examples present.
+
+Do not silently choose among these by running all of them. Select one design on paper first, justify it from existing evidence, and freeze it before optimizer work.
+
+### 5. S13 minimum experimental structure
+
+Unless a written design justifies a smaller experiment, use:
+- control = frozen S9/S11 diversified synthetic training path;
+- intervention = one predeclared identity-preserving robustness method;
+- seeds = exactly `20260927, 20260928, 20260929`;
+- paired initialization and paired minibatch schedule where mathematically possible;
+- 500 optimizer steps/model;
+- maximum 6 models total / 3,000 optimizer steps total;
+- CPU-only GitHub Actions;
+- fixed 0.50 / 0.50 thresholds;
+- no threshold search;
+- no automatic retries;
+- no P1/P2/P3 access.
+
+### 6. Predeclare a two-domain gate
+
+Before execution, freeze a gate that requires both:
+
+**Ordinary-domain preservation**
+- no material ordinary onset-F1 regression;
+- no material ordinary state-admission regression;
+- no material ordinary joint-admission regression;
+- precision and negative-only false-positive stability.
+
+**Soft-onset robustness**
+- positive challenge onset F1 and recall deltas across all predeclared seeds;
+- minimum mean gains large enough to be practically meaningful, not merely positive.
+
+The exact numeric floors must be written before model execution. Do not weaken them after seeing results.
+
+### 7. Implement offline and test before launch
+
+After the S13 design is frozen:
+1. implement the runner;
+2. add focused unit/admission tests;
+3. verify dataset identity and paired-control invariants;
+4. run repository tests needed for the changed code;
+5. record source Git blobs;
+6. prepare a single-use launch workflow;
+7. update this handoff before execution.
+
+If implementation tests fail, fix only concrete implementation defects. Do not alter the scientific hypothesis to make the gate easier.
+
+### 8. Execution authorization handling
+
+The user's standing broad authorization permits bounded inexpensive GitHub work, but every experiment must still have a **prospectively frozen scope** before execution.
+
+For S13:
+- once the design, code, tests, source pins, budget and gate are frozen, the single bounded synthetic-only run may proceed under the user's broad authorization;
+- do not use that authorization to reopen P1/P2 or P3 unless a separate real-data action has first been explicitly defined in this handoff;
+- P3 remains sealed until a written development gate specifies exactly why it should be opened and what result would count as success/failure.
+
+### 9. Stop conditions
+
+Stop and freeze if:
+- S13 fails its preregistered gate;
+- ordinary competence regresses beyond the frozen limits;
+- robustness gains are seed-sensitive;
+- any identity invariant fails;
+- runtime exceeds the declared ceiling;
+- results suggest another parameter search rather than a clear bounded follow-up.
+
+Do not chain immediately into S14 after a failed S13. First write an analysis explaining what was learned and whether another experiment is scientifically justified.
+
+### 10. Resume command
+
+**Resume from here by drafting and reviewing the S13 prospective design only. Do not launch a model until that design, exact gate, code/test plan, source pins and hard execution ceiling are frozen. Keep P1/P2 closed and P3 sealed.**
