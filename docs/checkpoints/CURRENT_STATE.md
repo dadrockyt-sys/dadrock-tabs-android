@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **S12 GATE FAILED AND FROZEN — NEXT: MODEL-FREE TRANSFORM/TARGET REVIEW, THEN ONE JUSTIFIED S13 DESIGN; P1/P2 CLOSED; P3 SEALED**
+Status: **S13 SCIENTIFIC GATE FAILED AND FROZEN — STOP MODEL EXPERIMENTS; PROJECT-LEVEL SIMULATOR/REPRESENTATION REVIEW NEXT; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1106,3 +1106,83 @@ The one launch must:
 
 **Immediate next action:** create the one unique armed S13 launch marker and allow the already-frozen execution workflow to run exactly once. Then freeze the scientific gate result, update the durable execution history, and stop. No S14 and no real-data follow-up may occur automatically.
 
+
+
+## S13 single execution frozen — 2026-09-28
+
+The one authorized bounded synthetic-only S13 execution has completed and is now **consumed**. The GitHub workflow succeeded operationally, but the preregistered **scientific gate failed**. This is a frozen negative result.
+
+Frozen result:
+- `docs/astra/SYNTHETIC_S13_RESULT_V1.json`
+- launch identity `s13-v1-20260928-canonical-01`
+- launch commit `c3644cb2566e25a92ec1cd0aa4859e76c3930f3c`
+- workflow run **36463727631**
+- job **109068446982**
+- run attempt **1**
+- artifact **10988304586**
+- artifact ZIP digest `sha256:964248c795d534cf44062b80de5319108cf8dc9477fe44067a554238f5acf162`
+- frozen `result.json` SHA-256 `aef0af7892029cc86ab3a04fcf8073c3f0f749d86e8754576ca496d25803e67f`
+- workflow conclusion **success**
+- scientific gate **FAIL**
+- models **6**
+- optimizer steps **3000 total / 500 per model**
+- fit/eval **58.35 s**
+- thresholds **0.50 / 0.50**
+- threshold search/retuning **none**
+- automatic retry **none**
+- P1/P2 access **none**
+- P3 opened **no**
+- paid compute **$0**
+- main/Production mutation **none**
+
+The durable ledger has been updated:
+- `docs/astra/SYNTHETIC_S13_EXECUTION_HISTORY_V1.json`
+- the launch identity is consumed and must not be reused.
+
+### Scientific result
+
+The intervention did not deliver the required challenge benefit.
+
+Aggregate challenge deltas, intervention minus paired control:
+- pitch-onset F1 mean **-0.01208**; seed deltas **-0.03317, +0.02572, -0.02880**;
+- pitch-onset recall mean **-0.02326**; seed deltas **-0.00775, -0.00775, -0.05426**;
+- pitch-onset precision mean **+0.00184**, but one seed lost **0.06769**, exceeding the frozen maximum allowed precision loss of 0.05.
+
+Aggregate ordinary deltas:
+- pitch-onset F1 mean **-0.01228**;
+- precision mean **-0.01548**, with one seed loss **0.04728**, exceeding the frozen 0.03 limit;
+- state admission mean **-0.00517**, with one seed loss **0.03101**, exceeding the frozen 0.03 limit;
+- joint admission mean **-0.01292**.
+
+The required positive challenge F1 gain in all three seeds failed (**1/3 positive**), and challenge recall gain was positive in **0/3** seeds. The required mean challenge F1 gain >=0.05 and recall gain >=0.08 both failed.
+
+Safety/identity/runtime controls did behave as frozen:
+- all required metrics finite;
+- exactly six 500-step models / 3000 total steps;
+- paired initialization and batches verified;
+- fixed thresholds/no search verified;
+- transformed-row rule and transform invariants verified;
+- non-feature arrays bit-identical;
+- challenge train/validation features unchanged;
+- negative-only FP guard passed every seed;
+- no P1/P2/P3 access.
+
+### Frozen interpretation
+
+S13 is **not** a successful robustness intervention. The admitted positive-onset-increment compression, applied to half of training rows at retain fraction 0.50, did not improve the transformed synthetic challenge under the preregistered gate and introduced ordinary-domain regressions in precision/state admission for some seeds.
+
+This negative result does not prove that onset robustness is impossible, and it does not identify one unique failure mechanism. It does establish that this exact transform/training intervention is rejected.
+
+### Mandatory stop
+
+Per the preregistered S13 stop rule:
+- **do not rerun S13**;
+- **do not lower thresholds or gates**;
+- **do not select the favorable seed**;
+- **do not tune retain fraction, subset fraction, loss, sampler, architecture, decoder, or transform strength from this result**;
+- **do not chain into S14**;
+- **do not automatically reopen P1/P2 or P3**.
+
+The next scientific step, if the project continues, is a **project-level review of the simulator/representation strategy**, using the frozen S12 and S13 failures plus the prior real-domain localization evidence. That review must be analysis/design only before any new model experiment is proposed.
+
+**Resume instruction:** Begin with project-level simulator/representation strategy review only. Preserve S12 and S13 as failed frozen interventions. Keep thresholds 0.50/0.50, P1/P2 closed, P3 sealed, and main/Production unchanged. Do not launch any model or real-data workflow from this checkpoint.
