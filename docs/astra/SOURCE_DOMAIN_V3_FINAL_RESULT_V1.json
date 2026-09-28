@@ -1,0 +1,64 @@
+{
+  "schema": "astra-source-domain-v3-final-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "passed-35-of-35",
+  "workflow": {
+    "run": 36487005586,
+    "job": 109146224786,
+    "head": "6a0323548b8ef63e14a8ae758f53809ce50b3b70",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "preexecutionHistory": {
+    "failedRun": 36486715250,
+    "failureResult": "docs/astra/SOURCE_DOMAIN_V3_PREEXECUTION_FAILURE_V1.json",
+    "correction": "NumPy 1.21 API compatibility only; scientific linear quantile rule unchanged"
+  },
+  "artifact": {
+    "id": 10999342888,
+    "name": "astra-source-domain-v3-final-coverage-v2",
+    "digest": "sha256:29868ae9595cd530ee7d3d25226da2a006f01dce16b9b570b2e5c2708ca59855",
+    "resultSha256": "05dbd9558afa1d63721351e6d2b9fffa44f32ccb4a231eaba3e228583a42a3ca",
+    "challengeManifestSha256": "2ba557e93692e18cf7a22807d36400ca3e22f87e6c9a4b12ee99534721d693ee",
+    "challengeDatasetSha256": "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce"
+  },
+  "frozenTrainingSupport": {
+    "stageBArtifact": 10999695803,
+    "stageBResultSha256": "d1f4ee0580ca98094fb12adabf76f437e6e3769c85b1fbc7f741205c9a3b13d2",
+    "v2InterventionSha256": "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b"
+  },
+  "coverage": {
+    "passed": 35,
+    "total": 35,
+    "required": 35,
+    "admissionPassed": true,
+    "descriptors": [
+      "waveformRms",
+      "spectralCentroid",
+      "rmsNormalizedFirstDifferenceEnergy",
+      "preparedCqtPositiveFlux",
+      "preparedCqtRowDisplacement"
+    ],
+    "challengeRows": 84,
+    "challengeRowsPerFamily": 12
+  },
+  "execution": {
+    "renderOperations": 168,
+    "audioSeconds": 336,
+    "elapsedSeconds": 54.77896432599999,
+    "persistedBytes": 2298862,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "interpretation": "Final V3 model-free source-domain coverage admission passed. This does not establish model benefit or real-domain transfer. It authorizes only a separately preregistered bounded synthetic training experiment under the unchanged architecture/frontend/threshold boundary.",
+  "nextAction": "freeze-bounded-v3-synthetic-training-design-and-offline-package-then-run-once-if-verified"
+}
