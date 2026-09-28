@@ -1,0 +1,46 @@
+{
+  "schema": "astra-source-domain-v3-training-offline-verification-frozen-v1",
+  "date": "2026-09-28",
+  "status": "passed",
+  "workflow": {
+    "run": 36489377119,
+    "job": 109154011434,
+    "head": "7f2c5f598fb2a7c80eed4a7ef6a4469f36b05c16",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11001326153,
+    "name": "astra-source-domain-v3-training-offline-verification-v1",
+    "digest": "sha256:e0bf086ef504c8f750eb9461b27f3d66427f0457b6911a2cd11dce4f458fa1a9",
+    "receiptSha256": "02ea4fa1928024a010b790fce66514961212cd65be0b05df98dfe6fcaccedf41"
+  },
+  "sourceGitBlobs": {
+    "runner": "4200536e693da7fbd0bb8980ebc6a0fd98cf273f",
+    "tests": "e9a6c705e54340ca1e1e610830802aef9a1f7755",
+    "s11": "d4aacc4081ed2ff851c7879ee4dc08d757c8a3d8",
+    "v1Gate": "3c9e92d6386707369ef071b60cd9d5d5d5b8558d",
+    "design": "c914ccc32af9ceaf5d5e6e7db88835f1e06b1645",
+    "spec": "07fe0dba6ed074e40632a8fc47e24f23a519427f"
+  },
+  "fileSha256": {
+    "control": "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894",
+    "intervention": "a17a16daeb8d698e325dc6820f18d5eda2fec75d9beebe2a9605a678124dc26b",
+    "challenge": "368032e81722a4ca97bf2ec81b432b90ef2fc982cac20c8bd543d34f514d9bce"
+  },
+  "execution": {
+    "modelInitializations": 6,
+    "modelFitCalls": 0,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "paidComputeDollars": 0,
+    "productionMutation": false
+  },
+  "decision": "offline-package-passed-one-final-synthetic-training-attempt-may-be-armed"
+}
