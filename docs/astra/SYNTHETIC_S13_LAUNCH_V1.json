@@ -1,0 +1,29 @@
+{
+  "schema": "astra-synthetic-s13-launch-v1",
+  "status": "armed",
+  "launchIdentity": "s13-v1-20260928-canonical-01",
+  "branch": "astra-work",
+  "scopeGitBlob": "1e5812bfc1b96bfec6a85e81894ae08dba9439e4",
+  "specGitBlob": "9da9ba1657d452faf667119320d3a7285d4cdb67",
+  "canonicalPreparation": {
+    "workflowRun": 36458911022,
+    "artifact": 10985624417,
+    "artifactDigest": "sha256:5a1737985f839adf2d14776a7b83d78609921f069102e36af874a1f3672690e1"
+  },
+  "execution": {
+    "maxModels": 6,
+    "optimizerStepsPerModel": 500,
+    "maxTotalOptimizerSteps": 3000,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false
+  },
+  "authorizationBasis": "standing bounded inexpensive synthetic GitHub authorization after frozen offline package verification",
+  "singleLaunch": true
+}
