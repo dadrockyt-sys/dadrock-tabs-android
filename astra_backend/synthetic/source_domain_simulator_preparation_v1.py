@@ -233,7 +233,7 @@ def prepare_only(out_dir):
     receipt["fullPreparationRenderedClips"]=int(full_rendered_clips)
     receipt["fullPreparationAudioSeconds"]=float(full_audio_seconds)
     Path(out/"source-domain-dataset-receipt.json").write_text(
-        json.dumps(receipt,indent=2,sort_keys=True)+"\\n"
+        json.dumps(receipt,indent=2,sort_keys=True)+"\n"
     )
     # S0 is an intermediate input, not part of the frozen three-arm package.
     s0.unlink()
