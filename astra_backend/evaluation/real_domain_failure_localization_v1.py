@@ -12,6 +12,7 @@ from evaluation.p1_p2_transfer_evaluation_v1 import (
 )
 from tiny_fit_pilot_v1 import TinyEventFitModel, _sha256_file, NUM_STRINGS, NUM_CLASSES, SILENCE_CLASS
 from synthetic.s0_pilot_v1 import context5
+from tabcnn_runtime.preprocessing import HOP_LENGTH_SAMPLES, SAMPLE_RATE_HZ
 
 SCHEMA="astra-real-domain-failure-localization-v1"
 STATE_THRESHOLD=0.5
@@ -64,7 +65,7 @@ def _synthetic_refs(d):
                     rows.append({
                       "id":f"synthetic:{int(i)}:{st}:{int(fr)}",
                       "clipIndex":int(i),"frame":int(fr),"string":int(st),"fret":fret,
-                      "pitch":int(OPEN_MIDI[st]+fret),"start":float(fr)*(256/22050),
+                      "pitch":int(OPEN_MIDI[st]+fret),"start":float(fr)*(HOP_LENGTH_SAMPLES/SAMPLE_RATE_HZ),
                     })
     return rows
 
