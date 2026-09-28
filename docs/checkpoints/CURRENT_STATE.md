@@ -108,3 +108,60 @@ Purpose:
 **Do not execute yet. Fresh explicit P1/P2 source access authorization is required.**
 
 P3 remains sealed.
+
+## Explicit next steps
+
+1. **Stop all model training/tuning.**
+   - Do not run new synthetic architecture, sampler, loss-weight, seed, threshold, normalization, or decoder experiments from the current P1/P2 findings.
+   - Do not select a different synthetic seed after seeing P1/P2.
+   - Keep thresholds fixed at **0.50 / 0.50**.
+
+2. **Next executable experiment, only after fresh explicit P1/P2 authorization:**
+   - run the zero-training **P2 attack/preparation integrity audit** defined in:
+     - `docs/astra/P2_ATTACK_PREPARATION_INTEGRITY_AUDIT_PROPOSAL_V1.md`
+   - use only the exact previously allowlisted P1/P2 source captures;
+   - optimizer steps = **0**;
+   - model-weight changes = **0**;
+   - threshold search/retuning = **0**;
+   - no input normalization fed into a model;
+   - no model/seed selection;
+   - no automatic retry;
+   - no P3 access.
+
+3. **Audit measurements to implement/freeze before any authorized source access:**
+   - raw-audio short-window RMS before/after each eligible attack;
+   - raw waveform first-difference energy;
+   - raw STFT positive spectral flux;
+   - prepared-CQT frame-difference and positive-flux measurements;
+   - source annotation time;
+   - prepared crop-local annotation time;
+   - nearest raw transient-peak offset;
+   - nearest prepared-CQT novelty-peak offset;
+   - source sample rate, channel metadata, crop boundaries, resampling provenance.
+
+4. **Required comparison:**
+   - compare P1 vs P2 descriptively only;
+   - determine whether P2 weakness is already present in raw audio, introduced/amplified by preprocessing, or caused by annotation/crop alignment;
+   - do not optimize any parameter from these comparisons.
+
+5. **Frozen decision branches for that audit:**
+   - raw P2 attacks weak -> support **capture/performance-domain mismatch**;
+   - raw attacks strong but prepared CQT novelty weak -> support **preprocessing/resampling representation mismatch**;
+   - novelty peaks systematically offset from annotations -> support **alignment/crop timing issue**;
+   - no clear discrepancy -> freeze as **unresolved** and do not tune on P2.
+
+6. **After the audit:**
+   - freeze exact result, artifact hashes, interpretation, and any failure honestly in this file;
+   - if the result points to an offline preprocessing bug that can be reproduced without P1/P2, fix/test it offline first;
+   - if the result merely suggests a real-domain modeling change, write a proposal only—do not train against these eight examples automatically;
+   - do not open P3 unless separately and explicitly authorized after a new development-stage gate is defined.
+
+## Authorization boundary for the next step
+
+Current authorization does **not** permit another P1/P2 source-access run.
+
+A fresh explicit user authorization is required before executing the P2 attack/preparation integrity audit.
+
+Routine GitHub-only preparation for that audit remains allowed.
+
+P3 remains sealed.
