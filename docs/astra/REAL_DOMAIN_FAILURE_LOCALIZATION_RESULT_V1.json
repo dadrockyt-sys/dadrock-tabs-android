@@ -1,0 +1,122 @@
+{
+  "schema": "astra-real-domain-failure-localization-frozen-result-v1",
+  "date": "2026-09-28",
+  "workflowConclusion": "success",
+  "scientificOutcome": "p1_candidate_state_representation_failure_and_p2_attack_domain_mismatch",
+  "run": {
+    "runId": 36392740663,
+    "jobId": 108832021154,
+    "headSha": "a5ecdc519b557849ae98825f8c50b219c15527d4",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifactId": 10957888924,
+    "name": "astra-real-domain-failure-localization-v1",
+    "digest": "sha256:bc766cf7082bbdc92f82dda9818b2981bf329e67b5b80bdd6f84ac8d27fc7f74",
+    "expiresAt": "2026-10-28T08:09:33Z",
+    "files": {
+      "result.json": "a405ce59ba0b52a2111b600a0f7ad9aa513a6723fd83f11d3b25083b6ff71724",
+      "synthetic-receipt.json": "cd6112b637eb79870de55620522cfe09baf556ae217172419fa8dc1c1c04beb6"
+    }
+  },
+  "execution": {
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "modelWeightsChanged": false,
+    "normalizationFedToModel": false,
+    "p1Accessed": true,
+    "p2Accessed": true,
+    "p3Opened": false,
+    "automaticRetry": false
+  },
+  "p1": {
+    "baselineState": {
+      "exactStringFretTop1Rate": 0.5625,
+      "pitchOnlyTop1Rate": 0.5625,
+      "globalTrueStateRankMedian": 1,
+      "medianAbsoluteSemitoneError": 0,
+      "trueClassTop5Rate": 0.875,
+      "trueStateProbabilityMean": 0.6067937820212137,
+      "silenceProbabilityMean": 0.3588037643614612
+    },
+    "candidateState": {
+      "exactStringFretTop1Rate": 0.0625,
+      "pitchOnlyTop1Rate": 0.3125,
+      "wrongStringCorrectPitchTop1Rate": 0.25,
+      "globalTrueStateRankMedian": 13.5,
+      "sameStringTrueFretRankMedian": 4,
+      "medianAbsoluteSemitoneError": 11.5,
+      "meanAbsoluteSemitoneError": 10.625,
+      "trueClassTop1Rate": 0.0625,
+      "trueClassTop3Rate": 0.1875,
+      "trueClassTop5Rate": 0.3125,
+      "trueStateProbabilityMean": 0.03050097539274414,
+      "silenceProbabilityMean": 0.7171142365550622
+    },
+    "baselineOnset": {
+      "onsetProbabilityAtReferenceMean": 0.6316480822497397,
+      "window1ThresholdCrossRate": 1,
+      "window4ThresholdCrossRate": 1,
+      "window1AbsMaxFrameOffsetMedian": 0
+    },
+    "candidateOnset": {
+      "onsetProbabilityAtReferenceMean": 0.07482130565024418,
+      "window1ThresholdCrossRate": 0.1875,
+      "window4ThresholdCrossRate": 0.1875,
+      "window1AbsMaxFrameOffsetMedian": 1
+    },
+    "attackNovelty": {
+      "frameDiffL2_k1Mean": 1.971649185832479,
+      "positiveSpectralFlux_k1Mean": 14.424319431185722,
+      "positiveSpectralFlux_k2Mean": 21.57063638046384,
+      "positiveSpectralFlux_k4Mean": 30.33057263866067
+    }
+  },
+  "p2": {
+    "baselineOnset": {
+      "onsetProbabilityAtReferenceMean": 0.004931041482791443,
+      "window1MaxOnsetProbabilityMean": 0.01849737691776833,
+      "window4MaxOnsetProbabilityMean": 0.01900126958538143,
+      "window1ThresholdCrossRate": 0,
+      "window4ThresholdCrossRate": 0,
+      "window1AbsMaxFrameOffsetMedian": 0,
+      "stateCorrectAtReferenceRate": 0.26666666666666666
+    },
+    "candidateOnset": {
+      "onsetProbabilityAtReferenceMean": 0.04413436467663049,
+      "window1MaxOnsetProbabilityMean": 0.06393860940329148,
+      "window4MaxOnsetProbabilityMean": 0.06419102645216507,
+      "window1ThresholdCrossRate": 0,
+      "window4ThresholdCrossRate": 0,
+      "window1AbsMaxFrameOffsetMedian": 1,
+      "stateCorrectAtReferenceRate": 0.26666666666666666
+    },
+    "attackNovelty": {
+      "frameDiffL2_k1Mean": 1.4193860348584642,
+      "positiveSpectralFlux_k1Mean": 8.510302384694418,
+      "positiveSpectralFlux_k2Mean": 12.341720680395762,
+      "positiveSpectralFlux_k4Mean": 21.901864186922708
+    }
+  },
+  "synthetic": {
+    "candidateOnset": {
+      "onsetProbabilityAtReferenceMean": 0.6582589094750873,
+      "window1ThresholdCrossRate": 0.6744186046511628,
+      "window4ThresholdCrossRate": 0.6744186046511628,
+      "window1AbsMaxFrameOffsetMedian": 0,
+      "stateCorrectAtReferenceRate": 0.32558139534883723
+    },
+    "attackNovelty": {
+      "frameDiffL2_k1Mean": 2.9227591289514367,
+      "positiveSpectralFlux_k1Mean": 26.543297872524853,
+      "positiveSpectralFlux_k2Mean": 39.02564866459647,
+      "positiveSpectralFlux_k4Mean": 42.81760031585546
+    }
+  },
+  "interpretation": {
+    "p1": "Candidate failure is primarily diffuse state/pitch representation mismatch, not a simple string-only swap. Wrong-string/correct-pitch top1 occurs in 25%, but median absolute pitch error is 11.5 semitones and the median true-state global rank is 13.5.",
+    "p2": "No small timing shift rescues onset detection. Neither model crosses 0.50 anywhere within +/-4 frames of any P2 reference attack, while attack novelty is substantially weaker than P1 and synthetic.",
+    "decision": "Freeze. Do not threshold-rescue or tune on the eight real examples. Keep P3 sealed."
+  }
+}
