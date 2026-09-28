@@ -3,32 +3,59 @@
 Updated: 2026-09-28 UTC (2026-09-27 America/Toronto)
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
-Status: **S4 MODEL EXPERIMENT EXPLICITLY AUTHORIZED — SOURCE FREEZE IN PROGRESS; P1/P2/P3 SEALED**
+Status: **S4 FIRST LAUNCH FAILED BEFORE JOB CREATION; 0 MODEL EXECUTION; WORKFLOW YAML CORRECTED OFFLINE; FRESH MODEL AUTHORIZATION REQUIRED; P1/P2/P3 SEALED**
 
 ## Standing authorization policy
 
-Routine GitHub-only workflows are pre-authorized. Model execution, Codespaces and potentially billable Vercel operations require explicit approval.
+Routine GitHub-only code/tests/docs/metadata work is pre-authorized. Explicit approval remains required for model execution, Codespaces, and potentially billable Vercel operations.
 
-Stephen explicitly said **"I authorize"** for the frozen S4 model experiment.
+## S4 launch failure
 
-## Frozen S4 boundary
+Stephen authorized the frozen S4 model experiment. One launch artifact was committed at:
 
-- 294 deterministic synthetic clips / 588 s;
-- exactly two identical five-frame models;
-- control: state + onset losses both update shared encoder;
-- intervention: onset branch consumes detached encoder activations, so onset loss cannot update encoder;
-- state weight 6.0, onset pos_weight 8.0, onset multiplier 4.0 fixed;
-- same 32/32/32/32 sampler and identical 500 minibatches;
-- identical initialization;
-- lr 0.003, 500 optimizer steps/model;
-- thresholds 0.50/0.50, no threshold search;
-- gradient-contract checks before optimization;
-- zero automatic retries;
-- no P1/P2/P3, Codespaces or Vercel.
+- launch head `11c57c60afdb10ff36e07c4a86902c6d9f81d8b8`
+- GitHub workflow run **36374078304**
+- conclusion **FAILURE**
+- jobs created: **0**
+- model execution: **none**
+- render: **none**
+- optimizer steps: **0**
+- artifact: **none**
+- P1/P2/P3: untouched
+- Codespaces/Vercel: unused
 
-### Exact next task
+Frozen failure receipt:
+- `docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_WORKFLOW_PARSE_FAILURE_V1.json`
 
-Freeze exact source identities and authorization, launch S4 once, inspect that one run, freeze the result, then stop model work.
+### Cause and offline correction
+
+The workflow used an inline flow-style mapping containing an unquoted GitHub expression:
+
+`with: {ref: ${{ github.sha }}}`
+
+That source shape is invalid/unsafe YAML for GitHub workflow parsing because the nested braces appear inside a flow mapping. The workflow never reached job creation.
+
+Offline correction only:
+- replace checkout `with` with block-style `with:\n  ref: ...`;
+- normalize setup-python `with` to block style as well.
+
+The S4 runner and scientific design are unchanged.
+
+## Frozen S4 experiment remains
+
+Exactly two identical models:
+1. control: state + onset losses update shared encoder;
+2. intervention: onset head consumes detached encoder activations, so onset loss cannot update encoder.
+
+All S4 data/model/loss/sampler/threshold/step settings remain unchanged.
+
+### EXACT NEXT STEP — fresh explicit model authorization required
+
+The previous grant was used for the single launch attempt and there is no automatic model retry.
+
+The corrected workflow source may remain committed under standing routine GitHub authorization, but **do not create a new S4 launch until Stephen explicitly authorizes the corrected model run**.
+
+No P1/P2/P3, Codespaces, Vercel, threshold tuning, deployment or main mutation.
 
 
 ---

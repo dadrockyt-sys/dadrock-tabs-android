@@ -1,0 +1,30 @@
+{
+  "schema": "astra-synthetic-data-diversity-s4-workflow-parse-failure-v1",
+  "date": "2026-09-27",
+  "runId": 36374078304,
+  "launchHeadSha": "11c57c60afdb10ff36e07c4a86902c6d9f81d8b8",
+  "workflowConclusion": "failure",
+  "jobsCreated": 0,
+  "modelExecutionStarted": false,
+  "renderStarted": false,
+  "optimizerSteps": 0,
+  "artifactProduced": false,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Opened": false,
+  "codespacesUsed": false,
+  "vercelUsed": false,
+  "diagnosis": {
+    "category": "workflow_yaml_parse_or_validation_failure_before_job_creation",
+    "identifiedSourceIssue": "Inline flow-style 'with' mapping contained an unquoted GitHub expression with nested braces: with: {ref: ${{ github.sha }}}.",
+    "correction": "Use block-style with/ref mapping. Also normalize setup-python with mapping to block style.",
+    "scientificDesignChanged": false,
+    "modelRunnerChanged": false
+  },
+  "authorizationBoundary": {
+    "priorSingleLaunchConsumed": true,
+    "automaticModelRetry": false,
+    "correctedWorkflowMayBeCommittedUnderStandingRoutineGitHubAuthorization": true,
+    "freshExplicitModelAuthorizationRequiredBeforeNewLaunch": true
+  }
+}

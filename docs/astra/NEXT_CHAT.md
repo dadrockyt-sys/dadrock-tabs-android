@@ -1,24 +1,17 @@
 # Next chat: start here
 
-S3 failed its frozen gate.
+S4's first authorized launch did not create a job.
 
-Offline review supports one S4 hypothesis: shared-encoder task competition.
+Run 36374078304:
+- workflow failure before job creation
+- 0 model execution
+- 0 rendering
+- 0 optimizer steps
+- no artifact
+- P1/P2/P3 untouched
 
-S4 changes exactly one variable:
-- control: both state and onset losses update the shared encoder;
-- intervention: onset loss trains the onset head but its encoder activation is detached, so onset loss contributes zero encoder gradient.
+Cause: the workflow checkout used an inline flow-style YAML mapping containing an unquoted GitHub expression. It has been corrected offline to block-style YAML. S4 runner/design are unchanged.
 
-Everything else uses the S3 control configuration:
-- state weight 6
-- onset pos_weight 8
-- onset-aware sampler
-- same five-frame architecture
-- lr 0.003
-- 500 steps/model
-- thresholds 0.50 / 0.50
-- decoder V2
+Standing routine GitHub authorization covers the source correction, but the prior S4 single-launch grant is consumed.
 
-Frozen design:
-`docs/astra/SYNTHETIC_DATA_DIVERSITY_S4_DESIGN_V1.md`
-
-Standing policy still applies: routine GitHub work is pre-authorized, but **S4 model execution requires explicit authorization**. P1/P2/P3 remain sealed.
+**Fresh explicit authorization is required before launching the corrected S4 model workflow.**
