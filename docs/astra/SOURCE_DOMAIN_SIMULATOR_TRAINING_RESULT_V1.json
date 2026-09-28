@@ -1,0 +1,286 @@
+{
+  "schema": "astra-source-domain-simulator-training-frozen-result-v1",
+  "date": "2026-09-28",
+  "status": "scientific-gate-failed",
+  "scientificOutcome": "source-domain-training_improves_challenge_precision_but_reduces_recall_and_fails_preservation_gate",
+  "launchIdentity": "source-domain-v1-20260928-canonical-01",
+  "launchCommit": "a47bd80c71e275c9523744c348c7c559a557dcbf",
+  "workflow": {
+    "run": 36476678125,
+    "job": 109112023738,
+    "runAttempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 10993997488,
+    "name": "astra-source-domain-training-v1-36476678125-1",
+    "digest": "sha256:06015a175a2e84b5094b4ffe9dbd58196be14c39b8e25025fbdf3efb65007c3a",
+    "resultJsonSha256": "3e769072bf5bd906318bfd78ae2f7b126e81f6f0d39dd183dbf4b1f9a33fdacf",
+    "workflowReceiptSha256": "28128e5a463c4c40ebb24fef8ad610fe83f518d07c24c68ea31281d0084ae39b"
+  },
+  "frozenPreparation": {
+    "run": 36475263654,
+    "artifact": 10993531230,
+    "digest": "sha256:00bbd401e887aaabef6f5c911b2a9a767d854ad3d7254584b94927a10ec29953",
+    "featureHashes": {
+      "control": "b172b7cdcc0df5bc3b47b54a8dd116992f9552383babe0dc4cde5eecdac3a749",
+      "intervention": "a8b5c5c590c82c152f302260430b3d6e4a3c9d5ee378d683bd8091f8f220501a",
+      "challenge": "c786d846b2651872b621afa16d69a179965ffc0190a164d2e5e4ca89e0842640"
+    }
+  },
+  "execution": {
+    "modelCount": 6,
+    "optimizerStepsPerModel": 500,
+    "optimizerStepsTotal": 3000,
+    "fitEvalSeconds": 13.25133326599996,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "automaticRetry": false,
+    "paidComputeDollars": 0,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Opened": false,
+    "codespacesUsed": false,
+    "vercelUsed": false,
+    "productionMutation": false
+  },
+  "aggregateDeltas": {
+    "challengeOnsetF1": {
+      "mean": 0.019516971341798455,
+      "minimum": 0.0006584362139917532,
+      "maximum": 0.044992581010578014,
+      "positiveSeeds": 3
+    },
+    "challengeOnsetRecall": {
+      "mean": -0.049095607235142134,
+      "minimum": -0.054263565891472854,
+      "maximum": -0.046511627906976716,
+      "positiveSeeds": 0
+    },
+    "challengeOnsetPrecision": {
+      "mean": 0.10827384116857801,
+      "minimum": 0.07236842105263153,
+      "maximum": 0.15000000000000002,
+      "positiveSeeds": 3
+    },
+    "ordinaryOnsetF1": {
+      "mean": -0.030343572718106133,
+      "minimum": -0.052964499769479145,
+      "maximum": -0.016106205274383778,
+      "positiveSeeds": 0
+    },
+    "ordinaryOnsetRecall": {
+      "mean": -0.05684754521963827,
+      "minimum": -0.09302325581395354,
+      "maximum": -0.03100775193798455,
+      "positiveSeeds": 0
+    },
+    "ordinaryOnsetPrecision": {
+      "mean": 0.017013806854550156,
+      "minimum": 0.01041666666666663,
+      "maximum": 0.028202393648536606,
+      "positiveSeeds": 3
+    },
+    "ordinaryStateAdmission": {
+      "mean": -0.01550387596899224,
+      "minimum": -0.023255813953488358,
+      "maximum": 0,
+      "positiveSeeds": 0
+    },
+    "ordinaryJointAdmission": {
+      "mean": -0.0387596899224806,
+      "minimum": -0.054263565891472854,
+      "maximum": -0.023255813953488358,
+      "positiveSeeds": 0
+    }
+  },
+  "perSeed": [
+    {
+      "seed": 20260927,
+      "controlOrdinary": {
+        "f1": 0.7256637168141593,
+        "precision": 0.845360824742268,
+        "recall": 0.6356589147286822,
+        "tp": 82,
+        "fp": 15,
+        "fn": 47
+      },
+      "interventionOrdinary": {
+        "f1": 0.7037037037037038,
+        "precision": 0.8735632183908046,
+        "recall": 0.5891472868217055,
+        "tp": 76,
+        "fp": 11,
+        "fn": 53
+      },
+      "controlChallenge": {
+        "f1": 0.6274509803921569,
+        "precision": 0.6349206349206349,
+        "recall": 0.6201550387596899,
+        "tp": 80,
+        "fp": 46,
+        "fn": 49
+      },
+      "interventionChallenge": {
+        "f1": 0.6403508771929824,
+        "precision": 0.7373737373737373,
+        "recall": 0.5658914728682171,
+        "tp": 73,
+        "fp": 26,
+        "fn": 56
+      },
+      "ordinaryDelta": {
+        "f1": -0.02196001311045548,
+        "precision": 0.028202393648536606,
+        "recall": -0.046511627906976716,
+        "stateAdmission": 0,
+        "jointAdmission": -0.023255813953488358
+      },
+      "challengeDelta": {
+        "f1": 0.012899896800825594,
+        "precision": 0.10245310245310246,
+        "recall": -0.054263565891472854,
+        "stateAdmission": 0.015503875968992276,
+        "jointAdmission": -0.06201550387596899
+      },
+      "ordinaryLegatoF1Loss": 0.3090909090909091
+    },
+    {
+      "seed": 20260928,
+      "controlOrdinary": {
+        "f1": 0.7400881057268723,
+        "precision": 0.8571428571428571,
+        "recall": 0.6511627906976745,
+        "tp": 84,
+        "fp": 14,
+        "fn": 45
+      },
+      "interventionOrdinary": {
+        "f1": 0.7239819004524886,
+        "precision": 0.8695652173913043,
+        "recall": 0.6201550387596899,
+        "tp": 80,
+        "fp": 12,
+        "fn": 49
+      },
+      "controlChallenge": {
+        "f1": 0.6748971193415638,
+        "precision": 0.7192982456140351,
+        "recall": 0.6356589147286822,
+        "tp": 82,
+        "fp": 32,
+        "fn": 47
+      },
+      "interventionChallenge": {
+        "f1": 0.6755555555555556,
+        "precision": 0.7916666666666666,
+        "recall": 0.5891472868217055,
+        "tp": 76,
+        "fp": 20,
+        "fn": 53
+      },
+      "ordinaryDelta": {
+        "f1": -0.016106205274383778,
+        "precision": 0.012422360248447228,
+        "recall": -0.03100775193798455,
+        "stateAdmission": -0.023255813953488358,
+        "jointAdmission": -0.054263565891472854
+      },
+      "challengeDelta": {
+        "f1": 0.0006584362139917532,
+        "precision": 0.07236842105263153,
+        "recall": -0.046511627906976716,
+        "stateAdmission": 0.007751937984496138,
+        "jointAdmission": -0.046511627906976744
+      },
+      "ordinaryLegatoF1Loss": 0.13333333333333341
+    },
+    {
+      "seed": 20260929,
+      "controlOrdinary": {
+        "f1": 0.7551867219917013,
+        "precision": 0.8125,
+        "recall": 0.7054263565891473,
+        "tp": 91,
+        "fp": 21,
+        "fn": 38
+      },
+      "interventionOrdinary": {
+        "f1": 0.7022222222222222,
+        "precision": 0.8229166666666666,
+        "recall": 0.6124031007751938,
+        "tp": 79,
+        "fp": 17,
+        "fn": 50
+      },
+      "controlChallenge": {
+        "f1": 0.6245353159851301,
+        "precision": 0.6,
+        "recall": 0.6511627906976745,
+        "tp": 84,
+        "fp": 56,
+        "fn": 45
+      },
+      "interventionChallenge": {
+        "f1": 0.6695278969957081,
+        "precision": 0.75,
+        "recall": 0.6046511627906976,
+        "tp": 78,
+        "fp": 26,
+        "fn": 51
+      },
+      "ordinaryDelta": {
+        "f1": -0.052964499769479145,
+        "precision": 0.01041666666666663,
+        "recall": -0.09302325581395354,
+        "stateAdmission": -0.023255813953488358,
+        "jointAdmission": -0.03875968992248058
+      },
+      "challengeDelta": {
+        "f1": 0.044992581010578014,
+        "precision": 0.15000000000000002,
+        "recall": -0.04651162790697683,
+        "stateAdmission": -0.007751937984496082,
+        "jointAdmission": -0.031007751937984496
+      },
+      "ordinaryLegatoF1Loss": 0.33333333333333337
+    }
+  ],
+  "failedCriteria": [
+    "challengeOnsetRecallGainPositive3of3",
+    "meanChallengeOnsetF1GainAtLeast0_05",
+    "meanChallengeOnsetRecallGainAtLeast0_08",
+    "noOrdinaryOnsetF1LossOver0_03",
+    "noOrdinaryJointAdmissionLossOver0_04",
+    "ordinaryNonChordFamilyLossOver0_15InAtMostOneSeed"
+  ],
+  "passedCriteria": [
+    "challengeOnsetF1GainPositive3of3",
+    "noChallengePrecisionLossOver0_05",
+    "challengeNegativeOnlyFpAtMost0_10EverySeed",
+    "noOrdinaryPrecisionLossOver0_03",
+    "noOrdinaryStateAdmissionLossOver0_03",
+    "ordinaryNegativeOnlyFpAtMost0_10EverySeed",
+    "allRequiredMetricsFinite",
+    "allSix500Steps",
+    "pairedInitializationAndBatches",
+    "fixedDatasetHashesVerified",
+    "nonFeatureArraysBitIdentical",
+    "interventionValidationTestFeaturesBitIdentical",
+    "challengeTrainValidationFeaturesBitIdentical",
+    "interventionChangedRowsExactlyTrain",
+    "challengeChangedRowsExactlyTest",
+    "historicalS9TrainingChordStringsPreserved",
+    "fixedThresholdsNoSearch",
+    "exactSixModelsAnd3000Steps",
+    "noAutomaticRetry"
+  ],
+  "interpretation": {
+    "supported": "The source-domain-trained arm reduced false positives and increased onset precision on the fixed synthetic challenge in all three seeds, producing small positive F1 deltas in all three seeds.",
+    "failed": "Recall decreased on the challenge in all three seeds, mean F1 gain was below the preregistered +0.05 floor, and ordinary-domain recall/F1/joint admission regressed. Legato ordinary F1 exceeded the 0.15 loss guard in two seeds.",
+    "decision": "Reject this exact source-domain training package under the frozen gate. Do not tune simulator ranges, select a favorable seed, alter thresholds, or automatically run another model experiment."
+  },
+  "stopRule": "Freeze failure and return to project-level simulator/representation review. No automatic follow-on model run or P1/P2/P3 access."
+}
