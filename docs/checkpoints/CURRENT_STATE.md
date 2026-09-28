@@ -4,7 +4,7 @@ Updated: 2026-09-28 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **SOURCE-DOMAIN TRAINING V1 FAILED; MODEL-FREE JOINT-COVERAGE REVIEW FROZEN — FIXED CHALLENGE IS MARGINALLY IN-RANGE BUT JOINTLY UNREPRESENTED; NEXT: DESIGN-ONLY JOINT-COVERAGE PROTOCOL; P1/P2 CLOSED; P3 SEALED**
+Status: **JOINT-COVERAGE V2 ZERO-RENDER MANIFEST ADMISSION PASSED — NEXT: MODEL-FREE WAVEFORM/PREPARED-FEATURE ADMISSION DESIGN ONLY; NO DATASET RENDER OR MODEL YET; P1/P2 CLOSED; P3 SEALED**
 
 Latest supervisory instructions are in **Supervisory review after S12** at the end of this file. Earlier execution/resume sections are historical where superseded.
 
@@ -1709,3 +1709,92 @@ Any such design must:
 - keep P1/P2 closed and P3 sealed.
 
 **Resume instruction:** Continue with design-only joint-coverage protocol work. Do not train or render a new dataset yet.
+
+
+## Joint-coverage V2 zero-render manifest admission — 2026-09-28
+
+The prospective V2 joint-coverage protocol and deterministic parameter-manifest implementation have now passed zero-render admission.
+
+Frozen protocol:
+- `docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.md`
+- `docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_PROTOCOL_V2.json`
+
+Implementation:
+- `astra_backend/synthetic/source_domain_joint_coverage_manifest_v2.py`
+- `astra_backend/synthetic/test_source_domain_joint_coverage_manifest_v2.py`
+- `.github/workflows/astra-source-domain-joint-coverage-manifest-v2.yml`
+
+Frozen result:
+- `docs/astra/SOURCE_DOMAIN_JOINT_COVERAGE_MANIFEST_RESULT_V2.json`
+
+### Verification
+
+Workflow:
+- run **36481373445**
+- job **109127570036**
+- head `4ebd5a9f3d4c78a6493372d2642e67f77eb8ec4c`
+- conclusion **SUCCESS**
+- focused tests **4 passed**
+
+Artifact:
+- **10997033182**
+- digest `sha256:69fb45f4c5cfa20a18a5a3dda75c5ff835da38c08549d64fc929daaaba1b30ee`
+- manifest JSON SHA-256 `a0d7786b1f459d348efef151f7ef8d4f5b1cf412b27ad61e7a4e052c4559e24d`
+- manifest content SHA-256 `2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469`
+
+Frozen input:
+- source-domain V1 preparation run **36475263654**
+- artifact **10993531230**
+- exact S9 control file SHA-256 `16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894`
+
+### Zero-render admission result
+
+The deterministic manifest contains:
+- **210** training parameter rows;
+- exactly **30 per family**;
+- **42** primary held-out challenge rows;
+- exactly **6 per family**.
+
+Checks passed:
+- every continuous training axis occupies all 30 frozen marginal strata exactly once per family;
+- every primary-challenge axis occupies all six frozen challenge strata exactly once per family;
+- categorical nonlinear/hum counts match the protocol;
+- train/challenge exact full parameter-vector duplicates = **0**;
+- historical S9 metadata identity preserved;
+- manifest rerun logic is deterministic under the frozen implementation.
+
+Execution boundary remained exact:
+- waveform renders **0**;
+- models loaded **0**;
+- model inference **false**;
+- optimizer steps **0**;
+- P1/P2/P3 access **none**;
+- threshold search/retuning **none**;
+- paid compute **$0**;
+- main/Production mutation **none**.
+
+### What this establishes
+
+The V2 parameter plan fixes the V1 design problem of relying only on independent marginal random draws at the manifest level by imposing deterministic family-wise marginal stratification and a separately stratified held-out in-support challenge.
+
+This is **not yet evidence** that:
+- waveform-level V2 coverage survives the source renderer as intended;
+- prepared-CQT joint coverage improves;
+- the frozen S11 model will benefit;
+- V1's failed precision/recall tradeoff was caused by coverage alone.
+
+The V1 failed training result remains frozen.
+
+### Exact next action
+
+Do **not** render the full V2 dataset and do **not** train a model yet.
+
+Next work is design/review only for a bounded **model-free waveform and prepared-feature admission** using the frozen V2 manifest:
+1. define a small fixed waveform fixture/sample subset before rendering;
+2. freeze source-label/timing/fundamental/peak and no-clipping checks;
+3. freeze prepared-CQT coverage diagnostics comparing V2 train/challenge geometry without using model scores;
+4. keep the old V1 fixed challenge as secondary diagnostic only, never as the V2 gate;
+5. define hard render/audio/storage/time ceilings;
+6. only after that design is frozen may a bounded model-free V2 waveform preparation be implemented.
+
+**Resume instruction:** Continue with model-free V2 waveform/prepared-feature admission design only. No dataset rendering, model execution, optimizer work, P1/P2 access or P3 access.
