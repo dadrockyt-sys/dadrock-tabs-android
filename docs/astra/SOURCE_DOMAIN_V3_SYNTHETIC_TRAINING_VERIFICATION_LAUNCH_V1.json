@@ -1,0 +1,15 @@
+{
+  "schema": "astra-source-domain-v3-training-verification-launch-v1",
+  "date": "2026-09-28",
+  "status": "armed",
+  "launchIdentity": "source-domain-v3-training-verify-20260928-canonical-01",
+  "optimizerSteps": 0,
+  "modelFitCalls": 0,
+  "modelInference": false,
+  "automaticRetry": false,
+  "p1Access": false,
+  "p2Access": false,
+  "p3Access": false,
+  "paidComputeDollars": 0,
+  "productionMutation": false
+}
