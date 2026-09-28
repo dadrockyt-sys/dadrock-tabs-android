@@ -1,0 +1,74 @@
+{
+  "schema": "astra-source-domain-v2-source-isolating-pitch-protocol-v1",
+  "date": "2026-09-28",
+  "status": "prospective-diagnostic-design-frozen-no-execution-yet",
+  "frozenStageAResult": "docs/astra/SOURCE_DOMAIN_V2_STAGE_A_RESULT_V1.json",
+  "measurementReview": "docs/astra/SOURCE_DOMAIN_V2_STAGE_A_MEASUREMENT_VALIDITY_REVIEW_V1.json",
+  "sample": {
+    "stageARows": 28,
+    "trainLocalPositions": [
+      0,
+      29
+    ],
+    "challengeLocalPositions": [
+      0,
+      5
+    ],
+    "originalMeasurableAttackedEvents": 86,
+    "rowSubstitution": false
+  },
+  "probe": {
+    "sourceMultiplicity": 1,
+    "preserveOriginalEventIndex": true,
+    "preserveExactClipManifestParameters": true,
+    "preservePerNoteSubstreams": true,
+    "applySamePostChain": true,
+    "clipSeconds": 2,
+    "outputSampleRateHz": 22050
+  },
+  "estimator": {
+    "sameAsOriginal": true,
+    "searchBandRelative": [
+      0.85,
+      1.15
+    ],
+    "toleranceCents": 15,
+    "stableWindowRule": "min(end-0.04,start+0.10) to min(end,start+0.12)"
+  },
+  "admission": {
+    "deterministicRerender": true,
+    "finiteAndPeakUnder0_999": true,
+    "exactEventIdentity": true,
+    "exactlyOneMusicalNotePerProbe": true,
+    "allMeasurableWithin15Cents": true,
+    "noOriginalMeasurableEventOmitted": true
+  },
+  "ceilings": {
+    "probeRendersMax": 172,
+    "audioSecondsMax": 344,
+    "wallMinutesMax": 20,
+    "persistedBytesMax": 104857600,
+    "cpuOnly": true,
+    "modelLoads": 0,
+    "modelInference": false,
+    "optimizerSteps": 0,
+    "thresholdWork": false,
+    "p1Access": false,
+    "p2Access": false,
+    "p3Access": false,
+    "automaticRetry": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "interpretation": {
+    "originalStageAResultRewritten": false,
+    "passWouldEstablish": "original pitch failure was measurement-confounded for polyphony under isolated source validation",
+    "passWouldNotAuthorize": [
+      "Stage B",
+      "model training",
+      "P1/P2",
+      "P3"
+    ]
+  },
+  "nextAction": "implement-and-statically-verify-source-isolating-diagnostic-package"
+}
