@@ -1,6 +1,23 @@
 {
   "schema": "astra-source-domain-simulator-training-execution-history-v1",
-  "status": "no-source-domain-training-execution-yet",
-  "consumedLaunchIdentities": [],
-  "notes": "Durable single-use ledger. Offline verification performs zero optimizer steps. Any future launch identity must be absent here before execution and consumed after the one run."
+  "status": "source-domain-training-execution-consumed-failed",
+  "consumedLaunchIdentities": [
+    "source-domain-v1-20260928-canonical-01"
+  ],
+  "executions": [
+    {
+      "launchIdentity": "source-domain-v1-20260928-canonical-01",
+      "launchCommit": "a47bd80c71e275c9523744c348c7c559a557dcbf",
+      "workflowRun": 36476678125,
+      "workflowJob": 109112023738,
+      "runAttempt": 1,
+      "workflowConclusion": "success",
+      "scientificGatePassed": false,
+      "artifact": 10993997488,
+      "artifactDigest": "sha256:06015a175a2e84b5094b4ffe9dbd58196be14c39b8e25025fbdf3efb65007c3a",
+      "resultJsonSha256": "3e769072bf5bd906318bfd78ae2f7b126e81f6f0d39dd183dbf4b1f9a33fdacf",
+      "frozenResult": "docs/astra/SOURCE_DOMAIN_SIMULATOR_TRAINING_RESULT_V1.json"
+    }
+  ],
+  "notes": "Launch identity consumed. No rerun, simulator-range tuning, threshold rescue, favorable-seed selection, automatic P1/P2/P3 follow-up, or follow-on model experiment is authorized."
 }
