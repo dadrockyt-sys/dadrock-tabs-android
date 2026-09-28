@@ -1,0 +1,108 @@
+name: Astra V2 source-isolating pitch diagnostic (disabled)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+
+jobs:
+  isolated-pitch:
+    if: ${{ false }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Install frozen CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check pytest
+
+      - name: Download exact frozen V1 preparation
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-simulator-preparation-v1
+          path: /tmp/astra-source-domain-v1
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36475263654'
+
+      - name: Download exact frozen V2 manifest
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-joint-coverage-manifest-v2
+          path: /tmp/astra-source-domain-v2-manifest
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36481373445'
+
+      - name: Download exact frozen failed Stage A result
+        uses: actions/download-artifact@v4
+        with:
+          name: astra-source-domain-v2-stage-a-admission-v3
+          path: /tmp/astra-source-domain-v2-stage-a-v3
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: '36484128430'
+
+      - name: Verify frozen input identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTROL=/tmp/astra-source-domain-v1/datasets/s9-control.npz
+          MANIFEST=/tmp/astra-source-domain-v2-manifest/manifest.json
+          STAGEA=/tmp/astra-source-domain-v2-stage-a-v3/stage-a-result.json
+          test "$(sha256sum "$CONTROL" | awk '{print $1}')" = "16123bfab56050e355e424be0050b11e6447b24c32c105da86c0ec971d599894"
+          test "$(sha256sum "$STAGEA" | awk '{print $1}')" = "5778104fe505f5a38b4e2a0ed3e049a9993db92a9a1a3a078851c6cb7df8e0c2"
+          python - <<'PY'
+          import hashlib,json
+          p='/tmp/astra-source-domain-v2-manifest/manifest.json'
+          m=json.load(open(p)); x=dict(m); x.pop('manifestContentSha256',None)
+          h=hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+          assert h=='2dc6e09c3c617ac55e84e386e6fc6ff26d0e68ed81016169cad5ce72c7d95469'
+          assert m['manifestContentSha256']==h
+          print('ISOLATED_PITCH_INPUTS_OK')
+          PY
+
+      - name: Focused diagnostic tests
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          pytest -q astra_backend/synthetic/test_source_domain_v2_source_isolating_pitch_v1.py
+
+      - name: Run one source-isolating diagnostic
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-v2-isolated-pitch
+          python -m synthetic.source_domain_v2_source_isolating_pitch_v1 \
+            --control /tmp/astra-source-domain-v1/datasets/s9-control.npz \
+            --manifest /tmp/astra-source-domain-v2-manifest/manifest.json \
+            --stage-a-result /tmp/astra-source-domain-v2-stage-a-v3/stage-a-result.json \
+            --out /tmp/astra-v2-isolated-pitch/result.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-source-domain-v2-source-isolating-pitch-v1
+          path: /tmp/astra-v2-isolated-pitch
+          if-no-files-found: warn
+          retention-days: 30
