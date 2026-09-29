@@ -2863,3 +2863,75 @@ Proceed to **pre-inference annotation and intake closure only**:
 Only after that zero-inference checkpoint may the one bounded real-development model evaluation run.
 
 **Resume instruction:** Collection is complete. Continue with annotation and intake validation; do not run the candidate model yet.
+
+
+## Pre-inference annotation draft complete; scientific QA block frozen — 2026-09-28
+
+The 24-clip independent real-development intake has now been populated and structurally validated before any candidate-model output.
+
+New frozen files:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_MODEL_FREE_ANNOTATIONS_V1.json`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_COLLECTED_AUDIO_CORRECTION_V2.json`
+- updated `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_ANNOTATION_QA_V1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_ZERO_INFERENCE_VERIFICATION_V1.json`
+
+Verified intake:
+- 24 clips;
+- 18 positive / 6 negative-only;
+- 145.415094 s positive evaluation audio;
+- 41.366531 s negative-only evaluation audio;
+- all frozen coverage categories present;
+- 105 model-free pitch/onset draft labels;
+- confidence: 81 high / 5 medium / 19 low;
+- candidate remains S9 30-voicing intervention;
+- thresholds remain 0.50 / 0.50;
+- model inference 0;
+- optimizer steps 0;
+- P1/P2/P3 none;
+- A2 closed;
+- main/Production unchanged.
+
+A pre-inference clerical correction was necessary and frozen before any model output:
+- P02 SHA-256 corrected from the earlier recorded value to `e4a57932d02b3e925d9e76a04067bd623fe1023c9e37da19f4011e93a8e0483e` after recomputation from uploaded bytes;
+- P05/P09/P11/N05 evaluation endpoints were reduced by tiny amounts where the nominal endpoint exceeded decoded MP3 duration.
+
+These are bookkeeping corrections, not result-responsive changes.
+
+### Structural vs scientific status
+
+**Frozen structural intake validator: PASS.**
+
+**Scientific annotation completeness: NOT YET PASSED.**
+
+The draft uses spectral-flux onset detection plus YIN fundamental estimation. This is model-free but fundamentally monophonic, so chordal/polyphonic clips can be under-annotated. Do not let structural validity substitute for reference-label completeness.
+
+Mandatory human QA before inference:
+- P01
+- P02
+- P05
+- P06
+- P07
+- P10
+- P13
+- P16
+
+Recommended additional QA:
+- P03
+- P08
+- P11
+- P12
+- P18
+
+Human QA must be completed without viewing candidate output. Add every reliably audible simultaneous pitch for chord events; use MIDI pitch; preserve onset relative to the frozen crop; string/fret only when unambiguous.
+
+### Exact next task
+
+Complete human QA of the reference annotations. Then:
+1. freeze corrected annotations;
+2. update intake;
+3. rerun pure structural validator;
+4. freeze a new zero-inference receipt with scientific readiness true only if the reference set is adequate;
+5. only then run the single bounded candidate-model evaluation.
+
+**Resume instruction:** Do not run the candidate model yet. Continue only with pre-inference human annotation QA. No training/tuning/A2/P1/P2/P3.
