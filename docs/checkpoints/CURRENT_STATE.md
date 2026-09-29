@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9/V10/V11/V12 FROZEN; POST-V12 CAUSAL REVIEW COMPLETE; NO V13 OPEN**
+Status: **V9/V10/V11/V12 FROZEN; V13 CONTRACT/PREFLIGHT PASS; V13 EMPIRICAL EXECUTION NOT AUTHORIZED**
 
-Latest resume instructions are in **Post-V12 causal review complete — active-non-onset family mixture identified — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
+Latest resume instructions are in **V13 active-non-onset family-mixture study prospectively frozen — preflight PASS — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -6225,3 +6225,112 @@ This review used:
 Main/Production unchanged.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, freeze the active-non-onset family-mixture study first. Empirical execution must still wait for a fresh authorization after that contract/preflight is visible.
+
+
+## V13 active-non-onset family-mixture study prospectively frozen — preflight PASS — 2026-09-29
+
+**Current resume authority. This section supersedes the prior post-V12 generic-review boundary.**
+
+The user explicitly authorized opening the next project. That authorization was used only for prospective V13 definition, implementation, pure tests, and model-free preflight. It was not treated as empirical-training authorization because the exact V13 contract did not yet exist when authorization was given.
+
+Completed:
+- `docs/astra/V13_PROJECT_AUTHORIZATION_V1.json`
+- `docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.md`
+- `docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json`
+- `astra_backend/synthetic/v13_active_nononset_mixture_v1.py`
+- `astra_backend/synthetic/test_v13_active_nononset_mixture_v1.py`
+- `astra_backend/synthetic/v13_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v13_contract_validator_v1.py`
+- `.github/workflows/astra-v13-active-nononset-preflight-v1.yml`
+- `docs/astra/V13_PREFLIGHT_RESULT_V1.md`
+- `docs/astra/V13_PREFLIGHT_RESULT_V1.json`
+
+### Frozen V13 question
+
+With the exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical 2-second comparator active-non-onset family mixture materially recover common-population precision/F1 without increasing negative-only false positives?
+
+### Frozen intervention
+
+Control:
+- exact executed-V9 dataset and four-stratum batch plan.
+
+Intervention:
+- same dataset arrays;
+- same positive-onset selections;
+- same negative-structure-inactive selections;
+- same other-inactive selections;
+- same per-step 128-frame permutation;
+- replace only active-non-onset selections.
+
+Across exactly **16,000 active-non-onset slots**, the historical comparator family allocation is frozen to:
+- isolated **2,511**
+- scales **2,569**
+- chords **2,219**
+- repeated **2,861**
+- legato **3,037**
+- palmmute **1,752**
+- mixed-positive **1,051**
+
+Family schedule seed: **20283928**  
+Family-pool selection seed: **20283929**
+
+Because positive-onset selections are identical across arms, sampled attacked-note-label exposure must also remain identical.
+
+### Model-free preflight passed
+
+Run:
+- **36539873506**
+- job **109312472318**
+- head `98eaaeb87737582f59fde5755da88cb647af8c27`
+- artifact **11019923191**
+- digest `sha256:7d46e108c9fcfba1dbc3e1cfd767f62ffe8e3888cdfe3c98ef4da46044d6b96a`
+- conclusion **success**
+- retained through 2026-10-29
+
+Preflight counts:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+
+### Frozen empirical gate if later authorized
+
+V13 control must exactly reproduce frozen V9 common-test metrics within 1e-12:
+- precision 0.3244274809160305
+- recall 0.6589147286821705
+- F1 0.43478260869565216
+
+Support requires all:
+- common precision gain >= +0.15
+- common F1 gain >= +0.10
+- common recall decline <=0.05
+- common negative FP <=0.10/s
+- frozen-V9 test F1 decline <=0.05
+- exact historical active-non-onset family-slot totals
+- identical positive-onset selections
+- identical negative-structure-inactive selections
+- identical other-inactive selections
+- identical per-step shuffle
+- identical sampled attacked-note-label exposure
+- exact 500 updates/model
+- exact 2 models
+- finite metrics
+- no threshold search
+- no scientific retry
+
+There is no V2B stage in V13.
+
+### Current authorization boundary
+
+**Empirical V13 execution is not yet authorized.**
+
+A fresh explicit authorization after this frozen contract/preflight is required before:
+- deterministic dataset regeneration;
+- training the two V13 models;
+- any optimizer step;
+- any model inference.
+
+Main/Production unchanged.
+
+**Resume instruction:** Preserve V9-V12 as frozen historical results. Preserve V13 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V13 after this point, consume one unique V13 launch scope and execute exactly the frozen two-arm synthetic-only active-non-onset family-mixture study with no retries and no V2B.
