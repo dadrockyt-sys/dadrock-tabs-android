@@ -1,0 +1,60 @@
+{
+  "schema": "astra-v14-execution-attempt-1-failure-v1",
+  "date": "2026-09-29",
+  "status": "invalid-noninterpretable-control-reproduction-failure",
+  "launchIdentity": "v14-matched-context-v1-20260929-01",
+  "run": {
+    "id": 36546933952,
+    "jobId": 109335463434,
+    "headSha": "8487cc3a433df177285582b966d36ed54bec368f",
+    "runAttempt": 1,
+    "conclusion": "failure"
+  },
+  "preExecutionValidation": {
+    "testsPassed": 7,
+    "testsFailed": 0,
+    "validatorPassed": true
+  },
+  "executionReached": {
+    "waveformDatasets": 2,
+    "modelsTrained": 2,
+    "optimizerStepsPerModel": 500,
+    "optimizerStepsTotal": 1000,
+    "syntheticModelInference": true,
+    "v2b": false,
+    "realAudio": false
+  },
+  "failure": {
+    "stage": "control reproduction guard",
+    "exception": "RuntimeError: control reproduction failed",
+    "artifactUploaded": false,
+    "scientificResultInterpretable": false,
+    "primaryRootCause": "V14 empirical runner used ROOT=20260929 for paired batch sampling, while the historical V9 control used ROOT=20260927 with RNG seed ROOT+17001.",
+    "secondaryRuntimeMismatch": "Attempt also used ubuntu-latest / Python 3.11 and freshly installed current packages instead of the exact historical V9 ubuntu-22.04 / Python 3.10.15 / requirements.lock.txt runtime.",
+    "consequence": "The control was not the frozen historical control identity. Bridge metrics, even though computed internally before the guard, were not persisted and must not be reconstructed or interpreted."
+  },
+  "automaticRetry": false,
+  "artifactCount": 0,
+  "correctionsPreparedAfterFailure": {
+    "runnerBatchRoot": 20260927,
+    "workflowRuntime": "ubuntu-22.04 + Python 3.10.15 + astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "futureFailureReceipt": true,
+    "focusedBatchRootGuardAdded": true,
+    "correctedRunnerBlob": "68fd78964acc474337988182fc7c619adff691b2",
+    "correctedWorkflowBlob": "8be667ab11f6e1548c227f2d3b1ddb762ecfa408",
+    "correctedTestsBlob": "c0ffdcf95759c0a5e54e95b1f4349f866f704a29"
+  },
+  "authorization": {
+    "originalEmpiricalAuthorizationConsumed": true,
+    "secondExecutionAuthorized": false,
+    "freshExplicitAuthorizationRequired": true
+  },
+  "boundaries": {
+    "v2b": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
