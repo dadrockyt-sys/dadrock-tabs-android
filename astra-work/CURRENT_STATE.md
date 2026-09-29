@@ -978,3 +978,51 @@ Start with **C01 Electric guitar Tapping**:
 `https://pixabay.com/sound-effects/musical-electric-guitar-tapping-34546/`
 
 **Resume instruction:** Continue V2B collection from C01. Do not inspect candidate-model output, tune thresholds, or reuse V1.1 while collecting.
+
+
+## V2B pre-inference intake closed — 2026-09-28
+
+V2B collection and annotation are complete before any candidate-model output.
+
+Frozen files:
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json`
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_COLLECTION_CORRECTION_V2.json`
+- updated `docs/astra/V2B_CALIBRATION_DEVELOPMENT_INTAKE.json`
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_ZERO_INFERENCE_VERIFICATION_V1.json`
+
+Validated set:
+- 17 clips total
+- 13 positive / 4 negative-only
+- 110.023184 s positive
+- 31.857959 s negative
+- 9 creator/capture identities
+- all required V2B coverage present
+
+Frozen annotations:
+- 164 onset landmarks
+- 57 trusted pitch landmarks
+- 50 high-confidence pitch landmarks
+- 7 medium-confidence pitch landmarks
+- pitch-trusted clips: C01, C02, C05, C06, C07, C12
+- onset-only positive clips: C03, C04, C08, C09, C10, C11, C13
+
+Polyphonic/effect-heavy material is not treated as exhaustive pitch ground truth.
+
+Pre-inference clerical corrections:
+- C04 evaluation duration corrected from 5.806 s to 5.799184 s using decoded uploaded bytes
+- D01 evaluation duration corrected from 8.098 s to 8.097959 s
+- corrections occurred before any V2B candidate output
+
+Zero-inference verification:
+- structural intake: PASS
+- annotation readiness for calibration diagnostics: PASS
+- model inference: 0
+- optimizer steps: 0
+- threshold search: none
+- calibration fitting: none
+- V1.1 tuning use: none
+- P1/P2/P3: none
+- A2: closed
+- main/Production: unchanged
+
+**Resume instruction:** V2B is complete. Stop before V2C. Do not run the candidate on V2B, inspect raw model probabilities, search thresholds, fit calibration, or tune anything until V2C is explicitly authorized. V1.1 remains sealed.
