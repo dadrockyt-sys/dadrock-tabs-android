@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **Post-V13 recovery strategy review complete — recovery-first bridge selected — 2026-09-29** at the end of this file. No V14 is open.
+Latest instructions: **V14 2-second matched-context bridge opened — contract frozen — model-free preflight complete — 2026-09-29** at the end of this file. V14 empirical execution is not authorized.
 
 ## Current status
 
@@ -4867,3 +4867,155 @@ After that contract/preflight is visible, require another fresh explicit authori
 P1/P2 remain closed. P3 remains sealed. Main/Production unchanged.
 
 **Resume instruction:** Preserve V9-V13 as frozen evidence. Do not revert to the negative-structure-inactive-mixture V14. Await explicit authorization to open the 2-second matched-context bridge project.
+
+
+## V14 2-second matched-context bridge opened — contract frozen — model-free preflight complete — 2026-09-29
+
+**THIS IS THE CURRENT RESUME AUTHORITY.**
+
+The user's explicit authorization was consumed for **project preparation only**:
+- open V14;
+- freeze the 2-second matched-context bridge contract;
+- derive one deterministic feasible timing schedule;
+- implement a pure model-free validator and focused tests;
+- complete model-free preflight.
+
+It was **not** consumed as empirical rendering/training authorization.
+
+Created:
+- `docs/astra/V14_PROJECT_AUTHORIZATION_V1.json`
+- `docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.md`
+- `docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json`
+- `astra_backend/synthetic/v14_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v14_contract_validator_v1.py`
+- `docs/astra/V14_PREFLIGHT_RESULT_V1.md`
+- `docs/astra/V14_PREFLIGHT_RESULT_V1.json`
+
+### Frozen V14 question
+
+> Can the successful V9 acoustic-attack timing principles retain material benefit when returned to a 2-second comparator-like temporal/context construction?
+
+V14 is a **package recovery experiment**, not a single-factor causal isolation.
+
+### Frozen bridge timing package
+
+Duration:
+- **2.0 s** per clip.
+
+Positive attack groups per clip:
+- isolated 1
+- scales 4
+- chords 2
+- repeated 5
+- legato 1
+- palmmute 6
+- mixed-positive 1
+
+Aggregate:
+- positive clips **273**
+- positive seconds **546**
+- attack groups **819**
+- density **1.500000/s**
+- gaps **546**
+
+Gap classes:
+- S **252**
+- M **225**
+- L **69**
+
+Supports:
+- S **0.100–0.130 s**
+- M **0.251–0.260 s**
+- L **0.850–0.950 s**
+
+Root seed:
+- **20260929**
+
+The exact assignment is SHA-256 deterministic by family/base/variant identity. There is no candidate sweep, retry, parameter search, or best-of-N selection.
+
+### Model-free schedule result
+
+Independent preflight recomputation:
+- IOI p10 **0.1061617322 s**
+- IOI p50 **0.2520127045 s**
+- IOI p90 **0.8704418108 s**
+- repeat250 **0.4615384615**
+- longGap700 **0.1263736264**
+- latest attack **1.7920413320 s**
+- minimum post-last-attack margin **0.2079586680 s**
+- corrected timing-distance V1 **0.0430642112**
+
+All schedule arithmetic passed.
+
+### Preflight correction caught before empirical work
+
+The first frozen draft contained a tiny arithmetic typo in the precision recovery gate.
+
+Correct exact 50%-recovery gates are:
+- common F1 >= **0.586490016794178**
+- common precision >= **0.5756752789195536**
+
+The contract and validator were corrected before the preflight receipt was frozen.
+
+### Validator/test caveat
+
+Committed:
+- `astra_backend/synthetic/v14_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v14_contract_validator_v1.py`
+
+The current execution container could not resolve `raw.githubusercontent.com`, and the connected GitHub tooling available in this session did not expose workflow dispatch. Therefore do **not** claim the committed unittest suite was executed remotely.
+
+The exact frozen schedule and gate arithmetic were independently recomputed model-free and passed.
+
+**Future empirical execution must fail closed:** before any render or optimizer step, execute the committed validator/tests against the branch contract. If any test fails, stop with zero renders and zero optimizer steps.
+
+### Frozen empirical settings if later authorized
+
+Both arms:
+- same-runtime 2-second datasets;
+- control = historical comparator package;
+- bridge = frozen V14 timing/context package;
+- R3 renderer;
+- frozen RMS normalization + CQT;
+- S6 nonlinear five-frame model;
+- active-state weight 9.0;
+- onset positive weight 8.0;
+- onset loss multiplier 4.0;
+- Adam 0.003;
+- four sampler strata × 32 frames/update;
+- state/onset thresholds 0.50 / 0.50;
+- exactly 500 updates/model;
+- exactly 2 models;
+- no threshold search;
+- no scientific retry;
+- primary evaluation = exact frozen common 2-second comparator test;
+- no V2B;
+- no real-audio inference.
+
+### Current authorization boundary
+
+**Empirical V14 execution is NOT authorized.**
+
+Do not:
+- render waveforms;
+- generate empirical V14 datasets;
+- take optimizer steps;
+- run model inference;
+- run V2B;
+- access P1/P2/P3;
+- weaken recovery gates;
+- search alternate bridge schedules;
+- mutate main or Production.
+
+A fresh explicit user authorization is required before empirical V14 execution.
+
+After that authorization:
+1. first run the committed V14 validator/tests;
+2. if and only if they pass, consume one unique V14 empirical launch identity;
+3. execute exactly the frozen two-arm synthetic-only bridge;
+4. no retry;
+5. freeze result and stop.
+
+If V14 fails the material-recovery gates, do not auto-open V15/V16. Follow the previously frozen stop rule and choose one larger redesign/independent real-development/pause decision path.
+
+**Resume instruction:** Preserve V9-V13 and the V14 contract/preflight exactly. At a generic “continue”, documentation/review only. Await fresh explicit authorization for empirical V14 execution.
