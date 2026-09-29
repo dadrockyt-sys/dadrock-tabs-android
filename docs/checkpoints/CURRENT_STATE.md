@@ -3226,3 +3226,63 @@ A2 remains closed.
 Main/Production unchanged.
 
 **Resume instruction:** V2B design is ready, but collection is still a separate empirical step. Do not scrape/source/download new calibration audio or run inference/calibration until the user explicitly authorizes V2B collection.
+
+
+## V2B collection explicitly authorized; fresh web shortlist frozen — 2026-09-28
+
+The user explicitly authorized V2B collection.
+
+Fresh shortlist files:
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_WEB_SHORTLIST_V1.json`
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_WEB_SHORTLIST_V1.md`
+
+Frozen pool:
+- **13 positive guitar candidates** (one spare beyond minimum);
+- **4 negative-only candidates**;
+- no V1.1 clip IDs/titles reused;
+- no P1/P2/P3;
+- no synthetic audio.
+
+Positive coverage includes:
+- clean;
+- distorted/overdriven;
+- >=4 primarily single-note candidates;
+- >=3 repeated-attack candidates;
+- >=2 bend/slide/legato-style candidates;
+- >=2 chordal/polyphonic candidates;
+- multiple creators/capture sources.
+
+Negative pool:
+- keyboard typing;
+- war drums/percussion;
+- applause/cheer;
+- cheering crowd.
+
+All candidates are Pixabay pages under the same internal-evaluation source policy used previously. Original standalone audio must not be committed to the public repository.
+
+Longer candidates are **not yet cropped**. Any 4–10 s crop must be selected from audio quality/coverage and frozen before any candidate-model output.
+
+Automated Pixabay download remains known-blocked in the current tooling. Acquisition therefore proceeds through the user's normal Pixabay **Free download** control.
+
+No V2B audio has been supplied yet.
+No model inference has occurred on V2B.
+No threshold search/calibration has occurred.
+V1.1 remains sealed from tuning.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+### Exact next task
+
+Collect the frozen shortlist. One-by-one is acceptable and preferred for provenance:
+1. user downloads the next frozen source through the normal Pixabay control;
+2. user uploads the untouched file;
+3. hash and decoded duration are verified immediately;
+4. source identity is matched;
+5. any needed 4–10 s crop is frozen before model output;
+6. continue until at least 12 positive + 4 negative clips pass intake.
+
+Start with **C01 Electric guitar Tapping**:
+`https://pixabay.com/sound-effects/musical-electric-guitar-tapping-34546/`
+
+**Resume instruction:** Continue V2B collection from C01. Do not inspect candidate-model output, tune thresholds, or reuse V1.1 while collecting.
