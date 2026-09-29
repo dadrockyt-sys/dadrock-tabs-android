@@ -1,0 +1,19 @@
+{
+  "schema": "astra-v9-execution-history-v1",
+  "date": "2026-09-29",
+  "status": "launch-scope-consumed-before-dispatch",
+  "consumedLaunchIdentities": [
+    "v9-frozen-v1-20260929-01"
+  ],
+  "records": [
+    {
+      "launchIdentity": "v9-frozen-v1-20260929-01",
+      "authorization": "docs/astra/V9_EXECUTION_AUTHORIZATION_V1.json",
+      "preflightRunId": 36526305988,
+      "preflightArtifactId": 11014613083,
+      "preflightArtifactDigest": "sha256:c764c270d0b280895fb755adcb32032b3d604e66ccef0ae627362d9b26a50b30",
+      "preflightConclusion": "success",
+      "scientificRetry": false
+    }
+  ]
+}
