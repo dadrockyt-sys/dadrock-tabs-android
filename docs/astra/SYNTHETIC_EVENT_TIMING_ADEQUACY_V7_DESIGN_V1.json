@@ -1,0 +1,122 @@
+{
+  "schema": "astra-synthetic-event-timing-adequacy-v7-design-v1",
+  "date": "2026-09-29",
+  "status": "design-frozen-execution-not-authorized",
+  "hypothesis": "synthetic-event-time-distribution-contributes-to-real-onset-transfer-failure",
+  "v2bFrozenTargets": {
+    "aggregateOnsetsPerSecond": 1.4905949321319818,
+    "interOnsetIntervalP50Seconds": 0.2560000000000002,
+    "interOnsetIntervalP90Seconds": 0.882358,
+    "repeatedAttackFractionWithin250ms": 0.47019867549668876
+  },
+  "invariants": {
+    "architecture": "S9/S6 nonlinear frozen",
+    "parameterCount": "identical",
+    "renderer": "R3 frozen",
+    "stateObjective": "exact-string-fret",
+    "onsetObjective": "O0 historical exact-frame BCE",
+    "eventCountsPerClip": "fixed",
+    "contentTemplates": "fixed",
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "productionDecoderChanged": false
+  },
+  "arms": [
+    {
+      "id": "E0",
+      "timing": "historical"
+    },
+    {
+      "id": "E1",
+      "timing": "repeated-attack-enriched",
+      "shortPairFraction": 0.45,
+      "shortIoiSeconds": [
+        0.08,
+        0.22
+      ]
+    },
+    {
+      "id": "E2",
+      "timing": "sparse-tail-enriched",
+      "longPairFraction": 0.2,
+      "longIoiSeconds": [
+        0.7,
+        1.1
+      ]
+    },
+    {
+      "id": "E3",
+      "timing": "combined-bimodal",
+      "shortPairFraction": 0.45,
+      "shortIoiSeconds": [
+        0.08,
+        0.22
+      ],
+      "longPairFraction": 0.2,
+      "longIoiSeconds": [
+        0.7,
+        1.1
+      ],
+      "historicalPairFraction": 0.35
+    }
+  ],
+  "v7a": {
+    "modelInference": false,
+    "timingDistanceFormula": "abs(repeat250-targetRepeat)+abs(ioi50-targetIoi50)/targetIoi50+abs(ioi90-targetIoi90)/targetIoi90+0.5*abs(rate-targetRate)/targetRate",
+    "advancementRule": {
+      "timingDistanceRelativeImprovementAtLeast": 0.3,
+      "repeatedAttackAbsoluteErrorImprovementAtLeast": 0.1,
+      "ioiP90AbsoluteErrorImprovementSecondsAtLeast": 0.2,
+      "aggregateOnsetsPerSecondWithinRelative": 0.15,
+      "maxAdvancingArms": 1
+    }
+  },
+  "v7b": {
+    "maxModels": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "retries": 0,
+    "thresholdSearch": false
+  },
+  "v7c": {
+    "syntheticSanity": {
+      "maxF1DeclineVsE0": 0.08,
+      "maxRecallDeclineVsE0": 0.08,
+      "precisionAtLeast": 0.7,
+      "negativeFpPerSecondAtMost": 0.1
+    }
+  },
+  "v7d": {
+    "developmentInterestRule": {
+      "onsetAdmissionGainVsE0AtLeast": 0.15,
+      "trustedJointAdmissionGainVsE0AtLeast": 0.1,
+      "highConfidenceJointAdmissionAtLeast": 0.15,
+      "negativeFpPerSecondAtMost": 0.1,
+      "maxStateAdmissionDeclineVsE0": 0.1
+    }
+  },
+  "confirmation": {
+    "freshHoldoutRequired": true,
+    "v1_1Used": false
+  },
+  "executionAuthorized": false,
+  "boundaries": {
+    "timingSearch": false,
+    "eventCountChange": false,
+    "contentDistributionChange": false,
+    "rendererChange": false,
+    "architectureChange": false,
+    "lossChange": false,
+    "thresholdChange": false,
+    "decoderChange": false,
+    "realAudioTraining": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
