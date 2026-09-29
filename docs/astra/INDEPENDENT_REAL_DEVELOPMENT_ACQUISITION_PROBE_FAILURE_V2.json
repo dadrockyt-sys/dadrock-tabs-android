@@ -1,0 +1,25 @@
+{
+  "schema": "astra-independent-real-development-acquisition-probe-failure-v2",
+  "date": "2026-09-28",
+  "status": "technical-acquisition-failed-before-audio-download",
+  "workflow": {
+    "run": 36508495937,
+    "job": 109215211120,
+    "head": "b2e28dfa31f4f6f35f03a874d6d029d3684da2fd",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "candidateId": "P01",
+  "sourceUrl": "https://pixabay.com/sound-effects/musical-guitar-riff-in-e-minor-95-bpm-dry-475013/",
+  "audioUrl": "https://cdn.pixabay.com/audio/2026/01/28/06-09-01-310.mp3",
+  "failure": "Direct CDN request from GitHub Actions returned HTTP 403 Forbidden.",
+  "audioDownloaded": false,
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false,
+  "automaticRetry": false,
+  "interpretation": "Second independently versioned technical acquisition method also failed before audio access. Do not continue escalating automated bypass attempts against Pixabay access controls.",
+  "nextAction": "Require user-mediated lawful download/upload of shortlisted audio, or switch to a source with a documented machine-download interface under a separately frozen sourcing revision."
+}
