@@ -1,10 +1,17 @@
 name: Astra V14 matched-context empirical v1
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - '.github/one-shot/v14-matched-context-v1-20260929-01.txt'
 
 permissions:
   contents: read
+
+env:
+  PYTHONPATH: .:astra_backend
 
 jobs:
   v14:
@@ -18,7 +25,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install bounded dependencies
-        run: pip install --disable-pip-version-check numpy scipy torch
+        run: pip install --disable-pip-version-check numpy scipy torch librosa
       - name: Fail-closed pure validator tests
         run: python -m unittest -v astra_backend.synthetic.test_v14_contract_validator_v1
       - name: Execute frozen V14
