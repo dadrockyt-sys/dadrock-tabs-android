@@ -1,0 +1,108 @@
+{
+  "schema": "astra-post-v12-causal-review-v1",
+  "date": "2026-09-29",
+  "status": "documentation-review-only-no-v13-opened",
+  "historicalComparatorStrata": {
+    "positiveOnset": 525,
+    "activeNonOnset": 8220,
+    "negativeStructureInactive": 4635,
+    "otherInactive": 4890
+  },
+  "executedV9Strata": {
+    "positiveOnset": 1170,
+    "activeNonOnset": 10444,
+    "negativeStructureInactive": 10868,
+    "otherInactive": 13848
+  },
+  "historicalActiveNonOnsetByFamily": {
+    "isolated": 1290,
+    "scales": 1320,
+    "chords": 1140,
+    "repeated": 1470,
+    "legato": 1560,
+    "palmmute": 900,
+    "mixed": 540,
+    "total": 8220
+  },
+  "executedV9ActiveNonOnsetByFamily": {
+    "isolated": 1215,
+    "scales": 2079,
+    "chords": 788,
+    "repeated": 2140,
+    "legato": 1163,
+    "palmmute": 2487,
+    "mixed": 572,
+    "total": 10444
+  },
+  "historicalActiveNonOnsetTargetSlots16000": {
+    "isolated": 2511,
+    "scales": 2569,
+    "chords": 2219,
+    "repeated": 2861,
+    "legato": 3037,
+    "palmmute": 1752,
+    "mixed": 1051,
+    "total": 16000
+  },
+  "historicalNegativeInactiveByFamily": {
+    "legato": 1020,
+    "palmmute": 1560,
+    "mixed": 2055,
+    "total": 4635
+  },
+  "executedV9NegativeInactiveByFamily": {
+    "legato": 3907,
+    "palmmute": 2403,
+    "mixed": 4558,
+    "total": 10868
+  },
+  "historicalNegativeInactiveTargetSlots16000": {
+    "legato": 3521,
+    "palmmute": 5385,
+    "mixed": 7094,
+    "total": 16000
+  },
+  "historicalOtherInactiveByFamily": {
+    "isolated": 1290,
+    "scales": 1170,
+    "chords": 1410,
+    "repeated": 1020,
+    "total": 4890
+  },
+  "executedV9OtherInactiveByFamily": {
+    "isolated": 3825,
+    "scales": 2871,
+    "chords": 4342,
+    "repeated": 2810,
+    "total": 13848
+  },
+  "preferredFutureQuestion": "With exact executed V9 arrays and exact V9 batch plan fixed everywhere else, does matching only the historical comparator active-non-onset family mixture materially recover common-population precision/F1 without increasing negative-only false positives?",
+  "preferredIntervention": {
+    "changeOnlyStratum": "activeNonOnset",
+    "slotsPerArm": 16000,
+    "keepPositiveOnsetSelectionsIdentical": true,
+    "keepNegativeStructureInactiveSelectionsIdentical": true,
+    "keepOtherInactiveSelectionsIdentical": true,
+    "keepPerStepShuffleIdentical": true,
+    "keepAttackedNoteLabelExposureIdentical": true,
+    "regenerateInterventionAudio": false,
+    "primaryEvaluation": "frozen 2-second comparator test",
+    "secondaryEvaluation": "frozen V9 test",
+    "v2b": false
+  },
+  "secondaryFutureQuestion": "Match only negative-structure-inactive family mixture after active-non-onset study, if needed.",
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0,
+    "workflowDispatches": 0
+  },
+  "boundaries": {
+    "v13Opened": false,
+    "v2b": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
