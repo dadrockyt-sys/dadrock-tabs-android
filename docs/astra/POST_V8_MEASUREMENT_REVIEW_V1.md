@@ -21,7 +21,7 @@ The V2B inventory remains exactly C01-C13 positive and D01-D04 negative-only. Th
 | Evaluation durations | recorded with correction overlay | C04 and D01 rounded values were superseded pre-inference. Corrected totals are 110.023183673 s positive and 31.857959184 s negative. |
 | V2B onset annotations | recorded + Git-verified record | 164 spectral-flux landmarks; detector landmarks, not exhaustive human-verified attacks. |
 | V2B pitch annotations | recorded + Git-verified record | 57 trusted-pitch landmarks, 50 marked high confidence; no string/fret truth. |
-| V2B scored pitch populations | recorded, denominator trace incomplete | V6 scoring uses 56 trusted / 49 high-confidence refs. The one trusted and one high-confidence exclusion are not explained in the V6 result itself. |
+| V2B scored pitch populations | recorded + provenance reconciled | V2C records one unrepresentable high-confidence landmark excluded from scoring: C06 at 0.042667 s, MIDI 37. This reconciles 57/50 raw to 56/49 scorable refs. |
 | V1.1 | recorded exposed evidence | Previously evaluated; closed to further tuning/confirmation, not an untouched holdout. |
 | P1/P2/P3 | closed | No access in this review. |
 | V6 timing summary | recorded | Synthetic p50/p90 0.3482993197/0.4179591837 s. Exact full timing orchestration source was not located in the active synthetic directory. |
@@ -52,7 +52,7 @@ Annotation identity:
 - no string/fret annotations;
 - polyphonic/effect-heavy clips explicitly are not exhaustive pitch ground truth.
 
-V6 later scored 56 trusted and 49 high-confidence references. The committed result does not carry the exact per-landmark exclusion explanation. This is a provenance gap, not permission to infer or repair the denominator.
+V6 later scored 56 trusted and 49 high-confidence references. The committed V2C diagnostic records the exact excluded landmark as C06 at 0.042667 s, MIDI pitch 37, confidence high, categorized as unrepresentable. This reconciles 57/50 raw to 56/49 scorable references without changing any denominator.
 
 ## Common timing contract for future pre-V9 measurement
 
@@ -120,7 +120,7 @@ Uncertain:
 
 - corrected synthetic-versus-V2B distance in a common attack-group unit;
 - exact V6 -> V7/V8 baseline transformation provenance;
-- exact 57/50 -> 56/49 pitch-reference exclusion trace;
+- no remaining 57/50 -> 56/49 pitch-reference gap; V2C records the single excluded C06 high-confidence MIDI-37 landmark;
 - whether event timing is causally important for transfer once renderer/representation/loss/calibration interactions remain;
 - fresh independent product performance.
 
