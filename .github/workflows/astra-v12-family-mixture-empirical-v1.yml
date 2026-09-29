@@ -1,0 +1,98 @@
+name: Astra V12 family mixture empirical execution
+on:
+  push:
+    branches: [astra-work]
+    paths: ['docs/astra/V12_EXECUTION_LAUNCH_V1.json']
+jobs:
+  v12:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify launch and authorization
+        run: |
+          python - <<'PY'
+          import json, os
+          a=json.load(open('docs/astra/V12_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V12_EXECUTION_LAUNCH_V1.json'))
+          h=json.load(open('docs/astra/V12_EXECUTION_HISTORY_V1.json'))
+          assert a['schema']=='astra-v12-empirical-execution-authorization-v1'
+          assert a['explicitlyAuthorized'] is True and a['userInstruction']=='I authorize'
+          assert l['schema']=='astra-v12-execution-launch-v1'
+          assert l['status']=='armed-consumed'
+          assert h['schema']=='astra-v12-execution-history-v1'
+          assert h['consumedLaunchIdentities'].count(l['launchIdentity'])==1
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          assert l['execution']['models']==2
+          assert l['execution']['optimizerStepsPerModel']==500
+          assert l['execution']['maxOptimizerStepsTotal']==1000
+          assert l['execution']['thresholdSearch'] is False
+          assert l['execution']['automaticScientificRetry'] is False
+          assert l['execution']['v2b'] is False
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Re-run V12 admission tests
+        run: |
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v12_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v12_family_mixture_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v12_contract_validator_v1.py --contract docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.json
+      - name: Execute exactly one V12 study
+        run: |
+          mkdir -p /tmp/astra-v12
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v12_family_mixture_v1.py run --outdir /tmp/astra-v12/run
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-v12/run/result.json'))
+          assert x['schema']=='astra-v12-family-mixture-v1'
+          assert x['execution']['models']==2
+          assert x['execution']['optimizerStepsTotal']==1000
+          assert x['execution']['automaticScientificRetries']==0
+          assert x['execution']['thresholdSearch'] is False
+          assert x['execution']['realAudioInference']==0
+          assert x['execution']['v2bInference']==0
+          assert x['checks']['baselineReproducedExactly'] is True
+          PY
+      - name: Write receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          root=pathlib.Path('/tmp/astra-v12/run')
+          receipt={
+            'schema':'astra-v12-execution-receipt-v1',
+            'githubRunId':os.environ.get('GITHUB_RUN_ID'),
+            'githubRunAttempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'headSha':os.environ.get('GITHUB_SHA'),
+            'resultExists':(root/'result.json').exists(),
+            'controlModelExists':(root/'control.pt').exists(),
+            'interventionModelExists':(root/'intervention.pt').exists(),
+            'v2bInferencePerformed':False,
+            'realAudioUsed':False
+          }
+          if (root/'result.json').exists():
+              x=json.load(open(root/'result.json'))
+              receipt['models']=x['execution']['models']
+              receipt['optimizerStepsTotal']=x['execution']['optimizerStepsTotal']
+              receipt['familyMixtureHypothesisSupported']=x['familyMixtureHypothesisSupported']
+              receipt['baselineReproducedExactly']=x['checks']['baselineReproducedExactly']
+          root.mkdir(parents=True,exist_ok=True)
+          (root/'execution-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-v12-family-mixture-empirical-v1
+          path: |
+            /tmp/astra-v12/run/result.json
+            /tmp/astra-v12/run/control.pt
+            /tmp/astra-v12/run/intervention.pt
+            /tmp/astra-v12/run/execution-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
