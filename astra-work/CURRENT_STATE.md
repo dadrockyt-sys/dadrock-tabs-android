@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V12 family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of this file. No V2B or automatic next study.
+Latest instructions: **Post-V12 causal review complete — active-non-onset family mixture identified — 2026-09-29** at the end of this file. No V13 is open.
 
 ## Current status
 
@@ -3968,3 +3968,124 @@ Do not:
 - mutate main or Production.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
+
+
+## Post-V12 causal review complete — active-non-onset family mixture identified — 2026-09-29
+
+**Current resume authority. Documentation/review only; no V13 opened.**
+
+Completed:
+- `docs/astra/POST_V12_CAUSAL_REVIEW_V1.md`
+- `docs/astra/POST_V12_CAUSAL_REVIEW_V1.json`
+
+### Main finding
+
+The four-stratum sampler always takes exactly 32 frames from each stratum per update, so the absolute stratum-size differences between the historical 2-second comparator and V9 do not change top-level sampler weights.
+
+The important remaining difference is **family composition inside the non-positive strata**, especially active-non-onset.
+
+Historical comparator stratum sizes:
+- positive-onset **525**
+- active-non-onset **8,220**
+- negative-structure inactive **4,635**
+- other inactive **4,890**
+
+Executed V9:
+- positive-onset **1,170**
+- active-non-onset **10,444**
+- negative-structure inactive **10,868**
+- other inactive **13,848**
+
+### Active-non-onset family redistribution
+
+Historical active-non-onset:
+- isolated 1,290 = 15.69%
+- scales 1,320 = 16.06%
+- chords 1,140 = 13.87%
+- repeated 1,470 = 17.88%
+- legato 1,560 = 18.98%
+- palmmute 900 = 10.95%
+- mixed 540 = 6.57%
+
+Executed V9:
+- isolated 1,215 = 11.63%
+- scales 2,079 = 19.91%
+- chords 788 = 7.55%
+- repeated 2,140 = 20.49%
+- legato 1,163 = 11.14%
+- palmmute 2,487 = 23.81%
+- mixed 572 = 5.48%
+
+Largest shifts:
+- palmmute **+12.86 percentage points**
+- legato **-7.84**
+- chords **-6.32**
+- isolated **-4.06**
+- scales **+3.85**
+- repeated **+2.61**
+- mixed **-1.09**
+
+Across exactly 16,000 active-non-onset training slots, historical comparator proportions map to this deterministic largest-remainder allocation:
+- isolated **2,511**
+- scales **2,569**
+- chords **2,219**
+- repeated **2,861**
+- legato **3,037**
+- palmmute **1,752**
+- mixed **1,051**
+- total **16,000**
+
+### Why this is the preferred next single-factor question
+
+Unlike V10 and V12, an active-non-onset family-mixture intervention can preserve:
+- exact positive-onset selections;
+- exact attacked-note-label exposure;
+- exact negative-structure-inactive selections;
+- exact other-inactive selections;
+- exact per-step shuffle;
+- exact V9 dataset arrays;
+- exact model/loss/threshold/optimizer settings.
+
+This makes it a cleaner state-learning distribution test and directly targets one of the largest remaining within-stratum shifts.
+
+### Secondary unresolved non-positive shift
+
+Negative-structure inactive composition also changed substantially:
+
+Historical:
+- legato 22.01%
+- palmmute 33.66%
+- mixed 44.34%
+
+V9:
+- legato 35.95%
+- palmmute 22.11%
+- mixed 41.94%
+
+If an active-non-onset study later fails, a separate negative-inactive family-mixture study would be the next cleaner one-variable diagnostic. Do not combine both in one project.
+
+### Preferred future project question
+
+Do **not** open V13 automatically.
+
+If the user explicitly authorizes a new project, prospectively freeze:
+
+> With the exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical comparator active-non-onset family mixture materially recover common-population precision/F1 without increasing negative-only false positives?
+
+No intervention-specific rendering is needed.
+
+### Current stop boundary
+
+No V13 contract, runner, workflow, launch, authorization, model training, or inference exists.
+
+This review used:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+- workflow dispatches 0
+
+Main/Production unchanged.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, freeze the active-non-onset family-mixture study first. Empirical execution must still wait for a fresh authorization after that contract/preflight is visible.
