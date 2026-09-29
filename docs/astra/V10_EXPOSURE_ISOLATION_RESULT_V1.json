@@ -138,5 +138,12 @@
     "a2": false,
     "mainMutation": false,
     "productionMutation": false
+  },
+  "postReviewCausalQualification": {
+    "review": "docs/astra/POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1.json",
+    "pureExposureIsolation": false,
+    "reason": "matching attacked-note-label count required changing positive-onset frame selection toward three-label chord attacks",
+    "supportedConclusion": "the specific chord-enriched exposure-matching scheme did not materially recover the primary common-population precision/F1 loss",
+    "broaderPureLabelMassQuestionStillOpen": true
   }
 }
