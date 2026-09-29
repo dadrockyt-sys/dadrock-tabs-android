@@ -1327,3 +1327,78 @@ Do not claim causal isolation.
 Do not run V3D because no transform passed the V3 diagnostic gate.
 
 **Resume instruction:** Stop at the V3 no-transform boundary. Any next experiment aimed at synthetic rendering adequacy, representation learning, or fresh real-domain training is a new project decision and requires explicit authorization.
+
+
+## V4 synthetic-to-real rendering adequacy design frozen — 2026-09-28
+
+Generic continuation was used only for design/documentation at the V3 no-transform boundary.
+
+New files:
+- `docs/astra/SYNTHETIC_REAL_RENDERING_ADEQUACY_V4_DESIGN_V1.md`
+- `docs/astra/SYNTHETIC_REAL_RENDERING_ADEQUACY_V4_DESIGN_V1.json`
+
+V4 tests whether missing synthetic acoustic/timbral realism is a major cause of the transfer collapse.
+
+Frozen renderer arms:
+- **R0** — original S9 renderer
+- **R1** — fixed amplifier/cabinet coloration + soft saturation
+- **R2** — R1 + deterministic room/capture variation + low-level recording noise
+- **R3** — R2 + mild compression + transient variation + bounded hum/noise + bounded pre-normalization level variation
+
+No pitch/time/label changes are allowed.
+
+### V4A model-free screen
+
+Compare R0/R1/R2/R3 to V2B using:
+- median absolute SMD
+- fraction of bins with |SMD| >=1
+- median Wasserstein distance
+- median robust range overlap
+
+A non-baseline renderer advances only if all are true vs R0:
+- median |SMD| improves >=15%
+- fraction |SMD|>=1 improves >=20% relative
+- median Wasserstein improves >=10%
+- median range overlap declines by no more than 0.02 absolute
+
+At most the best two non-baseline arms may advance.
+
+If none qualify, V4 stops before training.
+
+### V4B bounded synthetic training
+
+Only if V4A advances renderer(s):
+- one R0 baseline reproduction
+- each advancing renderer arm
+- max 3 models
+- 500 optimizer steps/model
+- max 1500 optimizer steps total
+- S9 architecture/sampler/loss/initialization frozen
+- thresholds remain 0.50/0.50
+- decoder unchanged
+- no retry / no threshold search
+
+### V4C V2B development gate
+
+A renderer-trained model is development-interesting only if vs same-run R0:
+- trusted joint-admission gain >= +0.20 absolute
+- high-confidence joint admission >=25%
+- negative FP <=0.10 events/s
+
+No V1.1 access.
+
+### V4D
+
+Any V4C success requires a fresh holdout. V1.1 remains sealed.
+
+No empirical V4 work has been run.
+No new synthetic renderer implemented.
+No model trained.
+No optimizer steps.
+No model inference.
+V1.1 remains sealed.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+**Resume instruction:** V4 design is ready. Do not implement/run V4A, generate new renderer arms, train models, or evaluate V2B until the user explicitly authorizes V4 empirical execution. Generic continuation remains documentation/design only.
