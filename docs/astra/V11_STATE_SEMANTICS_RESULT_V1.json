@@ -1,0 +1,170 @@
+{
+  "schema": "astra-v11-state-semantics-result-v1",
+  "date": "2026-09-29",
+  "status": "complete-state-semantics-hypothesis-not-supported",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize",
+    "launchIdentity": "v11-state-semantics-v1-20260929-01",
+    "contractPath": "docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.json"
+  },
+  "execution": {
+    "runId": 36534741201,
+    "jobId": 109296097761,
+    "headSha": "0c3a24ab7d49a3b4525a2af372c2fbcf08fbccd6",
+    "conclusion": "success",
+    "artifactId": 11018510069,
+    "artifactDigest": "sha256:5cb15fcbb40b38bcee93e6bde1b4f4109204c9b979dcfb17910a25d2fe66bb91",
+    "artifactExpiresAt": "2026-10-29T07:09:37Z",
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "elapsedSeconds": 104.654474708,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0,
+    "realAudioInference": 0,
+    "v2bInferencePerformed": false
+  },
+  "identity": {
+    "attackedSignatureSha256": "9129b31cec8c56a8275e269b25fd9ab686b15f91e8b5da711ef6490eddfffe97",
+    "controlAttackGroups": 1638,
+    "interventionAttackGroups": 1638,
+    "controlAttackedNoteLabels": 1806,
+    "interventionAttackedNoteLabels": 1806,
+    "restoredNonAttackedContinuationEvents": 84,
+    "truncatedAttackedStatesAtSameStringRetrigger": 789,
+    "positiveOnsetIndicesIdentical": true
+  },
+  "reproduction": {
+    "passed": true,
+    "frozenV9CommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "reproducedControlCommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    }
+  },
+  "commonComparatorTest": {
+    "control": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6821705426356589,
+      "jointAdmission": 0.2868217054263566
+    },
+    "stateSemanticRestored": {
+      "precision": 0.35398230088495575,
+      "recall": 0.6201550387596899,
+      "f1": 0.4507042253521127,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.26356589147286824,
+      "onsetAdmission": 0.689922480620155,
+      "jointAdmission": 0.2558139534883721
+    },
+    "deltas": {
+      "precision": 0.029554819968925228,
+      "recall": -0.03875968992248058,
+      "f1": 0.015921616656460524,
+      "stateAdmission": -0.046511627906976716,
+      "onsetAdmission": 0.007751937984496138,
+      "jointAdmission": -0.031007751937984496
+    }
+  },
+  "v9Test": {
+    "control": {
+      "precision": 0.48663101604278075,
+      "recall": 0.7054263565891473,
+      "f1": 0.5759493670886077,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2868217054263566,
+      "onsetAdmission": 0.6627906976744186,
+      "jointAdmission": 0.27906976744186046
+    },
+    "stateSemanticRestored": {
+      "precision": 0.4381443298969072,
+      "recall": 0.6589147286821705,
+      "f1": 0.5263157894736842,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.3178294573643411,
+      "onsetAdmission": 0.6356589147286822,
+      "jointAdmission": 0.29457364341085274
+    },
+    "deltas": {
+      "precision": -0.04848668614587354,
+      "recall": -0.046511627906976716,
+      "f1": -0.049633577614923485,
+      "stateAdmission": 0.031007751937984496,
+      "onsetAdmission": -0.02713178294573637,
+      "jointAdmission": 0.015503875968992276
+    }
+  },
+  "trainingExposure": {
+    "control": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676,
+      "optimizerSteps": 500
+    },
+    "intervention": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676,
+      "optimizerSteps": 500
+    }
+  },
+  "samplerStrata": {
+    "control": {
+      "positiveOnset": 1170,
+      "activeNonOnset": 10444,
+      "negativeStructureInactive": 10868,
+      "otherInactive": 13848
+    },
+    "intervention": {
+      "positiveOnset": 1170,
+      "activeNonOnset": 13872,
+      "negativeStructureInactive": 8758,
+      "otherInactive": 12530
+    }
+  },
+  "frozenChecks": {
+    "baselineReproducedExactly": true,
+    "commonPrecisionGainAtLeast0_15": false,
+    "commonF1GainAtLeast0_10": false,
+    "commonRecallDeclineAtMost0_05": true,
+    "commonJointAdmissionDeclineAtMost0_05": true,
+    "commonNegativeFpPerSecondAtMost0_10": true,
+    "v9F1DeclineAtMost0_05": true,
+    "exact500StepsPerModel": true
+  },
+  "decision": {
+    "stateSemanticsHypothesisSupported": false,
+    "conclusion": "Restoring historical family-duration targets and legato continuation under fixed V9 attack timing produced only small common-population precision/F1 gains and did not satisfy the frozen material-recovery thresholds.",
+    "v2bEvaluationPerformed": false,
+    "automaticNextStudy": false
+  },
+  "artifactFileSha256": {
+    "artifactZip": "5cb15fcbb40b38bcee93e6bde1b4f4109204c9b979dcfb17910a25d2fe66bb91",
+    "resultJson": "993e02b43a950072f7e31b4e8075c0a635410747f186f1e963595ca481046a73",
+    "executionReceiptJson": "eaeb365202f0b2b31e6b347a096763da596bff4caf51dcdc51b3c747b0087a55",
+    "controlPt": "043d272e22bcb273b3bce6c31c4b561b7e47741cfb242f6b8d419c1c7dc18bb7",
+    "interventionPt": "3a998c7d19e8e3daecca0f624c9f3133824f9f72c30b20c6d1596d2964d91b69"
+  },
+  "guards": {
+    "v2b": false,
+    "realAudio": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
