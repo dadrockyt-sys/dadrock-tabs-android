@@ -1,0 +1,173 @@
+{
+  "schema": "astra-v12-family-mixture-result-v1",
+  "date": "2026-09-29",
+  "status": "complete-family-mixture-hypothesis-not-supported",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize",
+    "launchIdentity": "v12-family-mixture-v1-20260929-01",
+    "contractPath": "docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.json"
+  },
+  "execution": {
+    "runId": 36537632082,
+    "jobId": 109305235382,
+    "headSha": "d08dd9dc0f8318e094070cc96e30bf8713d581e7",
+    "conclusion": "success",
+    "artifactId": 11018959307,
+    "artifactDigest": "sha256:1085e801d644b52a48e007f200334ccf4a5fe3c1ed753ae90533a1b58482fa6d",
+    "artifactExpiresAt": "2026-10-29T07:38:26Z",
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "elapsedSeconds": 68.18858694100001,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0,
+    "realAudioInference": 0,
+    "v2bInferencePerformed": false
+  },
+  "identity": {
+    "controlBatchPlanSha256": "8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7",
+    "interventionBatchPlanSha256": "fa9146d23f67084edb683c889d273a2fc55d2a036c7f858418c92d9329812e0c",
+    "strata": {
+      "positiveOnset": 1170,
+      "activeNonOnset": 10444,
+      "negativeStructureInactive": 10868,
+      "otherInactive": 13848
+    },
+    "nonPositiveSelectionsIdenticalAcrossArms": true,
+    "samePerStepPermutationAcrossArms": true,
+    "controlPositiveFamilySlots": {
+      "isolated": 2013,
+      "scales": 3314,
+      "chords": 838,
+      "repeated": 3306,
+      "legato": 1661,
+      "palmmute": 4089,
+      "mixed": 779
+    },
+    "interventionPositiveFamilySlots": {
+      "isolated": 914,
+      "scales": 3657,
+      "chords": 1829,
+      "repeated": 3657,
+      "legato": 914,
+      "palmmute": 4572,
+      "mixed": 457
+    }
+  },
+  "reproduction": {
+    "passed": true,
+    "frozenV9CommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "reproducedControlCommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    }
+  },
+  "trainingExposure": {
+    "control": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676,
+      "optimizerSteps": 500
+    },
+    "intervention": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 19658,
+      "optimizerSteps": 500
+    },
+    "linkedAttackedLabelIncrease": 1982,
+    "linkedAttackedLabelRelativeIncrease": 0.11212944105001131
+  },
+  "commonComparatorTest": {
+    "control": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6821705426356589,
+      "jointAdmission": 0.2868217054263566
+    },
+    "historicalFamilyMixture": {
+      "precision": 0.34220532319391633,
+      "recall": 0.6976744186046512,
+      "f1": 0.45918367346938777,
+      "negativeFpPerSecond": 0.16666666666666666,
+      "stateAdmission": 0.3333333333333333,
+      "onsetAdmission": 0.751937984496124,
+      "jointAdmission": 0.3333333333333333
+    },
+    "deltas": {
+      "precision": 0.017777842277885814,
+      "recall": 0.03875968992248069,
+      "f1": 0.024401064773735603,
+      "negativeFpPerSecond": 0.16666666666666666,
+      "stateAdmission": 0.023255813953488358,
+      "onsetAdmission": 0.06976744186046513,
+      "jointAdmission": 0.046511627906976716
+    }
+  },
+  "v9Test": {
+    "control": {
+      "precision": 0.48663101604278075,
+      "recall": 0.7054263565891473,
+      "f1": 0.5759493670886077,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2868217054263566,
+      "onsetAdmission": 0.6627906976744186,
+      "jointAdmission": 0.27906976744186046
+    },
+    "historicalFamilyMixture": {
+      "precision": 0.4702842377260982,
+      "recall": 0.7054263565891473,
+      "f1": 0.5643410852713179,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6782945736434108,
+      "jointAdmission": 0.29457364341085274
+    },
+    "deltas": {
+      "precision": -0.016346778316682575,
+      "recall": 0,
+      "f1": -0.01160828181728979,
+      "stateAdmission": 0.023255813953488358,
+      "onsetAdmission": 0.01550387596899222,
+      "jointAdmission": 0.015503875968992276
+    }
+  },
+  "frozenChecks": {
+    "baselineReproducedExactly": true,
+    "commonPrecisionGainAtLeast0_15": false,
+    "commonF1GainAtLeast0_10": false,
+    "commonRecallDeclineAtMost0_05": true,
+    "commonNegativeFpPerSecondAtMost0_10": false,
+    "v9F1DeclineAtMost0_05": true,
+    "exact500StepsPerModel": true
+  },
+  "decision": {
+    "familyMixtureHypothesisSupported": false,
+    "conclusion": "Historical positive-onset family-mixture resampling improved common-population recall/F1 modestly but failed the preregistered material precision/F1 recovery thresholds and violated the negative-only false-positive ceiling.",
+    "v2bEvaluationPerformed": false,
+    "automaticNextStudy": false
+  },
+  "artifactFileSha256": {
+    "artifactZip": "1085e801d644b52a48e007f200334ccf4a5fe3c1ed753ae90533a1b58482fa6d",
+    "resultJson": "4a5bf0f25b66ff8a842ae1fd8d434859b8769791fe109c51a049f5ff1bb76d91",
+    "executionReceiptJson": "71dca6e919295947173db6af2481a06821ce49c3bef669bd87a3a51bb7e9e94c",
+    "controlPt": "da8d334c77790033b35fe6a3df3e70683b3a41b8f9e54b85f022b56f4de4f821",
+    "interventionPt": "4b4aca670d4477fcb4c7d0f0e6fe5724d3ec802043ab04dd85c0513adb5fef3b"
+  },
+  "guards": {
+    "v2b": false,
+    "realAudio": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
