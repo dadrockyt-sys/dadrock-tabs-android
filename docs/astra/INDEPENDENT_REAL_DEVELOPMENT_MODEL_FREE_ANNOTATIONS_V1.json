@@ -1,0 +1,694 @@
+{
+  "schema": "astra-independent-real-development-model-free-annotations-v1",
+  "date": "2026-09-28",
+  "status": "draft-frozen-before-model-output-pending-human-qa",
+  "method": {
+    "onset": "librosa spectral-flux onset detection",
+    "pitch": "librosa YIN fundamental estimate in post-onset windows",
+    "learnedModelUsed": false,
+    "candidateModelUsed": false,
+    "stringFretAnnotated": false
+  },
+  "summary": {
+    "positiveClips": 18,
+    "annotationCount": 105,
+    "highConfidence": 81,
+    "mediumConfidence": 5,
+    "lowConfidence": 19
+  },
+  "limitations": [
+    "YIN is fundamentally monophonic; chordal/polyphonic clips may be under-annotated.",
+    "These labels are suitable as a frozen model-free draft but are not yet sufficient for a scientifically complete polyphonic pitch-onset evaluation without human QA.",
+    "No string/fret label is asserted where fingering is ambiguous."
+  ],
+  "scientificInferenceReady": false,
+  "modelInferenceCount": 0,
+  "annotations": {
+    "P01": [
+      {
+        "eventStart": 0.325079,
+        "pitch": 52,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.650159,
+        "pitch": 51,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.625397,
+        "pitch": 50,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.867664,
+        "pitch": 48,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.37542,
+        "pitch": 52,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.700499,
+        "pitch": 51,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.664127,
+        "pitch": 50,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.941224,
+        "pitch": 48,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 9.171882,
+        "pitch": 50,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P02": [
+      {
+        "eventStart": 0.15093,
+        "pitch": 43,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.580499,
+        "pitch": 44,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.277098,
+        "pitch": 63,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.555737,
+        "pitch": 43,
+        "confidence": "medium",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.482993,
+        "pitch": 52,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P03": [
+      {
+        "eventStart": 0.05805,
+        "pitch": 66,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.736871,
+        "pitch": 76,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P04": [
+      {
+        "eventStart": 0.267029,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.487619,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.661769,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.870748,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.033288,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.219048,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.368435,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.728345,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.494603,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.842902,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.214422,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P05": [
+      {
+        "eventStart": 0.510839,
+        "pitch": 47,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.766259,
+        "pitch": 62,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.520907,
+        "pitch": 69,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.008526,
+        "pitch": 74,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.496145,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.14322,
+        "pitch": 73,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.526349,
+        "pitch": 74,
+        "confidence": "medium",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.770159,
+        "pitch": 54,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.269388,
+        "pitch": 74,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.524807,
+        "pitch": 59,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.873107,
+        "pitch": 57,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.267846,
+        "pitch": 66,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P06": [
+      {
+        "eventStart": 0.487619,
+        "pitch": 47,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P07": [
+      {
+        "eventStart": 1.393197,
+        "pitch": 40,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.205896,
+        "pitch": 43,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P08": [
+      {
+        "eventStart": 0.04644,
+        "pitch": 44,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P09": [
+      {
+        "eventStart": 0.638549,
+        "pitch": 60,
+        "confidence": "medium",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.149388,
+        "pitch": 45,
+        "confidence": "medium",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.764717,
+        "pitch": 45,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.798005,
+        "pitch": 64,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.482993,
+        "pitch": 58,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.8878,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.549569,
+        "pitch": 65,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.304218,
+        "pitch": 57,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P10": [
+      {
+        "eventStart": 0.12771,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.905578,
+        "pitch": 54,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.625397,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.066576,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.821224,
+        "pitch": 55,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.982222,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.433469,
+        "pitch": 55,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.874649,
+        "pitch": 55,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.617687,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.349116,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P11": [
+      {
+        "eventStart": 0.05805,
+        "pitch": 52,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.592109,
+        "pitch": 57,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P12": [
+      {
+        "eventStart": 5.886259,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.466757,
+        "pitch": 50,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P13": [
+      {
+        "eventStart": 0.499229,
+        "pitch": 52,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.592109,
+        "pitch": 52,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P14": [
+      {
+        "eventStart": 0.04644,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.952018,
+        "pitch": 64,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.857596,
+        "pitch": 62,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.852971,
+        "pitch": 47,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.244626,
+        "pitch": 40,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P15": [
+      {
+        "eventStart": 0.08127,
+        "pitch": 43,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.754649,
+        "pitch": 45,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.393197,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.973696,
+        "pitch": 48,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.612245,
+        "pitch": 50,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.215964,
+        "pitch": 51,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.761633,
+        "pitch": 41,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.191202,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.585941,
+        "pitch": 44,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.99229,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.387029,
+        "pitch": 47,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.828209,
+        "pitch": 42,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.246168,
+        "pitch": 44,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P16": [
+      {
+        "eventStart": 0.04644,
+        "pitch": 52,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P17": [
+      {
+        "eventStart": 0.10449,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 0.766259,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.462857,
+        "pitch": 49,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.822766,
+        "pitch": 51,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 1.915646,
+        "pitch": 45,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 2.612245,
+        "pitch": 44,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.308844,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.738413,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.191202,
+        "pitch": 50,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.458231,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 5.12,
+        "pitch": 49,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.304218,
+        "pitch": 44,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.000816,
+        "pitch": 46,
+        "confidence": "high",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 7.383946,
+        "pitch": 46,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ],
+    "P18": [
+      {
+        "eventStart": 1.346757,
+        "pitch": 54,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.018594,
+        "pitch": 52,
+        "confidence": "medium",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 3.424943,
+        "pitch": 53,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 4.667211,
+        "pitch": 51,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      },
+      {
+        "eventStart": 6.350658,
+        "pitch": 43,
+        "confidence": "low",
+        "method": "model-free-yin-onset"
+      }
+    ]
+  }
+}
