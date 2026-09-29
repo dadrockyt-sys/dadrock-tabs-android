@@ -1,6 +1,7 @@
 import copy, json, unittest
 from pathlib import Path
 from astra_backend.synthetic.v14_contract_validator_v1 import summarize, validate
+from astra_backend.synthetic import v14_empirical_v1
 
 CONTRACT=Path("docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json")
 
@@ -27,6 +28,9 @@ class V14ValidatorTests(unittest.TestCase):
     def test_reject_gate_weakening(self):
         c=copy.deepcopy(self.contract); c["empiricalGate"]["commonF1AtLeast"]=.55
         with self.assertRaises(ValueError): validate(c)
+    def test_historical_batch_root_is_frozen(self):
+        self.assertEqual(v14_empirical_v1.BATCH_ROOT, 20260927)
+
     def test_no_execution(self):
         r=validate(self.contract)
         self.assertEqual(r["execution"]["waveformRenders"],0)
