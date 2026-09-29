@@ -1,0 +1,107 @@
+{
+  "schema": "astra-v12-family-mixture-contract-v1",
+  "date": "2026-09-29",
+  "status": "frozen-preparation-empirical-execution-not-authorized",
+  "question": "With exact executed V9 dataset semantics and all non-positive batch selections fixed, does matching historical comparator positive-onset family mixture materially recover common-population precision/F1?",
+  "dataReuse": {
+    "originalV9ArtifactRetainedDatasetArrays": false,
+    "empiricalRegenerationRequired": true,
+    "sharedSingleV9DatasetAcrossArms": true,
+    "interventionSpecificRendering": false
+  },
+  "historicalTrainPositiveOnsetFrames": {
+    "isolated": 30,
+    "scales": 120,
+    "chords": 60,
+    "repeated": 120,
+    "legato": 30,
+    "palmmute": 150,
+    "mixed": 15,
+    "total": 525
+  },
+  "targetPositiveSlots": {
+    "isolated": 914,
+    "scales": 3657,
+    "chords": 1829,
+    "repeated": 3657,
+    "legato": 914,
+    "palmmute": 4572,
+    "mixed": 457,
+    "total": 16000
+  },
+  "seeds": {
+    "familySchedule": 20281928,
+    "familyPoolSelection": 20281929
+  },
+  "expectedV9PositivePools": {
+    "isolated": 150,
+    "scales": 240,
+    "chords": 60,
+    "repeated": 240,
+    "legato": 120,
+    "palmmute": 300,
+    "mixed": 60,
+    "total": 1170
+  },
+  "fixed": {
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "batchSize": 128,
+    "learningRate": 0.003,
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0
+  },
+  "identity": {
+    "positiveSlotsPerArm": 16000,
+    "identicalNonPositiveSelections": true,
+    "samePerStepPermutation": true,
+    "interventionChangesOnlyPositiveOnsetSelections": true,
+    "reportAttackedNoteLabelExposure": true
+  },
+  "baselineReproduction": {
+    "precision": 0.3244274809160305,
+    "recall": 0.6589147286821705,
+    "f1": 0.43478260869565216,
+    "tolerance": 1e-12
+  },
+  "supportGate": {
+    "commonPrecisionGainAtLeast": 0.15,
+    "commonF1GainAtLeast": 0.1,
+    "commonRecallDeclineAtMost": 0.05,
+    "commonNegativeFpPerSecondAtMost": 0.1,
+    "v9F1DeclineAtMost": 0.05,
+    "exact500StepsPerModel": true,
+    "exact2Models": true,
+    "finiteMetricsRequired": true
+  },
+  "evaluation": {
+    "primary": "frozen 2-second comparator test",
+    "secondary": "frozen executed-V9 4-second test",
+    "v2b": false,
+    "realAudio": false
+  },
+  "sourcePins": {
+    "projectAuthorizationBlob": "cdbef30524a23788dbc54369f0a00a8cc88d30d3",
+    "runnerBlob": "9aa5a381269f022eb75aa13308442250dd0e7a51",
+    "testsBlob": "e385d0a6ae958f974dca832ab91ec7051de9568d",
+    "postV11ReviewBlob": "a817799cbb0047af113a24724b7ab057fe95bc2f",
+    "v11ResultBlob": "390ba1085a99d41da9fb4a07232f51e66f6c8e6f",
+    "v9EmpiricalBlob": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s1Blob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s6Blob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "runtimeLockBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "boundaries": {
+    "empiricalExecutionAuthorized": false,
+    "v2b": false,
+    "realAudio": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
