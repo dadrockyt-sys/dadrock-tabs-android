@@ -1,12 +1,12 @@
 # Astra — current handoff
 
-Updated: 2026-09-28 UTC
+Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **ARCHITECTURE RESEARCH A1 FAILED ITS FROZEN GATE — STRONG STATE/JOINED IMPROVEMENT EVIDENCE BUT NO ACCEPTANCE; A1 CLOSED; ANY A2 REQUIRES NEW EXPLICIT PROJECT DECISION; P1/P2 CLOSED; P3 SEALED**
+Status: **V8A COMPLETE — NO ARM ADVANCES; V9 NOT LAUNCH-READY; NEXT: MODEL-FREE MEASUREMENT/IDENTITY AUDIT AND ONE DRAFT DESIGN; NO EMPIRICAL EXECUTION**
 
-Latest supervisory instructions are in **Post-A1 supervisory evidence reconciliation complete** in `astra-work/CURRENT_STATE.md`. The bounded review is complete; stop at the new project-decision boundary. Earlier execution/resume sections below are historical where superseded.
+Latest supervisory instructions are in **Supervisory review after V8 / before V9 — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -4584,3 +4584,63 @@ A next project should either:
 - main/Production unchanged
 
 **Resume instruction:** Stop at the V8A no-advance boundary. Any fallback-free long-duration curriculum redesign or fresh real-domain training study is a new project decision and requires explicit authorization.
+
+## Supervisory review after V8 / before V9 — 2026-09-29
+
+**Current resume authority.** This section supersedes conflicting next-step instructions above. V8 remains frozen with no advancing arm. V9 is a proposal, not launch-ready. The next task is a bounded model-free evidence and measurement audit from existing committed records, followed by one concrete design. No new experiment or audio access is authorized by this review.
+
+### Evidence reviewed and limits
+
+Reviewed remote head `c80f1b666122c9b670e50fcd21cace3594bc9e71`, AGENTS.md, both handoffs, V8 design/spec/result, V8 timing runner (blob `3c7efea4ce00d737a9ed1bb2711185b7a5fb1955`) and workflow, V2B collected-audio manifest, duration correction and annotations, and V6 onset-objective helper. Connected GitHub independently reports accepted V8 run 36523314347/job 109260764079 successful. The supplied screenshot points to this same head.
+
+This was source/document review, not independent experimental reproduction. No corpus audio, model weights or result artifact was downloaded; no model, test suite, timing generator, optimizer or workflow was run. V4–V7 empirical claims were not fully reproduced or their complete local execution chains audited. Existing dirty/stale local checkouts were preserved; write from the verified remote tree.
+
+### Assessment and concrete corrections
+
+GPT-5.6 correctly rejected V8 under its frozen gate and avoided unnecessary training. Keep that discipline. L1's reported 56.52% distance improvement is useful development evidence, but its 13 fallbacks fail the declared gate; L2 also fails. Neither establishes improved transcription. The next priority is trustworthy measurement, not another iteration toward the same potentially misleading scalar.
+
+1. **Attack units are inconsistent.** V8 `base_attacks("chords")` emits three identical times for each chord; `summarize` includes zero IOIs in `x <= .25`. L0's repeated fraction and simultaneous fraction are both 0.2666667: from the inspected base templates, all of that “repeat” count is simultaneous chord multiplicity, not successive attacks. V2B's 164 references are spectral-flux timestamps, not per-string chord notes. Comparing those rates/IOIs directly conflates polyphony with temporal density. Preserve V6–V8 results; do not silently recalculate their acceptance. Prospectively report acoustic attack groups separately from note-level targets. Keep all chord notes in training labels, but count a simultaneous group once for attack timing. Define grouping tolerance and positive-gap repeat rules before recomputation. A short gap alone does not establish a repeated pitch or picking technique.
+
+2. **Model-free does not mean verified ground truth.** The V2B annotation file explicitly uses spectral-flux onset detection and YIN stability, with no string/fret annotations and no exhaustive polyphonic truth. “High confidence” is an algorithmic category unless independent QA is documented. Rate 1.49059/s and IOI p90 0.882358 s characterize this detected-landmark sample, not necessarily all audible attacks. V9 must not claim that matching detector output solves a performance-domain mismatch. Pin detector settings/source and document completeness/uncertainty. Independent audio QA, if needed, is a separate concrete scoped step; do not invent it or relabel the existing landmarks as human-verified.
+
+3. **The sound inventory already exists.** Start from `docs/astra/V2B_CALIBRATION_DEVELOPMENT_COLLECTED_AUDIO_V1.json`: exactly C01–C13 positive and D01–D04 negative, with filenames, original-byte hashes, source URLs and crop endpoints. Apply the existing `V2B_CALIBRATION_DEVELOPMENT_COLLECTION_CORRECTION_V2.json` overlay: C04 duration 5.799183673469388 s, D01 8.097959183673469 s; totals 110.023183673 s positive and 31.857959184 s negative. Do not enumerate every uploaded MP3 as eligible: other uploads belong to the excluded V1.1 pool. Reconcile annotations (57/50 raw pitch landmarks) with reported scoring populations (56/49) using recorded exclusions; do not silently change denominators. Preserve both source-byte identity and annotation/crop identity. No re-download or new decoding is needed to copy recorded metadata; mark hash verification as inherited, not newly performed.
+
+4. **V1.1 is closed and already evaluated, not an untouched holdout.** Its prior 1/72 result is exposed evidence. “Sealed” here means no further use for tuning/confirmation. Keep it excluded, along with P1/P2/P3. Any future confirmation set must be genuinely new and grouped by source recording/creator where possible, not another crop or renamed copy of development audio.
+
+5. **V8 did not isolate duration.** L1/L2 also repeat motifs, change repeated-family spacing to 0.18 s and introduce random 0.7–1.1 s inter-motif gaps. Improvements concern this complete construction package, not duration alone. Its `invalidClipCount` checks onset bounds only: it does not validate pitch/string/fret, offsets, sustains, overlap, split identity or negative examples. Negative clips are skipped entirely by the screen. Its fallback numerator counts correction operations, while the spec says fraction of clips with fallback. Those can diverge. Record these limitations without changing V8's frozen result.
+
+6. **Do not infer exhaustive causes from failed small interventions.** V4/V5/V6 failures reject those bounded packages; they do not rule out renderer realism, target design, loss formulation, calibration or representation as interacting contributors. The event-timing hypothesis remains plausible and unproven. V2B has repeatedly informed model/design decisions and is development data, even though its waveforms were not used for gradient training.
+
+7. **Launch and reproducibility safeguards are incomplete.** V8's workflow checks three launch fields but does not pin runner/spec hashes, consume a unique scope, reject reruns or run focused admission tests. Preserve historical infrastructure attempts and corrections honestly; “accepted output” does not erase prior attempts. Future result paths must refuse overwrites, and infrastructure repair must be distinguished from scientific retries. V7 records a local script hash; a hash without the exact retained script is insufficient reproduction evidence.
+
+### Exact next authorized task: model-free evidence audit and one draft design
+
+Do this useful preparation without asking again for permission to edit documentation or inspect committed source. This review does not grant V9 empirical execution.
+
+1. Create `docs/astra/POST_V8_MEASUREMENT_REVIEW_V1.md` and a machine-readable companion. Reconcile the 17-file V2B manifest, corrections, annotation identity, exclusions, durations, prior exposure and source-overlap checks using existing records only. Include a status table distinguishing recorded, independently verified, missing and contradictory evidence. Keep original audio outside Git. Do not access V1.1/P1/P2/P3 bytes or expand the sound pool.
+
+2. Specify a common timing contract before recalculating anything: acoustic-group versus note units; simultaneous tolerance; crop-local origin; exact sample duration versus rounded metadata; endpoint inclusion; quantile convention; pooling versus clip-balanced summaries; empty/single-attack clips; positive-only density denominator; separate negative duration; and repeat fraction over eligible positive IOIs. Report per-clip/per-family counts as well as pooled values. Do not deduce simultaneous note multiplicity or exhaustive attack coverage from the real landmark lists.
+
+3. Implement only a small pure measurement/manifest validator if needed, with hand-authored JSON fixtures and no audio/model dependencies. Test a three-note chord as one acoustic group and three note labels; two distinct short-gap attacks; singleton/empty clips; crop boundaries; duplicate IDs; missing/nonfinite/boolean numeric fields; impossible durations; corrected duration propagation; and count/rate consistency. Fixture checks are authorized. Do not generate V9 empirical timing populations or run historical experiments as a “test.” Record exact focused commands and results.
+
+4. Produce a short reconciliation of historical summaries from committed records. Distinguish V6's synthetic p50/p90 0.3483/0.4180 from V7/V8 template values 0.34/0.40; trace data and transformation provenance rather than assume they are the identical baseline. Locate the full V6/V7 orchestration and measurement source if retained; mark it unavailable if only helper files/hashes survive. Do not reconstruct missing evidence by new model runs.
+
+5. Draft `docs/astra/FALLBACK_FREE_CURRICULUM_V9_DESIGN_V1.md` and matching JSON, explicitly **not launch-ready** until measurement comparability is resolved. Choose one hypothesis and bounded generator package; do not default to trying both 4 and 6 seconds. Explain any chosen duration, content count and gap distribution prospectively. Preserve original note labels and generate feasible onsets AND offsets/sustains by construction. Define conditional sampling, support, infeasibility handling and RNG identity mathematically. Avoid hidden rejection loops, clipping, compression, event deletion or reseeding to force a gate pass. “Zero fallback” is not a substitute for distribution fidelity or full label validity.
+
+6. Before a future empirical phase, freeze all numerical gates and exact comparators. If corrected measurement units require a new distance/target version, document why; historical gates remain unchanged. Freeze weights/scales, all metric definitions, unique seeds, maximum arms, no-advance behavior and tie-breaking. Do not choose gates after viewing candidate timing output. Gate feasibility and sample limitations must be reviewable before generation.
+
+7. Specify the downstream experiment completely on paper: same-runtime baseline and intervention, architecture/source pins, initialization mapping, renderer, frontend, loss reductions, batch and split identities, padding/masks, frame/clip weighting, train duration and number of frames/events seen. Two 500-update models at different sequence lengths do not have equal compute or exposure. Retain the existing maximum two models/1,000 updates unless separately authorized; add explicit render, inference, CPU-time and storage ceilings before launch. Use a common fixed synthetic evaluation population for comparative sanity, plus a separately declared duration stress test if justified. Prevent shared base motifs/recordings crossing train/test.
+
+8. Prospectively encode the full order: timing gate -> render -> train -> synthetic sanity -> permitted V2B evaluation. Failed sanity must technically prevent real inference; the recorded V5 premature T1 evaluation shows why prose alone is insufficient. Freeze eligible clip/landmark populations and scoring functions, including compatibility aggregation and exact timing/frame semantics. Compatible state/onset admission is diagnostic, not exact fingering or ordinary-decoder note accuracy. Keep ordinary-decoder negative FP counts and exact seconds. Any fresh confirmation acquisition/evaluation requires its own reviewable scope; it is not automatic on a development pass.
+
+9. Retain exact source, manifests, settings, model checkpoints and raw result JSON in durable authorized storage for any later execution. Hashes alone and expiring artifacts are insufficient. No original sound files or credentials in Git. Define one consumed launch scope across all invocation paths, source/spec validation, no automatic retry, deadline checks, partial-failure receipts and non-overwriting outputs. Do not modify consumed historical launch markers.
+
+10. Save the audit, any pure validator/tests and the draft design; synchronize both handoff headers and final resume instructions; verify remote ref and content. End with one concrete readiness assessment and an exact proposed empirical scope if all dependencies are satisfied. If reference completeness or timing comparability is unresolved, recommend the smallest annotation/measurement resolution step instead of launching V9. No automatic V10 or indefinite sequence of benchmark-fitting attempts.
+
+### Authorization and stop boundary
+
+The current request authorizes this review and saving instructions. Existing sound-file intake and prior experiment authorizations remain historical scoped grants; do not ask to repeat completed authorized work, and do not treat them as approval for a new empirical project. The latest pre-review handoff explicitly reserves V9 empirical execution for an explicit user decision. Honor any later authorization according to its actual scope, without requiring a magic phrase.
+
+For now: committed-record review, documentation and pure fixture tests only. No new audio decoding/annotation, V9 timing population generation, waveform rendering, weights, inference, optimizer, launch marker, workflow dispatch, A2, main or production changes.
+
+**Resume instruction for GPT-5.6:** Audit V2B identity and timing measurement semantics first, particularly chord multiplicity versus distinct attacks and algorithmic-label uncertainty. Prepare one precise, testable V9 draft only after those issues are documented. Preserve V8's no-advance result and all sound-file identities. Save a concrete readiness checkpoint before requesting any new empirical authorization.
