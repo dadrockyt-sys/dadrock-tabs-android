@@ -1,11 +1,11 @@
 {
   "schema": "astra-fallback-free-curriculum-v9-design-v1",
   "date": "2026-09-29",
-  "status": "draft-not-launch-ready",
+  "status": "superseded-by-final-contract-execution-not-authorized",
   "hypothesis": "one native 4-second generator can improve corrected common-unit timing fidelity while preserving full valid labels without post-placement fallback",
   "arm": {
     "id": "V9-4S",
-    "clipSeconds": 4.0,
+    "clipSeconds": 4,
     "maxInterventionArms": 1,
     "fallbackPathsAllowed": 0,
     "hiddenRejectionLoopsAllowed": false,
@@ -46,7 +46,10 @@
     "maxOptimizerStepsPerModel": 500,
     "maxOptimizerStepsTotal": 1000,
     "retries": 0,
-    "thresholds": {"state": 0.5, "onset": 0.5},
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
     "decoderChange": false,
     "renderer": "R3 frozen",
     "stateObjective": "exact-string-fret",
@@ -74,5 +77,6 @@
     "mainMutation": false,
     "productionMutation": false,
     "executionAuthorized": false
-  }
+  },
+  "supersededBy": "docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json"
 }
