@@ -1,0 +1,28 @@
+{
+  "schema": "astra-v10-empirical-execution-authorization-v1",
+  "date": "2026-09-29",
+  "status": "explicitly-authorized-for-frozen-v10-exposure-isolation-contract",
+  "explicitlyAuthorized": true,
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "contractPath": "docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json",
+  "authorizationScope": {
+    "exactlyTwoModels": true,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "regenerateFrozenV9Dataset": true,
+    "regenerateFrozenComparatorEvaluationDataset": true,
+    "syntheticOnly": true,
+    "v2b": false,
+    "realAudio": false,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
