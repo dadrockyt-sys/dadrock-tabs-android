@@ -3502,3 +3502,43 @@ A2 remains closed.
 Main/Production unchanged.
 
 **Resume instruction:** V3 design is ready, but empirical V3A/V3B/V3C execution is a new project step. Do not run it until the user explicitly authorizes V3 empirical execution.
+
+
+## V3A execution package prepared — empirical execution still gated — 2026-09-28
+
+Generic continuation was used only to prepare the execution package. No V3A audit was run.
+
+New files:
+- `astra_backend/synthetic/v3a_frontend_distribution_audit_v1.py`
+- `astra_backend/synthetic/v3a_frontend_distribution_validator_v1.py`
+- `docs/astra/V3A_FRONTEND_AUDIT_EXECUTION_PACKAGE_V1.json`
+
+The V3A runner is model-free. It:
+- loads the historical synthetic feature NPZ;
+- decodes the private V2B audio using the existing frozen frontend math;
+- verifies every V2B file hash against the frozen collection manifest;
+- applies only the already-frozen V2B crop boundaries;
+- computes per-bin mean/std/median/MAD/floor occupancy;
+- computes dynamic-range, frame-L2, temporal-difference-L2 and 5-frame context-norm summaries;
+- computes per-bin standardized mean differences, Wasserstein distances and robust range overlap;
+- emits no model output and performs no thresholding or calibration.
+
+The validator fails closed on:
+- wrong schema;
+- non-192-bin feature summaries/distances;
+- non-finite values;
+- any model inference or optimizer work;
+- threshold search;
+- frontend mutation;
+- V1.1/P1/P2/P3/A2 access.
+
+No V3A empirical execution occurred.
+No model inference occurred.
+No optimizer steps occurred.
+No threshold/frontend/decoder changes occurred.
+V1.1 remains sealed.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+**Resume instruction:** V3A tooling is ready. Do not execute V3A until the user explicitly authorizes V3 empirical execution. Generic continuation remains documentation/tooling-only.
