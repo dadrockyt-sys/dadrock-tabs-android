@@ -2508,3 +2508,54 @@ The current request authorizes this review and saving instructions. Existing sou
 For now: committed-record review, documentation and pure fixture tests only. No new audio decoding/annotation, V9 timing population generation, waveform rendering, weights, inference, optimizer, launch marker, workflow dispatch, A2, main or production changes.
 
 **Resume instruction for GPT-5.6:** Audit V2B identity and timing measurement semantics first, particularly chord multiplicity versus distinct attacks and algorithmic-label uncertainty. Prepare one precise, testable V9 draft only after those issues are documented. Preserve V8's no-advance result and all sound-file identities. Save a concrete readiness checkpoint before requesting any new empirical authorization.
+
+
+## Post-V8 measurement audit + V9 draft complete — 2026-09-29
+
+**This is the current resume authority and supersedes the earlier instruction to perform the post-V8 audit/design.**
+
+Completed and saved:
+- `docs/astra/POST_V8_MEASUREMENT_REVIEW_V1.md`
+- `docs/astra/POST_V8_MEASUREMENT_REVIEW_V1.json`
+- `astra_backend/synthetic/v9_measurement_contract_v1.py`
+- `astra_backend/synthetic/test_v9_measurement_contract_v1.py`
+- `docs/astra/FALLBACK_FREE_CURRICULUM_V9_DESIGN_V1.md`
+- `docs/astra/FALLBACK_FREE_CURRICULUM_V9_DESIGN_V1.json`
+
+Focused pure-Python fixture validation: 10/10 tests passed. Audio decoding 0; model inference 0; optimizer steps 0; workflow dispatches 0; V1.1/P1/P2/P3/A2 access none; main/Production unchanged.
+
+### Measurement finding that must be preserved
+
+Historical V6/V7/V8 acceptance remains frozen, but the synthetic-to-V2B timing scalar is not prospectively trustworthy as one common physical unit. Retained V8 source counts simultaneous chord-note timestamps as zero IOIs and those zero IOIs also enter the <=250 ms repeat fraction. L0's simultaneous and repeat fractions are both 0.2666667. V2B's 164 references are spectral-flux landmark timestamps, not note-level chord multiplicity.
+
+Future timing work must separate note/string/fret labels from acoustic attack groups used for timing-distribution measurement. Do not retroactively alter V6/V7/V8 decisions.
+
+### Reconciled V2B evidence
+
+Eligible inventory remains exactly C01-C13 positive and D01-D04 negative-only. Frozen corrected durations: C04 5.799183673469388 s; D01 8.097959183673469 s; totals 110.023183673 s positive and 31.857959184 s negative.
+
+Raw annotations contain 164 onset landmarks, 57 trusted-pitch landmarks and 50 high-confidence pitch landmarks, from spectral-flux onset detection plus YIN pitch stability. There is no string/fret truth and no exhaustive polyphonic truth. V6 scoring later uses 56 trusted / 49 high-confidence refs; the exact exclusion provenance remains unresolved in the committed result and must not be guessed.
+
+### V9 design status
+
+One bounded design is drafted: one 4-second intervention arm, native conditional feasible timing generation, separate acoustic-group timing and note labels, onsets and offsets/sustains valid by construction, no post-placement shift, clipping/compression/event deletion, hidden rejection loop or reseed-to-pass. Infeasible instances fail closed. Maximum downstream models remains 2 and maximum downstream optimizer steps remains 1,000 total.
+
+**V9 is not launch-ready.** Numerical gates and common-unit timing targets are intentionally not frozen yet.
+
+### Exact next authorized task: PRE-V9-MEASUREMENT-V1
+
+At a generic continue, perform only this bounded model-free measurement step from committed records:
+
+1. Use the committed V2B manifest, duration-correction and annotation JSON plus retained frozen synthetic baseline records/source.
+2. Do not read/decode original audio and do not add/change annotations.
+3. Freeze the prospective common timing semantics before calculation: acoustic attack groups separate from note labels; 10 ms simultaneous grouping tolerance; crop-local origin; exact corrected durations; half-open [0,duration) endpoint; positive IOIs only; repeat250 over eligible positive IOIs; positive density excludes negative-only time; empty/singleton clips have zero IOIs and undefined clip repeat; report pooled/per-clip summaries and per-family synthetic summaries.
+4. Produce a versioned common-unit target/reference table while preserving historical V6/V7/V8 metrics separately.
+5. Reconcile the 57/50 -> 56/49 scoring denominator if a committed exclusion record exists; otherwise mark it unresolved.
+6. Run only focused pure measurement/fixture checks. No V9 candidate timing population is part of this step.
+7. Save source, machine-readable result, human review and both synchronized handoffs; verify remote branch content.
+
+### Stop boundary
+
+Do not yet generate a V9 candidate timing arm, render waveforms, train models, run V2B model inference, dispatch a workflow/launch marker, access V1.1/P1/P2/P3, open A2, alter thresholds/decoder, or mutate main/Production.
+
+After PRE-V9-MEASUREMENT-V1, stop at the corrected reference table and readiness decision. If comparability is resolved, the next user decision is whether to authorize empirical V9 under a fully frozen numerical contract.
