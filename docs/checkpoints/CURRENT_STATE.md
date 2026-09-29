@@ -2687,3 +2687,32 @@ Current blocker: no genuinely new qualifying real-development clip set has yet b
 A1 must not be retrained to recreate weights. Before eventual inference, pin one durable already-frozen candidate identity; if the preferred candidate weights are unavailable, freeze that limitation rather than reconstructing them.
 
 **Resume instruction:** Continue with intake only after qualifying new real audio is supplied or identified. Hash, annotate, pin provenance and candidate/runtime identities, validate the complete manifest, and freeze a zero-inference verification receipt. Only a fully passed pre-inference intake may advance to one bounded real-development evaluation. Do not train/tune, open A2, reuse P1/P2, or access P3.
+
+
+## Independent real-development web sourcing — completed 2026-09-28
+
+Frozen sourcing review:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_WEB_SOURCE_REVIEW_V1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_WEB_SOURCE_REVIEW_V1.json`
+
+Sourced candidate pool:
+- **18 positive guitar clips**, nominal **139 s**;
+- **6 negative-only clips**, nominal **39 s**;
+- one reserve legato source requiring a prospectively frozen 4–10 s crop if used.
+
+Primary selected source: Pixabay sound effects under the Pixabay Content License, for internal evaluation only. Original standalone audio must not be committed or redistributed.
+
+Coverage represented in the pool:
+- clean/distorted electric;
+- acoustic/baritone;
+- single notes;
+- repeated attacks;
+- bends/slide;
+- palm mute;
+- strumming/arpeggio;
+- riffs/chords;
+- transient-rich negative speech/percussion/typing/crowd material.
+
+No audio download, model inference, optimizer, workflow dispatch, or P1/P2/P3 access occurred during sourcing.
+
+**Resume instruction:** Continue only by downloading the frozen shortlisted candidates, hashing them, preserving provenance, human-screening them, freezing annotations before output, populating the intake manifest, and passing the pure zero-inference intake verification. Do not train/tune or infer before that checkpoint.
