@@ -1,16 +1,16 @@
 {
   "schema": "astra-v2b-calibration-development-intake-v1",
   "date": "2026-09-28",
-  "status": "collection-complete-annotations-pending",
+  "status": "pre-inference-intake-frozen-and-validated",
   "design": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_DESIGN.md",
   "independence": {
-    "noV1_1Overlap": false,
-    "noV1_1NearDuplicates": false,
-    "noP1Overlap": false,
-    "noP2Overlap": false,
-    "noP3Overlap": false,
-    "noPreviouslyModelInspectedAudio": false,
-    "declaration": null
+    "noV1_1Overlap": true,
+    "noV1_1NearDuplicates": true,
+    "noP1Overlap": true,
+    "noP2Overlap": true,
+    "noP3Overlap": true,
+    "noPreviouslyModelInspectedAudio": true,
+    "declaration": "All V2B clips are fresh sources distinct from the sealed V1.1 set by source identity and file hash; no P1/P2/P3, synthetic, or candidate-output-selected audio is included."
   },
   "candidate": {
     "name": "S9 30-voicing intervention",
@@ -28,9 +28,21 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-tapping-34546/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "davidkyoku (Freesound)",
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks",
+        "legato-bend-slide"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 42,
+          "trustedPitchLandmarkCount": 12
+        }
+      ]
     },
     {
       "id": "C02",
@@ -41,9 +53,20 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-riff-jingle-83860/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 15,
+          "trustedPitchLandmarkCount": 8
+        }
+      ]
     },
     {
       "id": "C03",
@@ -54,22 +77,42 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-054374-funky-electric-guitar-sample-9-84788/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "clean-capture",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 38,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C04",
       "kind": "positive",
       "file": "freesound_community-guitar-plug-and-play-106347.mp3",
       "sha256": "ce7d43755bc3ab216e96935864fc720d8702ceaf6dc7c5ba180d2270a620aa9d",
-      "durationSeconds": 5.806,
+      "durationSeconds": 5.799183673,
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 5.806,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-guitar-plug-and-play-106347/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 7,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C05",
@@ -80,9 +123,20 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-phrase-38142/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "teresanski (Freesound)",
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 11,
+          "trustedPitchLandmarkCount": 11
+        }
+      ]
     },
     {
       "id": "C06",
@@ -93,9 +147,19 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8.496,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-one-note-electric-guitar-90716/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "davidkyoku (Freesound)",
+      "coverage": [
+        "clean-capture",
+        "single-note"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 10,
+          "trustedPitchLandmarkCount": 10
+        }
+      ]
     },
     {
       "id": "C07",
@@ -106,9 +170,20 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 6.96,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-86322/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "legato-bend-slide"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 6,
+          "trustedPitchLandmarkCount": 5
+        }
+      ]
     },
     {
       "id": "C08",
@@ -119,9 +194,19 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-pluck-40468/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "clean-capture",
+        "single-note"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 2,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C09",
@@ -132,9 +217,19 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 7.152,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-pick-slides-106398/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "X172 (Freesound)",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "legato-bend-slide"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 2,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C10",
@@ -145,9 +240,20 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-12-first-electric-guitar-power-chords-34547/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "davidkyoku (Freesound)",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "chordal-polyphonic",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 4,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C11",
@@ -158,9 +264,18 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/distorted-reversed-electric-guitar-49960/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "jasonlee3071",
+      "coverage": [
+        "distorted-or-overdriven-capture"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 3,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "C12",
@@ -171,9 +286,21 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 5.616,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-out-on-a-bender-13586/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "PhotoCapeBreton",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "single-note",
+        "legato-bend-slide",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "trusted-pitch-landmarks",
+          "onsetCount": 11,
+          "trustedPitchLandmarkCount": 11
+        }
+      ]
     },
     {
       "id": "C13",
@@ -184,21 +311,34 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 10,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-017628-strummed-electric-guitar-chords-55201/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
-      "annotations": []
+      "creatorOrCaptureChain": "Freesound community",
+      "coverage": [
+        "clean-capture",
+        "chordal-polyphonic",
+        "repeated-attacks"
+      ],
+      "annotations": [
+        {
+          "referenceFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+          "mode": "onset-only",
+          "onsetCount": 13,
+          "trustedPitchLandmarkCount": 0
+        }
+      ]
     },
     {
       "id": "D01",
       "kind": "negative-only",
       "file": "dragon-studio-keyboard-typing-asmr-356118.mp3",
       "sha256": "c31fea731c71efe9dea3c9b3d1e9256c64bb3d1f26a521c757c24321912ef81c",
-      "durationSeconds": 8.098,
+      "durationSeconds": 8.097959184,
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8.098,
       "sourceUrl": "https://pixabay.com/sound-effects/film-special-effects-keyboard-typing-asmr-356118/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
+      "creatorOrCaptureChain": "DRAGON-STUDIO",
+      "coverage": [
+        "negative-typing-mechanical"
+      ],
       "annotations": []
     },
     {
@@ -210,8 +350,10 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 7.584,
       "sourceUrl": "https://pixabay.com/sound-effects/musical-ancient-war-drums-463214/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
+      "creatorOrCaptureChain": "DRAGON-STUDIO",
+      "coverage": [
+        "negative-percussion"
+      ],
       "annotations": []
     },
     {
@@ -223,8 +365,10 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8.04,
       "sourceUrl": "https://pixabay.com/sound-effects/people-applause-cheer-236786/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
+      "creatorOrCaptureChain": "Driken5482",
+      "coverage": [
+        "negative-crowd-applause"
+      ],
       "annotations": []
     },
     {
@@ -236,8 +380,10 @@
       "evaluationStartSeconds": 0,
       "evaluationEndSeconds": 8.136,
       "sourceUrl": "https://pixabay.com/sound-effects/people-cheering-crowd-242638/",
-      "creatorOrCaptureChain": "pending-normalization",
-      "coverage": [],
+      "creatorOrCaptureChain": "Universfield",
+      "coverage": [
+        "negative-crowd-applause"
+      ],
       "annotations": []
     }
   ],
@@ -245,16 +391,49 @@
     "clipCount": 17,
     "positiveClipCount": 13,
     "negativeOnlyClipCount": 4,
-    "positiveAudioSeconds": 110.03,
-    "negativeAudioSeconds": 31.858,
-    "creatorsOrCaptureChains": 0,
-    "coverage": []
+    "positiveAudioSeconds": 110.023183673,
+    "negativeAudioSeconds": 31.857959184,
+    "creatorsOrCaptureChains": 9,
+    "coverage": [
+      "chordal-polyphonic",
+      "clean-capture",
+      "distorted-or-overdriven-capture",
+      "legato-bend-slide",
+      "negative-crowd-applause",
+      "negative-percussion",
+      "negative-typing-mechanical",
+      "repeated-attacks",
+      "single-note"
+    ]
   },
-  "annotationsFrozenBeforeInference": false,
+  "annotationsFrozenBeforeInference": true,
   "modelInferenceCount": 0,
   "optimizerSteps": 0,
   "p1Accessed": false,
   "p2Accessed": false,
   "p3Accessed": false,
-  "v1_1AccessedForTuning": false
+  "v1_1AccessedForTuning": false,
+  "annotationFile": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+  "annotationPolicy": {
+    "trustedPitchClipIds": [
+      "C01",
+      "C02",
+      "C05",
+      "C06",
+      "C07",
+      "C12"
+    ],
+    "onsetOnlyClipIds": [
+      "C03",
+      "C04",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C13"
+    ],
+    "onsetLandmarkCount": 164,
+    "trustedPitchLandmarkCount": 57,
+    "candidateModelUsed": false
+  }
 }
