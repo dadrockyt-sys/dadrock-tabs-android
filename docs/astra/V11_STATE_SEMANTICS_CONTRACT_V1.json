@@ -1,0 +1,100 @@
+{
+  "schema": "astra-v11-state-semantics-contract-v1",
+  "date": "2026-09-29",
+  "status": "frozen-preparation-empirical-execution-not-authorized",
+  "question": "With successful V9 attack timing/counts fixed, does restoring historical family-specific state/audio duration and legato-continuation semantics materially recover common-population precision/F1?",
+  "arms": {
+    "control": "exact executed V9 4-second semantics",
+    "intervention": "same attacks/notes with restored S0 state-duration and legato continuation semantics"
+  },
+  "durationsSeconds": {
+    "isolated": 1.03,
+    "scales": 0.27,
+    "chords": 0.48,
+    "repeated": 0.31,
+    "legatoAttack": 0.5,
+    "legatoContinuation": 0.74,
+    "palmmute": 0.16,
+    "mixedPositive": 0.86
+  },
+  "retriggerRule": "actual attacked end=min(onset+historical_duration,next same-string attack onset,4.0); legato continuation begins at onset+0.50 and ends at min(start+0.74,next same-string attack,4.0), omitted only when nonpositive",
+  "identity": {
+    "clips": 294,
+    "positiveClips": 273,
+    "negativeOnlyClips": 21,
+    "attackGroupsEachArm": 1638,
+    "attackedNoteLabelsEachArm": 1806,
+    "exactAttackedStringFretOnsetIdentity": true,
+    "requireAtLeastOneLegatoContinuation": true,
+    "zeroSameStringOverlap": true,
+    "negativeOnlyUnchanged": true
+  },
+  "training": {
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "batchSize": 128,
+    "learningRate": 0.003,
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0
+  },
+  "baselineReproduction": {
+    "precision": 0.3244274809160305,
+    "recall": 0.6589147286821705,
+    "f1": 0.43478260869565216,
+    "tolerance": 1e-12
+  },
+  "supportGate": {
+    "commonPrecisionGainAtLeast": 0.15,
+    "commonF1GainAtLeast": 0.1,
+    "commonRecallDeclineAtMost": 0.05,
+    "commonJointAdmissionDeclineAtMost": 0.05,
+    "commonNegativeFpPerSecondAtMost": 0.1,
+    "v9F1DeclineAtMost": 0.05,
+    "exact500StepsPerModel": true,
+    "exact2Models": true,
+    "finiteMetricsRequired": true
+  },
+  "evaluation": {
+    "primary": "frozen 2-second comparator test",
+    "secondary": "frozen executed-V9 4-second test",
+    "v2b": false,
+    "realAudio": false
+  },
+  "compute": {
+    "maxRenderCpuMinutes": 30,
+    "maxFitEvalCpuMinutes": 60,
+    "maxPersistedMiB": 700,
+    "paidComputeDollars": 0
+  },
+  "sourcePins": {
+    "projectAuthorizationBlob": "3b44f4cb7d2fe233ae8c14ea9f51b292a0632e5e",
+    "runnerBlob": "3d19a5e368955e083a740020b76d6fa248532eff",
+    "testsBlob": "a675b17521e118936da0636f7533f74e352b9ef8",
+    "postV10ReviewBlob": "6ae51fbd0189cfcaae388c43e26c37d92d8a728f",
+    "v9ResultBlob": "4e08a77600976813c478ce5c55c8908cbe63f48f",
+    "v10ResultBlob": "a92ce2b76cfcf4ac9a8372cf918d6495a164a460",
+    "v9EmpiricalBlob": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s0Blob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s1Blob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s6Blob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "runtimeLockBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "boundaries": {
+    "empiricalExecutionAuthorized": false,
+    "v2b": false,
+    "realAudio": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
