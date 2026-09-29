@@ -1,0 +1,103 @@
+{
+  "schema": "astra-onset-event-statistics-adequacy-v6-design-v1",
+  "date": "2026-09-29",
+  "status": "design-frozen-execution-not-authorized",
+  "hypothesis": "onset-supervision-and-event-statistics-contribute-to-real-transfer-failure",
+  "invariants": {
+    "architecture": "S9/S6 nonlinear frozen",
+    "parameterCount": "identical",
+    "renderer": "R3 frozen",
+    "stateObjective": "exact-string-fret frozen",
+    "data": "same synthetic corpus/splits",
+    "batches": "identical",
+    "initialization": "identical",
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "productionDecoderChanged": false
+  },
+  "arms": [
+    {
+      "id": "O0",
+      "onsetObjective": "historical-exact-frame-bce"
+    },
+    {
+      "id": "O1",
+      "onsetObjective": "soft-target-window",
+      "windowFrames": 1,
+      "centerTarget": 1,
+      "adjacentTarget": 0.5
+    },
+    {
+      "id": "O2",
+      "onsetObjective": "exact-target-focal",
+      "gamma": 2,
+      "alphaPositive": 0.75,
+      "alphaNegative": 0.25
+    },
+    {
+      "id": "O3",
+      "onsetObjective": "soft-window-plus-focal",
+      "windowFrames": 1,
+      "gamma": 2,
+      "alphaPositive": 0.75,
+      "alphaNegative": 0.25
+    }
+  ],
+  "v6a": {
+    "syntheticSanity": {
+      "maxPitchOnsetF1DeclineVsO0": 0.08,
+      "maxOnsetRecallDeclineVsO0": 0.08,
+      "onsetPrecisionAtLeast": 0.7,
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1,
+      "require500Steps": true
+    }
+  },
+  "v6b": {
+    "developmentInterestRule": {
+      "onsetAdmissionAbsoluteGainVsO0AtLeast": 0.2,
+      "trustedJointAdmissionAbsoluteGainVsO0AtLeast": 0.15,
+      "highConfidenceJointAdmissionAtLeast": 0.2,
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1,
+      "maxStateAdmissionDeclineVsO0": 0.1
+    }
+  },
+  "v6c": {
+    "modelFreeMetrics": [
+      "onsetsPerSecond",
+      "interOnsetIntervalP10P50P90",
+      "repeatedAttackFractionWithin250ms",
+      "eventDensityByClip",
+      "activeDurationDistribution",
+      "onsetToSustainRatio"
+    ]
+  },
+  "compute": {
+    "maxModels": 4,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 2000,
+    "retries": 0,
+    "thresholdSearch": false,
+    "lossParameterSearch": false
+  },
+  "confirmation": {
+    "freshHoldoutRequired": true,
+    "v1_1Used": false
+  },
+  "executionAuthorized": false,
+  "boundaries": {
+    "architectureChange": false,
+    "rendererChange": false,
+    "stateObjectiveChange": false,
+    "thresholdChange": false,
+    "decoderChange": false,
+    "realAudioTraining": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
