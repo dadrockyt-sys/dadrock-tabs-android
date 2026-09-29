@@ -4123,3 +4123,163 @@ Main/Production unchanged.
 Any V6B success requires a fresh holdout; V1.1 is not the confirmation set.
 
 **Resume instruction:** V6 design is ready. Do not implement O1/O2/O3, train O0/O1/O2/O3, evaluate V2B, or run the V6C event-statistics audit until the user explicitly authorizes V6 empirical execution. Generic continuation remains design/documentation only.
+
+
+## V6 empirical execution complete — 2026-09-29
+
+The user explicitly authorized V6 empirical execution.
+
+Frozen source/results:
+- `astra_backend/synthetic/v6_onset_objectives_v1.py`
+- `astra_backend/synthetic/test_v6_onset_objectives_v1.py`
+- `docs/astra/V6_ONSET_EVENT_STATISTICS_ADEQUACY_RESULT_V1.json`
+- `docs/astra/V6_ONSET_EVENT_STATISTICS_ADEQUACY_RESULT_V1.md`
+
+Focused onset-helper tests:
+- **7 / 7 passed**
+
+### Identity / compute
+
+All arms used:
+- identical S9/S6 nonlinear architecture and parameter count
+- identical R3 features
+- identical exact-string/fret state objective
+- identical initialization
+- identical batch plan
+- identical optimizer/learning rate
+- thresholds 0.50/0.50
+- ordinary decoder unchanged
+
+Identity:
+- initial model SHA-256 `ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc`
+- R3 feature SHA-256 `622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6`
+- batch-plan SHA-256 `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`
+
+Training:
+- O0 exact-frame BCE: 500 steps
+- O1 fixed +/-1-frame soft BCE: 500 steps
+- O2 fixed focal exact-target: 500 steps
+- O3 fixed soft-window + focal: 500 steps
+- total optimizer work: **2000 / 2000 authorized steps**
+
+### V6A synthetic sanity
+
+O0:
+- precision **0.76471**
+- recall **0.60465**
+- F1 **0.67532**
+- negative FP **0.0/s**
+- eligible
+
+O1:
+- precision **0.63433**
+- recall **0.65891**
+- F1 **0.64639**
+- negative FP **0.0/s**
+- failed frozen precision floor 0.70
+- **not V2B-eligible**
+
+O2:
+- precision **0.75000**
+- recall **0.60465**
+- F1 **0.66953**
+- negative FP **0.0/s**
+- eligible
+
+O3:
+- precision **0.72951**
+- recall **0.68992**
+- F1 **0.70916**
+- negative FP **0.0/s**
+- eligible
+
+### V6B V2B comparison
+
+O0:
+- onset admission **1/56 = 0.01786**
+- state admission **2/56 = 0.03571**
+- trusted joint **0/56**
+- high-confidence joint **0/49**
+- negative FP **0.15695/s**
+
+O2:
+- onset admission **1/56 = 0.01786**
+- state admission **10/56 = 0.17857**
+- trusted joint **0/56**
+- high-confidence joint **0/49**
+- negative FP **0.78473/s**
+- onset gain vs O0 **0.00**
+
+O3:
+- onset admission **2/56 = 0.03571**
+- state admission **9/56 = 0.16071**
+- trusted joint **0/56**
+- high-confidence joint **0/49**
+- negative FP **1.60086/s**
+- onset gain vs O0 **+0.01786**
+
+Frozen V6B gate required:
+- onset-admission gain >= +0.20
+- trusted joint gain >= +0.15
+- high-confidence joint >=20%
+- negative FP <=0.10/s
+- state admission decline <=0.10
+
+**No V6 alternative arm is development-interesting.**
+
+### V6C model-free event-statistics audit
+
+Synthetic:
+- 273 positive clips
+- 903 onset references
+- 546 s
+- aggregate **1.65385 onsets/s**
+- clip-rate p50 **2.000/s**
+- clip-rate p90 **3.000/s**
+- IOI p50 **0.3483 s**
+- IOI p90 **0.4180 s**
+- repeated-attack fraction <=250 ms **26.67%**
+
+V2B:
+- 13 positive clips
+- 164 frozen onset landmarks
+- 110.023 s
+- aggregate **1.49059 onsets/s**
+- clip-rate p50 **1.177/s**
+- clip-rate p90 **3.432/s**
+- IOI p50 **0.2560 s**
+- IOI p90 **0.8824 s**
+- repeated-attack fraction <=250 ms **47.02%**
+
+Synthetic zero IOIs occur from simultaneous multi-string chord attacks counted as separate references.
+
+V2B therefore contains substantially more short-gap repeated attacks and a much longer sparse-event upper tail despite similar aggregate event density.
+
+V2B lacks exhaustive sustain-duration annotations for every clip, so real active-duration/onset-to-sustain metrics were not fabricated.
+
+### Supported interpretation
+
+Fixed onset tolerance and focal loss do not repair real transfer.
+
+O3 improves the synthetic onset task but transfers only one additional real onset landmark and greatly worsens negative false positives.
+
+Combined with V6C, the evidence now points more strongly toward **synthetic event-timing / onset-representation mismatch** rather than threshold, affine normalization, bounded renderer realism, exact string/fret specificity, or simple onset-loss formulation.
+
+Do not claim causal isolation.
+
+### Guards
+
+- no threshold search
+- no loss-parameter search
+- no decoder change
+- no architecture or parameter-count change
+- no renderer change
+- no real audio in training
+- V1.1 not used for tuning
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+No fresh holdout is warranted because no V6B arm passed.
+
+**Resume instruction:** Stop at the V6 no-development-interesting-onset-objective boundary. Any next experiment that redesigns the synthetic event generator/onset curriculum, or any fresh real-domain training study, is a new project decision and requires explicit authorization.
