@@ -121,3 +121,10 @@ No post-hoc sampler retuning, threshold search, V2B bypass, or automatic next ex
 - main/Production unchanged.
 
 The next project, if any, must be prospectively defined and separately authorized. No automatic V11 is created by this result.
+
+
+## Post-review causal qualification — 2026-09-29
+
+The post-V10 source review narrows the causal wording. V10 matched attacked-note-label count by selecting more three-label positive frames; in this corpus those are chord attacks. The intervention therefore changed positive-onset chord/content mixture as well as total attacked-label count.
+
+Accordingly, the result rules out this **specific chord-enriched exposure-matching scheme** as a material rescue. It does not by itself disprove every possible pure positive-label loss-mass explanation.
