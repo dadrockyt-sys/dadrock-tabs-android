@@ -1,0 +1,237 @@
+{
+  "schema": "astra-v2b-calibration-development-web-shortlist-v1",
+  "date": "2026-09-28",
+  "status": "sourced-and-frozen-before-download-or-model-output",
+  "sourcePolicy": {
+    "provider": "Pixabay",
+    "licensePage": "https://pixabay.com/service/license-summary/",
+    "internalEvaluationOnly": true,
+    "doNotCommitStandaloneAudio": true
+  },
+  "exclusions": {
+    "v1_1ClipIdsExcluded": true,
+    "v1_1NearDuplicatesExcludedByTitleAndSourceId": true,
+    "p1Excluded": true,
+    "p2Excluded": true,
+    "p3Excluded": true,
+    "syntheticExcluded": true
+  },
+  "positiveCandidates": [
+    {
+      "id": "C01",
+      "title": "Electric guitar Tapping",
+      "creator": "davidkyoku (Freesound)",
+      "page": "https://pixabay.com/sound-effects/musical-electric-guitar-tapping-34546/",
+      "nominalSeconds": 18,
+      "plannedCrop": "select and freeze one 4-10 s segment before model output",
+      "coverage": [
+        "single-note",
+        "repeated-attacks",
+        "legato-bend-slide",
+        "clean-capture"
+      ]
+    },
+    {
+      "id": "C02",
+      "title": "Electric guitar riff jingle",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-electric-guitar-riff-jingle-83860/",
+      "nominalSeconds": 12,
+      "plannedCrop": "select and freeze one 4-10 s segment before model output",
+      "coverage": [
+        "repeated-attacks",
+        "clean-capture"
+      ]
+    },
+    {
+      "id": "C03",
+      "title": "054374_Funky Electric Guitar Sample 9",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-054374-funky-electric-guitar-sample-9-84788/",
+      "nominalSeconds": 10,
+      "plannedCrop": "full clip if decoded duration is within 4-10 s",
+      "coverage": [
+        "clean-capture",
+        "repeated-attacks"
+      ]
+    },
+    {
+      "id": "C04",
+      "title": "Guitar plug and play",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-guitar-plug-and-play-106347/",
+      "nominalSeconds": 5,
+      "plannedCrop": "full clip",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "repeated-attacks"
+      ]
+    },
+    {
+      "id": "C05",
+      "title": "electric guitar phrase",
+      "creator": "teresanski (Freesound)",
+      "page": "https://pixabay.com/sound-effects/musical-electric-guitar-phrase-38142/",
+      "nominalSeconds": 11,
+      "plannedCrop": "prospectively cap/select 4-10 s before model output",
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks"
+      ]
+    },
+    {
+      "id": "C06",
+      "title": "One note electric guitar",
+      "creator": "davidkyoku (Freesound)",
+      "page": "https://pixabay.com/sound-effects/musical-one-note-electric-guitar-90716/",
+      "nominalSeconds": 8,
+      "plannedCrop": "full clip",
+      "coverage": [
+        "single-note",
+        "clean-capture"
+      ]
+    },
+    {
+      "id": "C07",
+      "title": "electric guitar",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-electric-guitar-86322/",
+      "nominalSeconds": 6,
+      "plannedCrop": "full clip",
+      "coverage": [
+        "single-note",
+        "clean-capture"
+      ]
+    },
+    {
+      "id": "C08",
+      "title": "Electric Guitar Pluck",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-electric-guitar-pluck-40468/",
+      "nominalSeconds": 10,
+      "plannedCrop": "full clip if decoded duration is within 4-10 s",
+      "coverage": [
+        "single-note",
+        "clean-capture"
+      ]
+    },
+    {
+      "id": "C09",
+      "title": "Pick Slides",
+      "creator": "X172 (Freesound)",
+      "page": "https://pixabay.com/sound-effects/musical-pick-slides-106398/",
+      "nominalSeconds": 7,
+      "plannedCrop": "full clip",
+      "coverage": [
+        "legato-bend-slide",
+        "distorted-or-overdriven-capture"
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "12 first electric guitar power chords",
+      "creator": "davidkyoku (Freesound)",
+      "page": "https://pixabay.com/sound-effects/musical-12-first-electric-guitar-power-chords-34547/",
+      "nominalSeconds": 14,
+      "plannedCrop": "select and freeze one 4-10 s segment before model output",
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "chordal-polyphonic",
+        "repeated-attacks"
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "Distorted reversed electric guitar",
+      "creator": "jasonlee3071",
+      "page": "https://pixabay.com/sound-effects/distorted-reversed-electric-guitar-49960/",
+      "nominalSeconds": 28,
+      "plannedCrop": "select and freeze one 4-10 s segment before model output",
+      "coverage": [
+        "distorted-or-overdriven-capture"
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "Out On A Bender",
+      "creator": "PhotoCapeBreton",
+      "page": "https://pixabay.com/sound-effects/musical-out-on-a-bender-13586/",
+      "nominalSeconds": 6,
+      "plannedCrop": "full clip",
+      "coverage": [
+        "single-note",
+        "legato-bend-slide",
+        "distorted-or-overdriven-capture"
+      ]
+    },
+    {
+      "id": "C13",
+      "title": "017628_Strummed electric guitar chords",
+      "creator": "Freesound community",
+      "page": "https://pixabay.com/sound-effects/musical-017628-strummed-electric-guitar-chords-55201/",
+      "nominalSeconds": 79,
+      "plannedCrop": "select and freeze one 4-10 s segment before model output",
+      "coverage": [
+        "chordal-polyphonic",
+        "repeated-attacks",
+        "clean-capture"
+      ]
+    }
+  ],
+  "negativeCandidates": [
+    {
+      "id": "D01",
+      "title": "Keyboard Typing ASMR",
+      "creator": "DRAGON-STUDIO",
+      "page": "https://pixabay.com/sound-effects/film-special-effects-keyboard-typing-asmr-356118/",
+      "nominalSeconds": 8,
+      "category": "typing-mechanical"
+    },
+    {
+      "id": "D02",
+      "title": "Ancient War Drums",
+      "creator": "DRAGON-STUDIO",
+      "page": "https://pixabay.com/sound-effects/musical-ancient-war-drums-463214/",
+      "nominalSeconds": 8,
+      "category": "percussion"
+    },
+    {
+      "id": "D03",
+      "title": "Applause, cheer",
+      "creator": "Driken5482",
+      "page": "https://pixabay.com/sound-effects/people-applause-cheer-236786/",
+      "nominalSeconds": 8,
+      "category": "crowd-applause"
+    },
+    {
+      "id": "D04",
+      "title": "Cheering Crowd",
+      "creator": "Universfield",
+      "page": "https://pixabay.com/sound-effects/people-cheering-crowd-242638/",
+      "nominalSeconds": 8,
+      "category": "crowd-applause"
+    }
+  ],
+  "nominalCounts": {
+    "positive": 13,
+    "negativeOnly": 4,
+    "total": 17
+  },
+  "nominalPositiveSecondsBeforeProspectiveCrops": 195,
+  "nominalNegativeSeconds": 32,
+  "coverageCheck": {
+    "creatorsOrCaptureChainsAtLeast2": true,
+    "cleanAtLeast2": true,
+    "distortedAtLeast2": true,
+    "singleNoteAtLeast4": true,
+    "repeatedAttacksAtLeast3": true,
+    "legatoBendSlideAtLeast2": true,
+    "chordalPolyphonicAtLeast2": true
+  },
+  "acquisition": {
+    "automaticPixabayDownloadKnownBlocked": true,
+    "method": "user-mediated normal Free download control, one-by-one or batch",
+    "modelOutputViewed": false
+  }
+}
