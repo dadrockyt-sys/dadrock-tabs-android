@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **Post-V13 causal review complete — negative-structure-inactive family mixture identified — 2026-09-29** at the end of this file. No V14 is open.
+Latest instructions: **Supervisory course correction — stop serial micro-studies; recovery-first context bridge planning — 2026-09-29** at the end of this file. No V14 is open.
 
 ## Current status
 
@@ -4547,3 +4547,186 @@ These are the exact next steps to follow from the current frozen state.
     Do not claim the true cause is known.
 
 **Immediate resume rule:** At the next generic “continue”, documentation/review only. At the next explicit authorization to open a project, prospectively define/freeze V14 negative-structure-inactive family-mixture isolation, run model-free preflight only, then stop for fresh empirical authorization.
+
+
+## Supervisory course correction — stop serial micro-studies; recovery-first context bridge planning — 2026-09-29
+
+**THIS IS THE CURRENT RESUME AUTHORITY. It supersedes the prior instruction proposing V14 as another negative-structure-inactive family-mixture isolation. No V14 is open and no empirical execution is authorized by this review.**
+
+### Why the current path is not progressing
+
+The recent work is careful, reproducible, and honest, but the scientific search strategy has become too local relative to the size of the failure.
+
+Frozen common-comparator reference:
+- successful 2-second comparator F1: **0.7381974249**
+- executed V9 F1: **0.4347826087**
+- V9 gap: **-0.3034148162 F1**
+- comparator precision: **0.8269230769**
+- V9 precision: **0.3244274809**
+- precision gap: **-0.5024955960**
+
+Subsequent bounded interventions on that same common test produced:
+- V10 attacked-label/chord-enriched exposure scheme: F1 **+0.0032577371**
+- V11 state-semantics restoration package: F1 **+0.0159216167**
+- V12 positive-onset historical family mixture: F1 **+0.0244010648**, while violating the frozen negative-only FP ceiling
+- V13 active-non-onset historical family mixture: F1 **+0.0048956755**
+
+Those results do not prove that the remaining negative-structure-inactive mixture has zero effect. They do show that serially restoring one marginal sampler statistic at a time has so far recovered only a small fraction of the original V9 deficit. The project should **not** keep spending project versions on increasingly narrow marginal-mixture hypotheses without first testing the larger domain/context construction difference.
+
+### Important correction to the previous V14 recommendation
+
+**Do not open the previously proposed negative-structure-inactive-mixture V14 by default.**
+
+That study may remain a documented optional diagnostic, but it is no longer the preferred next project.
+
+Reason:
+- V10-V13 already tested several plausible isolated training-distribution explanations.
+- None materially restored the common-test failure.
+- The original V9 intervention simultaneously changed a much larger corpus/context package: 2-second versus 4-second construction, amount of rendered temporal context, inactive/background context, sequence/gap structure, family/context interactions, and resulting frame distribution.
+- Marginal family-mixture matching does not reconstruct those joint temporal/context distributions.
+- A further one-factor mixture test risks producing another precise negative result without materially increasing the probability of a usable system.
+
+### New objective: recovery-first, then causal decomposition
+
+The next phase should answer a more useful question:
+
+> Can the strong V9 attack-timing idea survive when it is placed back into a context/corpus construction that is much closer to the successful 2-second comparator?
+
+This is a **recovery/bridge question**, not a claim that one factor is the true cause.
+
+If recovery occurs, later studies can decompose which context factor mattered. If recovery does not occur, the project has learned much more than another marginal-mixture test would provide.
+
+### Exact next authorized task at a generic “continue” — MODEL-FREE RECOVERY STRATEGY REVIEW
+
+At the next generic “continue”, perform documentation/source analysis only. Do **not** train or infer.
+
+Create:
+- docs/astra/POST_V13_RECOVERY_STRATEGY_REVIEW_V1.md
+- docs/astra/POST_V13_RECOVERY_STRATEGY_REVIEW_V1.json
+
+The review must do all of the following:
+
+1. **Build one compact result table for V9-V13.**
+   Include, for the common comparator test:
+   - absolute precision / recall / F1;
+   - delta from reproduced V9 control;
+   - delta from the successful 2-second comparator where available;
+   - state/onset/joint admission;
+   - negative-only FP/s;
+   - exactly what variable/package each version changed.
+
+2. **Quantify progress against the actual recovery gap.**
+   Use the frozen comparator and V9 numbers above.
+   For each V10-V13 intervention, report the fraction of the original **0.3034148162 F1 deficit** recovered.
+   Do not describe a +0.02 movement as material recovery merely because it is positive.
+
+3. **Inventory the remaining 2-second vs 4-second construction differences from committed source/contracts.**
+   At minimum inspect:
+   - clip/window duration and boundary handling;
+   - renderer context before/after attacks;
+   - inactive/background duration and placement;
+   - note/state continuation across window boundaries;
+   - event density and long-gap structure;
+   - family co-occurrence and cross-family sequence structure;
+   - sampling pools and eligibility rules;
+   - number of unique rendered contexts/examples;
+   - normalization/feature framing differences, if any;
+   - any source-code divergence between the successful comparator builder and executed V9 builder.
+
+   Distinguish:
+   - confirmed difference;
+   - likely linked consequence;
+   - unknown/unmeasured.
+
+4. **Do not rely only on marginal percentages.**
+   Where existing committed arrays/receipts permit model-free analysis, compare joint/context descriptors such as:
+   - run-length distributions;
+   - attack-to-window-edge distance;
+   - silence/inactive run lengths;
+   - number of state transitions per window;
+   - note overlap/polyphony;
+   - family × state-stratum combinations;
+   - attack density conditional on family;
+   - repeated-note/retrigger spacing;
+   - context immediately preceding/following positive onsets.
+
+   No new audio rendering, model loading, optimizer work, or inference is allowed for this review.
+
+5. **Select exactly ONE preferred next empirical project design.**
+   The preferred design should be a **matched-context bridge**, not another isolated marginal sampler restoration.
+
+   Default design direction unless source inspection disproves feasibility:
+   - retain the successful/frozen V9 attack-timing schedule or its exact deterministic identity;
+   - render/train in a **2-second context construction matched as closely as practical to the successful comparator**;
+   - keep model architecture, loss, thresholds, optimizer, and evaluation fixed;
+   - use the same common 2-second comparator test as primary evaluation;
+   - use a separately frozen secondary test only if already available and uncontaminated;
+   - no V2B and no real-audio inference at this stage.
+
+   The contract must explicitly list every difference between bridge and V9. Do not call this a single-factor causal isolation if multiple context properties move together.
+
+6. **Define a success gate that measures meaningful recovery, not tiny movement.**
+   Before any execution, propose a prospective gate tied to the original comparator gap. A preferred form is:
+   - recover at least **50% of the V9 common-test F1 deficit**, which corresponds to F1 >= approximately **0.58649** on the common comparator test;
+   - simultaneously obtain a substantial precision recovery;
+   - preserve recall within a prospectively frozen tolerance;
+   - negative-only FP/s <= **0.10**;
+   - exact bounded training budget and no threshold search/retry.
+
+   The final exact numbers must be justified and frozen in the future project contract before execution. Do not tune the gate after observing results.
+
+7. **Add a stop rule.**
+   If the matched-context bridge fails to achieve material recovery, stop synthetic micro-optimization and write a decision brief choosing among:
+   - redesigning the synthetic generator at a larger level;
+   - obtaining a new explicitly authorized independent real-development set;
+   - pausing this model line.
+
+   Do not automatically create V15/V16 or continue serial mixture restoration.
+
+### Preferred future V14, only after the recovery review
+
+If the recovery review supports feasibility and the user explicitly authorizes a new project, V14 should be a **2-second matched-context bridge study** (name may be refined in the contract), not the previously proposed negative-structure-inactive-mixture study.
+
+Before any optimizer step:
+- freeze the exact V14 question;
+- freeze source blobs and dataset/render identities;
+- freeze exact differences vs V9 and vs the successful comparator;
+- freeze model/loss/threshold/optimizer settings;
+- freeze evaluation datasets;
+- freeze meaningful recovery gates;
+- set hard model/update/time/storage ceilings;
+- run a model-free preflight;
+- stop and require fresh explicit empirical authorization after the preflight is visible.
+
+### What GPT-5.6 should stop doing
+
+Do not:
+- open V14 as negative-structure-inactive family mixture merely because it was the next item in the old handoff;
+- keep creating one project per marginal family proportion;
+- treat successful workflow execution as scientific progress;
+- optimize toward tiny positive deltas while the principal F1/precision gap remains large;
+- silently alter multiple properties while describing the experiment as causal isolation;
+- retune thresholds/losses/steps to manufacture a pass;
+- touch P1/P2/P3, V2B, main, or Production;
+- discard frozen negative results.
+
+### What counts as progress now
+
+Progress is:
+1. explaining the large V9 regression at the correct scale;
+2. testing whether a comparator-like context restores a **material** portion of that regression;
+3. preserving deterministic/reproducible controls;
+4. stopping quickly if the broader bridge also fails.
+
+The immediate priority is no longer “find the next marginal mismatch.” It is “test the smallest coherent context package capable of plausibly explaining a ~0.30 F1 / ~0.50 precision regression.”
+
+### Immediate resume rule
+
+At the next generic **“continue”**:
+1. perform the model-free recovery strategy review above;
+2. save its MD + JSON;
+3. update both handoffs with one preferred V14 bridge design;
+4. do **not** execute training/inference;
+5. stop at the explicit project-authorization boundary.
+
+No V14 empirical work is authorized by this supervisory review.
