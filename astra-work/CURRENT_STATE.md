@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V9 final empirical contract frozen — 2026-09-29** at the end of this file. No launch is armed; empirical V9 still requires explicit authorization.
+Latest instructions: **V9 empirical execution complete — synthetic sanity FAIL — 2026-09-29** at the end of this file. V2B was technically blocked and not run.
 
 ## Current status
 
@@ -2812,3 +2812,147 @@ Current counts remain:
 - main/Production unchanged
 
 **Resume instruction:** Stop here. The next action is empirical V9 execution under the exact frozen contract, and it requires explicit user authorization. If authorization is given, first implement and pin the generator/runner/workflow and validate them model-free without generating candidate timing output; only then consume one launch scope and execute the ordered V9 gate chain. No automatic V10.
+
+
+## V9 empirical execution complete — synthetic sanity FAIL — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier V9 authorization/execution instruction.**
+
+Explicit user authorization was consumed under launch identity:
+- `v9-frozen-v1-20260929-01`
+
+Frozen result:
+- `docs/astra/V9_FALLBACK_FREE_CURRICULUM_RESULT_V1.json`
+- `docs/astra/V9_FALLBACK_FREE_CURRICULUM_RESULT_V1.md`
+
+Accepted preflight:
+- run **36526305988**
+- job **109270011760**
+- head `a0c09415abba839cf525531141dcfa7822e95f68`
+- artifact **11014613083**
+- digest `sha256:c764c270d0b280895fb755adcb32032b3d604e66ccef0ae627362d9b26a50b30`
+- conclusion **success**
+
+One earlier preflight run failed before candidate generation because the workflow test command omitted the repository root from PYTHONPATH. That was an infrastructure-only failure: 0 candidate timings, 0 renders, 0 optimizer steps, 0 inference. The path was repaired before the consumed empirical launch.
+
+Empirical execution:
+- run **36526450793**
+- job **109270456836**
+- head `f488e857c821fbee2846aa5ae3a511a2e30e8007`
+- artifact **11015165684**
+- digest `sha256:e5ebb4c1450cbfac7453dc9613c33e0f64a5694044c2195ceeea36651f65af3c`
+- workflow conclusion **success**
+- models **2**
+- optimizer steps **1,000 total**
+- automatic scientific retries **0**
+- threshold search **false**
+- real-audio model inference **0**
+
+### V9A timing gate passed
+
+The single frozen timing arm passed every prospective condition:
+- V8 L0 corrected timing distance **1.6103247396**
+- V9 timing distance **0.0918590535**
+- relative improvement **94.30%**
+- density **1.500000/s**
+- IOI p50 **0.257750 s**
+- IOI p90 **0.902659 s**
+- repeat250 **46.1538%**
+- longGap700 **13.8462%**
+- 1,638 acoustic attack groups
+- 1,806 attacked note labels
+- 0 infeasible clips
+- 0 invalid labels/offsets
+- 0 fallback operations
+
+This establishes that the frozen fallback-free construction can closely match the chosen common-unit timing statistics.
+
+### Render/training completed within ceilings
+
+R3 render:
+- comparator: 294 clips / 588 s / 87 frames per clip / 735 attack groups / 903 attacked note labels
+- V9: 294 clips / 1,176 s / 173 frames per clip / 1,638 attack groups / 1,806 attacked note labels
+- render time **64.49 s**
+- persisted datasets **41.49 MiB**
+- no external audio assets
+
+Training exposure:
+- 500 steps/model
+- 64,000 sampled frames/model
+- 1,486.077 sampled frame-seconds/model
+- 16,000 sampled attack frames/model
+- comparator sampled attacked note labels **19,702**
+- V9 sampled attacked note labels **17,676**
+
+Equal update/frame exposure therefore did not produce equal attacked-note-label exposure. Preserve this as an observed package difference; do not post-hoc resample V9.
+
+### Synthetic sanity failed
+
+Common fixed comparator test population:
+
+Comparator:
+- precision **0.826923**
+- recall **0.666667**
+- F1 **0.738197**
+- TP/FP/FN **86 / 18 / 43**
+- negative FP/s **0**
+- state admission **0.294574**
+- onset admission **0.620155**
+- joint admission **0.286822**
+
+V9 intervention:
+- precision **0.324427**
+- recall **0.658915**
+- F1 **0.434783**
+- TP/FP/FN **85 / 177 / 44**
+- negative FP/s **0**
+- state admission **0.310078**
+- onset admission **0.682171**
+- joint admission **0.286822**
+
+Frozen checks:
+- onset precision >=0.70: **FAIL**
+- pitch-onset F1 decline <=0.08: **FAIL**
+- onset recall decline <=0.08: PASS
+- negative FP/s <=0.10: PASS
+- exactly 500 steps/model: PASS
+- finite metrics: PASS
+
+### V9 decision
+
+**V9 stops at synthetic sanity. It does not advance to V2B.**
+
+The technical gate correctly blocked real-development inference:
+- V2B model inference **0**
+- V1.1/P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+Do not:
+- bypass the failed sanity gate;
+- run V2B anyway;
+- retune thresholds;
+- change sampler weights;
+- equalize attacked-label exposure post hoc and call it the same V9;
+- rerun V9;
+- open V10 automatically.
+
+The supported interpretation is narrow: the timing generator solved the common-unit timing-fit problem, but the complete 4-second V9 training package badly degraded synthetic precision/F1. Do not claim duration alone caused the failure because duration, attack allocation, gap distribution, sustain placement, and effective attacked-note-label exposure changed together.
+
+Artifact evidence:
+- `timing.json` SHA-256 `ae9384286a40009a328ce98fd90f15f3bbc4e31b9686f48e6f81a5275d41d913`
+- render receipt `817a474c5ffabf34a43d5fc19b2e8836982fc86a29bcdc762ada8cfb48aa7f0d`
+- train result `7f1b51592fdaf01f77d5d658abe76cc5f22de76ca70cdcf5bcfc9ac6e89dcfc7`
+- comparator checkpoint `653587a0ac02b383daca3740d26fe0685bd3fc3c88cfd86335f4a90ad3bfe8a5`
+- intervention checkpoint `98668a9e044d1de1823f6e55c982fe0729bb2361264ba9d6264b565b8ef48115`
+- execution receipt `62da92fdba5dc195eb378a45daeab1adbbea92d4677b2d72c7e2e083ae4a050d`
+
+The workflow artifact is retained through 2026-10-29. The immutable hashes and scientific result are committed.
+
+### Exact next decision boundary
+
+Stop model execution here.
+
+A future project must be separately and prospectively defined. The smallest scientifically motivated question suggested by V9 is whether **training exposure / attack-label weighting** rather than timing-fit itself explains the precision collapse, but that would be a new controlled study, not a V9 retry.
+
+**Resume instruction:** Preserve V9 as a frozen FAIL at synthetic sanity. Do not perform V2B inference from V9 and do not create V10 automatically. At a generic “continue”, perform documentation/review only unless the user explicitly authorizes a new project question.
