@@ -1,0 +1,21 @@
+{
+  "schema": "astra-v10-execution-history-v1",
+  "date": "2026-09-29",
+  "status": "launch-scope-consumed-before-dispatch",
+  "consumedLaunchIdentities": [
+    "v10-exposure-v1-20260929-01"
+  ],
+  "records": [
+    {
+      "launchIdentity": "v10-exposure-v1-20260929-01",
+      "authorization": "docs/astra/V10_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json",
+      "contract": "docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json",
+      "preflightRunId": 36527632335,
+      "preflightJobId": 109274053805,
+      "preflightArtifactId": 11014419820,
+      "preflightArtifactDigest": "sha256:b62962f0715471d0a49e7402fa0cd6baa1383029db7d23db5ff26164c25a2dbd",
+      "preflightConclusion": "success",
+      "scientificRetry": false
+    }
+  ]
+}
