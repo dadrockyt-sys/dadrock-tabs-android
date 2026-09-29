@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9/V10 FROZEN; V11 CONTRACT/PREFLIGHT PASS; V11 EMPIRICAL EXECUTION NOT AUTHORIZED**
+Status: **V9/V10/V11 FROZEN; V11 STATE-SEMANTICS HYPOTHESIS NOT SUPPORTED; NO V2B**
 
-Latest resume instructions are in **V11 state-semantics study prospectively frozen — preflight PASS — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
+Latest resume instructions are in **V11 state-semantics empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -5554,3 +5554,157 @@ Even after an empirical V11 result, V2B remains out of scope.
 V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
 
 **Resume instruction:** Preserve V9 and V10 as frozen historical results with their post-review qualifications. Preserve V11 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V11 after this point, consume one unique V11 launch scope and execute exactly the frozen two-arm synthetic-only study with no retries and no V2B.
+
+
+## V11 state-semantics empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier V11 preflight/authorization boundary.**
+
+Explicit user authorization was consumed under launch identity:
+- `v11-state-semantics-v1-20260929-01`
+
+Frozen result:
+- `docs/astra/V11_STATE_SEMANTICS_RESULT_V1.json`
+- `docs/astra/V11_STATE_SEMANTICS_RESULT_V1.md`
+
+Empirical run:
+- run **36534741201**
+- job **109296097761**
+- head `0c3a24ab7d49a3b4525a2af372c2fbcf08fbccd6`
+- artifact **11018510069**
+- artifact digest `sha256:5cb15fcbb40b38bcee93e6bde1b4f4109204c9b979dcfb17910a25d2fe66bb91`
+- workflow conclusion **success**
+- artifact retained through 2026-10-29
+- models **2**
+- optimizer steps **1,000 total**
+- threshold search **false**
+- automatic scientific retries **0**
+- real-audio inference **0**
+- V2B inference **0**
+
+### Control reproduction passed exactly
+
+The V11 control exactly reproduced frozen V9 common comparator-test metrics:
+- precision **0.3244274809160305**
+- recall **0.6589147286821705**
+- F1 **0.43478260869565216**
+
+### Identity remained fixed
+
+Both 4-second arms:
+- attack groups **1,638**
+- attacked note labels **1,806**
+- attacked signature SHA-256 `9129b31cec8c56a8275e269b25fd9ab686b15f91e8b5da711ef6490eddfffe97`
+- sampled attacked note labels **17,676**
+- sampled attack frames **16,000**
+- sampled frames **64,000**
+- 500 updates/model
+
+The intervention restored **84** non-attacked legato continuation events and applied the frozen historical-duration/retrigger rule with **789** attacked-state truncations at same-string retriggers.
+
+### Primary common comparator-test result
+
+Control:
+- precision **0.324427**
+- recall **0.658915**
+- F1 **0.434783**
+- state admission **0.310078**
+- onset admission **0.682171**
+- joint admission **0.286822**
+- negative FP/s **0**
+
+State-semantics restored:
+- precision **0.353982**
+- recall **0.620155**
+- F1 **0.450704**
+- state admission **0.263566**
+- onset admission **0.689922**
+- joint admission **0.255814**
+- negative FP/s **0**
+
+Deltas:
+- precision **+0.029555**
+- recall **-0.038760**
+- F1 **+0.015922**
+- state admission **-0.046512**
+- onset admission **+0.007752**
+- joint admission **-0.031008**
+
+Frozen material-recovery gates:
+- precision gain >= +0.15: **FAIL**
+- F1 gain >= +0.10: **FAIL**
+- recall decline <=0.05: PASS
+- joint-admission decline <=0.05: PASS
+- negative FP/s <=0.10: PASS
+
+### Secondary frozen-V9 test result
+
+Control:
+- precision **0.486631**
+- recall **0.705426**
+- F1 **0.575949**
+
+State-semantics restored:
+- precision **0.438144**
+- recall **0.658915**
+- F1 **0.526316**
+
+Deltas:
+- precision **-0.048487**
+- recall **-0.046512**
+- F1 **-0.049634**
+
+The frozen V9-test F1 decline limit was 0.05, so the observed 0.049634 decline passed narrowly.
+
+### Sampler strata changed only as a downstream consequence of state targets
+
+Positive-onset stratum:
+- control/intervention **1,170 / 1,170**
+
+Non-positive membership:
+- active non-onset **10,444 -> 13,872**
+- negative-structure inactive **10,868 -> 8,758**
+- other inactive **13,848 -> 12,530**
+
+The sampler algorithm was unchanged. Changed state duration changed which frames belonged to the non-positive strata.
+
+### V11 decision
+
+**The state-duration / legato-continuation hypothesis is not supported.**
+
+Restoring historical family-duration targets plus the omitted legato continuation produced only small primary precision/F1 gains and did not meet the prospective material-recovery thresholds.
+
+This weakens the hypothesis that the V9 failure is primarily explained by the state-duration/continuation discrepancy.
+
+Do not claim the true cause is known.
+
+Remaining unresolved package differences include:
+- 4-second versus 2-second temporal/context distribution;
+- V9 attack-count allocation by family;
+- gap distribution / longer-range clip structure;
+- interaction between changed occupancy and the fixed four-stratum sampler;
+- other correlations introduced by the dense V9 package.
+
+Artifact evidence:
+- ZIP `5cb15fcbb40b38bcee93e6bde1b4f4109204c9b979dcfb17910a25d2fe66bb91`
+- `result.json` `993e02b43a950072f7e31b4e8075c0a635410747f186f1e963595ca481046a73`
+- execution receipt `eaeb365202f0b2b31e6b347a096763da596bff4caf51dcdc51b3c747b0087a55`
+- control checkpoint `043d272e22bcb273b3bce6c31c4b561b7e47741cfb242f6b8d419c1c7dc18bb7`
+- intervention checkpoint `3a998c7d19e8e3daecca0f624c9f3133824f9f72c30b20c6d1596d2964d91b69`
+
+### Current stop boundary
+
+Preserve:
+- V9 = frozen FAIL at synthetic sanity, with post-review contract qualification
+- V10 = complete; chord-enriched exposure matching did not materially rescue V9
+- V11 = complete; restored state-duration / legato semantics did not materially rescue V9
+
+Do not:
+- rerun V11;
+- post-hoc alter duration/truncation/sampler/threshold/loss settings and call it V11;
+- run V2B;
+- open V12 automatically;
+- access V1.1/P1/P2/P3/A2;
+- mutate main or Production.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
