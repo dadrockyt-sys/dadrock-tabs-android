@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9-V13 FROZEN; V14 ATTEMPT 1 INVALID / NON-INTERPRETABLE; CORRECTED PACKAGE PREPARED; NO RETRY AUTHORIZED**
+Status: **V9-V14 FROZEN; V14 FAILED MATERIAL-RECOVERY GATE; SERIAL SYNTHETIC MICRO-OPTIMIZATION CLOSED**
 
-Latest resume instructions are in **V14 empirical attempt 1 consumed — INVALID / non-interpretable — corrected package prepared, not executed — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
+Latest resume instructions are in **V14 empirical execution complete — FAILED material-recovery gate — serial micro-optimization closed — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -6935,3 +6935,135 @@ If freshly authorized:
 8. no automatic retry, V2B, P1/P2/P3, or Production mutation.
 
 The scientific V14 question remains **unanswered** after attempt 1.
+
+
+## V14 empirical execution complete — FAILED material-recovery gate — serial micro-optimization closed — 2026-09-29
+
+**THIS IS THE CURRENT RESUME AUTHORITY.**
+
+Fresh explicit authorization was used for exactly one corrected conforming V14 empirical execution.
+
+### Provenance
+
+- workflow run **36590057639**
+- job **109480499261**
+- launch identity `v14-matched-context-v1-20260929-02`
+- launch commit `e6b3085493b90cecd3ce56d498609ce1afaf54b7`
+- artifact **11043457682**
+- artifact digest `sha256:bc69dfbc4de527e2cef9c85b7f0cc29bca27aea16f16f799222d7ef6de9f02fb`
+- result:
+  - `docs/astra/V14_MATCHED_CONTEXT_BRIDGE_RESULT_V1.json`
+  - `docs/astra/V14_MATCHED_CONTEXT_BRIDGE_RESULT_V1.md`
+
+The earlier run **36546933952** is a technical invalidation, not an accepted scientific result: it used the wrong historical batch root and a non-parity runtime, then failed the control reproduction guard. Those issues were repaired before the fresh authorized corrected run.
+
+### Validator and control
+
+The fail-closed V14 validator tests passed before empirical execution.
+
+The corrected run exactly reproduced the successful historical 2-second comparator:
+- precision **0.8269230769**
+- recall **0.6666666667**
+- F1 **0.7381974249**
+- negative FP/s **0**
+- state admission **0.2945736434**
+- onset admission **0.6201550388**
+- joint admission **0.2868217054**
+
+### V14 bridge primary common-population result
+
+- precision **0.4968944099**
+- recall **0.6201550388**
+- F1 **0.5517241379**
+- negative FP/s **0**
+- state admission **0.2868217054**
+- onset admission **0.5736434109**
+- joint admission **0.2713178295**
+
+Versus reproduced control:
+- precision **-0.3300286670**
+- recall **-0.0465116279**
+- F1 **-0.1864732870**
+
+Recovery relative to frozen V9 failure:
+- F1 deficit recovered **38.54%**
+- precision deficit recovered **34.32%**
+
+### Frozen gate decision
+
+Required:
+- F1 >= **0.5864900168**
+- precision >= **0.5756752789**
+- recall decline <= **0.05**
+- negative FP/s <= **0.10**
+
+Observed:
+- F1 -> **FAIL**
+- precision -> **FAIL**
+- recall decline 0.0465116279 -> **PASS**
+- negative FP/s 0 -> **PASS**
+- exact two models / 500 updates each -> **PASS**
+- finite -> **PASS**
+- no threshold search -> **PASS**
+- no scientific retry -> **PASS**
+
+**V14 overall: FAIL.**
+
+Do not reinterpret the meaningful V9 improvement as a pass.
+
+### Important generator evidence
+
+Bridge render:
+- 294 examples
+- 588 s
+- 819 attack groups
+- 987 attacked labels
+- **384 deterministic state truncations**
+
+Control:
+- 294 examples
+- 588 s
+- 735 attack groups
+- 903 attacked labels
+- 0 truncations
+
+This is strong evidence that the denser V9-style short-gap timing conflicts with historical state-duration semantics in the 2-second bridge. It also changes active/inactive sampler-pool geometry.
+
+The 2-second bridge recovered a substantial minority of the V9 failure, so context duration mattered, but the remaining large precision/F1 gap shows that 4-second context alone was not the full cause.
+
+### Stop rule now active
+
+Do **not**:
+- open V15/V16 automatically;
+- run another sampler-mixture or timing micro-study;
+- retune thresholds;
+- change losses;
+- increase steps;
+- search alternate bridge schedules;
+- rerun V14;
+- run V2B;
+- access P1/P2/P3;
+- mutate main or Production.
+
+The serial synthetic micro-optimization path is closed.
+
+### Next authorized task at generic “continue”
+
+Documentation/review only.
+
+Prepare one decision brief comparing exactly these three paths:
+1. **larger synthetic-generator redesign** — address timing/state-duration compatibility and joint context generation as a first-class design problem;
+2. **separately authorized independent real-development evidence** — only under a new source/acquisition/evaluation plan, with P3 still sealed;
+3. **pause this model line**.
+
+The decision brief must:
+- summarize V9-V14 evidence at system scale;
+- explicitly include the V14 384-truncation finding;
+- distinguish what is established from what remains unknown;
+- compare information value, risk of overfitting, cost, and what each path could actually resolve;
+- recommend exactly one next research direction for user review, but do not execute it;
+- preserve all current real-data boundaries.
+
+No new empirical project is currently authorized.
+
+**Resume instruction:** V14 is frozen as a failed result. At generic “continue,” produce the documentation-only post-V14 decision brief and update both handoffs. Do not run any model, render, inference, V2B, or real-data step without a new explicit authorization.
