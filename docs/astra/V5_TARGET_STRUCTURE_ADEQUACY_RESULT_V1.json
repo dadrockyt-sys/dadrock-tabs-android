@@ -1,0 +1,154 @@
+{
+  "schema": "astra-v5-target-structure-adequacy-result-v1",
+  "date": "2026-09-28",
+  "status": "completed-no-development-interesting-arm",
+  "runtime": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.3.5",
+    "librosa": "0.11.0"
+  },
+  "identity": {
+    "initialModelSha256": "ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc",
+    "sameInitialization": true,
+    "featureSha256": "622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "sameFeatures": true,
+    "sameTargets": true,
+    "sameBatchIndices": true,
+    "parameterCount": 157708
+  },
+  "objective": {
+    "T0": "exact-string-fret",
+    "T1": "pitch-equivalent-noisy-or-coverage-plus-unsupported-state-suppression",
+    "T2": "50-percent-exact-plus-50-percent-pitch-equivalent",
+    "compatibleStateAggregation": "1-product(1-p) over physical string/fret positions",
+    "mixedWeight": 0.5,
+    "weightSearch": false
+  },
+  "training": {
+    "T0": {
+      "optimizerSteps": 500,
+      "modelFileSha256": "63331791ce39e6db066f100db947096dcbcf76a0ecc7b231ec2a84843be02482"
+    },
+    "T1": {
+      "optimizerSteps": 500,
+      "modelFileSha256": "a58a63d9ff1afc98e1f0cca9a18f91c0e653ddb538b4ee4e073f9328ecef52f5"
+    },
+    "T2": {
+      "optimizerSteps": 500,
+      "modelFileSha256": "d6fee6dd3114e51bf93db0633d16ad55fec3ba68562d38e2a898be8c6a0f87b1"
+    },
+    "totalOptimizerSteps": 1500,
+    "maxAuthorized": 1500
+  },
+  "syntheticSanity": {
+    "rules": {
+      "maxPitchOnsetF1DeclineVsT0": 0.1,
+      "maxOnsetRecallDeclineVsT0": 0.1,
+      "negativeFpPerSecondAtMost": 0.1
+    },
+    "T0": {
+      "precision": 0.7647058823529411,
+      "recall": 0.6046511627906976,
+      "f1": 0.6753246753246753,
+      "negativeEvents": 0,
+      "negativeSeconds": 6,
+      "negativeFpPerSecond": 0,
+      "eligible": true
+    },
+    "T1": {
+      "precision": 0.6721311475409836,
+      "recall": 0.3178294573643411,
+      "f1": 0.431578947368421,
+      "negativeEvents": 0,
+      "negativeSeconds": 6,
+      "negativeFpPerSecond": 0,
+      "f1DeclineVsT0": 0.2437457279562543,
+      "recallDeclineVsT0": 0.2868217054263565,
+      "eligible": false
+    },
+    "T2": {
+      "precision": 0.6981132075471698,
+      "recall": 0.5736434108527132,
+      "f1": 0.6297872340425532,
+      "negativeEvents": 0,
+      "negativeSeconds": 6,
+      "negativeFpPerSecond": 0,
+      "f1DeclineVsT0": 0.0455374412821221,
+      "recallDeclineVsT0": 0.03100775193798444,
+      "eligible": true
+    }
+  },
+  "v2b": {
+    "T0": {
+      "trustedJointHits": 0,
+      "trustedRefs": 56,
+      "trustedJointRate": 0,
+      "highJointHits": 0,
+      "highRefs": 49,
+      "highJointRate": 0,
+      "stateAdmissionRate": 0.03571428571428571,
+      "onsetAdmissionRate": 0.017857142857142856,
+      "negativeEvents": 5,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.1569466509506483
+    },
+    "T2": {
+      "trustedJointHits": 0,
+      "trustedRefs": 56,
+      "trustedJointRate": 0,
+      "highJointHits": 0,
+      "highRefs": 49,
+      "highJointRate": 0,
+      "stateAdmissionRate": 0.08928571428571429,
+      "onsetAdmissionRate": 0.017857142857142856,
+      "negativeEvents": 10,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.3138933019012966,
+      "trustedJointAdmissionAbsoluteGainVsT0": 0,
+      "onsetAdmissionDeclineVsT0": 0,
+      "developmentInteresting": false
+    }
+  },
+  "excludedFromV2bGate": {
+    "T1": {
+      "reason": "failed frozen synthetic sanity before eligibility",
+      "procedurallyPrematureReadoutOccurred": true,
+      "treatment": "quarantined and excluded from all V5 conclusions; no objective, model, gate, or parameter changes were made in response to that readout"
+    }
+  },
+  "gate": {
+    "trustedJointAdmissionAbsoluteGainVsT0AtLeast": 0.2,
+    "highConfidenceJointAdmissionAtLeast": 0.25,
+    "negativeFpPerSecondAtMost": 0.1,
+    "maxOnsetAdmissionDeclineVsT0": 0.1
+  },
+  "developmentInteresting": {
+    "T1": false,
+    "T2": false
+  },
+  "execution": {
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "decoderChanged": false,
+    "architectureChanged": false,
+    "parameterCountChanged": false,
+    "renderer": "R3 frozen",
+    "v1_1Used": false
+  },
+  "localEvidence": {
+    "finalArmRunnerSha256": "af5371c512a69719f4042f53820919d040ec48c8d6bd320fef199d6baf9667d5"
+  },
+  "guards": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
