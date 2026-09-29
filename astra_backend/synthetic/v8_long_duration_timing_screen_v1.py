@@ -3,84 +3,89 @@ from __future__ import annotations
 import argparse, hashlib, json
 from pathlib import Path
 import numpy as np
-from synthetic.s0_pilot_v1 import ROOT_SEED,FAMILIES,BASES_PER_FAMILY,VARIANTS_PER_BASE,build_template,_seed
 
+ROOT_SEED=20260927
+FAMILIES=("isolated","scales","chords","repeated","legato","palmmute","mixed")
+BASES_PER_FAMILY=14
+VARIANTS_PER_BASE=3
 TARGET={"rate":1.4905949321319818,"ioi50":0.2560000000000002,"ioi90":0.882358,"repeat250":0.47019867549668876}
 
-def q(a,p):
-    if not a:return None
-    x=np.asarray(sorted(a),dtype=np.float64)
-    return float(np.quantile(x,p))
+def _seed(*parts):
+    raw="|".join(str(x) for x in parts).encode()
+    return int.from_bytes(hashlib.sha256(raw).digest()[:8],"big") & 0x7fffffff
 
-def historical_attacks(t):
-    return sorted(float(s["start"]) for s in t["segments"] if s["attack"])
+def base_attacks(family,base):
+    if family=="isolated": return [.32],False
+    if family=="scales": return [.22,.58,.94,1.30],False
+    if family=="chords": return [.32,.32,.32,1.08,1.08,1.08],False
+    if family=="repeated": return [.28,.68,1.08,1.48],False
+    if family=="legato": return [.28],False
+    if family=="palmmute": return [.28,.62,.96,1.30,1.64],False
+    if family=="mixed":
+        neg=(base%2)==0
+        return ([] if neg else [.36]),neg
+    raise ValueError(family)
 
 def motif_relative(family,base):
-    t=build_template(family,base)
-    at=historical_attacks(t)
+    at,_=base_attacks(family,base)
     if family=="repeated" and at:
-        return [at[0]+0.18*i for i in range(len(at))]
+        return [at[0]+.18*i for i in range(len(at))]
     return at
 
 def make_positive_clip(family,base,variant,arm):
     if arm=="L0":
-        t=build_template(family,base)
-        return historical_attacks(t),2.0,0
+        at,neg=base_attacks(family,base)
+        if neg: return [],2.0,0
+        return list(at),2.0,0
     motifs=2 if arm=="L1" else 3
     seconds=4.0 if arm=="L1" else 6.0
-    starts=[]; cursor=0.20; fallbacks=0
+    starts=[]; fallbacks=0
     for m in range(motifs):
         b=(base+m)%BASES_PER_FAMILY
         rel=motif_relative(family,b)
         if not rel: continue
-        # normalize motif start to zero
-        r0=rel[0]
-        rel=[x-r0 for x in rel]
+        r0=rel[0]; rel=[x-r0 for x in rel]
         if m==0:
-            motif_start=0.20
+            motif_start=.20
         else:
             rng=np.random.RandomState(_seed(ROOT_SEED,"v8-gap",arm,family,base,variant,m))
-            gap=float(rng.uniform(.70,1.10))
-            motif_start=starts[-1]+gap
+            motif_start=starts[-1]+float(rng.uniform(.70,1.10))
         cand=[motif_start+x for x in rel]
-        if cand and cand[-1] > seconds-0.12:
-            # deterministic fallback to the latest valid placement preserving motif shape
-            shift=(seconds-0.12)-cand[-1]
-            cand=[x+shift for x in cand]
-            fallbacks+=1
-        if cand and cand[0] < 0:
-            fallbacks+=1
-            cand=[x-cand[0]+0.02 for x in cand]
+        if cand and cand[-1]>seconds-.12:
+            shift=(seconds-.12)-cand[-1]
+            cand=[x+shift for x in cand]; fallbacks+=1
+        if cand and cand[0]<0:
+            cand=[x-cand[0]+.02 for x in cand]; fallbacks+=1
         starts.extend(cand)
-    starts=sorted(starts)
-    return starts,seconds,fallbacks
+    return sorted(starts),seconds,fallbacks
+
+def q(a,p):
+    return float(np.quantile(np.asarray(sorted(a),dtype=np.float64),p)) if a else None
 
 def summarize(arm):
-    rows=[]; all_ioi=[]; simultaneous=0; repeat=0; longn=0; pairn=0; fallbacks=0
-    events=0; seconds=0.0; invalid=0
+    rows=[]; all_ioi=[]; simultaneous=repeat=longn=pairn=fallbacks=events=invalid=0; seconds=0.0
     for family in FAMILIES:
       for base in range(BASES_PER_FAMILY):
-        t=build_template(family,base)
-        if t["negativeOnly"]: continue
+        _,neg=base_attacks(family,base)
+        if neg: continue
         for variant in range(VARIANTS_PER_BASE):
           at,dur,fb=make_positive_clip(family,base,variant,arm)
           fallbacks+=fb
           if any(x<0 or x>dur for x in at): invalid+=1
           io=[at[i]-at[i-1] for i in range(1,len(at))]
           all_ioi.extend(io); pairn+=len(io)
-          simultaneous+=sum(1 for x in io if abs(x)<1e-9)
+          simultaneous+=sum(1 for x in io if abs(x)<1e-12)
           repeat+=sum(1 for x in io if x<=.25)
           longn+=sum(1 for x in io if x>=.70)
-          rows.append(len(at)/dur if dur else 0)
-          events+=len(at); seconds+=dur
+          rows.append(len(at)/dur); events+=len(at); seconds+=dur
     s={
       "positiveClips":len(rows),"events":events,"positiveSeconds":seconds,
       "aggregateOnsetsPerSecond":events/seconds,
       "clipRateP10":q(rows,.1),"clipRateP50":q(rows,.5),"clipRateP90":q(rows,.9),
       "interOnsetIntervalP10":q(all_ioi,.1),"interOnsetIntervalP50":q(all_ioi,.5),"interOnsetIntervalP90":q(all_ioi,.9),
-      "repeatedAttackFractionWithin250ms":repeat/pairn if pairn else 0,
-      "fractionIoiAtLeast700ms":longn/pairn if pairn else 0,
-      "simultaneousEventFraction":simultaneous/pairn if pairn else 0,
+      "repeatedAttackFractionWithin250ms":repeat/pairn if pairn else 0.0,
+      "fractionIoiAtLeast700ms":longn/pairn if pairn else 0.0,
+      "simultaneousEventFraction":simultaneous/pairn if pairn else 0.0,
       "clipBoundaryFallbackCount":fallbacks,"invalidClipCount":invalid,
     }
     s["timingDistance"]=(
@@ -92,8 +97,7 @@ def summarize(arm):
     return s
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument("--out",required=True)
-    a=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument("--out",required=True); a=ap.parse_args()
     arms={x:summarize(x) for x in ("L0","L1","L2")}
     b=arms["L0"]
     for x in ("L1","L2"):
