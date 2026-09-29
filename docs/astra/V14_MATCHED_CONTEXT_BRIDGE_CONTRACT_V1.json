@@ -1,0 +1,260 @@
+{
+  "schema": "astra-v14-matched-context-bridge-contract-v1",
+  "date": "2026-09-29",
+  "status": "frozen-prospective-contract-empirical-execution-not-authorized",
+  "question": "Can the successful V9 acoustic-attack timing principles retain material benefit when returned to a 2-second comparator-like temporal/context construction?",
+  "interpretation": "Package recovery experiment; not single-factor causal isolation.",
+  "identities": {
+    "clips": 294,
+    "positiveClips": 273,
+    "negativeOnlyClips": 21,
+    "basesPerFamily": 14,
+    "variantsPerBase": 3,
+    "splitByBase": {
+      "train": "0-9",
+      "validation": "10-11",
+      "test": "12-13"
+    },
+    "families": [
+      "isolated",
+      "scales",
+      "chords",
+      "repeated",
+      "legato",
+      "palmmute",
+      "mixed"
+    ],
+    "clipSeconds": 2,
+    "renderer": "R3",
+    "frontend": "frozen RMS normalization + CQT",
+    "model": "S6 nonlinear shared encoder/state-head package with five-frame input",
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "optimizer": {
+      "type": "Adam",
+      "learningRate": 0.003
+    },
+    "loss": {
+      "stateActiveWeight": 9,
+      "onsetPositiveWeight": 8,
+      "onsetLossMultiplier": 4
+    },
+    "sampler": {
+      "strata": [
+        "positiveOnset",
+        "activeNonOnset",
+        "negativeStructureInactive",
+        "otherInactive"
+      ],
+      "slotsEachPerStep": 32,
+      "batchSize": 128
+    },
+    "updatesPerModel": 500,
+    "models": 2,
+    "maxTotalUpdates": 1000
+  },
+  "control": {
+    "name": "same-runtime historical 2-second comparator",
+    "sourceSemantics": "S0 historical family templates and state durations, rendered with R3 in the V14 runtime"
+  },
+  "bridge": {
+    "clipSeconds": 2,
+    "rootSeed": 20260929,
+    "attackGroupsPerPositiveClip": {
+      "isolated": 1,
+      "scales": 4,
+      "chords": 2,
+      "repeated": 5,
+      "legato": 1,
+      "palmmute": 6,
+      "mixed": 1
+    },
+    "totalAttackGroups": 819,
+    "positiveSeconds": 546,
+    "aggregateAttackGroupsPerSecond": 1.5,
+    "firstAttackSupportsSeconds": {
+      "isolated": [
+        0.3,
+        0.34
+      ],
+      "scales": [
+        0.2,
+        0.24
+      ],
+      "chords": [
+        0.3,
+        0.34
+      ],
+      "repeated": [
+        0.26,
+        0.3
+      ],
+      "legato": [
+        0.26,
+        0.3
+      ],
+      "palmmute": [
+        0.24,
+        0.26
+      ],
+      "mixed": [
+        0.34,
+        0.38
+      ]
+    },
+    "gapSupportsSeconds": {
+      "S": [
+        0.1,
+        0.13
+      ],
+      "M": [
+        0.251,
+        0.26
+      ],
+      "L": [
+        0.85,
+        0.95
+      ]
+    },
+    "gapClassTotals": {
+      "S": 252,
+      "M": 225,
+      "L": 69,
+      "total": 546
+    },
+    "familyGapClassTotals": {
+      "scales": {
+        "S": 58,
+        "M": 52,
+        "L": 16,
+        "total": 126
+      },
+      "chords": {
+        "S": 19,
+        "M": 18,
+        "L": 5,
+        "total": 42
+      },
+      "repeated": {
+        "S": 78,
+        "M": 68,
+        "L": 22,
+        "total": 168
+      },
+      "palmmute": {
+        "S": 97,
+        "M": 87,
+        "L": 26,
+        "total": 210
+      }
+    },
+    "clipTypeCounts": {
+      "scales": {
+        "L": 16,
+        "S2M1": 16,
+        "S1M2": 10
+      },
+      "chords": {
+        "L": 5,
+        "S": 19,
+        "M": 18
+      },
+      "repeated": {
+        "L": 22,
+        "S2M2": 14,
+        "S1M3": 6
+      },
+      "palmmute": {
+        "L": 26,
+        "S1M4": 13,
+        "S2M3": 3
+      }
+    },
+    "deterministicAssignment": "Within each family, sort positive clip identities by SHA-256(rootSeed|type|family|clipIdentity), assign frozen type quotas in contract order, then SHA-sort each clip's class slots; gap values and first attacks use SHA-derived [0,1) fractions.",
+    "finalRequiredMarginSeconds": 0.12,
+    "stateSemantics": "Preserve historical comparator family/state semantics and legato non-attacked continuation where compatible with the prospectively frozen attack schedule. Any deterministic truncation at a same-string retrigger must be explicitly implemented, counted, and identical under the frozen rule; no post-hoc repair/search.",
+    "noFallback": true
+  },
+  "modelFreeExpected": {
+    "attackGroupCount": 819,
+    "gapCount": 546,
+    "gapClassCounts": {
+      "S": 252,
+      "M": 225,
+      "L": 69
+    },
+    "density": 1.5,
+    "repeat250Fraction": 0.46153846153846156,
+    "longGap700Fraction": 0.12637362637362637,
+    "deterministicMeasuredExpected": {
+      "ioiP10Seconds": 0.10654500694083052,
+      "ioiP50Seconds": 0.2517739427055513,
+      "ioiP90Seconds": 0.8641749706125101,
+      "maximumLastAttackSeconds": 1.7931743849046686,
+      "minimumPostLastAttackMarginSeconds": 0.20682561509533137,
+      "timingDistanceV1": 0.05109925255448195
+    }
+  },
+  "reference": {
+    "successfulComparator": {
+      "precision": 0.8269230769230769,
+      "recall": 0.6666666666666666,
+      "f1": 0.7381974248927038
+    },
+    "v9Common": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "f1Deficit": 0.30341481619705163,
+    "precisionDeficit": 0.5024955960070463,
+    "v2bTiming": {
+      "density": 1.4905949321256224,
+      "ioiP10": 0.106667,
+      "ioiP50": 0.256,
+      "ioiP90": 0.882358,
+      "repeat250": 0.47019867549668876,
+      "longGap700": 0.12582781456953643
+    }
+  },
+  "empiricalGate": {
+    "commonF1AtLeast": 0.586490016794178,
+    "commonPrecisionAtLeast": 0.5756752789195302,
+    "maxRecallDeclineVsSuccessfulComparator": 0.05,
+    "negativeFpPerSecondAtMost": 0.1,
+    "exact500UpdatesPerModel": true,
+    "exact2Models": true,
+    "thresholdsFixed": true,
+    "noThresholdSearch": true,
+    "noAutomaticScientificRetry": true
+  },
+  "gateRationale": {
+    "f1": "Requires at least 50% recovery of the original V9 common-test F1 deficit.",
+    "precision": "Requires at least 50% recovery of the original V9-to-comparator precision deficit: 0.3244274809 + 0.5*0.5024955960 = 0.5756752789."
+  },
+  "executionCeilings": {
+    "waveformDatasets": 2,
+    "examplesPerDataset": 294,
+    "totalModels": 2,
+    "totalOptimizerUpdates": 1000,
+    "automaticScientificRetries": 0,
+    "thresholdSearch": false,
+    "v2b": false,
+    "realAudio": false
+  },
+  "sourcePins": {
+    "s0PilotBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s6PilotBlob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "rendererBlob": "badedb6c36ad389093b6f74b97f4452c44518501",
+    "v9EmpiricalBlob": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "recoveryReviewMdBlob": "a7f381af12b119afeede839a9cbd5b3de00a915f",
+    "recoveryReviewJsonBlob": "76e058deb7114c48997a1d8b23b4922f92d65dc8"
+  },
+  "authorization": {
+    "projectPreparationAuthorized": true,
+    "empiricalRenderingTrainingAuthorized": false,
+    "requireFreshAuthorizationAfterVisiblePreflight": true
+  }
+}
