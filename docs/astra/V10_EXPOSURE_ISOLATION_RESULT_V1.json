@@ -1,0 +1,142 @@
+{
+  "schema": "astra-v10-exposure-isolation-result-v1",
+  "date": "2026-09-29",
+  "status": "complete-exposure-hypothesis-not-supported",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize",
+    "launchIdentity": "v10-exposure-v1-20260929-01",
+    "contractPath": "docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json"
+  },
+  "execution": {
+    "runId": 36528001337,
+    "jobId": 109275178270,
+    "headSha": "b5c661b6f383571bf31383e2a1d884089c71311d",
+    "conclusion": "success",
+    "artifactId": 11015118480,
+    "artifactDigest": "sha256:34bed0c4f07458915196d5fb91cf3ca521ccb5ae8d01233ca0b2de6303e50fee",
+    "artifactExpiresAt": "2026-10-29T05:51:42Z",
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "elapsedSeconds": 67.40923519600003,
+    "realAudioInference": 0,
+    "v2bInferencePerformed": false,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0
+  },
+  "identity": {
+    "controlBatchPlanSha256": "8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7",
+    "balancedBatchPlanSha256": "d439414e7b1dd92a4b505d14752da9bdeee203ee1dc09ff3a3e5c923e22cc837",
+    "positiveSlotsPerArm": 16000,
+    "controlSampledAttackedNoteLabels": 17676,
+    "balancedSampledAttackedNoteLabels": 19702,
+    "balancedMultiPositiveFrames": 1851,
+    "balancedSinglePositiveFrames": 14149,
+    "nonPositiveSelectionsIdenticalAcrossArms": true,
+    "samePerStepPermutationAcrossArms": true
+  },
+  "reproduction": {
+    "passed": true,
+    "frozenV9CommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "reproducedControlCommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "controlExposureExactly17676": true
+  },
+  "commonComparatorTest": {
+    "control": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6821705426356589,
+      "jointAdmission": 0.2868217054263566
+    },
+    "exposureBalanced": {
+      "precision": 0.3486238532110092,
+      "recall": 0.5891472868217055,
+      "f1": 0.43804034582132567,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2713178294573643,
+      "onsetAdmission": 0.6666666666666666,
+      "jointAdmission": 0.2558139534883721
+    },
+    "deltasBalancedMinusControl": {
+      "precision": 0.024196372294978674,
+      "recall": -0.06976744186046502,
+      "f1": 0.00325773712567351,
+      "stateAdmission": -0.03875968992248066,
+      "onsetAdmission": -0.015503875968992276,
+      "jointAdmission": -0.031007751937984496
+    }
+  },
+  "v9Test": {
+    "control": {
+      "precision": 0.48663101604278075,
+      "recall": 0.7054263565891473,
+      "f1": 0.5759493670886077,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2868217054263566,
+      "onsetAdmission": 0.6627906976744186,
+      "jointAdmission": 0.27906976744186046
+    },
+    "exposureBalanced": {
+      "precision": 0.5379939209726444,
+      "recall": 0.686046511627907,
+      "f1": 0.6030664395229983,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.3023255813953488,
+      "onsetAdmission": 0.6085271317829457,
+      "jointAdmission": 0.2751937984496124
+    },
+    "deltasBalancedMinusControl": {
+      "precision": 0.05136290492986367,
+      "recall": -0.01937984496124028,
+      "f1": 0.027117072434390654,
+      "stateAdmission": 0.01550387596899222,
+      "onsetAdmission": -0.054263565891472874,
+      "jointAdmission": -0.003875968992248068
+    }
+  },
+  "frozenChecks": {
+    "baselineReproducedExactly": true,
+    "balancedExposureExactly19702": true,
+    "controlExposureExactly17676": true,
+    "commonPrecisionGainAtLeast0_20": false,
+    "commonF1GainAtLeast0_15": false,
+    "commonRecallDeclineAtMost0_08": true,
+    "commonNegativeFpPerSecondAtMost0_10": true,
+    "v9PrecisionDeclineAtMost0_05": true,
+    "v9F1DeclineAtMost0_05": true,
+    "exact500StepsPerModel": true
+  },
+  "decision": {
+    "exposureHypothesisSupported": false,
+    "conclusion": "Exact matching of attacked-note-label exposure produced only small common-population precision/F1 gains and did not meet the prospectively frozen material-recovery thresholds.",
+    "v2bEvaluationPerformed": false,
+    "automaticNextStudy": false
+  },
+  "artifactFileSha256": {
+    "resultJson": "7d94334506a55799b5d24ca36a490aa96c71047eef0d984e4b4ff8a283aee689",
+    "executionReceiptJson": "acffa9b2491e87ec2f550b6f3433c542ee11ba8c97b8e088a967fbb57253c63f",
+    "controlPt": "d1b57eeeb7fbf980fade36e1f2dcd06a5099f32bb63af5acb0d356ee9a6d52d3",
+    "balancedPt": "f57b034f013ec0a245d83e38654afe2f8aa0d761fbf2fcd711cf5c4ff07b31b6"
+  },
+  "guards": {
+    "v2b": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
