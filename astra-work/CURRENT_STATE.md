@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V12 family-mixture study prospectively frozen — preflight PASS — 2026-09-29** at the end of this file. Empirical V12 requires fresh explicit authorization.
+Latest instructions: **V12 family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of this file. No V2B or automatic next study.
 
 ## Current status
 
@@ -3803,3 +3803,168 @@ A fresh explicit authorization after this frozen contract/preflight is required 
 V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
 
 **Resume instruction:** Preserve V9/V10/V11 as frozen historical results. Preserve V12 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V12 after this point, consume one unique V12 launch scope and execute exactly the frozen two-arm synthetic-only family-mixture study with no retries and no V2B.
+
+
+## V12 family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier V12 preflight/authorization boundary.**
+
+Explicit user authorization was consumed under launch identity:
+- `v12-family-mixture-v1-20260929-01`
+
+Frozen result:
+- `docs/astra/V12_FAMILY_MIXTURE_RESULT_V1.json`
+- `docs/astra/V12_FAMILY_MIXTURE_RESULT_V1.md`
+
+Empirical run:
+- run **36537632082**
+- job **109305235382**
+- head `d08dd9dc0f8318e094070cc96e30bf8713d581e7`
+- artifact **11018959307**
+- artifact digest `sha256:1085e801d644b52a48e007f200334ccf4a5fe3c1ed753ae90533a1b58482fa6d`
+- workflow conclusion **success**
+- artifact retained through 2026-10-29
+- models **2**
+- optimizer steps **1,000 total**
+- threshold search **false**
+- automatic scientific retries **0**
+- real-audio inference **0**
+- V2B inference **0**
+
+### Control reproduction passed exactly
+
+The V12 control exactly reproduced frozen V9 common comparator-test metrics:
+- precision **0.3244274809160305**
+- recall **0.6589147286821705**
+- F1 **0.43478260869565216**
+
+Control batch plan:
+`8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7`
+
+### Family-mixture intervention identity
+
+Control sampled positive-onset slots:
+- isolated 2,013
+- scales 3,314
+- chords 838
+- repeated 3,306
+- legato 1,661
+- palmmute 4,089
+- mixed-positive 779
+
+Historical-mixture intervention:
+- isolated 914
+- scales 3,657
+- chords 1,829
+- repeated 3,657
+- legato 914
+- palmmute 4,572
+- mixed-positive 457
+
+Intervention batch plan:
+`fa9146d23f67084edb683c889d273a2fc55d2a036c7f858418c92d9329812e0c`
+
+All non-positive selections and per-step shuffle remained identical.
+
+### Linked attacked-note-label exposure
+
+Because the historical mixture increases chord-frame share:
+- control attacked labels **17,676**
+- intervention attacked labels **19,658**
+- increase **1,982** (**11.21%**)
+
+This is a linked downstream consequence and must not be interpreted as a separately isolated factor.
+
+### Primary common comparator-test result
+
+Control:
+- precision **0.324427**
+- recall **0.658915**
+- F1 **0.434783**
+- state admission **0.310078**
+- onset admission **0.682171**
+- joint admission **0.286822**
+- negative FP/s **0**
+
+Historical family mixture:
+- precision **0.342205**
+- recall **0.697674**
+- F1 **0.459184**
+- state admission **0.333333**
+- onset admission **0.751938**
+- joint admission **0.333333**
+- negative FP/s **0.166667**
+
+Deltas:
+- precision **+0.017778**
+- recall **+0.038760**
+- F1 **+0.024401**
+- state admission **+0.023256**
+- onset admission **+0.069767**
+- joint admission **+0.046512**
+- negative FP/s **+0.166667**
+
+Frozen gates:
+- precision gain >= +0.15: **FAIL**
+- F1 gain >= +0.10: **FAIL**
+- recall decline <=0.05: PASS
+- negative FP/s <=0.10: **FAIL**
+
+### Secondary frozen-V9 test
+
+Control:
+- precision **0.486631**
+- recall **0.705426**
+- F1 **0.575949**
+
+Historical family mixture:
+- precision **0.470284**
+- recall **0.705426**
+- F1 **0.564341**
+
+Deltas:
+- precision **-0.016347**
+- recall **0**
+- F1 **-0.011608**
+
+The frozen secondary F1 decline ceiling passed.
+
+### V12 decision
+
+**The positive-onset family-mixture hypothesis is not supported.**
+
+Matching the historical family mixture produced modest common-population recall/F1 gains but did not meet material precision/F1 recovery thresholds and exceeded the negative-only false-positive ceiling.
+
+This further weakens a simple family-mixture explanation for V9.
+
+Do not claim the true cause is known.
+
+Remaining unresolved factors include:
+- 4-second versus 2-second inactive/background context distribution;
+- longer-range sequence/gap structure beyond marginal timing statistics;
+- interactions among duration, family composition, negative/background context and the fixed four-stratum sampler;
+- the 2-second versus 4-second corpus construction as a broader composite synthetic-domain shift.
+
+Artifact evidence:
+- ZIP `1085e801d644b52a48e007f200334ccf4a5fe3c1ed753ae90533a1b58482fa6d`
+- `result.json` `4a5bf0f25b66ff8a842ae1fd8d434859b8769791fe109c51a049f5ff1bb76d91`
+- execution receipt `71dca6e919295947173db6af2481a06821ce49c3bef669bd87a3a51bb7e9e94c`
+- control checkpoint `da8d334c77790033b35fe6a3df3e70683b3a41b8f9e54b85f022b56f4de4f821`
+- intervention checkpoint `4b4aca670d4477fcb4c7d0f0e6fe5724d3ec802043ab04dd85c0513adb5fef3b`
+
+### Current stop boundary
+
+Preserve:
+- V9 = frozen FAIL at synthetic sanity
+- V10 = frozen; exposure-matching did not materially rescue V9
+- V11 = frozen; state-semantics restoration did not materially rescue V9
+- V12 = complete; historical positive-onset family-mixture restoration did not materially rescue V9
+
+Do not:
+- rerun V12;
+- post-hoc tune family proportions, sampler, threshold, loss or decoder and call it V12;
+- run V2B;
+- open V13 automatically;
+- mutate main or Production.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
