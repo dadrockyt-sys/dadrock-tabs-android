@@ -1,0 +1,42 @@
+name: Astra V8A long-duration timing screen
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V8A_EXECUTION_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  v8a:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Install timing dependencies
+        run: python -m pip install numpy==1.21.6 scipy==1.8.1 torch==1.11.0 --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Verify authorization
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('docs/astra/V8A_EXECUTION_LAUNCH_V1.json'))
+          assert d['explicitlyAuthorized'] is True
+          assert d['modelInference'] is False
+          assert d['optimizerSteps']==0
+          PY
+      - name: Run V8A model-free screen
+        run: |
+          mkdir -p /tmp/v8a
+          PYTHONPATH=astra_backend python astra_backend/synthetic/v8_long_duration_timing_screen_v1.py --out /tmp/v8a/result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-v8a-long-duration-timing-screen-v1
+          path: /tmp/v8a/result.json
+          if-no-files-found: error
+          retention-days: 7
