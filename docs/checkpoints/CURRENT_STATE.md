@@ -2716,3 +2716,105 @@ Coverage represented in the pool:
 No audio download, model inference, optimizer, workflow dispatch, or P1/P2/P3 access occurred during sourcing.
 
 **Resume instruction:** Continue only by downloading the frozen shortlisted candidates, hashing them, preserving provenance, human-screening them, freezing annotations before output, populating the intake manifest, and passing the pure zero-inference intake verification. Do not train/tune or infer before that checkpoint.
+
+
+## Web acquisition probes exhausted; frozen candidate pinned — 2026-09-28
+
+Continuation from the frozen web shortlist attempted two bounded **model-free** acquisition paths for candidate P01.
+
+### Acquisition probe V1 — failed before audio access
+
+Frozen failure:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_ACQUISITION_PROBE_FAILURE_V1.json`
+
+Workflow:
+- run **36508296736**
+- job **109214593700**
+- head `321391803e96dee3b2f9f13c705f9fe2a6654225`
+- attempt **1**
+- conclusion **FAILURE**
+
+Method:
+- public Pixabay page;
+- headless Playwright;
+- attempted to observe a public audio response after normal page/play/download interaction.
+
+Failure:
+- no public Pixabay audio URL was observed by the GitHub runner.
+
+No audio was downloaded.
+No model was loaded.
+No inference or optimizer work occurred.
+P1/P2/P3 remained untouched.
+
+### Acquisition probe V2 — failed before audio access
+
+Frozen failure:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_ACQUISITION_PROBE_FAILURE_V2.json`
+
+Workflow:
+- run **36508495937**
+- job **109215211120**
+- head `b2e28dfa31f4f6f35f03a874d6d029d3684da2fd`
+- attempt **1**
+- conclusion **FAILURE**
+
+Method:
+- exact public CDN URL resolved during the earlier read-only browser session;
+- direct request from GitHub Actions with ordinary User-Agent/Referer headers.
+
+Failure:
+- CDN returned **HTTP 403 Forbidden**.
+
+This is an access-control/automation limitation, not a scientific result. Do not escalate with anti-bot bypass, credential circumvention, or repeated automated retries.
+
+### Durable candidate identity now pinned
+
+A1 and S11 result artifacts do not contain durable trained weight files, so they cannot be recreated by retraining under this program.
+
+The newest verified durable compatible checkpoint in the frozen synthetic line has therefore been pinned **before any new real-development model output**:
+
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_CANDIDATE_PIN_V1.json`
+- candidate: **S9 30-voicing intervention**
+- source run **36379258174**
+- artifact **10952098012**
+- artifact digest `sha256:30b4596731c0445e6c38e046c4e628f75dbd55562a97901966746b2e99d7b596`
+- artifact currently unexpired; expiry **2026-10-28T04:50:19Z**
+- weight file `intervention.pt`
+- weight SHA-256 independently rechecked: `8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036`
+- model not loaded;
+- inference **0**;
+- optimizer **0**.
+
+The candidate's historical S9 gate remains **FAILED**. Pinning it only provides a durable preselected checkpoint for the independent real-development evaluation; it does not reinterpret the historical outcome.
+
+The candidate identity has been written into:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`
+
+### Exact current blocker
+
+Automated Pixabay acquisition is blocked before audio bytes are available. The authorized intake still lacks the actual 24 real-development audio files.
+
+**Next required action is user-mediated lawful acquisition** of the frozen shortlisted files: download them from their Pixabay source pages using the normal site download control, then upload the files here (a ZIP is preferable). Do not rename or edit them before upload if avoidable.
+
+Once supplied, the existing authorization permits:
+1. SHA-256 hashing;
+2. exact duration/media verification;
+3. source-to-file matching;
+4. human/annotation screening before any model output;
+5. manifest population;
+6. pure intake validation;
+7. zero-inference verification receipt.
+
+Only after that checkpoint may one bounded real-development inference run.
+
+Do not:
+- automate around Pixabay anti-bot/access controls;
+- substitute P1/P2/P3;
+- retrain A1/S11;
+- train/tune any candidate;
+- run inference before intake verification;
+- open A2;
+- mutate main/Production.
+
+**Resume instruction:** Wait for the user to upload the lawfully downloaded frozen shortlist (preferably one ZIP). Then continue automatically through hash/duration/provenance verification and intake preparation, stopping before inference if any clip or annotation criterion fails.
