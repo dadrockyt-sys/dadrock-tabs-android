@@ -1,0 +1,78 @@
+{
+  "schema": "astra-target-structure-adequacy-v5-design-v1",
+  "date": "2026-09-28",
+  "status": "design-frozen-execution-not-authorized",
+  "hypothesis": "exact-string-fret-supervision-contributes-to-real-transfer-failure",
+  "invariants": {
+    "architecture": "identical across T0/T1/T2",
+    "parameterCount": "identical",
+    "renderer": "R3 frozen",
+    "data": "identical synthetic arrays/labels except objective interpretation",
+    "batches": "identical",
+    "initialization": "identical",
+    "optimizerStepsPerArm": 500,
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "productionDecoderChanged": false
+  },
+  "arms": [
+    {
+      "id": "T0",
+      "objective": "exact-string-fret"
+    },
+    {
+      "id": "T1",
+      "objective": "pitch-equivalent-compatible-position"
+    },
+    {
+      "id": "T2",
+      "objective": "50-percent-exact-plus-50-percent-pitch-equivalent"
+    }
+  ],
+  "v5a": {
+    "syntheticSanity": {
+      "maxPitchOnsetF1DeclineVsT0": 0.1,
+      "maxOnsetRecallDeclineVsT0": 0.1,
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+    }
+  },
+  "v5b": {
+    "dataset": "V2B development only",
+    "scoring": "pitch-compatible state aggregation plus compatible-string onset max; ordinary decoder retained for negative FP",
+    "developmentInterestRule": {
+      "trustedJointAdmissionAbsoluteGainVsT0AtLeast": 0.2,
+      "highConfidenceJointAdmissionAtLeast": 0.25,
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1,
+      "maxOnsetAdmissionDeclineVsT0": 0.1
+    }
+  },
+  "compute": {
+    "maxModels": 3,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1500,
+    "retries": 0,
+    "lossWeightSearch": false,
+    "thresholdSearch": false
+  },
+  "confirmation": {
+    "freshHoldoutRequired": true,
+    "v1_1Used": false
+  },
+  "executionAuthorized": false,
+  "boundaries": {
+    "architectureChange": false,
+    "parameterCountChange": false,
+    "rendererSearch": false,
+    "thresholdChange": false,
+    "productionDecoderChange": false,
+    "realAudioTraining": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
