@@ -146,6 +146,8 @@ Neither outcome:
 - S6 model/training source: `142168784e3dfebf8a5221017e40c8aa73be1fa5`
 - S1 sampler source: `bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf`
 - exact runtime lock: `174a5016cfe9e6c00816d2171210aa84c66081a8`
+- V10 contract validator: `34d248f74812652fcd213fc420506c3f82b5a6d1`
+- V10 validator tests: `32d6dac52a2e388f507ac958aab4ec7f6bbfc9b1`
 
 ## Current boundary
 
