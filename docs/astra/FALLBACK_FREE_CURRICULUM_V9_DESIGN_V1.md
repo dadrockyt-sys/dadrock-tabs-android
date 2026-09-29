@@ -1,7 +1,7 @@
-# Fallback-free curriculum V9 design V1 — DRAFT, NOT LAUNCH-READY
+# Fallback-free curriculum V9 design V1 — SUPERSEDED BY FINAL CONTRACT
 
 Date: 2026-09-29 UTC  
-Status: design-only. No candidate timing population may be generated until PRE-V9-MEASUREMENT-V1 freezes comparable attack-group targets and numerical gates.
+Status: historical draft. The common-unit measurement is complete and `FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1` now supersedes this draft. Empirical execution remains unauthorized.
 
 ## Single hypothesis
 
