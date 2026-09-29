@@ -1,0 +1,24 @@
+{
+  "schema": "astra-v13-empirical-execution-authorization-v1",
+  "date": "2026-09-29",
+  "status": "explicitly-authorized-for-frozen-v13-active-nononset-mixture-contract",
+  "explicitlyAuthorized": true,
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "contractPath": "docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json",
+  "authorizationScope": {
+    "syntheticOnly": true,
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "deterministicallyRegenerateCommonComparatorDataset": true,
+    "deterministicallyRegenerateExecutedV9Dataset": true,
+    "sharedSingleV9DatasetAcrossArms": true,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "realAudio": false,
+    "v2b": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
