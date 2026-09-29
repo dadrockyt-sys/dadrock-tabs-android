@@ -1,0 +1,40 @@
+{
+  "schema": "astra-v2b-calibration-development-design-v1",
+  "date": "2026-09-28",
+  "status": "design-frozen-collection-not-authorized",
+  "minimums": {
+    "clips": 16,
+    "positive": 12,
+    "negativeOnly": 4,
+    "positiveSeconds": 60,
+    "negativeSeconds": 20
+  },
+  "positiveCoverage": {
+    "creatorsOrCaptureChains": 2,
+    "cleanClips": 2,
+    "distortedClips": 2,
+    "primarilySingleNoteClips": 4,
+    "repeatedAttackClips": 3,
+    "legatoBendSlideClips": 2,
+    "chordalPolyphonicClips": 2
+  },
+  "clipDurationSeconds": [
+    4,
+    10
+  ],
+  "independence": {
+    "excludeV1_1": true,
+    "excludeNearDuplicatesOfV1_1": true,
+    "excludeP1": true,
+    "excludeP2": true,
+    "excludeP3": true,
+    "excludeSynthetic": true,
+    "excludePreviouslyModelInspectedAudio": true
+  },
+  "candidate": "S9 30-voicing intervention",
+  "collectionAuthorized": false,
+  "inferenceAuthorized": false,
+  "thresholdSearchAuthorized": false,
+  "tuningAuthorized": false,
+  "nextAction": "await-explicit-authorization-before-sourcing-v2b-audio"
+}
