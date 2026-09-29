@@ -1,0 +1,25 @@
+name: Astra V12 family mixture preflight
+on:
+  push:
+    branches: [astra-work]
+    paths: ['docs/astra/V12_PREFLIGHT_LAUNCH_V1.json']
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - run: python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+      - run: PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v12_contract_validator_v1.py
+      - run: PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v12_family_mixture_v1.py
+      - run: |
+          mkdir -p /tmp/v12-preflight
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v12_contract_validator_v1.py --contract docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.json > /tmp/v12-preflight/contract-validation.json
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v12_family_mixture_v1.py static --out /tmp/v12-preflight/static-summary.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-v12-family-mixture-preflight-v1
+          path: /tmp/v12-preflight
+          retention-days: 30
