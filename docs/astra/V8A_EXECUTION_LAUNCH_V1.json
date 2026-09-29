@@ -1,0 +1,10 @@
+{
+  "schema": "astra-v8a-execution-launch-v1",
+  "date": "2026-09-29",
+  "explicitlyAuthorized": true,
+  "userInstruction": "I authorize",
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "waveformRendering": false,
+  "parameterSearch": false
+}
