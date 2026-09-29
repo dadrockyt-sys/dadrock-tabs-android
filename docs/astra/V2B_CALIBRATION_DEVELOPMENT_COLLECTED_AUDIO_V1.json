@@ -1,0 +1,233 @@
+{
+  "schema": "astra-v2b-calibration-development-collected-audio-v1",
+  "date": "2026-09-28",
+  "status": "collection-complete-before-model-output",
+  "counts": {
+    "total": 17,
+    "positive": 13,
+    "negativeOnly": 4
+  },
+  "durations": {
+    "positiveEvaluationSeconds": 110.03,
+    "negativeEvaluationSeconds": 31.858
+  },
+  "clips": [
+    {
+      "id": "C01",
+      "kind": "positive",
+      "file": "freesound_community-electric-guitar-tapping-34546.mp3",
+      "sha256": "a8b7240c8cd27b7f0eebc06ea03e126f8a00f50c3eba86c9689e066916e0c865",
+      "decodedDurationSeconds": 18.408,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-tapping-34546/"
+    },
+    {
+      "id": "C02",
+      "kind": "positive",
+      "file": "freesound_community-electric-guitar-riff-jingle-83860.mp3",
+      "sha256": "5c04c34f0520d69d634e65b554a3405b33ef3c97a1f291351d643c987ec6c12d",
+      "decodedDurationSeconds": 12.96,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-riff-jingle-83860/"
+    },
+    {
+      "id": "C03",
+      "kind": "positive",
+      "file": "freesound_community-054374_funky-electric-guitar-sample-9-84788.mp3",
+      "sha256": "73252f66477e157e46c400474d7bcf1763fb30dbac70e83de222c8c0be6fefde",
+      "decodedDurationSeconds": 10.728,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-054374-funky-electric-guitar-sample-9-84788/"
+    },
+    {
+      "id": "C04",
+      "kind": "positive",
+      "file": "freesound_community-guitar-plug-and-play-106347.mp3",
+      "sha256": "ce7d43755bc3ab216e96935864fc720d8702ceaf6dc7c5ba180d2270a620aa9d",
+      "decodedDurationSeconds": 5.806,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.806,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-guitar-plug-and-play-106347/"
+    },
+    {
+      "id": "C05",
+      "kind": "positive",
+      "file": "freesound_community-electric-guitar-phrase-38142.mp3",
+      "sha256": "98d23874573cf88ce1c1b03611d2d43b508f0ea1e97b288e75e852f3b251d92b",
+      "decodedDurationSeconds": 10.867,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-phrase-38142/"
+    },
+    {
+      "id": "C06",
+      "kind": "positive",
+      "file": "freesound_community-one-note-electric-guitar-90716.mp3",
+      "sha256": "5119f2846107494c894daeb336d1a161c21c0bf3035849d238cb63933eccaa26",
+      "decodedDurationSeconds": 8.496,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.496,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-one-note-electric-guitar-90716/"
+    },
+    {
+      "id": "C07",
+      "kind": "positive",
+      "file": "freesound_community-electric-guitar-86322.mp3",
+      "sha256": "c4a2236b6aed88860d5629141d713e928d6e8a125b629da813743a6ed115c409",
+      "decodedDurationSeconds": 6.96,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 6.96,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-86322/"
+    },
+    {
+      "id": "C08",
+      "kind": "positive",
+      "file": "freesound_community-electric-guitar-pluck-40468.mp3",
+      "sha256": "182bc4631c6d6d21711adfa3adb0276195802918a6f78a14754387cf952a5d18",
+      "decodedDurationSeconds": 10.512,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-electric-guitar-pluck-40468/"
+    },
+    {
+      "id": "C09",
+      "kind": "positive",
+      "file": "freesound_community-pick-slides-106398.mp3",
+      "sha256": "7f965e5a9edc59702581896d927f50122de03d017b61263318b85f6a3087c01c",
+      "decodedDurationSeconds": 7.152,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.152,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-pick-slides-106398/"
+    },
+    {
+      "id": "C10",
+      "kind": "positive",
+      "file": "freesound_community-12-first-electric-guitar-power-chords-34547.mp3",
+      "sha256": "c7e945d24f96e6f99f6de7842d5023dd064a5f4cdc0e323a661d4f34c9faebfc",
+      "decodedDurationSeconds": 14.328,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-12-first-electric-guitar-power-chords-34547/"
+    },
+    {
+      "id": "C11",
+      "kind": "positive",
+      "file": "jasonlee3071-distorted-reversed-electric-guitar-49960.mp3",
+      "sha256": "7e56b2a25a4f954f101dbed718535ccc37398c0496cd00034af6696d538d6896",
+      "decodedDurationSeconds": 28.578,
+      "sampleRateHz": 44100,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/distorted-reversed-electric-guitar-49960/"
+    },
+    {
+      "id": "C12",
+      "kind": "positive",
+      "file": "photocapebreton-out-on-a-bender-13586.mp3",
+      "sha256": "829ab61fd00ae48525f5fcd642965715afa47276b761cdbebaf849416faa71df",
+      "decodedDurationSeconds": 5.616,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.616,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-out-on-a-bender-13586/"
+    },
+    {
+      "id": "C13",
+      "kind": "positive",
+      "file": "freesound_community-017628_strummed-electric-guitar-chords-55201.mp3",
+      "sha256": "4f62d5c15bdc9e67c30ddeae8d625236cfa34c6434e6cc8108f69c6538ed3e44",
+      "decodedDurationSeconds": 79.128,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-017628-strummed-electric-guitar-chords-55201/"
+    },
+    {
+      "id": "D01",
+      "kind": "negative-only",
+      "file": "dragon-studio-keyboard-typing-asmr-356118.mp3",
+      "sha256": "c31fea731c71efe9dea3c9b3d1e9256c64bb3d1f26a521c757c24321912ef81c",
+      "decodedDurationSeconds": 8.098,
+      "sampleRateHz": 44100,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.098,
+      "sourceUrl": "https://pixabay.com/sound-effects/film-special-effects-keyboard-typing-asmr-356118/"
+    },
+    {
+      "id": "D02",
+      "kind": "negative-only",
+      "file": "dragon-studio-ancient-war-drums-463214.mp3",
+      "sha256": "d1ffe02962a4705030c2818ee3847610ad044c263c68ac1cc8cc9bf8d6471eb2",
+      "decodedDurationSeconds": 7.584,
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.584,
+      "sourceUrl": "https://pixabay.com/sound-effects/musical-ancient-war-drums-463214/"
+    },
+    {
+      "id": "D03",
+      "kind": "negative-only",
+      "file": "driken5482-applause-cheer-236786.mp3",
+      "sha256": "d0b67c9ea8b8ee011eef5547badd066ae20796839c3beae563a7b5b994458231",
+      "decodedDurationSeconds": 8.04,
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.04,
+      "sourceUrl": "https://pixabay.com/sound-effects/people-applause-cheer-236786/"
+    },
+    {
+      "id": "D04",
+      "kind": "negative-only",
+      "file": "universfield-cheering-crowd-242638.mp3",
+      "sha256": "4dbdcf905535bdc8d37ac9a2d2f649e373895e257333fbbe0e3003da07fa2627",
+      "decodedDurationSeconds": 8.136,
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.136,
+      "sourceUrl": "https://pixabay.com/sound-effects/people-cheering-crowd-242638/"
+    }
+  ],
+  "checks": {
+    "minimumPositiveClipsMet": true,
+    "minimumNegativeClipsMet": true,
+    "minimumPositiveSecondsMet": true,
+    "minimumNegativeSecondsMet": true,
+    "noModelOutputViewed": true,
+    "v1_1UsedForTuning": false
+  },
+  "modelInferenceCount": 0,
+  "optimizerSteps": 0,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false
+}
