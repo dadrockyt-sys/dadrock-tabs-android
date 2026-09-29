@@ -1732,3 +1732,86 @@ Do not claim causal isolation.
 No fresh V5 holdout is warranted because no alternative objective passed V5B.
 
 **Resume instruction:** Stop at the V5 no-development-interesting-objective boundary. Any next experiment on onset representation, synthetic event statistics, or fresh real-domain training is a new project decision and requires explicit authorization.
+
+
+## V6 onset-representation / event-statistics adequacy design frozen — 2026-09-29
+
+Generic continuation was used only for design/documentation at the V5 no-development-interesting-objective boundary.
+
+New files:
+- `docs/astra/ONSET_EVENT_STATISTICS_ADEQUACY_V6_DESIGN_V1.md`
+- `docs/astra/ONSET_EVENT_STATISTICS_ADEQUACY_V6_DESIGN_V1.json`
+
+V6 tests whether onset supervision and synthetic event statistics materially contribute to the real-domain transfer collapse.
+
+Frozen arms:
+- **O0** — historical exact-frame BCE onset objective
+- **O1** — fixed ±1-frame soft onset targets (center 1.0, adjacent 0.5)
+- **O2** — fixed focal onset objective (gamma 2.0, alpha+ 0.75, alpha- 0.25)
+- **O3** — fixed soft-window + focal objective
+
+Across all arms:
+- identical S9/S6 nonlinear architecture and parameter count
+- identical R3 renderer
+- exact string/fret state objective frozen
+- identical synthetic corpus/splits
+- identical initialization and batch plan
+- 500 optimizer steps/arm
+- thresholds remain 0.50/0.50
+- production decoder unchanged
+- no onset-window / alpha / gamma / loss-weight search
+
+### V6A synthetic sanity
+
+Alternative arms must satisfy vs O0:
+- pitch-onset F1 decline <=0.08 absolute
+- onset recall decline <=0.08 absolute
+- onset precision >=0.70
+- negative-only FP <=0.10/s
+- all 500 optimizer steps completed with finite losses
+
+Only sanity-eligible arms may reach V2B.
+
+### V6B V2B development gate
+
+At unchanged 0.50/0.50:
+- compatible-string onset admission gain vs O0 >= +0.20
+- trusted joint-admission gain vs O0 >= +0.15
+- high-confidence joint admission >=20%
+- ordinary-decoder negative FP <=0.10/s
+- compatible state admission decline <=0.10
+
+No scoring-time temporal tolerance is allowed; O1/O3 must generalize from training.
+
+### V6C model-free event-statistics audit
+
+Regardless of V6B outcome, compare synthetic vs V2B:
+- onsets/sec
+- IOI p10/p50/p90
+- repeated-attack fraction within 250 ms
+- event-density distribution
+- active-duration distribution where available
+- onset-to-sustain ratio
+
+V6C is descriptive only and cannot retroactively alter O1/O2/O3.
+
+### Compute ceiling
+
+- max 4 models
+- 500 steps/model
+- max 2000 optimizer steps total
+- zero retries
+- zero threshold search
+- zero loss-parameter search
+
+No empirical V6 work has been run.
+No model training/inference.
+No real audio training.
+V1.1 remains sealed.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+Any V6B success requires a fresh holdout; V1.1 is not the confirmation set.
+
+**Resume instruction:** V6 design is ready. Do not implement O1/O2/O3, train O0/O1/O2/O3, evaluate V2B, or run the V6C event-statistics audit until the user explicitly authorizes V6 empirical execution. Generic continuation remains design/documentation only.
