@@ -6,5 +6,10 @@
   "modelInference": false,
   "optimizerSteps": 0,
   "waveformRendering": false,
-  "parameterSearch": false
+  "parameterSearch": false,
+  "attempt": 2,
+  "previousInfrastructureFailure": {
+    "runId": 36522967333,
+    "reason": "missing librosa import dependency before any V8A result was produced"
+  }
 }
