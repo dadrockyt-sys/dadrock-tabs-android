@@ -1,0 +1,169 @@
+{
+  "schema": "astra-v9-fallback-free-curriculum-result-v1",
+  "date": "2026-09-29",
+  "status": "completed-v9a-pass-synthetic-sanity-fail-v2b-blocked",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize",
+    "launchIdentity": "v9-frozen-v1-20260929-01"
+  },
+  "preflight": {
+    "firstInfrastructureRun": {
+      "runId": 36526163229,
+      "conclusion": "failure-before-candidate-generation",
+      "reason": "test import path omitted repository root",
+      "candidateTimingGenerated": false,
+      "optimizerSteps": 0,
+      "modelInferenceCount": 0
+    },
+    "acceptedRun": {
+      "runId": 36526305988,
+      "jobId": 109270011760,
+      "headSha": "a0c09415abba839cf525531141dcfa7822e95f68",
+      "artifactId": 11014613083,
+      "artifactDigest": "sha256:c764c270d0b280895fb755adcb32032b3d604e66ccef0ae627362d9b26a50b30",
+      "conclusion": "success"
+    }
+  },
+  "execution": {
+    "runId": 36526450793,
+    "jobId": 109270456836,
+    "headSha": "f488e857c821fbee2846aa5ae3a511a2e30e8007",
+    "conclusion": "success",
+    "artifactId": 11015165684,
+    "artifactDigest": "sha256:e5ebb4c1450cbfac7453dc9613c33e0f64a5694044c2195ceeea36651f65af3c",
+    "artifactExpiresAt": "2026-10-29T05:32:13Z",
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "automaticScientificRetries": 0,
+    "thresholdSearch": false,
+    "realAudioModelInferenceCount": 0
+  },
+  "v9a": {
+    "passed": true,
+    "baselineTimingDistanceV1": 1.6103247395960165,
+    "timingDistanceV1": 0.09185905345534581,
+    "relativeImprovement": 0.9429561931226427,
+    "summary": {
+      "positiveClips": 273,
+      "negativeOnlyClips": 21,
+      "positiveSeconds": 1092,
+      "attackGroupCount": 1638,
+      "attackedNoteLabelCount": 1806,
+      "density": 1.5,
+      "ioiP10": 0.12076228667472112,
+      "ioiP50": 0.2577495863213714,
+      "ioiP90": 0.9026586623262927,
+      "repeat250": 0.46153846153846156,
+      "longGap700": 0.13846153846153847,
+      "infeasibleClipCount": 0,
+      "invalidLabelCount": 0,
+      "invalidOffsetCount": 0,
+      "fallbackOperationCount": 0
+    },
+    "allFrozenChecksPassed": true
+  },
+  "render": {
+    "comparator": {
+      "examples": 294,
+      "seconds": 588,
+      "frameCount": 87,
+      "attackGroups": 735,
+      "attackedNoteLabels": 903
+    },
+    "intervention": {
+      "examples": 294,
+      "seconds": 1176,
+      "frameCount": 173,
+      "attackGroups": 1638,
+      "attackedNoteLabels": 1806
+    },
+    "renderer": "R3",
+    "elapsedSeconds": 64.49314586999998,
+    "persistedMiB": 41.48554611206055,
+    "withinStorageCeiling": true,
+    "externalAudioAssets": false
+  },
+  "trainingExposure": {
+    "comparator": {
+      "optimizerSteps": 500,
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 19702
+    },
+    "intervention": {
+      "optimizerSteps": 500,
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676
+    },
+    "qualification": "Equal optimizer updates, sampled frames, frame-seconds, and sampled attack frames did not imply equal attacked-note-label exposure."
+  },
+  "syntheticSanity": {
+    "passed": false,
+    "comparator": {
+      "precision": 0.8269230769230769,
+      "recall": 0.6666666666666666,
+      "f1": 0.7381974248927038,
+      "truePositive": 86,
+      "falsePositive": 18,
+      "falseNegative": 43,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.29457364341085274,
+      "onsetAdmission": 0.6201550387596899,
+      "jointAdmission": 0.2868217054263566
+    },
+    "intervention": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216,
+      "truePositive": 85,
+      "falsePositive": 177,
+      "falseNegative": 44,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6821705426356589,
+      "jointAdmission": 0.2868217054263566
+    },
+    "checks": {
+      "onsetPrecisionAtLeast0_70": false,
+      "pitchOnsetF1DeclineAtMost0_08": false,
+      "onsetRecallDeclineAtMost0_08": true,
+      "negativeFpPerSecondAtMost0_10": true,
+      "exact500StepsPerModel": true,
+      "finiteMetrics": true
+    },
+    "deltas": {
+      "precisionInterventionMinusComparator": -0.5024955960070463,
+      "recallInterventionMinusComparator": -0.007751937984496138,
+      "f1InterventionMinusComparator": -0.30341481619705163,
+      "stateAdmissionInterventionMinusComparator": 0.01550387596899222,
+      "onsetAdmissionInterventionMinusComparator": 0.06201550387596899,
+      "jointAdmissionInterventionMinusComparator": 0
+    }
+  },
+  "artifactFileSha256": {
+    "timingJson": "ae9384286a40009a328ce98fd90f15f3bbc4e31b9686f48e6f81a5275d41d913",
+    "renderReceiptJson": "817a474c5ffabf34a43d5fc19b2e8836982fc86a29bcdc762ada8cfb48aa7f0d",
+    "trainResultJson": "7f1b51592fdaf01f77d5d658abe76cc5f22de76ca70cdcf5bcfc9ac6e89dcfc7",
+    "comparatorPt": "653587a0ac02b383daca3740d26fe0685bd3fc3c88cfd86335f4a90ad3bfe8a5",
+    "interventionPt": "98668a9e044d1de1823f6e55c982fe0729bb2361264ba9d6264b565b8ef48115",
+    "executionReceiptJson": "62da92fdba5dc195eb378a45daeab1adbbea92d4677b2d72c7e2e083ae4a050d"
+  },
+  "decision": {
+    "v2bEvaluationPerformed": false,
+    "reason": "Frozen synthetic sanity gate failed; contract technically blocks real-development inference.",
+    "automaticV10": false
+  },
+  "guards": {
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
