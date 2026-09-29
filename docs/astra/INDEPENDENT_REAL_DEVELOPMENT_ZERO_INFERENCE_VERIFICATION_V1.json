@@ -1,0 +1,63 @@
+{
+  "schema": "astra-independent-real-development-zero-inference-verification-v1",
+  "date": "2026-09-28",
+  "status": "structural-pass-scientific-annotation-qa-blocked",
+  "intake": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json",
+  "annotations": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_MODEL_FREE_ANNOTATIONS_V1.json",
+  "correction": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_COLLECTED_AUDIO_CORRECTION_V2.json",
+  "validator": "astra_backend/synthetic/independent_real_development_intake_validator_v1.py",
+  "structuralValidation": {
+    "passed": true,
+    "clipCount": 24,
+    "positiveClipCount": 18,
+    "negativeOnlyClipCount": 6,
+    "positiveAudioSeconds": 145.41509400000004,
+    "negativeAudioSeconds": 41.366531,
+    "requiredCoverageComplete": true,
+    "annotationCount": 105
+  },
+  "annotationDraft": {
+    "highConfidence": 81,
+    "mediumConfidence": 5,
+    "lowConfidence": 19,
+    "method": "spectral-flux onset + YIN fundamental; no learned model"
+  },
+  "scientificReadiness": {
+    "passed": false,
+    "reason": "Monophonic YIN draft cannot establish complete reference pitch sets for chordal/polyphonic clips without human QA.",
+    "mandatoryQaClipIds": [
+      "P01",
+      "P02",
+      "P05",
+      "P06",
+      "P07",
+      "P10",
+      "P13",
+      "P16"
+    ],
+    "recommendedQaClipIds": [
+      "P03",
+      "P08",
+      "P11",
+      "P12",
+      "P18"
+    ]
+  },
+  "execution": {
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "training": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "workflowModelDispatches": 0
+  },
+  "guards": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "nextAction": "human-qa-reference-annotations-before-any-candidate-model-inference"
+}
