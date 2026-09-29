@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V9 empirical execution complete — synthetic sanity FAIL — 2026-09-29** at the end of this file. V2B was technically blocked and not run.
+Latest instructions: **V10 exposure-isolation study prospectively frozen — 2026-09-29** at the end of this file. V10 model-free preflight passed; empirical execution requires fresh authorization.
 
 ## Current status
 
@@ -2956,3 +2956,114 @@ Stop model execution here.
 A future project must be separately and prospectively defined. The smallest scientifically motivated question suggested by V9 is whether **training exposure / attack-label weighting** rather than timing-fit itself explains the precision collapse, but that would be a new controlled study, not a V9 retry.
 
 **Resume instruction:** Preserve V9 as a frozen FAIL at synthetic sanity. Do not perform V2B inference from V9 and do not create V10 automatically. At a generic “continue”, perform documentation/review only unless the user explicitly authorizes a new project question.
+
+
+## V10 exposure-isolation study prospectively frozen — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier generic “new project question” boundary.**
+
+The user explicitly authorized opening the next project question. That authorization was used only for prospective study definition, static implementation, and model-free preflight. It was not treated as informed authorization for empirical V10 execution because the V10 contract did not yet exist when the authorization was given.
+
+Completed and saved:
+- `docs/astra/V10_PROJECT_AUTHORIZATION_V1.json`
+- `docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.md`
+- `docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json`
+- `astra_backend/synthetic/v10_exposure_isolation_v1.py`
+- `astra_backend/synthetic/test_v10_exposure_isolation_v1.py`
+- `astra_backend/synthetic/v10_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v10_contract_validator_v1.py`
+- `docs/astra/V10_PREFLIGHT_RESULT_V1.md`
+- `docs/astra/V10_PREFLIGHT_RESULT_V1.json`
+
+### Frozen question
+
+Does exact matching of sampled attacked-note-label exposure, while holding the frozen V9 dataset/model/loss/thresholds/update count/non-positive strata/per-step shuffle fixed, materially restore synthetic pitch-onset precision/F1?
+
+This is a new synthetic-only causal diagnostic, not a V9 retry.
+
+### Frozen arms
+
+Both arms train on the exact same regenerated frozen V9 4-second dataset.
+
+Control:
+- exact frozen V9 positive-onset sampling
+
+Intervention:
+- changes only which positive-onset frames are selected
+- total positive-onset frame slots remains 16,000
+- attacked-note-label exposure is exactly matched to the old comparator exposure: **19,702**
+
+Exposure arithmetic:
+- V9 control expected labels: **17,676**
+- target labels: **19,702**
+- 1,851 three-label positive frames
+- 14,149 one-label positive frames
+- 351 updates with 4 multi-label positive frames
+- 149 updates with 3 multi-label positive frames
+
+Non-positive stratum selections and per-step shuffle are identical across arms.
+
+Everything else is fixed:
+- S6 nonlinear model
+- same initialization
+- batch size 128
+- 500 updates/model
+- max 1,000 total
+- Adam lr 0.003
+- state active weight 9.0
+- onset positive weight 8.0
+- onset loss multiplier 4.0
+- thresholds 0.50/0.50
+- no threshold search
+- no scientific retry
+
+### Frozen validity and support gates
+
+The V10 control must exactly reproduce the frozen V9 common-population precision/recall/F1 within 1e-12 and attacked-label exposure 17,676. Otherwise the study is invalid.
+
+Exposure support requires all:
+- common 2-second comparator-test precision gain >= +0.20
+- common F1 gain >= +0.15
+- common recall decline <=0.08
+- common negative FP/s <=0.10
+- V9-test precision decline <=0.05
+- V9-test F1 decline <=0.05
+- exact 17,676 / 19,702 control/intervention attacked-label exposure
+- exactly 500 updates/model
+- finite metrics
+- no threshold search/retry
+
+There is **no V2B stage in V10** under any outcome.
+
+### Model-free preflight passed
+
+- run **36527632335**
+- job **109274053805**
+- head `b55f2bebf1df366f08c5262815afe5dbbe82ca95`
+- artifact **11014419820**
+- digest `sha256:b62962f0715471d0a49e7402fa0cd6baa1383029db7d23db5ff26164c25a2dbd`
+- conclusion **success**
+- artifact retained through 2026-10-29
+
+Preflight counts:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+
+### Current authorization boundary
+
+**Empirical V10 execution is not yet authorized.**
+
+A fresh explicit authorization, now that the exact V10 contract is visible/frozen, is required before:
+- rebuilding V9/comparator datasets;
+- training the two V10 models;
+- any optimizer step;
+- any model inference.
+
+Even after a V10 empirical result, V2B remains out of scope and would require a separate project decision.
+
+V1.1/P1/P2/P3/A2 remain untouched. Main/Production unchanged.
+
+**Resume instruction:** Preserve V9 as frozen FAIL. Preserve V10 as frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation review only. If the user explicitly authorizes empirical V10 after this contract freeze, consume one unique V10 launch scope and execute exactly the two-arm synthetic-only study with no retries and no V2B.
