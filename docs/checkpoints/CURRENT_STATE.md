@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9 FROZEN FAIL; V10 CONTRACT/PREFLIGHT COMPLETE; V10 EMPIRICAL EXECUTION NOT AUTHORIZED**
+Status: **V9 FROZEN FAIL; V10 COMPLETE — EXPOSURE HYPOTHESIS NOT SUPPORTED; NO V2B**
 
-Latest resume instructions are in **V10 exposure-isolation study prospectively frozen — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
+Latest resume instructions are in **V10 exposure-isolation empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -5203,3 +5203,140 @@ Even after a V10 empirical result, V2B remains out of scope and would require a 
 V1.1/P1/P2/P3/A2 remain untouched. Main/Production unchanged.
 
 **Resume instruction:** Preserve V9 as frozen FAIL. Preserve V10 as frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation review only. If the user explicitly authorizes empirical V10 after this contract freeze, consume one unique V10 launch scope and execute exactly the two-arm synthetic-only study with no retries and no V2B.
+
+
+## V10 exposure-isolation empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier V10 preflight/authorization boundary.**
+
+Explicit user authorization was consumed under launch identity:
+- `v10-exposure-v1-20260929-01`
+
+Frozen result:
+- `docs/astra/V10_EXPOSURE_ISOLATION_RESULT_V1.json`
+- `docs/astra/V10_EXPOSURE_ISOLATION_RESULT_V1.md`
+
+Empirical run:
+- run **36528001337**
+- job **109275178270**
+- head `b5c661b6f383571bf31383e2a1d884089c71311d`
+- artifact **11015118480**
+- artifact digest `sha256:34bed0c4f07458915196d5fb91cf3ca521ccb5ae8d01233ca0b2de6303e50fee`
+- workflow conclusion **success**
+- artifact retained through 2026-10-29
+- models **2**
+- optimizer steps **1,000 total**
+- threshold search **false**
+- automatic scientific retries **0**
+- real-audio inference **0**
+- V2B inference **0**
+
+### Control reproduction passed exactly
+
+The V10 control reproduced frozen V9 common comparator-test metrics exactly:
+- precision **0.3244274809160305**
+- recall **0.6589147286821705**
+- F1 **0.43478260869565216**
+- attacked-note-label exposure **17,676**
+
+This validates the controlled comparison.
+
+### Exposure intervention identity
+
+The intervention changed only positive-onset frame selection:
+- positive-onset slots **16,000** in both arms
+- control attacked-note labels **17,676**
+- intervention attacked-note labels **19,702**
+- 1,851 three-label positive frames
+- 14,149 one-label positive frames
+- non-positive selections identical
+- per-step shuffle identical
+
+Control batch-plan SHA-256:
+`8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7`
+
+Exposure-balanced batch-plan SHA-256:
+`d439414e7b1dd92a4b505d14752da9bdeee203ee1dc09ff3a3e5c923e22cc837`
+
+### Primary common comparator-test result
+
+Control:
+- precision **0.324427**
+- recall **0.658915**
+- F1 **0.434783**
+- state admission **0.310078**
+- onset admission **0.682171**
+- joint admission **0.286822**
+- negative FP/s **0**
+
+Exposure-balanced:
+- precision **0.348624**
+- recall **0.589147**
+- F1 **0.438040**
+- state admission **0.271318**
+- onset admission **0.666667**
+- joint admission **0.255814**
+- negative FP/s **0**
+
+Deltas:
+- precision **+0.024196**
+- recall **-0.069767**
+- F1 **+0.003258**
+- state admission **-0.038760**
+- onset admission **-0.015504**
+- joint admission **-0.031008**
+
+Frozen material-recovery gates:
+- precision gain >= +0.20: **FAIL**
+- F1 gain >= +0.15: **FAIL**
+- recall decline <=0.08: PASS
+- negative FP/s <=0.10: PASS
+
+### Secondary V9-test result
+
+Control:
+- precision **0.486631**
+- recall **0.705426**
+- F1 **0.575949**
+
+Exposure-balanced:
+- precision **0.537994**
+- recall **0.686047**
+- F1 **0.603066**
+
+Deltas:
+- precision **+0.051363**
+- recall **-0.019380**
+- F1 **+0.027117**
+
+These secondary gains are modest and do not rescue the preregistered primary gate.
+
+### V10 decision
+
+**The attacked-note-label exposure hypothesis is not supported.**
+
+Exact exposure matching did not materially restore the V9 common-population precision/F1 collapse. The roughly 11% attacked-label exposure deficit observed in V9 was therefore not, by itself, a sufficient explanation.
+
+Do not claim the true cause is known. Remaining package differences include longer temporal/context distribution, active/sustain-frame composition, attack-count allocation by family, onset/state coupling, and gap/sustain interactions.
+
+Artifact evidence:
+- `result.json` SHA-256 `7d94334506a55799b5d24ca36a490aa96c71047eef0d984e4b4ff8a283aee689`
+- execution receipt `acffa9b2491e87ec2f550b6f3433c542ee11ba8c97b8e088a967fbb57253c63f`
+- control checkpoint `d1b57eeeb7fbf980fade36e1f2dcd06a5099f32bb63af5acb0d356ee9a6d52d3`
+- exposure-balanced checkpoint `f57b034f013ec0a245d83e38654afe2f8aa0d761fbf2fcd711cf5c4ff07b31b6`
+
+### Current stop boundary
+
+Preserve:
+- V9 = frozen FAIL at synthetic sanity
+- V10 = complete; exposure hypothesis NOT SUPPORTED
+
+Do not:
+- rerun V10;
+- post-hoc tune exposure, sampler weights, losses, thresholds, or decoder;
+- run V2B from V10;
+- open V11 automatically;
+- access V1.1/P1/P2/P3/A2;
+- mutate main or Production.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, perform documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
