@@ -1,0 +1,112 @@
+{
+  "schema": "astra-synthetic-real-rendering-adequacy-v4-design-v1",
+  "date": "2026-09-28",
+  "status": "design-frozen-execution-not-authorized",
+  "question": "synthetic-rendering-adequacy-for-real-transfer",
+  "dataRoles": {
+    "v1_1": "sealed-evaluation",
+    "v2b": "development-diagnostic",
+    "p1": "closed",
+    "p2": "closed",
+    "p3": "closed",
+    "freshHoldout": "required-if-v4c-passes"
+  },
+  "rendererArms": [
+    {
+      "id": "R0",
+      "name": "S9 baseline",
+      "changes": []
+    },
+    {
+      "id": "R1",
+      "name": "amplifier-cabinet-coloration",
+      "changes": [
+        "fixed-band-coloration",
+        "soft-saturation"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "room-capture-variation",
+      "changes": [
+        "R1",
+        "short-room-response",
+        "spectral-tilt",
+        "low-level-recording-noise"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "bounded-realism-package",
+      "changes": [
+        "R2",
+        "mild-compression",
+        "transient-variation",
+        "bounded-hum-noise",
+        "bounded-pre-normalization-level-variation"
+      ]
+    }
+  ],
+  "v4a": {
+    "modelInference": false,
+    "metrics": [
+      "medianAbsoluteSmd",
+      "fractionAbsSmdAtLeast1",
+      "wassersteinMedian",
+      "rangeOverlapMedian"
+    ],
+    "advancementRule": {
+      "medianAbsoluteSmdRelativeImprovementAtLeast": 0.15,
+      "fractionAbsSmdAtLeast1RelativeImprovementAtLeast": 0.2,
+      "wassersteinMedianRelativeImprovementAtLeast": 0.1,
+      "rangeOverlapAbsoluteDeclineAtMost": 0.02
+    },
+    "maxAdvancingNonBaselineRenderers": 2,
+    "tieBreak": [
+      "lowerMedianAbsoluteSmd",
+      "lowerFractionAbsSmdAtLeast1",
+      "lowerWassersteinMedian",
+      "higherRangeOverlapMedian",
+      "lowerRendererComplexity"
+    ]
+  },
+  "v4b": {
+    "authorizedByDesignOnly": false,
+    "maxModels": 3,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1500,
+    "architecture": "S9 frozen",
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "decoderChange": false
+  },
+  "v4c": {
+    "dataset": "V2B only",
+    "developmentInterestRule": {
+      "trustedJointAdmissionAbsoluteGainVsR0AtLeast": 0.2,
+      "highConfidenceJointAdmissionAtLeast": 0.25,
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+    }
+  },
+  "v4d": {
+    "freshHoldoutRequired": true,
+    "v1_1Used": false
+  },
+  "executionAuthorized": false,
+  "boundaries": {
+    "realAudioTraining": false,
+    "arbitraryRendererSearch": false,
+    "architectureChange": false,
+    "thresholdChange": false,
+    "decoderChange": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
