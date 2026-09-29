@@ -1,0 +1,65 @@
+{
+  "schema": "astra-real-domain-transfer-calibration-diagnosis-v2",
+  "date": "2026-09-28",
+  "status": "design-frozen",
+  "sealedEvaluationSet": "independent-real-development-v1-1",
+  "phases": {
+    "v2a": {
+      "name": "exact-runtime-reproduction",
+      "authorizedNow": true,
+      "training": false,
+      "tuning": false
+    },
+    "v2b": {
+      "name": "fresh-calibration-development-set",
+      "authorizedNow": false,
+      "minPositiveClips": 12,
+      "minNegativeClips": 4,
+      "minPositiveSeconds": 60,
+      "minNegativeSeconds": 20
+    },
+    "v2c": {
+      "name": "calibration-diagnosis-on-new-set",
+      "authorizedNow": false,
+      "thresholdGrid": {
+        "state": [
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ],
+        "onset": [
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      }
+    },
+    "v2d": {
+      "name": "fresh-holdout-confirmation",
+      "authorizedNow": false
+    }
+  },
+  "v1_1ProhibitedUses": [
+    "threshold-selection",
+    "calibration-fitting",
+    "gain-selection",
+    "frontend-retuning",
+    "decoder-tuning",
+    "finetuning",
+    "candidate-selection",
+    "architecture-selection"
+  ],
+  "v2aDecisionRule": {
+    "runtimeMismatchInsufficientIfTrustedHitRateBelow": 0.1
+  },
+  "boundaries": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
