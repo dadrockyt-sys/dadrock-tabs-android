@@ -1,0 +1,78 @@
+{
+  "schema": "astra-fallback-free-curriculum-v9-design-v1",
+  "date": "2026-09-29",
+  "status": "draft-not-launch-ready",
+  "hypothesis": "one native 4-second generator can improve corrected common-unit timing fidelity while preserving full valid labels without post-placement fallback",
+  "arm": {
+    "id": "V9-4S",
+    "clipSeconds": 4.0,
+    "maxInterventionArms": 1,
+    "fallbackPathsAllowed": 0,
+    "hiddenRejectionLoopsAllowed": false,
+    "postPlacementShiftAllowed": false,
+    "clippingAllowed": false,
+    "eventDeletionAllowed": false,
+    "reseedToPassAllowed": false
+  },
+  "units": {
+    "timing": "acoustic-attack-group",
+    "labels": "note/string/fret targets retained separately",
+    "simultaneousToleranceSecondsProposed": 0.01
+  },
+  "generator": {
+    "rng": "SHA-256 counter-derived uniforms from frozen seed/split/family/base/variant/index identity",
+    "conditionalFeasibleGapSampling": true,
+    "infeasibleClipAction": "fail-closed",
+    "offsetsAndSustainsGeneratedByConstruction": true
+  },
+  "gates": {
+    "numericalValuesFrozen": false,
+    "blockedOn": "PRE-V9-MEASUREMENT-V1 common-unit target table",
+    "requiredMetrics": [
+      "positive attack-group density",
+      "IOI p50",
+      "IOI p90",
+      "repeat250 positive IOIs",
+      "long-gap fraction",
+      "per-clip rate distribution",
+      "per-family synthetic summaries",
+      "zero infeasible clips",
+      "zero invalid note labels/offsets",
+      "zero fallback paths"
+    ]
+  },
+  "downstream": {
+    "maxModels": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "retries": 0,
+    "thresholds": {"state": 0.5, "onset": 0.5},
+    "decoderChange": false,
+    "renderer": "R3 frozen",
+    "stateObjective": "exact-string-fret",
+    "onsetObjective": "O0 exact-frame BCE",
+    "requiresFrameEventExposureAccounting": true,
+    "requiresNumericRenderCpuInferenceStorageCeilings": true
+  },
+  "order": [
+    "common-unit measurement",
+    "freeze final spec",
+    "timing manifest",
+    "pre-render gate",
+    "render",
+    "train",
+    "synthetic sanity",
+    "permitted V2B development evaluation",
+    "freeze result"
+  ],
+  "guards": {
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false,
+    "executionAuthorized": false
+  }
+}
