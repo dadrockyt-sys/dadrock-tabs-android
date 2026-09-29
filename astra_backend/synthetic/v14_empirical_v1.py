@@ -25,6 +25,7 @@ MAX_STEPS=500
 BATCH_SIZE=128
 DURATION=2.0
 ROOT=20260929
+BATCH_ROOT=20260927  # exact historical V9 paired-batch root
 
 HIST_DUR={
  "isolated":1.03,"scales":.27,"chords":.48,"repeated":.31,
@@ -140,7 +141,7 @@ def flat(d):
 def paired_batches(c,b):
     cs=build_sampling_strata(c["state"],c["onset"],c["split"],c["has_negative_structure"])
     bs=build_sampling_strata(b["state"],b["onset"],b["split"],b["has_negative_structure"])
-    rng=np.random.RandomState(ROOT+17001); cb=[]; bb=[]
+    rng=np.random.RandomState(BATCH_ROOT+17001); cb=[]; bb=[]
     keys=("positiveOnset","activeNonOnset","negativeStructureInactive","otherInactive")
     for _ in range(MAX_STEPS):
         cc=[]; ii=[]
@@ -192,7 +193,18 @@ def run(contract_path,outdir):
       "recall":abs(c_common["pitchOnset"]["recall"]-ref["recall"])<=1e-12,
       "f1":abs(c_common["pitchOnset"]["f1"]-ref["f1"])<=1e-12,
     }
-    if not all(repro.values()): raise RuntimeError("control reproduction failed")
+    if not all(repro.values()):
+        failure={
+          "schema":"astra-v14-control-reproduction-failure-v1",
+          "controlCommon":c_common,
+          "expectedControl":ref,
+          "reproductionChecks":repro,
+          "batchRoot":BATCH_ROOT,
+          "optimizerStepsTotal":cf["optimizerSteps"]+bf["optimizerSteps"],
+          "scientificResultInterpretable":False,
+        }
+        (out/"control-reproduction-failure.json").write_text(json.dumps(failure,indent=2,sort_keys=True)+"\n")
+        raise RuntimeError("control reproduction failed")
 
     g=contract["empiricalGate"]
     checks={
