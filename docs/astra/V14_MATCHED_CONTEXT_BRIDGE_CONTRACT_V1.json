@@ -172,7 +172,7 @@
         "S2M3": 3
       }
     },
-    "deterministicAssignment": "Within each family, sort positive clip identities by SHA-256(rootSeed|type|family|clipIdentity), assign frozen type quotas in contract order, then SHA-sort each clip's class slots; gap values and first attacks use SHA-derived [0,1) fractions.",
+    "deterministicAssignment": "Within each family, enumerate positive clip identities as baseIndex 0-13 × variant 0-2 (mixed keeps odd-base positive clips only), sort by SHA-256(rootSeed|type|family|baseIndex|variant), assign frozen type quotas in contract order, then SHA-sort each clip's class slots; gap values and first attacks use SHA-derived [0,1) fractions.",
     "finalRequiredMarginSeconds": 0.12,
     "stateSemantics": "Preserve historical comparator family/state semantics and legato non-attacked continuation where compatible with the prospectively frozen attack schedule. Any deterministic truncation at a same-string retrigger must be explicitly implemented, counted, and identical under the frozen rule; no post-hoc repair/search.",
     "noFallback": true
@@ -189,12 +189,12 @@
     "repeat250Fraction": 0.46153846153846156,
     "longGap700Fraction": 0.12637362637362637,
     "deterministicMeasuredExpected": {
-      "ioiP10Seconds": 0.10654500694083052,
-      "ioiP50Seconds": 0.2517739427055513,
-      "ioiP90Seconds": 0.8641749706125101,
-      "maximumLastAttackSeconds": 1.7931743849046686,
-      "minimumPostLastAttackMarginSeconds": 0.20682561509533137,
-      "timingDistanceV1": 0.05109925255448195
+      "ioiP10Seconds": 0.10616173218599859,
+      "ioiP50Seconds": 0.2520127044882436,
+      "ioiP90Seconds": 0.8704418107561172,
+      "maximumLastAttackSeconds": 1.7920413319826713,
+      "minimumPostLastAttackMarginSeconds": 0.20795866801732865,
+      "timingDistanceV1": 0.04306421123172013
     }
   },
   "reference": {
