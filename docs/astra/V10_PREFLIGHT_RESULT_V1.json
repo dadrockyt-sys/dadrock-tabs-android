@@ -1,0 +1,35 @@
+{
+  "schema": "astra-v10-preflight-result-v1",
+  "date": "2026-09-29",
+  "status": "model-free-preflight-passed-empirical-execution-not-authorized",
+  "runId": 36527632335,
+  "jobId": 109274053805,
+  "headSha": "b55f2bebf1df366f08c5262815afe5dbbe82ca95",
+  "conclusion": "success",
+  "artifactId": 11014419820,
+  "artifactDigest": "sha256:b62962f0715471d0a49e7402fa0cd6baa1383029db7d23db5ff26164c25a2dbd",
+  "artifactExpiresAt": "2026-10-29T05:45:56Z",
+  "checks": {
+    "projectAuthorizationPins": true,
+    "contractValidatorTests": true,
+    "exposureStaticTests": true,
+    "frozenContractValid": true,
+    "targetAttackedNoteLabels": 19702,
+    "targetMultiPositiveFrames": 1851,
+    "targetSinglePositiveFrames": 14149,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "waveformRendering": false
+  },
+  "empiricalExecutionAuthorized": false,
+  "boundaries": {
+    "v2b": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
