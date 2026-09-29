@@ -1,0 +1,38 @@
+{
+  "schema": "astra-v2b-calibration-development-intake-v1",
+  "date": null,
+  "status": "template-awaiting-explicitly-authorized-v2b-collection",
+  "design": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_DESIGN.md",
+  "independence": {
+    "noV1_1Overlap": false,
+    "noV1_1NearDuplicates": false,
+    "noP1Overlap": false,
+    "noP2Overlap": false,
+    "noP3Overlap": false,
+    "noPreviouslyModelInspectedAudio": false,
+    "declaration": null
+  },
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036",
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5
+  },
+  "clips": [],
+  "summary": {
+    "clipCount": 0,
+    "positiveClipCount": 0,
+    "negativeOnlyClipCount": 0,
+    "positiveAudioSeconds": 0,
+    "negativeAudioSeconds": 0,
+    "creatorsOrCaptureChains": 0,
+    "coverage": []
+  },
+  "annotationsFrozenBeforeInference": false,
+  "modelInferenceCount": 0,
+  "optimizerSteps": 0,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false,
+  "v1_1AccessedForTuning": false
+}
