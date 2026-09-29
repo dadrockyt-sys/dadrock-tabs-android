@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **Post-V11 causal review complete — positive-onset family mixture identified — 2026-09-29** at the end of this file. No V12 is open.
+Latest instructions: **V12 family-mixture study prospectively frozen — preflight PASS — 2026-09-29** at the end of this file. Empirical V12 requires fresh explicit authorization.
 
 ## Current status
 
@@ -3688,3 +3688,118 @@ This review used:
 V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, prospectively define/freeze the positive-onset family-mixture study first; empirical execution would still require a fresh authorization after that contract/preflight is visible.
+
+
+## V12 family-mixture study prospectively frozen — preflight PASS — 2026-09-29
+
+**Current resume authority. This section supersedes the prior post-V11 generic-review boundary.**
+
+The user explicitly authorized opening the next project. That authorization was used only for prospective V12 definition, implementation, pure tests, and model-free preflight. It was not treated as empirical-training authorization because the exact V12 contract did not yet exist when authorization was given.
+
+Completed:
+- `docs/astra/V12_PROJECT_AUTHORIZATION_V1.json`
+- `docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.md`
+- `docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.json`
+- `astra_backend/synthetic/v12_family_mixture_v1.py`
+- `astra_backend/synthetic/test_v12_family_mixture_v1.py`
+- `astra_backend/synthetic/v12_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v12_contract_validator_v1.py`
+- `.github/workflows/astra-v12-family-mixture-preflight-v1.yml`
+- `docs/astra/V12_PREFLIGHT_RESULT_V1.md`
+- `docs/astra/V12_PREFLIGHT_RESULT_V1.json`
+
+### Frozen V12 question
+
+With the exact executed V9 dataset semantics and all non-positive batch selections fixed, does matching the historical 2-second comparator positive-onset family mixture materially recover common-population precision/F1?
+
+### Frozen intervention
+
+Control:
+- exact executed-V9 training semantics and batch generation.
+
+Intervention:
+- same V9 dataset arrays;
+- same active-non-onset, negative-structure-inactive, and other-inactive selections;
+- same per-step 128-frame shuffle;
+- replace only positive-onset selections.
+
+Across exactly 16,000 positive-onset slots, the historical comparator family allocation is frozen to:
+- isolated **914**
+- scales **3,657**
+- chords **1,829**
+- repeated **3,657**
+- legato **914**
+- palmmute **4,572**
+- mixed-positive **457**
+
+Family schedule seed: **20281928**  
+Family-pool selection seed: **20281929**
+
+Because chord onset frames contain three attacked labels, the intervention will also change attacked-note-label exposure as a downstream consequence. Any empirical result must report that linked quantity and must not call V12 a pure label-count experiment.
+
+### Dataset-regeneration constraint
+
+The original V9 artifact did not retain the V9/comparator dataset arrays.
+
+If empirical V12 is later authorized:
+- deterministically regenerate exactly one common 2-second comparator dataset;
+- deterministically regenerate exactly one executed-V9 4-second dataset;
+- train both V12 arms on that same single V9 dataset;
+- no intervention-specific rendering or timing/state generation;
+- require exact V9 control reproduction before interpreting V12.
+
+### Model-free preflight passed
+
+Run:
+- **36537123050**
+- job **109303603997**
+- head `250b08ddd7aca913ea0382122a259ca6e7a50f2a`
+- artifact **11018394264**
+- digest `sha256:b50fe403922d929fb2864b77868f83f57af23b20b240fbfe42f6e8aa8224959e`
+- conclusion **success**
+- retained through 2026-10-29
+
+Preflight counts:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+
+### Frozen empirical gate if later authorized
+
+V12 control must exactly reproduce frozen V9 common-test metrics within 1e-12:
+- precision 0.3244274809160305
+- recall 0.6589147286821705
+- F1 0.43478260869565216
+
+Support requires all:
+- common precision gain >= +0.15
+- common F1 gain >= +0.10
+- common recall decline <=0.05
+- common negative FP <=0.10/s
+- frozen-V9 test F1 decline <=0.05
+- exact historical family-slot totals
+- identical non-positive selections
+- same per-step shuffle
+- exact 500 updates/model
+- exact 2 models
+- finite metrics
+- no threshold search
+- no scientific retry
+
+There is no V2B stage in V12.
+
+### Current authorization boundary
+
+**Empirical V12 execution is not yet authorized.**
+
+A fresh explicit authorization after this frozen contract/preflight is required before:
+- deterministic dataset regeneration;
+- training the two V12 models;
+- any optimizer step;
+- any model inference.
+
+V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
+
+**Resume instruction:** Preserve V9/V10/V11 as frozen historical results. Preserve V12 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V12 after this point, consume one unique V12 launch scope and execute exactly the frozen two-arm synthetic-only family-mixture study with no retries and no V2B.
