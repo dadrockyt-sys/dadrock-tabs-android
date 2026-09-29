@@ -3017,3 +3017,100 @@ A2 remains closed.
 Main/Production remain unchanged.
 
 **Resume instruction:** The next authorized empirical action is one bounded evaluation of the already pinned S9 30-voicing intervention candidate under the frozen V1.1 scoring contract only. Do not restore exhaustive pitch PR/F1 claims, tune anything from these clips, or open P1/P2/P3/A2.
+
+
+## Independent real-development evaluation V1.1 completed — 2026-09-28
+
+The user explicitly authorized the one bounded evaluation under the frozen trusted-scoring contract V1.1.
+
+Frozen result files:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_RESULT_V1_1.json`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_RESULT_V1_1.md`
+
+Candidate:
+- S9 30-voicing intervention
+- checkpoint SHA-256 `8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036`
+- state/onset thresholds fixed at 0.50 / 0.50
+- no threshold search/retuning
+- no candidate reselection
+- no training/fine-tuning
+- no optimizer steps
+
+### Primary V1.1 result
+
+Trusted high+medium landmarks:
+- **1 / 72 hit**
+- hit rate **0.0138889 (1.389%)**
+
+High-confidence landmarks:
+- **1 / 68 hit**
+- hit rate **0.0147059 (1.471%)**
+
+Sensitivity including low-confidence landmarks:
+- **1 / 84 hit**
+- hit rate **0.0119048 (1.190%)**
+
+Negative-only:
+- **1 false-positive event**
+- duration **41.366531 s**
+- FP rate **0.0241741 events/s**
+
+Positive behavior:
+- P01 produced 3 decoded events and 1 trusted landmark hit.
+- Every other positive clip produced 0 admitted events.
+- All six onset-only/polyphonic clips produced 0 admitted events.
+
+The sole negative false positive occurred on N02:
+- string 0
+- fret 9
+- MIDI pitch 49
+- 4.0867–4.1332 s
+
+### Supported interpretation
+
+The pinned synthetic S9 checkpoint does **not transfer adequately** to this independent real-development audio under the frozen decoder and 0.50/0.50 thresholds.
+
+The low negative FP rate is not evidence of useful selectivity by itself because positive admission also collapsed.
+
+This is a transfer result, not proof that the S9 intervention caused the failure. It does not isolate:
+- frontend/domain mismatch;
+- calibration;
+- representation limits;
+- architecture;
+- historical-runtime differences.
+
+### Runtime qualification
+
+Historical lock:
+- Python 3.10.15 workflow
+- torch 1.11.0+cpu
+- librosa 0.9.1
+- numpy 1.21.6
+
+Local uploaded-audio runtime:
+- Python 3.13.5
+- torch 2.10.0+cpu
+- librosa 0.11.0
+- numpy 2.3.5
+
+Exact checkpoint bytes, architecture, frontend mathematics, decoder semantics, thresholds, crops and landmarks were preserved, but this is **not a bit-for-bit historical-runtime reproduction**.
+
+Local evidence hashes:
+- full local result SHA-256 `f435d64dc92c939f4b7c5bc354c989b03c902abc7987da69752bc8278645207b`
+- summary local result SHA-256 `33ee13da962ec35c5ef0f3a41074a7c7f6bf32019049d3fdf6ee63ab5fd29fb3`
+
+### Boundaries after result
+
+Do not automatically:
+- lower thresholds;
+- tune decoder/frontend/gain;
+- retrain or fine-tune;
+- replace candidate based on this result;
+- reuse this V1.1 set as a tuning target;
+- open A2;
+- access P1/P2/P3;
+- mutate main/Production.
+
+The smallest next research question would be a **new prospectively frozen real-domain transfer/calibration diagnosis**, with a fresh development/training split if any tuning is to occur.
+
+**Resume instruction:** Stop at this decision boundary. The one authorized V1.1 evaluation is complete. Any calibration/domain-adaptation/fine-tuning/new-candidate work is a new project decision and must not silently tune on the V1.1 evidence set.
