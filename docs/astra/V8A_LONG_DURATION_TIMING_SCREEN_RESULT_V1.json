@@ -1,0 +1,125 @@
+{
+  "schema": "astra-v8a-long-duration-timing-screen-result-v1",
+  "date": "2026-09-29",
+  "status": "completed-no-advancing-arm",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize"
+  },
+  "acceptedWorkflow": {
+    "runId": 36523314347,
+    "jobId": 109260764079,
+    "headSha": "8e110132c778b7158a431a99e81bf2fe182e27d5",
+    "artifactId": 11012914117,
+    "artifactDigest": "sha256:56ff7a8c938a4818ab4d4cb4bf17a59a959b57482c0b40a38a301ba9e674e640",
+    "conclusion": "success"
+  },
+  "preResultInfrastructureHistory": [
+    {
+      "runId": 36522967333,
+      "status": "failed-before-result",
+      "reason": "missing librosa dependency while importing unused audio frontend"
+    },
+    {
+      "runId": 36523176261,
+      "status": "failed-before-result",
+      "reason": "numba/numpy incompatibility while importing unused audio frontend"
+    },
+    {
+      "note": "A pre-accepted runner version also collapsed simultaneous chord onset references; it was corrected before any accepted V8A result."
+    }
+  ],
+  "frozenTargets": {
+    "aggregateOnsetsPerSecond": 1.4905949321319818,
+    "interOnsetIntervalP50Seconds": 0.2560000000000002,
+    "interOnsetIntervalP90Seconds": 0.882358,
+    "repeatedAttackFractionWithin250ms": 0.47019867549668876
+  },
+  "arms": {
+    "L0": {
+      "clipSeconds": 2,
+      "positiveClips": 273,
+      "events": 903,
+      "positiveSeconds": 546,
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "interOnsetIntervalP50": 0.3400000000000001,
+      "interOnsetIntervalP90": 0.4,
+      "repeatedAttackFractionWithin250ms": 0.26666666666666666,
+      "fractionIoiAtLeast700ms": 0.06666666666666667,
+      "simultaneousEventFraction": 0.26666666666666666,
+      "clipBoundaryFallbackCount": 0,
+      "invalidClipCount": 0,
+      "timingDistance": 1.1330866988352755
+    },
+    "L1": {
+      "clipSeconds": 4,
+      "positiveClips": 273,
+      "events": 1785,
+      "positiveSeconds": 1092,
+      "aggregateOnsetsPerSecond": 1.6346153846153846,
+      "interOnsetIntervalP50": 0.33999999999999986,
+      "interOnsetIntervalP90": 0.8515728938640852,
+      "repeatedAttackFractionWithin250ms": 0.3888888888888889,
+      "fractionIoiAtLeast700ms": 0.2222222222222222,
+      "simultaneousEventFraction": 0.2222222222222222,
+      "clipBoundaryFallbackCount": 13,
+      "clipBoundaryFallbackFraction": 0.047619047619047616,
+      "invalidClipCount": 0,
+      "timingDistance": 0.49263409516311174,
+      "relativeTimingDistanceImprovementVsL0": 0.5652282427553857,
+      "advancementChecks": {
+        "timingDistanceRelativeImprovementAtLeast0_35": true,
+        "repeatErrorImprovementAtLeast0_10": true,
+        "ioiP90ErrorImprovementAtLeast0_25": true,
+        "aggregateRateWithin15Percent": true,
+        "fallbackRateAtMost0_02": false,
+        "noInvalidClips": true
+      },
+      "qualifies": false
+    },
+    "L2": {
+      "clipSeconds": 6,
+      "positiveClips": 273,
+      "events": 2688,
+      "positiveSeconds": 1638,
+      "aggregateOnsetsPerSecond": 1.641025641025641,
+      "interOnsetIntervalP50": 0.33999999999999986,
+      "interOnsetIntervalP90": 0.9100652042226485,
+      "repeatedAttackFractionWithin250ms": 0.3652173913043478,
+      "fractionIoiAtLeast700ms": 0.2579710144927536,
+      "simultaneousEventFraction": 0.20869565217391303,
+      "clipBoundaryFallbackCount": 40,
+      "clipBoundaryFallbackFraction": 0.14652014652014653,
+      "invalidClipCount": 0,
+      "timingDistance": 0.5149675581145156,
+      "relativeTimingDistanceImprovementVsL0": 0.5455179567072299,
+      "advancementChecks": {
+        "timingDistanceRelativeImprovementAtLeast0_35": true,
+        "repeatErrorImprovementAtLeast0_10": false,
+        "ioiP90ErrorImprovementAtLeast0_25": true,
+        "aggregateRateWithin15Percent": true,
+        "fallbackRateAtMost0_02": false,
+        "noInvalidClips": true
+      },
+      "qualifies": false
+    }
+  },
+  "qualifyingArms": [],
+  "selectedArm": null,
+  "execution": {
+    "waveformRenderCount": 0,
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "parameterSearch": false
+  },
+  "decision": "Stop V8 before V8B because no longer-duration arm satisfies every frozen V8A advancement condition.",
+  "guards": {
+    "v1_1Used": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
