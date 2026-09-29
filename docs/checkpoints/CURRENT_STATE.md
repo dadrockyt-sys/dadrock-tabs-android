@@ -4283,3 +4283,90 @@ Do not claim causal isolation.
 No fresh holdout is warranted because no V6B arm passed.
 
 **Resume instruction:** Stop at the V6 no-development-interesting-onset-objective boundary. Any next experiment that redesigns the synthetic event generator/onset curriculum, or any fresh real-domain training study, is a new project decision and requires explicit authorization.
+
+
+## V7 synthetic event-timing adequacy design frozen — 2026-09-29
+
+Generic continuation was used only for design/documentation at the V6 no-development-interesting-onset-objective boundary.
+
+New files:
+- `docs/astra/SYNTHETIC_EVENT_TIMING_ADEQUACY_V7_DESIGN_V1.md`
+- `docs/astra/SYNTHETIC_EVENT_TIMING_ADEQUACY_V7_DESIGN_V1.json`
+
+V7 tests whether the synthetic onset-time distribution itself contributes materially to the real-domain transfer failure.
+
+Frozen V2B model-free targets from V6C:
+- aggregate onset density **1.49059/s**
+- IOI median **0.2560 s**
+- IOI p90 **0.882358 s**
+- repeated-attack fraction <=250 ms **0.47020**
+
+Frozen timing arms:
+- **E0** historical timing
+- **E1** repeated-attack enriched: 45% of eligible adjacent pairs at 80–220 ms
+- **E2** sparse-tail enriched: 20% at 700–1100 ms
+- **E3** combined: 45% short, 20% long, 35% historical
+
+Event count per clip, content templates, labels, splits, R3 renderer, architecture, exact state objective, historical O0 onset loss, thresholds, and decoder remain fixed.
+
+### V7A model-free timing screen
+
+No model training/inference.
+
+Frozen timing distance compares:
+- repeated-attack fraction
+- IOI median
+- IOI p90
+- aggregate onset density
+
+A non-baseline arm advances only if all are true vs E0:
+- timing distance improves >=30% relative
+- repeated-attack absolute error improves >=0.10
+- IOI p90 absolute error improves >=0.20 s
+- aggregate onset density stays within +/-15% of V2B
+- clip bounds/labels remain valid
+
+Advance at most **one** arm, lowest timing distance.
+
+If none qualify, V7 stops before training.
+
+### V7B bounded paired training
+
+Only if V7A advances one arm:
+- E0 baseline + one timing arm
+- 500 steps/model
+- max **1000 optimizer steps total**
+- identical initialization and paired batches
+- no retries
+- no threshold search
+
+### V7C synthetic sanity
+
+Advancing arm must satisfy vs E0:
+- F1 decline <=0.08
+- recall decline <=0.08
+- precision >=0.70
+- synthetic negative FP <=0.10/s
+- all 500 steps finite
+
+### V7D V2B development gate
+
+At unchanged 0.50/0.50:
+- onset-admission gain >= +0.15
+- trusted joint-admission gain >= +0.10
+- high-confidence joint admission >=15%
+- negative FP <=0.10/s
+- state admission decline <=0.10
+
+Any success requires a fresh holdout; V1.1 remains sealed.
+
+No empirical V7 work has been run.
+No new timing corpus generated.
+No model training/inference.
+No threshold/loss/renderer/architecture changes.
+No real audio training.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+**Resume instruction:** V7 design is ready. Do not implement E1/E2/E3, generate timing manifests, train models, or evaluate V2B until the user explicitly authorizes V7 empirical execution. Generic continuation remains design/documentation only.
