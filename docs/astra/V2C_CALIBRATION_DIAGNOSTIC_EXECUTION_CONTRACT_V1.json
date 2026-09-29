@@ -1,0 +1,62 @@
+{
+  "schema": "astra-v2c-calibration-diagnostic-execution-contract-v1",
+  "date": "2026-09-28",
+  "status": "frozen-before-v2c-model-output",
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036"
+  },
+  "dataset": "V2B calibration-development only",
+  "sealedFromSelection": [
+    "V1.1",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "historicalThresholds": {
+    "state": 0.5,
+    "onset": 0.5
+  },
+  "grid": {
+    "state": [
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "onset": [
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "pairs": 16
+  },
+  "selectionRule": {
+    "eligibility": {
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+    },
+    "primary": "maximizeHighPlusMediumTrustedPitchLandmarkHitRate",
+    "tieBreak": [
+      "lowerNegativeFalsePositiveEventCount",
+      "higherStateThreshold",
+      "higherOnsetThreshold"
+    ],
+    "noneIfNoEligiblePair": true
+  },
+  "selectedPairRequiresFreshV2DHoldout": true,
+  "boundaries": {
+    "training": false,
+    "finetuning": false,
+    "decoderChange": false,
+    "frontendChange": false,
+    "gainChange": false,
+    "candidateReselection": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
