@@ -15,7 +15,7 @@ env:
 
 jobs:
   v14:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -23,16 +23,26 @@ jobs:
           ref: astra-work
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install bounded dependencies
-        run: pip install --disable-pip-version-check numpy scipy torch librosa
+          python-version: '3.10.15'
+      - name: Install exact historical CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
       - name: Fail-closed pure validator tests
         run: python -m unittest -v astra_backend.synthetic.test_v14_contract_validator_v1
       - name: Execute frozen V14
         run: python -m astra_backend.synthetic.v14_empirical_v1 --contract docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json --outdir v14_result
-      - name: Upload frozen result
+      - name: Upload frozen result or reproduction failure
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: astra-v14-matched-context-result-v1
-          path: v14_result
+          path: |
+            v14_result/result.json
+            v14_result/control-reproduction-failure.json
+            v14_result/execution-receipt.json
+            v14_result/control.pt
+            v14_result/bridge.pt
+          if-no-files-found: warn
           retention-days: 30
