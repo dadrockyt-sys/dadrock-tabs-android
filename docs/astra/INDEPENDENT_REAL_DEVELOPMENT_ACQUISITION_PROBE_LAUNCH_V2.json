@@ -1,0 +1,20 @@
+{
+  "schema": "astra-independent-real-development-acquisition-probe-launch-v2",
+  "date": "2026-09-28",
+  "status": "armed",
+  "candidateId": "P01",
+  "sourceUrl": "https://pixabay.com/sound-effects/musical-guitar-riff-in-e-minor-95-bpm-dry-475013/",
+  "audioUrl": "https://cdn.pixabay.com/audio/2026/01/28/06-09-01-310.mp3",
+  "sourcePins": {
+    "scriptGitBlob": "d1b22c173c50c7a3d5133364aa53b350b4a64180",
+    "workflowGitBlob": "953200e1339a51941ff5c3eb7d55da3d4f91391a"
+  },
+  "provenance": "public CDN URL resolved from the frozen source page during a read-only browser acquisition attempt",
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "p1Access": false,
+  "p2Access": false,
+  "p3Access": false,
+  "automaticRetry": false,
+  "maxAttempts": 1
+}
