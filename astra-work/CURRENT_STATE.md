@@ -349,3 +349,62 @@ Acquire or receive a genuinely new real-development clip set that satisfies the 
 If the user supplies or identifies qualifying new audio, intake/annotation work is within the authorized program. P1/P2 and P3 remain excluded.
 
 **Resume instruction:** Continue only with the independent real-development intake package. Do not train, tune, dispatch model inference, open A2, reuse P1/P2, or access P3. The next empirical inference may occur only after a complete new clip set passes the frozen pre-inference intake verification.
+
+
+## Independent real-development web sourcing completed — 2026-09-28
+
+A web sourcing pass was completed under the authorized independent real-development program.
+
+Frozen sourcing review:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_WEB_SOURCE_REVIEW_V1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_WEB_SOURCE_REVIEW_V1.json`
+
+The shortlist contains:
+- **18 positive guitar candidates**, nominal total **139 s**;
+- **6 negative-only candidates**, nominal total **39 s**;
+- one reserve dedicated legato source that must be prospectively cropped to 4–10 s before model output if used.
+
+Primary source is Pixabay sound effects. Individual pages were checked for the Pixabay Content License; this project will use any downloaded audio only for internal evaluation and will not commit or redistribute original standalone audio.
+
+The positive pool spans multiple creators and includes:
+- clean electric;
+- distorted/hard-rock/metal;
+- acoustic;
+- baritone;
+- single-note/pluck material;
+- repeated attacks/loops;
+- bends and slide;
+- palm-muted chord material;
+- strumming;
+- arpeggio;
+- riff and chord material.
+
+The negative pool includes keyboard typing, drums, applause, crowd cheer and speech so false-positive behavior is tested on transient-rich non-guitar audio rather than silence only.
+
+Research-dataset review:
+- GuitarSet remains a possible CC-BY backup source but was not selected for V1 because the new creator-clip pool better serves the independent-development objective.
+- IDMT-SMT-Guitar was not selected because its CC BY-NC-ND evaluation license creates unnecessary downstream-use ambiguity for this product project.
+- Guitar-TECHS/P1/P2/P3 material remains excluded.
+
+No audio was downloaded during this sourcing pass.
+No model inference was run.
+No optimizer steps were run.
+No P1/P2/P3 data was accessed.
+No workflow was dispatched.
+Main/Production remain unchanged.
+
+### Exact next task
+
+Use only the frozen web shortlist as the candidate pool. For each selected clip:
+1. download the original audio without adding it to Git;
+2. preserve source URL/title/creator/license metadata;
+3. hash original bytes immediately;
+4. human-audition and reject any mixed/ambiguous clip before model output;
+5. choose any necessary 4–10 s crop only from audio/annotation quality, never model behavior;
+6. freeze pitch/onset annotations before model inference;
+7. populate `INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json`;
+8. run the pure intake validator;
+9. freeze a zero-inference verification receipt;
+10. only then advance to the one bounded real-development inference.
+
+**Resume instruction:** Web sourcing is complete. Continue with download/hash/human-screen/annotation of the frozen shortlist only. Do not train, tune, open A2, reuse P1/P2, access P3, or run model inference until the complete intake passes zero-inference verification.
