@@ -2818,3 +2818,48 @@ Do not:
 - mutate main/Production.
 
 **Resume instruction:** Wait for the user to upload the lawfully downloaded frozen shortlist (preferably one ZIP). Then continue automatically through hash/duration/provenance verification and intake preparation, stopping before inference if any clip or annotation criterion fails.
+
+
+## Real-development audio collection complete — 2026-09-28
+
+The user completed the one-by-one lawful upload of the frozen web shortlist.
+
+Collection receipt:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_COLLECTED_AUDIO_V1.json`
+
+Frozen admitted set:
+- **24 clips total**
+- **18 positive guitar**
+- **6 negative-only**
+- **145.416 s positive evaluation audio**
+- **41.367 s negative-only evaluation audio**
+
+Important prospective adjustments frozen before model output:
+- P01: use 0.000–10.000 s;
+- P08: use 0.000–10.000 s;
+- N06: use 0.000–10.000 s;
+- original palm-muted P12 (3.840 s) excluded because it violated the frozen 4 s minimum;
+- replacement P12 is `imij-legato-in-b-standard-322656.mp3`, SHA-256 `b944e3e8aeee48c5baca86516658d0ccfe8cb32a8a4618673c38b1a924a57b31`;
+- replacement P12 evaluation crop frozen at **16.000–24.000 s**, chosen from audio quality/legato content before any model output;
+- duplicate P18 upload excluded.
+
+No model inference has occurred.
+No optimizer step has occurred.
+P1/P2/P3 remain untouched.
+A2 remains closed.
+Main/Production remain unchanged.
+
+### Exact next task
+
+Proceed to **pre-inference annotation and intake closure only**:
+1. human/model-free annotate pitch/onset events for all positive evaluation segments;
+2. mark confidence and only include string/fret where unambiguous;
+3. confirm each negative-only segment contains no target guitar;
+4. populate `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_INTAKE_V1.json` with the 24 frozen clip identities and annotations;
+5. run the pure intake validator;
+6. freeze the zero-inference verification receipt;
+7. stop if any criterion fails.
+
+Only after that zero-inference checkpoint may the one bounded real-development model evaluation run.
+
+**Resume instruction:** Collection is complete. Continue with annotation and intake validation; do not run the candidate model yet.
