@@ -1,0 +1,96 @@
+{
+  "schema": "astra-post-v11-causal-review-v1",
+  "date": "2026-09-29",
+  "status": "documentation-review-only-no-v12-opened",
+  "historicalComparatorTrainPositiveOnsetFrames": {
+    "isolated": 30,
+    "scales": 120,
+    "chords": 60,
+    "repeated": 120,
+    "legato": 30,
+    "palmmute": 150,
+    "mixed": 15,
+    "total": 525
+  },
+  "executedV9TrainPositiveOnsetFrames": {
+    "isolated": 150,
+    "scales": 240,
+    "chords": 60,
+    "repeated": 240,
+    "legato": 120,
+    "palmmute": 300,
+    "mixed": 60,
+    "total": 1170
+  },
+  "historicalComparatorShares": {
+    "isolated": 0.05714285714285714,
+    "scales": 0.22857142857142856,
+    "chords": 0.11428571428571428,
+    "repeated": 0.22857142857142856,
+    "legato": 0.05714285714285714,
+    "palmmute": 0.2857142857142857,
+    "mixed": 0.02857142857142857
+  },
+  "executedV9Shares": {
+    "isolated": 0.1282051282051282,
+    "scales": 0.20512820512820512,
+    "chords": 0.05128205128205128,
+    "repeated": 0.20512820512820512,
+    "legato": 0.10256410256410256,
+    "palmmute": 0.2564102564102564,
+    "mixed": 0.05128205128205128
+  },
+  "currentV9ExpectedPositiveOnsetSlotsOver16000": {
+    "isolated": 2051.2820512820513,
+    "scales": 3282.051282051282,
+    "chords": 820.5128205128206,
+    "repeated": 3282.051282051282,
+    "legato": 1641.025641025641,
+    "palmmute": 4102.5641025641025,
+    "mixed": 820.5128205128206
+  },
+  "historicalProportionExactSlotAllocationOver16000": {
+    "isolated": 914,
+    "scales": 3657,
+    "chords": 1829,
+    "repeated": 3657,
+    "legato": 914,
+    "palmmute": 4572,
+    "mixed": 457,
+    "total": 16000,
+    "method": "largest remainder from historical comparator train positive-onset family proportions"
+  },
+  "preferredFutureQuestion": "With exact executed V9 arrays and all non-positive batch selections fixed, does matching the historical comparator positive-onset family mixture materially recover common-population precision/F1?",
+  "preferredIntervention": {
+    "regenerateAudio": false,
+    "regenerateTiming": false,
+    "regenerateStateSemantics": false,
+    "totalPositiveOnsetSlots": 16000,
+    "changeOnlyPositiveOnsetSelections": true,
+    "keepNonPositiveSelectionsIdentical": true,
+    "keepPerStepShuffleIdentical": true,
+    "primaryEvaluation": "frozen 2-second comparator test",
+    "secondaryEvaluation": "frozen V9 test",
+    "v2b": false
+  },
+  "qualification": "Historical family-mixture resampling will also change attacked-note-label exposure because chord onset frames carry three attacked labels; report this as a linked downstream consequence.",
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0,
+    "workflowDispatches": 0
+  },
+  "boundaries": {
+    "v12Opened": false,
+    "v2b": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
