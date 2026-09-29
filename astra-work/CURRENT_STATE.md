@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V11 state-semantics empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of this file. No V2B or automatic next study.
+Latest instructions: **Post-V11 causal review complete — positive-onset family mixture identified — 2026-09-29** at the end of this file. No V12 is open.
 
 ## Current status
 
@@ -3572,3 +3572,119 @@ Do not:
 - mutate main or Production.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
+
+
+## Post-V11 causal review complete — positive-onset family mixture identified — 2026-09-29
+
+**Current resume authority. Documentation/review only; no V12 opened.**
+
+Completed:
+- `docs/astra/POST_V11_CAUSAL_REVIEW_V1.md`
+- `docs/astra/POST_V11_CAUSAL_REVIEW_V1.json`
+
+### Main finding
+
+The cleanest unresolved difference after V10/V11 is now the **family composition of the positive-onset stratum**.
+
+Historical 2-second comparator train positive-onset frames:
+- isolated 30
+- scales 120
+- chords 60
+- repeated 120
+- legato 30
+- palmmute 150
+- mixed-positive 15
+- total **525**
+
+Executed V9 train positive-onset frames:
+- isolated 150
+- scales 240
+- chords 60
+- repeated 240
+- legato 120
+- palmmute 300
+- mixed-positive 60
+- total **1,170**
+
+Because the sampler uniformly takes exactly 32 positive-onset frames per update, these frame-count differences directly alter positive-onset training-family exposure.
+
+Largest share changes from historical comparator to V9:
+- isolated +7.106 percentage points
+- chords -6.300 points
+- legato +4.542 points
+- palmmute -2.930 points
+- scales -2.344 points
+- repeated -2.344 points
+- mixed-positive +2.271 points
+
+Across 16,000 positive-onset slots, the historical comparator proportions correspond to this exact largest-remainder allocation:
+- isolated **914**
+- scales **3,657**
+- chords **1,829**
+- repeated **3,657**
+- legato **914**
+- palmmute **4,572**
+- mixed-positive **457**
+- total **16,000**
+
+Current V9 uniform positive-onset sampling implies approximately:
+- isolated 2,051.3
+- scales 3,282.1
+- chords 820.5
+- repeated 3,282.1
+- legato 1,641.0
+- palmmute 4,102.6
+- mixed-positive 820.5
+
+### Preferred future project question
+
+Do **not** open V12 automatically.
+
+If the user explicitly authorizes opening a new project, the preferred prospective question is:
+
+> With the exact executed V9 dataset arrays, attack timing, state semantics, model, loss, thresholds, optimizer, total positive-onset slots, and all non-positive batch selections fixed, does matching the historical comparator positive-onset family mixture materially recover common-population precision/F1?
+
+Preferred operational design:
+- no new rendering;
+- no timing generation;
+- no state-semantic regeneration;
+- control reproduces exact V9 batch plan;
+- intervention replaces only positive-onset selections;
+- exactly 16,000 positive-onset slots in both arms;
+- intervention uses the frozen historical family allocation above;
+- active-non-onset, negative-structure-inactive, and other-inactive selections remain identical;
+- same per-step shuffle;
+- same initialization/model/loss/thresholds/optimizer/500 updates;
+- primary eval = frozen 2-second comparator test;
+- secondary eval = frozen V9 test;
+- no V2B.
+
+Important qualification:
+- this is a **family-mixture** intervention, not a pure attacked-label-count intervention;
+- chord frames carry three attacked labels, so restoring chord-frame share will also change attacked-note-label exposure;
+- any future result must report both frame-family exposure and attacked-note-label exposure.
+
+### What current evidence weakens
+
+Simple single-factor explanations now weakened by direct diagnostics:
+- common-unit timing mismatch;
+- attacked-note-label exposure deficit alone;
+- historical state-duration / legato-continuation omission alone.
+
+These may still participate in interactions, but none materially rescued V9 in the executed studies.
+
+### Current stop boundary
+
+No V12 contract, runner, workflow, launch, or authorization file exists.
+
+This review used:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+- workflow dispatches 0
+
+V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, prospectively define/freeze the positive-onset family-mixture study first; empirical execution would still require a fresh authorization after that contract/preflight is visible.
