@@ -2062,3 +2062,118 @@ A2 remains closed.
 Main/Production unchanged.
 
 **Resume instruction:** V7 design is ready. Do not implement E1/E2/E3, generate timing manifests, train models, or evaluate V2B until the user explicitly authorizes V7 empirical execution. Generic continuation remains design/documentation only.
+
+
+## V7 empirical execution complete at V7A — no arm advances — 2026-09-29
+
+The user explicitly authorized V7 empirical execution.
+
+Frozen results:
+- `docs/astra/V7A_EVENT_TIMING_SCREEN_RESULT_V1.json`
+- `docs/astra/V7A_TIMING_MANIFEST_IDENTITY_V1.json`
+- `docs/astra/V7_SYNTHETIC_EVENT_TIMING_ADEQUACY_RESULT_V1.md`
+
+### Corrected V7A population
+
+The first local V7A summary accidentally included 21 negative-only clips in the onset-density denominator. This bookkeeping error was corrected before freezing the result.
+
+Correct comparison population:
+- 273 positive synthetic clips
+- 546.0 positive seconds
+- 903 positive onset references
+
+No V7 rule, timing parameter, gate, or arm changed.
+
+### V7A timing results
+
+E0:
+- rate **1.65385/s**
+- IOI p50 **0.3400 s**
+- IOI p90 **0.4000 s**
+- repeat <=250 ms **26.67%**
+- >=700 ms **6.67%**
+- timing distance **1.13309**
+
+E1:
+- rate **1.65385/s**
+- IOI p50 **0.18220 s**
+- IOI p90 **0.4000 s**
+- repeat <=250 ms **60.48%**
+- >=700 ms **4.44%**
+- timing distance **1.02428**
+- failed all non-rate advancement checks
+
+E2:
+- rate **1.65385/s**
+- IOI p50 **0.3400 s**
+- IOI p90 **0.4000 s**
+- repeat <=250 ms **26.67%**
+- >=700 ms **6.67%**
+- clip-boundary fallbacks **94**
+- timing distance **1.13309**
+- failed advancement
+
+E3:
+- rate **1.65385/s**
+- IOI p50 **0.18118 s**
+- IOI p90 **0.4000 s**
+- repeat <=250 ms **60.48%**
+- >=700 ms **8.41%**
+- clip-boundary fallbacks **57**
+- timing distance **1.02825**
+- failed advancement
+
+Frozen V2B targets:
+- rate **1.49059/s**
+- IOI p50 **0.2560 s**
+- IOI p90 **0.88236 s**
+- repeat <=250 ms **47.02%**
+
+### V7 decision
+
+**No non-baseline arm advances.**
+
+Therefore:
+- V7B training did not run
+- V7C synthetic sanity did not run
+- V7D V2B evaluation did not run
+- optimizer steps: **0**
+- model inference: **0**
+
+The short-gap arms overshot repetition and did not create the long sparse tail.
+The long-gap arms were constrained by the frozen 2-second clip duration; E2 required 94 deterministic fallbacks and E3 required 57.
+
+### Evidence identity
+
+Local V7A script SHA-256:
+`93b2b6008f78bdef2d3cff7fa694a340beeb269eaea505b3fbc8897b899a3df3`
+
+Corrected result SHA-256:
+`7b4a52264b43c463740d5bf3abdb2f3edcebe0028904d907e9f01d75ecb6fc45`
+
+Frozen timing-manifest SHA-256:
+- E0 `596b6ff5ee935364d5ece217a806f3c9d2dc40189a4a388523dd4b3c96ef71b6`
+- E1 `d0e4dbb867c5c228c124eab360b4539ecbd1880593cba8b190b0a486d7126c95`
+- E2 `cfc167bea39978685b35a508d78af91c23152d8ea223838de62a6537f1f4b866`
+- E3 `dd1bf82b851a8b16c87700479e8ee0cd2a2e26386a2adda0f4f0f264c2e7e243`
+
+### Supported interpretation
+
+The current fixed 2-second synthetic clip structure cannot adequately express the declared V2B-like long-tail timing distribution while preserving the frozen event counts/content.
+
+Do not claim that longer clips will solve transfer; V7 stopped before training.
+
+The next scientifically useful project would require a prospectively redesigned **longer-duration synthetic event curriculum / clip structure**, or a separately authorized fresh real-domain training study.
+
+### Guards
+
+- no optimizer work
+- no model inference
+- no threshold/loss/renderer/architecture/decoder changes
+- no real audio in training
+- V1.1 remains sealed
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+**Resume instruction:** Stop at the V7A no-advance boundary. Any experiment that changes synthetic clip duration/curriculum structure, or any fresh real-domain training study, is a new project decision and requires explicit authorization.
