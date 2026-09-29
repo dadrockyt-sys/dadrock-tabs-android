@@ -13,7 +13,7 @@ def q(a,p):
     return float(np.quantile(x,p))
 
 def historical_attacks(t):
-    return sorted({float(s["start"]) for s in t["segments"] if s["attack"]})
+    return sorted(float(s["start"]) for s in t["segments"] if s["attack"])
 
 def motif_relative(family,base):
     t=build_template(family,base)
