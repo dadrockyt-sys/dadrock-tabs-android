@@ -136,3 +136,10 @@ The GitHub artifact is retained through **2026-10-29**. The hashes are frozen in
 - main/Production unchanged
 
 The next useful decision is a new project question, not a retry. A future study would need to prospectively decide whether to isolate **training exposure / attack-label weighting** from the timing package, or to pause this synthetic path. No automatic V10 is authorized.
+
+
+## Post-V10 integrity qualification — 2026-09-29
+
+Source review in `POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1` found that the executed V9 template builder filtered S0 prototypes to attacked events and did not re-add the original non-attacked legato continuation, despite the frozen contract saying that continuation should remain a state-label event.
+
+Therefore preserve all numeric V9 observations, but do not claim exact conformance to the frozen family-state semantic contract. The executed package is the authority for the empirical measurements.
