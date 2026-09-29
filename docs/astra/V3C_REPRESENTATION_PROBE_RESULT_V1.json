@@ -1,0 +1,86 @@
+{
+  "schema": "astra-v3c-representation-probe-result-v1-summary",
+  "date": "2026-09-28",
+  "status": "completed-no-diagnostically-interesting-transform",
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036"
+  },
+  "thresholds": {
+    "state": 0.5,
+    "onset": 0.5
+  },
+  "transforms": [
+    {
+      "name": "identity",
+      "trustedHits": 0,
+      "trustedRefs": 56,
+      "trustedHitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "highHitRate": 0,
+      "negativeEvents": 14,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.4394506226618153,
+      "jointAdmissionAbsoluteGainVsIdentity": 0,
+      "diagnosticallyInteresting": false
+    },
+    {
+      "name": "global-affine",
+      "trustedHits": 1,
+      "trustedRefs": 56,
+      "trustedHitRate": 0.017857142857142856,
+      "highHits": 1,
+      "highRefs": 49,
+      "highHitRate": 0.02040816326530612,
+      "negativeEvents": 95,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 2.981986368062318,
+      "jointAdmissionAbsoluteGainVsIdentity": 0.017857142857142856,
+      "diagnosticallyInteresting": false
+    },
+    {
+      "name": "per-bin-affine",
+      "trustedHits": 1,
+      "trustedRefs": 56,
+      "trustedHitRate": 0.017857142857142856,
+      "highHits": 1,
+      "highRefs": 49,
+      "highHitRate": 0.02040816326530612,
+      "negativeEvents": 11,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.3452826320914263,
+      "jointAdmissionAbsoluteGainVsIdentity": 0.017857142857142856,
+      "diagnosticallyInteresting": false
+    }
+  ],
+  "frozenDiagnosticGate": {
+    "jointAdmissionAbsoluteGainAtLeast": 0.2,
+    "highConfidenceJointAdmissionAtLeast": 0.25,
+    "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+  },
+  "selectedInterestingTransforms": [],
+  "conclusion": "Simple global or per-bin first/second-moment affine alignment is insufficient to explain or repair the real-domain transfer collapse.",
+  "qualification": "Transforms were fit using V2B plus source-equivalent regenerated S9 synthetic statistics; the synthetic reference was not historical-byte-exact.",
+  "execution": {
+    "modelInferenceRuns": 3,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "training": false,
+    "decoderChanged": false,
+    "candidateReselected": false,
+    "v1_1Used": false
+  },
+  "localEvidenceHashes": {
+    "fullProbeResultSha256": "4942e262940c6e5377c9dbab0a05c78bfe59091211ff8267bc62699d9e874868",
+    "localProbeRunnerSha256": "9b41cecf2ec7f810ac4d0baa33fad6797392b2cbfc8cb529c0a17abd3015dc7a"
+  },
+  "guards": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
