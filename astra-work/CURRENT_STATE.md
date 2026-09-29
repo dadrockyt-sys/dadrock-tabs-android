@@ -2276,3 +2276,175 @@ A next project should either:
 - main/Production unchanged
 
 **Resume instruction:** Stop at the V8A no-advance boundary. Any fallback-free long-duration curriculum redesign or fresh real-domain training study is a new project decision and requires explicit authorization.
+
+
+## Explicit next steps with sound files — saved 2026-09-29
+
+The user requested that the next steps be written explicitly into this handoff and that the **sound files** be included in the plan.
+
+### Current scientific boundary
+
+V8A is complete and no long-duration arm advanced to training.
+
+Do **not** train L1/L2 from V8 as currently defined.  
+Do **not** reuse V1.1 for tuning or confirmation.  
+Do **not** open P1/P2/P3 or A2.  
+Do **not** mutate main or Production.
+
+### Preferred next project: fallback-free long-duration curriculum using the collected sound files as real-domain reference evidence
+
+The next project should be **V9: fallback-free long-duration synthetic curriculum with sound-file-grounded timing statistics**.
+
+The sound files already collected for the real-domain development set should be used only as frozen reference evidence unless the user separately authorizes real-audio training.
+
+#### Step 1 — inventory and lock the sound files
+
+Before any new model work:
+1. enumerate every sound file currently approved for the development evidence set;
+2. record filename / clip ID / duration / SHA-256 where available;
+3. confirm which files are positive-guitar clips and which are negative/background-only clips;
+4. keep V1.1 files separate and sealed;
+5. do not add or remove sound files after the V9 design is frozen unless a new version is declared.
+
+Create a machine-readable manifest for the sound files and freeze its hash.
+
+#### Step 2 — derive model-free timing targets from the sound files
+
+Using only the approved development sound files plus their frozen annotations:
+- onset density per second;
+- per-clip onset-rate distribution;
+- IOI p10 / p50 / p90;
+- repeated-attack fraction <=250 ms;
+- long-gap fraction >=700 ms;
+- simultaneous-onset fraction;
+- negative/background duration;
+- clip-duration distribution.
+
+Do not infer missing onset labels from model predictions.
+Do not fabricate sustain annotations that do not exist.
+
+The existing V6C targets remain the current reference until the sound-file manifest/statistics are regenerated and frozen under V9.
+
+#### Step 3 — design a fallback-free native event generator
+
+The next synthetic generator must create long-duration timing **natively**, rather than placing motifs and correcting them afterward.
+
+Required properties:
+- no post-placement boundary shifting;
+- no fallback/resample that changes an already generated event sequence;
+- event times are sampled conditionally so every event fits inside the clip by construction;
+- simultaneous chord attacks are preserved as separate onset references;
+- negative-only clips remain negative-only;
+- content-family distribution remains prospectively frozen;
+- clip duration should be selected prospectively from a small declared set informed by the sound-file duration/timing distribution.
+
+A likely first design should compare a 4-second and/or 6-second native generator, but the exact V9 arms must be frozen before output is viewed.
+
+#### Step 4 — V9A model-free gate before any audio rendering
+
+Generate timing manifests only.
+
+Compare each proposed synthetic timing arm to the frozen sound-file timing targets.
+
+Require, prospectively:
+- substantial timing-distance improvement versus the 2-second baseline;
+- improved repeated-attack error;
+- improved IOI-p90 error;
+- aggregate onset density within a declared tolerance;
+- **zero boundary fallback by construction**;
+- zero invalid clips/labels.
+
+Advance at most one arm.
+
+If no arm passes, stop with:
+- 0 waveform renders
+- 0 optimizer steps
+- 0 model inference
+
+#### Step 5 — render only if V9A passes
+
+If one timing arm passes V9A:
+- render exactly one long-duration synthetic arm plus the frozen R3 baseline;
+- keep the R3 acoustic renderer fixed;
+- freeze feature-array / dataset hashes;
+- keep real sound files out of training at this stage.
+
+#### Step 6 — bounded paired synthetic training
+
+Only after V9A passes:
+- train baseline + one advancing arm;
+- same architecture;
+- same initialization policy;
+- exact-string/fret state objective;
+- O0 exact-frame BCE onset loss;
+- paired stratum schedule;
+- 500 optimizer steps/model;
+- maximum 1000 optimizer steps total;
+- no retries;
+- no threshold search;
+- no decoder changes.
+
+#### Step 7 — synthetic sanity before real sound-file evaluation
+
+The advancing arm must pass a frozen synthetic sanity gate before any real development sound file is scored.
+
+At minimum retain:
+- precision floor;
+- F1/recall degradation limits;
+- negative-only synthetic FP limit;
+- finite-loss / exact-step checks.
+
+If it fails, stop before real sound-file inference.
+
+#### Step 8 — evaluate on the approved development sound files only
+
+If synthetic sanity passes:
+- evaluate exactly once on the approved development sound files;
+- use the existing frozen 0.50 / 0.50 thresholds;
+- use the ordinary decoder for negative false-positive rate;
+- report onset admission, state admission, trusted joint admission, high-confidence joint admission, and negative FP/s;
+- preserve per-clip results so any improvement can be audited.
+
+Do not use V1.1.
+
+#### Step 9 — require a fresh holdout before any broader claim
+
+If the V9 candidate passes its development gate:
+- freeze the model and all settings;
+- collect a **fresh, prospectively defined set of real sound files** not used in V2B/V9 development;
+- annotate those clips before inference;
+- run exactly one confirmation evaluation.
+
+No claim of product readiness should be made from development sound files alone.
+
+### Alternative project: fresh real-domain training study
+
+If the user explicitly chooses real-domain training instead of V9 synthetic redesign, treat it as a separate project.
+
+Before training on any sound files:
+1. freeze a training/development/holdout split;
+2. ensure no V1.1 leakage;
+3. define annotation requirements;
+4. define whether clips are licensed/authorized for model-training use;
+5. freeze preprocessing, augmentations, optimizer budget, and admission criteria;
+6. preserve a fresh untouched real-sound holdout.
+
+Do not silently convert the existing development sound files into training data.
+
+### Exact resume instruction
+
+At the next generic “continue”, remain at design/documentation only.
+
+The preferred next action is to prepare the **V9 sound-file manifest + fallback-free curriculum design**.
+
+Do **not**:
+- train on the sound files;
+- generate new model weights;
+- run V9 model inference;
+- use V1.1;
+- open P1/P2/P3;
+- alter thresholds/decoder;
+- mutate main/Production;
+
+until the user explicitly authorizes the empirical V9 execution phase.
+
