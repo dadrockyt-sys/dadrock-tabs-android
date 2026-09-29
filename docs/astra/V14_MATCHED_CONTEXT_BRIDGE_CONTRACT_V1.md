@@ -165,3 +165,5 @@ It does **not** permit:
 - main/Production mutation.
 
 After the preflight is visible, fresh explicit authorization is required before empirical V14 execution.
+
+Exact machine-readable precision threshold: **0.5756752789195536**.
