@@ -1,0 +1,51 @@
+{
+  "schema": "astra-independent-real-development-candidate-pin-v1",
+  "date": "2026-09-28",
+  "status": "frozen-fallback-candidate-pinned-before-real-inference",
+  "selectionRationale": "A1 and S11 execution artifacts do not contain durable model weights. The newest verified durable compatible frozen weight artifact in this synthetic line is the S9 30-voicing intervention checkpoint. Selection is frozen before any new real-development model output.",
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "historicalScientificOutcome": "failed-gate-but-strong-support-for-chord-voicing-diversity",
+    "sourceRun": 36379258174,
+    "sourceHead": "4e6f92c9cb4f2dc56bc9b983ed33c8e97c3f5810",
+    "artifactId": 10952098012,
+    "artifactDigest": "sha256:30b4596731c0445e6c38e046c4e628f75dbd55562a97901966746b2e99d7b596",
+    "artifactExpired": false,
+    "artifactExpiresAt": "2026-10-28T04:50:19Z",
+    "weightsFile": "intervention.pt",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036",
+    "checkpointSchema": "astra-synthetic-data-diversity-s9-pilot-v1",
+    "arm": "30-voicing-intervention",
+    "optimizerSteps": 500
+  },
+  "sourcePins": {
+    "s9RunnerGitBlob": "7fcf0f72cb15716d868db7ed8eefca0fbacf7345",
+    "s6ModelFitGitBlob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "s0FrontendWrapperGitBlob": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "preprocessingGitBlob": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "decoderGitBlob": "dca8499b81661de1251196cad72e3be753f7c5a6",
+    "evaluatorGitBlob": "0541c3adf2ebfe78137e7c44719f619171f6eaa7"
+  },
+  "thresholds": {
+    "state": 0.5,
+    "onset": 0.5,
+    "search": false,
+    "retuning": false
+  },
+  "verification": {
+    "artifactDownloadedForHashCheck": true,
+    "weightSha256Recomputed": true,
+    "modelLoaded": false,
+    "modelInference": false,
+    "optimizerSteps": 0
+  },
+  "boundaries": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "note": "This pin does not turn the failed S9 gate into a pass and does not authorize inference until the new real-development intake is complete and passes zero-inference verification."
+}
