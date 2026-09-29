@@ -1,0 +1,7 @@
+V14 corrected one-shot empirical launch marker
+launchIdentity=v14-matched-context-v1-20260929-02
+date=2026-09-29
+branch=astra-work
+freshUserAuthorization=true
+priorRun36546933952=technical-invalidation-wrong-runtime-and-batch-root
+scientificRetry=false
