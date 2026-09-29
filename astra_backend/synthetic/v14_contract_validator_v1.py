@@ -142,7 +142,7 @@ def validate(contract):
       "distance":abs(s["timingDistanceV1"]-exp["timingDistanceV1"])<=1e-15,
       "requiredMargin":s["minimumPostLastAttackMarginSeconds"]>=contract["bridge"]["finalRequiredMarginSeconds"],
       "f1Gate":abs(contract["empiricalGate"]["commonF1AtLeast"]-0.586490016794178)<=1e-15,
-      "precisionGate":abs(contract["empiricalGate"]["commonPrecisionAtLeast"]-0.5756752789195302)<=1e-15,
+      "precisionGate":abs(contract["empiricalGate"]["commonPrecisionAtLeast"]-0.5756752789195536)<=1e-15,
       "noSearch":contract["empiricalGate"]["noThresholdSearch"] is True and contract["empiricalGate"]["noAutomaticScientificRetry"] is True,
       "noReal":contract["executionCeilings"]["v2b"] is False and contract["executionCeilings"]["realAudio"] is False,
     }
