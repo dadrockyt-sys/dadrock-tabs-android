@@ -1,0 +1,73 @@
+{
+  "schema": "astra-upstream-transfer-diagnosis-v3-design-v1",
+  "date": "2026-09-28",
+  "status": "design-frozen-execution-not-authorized",
+  "question": "frontend-distribution-shift-vs-model-representation-failure",
+  "dataRoles": {
+    "v1_1": "sealed-evaluation",
+    "v2b": "diagnostic-development"
+  },
+  "phases": {
+    "v3a": {
+      "name": "frontend-distribution-audit",
+      "modelInference": false,
+      "metrics": [
+        "per-bin-mean",
+        "per-bin-std",
+        "median",
+        "MAD",
+        "floor-occupancy",
+        "dynamic-range-percentiles",
+        "frame-L2",
+        "temporal-difference-L2",
+        "context-window-L2",
+        "SMD",
+        "Wasserstein",
+        "range-overlap"
+      ]
+    },
+    "v3b": {
+      "name": "frozen-affine-diagnostic-transforms",
+      "transforms": [
+        "identity",
+        "global-affine",
+        "per-bin-affine"
+      ],
+      "fitData": [
+        "historical-synthetic-features",
+        "V2B-features"
+      ],
+      "v1_1Used": false
+    },
+    "v3c": {
+      "name": "representation-probe",
+      "thresholds": {
+        "state": 0.5,
+        "onset": 0.5
+      },
+      "thresholdSearch": false,
+      "diagnosticInterestRule": {
+        "jointAdmissionAbsoluteGainAtLeast": 0.2,
+        "highConfidenceJointAdmissionAtLeast": 0.25,
+        "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+      }
+    },
+    "v3d": {
+      "name": "fresh-holdout-required-before-improvement-claim"
+    }
+  },
+  "executionAuthorized": false,
+  "boundaries": {
+    "training": false,
+    "finetuning": false,
+    "thresholdChanges": false,
+    "decoderChanges": false,
+    "arbitraryNormalizationSearch": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
