@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **Supervisory course correction — stop serial micro-studies; recovery-first context bridge planning — 2026-09-29** at the end of this file. No V14 is open.
+Latest instructions: **Post-V13 recovery strategy review complete — recovery-first bridge selected — 2026-09-29** at the end of this file. No V14 is open.
 
 ## Current status
 
@@ -4730,3 +4730,140 @@ At the next generic **“continue”**:
 5. stop at the explicit project-authorization boundary.
 
 No V14 empirical work is authorized by this supervisory review.
+
+
+## Post-V13 recovery strategy review complete — recovery-first bridge selected — 2026-09-29
+
+**THIS IS THE CURRENT RESUME AUTHORITY. It supersedes the prior negative-structure-inactive V14 recommendation and the earlier instruction to perform the recovery strategy review.**
+
+Completed:
+- `docs/astra/POST_V13_RECOVERY_STRATEGY_REVIEW_V1.md`
+- `docs/astra/POST_V13_RECOVERY_STRATEGY_REVIEW_V1.json`
+
+### Decision
+
+Do **not** open V14 as another marginal sampler-mixture study by default.
+
+The frozen common-test gap is:
+- successful 2-second comparator F1 **0.7381974249**
+- V9 F1 **0.4347826087**
+- deficit **0.3034148162**
+- comparator precision **0.8269230769**
+- V9 precision **0.3244274809**
+- precision deficit **0.5024955960**
+
+Recovery achieved by recent separate interventions:
+- V10 F1 +0.0032577 = **1.07%** of original F1 deficit
+- V11 F1 +0.0159216 = **5.25%**
+- V12 F1 +0.0244011 = **8.04%**, but negative FP/s **0.166667** violated the frozen ceiling
+- V13 F1 +0.0048957 = **1.61%**
+
+These are useful negative diagnostics, but they do not constitute material recovery.
+
+### Important source-level context finding
+
+The renderer places the synthetic negative-structure burst at about **1.70 s** in both 2-second and 4-second clips.
+
+Therefore:
+- 2-second comparator leaves about **0.30 s** after the burst;
+- 4-second V9 leaves about **2.30 s** after the burst.
+
+This creates a large temporal-context difference inside negative-structure clips that sampler family-proportion matching does not remove.
+
+Other confirmed V9-vs-comparator package differences include:
+- 4.0 s vs 2.0 s clip duration;
+- different per-family attack counts;
+- V9 first attacks at 0.050–0.120 s vs comparator roughly 0.22–0.36 s;
+- deterministic S/M/L gap construction replacing fixed comparator motifs;
+- common 0.12–0.48 s V9 sustain support replacing historical family-specific durations;
+- executed V9 omission of the historical non-attacked legato continuation;
+- different boundary proximity and inactive run geometry;
+- materially different training-frame pools.
+
+Within the V9 paired run, R3 renderer, frontend, S6 model, thresholds and common primary evaluation were controlled. The failure is therefore consistent with a larger synthetic context/domain shift rather than merely a different evaluation target or threshold.
+
+### Preferred future V14
+
+No V14 is currently open.
+
+If the user explicitly authorizes opening a new project, prepare exactly one prospective project:
+
+**V14 — 2-second matched-context bridge**
+
+Question:
+
+> Can the successful V9 attack-timing principles retain material benefit when returned to a 2-second comparator-like temporal/context construction?
+
+This is a **package recovery experiment**, not a single-factor causal isolation.
+
+Preferred fixed elements:
+- 294 historical family/base/variant identities and split;
+- 2.0-second clips;
+- R3 renderer;
+- frozen RMS normalization + CQT;
+- S6 nonlinear five-frame model;
+- existing loss/weights;
+- thresholds 0.50 / 0.50;
+- Adam 0.003;
+- four 32-frame sampler strata;
+- 500 updates/model;
+- exact frozen common 2-second comparator test as primary evaluation;
+- no V2B;
+- no real audio;
+- no threshold/loss/seed search;
+- no automatic scientific retry.
+
+Bridge principle:
+- retain acoustic-attack-group accounting and deterministic V9-style timing construction;
+- use a prospectively frozen feasible 2-second timing/count schedule;
+- avoid the 4-second post-1.70-s inactive tail by construction;
+- preserve comparator-like family/state semantics unless a difference is explicitly frozen;
+- search **zero** alternative empirical schedules;
+- document every difference from control.
+
+The exact 2-second per-family attack counts and gap supports are not frozen yet. They may be derived once, model-free, during future contract preparation and must then be frozen before rendering or optimizer work.
+
+### Prospective material-recovery target
+
+Original F1 deficit = **0.3034148162**.
+
+50% recovery corresponds to:
+
+**common-test F1 >= 0.5864900168**
+
+Future V14 contract preparation should also freeze:
+- a substantial precision-recovery requirement tied to the original 0.502496 precision deficit;
+- recall tolerance;
+- negative FP/s <= 0.10;
+- exact compute/storage ceilings;
+- finite metrics;
+- no tuning/retry.
+
+Do not lower these after seeing empirical results.
+
+### Stop rule
+
+If a future authorized V14 matched-context bridge fails material recovery:
+- do not auto-open V15/V16;
+- stop serial synthetic micro-optimization;
+- write one decision brief choosing among larger generator redesign, separately authorized independent real-development evidence, or pausing this model line.
+
+### Current authorization boundary
+
+The recovery review is complete, but **V14 is not opened**.
+
+At a generic “continue”:
+- documentation/review only;
+- do not generate a V14 timing candidate;
+- do not render;
+- do not train;
+- do not infer;
+- do not dispatch an empirical workflow.
+
+A fresh explicit user authorization is required to **open V14 and prepare/freeze its prospective contract and model-free preflight**.
+
+After that contract/preflight is visible, require another fresh explicit authorization before empirical rendering/training.
+
+P1/P2 remain closed. P3 remains sealed. Main/Production unchanged.
+
+**Resume instruction:** Preserve V9-V13 as frozen evidence. Do not revert to the negative-structure-inactive-mixture V14. Await explicit authorization to open the 2-second matched-context bridge project.
