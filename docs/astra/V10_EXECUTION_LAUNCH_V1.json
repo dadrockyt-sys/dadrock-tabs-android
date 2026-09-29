@@ -1,0 +1,59 @@
+{
+  "schema": "astra-v10-execution-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-consumed",
+  "branch": "astra-work",
+  "launchIdentity": "v10-exposure-v1-20260929-01",
+  "preflight": {
+    "runId": 36527632335,
+    "jobId": 109274053805,
+    "artifactId": 11014419820,
+    "artifactDigest": "sha256:b62962f0715471d0a49e7402fa0cd6baa1383029db7d23db5ff26164c25a2dbd",
+    "conclusion": "success",
+    "headSha": "b55f2bebf1df366f08c5262815afe5dbbe82ca95"
+  },
+  "execution": {
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "syntheticOnly": true,
+    "v2b": false,
+    "realAudio": false,
+    "maxRenderCpuMinutes": 30,
+    "maxFitEvalCpuMinutes": 60,
+    "maxPersistedMiB": 700,
+    "paidComputeDollars": 0
+  },
+  "sourcePaths": {
+    "authorization": "docs/astra/V10_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json",
+    "history": "docs/astra/V10_EXECUTION_HISTORY_V1.json",
+    "contract": "docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json",
+    "preflightResult": "docs/astra/V10_PREFLIGHT_RESULT_V1.json",
+    "runner": "astra_backend/synthetic/v10_exposure_isolation_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v10_exposure_isolation_v1.py",
+    "validator": "astra_backend/synthetic/v10_contract_validator_v1.py",
+    "validatorTests": "astra_backend/synthetic/test_v10_contract_validator_v1.py",
+    "v9Empirical": "astra_backend/synthetic/v9_empirical_v1.py",
+    "s6": "astra_backend/synthetic/s6_pilot_v1.py",
+    "s1": "astra_backend/synthetic/s1_pilot_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v10-exposure-isolation-empirical-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "authorization": "c212bfdc2bbb7dc1e190139d12a382d0bc8cb743",
+    "history": "80949f75b711315ad5ebcb19e14c75b1ad71b700",
+    "contract": "d6c990439f20086b0edb9809d50153397bbbc315",
+    "preflightResult": "edd6216c272768653134416bbf5c5ef656fe5224",
+    "runner": "2c25b80c553d600ba26d2a7729bc1f3d1050f944",
+    "runnerTests": "7becffdd0ae821636d7935ea53b5ad9e0cb386c1",
+    "validator": "34d248f74812652fcd213fc420506c3f82b5a6d1",
+    "validatorTests": "32d6dac52a2e388f507ac958aab4ec7f6bbfc9b1",
+    "v9Empirical": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s6": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "d29927cf6f8236ce1559a07b7db0ab5ed549601e"
+  }
+}
