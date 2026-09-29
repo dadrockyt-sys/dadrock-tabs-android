@@ -11,5 +11,12 @@
     "workflowBlob": "0d707040f48186784454d1a4a0d94456d47149c9"
   },
   "rule": "One workflow dispatch only. No automatic scientific retry. Workflow must run pure validator tests before V14 empirical runner.",
-  "status": "ready-for-single-dispatch"
+  "status": "ready-for-single-carrier-dispatch",
+  "carrierWorkflow": {
+    "path": ".github/workflows/check-artist-duplicates.yml",
+    "branchBlob": "63d49e75c4b666cf4a6f2cca66216e3278ac3f95",
+    "defaultBranchRegisteredWorkflowName": "Check Artist SEO Duplicates",
+    "purpose": "Use a workflow_dispatch carrier already registered on the default branch while executing the astra-work branch-specific frozen V14 job. Main remains unchanged.",
+    "restoreAfterExecution": true
+  }
 }
