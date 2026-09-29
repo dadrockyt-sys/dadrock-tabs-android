@@ -32,6 +32,14 @@
     "s6": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
     "r3": "badedb6c36ad389093b6f74b97f4452c44518501",
     "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
-    "workflow": "32feaf79398dc58ab8315a5afdd6f92ac3c2987d"
+    "workflow": "52fbc49dc6b2c91a1cbf0a38dfafa19ba3083c57"
+  },
+  "infrastructureRepair": {
+    "priorRunId": 36526163229,
+    "reason": "Python package path excluded repository root; tests failed before candidate timing generation",
+    "scientificRetry": false,
+    "candidateTimingGenerated": false,
+    "optimizerSteps": 0,
+    "modelInferenceCount": 0
   }
 }
