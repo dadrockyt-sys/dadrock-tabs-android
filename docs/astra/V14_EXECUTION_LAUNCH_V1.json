@@ -11,12 +11,22 @@
     "workflowBlob": "dd5b5936c6b0a84d00038499a0f20834de6ba846"
   },
   "rule": "One workflow dispatch only. No automatic scientific retry. Workflow must run pure validator tests before V14 empirical runner.",
-  "status": "armed-awaiting-single-marker-commit",
+  "status": "consumed-attempt1-invalid-control-reproduction",
   "trigger": {
     "type": "single push-path marker",
     "workflowPath": ".github/workflows/astra-v14-matched-context-empirical-v1.yml",
     "markerPath": ".github/one-shot/v14-matched-context-v1-20260929-01.txt",
     "branch": "astra-work",
     "rule": "Create marker exactly once; no rerun or second marker."
-  }
+  },
+  "executedRun": {
+    "id": 36546933952,
+    "jobId": 109335463434,
+    "headSha": "8487cc3a433df177285582b966d36ed54bec368f",
+    "conclusion": "failure",
+    "artifactCount": 0
+  },
+  "scientificResultInterpretable": false,
+  "automaticRetry": false,
+  "freshAuthorizationRequiredForCorrectedExecution": true
 }
