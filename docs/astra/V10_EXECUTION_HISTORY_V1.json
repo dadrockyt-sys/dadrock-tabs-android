@@ -1,7 +1,7 @@
 {
   "schema": "astra-v10-execution-history-v1",
   "date": "2026-09-29",
-  "status": "launch-scope-consumed-before-dispatch",
+  "status": "completed-exposure-hypothesis-not-supported",
   "consumedLaunchIdentities": [
     "v10-exposure-v1-20260929-01"
   ],
@@ -15,7 +15,23 @@
       "preflightArtifactId": 11014419820,
       "preflightArtifactDigest": "sha256:b62962f0715471d0a49e7402fa0cd6baa1383029db7d23db5ff26164c25a2dbd",
       "preflightConclusion": "success",
-      "scientificRetry": false
+      "scientificRetry": false,
+      "empiricalRun": {
+        "runId": 36528001337,
+        "jobId": 109275178270,
+        "headSha": "b5c661b6f383571bf31383e2a1d884089c71311d",
+        "conclusion": "success",
+        "artifactId": 11015118480,
+        "artifactDigest": "sha256:34bed0c4f07458915196d5fb91cf3ca521ccb5ae8d01233ca0b2de6303e50fee",
+        "models": 2,
+        "optimizerStepsTotal": 1000,
+        "controlExposure": 17676,
+        "balancedExposure": 19702,
+        "exposureHypothesisSupported": false,
+        "v2bInferencePerformed": false,
+        "realAudioInference": 0
+      },
+      "resultPath": "docs/astra/V10_EXPOSURE_ISOLATION_RESULT_V1.json"
     }
   ]
 }
