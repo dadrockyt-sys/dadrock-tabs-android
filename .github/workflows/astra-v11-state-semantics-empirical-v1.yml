@@ -1,0 +1,129 @@
+name: Astra V11 state semantics empirical execution
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V11_EXECUTION_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-v11-state-semantics-empirical-v1
+  cancel-in-progress: false
+
+jobs:
+  v11:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify authorization, launch scope and exact pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/V11_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V11_EXECUTION_LAUNCH_V1.json'))
+          h=json.load(open('docs/astra/V11_EXECUTION_HISTORY_V1.json'))
+          c=json.load(open('docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.json'))
+          assert a['schema']=='astra-v11-empirical-execution-authorization-v1'
+          assert a['explicitlyAuthorized'] is True and a['userInstruction']=='I authorize'
+          assert c['schema']=='astra-v11-state-semantics-contract-v1'
+          assert c['boundaries']['empiricalExecutionAuthorized'] is False
+          assert l['schema']=='astra-v11-execution-launch-v1'
+          assert l['status']=='armed-consumed'
+          assert l['branch']=='astra-work' and os.environ.get('GITHUB_REF_NAME')=='astra-work'
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          assert h['schema']=='astra-v11-execution-history-v1'
+          lid=l['launchIdentity']
+          assert h['consumedLaunchIdentities'].count(lid)==1
+          assert l['preflight']['conclusion']=='success'
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceGitBlobs'][k]==blob(p),(k,p,l['sourceGitBlobs'][k],blob(p))
+          ex=l['execution']
+          assert ex['models']==2
+          assert ex['optimizerStepsPerModel']==500
+          assert ex['maxOptimizerStepsTotal']==1000
+          assert ex['thresholdSearch'] is False
+          assert ex['automaticScientificRetry'] is False
+          assert ex['v2b'] is False and ex['realAudio'] is False
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Re-run frozen V11 admission tests
+        run: |
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v11_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v11_state_semantics_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v11_contract_validator_v1.py             --contract docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.json
+      - name: Execute exactly one V11 two-arm synthetic study
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-v11
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v11_state_semantics_v1.py run             --outdir /tmp/astra-v11/run
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-v11/run/result.json'))
+          assert x['schema']=='astra-v11-state-semantics-v1'
+          assert x['execution']['models']==2
+          assert x['execution']['optimizerStepsTotal']==1000
+          assert x['execution']['realAudioInference']==0
+          assert x['execution']['v2bInference']==0
+          assert x['execution']['automaticScientificRetries']==0
+          assert x['execution']['thresholdSearch'] is False
+          assert x['control']['fit']['optimizerSteps']==500
+          assert x['stateSemanticRestored']['fit']['optimizerSteps']==500
+          assert x['checks']['baselineReproducedExactly'] is True
+          PY
+      - name: Write bounded execution receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          root=pathlib.Path('/tmp/astra-v11/run')
+          receipt={
+            'schema':'astra-v11-execution-receipt-v1',
+            'githubRunId':os.environ.get('GITHUB_RUN_ID'),
+            'githubRunAttempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'headSha':os.environ.get('GITHUB_SHA'),
+            'resultExists':(root/'result.json').exists(),
+            'controlModelExists':(root/'control.pt').exists(),
+            'interventionModelExists':(root/'intervention.pt').exists(),
+            'v2bInferencePerformed':False,
+            'realAudioUsed':False,
+          }
+          if (root/'result.json').exists():
+              x=json.load(open(root/'result.json'))
+              receipt['models']=x['execution']['models']
+              receipt['optimizerStepsTotal']=x['execution']['optimizerStepsTotal']
+              receipt['stateSemanticsHypothesisSupported']=x['stateSemanticsHypothesisSupported']
+              receipt['baselineReproducedExactly']=x['checks']['baselineReproducedExactly']
+          root.mkdir(parents=True,exist_ok=True)
+          (root/'execution-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-v11-state-semantics-empirical-v1
+          path: |
+            /tmp/astra-v11/run/result.json
+            /tmp/astra-v11/run/control.pt
+            /tmp/astra-v11/run/intervention.pt
+            /tmp/astra-v11/run/execution-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/astra-v11
