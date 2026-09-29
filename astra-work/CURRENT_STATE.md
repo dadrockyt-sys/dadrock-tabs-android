@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V13 active-non-onset family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of this file. No V2B or automatic next study.
+Latest instructions: **Post-V13 causal review complete — negative-structure-inactive family mixture identified — 2026-09-29** at the end of this file. No V14 is open.
 
 ## Current status
 
@@ -4362,3 +4362,88 @@ Do not:
 - mutate main or Production.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
+
+
+## Post-V13 causal review complete — negative-structure-inactive family mixture identified — 2026-09-29
+
+**Current resume authority. Documentation/review only; no V14 opened.**
+
+Completed:
+- `docs/astra/POST_V13_CAUSAL_REVIEW_V1.md`
+- `docs/astra/POST_V13_CAUSAL_REVIEW_V1.json`
+
+### Main finding
+
+V13 held the other three sampler strata and attacked-note-label exposure fixed, yet common F1 improved only **+0.004896**.
+
+The strongest remaining single within-stratum family-composition difference is now **negative-structure-inactive**.
+
+Historical comparator negative-structure-inactive training frames:
+- legato **1,020 = 22.01%**
+- palmmute **1,560 = 33.66%**
+- mixed **2,055 = 44.34%**
+- total **4,635**
+
+Executed V9:
+- legato **3,907 = 35.95%**
+- palmmute **2,403 = 22.11%**
+- mixed **4,558 = 41.94%**
+- total **10,868**
+
+Share shifts:
+- legato **+13.94 percentage points**
+- palmmute **-11.55**
+- mixed **-2.40**
+
+Across exactly 16,000 negative-structure-inactive training slots, the historical comparator proportions map to:
+- legato **3,521**
+- palmmute **5,385**
+- mixed **7,094**
+- total **16,000**
+
+### Preferred future project question
+
+Do **not** open V14 automatically.
+
+If the user explicitly authorizes a new project, prospectively freeze:
+
+> With the exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical comparator negative-structure-inactive family mixture materially recover common-population precision/F1 while preserving the negative-only false-positive ceiling?
+
+Preferred design:
+- no intervention-specific rendering;
+- same regenerated V9 arrays for both arms;
+- control = exact V9 batch plan;
+- intervention changes only negative-structure-inactive selection;
+- positive-onset selection identical;
+- active-non-onset selection identical;
+- other-inactive selection identical;
+- per-step shuffle identical;
+- attacked-note-label exposure identical;
+- exactly 16,000 negative-inactive slots;
+- target 3,521 / 5,385 / 7,094 for legato / palmmute / mixed;
+- same model/loss/threshold/optimizer/500 updates;
+- primary eval common 2-second comparator;
+- secondary eval frozen V9;
+- no V2B.
+
+### Broader decision point after that study
+
+If a future negative-structure-inactive isolation also fails, the evidence would increasingly favor a **composite corpus/context domain shift** rather than one isolated sampler statistic.
+
+At that point, stop serial single-factor micro-studies and consider a prospectively frozen matched-context or whole-package 2-second-context design instead.
+
+### Current stop boundary
+
+No V14 contract, authorization, runner, workflow, launch, rendering, model training, inference, or V2B exists.
+
+This review used:
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+- workflow dispatches 0
+
+Main/Production unchanged.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, freeze the negative-structure-inactive family-mixture study first. Empirical execution must still wait for fresh authorization after that contract/preflight is visible.
