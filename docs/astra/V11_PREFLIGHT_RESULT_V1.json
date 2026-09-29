@@ -1,0 +1,80 @@
+{
+  "schema": "astra-v11-preflight-result-v1",
+  "date": "2026-09-29",
+  "status": "model-free-preflight-passed-empirical-execution-not-authorized",
+  "runId": 36534288763,
+  "jobId": 109294696440,
+  "headSha": "d736257bf2181b1c1a936ac74b825000c15b4588",
+  "conclusion": "success",
+  "artifactId": 11017093440,
+  "artifactDigest": "sha256:974b0c3a9e86448b0c4b70ec37dada523dfe5a0eb208ac297ce6a0e8e0d56e81",
+  "artifactExpiresAt": "2026-10-29T07:03:19Z",
+  "staticAudit": {
+    "clips": 294,
+    "positiveClips": 273,
+    "negativeOnlyClips": 21,
+    "controlAttackGroups": 1638,
+    "interventionAttackGroups": 1638,
+    "controlAttackedNoteLabels": 1806,
+    "interventionAttackedNoteLabels": 1806,
+    "attackedSignatureSha256": "9129b31cec8c56a8275e269b25fd9ab686b15f91e8b5da711ef6490eddfffe97",
+    "restoredNonAttackedContinuationEvents": 84,
+    "truncatedAttackedStatesAtSameStringRetrigger": 789,
+    "perFamily": {
+      "isolated": {
+        "positiveClips": 42,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 168
+      },
+      "scales": {
+        "positiveClips": 42,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 37
+      },
+      "chords": {
+        "positiveClips": 42,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 126
+      },
+      "repeated": {
+        "positiveClips": 42,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 243
+      },
+      "legato": {
+        "positiveClips": 42,
+        "continuationEvents": 84,
+        "truncatedAttackedStates": 84
+      },
+      "palmmute": {
+        "positiveClips": 42,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 82
+      },
+      "mixed": {
+        "positiveClips": 21,
+        "continuationEvents": 0,
+        "truncatedAttackedStates": 49
+      }
+    }
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0
+  },
+  "empiricalExecutionAuthorized": false,
+  "boundaries": {
+    "v2b": false,
+    "realAudio": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
