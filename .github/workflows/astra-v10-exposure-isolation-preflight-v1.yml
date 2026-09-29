@@ -1,0 +1,79 @@
+name: Astra V10 exposure isolation preflight
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V10_PREFLIGHT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-v10-exposure-isolation-preflight
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify project authorization and source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/V10_PROJECT_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V10_PREFLIGHT_LAUNCH_V1.json'))
+          assert a['schema']=='astra-v10-project-authorization-v1'
+          assert a['userInstruction']=='I authorize'
+          assert a['authorizationScope']['optimizerSteps']==0
+          assert a['authorizationScope']['modelInference'] is False
+          assert l['schema']=='astra-v10-preflight-launch-v1'
+          assert l['status']=='armed-model-free-preflight-only'
+          assert l['optimizerSteps']==0 and l['modelInference'] is False
+          assert l['waveformRendering'] is False
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceGitBlobs'][k]==blob(p),(k,p,l['sourceGitBlobs'][k],blob(p))
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Run pure V10 tests
+        run: |
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v10_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v10_exposure_isolation_v1.py
+      - name: Validate frozen V10 contract
+        run: |
+          mkdir -p /tmp/v10-preflight
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v10_contract_validator_v1.py             --contract docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json             > /tmp/v10-preflight/contract-validation.json
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v10_exposure_isolation_v1.py static             --out /tmp/v10-preflight/static-summary.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/v10-preflight/contract-validation.json'))
+          s=json.load(open('/tmp/v10-preflight/static-summary.json'))
+          assert x['valid'] is True
+          assert x['empiricalExecutionAuthorized'] is False
+          assert s['optimizerStepsPlanned']==0
+          assert s['modelInferencePlanned'] is False
+          assert s['targetAttackedNoteLabels']==19702
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-v10-exposure-isolation-preflight-v1
+          path: |
+            /tmp/v10-preflight/contract-validation.json
+            /tmp/v10-preflight/static-summary.json
+          if-no-files-found: error
+          retention-days: 30
