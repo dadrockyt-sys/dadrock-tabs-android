@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V13 active-non-onset family-mixture study prospectively frozen — preflight PASS — 2026-09-29** at the end of this file. Empirical V13 requires fresh explicit authorization.
+Latest instructions: **V13 active-non-onset family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of this file. No V2B or automatic next study.
 
 ## Current status
 
@@ -4198,3 +4198,167 @@ A fresh explicit authorization after this frozen contract/preflight is required 
 Main/Production unchanged.
 
 **Resume instruction:** Preserve V9-V12 as frozen historical results. Preserve V13 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V13 after this point, consume one unique V13 launch scope and execute exactly the frozen two-arm synthetic-only active-non-onset family-mixture study with no retries and no V2B.
+
+
+## V13 active-non-onset family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier V13 preflight/authorization boundary.**
+
+Explicit user authorization was consumed under launch identity:
+- `v13-active-nononset-v1-20260929-01`
+
+Frozen result:
+- `docs/astra/V13_ACTIVE_NONONSET_MIXTURE_RESULT_V1.json`
+- `docs/astra/V13_ACTIVE_NONONSET_MIXTURE_RESULT_V1.md`
+
+Empirical run:
+- run **36540511146**
+- job **109314523890**
+- head `fe293c9446e5ed4b5afc632bbf1fdabc0136df3a`
+- artifact **11020985149**
+- artifact digest `sha256:1610b51364e8589f812b1084a2d090ccf34be062cdfbe2ad6edbda26e8435109`
+- conclusion **success**
+- models **2**
+- optimizer steps **1,000 total**
+- threshold search **false**
+- automatic scientific retries **0**
+- real-audio inference **0**
+- V2B inference **0**
+
+### Control reproduction passed exactly
+
+Frozen V9 common comparator-test metrics were reproduced exactly:
+- precision **0.3244274809160305**
+- recall **0.6589147286821705**
+- F1 **0.43478260869565216**
+
+### V13 intervention identity
+
+Only active-non-onset family selection changed.
+
+Control sampled active-non-onset slots:
+- isolated 1,907
+- scales 3,193
+- chords 1,207
+- repeated 3,304
+- legato 1,798
+- palmmute 3,711
+- mixed-positive 880
+
+Historical-mixture intervention:
+- isolated 2,511
+- scales 2,569
+- chords 2,219
+- repeated 2,861
+- legato 3,037
+- palmmute 1,752
+- mixed-positive 1,051
+
+Control batch plan:
+`8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7`
+
+Intervention batch plan:
+`1627721cd6f541edbf37bd58e4e5f92264d10b39f264855b195dbb6089539de4`
+
+Preserved exactly across arms:
+- positive-onset selections;
+- negative-structure-inactive selections;
+- other-inactive selections;
+- per-step shuffle;
+- sampled attacked-note-label exposure **17,676 / 17,676**;
+- sampled attack frames **16,000 / 16,000**;
+- sampled total frames **64,000 / 64,000**.
+
+### Primary common comparator-test result
+
+Control:
+- precision **0.324427**
+- recall **0.658915**
+- F1 **0.434783**
+- state admission **0.310078**
+- onset admission **0.682171**
+- joint admission **0.286822**
+- negative FP/s **0**
+
+Historical active-non-onset mixture:
+- precision **0.336066**
+- recall **0.635659**
+- F1 **0.439678**
+- state admission **0.263566**
+- onset admission **0.674419**
+- joint admission **0.240310**
+- negative FP/s **0**
+
+Deltas:
+- precision **+0.011638**
+- recall **-0.023256**
+- F1 **+0.004896**
+- state admission **-0.046512**
+- onset admission **-0.007752**
+- joint admission **-0.046512**
+- negative FP/s **0**
+
+Frozen gates:
+- precision gain >= +0.15: **FAIL**
+- F1 gain >= +0.10: **FAIL**
+- recall decline <=0.05: PASS
+- negative FP/s <=0.10: PASS
+
+### Secondary frozen-V9 test
+
+Control:
+- precision **0.486631**
+- recall **0.705426**
+- F1 **0.575949**
+
+Historical active-non-onset mixture:
+- precision **0.492021**
+- recall **0.717054**
+- F1 **0.583596**
+
+Deltas:
+- precision **+0.005390**
+- recall **+0.011628**
+- F1 **+0.007647**
+
+### V13 decision
+
+**The active-non-onset family-mixture hypothesis is not supported.**
+
+Matching only this historical within-stratum family mixture produced a negligible common-test precision/F1 improvement and did not meet material-recovery thresholds.
+
+This is a comparatively clean negative result because the other three sampler strata and attacked-note-label exposure were held fixed.
+
+Do not claim the true cause is known.
+
+Remaining unresolved factors include:
+- negative-structure-inactive family composition;
+- 2-second versus 4-second inactive/background context diversity;
+- longer-range sequence/gap structure beyond marginal timing statistics;
+- interactions among multiple strata;
+- the broader 2-second-to-4-second synthetic-domain construction shift.
+
+Artifact evidence:
+- ZIP `1610b51364e8589f812b1084a2d090ccf34be062cdfbe2ad6edbda26e8435109`
+- result `f2fa222cacbca5d796767938d093649004dac24425bb826bb4a5e4eb798e2ab1`
+- receipt `f65cfbbe10d90053121468d34fa78734bc93efe1cce4b3469a3cae166ad79fae`
+- control model `bdba8a2dab99fc61ea057a9511cc2ef7677eb88db889f00a517d546c446fd3d1`
+- intervention model `889bab7c5eb1386ab1dd33c20ea99ed3914fecd2beae52e63693aaeece5b0448`
+
+### Current stop boundary
+
+Preserve:
+- V9 = frozen FAIL at synthetic sanity
+- V10 = frozen negative diagnostic
+- V11 = frozen negative diagnostic
+- V12 = frozen negative diagnostic
+- V13 = complete; active-non-onset family-mixture hypothesis NOT SUPPORTED
+
+Do not:
+- rerun V13;
+- post-hoc tune the active-non-onset mixture and call it V13;
+- run V2B;
+- open V14 automatically;
+- mutate main or Production.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
