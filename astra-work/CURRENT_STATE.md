@@ -1129,3 +1129,68 @@ Do not continue lowering thresholds outside the frozen grid.
 The next scientifically useful project would be a new, prospectively frozen upstream transfer diagnosis aimed at representation/frontend/synthetic-to-real feature mismatch. It should not silently reuse V1.1 as a tuning target.
 
 **Resume instruction:** Stop at the V2C no-candidate boundary. Any upstream representation/frontend/domain-transfer experiment is a new project decision and requires explicit authorization.
+
+
+## Upstream transfer diagnosis V3 design frozen — 2026-09-28
+
+Generic continuation was used only for design/documentation, per the V2C decision boundary.
+
+New files:
+- `docs/astra/UPSTREAM_TRANSFER_DIAGNOSIS_V3_DESIGN_V1.md`
+- `docs/astra/UPSTREAM_TRANSFER_DIAGNOSIS_V3_DESIGN_V1.json`
+
+V3 separates two hypotheses:
+1. real-audio frontend features occupy a materially different distribution from historical synthetic features;
+2. the frozen model representation fails even after simple feature-statistic alignment.
+
+### V3A — frontend distribution audit
+
+No model inference.
+
+Compare historical synthetic features vs V2B real features using:
+- per-bin mean/std;
+- median/MAD;
+- floor occupancy;
+- dynamic-range percentiles;
+- frame and temporal-difference norms;
+- context-window norms;
+- standardized mean differences;
+- Wasserstein summaries;
+- feature-range overlap.
+
+### V3B — prospectively frozen diagnostic transforms
+
+Only if V3A shows substantial feature shift:
+- identity;
+- global affine;
+- per-bin affine.
+
+Transforms may match V2B feature mean/std toward historical synthetic mean/std.
+
+No nonlinear transform search, clipping search, gain search, threshold changes, decoder changes, or V1.1 fitting.
+
+### V3C — representation probe
+
+At historical thresholds 0.50 / 0.50 only.
+
+A transform is diagnostically interesting only if:
+- trusted joint-admission gain >= +0.20 absolute vs identity;
+- >=25% of high-confidence landmarks jointly pass;
+- negative FP <=0.10 events/s.
+
+This is diagnostic only and does not authorize adoption.
+
+### V3D
+
+Any apparent improvement requires a fresh holdout. Do not use V1.1 as the confirming holdout.
+
+No empirical V3 work has been run.
+No model inference.
+No optimizer steps.
+No threshold/frontend/decoder changes.
+V1.1 remains sealed.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+**Resume instruction:** V3 design is ready, but empirical V3A/V3B/V3C execution is a new project step. Do not run it until the user explicitly authorizes V3 empirical execution.
