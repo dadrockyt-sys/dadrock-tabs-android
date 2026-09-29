@@ -1,7 +1,7 @@
 {
   "schema": "astra-v11-execution-history-v1",
   "date": "2026-09-29",
-  "status": "launch-scope-consumed-before-dispatch",
+  "status": "completed-state-semantics-hypothesis-not-supported",
   "consumedLaunchIdentities": [
     "v11-state-semantics-v1-20260929-01"
   ],
@@ -15,7 +15,22 @@
       "preflightArtifactId": 11017093440,
       "preflightArtifactDigest": "sha256:974b0c3a9e86448b0c4b70ec37dada523dfe5a0eb208ac297ce6a0e8e0d56e81",
       "preflightConclusion": "success",
-      "scientificRetry": false
+      "scientificRetry": false,
+      "empiricalRun": {
+        "runId": 36534741201,
+        "jobId": 109296097761,
+        "headSha": "0c3a24ab7d49a3b4525a2af372c2fbcf08fbccd6",
+        "conclusion": "success",
+        "artifactId": 11018510069,
+        "artifactDigest": "sha256:5cb15fcbb40b38bcee93e6bde1b4f4109204c9b979dcfb17910a25d2fe66bb91",
+        "models": 2,
+        "optimizerStepsTotal": 1000,
+        "stateSemanticsHypothesisSupported": false,
+        "baselineReproducedExactly": true,
+        "v2bInferencePerformed": false,
+        "realAudioInference": 0
+      },
+      "resultPath": "docs/astra/V11_STATE_SEMANTICS_RESULT_V1.json"
     }
   ]
 }
