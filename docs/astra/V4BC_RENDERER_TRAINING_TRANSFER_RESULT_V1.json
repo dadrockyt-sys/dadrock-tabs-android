@@ -1,0 +1,149 @@
+{
+  "schema": "astra-v4bc-renderer-training-transfer-result-v1",
+  "date": "2026-09-28",
+  "status": "completed-no-development-interesting-renderer",
+  "runtime": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.3.5",
+    "librosa": "0.11.0"
+  },
+  "identity": {
+    "initialModelSha256": "ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "sameInitialization": true,
+    "sameBatchIndices": true,
+    "sameTargets": true
+  },
+  "training": {
+    "R0": {
+      "featureSha256": "48f3a6d44e335a56794fbcde671dd5cd11ca00217eb9bee3854395623f6610c2",
+      "optimizerSteps": 500,
+      "lossCheckpoints": [
+        [
+          1,
+          6.982616424560547
+        ],
+        [
+          100,
+          1.3525242805480957
+        ],
+        [
+          200,
+          0.9424567222595215
+        ],
+        [
+          300,
+          0.811080813407898
+        ],
+        [
+          400,
+          0.6393901109695435
+        ],
+        [
+          500,
+          0.5198392868041992
+        ]
+      ],
+      "modelFileSha256": "1d6d4f4ea2eeca6b2943b2ce373b2710786bdbbf56222946fe4fa07c070c291e"
+    },
+    "R3": {
+      "featureSha256": "622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6",
+      "optimizerSteps": 500,
+      "lossCheckpoints": [
+        [
+          1,
+          6.981131076812744
+        ],
+        [
+          100,
+          1.7202317714691162
+        ],
+        [
+          200,
+          1.0693233013153076
+        ],
+        [
+          300,
+          0.9722154140472412
+        ],
+        [
+          400,
+          0.8191365599632263
+        ],
+        [
+          500,
+          0.6685960292816162
+        ]
+      ],
+      "modelFileSha256": "9082cc87f9940b563e02011418a21a062ed995b35dae90bb70d44313120f185c"
+    },
+    "totalOptimizerSteps": 1000,
+    "maxAuthorized": 1500
+  },
+  "v2b": {
+    "R0": {
+      "trustedHits": 0,
+      "trustedRefs": 56,
+      "trustedHitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "highHitRate": 0,
+      "negativeEvents": 13,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.4080612924716856,
+      "negativePerClip": {
+        "D01": 0,
+        "D02": 13,
+        "D03": 0,
+        "D04": 0
+      }
+    },
+    "R3": {
+      "trustedHits": 0,
+      "trustedRefs": 56,
+      "trustedHitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "highHitRate": 0,
+      "negativeEvents": 5,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.1569466509506483,
+      "negativePerClip": {
+        "D01": 0,
+        "D02": 5,
+        "D03": 0,
+        "D04": 0
+      }
+    },
+    "trustedJointAdmissionAbsoluteGainVsR0": 0,
+    "developmentInteresting": false
+  },
+  "gate": {
+    "trustedGainAtLeast": 0.2,
+    "highConfidenceHitRateAtLeast": 0.25,
+    "negativeFpPerSecondAtMost": 0.1
+  },
+  "execution": {
+    "thresholds": {
+      "state": 0.5,
+      "onset": 0.5
+    },
+    "thresholdSearch": false,
+    "decoderChanged": false,
+    "architectureChanged": false,
+    "v1_1Used": false
+  },
+  "localEvidence": {
+    "runnerSha256": "bae6938f0846a87ea8d64d1dd7653c39d6a4c2cae3fea6cff788a0af77808fe2",
+    "fullResultSha256": "6d95c9c4690da54d93e838ad856764819a3cbafdf1e93e5ca392b9d6a8016fba"
+  },
+  "guards": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
