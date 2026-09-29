@@ -77,7 +77,7 @@ Clip-type quotas:
 
 Root seed: **20260929**.
 
-Assignment is deterministic by SHA-256. There is no candidate sweep, search, retry, or best-of-N selection.
+Assignment is deterministic by SHA-256 over exact positive clip identities (family/baseIndex/variant). There is no candidate sweep, search, retry, or best-of-N selection.
 
 Final required margin after the last attack: **0.120 s**.
 
@@ -87,14 +87,14 @@ The single frozen deterministic schedule gives:
 - attack groups **819**
 - gap count **546**
 - density **1.500000/s**
-- IOI p10 **0.1065450069 s**
-- IOI p50 **0.2517739427 s**
-- IOI p90 **0.8641749706 s**
+- IOI p10 **0.1061617322 s**
+- IOI p50 **0.2520127045 s**
+- IOI p90 **0.8704418108 s**
 - repeat250 **0.4615384615**
 - longGap700 **0.1263736264**
-- latest attack **1.7931743849 s**
-- minimum post-last-attack margin **0.2068256151 s**
-- corrected timing-distance V1 **0.0510992526**
+- latest attack **1.7920413320 s**
+- minimum post-last-attack margin **0.2079586680 s**
+- corrected timing-distance V1 **0.0430642112**
 
 These are model-free deterministic schedule values, not empirical model results.
 
