@@ -5,7 +5,7 @@ on:
     branches:
       - astra-work
     paths:
-      - '.github/one-shot/v14-matched-context-v1-20260929-01.txt'
+      - '.github/one-shot/v14-matched-context-v1-20260929-02.txt'
 
 permissions:
   contents: read
