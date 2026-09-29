@@ -155,6 +155,8 @@ The original V9 artifact did not retain dataset arrays. If empirical V13 is late
 - S1 sampler source: `bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf`
 - S6 model/training source: `142168784e3dfebf8a5221017e40c8aa73be1fa5`
 - runtime lock: `174a5016cfe9e6c00816d2171210aa84c66081a8`
+- V13 contract validator: `92127b19b1941f5cc41121983b5287afe169462c`
+- V13 validator tests: `0cba9a26c0ddaeae79210971a18ce5f9a928a1de`
 
 ## Current boundary
 
