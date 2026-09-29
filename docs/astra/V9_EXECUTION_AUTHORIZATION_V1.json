@@ -1,0 +1,29 @@
+{
+  "schema": "astra-v9-execution-authorization-v1",
+  "date": "2026-09-29",
+  "status": "explicitly-authorized-for-frozen-v9-empirical-contract",
+  "explicitlyAuthorized": true,
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "contractPath": "docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json",
+  "authorizationScope": {
+    "oneFrozenV9Arm": true,
+    "candidateTimingGeneration": true,
+    "waveformRenderingConditionalOnV9APass": true,
+    "modelTrainingConditionalOnRenderVerification": true,
+    "syntheticSanity": true,
+    "v2bDevelopmentEvaluationConditionalOnSyntheticSanity": true,
+    "maxModels": 2,
+    "maxOptimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "automaticScientificRetry": false,
+    "thresholdSearch": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
