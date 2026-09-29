@@ -1,0 +1,37 @@
+{
+  "schema": "astra-v12-preflight-result-v1",
+  "date": "2026-09-29",
+  "status": "model-free-preflight-passed-empirical-execution-not-authorized",
+  "runId": 36537123050,
+  "jobId": 109303603997,
+  "headSha": "250b08ddd7aca913ea0382122a259ca6e7a50f2a",
+  "conclusion": "success",
+  "artifactId": 11018394264,
+  "artifactDigest": "sha256:b50fe403922d929fb2864b77868f83f57af23b20b240fbfe42f6e8aa8224959e",
+  "artifactExpiresAt": "2026-10-29T07:32:15Z",
+  "validated": {
+    "historicalPositiveFramesTotal": 525,
+    "targetPositiveSlotsTotal": 16000,
+    "targetPositiveSlots": {
+      "isolated": 914,
+      "scales": 3657,
+      "chords": 1829,
+      "repeated": 3657,
+      "legato": 914,
+      "palmmute": 4572,
+      "mixed": 457
+    },
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "waveformRendering": 0,
+    "v2bInference": 0
+  },
+  "empiricalExecutionAuthorized": false,
+  "boundaries": {
+    "v2b": false,
+    "realAudio": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
