@@ -1,0 +1,19 @@
+{
+  "schema": "astra-v2c-preflight-landmark-support-correction-v1",
+  "date": "2026-09-28",
+  "status": "frozen-before-grid-metrics",
+  "issue": {
+    "clipId": "C06",
+    "eventStart": 0.042667,
+    "pitch": 37,
+    "confidence": "high",
+    "reason": "Pinned six-string model output space is standard E2 through fretted range; MIDI 37 has no compatible string/fret output state."
+  },
+  "action": "exclude-from-pitch-calibration-scoring-as-model-unrepresentable",
+  "trustedPitchLandmarksPreviously": 57,
+  "trustedPitchLandmarksScorable": 56,
+  "selectionRuleChanged": false,
+  "thresholdsChanged": false,
+  "candidateChanged": false,
+  "note": "The first V2C execution attempt stopped with an empty-compatible-position validation error before grid metrics or a selected pair were produced. This correction is support-domain validation, not result-responsive threshold tuning."
+}
