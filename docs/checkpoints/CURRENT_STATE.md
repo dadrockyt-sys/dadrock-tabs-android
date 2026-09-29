@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9 FROZEN FAIL; V10 COMPLETE — EXPOSURE HYPOTHESIS NOT SUPPORTED; NO V2B**
+Status: **V9/V10 FROZEN; POST-V10 INTEGRITY REVIEW COMPLETE; NO NEW PROJECT OPEN**
 
-Latest resume instructions are in **V10 exposure-isolation empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
+Latest resume instructions are in **Post-V10 causal/contract-integrity review complete — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -5340,3 +5340,99 @@ Do not:
 - mutate main or Production.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, perform documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
+
+
+## Post-V10 causal/contract-integrity review complete — 2026-09-29
+
+**Current resume authority. Documentation/review only; no new project opened.**
+
+Completed:
+- `docs/astra/POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1.md`
+- `docs/astra/POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1.json`
+
+V9 and V10 result files were amended only with interpretive qualifications; their numeric results remain unchanged.
+
+### New source-level finding: V9 legato contract mismatch
+
+The frozen V9 contract said the non-attacked legato continuation should remain a state-label event.
+
+The executed V9 template builder instead filters S0 prototypes to `attack=true` and never re-adds the original non-attacked legato continuation.
+
+Therefore:
+- V9 timing measurements remain valid for the generated attack groups;
+- V9/V10 empirical metrics remain valid observations of executed code;
+- do **not** claim exact V9 conformance to the frozen family-state semantic contract;
+- treat state-duration / continuation semantics as unresolved and scientifically relevant.
+
+Historical S0 state durations:
+- isolated ~1.03 s
+- scales 0.27 s
+- chords 0.48 s
+- repeated ~0.31 s
+- legato attacked 0.50 s + non-attacked continuation 0.74 s
+- palmmute 0.16 s
+- mixed-positive ~0.86 s
+
+Implemented V9 uses one attacked-note sustain support [0.12, 0.48] s and omits the original non-attacked legato continuation.
+
+### New causal qualification: V10 was not a pure label-mass intervention
+
+V10 raised sampled attacked-note labels from 17,676 to 19,702 by changing positive-onset frame selection:
+- 1,851 three-label frames
+- 14,149 one-label frames
+
+In this corpus, three-label positive frames are chord attacks. Therefore V10 also changed positive-onset chord/content mixture.
+
+Narrow supported conclusion:
+- the **specific chord-enriched label-count matching scheme** did not materially rescue V9.
+
+Do not overstate this as proving that all pure positive-label gradient-mass explanations are false.
+
+### Cross-population evidence
+
+The same V9 control performs substantially better on the V9-domain test than the common old 2-second comparator test:
+
+Common comparator test:
+- precision 0.324427
+- recall 0.658915
+- F1 0.434783
+
+V9 test:
+- precision 0.486631
+- recall 0.705426
+- F1 0.575949
+
+V9-domain minus common:
+- precision +0.162204
+- recall +0.046512
+- F1 +0.141167
+
+This is consistent with a synthetic-domain distribution shift. It does not identify the causal component.
+
+### Preferred next scientific question if a new project is later authorized
+
+Do **not** open V11 automatically.
+
+Preferred next one-variable topic:
+
+> With executed V9 attack timing/counts and all other training/evaluation settings fixed, does restoring historical family-specific state-duration and legato-continuation semantics materially recover common-population precision/F1?
+
+A future contract must preserve the successful V9 attack-timing manifest, explicitly define overlap/next-attack behavior, restore legato continuation by construction, freeze one arm only, and require the same fixed common 2-second population as primary synthetic sanity.
+
+Secondary possible future question:
+- keep exact frozen V9 batch indices and change only preregistered positive-onset loss mass, avoiding chord-family resampling.
+
+Neither project is opened or authorized by this review.
+
+### Execution counts for this review
+
+- waveform renders 0
+- models trained 0
+- optimizer steps 0
+- model inference 0
+- V2B inference 0
+- workflow dispatches 0
+
+V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
+
+**Resume instruction:** Stop here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, prospectively define/freeze its contract first; preferred topic is state-duration / legato-continuation semantics under the already successful V9 attack timing. No V2B and no automatic V11 execution.
