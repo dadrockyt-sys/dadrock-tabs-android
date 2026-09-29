@@ -1,0 +1,51 @@
+{
+  "schema": "astra-real-domain-transfer-calibration-diagnosis-v2a-runtime-reproduction-receipt-v1",
+  "date": "2026-09-28",
+  "status": "blocked-before-model-inference",
+  "targetRuntime": {
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu",
+    "librosa": "0.9.1",
+    "numpy": "1.21.6",
+    "scipy": "1.8.1",
+    "resampy": "0.4.3"
+  },
+  "localRuntime": {
+    "python": "3.13.5"
+  },
+  "attempts": [
+    {
+      "method": "local-existing-runtime-discovery",
+      "result": "no python3.10 interpreter present"
+    },
+    {
+      "method": "uv-python-install-3.10.15",
+      "result": "failed",
+      "reason": "sandbox outbound network/DNS unavailable"
+    },
+    {
+      "method": "repo-vendored-runtime-search",
+      "result": "none-found",
+      "searched": [
+        "python3.10",
+        "torch-1.11.0",
+        "numpy-1.21.6",
+        "librosa-0.9.1",
+        "wheelhouse",
+        "requirements.lock.txt"
+      ]
+    }
+  ],
+  "modelInferenceCount": 0,
+  "optimizerSteps": 0,
+  "thresholdsChanged": false,
+  "decoderChanged": false,
+  "candidateChanged": false,
+  "v1_1TunedOn": false,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false,
+  "a2Opened": false,
+  "conclusion": "Exact-runtime V2A cannot be executed in the current local sandbox without obtaining the historical runtime packages externally. No substitute runtime rerun was performed.",
+  "nextDecision": "Either authorize V2B fresh calibration-development collection, or provide/enable a Python 3.10 historical-runtime environment that can access the existing uploaded V1.1 audio without publishing it."
+}
