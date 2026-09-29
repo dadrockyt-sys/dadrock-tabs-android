@@ -2177,3 +2177,102 @@ The next scientifically useful project would require a prospectively redesigned 
 - main/Production unchanged
 
 **Resume instruction:** Stop at the V7A no-advance boundary. Any experiment that changes synthetic clip duration/curriculum structure, or any fresh real-domain training study, is a new project decision and requires explicit authorization.
+
+
+## V8 empirical execution complete at V8A — no arm advances — 2026-09-29
+
+The user explicitly authorized the longer-duration synthetic curriculum project.
+
+Frozen design/results:
+- `docs/astra/LONG_DURATION_SYNTHETIC_CURRICULUM_V8_DESIGN_V1.md`
+- `docs/astra/LONG_DURATION_SYNTHETIC_CURRICULUM_V8_DESIGN_V1.json`
+- `astra_backend/synthetic/v8_long_duration_timing_screen_v1.py`
+- `docs/astra/V8A_LONG_DURATION_TIMING_SCREEN_RESULT_V1.json`
+- `docs/astra/V8_LONG_DURATION_SYNTHETIC_CURRICULUM_RESULT_V1.md`
+
+Accepted V8A workflow:
+- run **36523314347**
+- job **109260764079**
+- head `8e110132c778b7158a431a99e81bf2fe182e27d5`
+- artifact **11012914117**
+- artifact digest `sha256:56ff7a8c938a4818ab4d4cb4bf17a59a959b57482c0b40a38a301ba9e674e640`
+- conclusion **success**
+
+Earlier workflow attempts failed before producing accepted scientific output because the timing-only screen unnecessarily imported the audio frontend. The accepted runner is standalone model-free timing code. A pre-accepted accounting bug that collapsed simultaneous chord onset references was also corrected before the accepted result.
+
+### V8A
+
+L0 2-second baseline:
+- onset density **1.65385/s**
+- IOI p50 **0.3400 s**
+- IOI p90 **0.4000 s**
+- repeats <=250 ms **26.67%**
+- timing distance **1.13309**
+
+L1 4-second curriculum:
+- onset density **1.63462/s**
+- IOI p50 **0.3400 s**
+- IOI p90 **0.85157 s**
+- repeats <=250 ms **38.89%**
+- boundary fallbacks **13/273 = 4.76%**
+- timing distance **0.49263**
+- relative timing-distance improvement **56.52%**
+- passes distance/repetition/p90/rate/validity conditions
+- **fails frozen <=2% fallback-rate condition**
+- does not advance
+
+L2 6-second curriculum:
+- onset density **1.64103/s**
+- IOI p50 **0.3400 s**
+- IOI p90 **0.91007 s**
+- repeats <=250 ms **36.52%**
+- boundary fallbacks **40/273 = 14.65%**
+- timing distance **0.51497**
+- relative timing-distance improvement **54.55%**
+- fails repeated-error improvement threshold and fallback-rate condition
+- does not advance
+
+Frozen V2B timing targets:
+- onset density **1.49059/s**
+- IOI p50 **0.2560 s**
+- IOI p90 **0.88236 s**
+- repeats <=250 ms **47.02%**
+
+### V8 decision
+
+**No arm advances.**
+
+Therefore:
+- no V8 waveform corpus rendered
+- no V8B paired training
+- no V8C synthetic sanity
+- no V8D V2B inference
+- waveform renders: 0
+- optimizer steps: **0**
+- model inference: **0**
+
+### Supported interpretation
+
+Longer clip duration removes much of the long-tail timing limitation. L1 and L2 both move IOI p90 near the V2B target and more than halve the frozen timing distance.
+
+However, the frozen motif-placement scheme requires too many post-placement boundary corrections, so neither arm passes the prospective integrity gate.
+
+This supports only the narrow conclusion that clip duration was part of the structural timing constraint. It does **not** establish that longer-duration training improves real transfer.
+
+A next project should either:
+1. prospectively redesign motif placement so long-duration timing is generated natively with essentially no fallback; or
+2. separately design a fresh real-domain training study.
+
+### Guards
+
+- no waveform corpus rendered
+- no optimizer work
+- no model inference
+- no threshold/loss/renderer/architecture/decoder changes
+- no real audio training
+- V1.1 remains sealed
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+**Resume instruction:** Stop at the V8A no-advance boundary. Any fallback-free long-duration curriculum redesign or fresh real-domain training study is a new project decision and requires explicit authorization.
