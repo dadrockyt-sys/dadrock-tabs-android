@@ -1,0 +1,49 @@
+{
+  "schema": "astra-independent-real-development-collected-audio-correction-v2",
+  "date": "2026-09-28",
+  "status": "pre-inference-clerical-correction",
+  "supersedesFieldsIn": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_COLLECTED_AUDIO_V1.json",
+  "corrections": [
+    {
+      "id": "P02",
+      "field": "sha256",
+      "old": "a6dd0898f55cc9e5b18d46b261b8ae9ca4d71a6218e73542ba4c0439cd44b46b",
+      "new": "e4a57932d02b3e925d9e76a04067bd623fe1023c9e37da19f4011e93a8e0483e",
+      "reason": "recomputed directly from uploaded bytes"
+    },
+    {
+      "id": "P05",
+      "field": "evaluationEndSeconds",
+      "old": 9.561,
+      "new": 9.560813,
+      "reason": "nominal endpoint exceeded decoded MP3 duration by 0.000187 s"
+    },
+    {
+      "id": "P09",
+      "field": "evaluationEndSeconds",
+      "old": 9.885,
+      "new": 9.874281,
+      "reason": "nominal endpoint exceeded decoded MP3 duration"
+    },
+    {
+      "id": "P11",
+      "field": "evaluationEndSeconds",
+      "old": 7.479,
+      "new": 7.471,
+      "reason": "nominal endpoint exceeded decoded MP3 duration"
+    },
+    {
+      "id": "N05",
+      "field": "evaluationEndSeconds",
+      "old": 7.367,
+      "new": 7.366531,
+      "reason": "nominal endpoint exceeded decoded MP3 duration"
+    }
+  ],
+  "correctedTotals": {
+    "positiveEvaluationSeconds": 145.41509400000004,
+    "negativeEvaluationSeconds": 41.366531
+  },
+  "modelInferenceCount": 0,
+  "interpretation": "All corrections were made before candidate-model output and therefore do not constitute result-responsive relabeling."
+}
