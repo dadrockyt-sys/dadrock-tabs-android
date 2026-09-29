@@ -2,10 +2,35 @@
   "schema": "astra-post-v8-measurement-review-v1",
   "date": "2026-09-29",
   "status": "complete-v9-not-launch-ready",
-  "scope": {"audioDecoded": false, "newAnnotation": false, "modelInferenceCount": 0, "optimizerSteps": 0, "workflowDispatches": 0},
+  "scope": {
+    "audioDecoded": false,
+    "newAnnotation": false,
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "workflowDispatches": 0
+  },
   "v2b": {
-    "positiveIds": ["C01","C02","C03","C04","C05","C06","C07","C08","C09","C10","C11","C12","C13"],
-    "negativeIds": ["D01","D02","D03","D04"],
+    "positiveIds": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C12",
+      "C13"
+    ],
+    "negativeIds": [
+      "D01",
+      "D02",
+      "D03",
+      "D04"
+    ],
     "positiveCount": 13,
     "negativeCount": 4,
     "onsetLandmarks": 164,
@@ -15,10 +40,30 @@
     "v6ScoredHighRefs": 49,
     "correctedPositiveSeconds": 110.023183673,
     "correctedNegativeSeconds": 31.857959184,
-    "corrections": {"C04": 5.799183673469388, "D01": 8.097959183673469}
+    "corrections": {
+      "C04": 5.799183673469388,
+      "D01": 8.097959183673469
+    },
+    "scoringProvenance": {
+      "rawTrustedPitchLandmarks": 57,
+      "rawHighConfidencePitchLandmarks": 50,
+      "scorableTrustedRefs": 56,
+      "scorableHighRefs": 49,
+      "excluded": {
+        "clipId": "C06",
+        "eventStart": 0.042667,
+        "pitch": 37,
+        "confidence": "high",
+        "category": "unrepresentableLandmarkExcluded"
+      },
+      "source": "docs/astra/V2C_CALIBRATION_DIAGNOSTIC_RESULT_V1.json"
+    }
   },
   "measurementContract": {
-    "units": ["note-label", "acoustic-attack-group"],
+    "units": [
+      "note-label",
+      "acoustic-attack-group"
+    ],
     "proposedSimultaneousToleranceSeconds": 0.01,
     "cropOrigin": "evaluation-crop-local",
     "endpoint": "half-open [0,duration)",
@@ -41,11 +86,21 @@
     "v8NoAdvancePreserved": true
   },
   "gaps": [
-    "57/50 raw pitch landmarks to 56/49 scored reference exclusion trace is incomplete in committed V6 result",
     "exact full V6 timing orchestration source not located in active synthetic directory",
     "exact V7 timing-screen source not retained alongside result; only script hash/manifests recorded",
     "common-unit corrected V2B versus synthetic timing table not yet frozen"
   ],
-  "readiness": {"v9EmpiricalExecutionReady": false, "nextStep": "PRE-V9-MEASUREMENT-V1 model-free common-unit remeasurement from committed records only"},
-  "guards": {"v1_1Used": false, "p1": false, "p2": false, "p3": false, "a2": false, "mainMutation": false, "productionMutation": false}
+  "readiness": {
+    "v9EmpiricalExecutionReady": false,
+    "nextStep": "PRE-V9-MEASUREMENT-V1 model-free common-unit remeasurement from committed records only"
+  },
+  "guards": {
+    "v1_1Used": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
 }
