@@ -1,0 +1,127 @@
+{
+  "schema": "astra-v7a-event-timing-screen-result-v1",
+  "date": "2026-09-29",
+  "status": "completed-no-advancing-arm",
+  "frozenV2bTargets": {
+    "aggregateOnsetsPerSecond": 1.4905949321319818,
+    "interOnsetIntervalP50Seconds": 0.2560000000000002,
+    "interOnsetIntervalP90Seconds": 0.882358,
+    "repeatedAttackFractionWithin250ms": 0.47019867549668876
+  },
+  "correction": {
+    "description": "Initial local summary incorrectly included the 21 negative-only synthetic clips in the onset-density denominator. The corrected screen uses the 273 positive clips / 546 s, matching the frozen V6C comparison population.",
+    "scientificRulesChanged": false,
+    "armParametersChanged": false,
+    "modelOutputViewed": false
+  },
+  "arms": {
+    "E0": {
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "clipRateP10": 0.5,
+      "clipRateP50": 2,
+      "clipRateP90": 3,
+      "interOnsetIntervalP10": 0,
+      "interOnsetIntervalP50": 0.3400000000000001,
+      "interOnsetIntervalP90": 0.4,
+      "repeatedAttackFractionWithin250ms": 0.26666666666666666,
+      "fractionIoiAtLeast700ms": 0.06666666666666667,
+      "simultaneousEventFraction": 0.26666666666666666,
+      "clipBoundaryFallbackCount": 0,
+      "timingDistance": 1.1330866988352755
+    },
+    "E1": {
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "clipRateP10": 0.5,
+      "clipRateP50": 2,
+      "clipRateP90": 3,
+      "interOnsetIntervalP10": 0,
+      "interOnsetIntervalP50": 0.18219760036255395,
+      "interOnsetIntervalP90": 0.4,
+      "repeatedAttackFractionWithin250ms": 0.6047619047619047,
+      "fractionIoiAtLeast700ms": 0.044444444444444446,
+      "simultaneousEventFraction": 0.26666666666666666,
+      "clipBoundaryFallbackCount": 0,
+      "timingDistance": 1.0242835428542445,
+      "advancementChecks": {
+        "timingDistanceRelativeImprovementAtLeast0_30": false,
+        "repeatedAttackAbsoluteErrorImprovementAtLeast0_10": false,
+        "ioiP90AbsoluteErrorImprovementSecondsAtLeast0_20": false,
+        "aggregateOnsetsPerSecondWithin15Percent": true
+      },
+      "qualifies": false
+    },
+    "E2": {
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "clipRateP10": 0.5,
+      "clipRateP50": 2,
+      "clipRateP90": 3,
+      "interOnsetIntervalP10": 0,
+      "interOnsetIntervalP50": 0.3400000000000001,
+      "interOnsetIntervalP90": 0.4,
+      "repeatedAttackFractionWithin250ms": 0.26666666666666666,
+      "fractionIoiAtLeast700ms": 0.06666666666666667,
+      "simultaneousEventFraction": 0.26666666666666666,
+      "clipBoundaryFallbackCount": 94,
+      "timingDistance": 1.1330866988352755,
+      "advancementChecks": {
+        "timingDistanceRelativeImprovementAtLeast0_30": false,
+        "repeatedAttackAbsoluteErrorImprovementAtLeast0_10": false,
+        "ioiP90AbsoluteErrorImprovementSecondsAtLeast0_20": false,
+        "aggregateOnsetsPerSecondWithin15Percent": true
+      },
+      "qualifies": false
+    },
+    "E3": {
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "clipRateP10": 0.5,
+      "clipRateP50": 2,
+      "clipRateP90": 3,
+      "interOnsetIntervalP10": 0,
+      "interOnsetIntervalP50": 0.18118270689874474,
+      "interOnsetIntervalP90": 0.4,
+      "repeatedAttackFractionWithin250ms": 0.6047619047619047,
+      "fractionIoiAtLeast700ms": 0.08412698412698413,
+      "simultaneousEventFraction": 0.26666666666666666,
+      "clipBoundaryFallbackCount": 57,
+      "timingDistance": 1.0282479704472491,
+      "advancementChecks": {
+        "timingDistanceRelativeImprovementAtLeast0_30": false,
+        "repeatedAttackAbsoluteErrorImprovementAtLeast0_10": false,
+        "ioiP90AbsoluteErrorImprovementSecondsAtLeast0_20": false,
+        "aggregateOnsetsPerSecondWithin15Percent": true
+      },
+      "qualifies": false
+    }
+  },
+  "qualifyingArms": [],
+  "selectedArm": null,
+  "execution": {
+    "positiveSyntheticClips": 273,
+    "positiveSyntheticSeconds": 546,
+    "positiveReferenceEvents": 903,
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "timingParameterSearch": false
+  },
+  "localEvidence": {
+    "executedScriptSha256": "93b2b6008f78bdef2d3cff7fa694a340beeb269eaea505b3fbc8897b899a3df3",
+    "correctedResultSha256": "7b4a52264b43c463740d5bf3abdb2f3edcebe0028904d907e9f01d75ecb6fc45",
+    "manifestSha256": {
+      "E0": "596b6ff5ee935364d5ece217a806f3c9d2dc40189a4a388523dd4b3c96ef71b6",
+      "E1": "d0e4dbb867c5c228c124eab360b4539ecbd1880593cba8b190b0a486d7126c95",
+      "E2": "cfc167bea39978685b35a508d78af91c23152d8ea223838de62a6537f1f4b866",
+      "E3": "dd1bf82b851a8b16c87700479e8ee0cd2a2e26386a2adda0f4f0f264c2e7e243"
+    }
+  },
+  "guards": {
+    "v1_1Used": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "nextAction": "Stop V7 before training because no non-baseline timing arm satisfies the frozen V7A advancement rule."
+}
