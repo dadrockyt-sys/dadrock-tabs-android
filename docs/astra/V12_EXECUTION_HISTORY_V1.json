@@ -1,7 +1,7 @@
 {
   "schema": "astra-v12-execution-history-v1",
   "date": "2026-09-29",
-  "status": "launch-scope-consumed-before-dispatch",
+  "status": "completed-family-mixture-hypothesis-not-supported",
   "consumedLaunchIdentities": [
     "v12-family-mixture-v1-20260929-01"
   ],
@@ -15,7 +15,24 @@
       "preflightArtifactId": 11018394264,
       "preflightArtifactDigest": "sha256:b50fe403922d929fb2864b77868f83f57af23b20b240fbfe42f6e8aa8224959e",
       "preflightConclusion": "success",
-      "scientificRetry": false
+      "scientificRetry": false,
+      "empiricalRun": {
+        "runId": 36537632082,
+        "jobId": 109305235382,
+        "headSha": "d08dd9dc0f8318e094070cc96e30bf8713d581e7",
+        "conclusion": "success",
+        "artifactId": 11018959307,
+        "artifactDigest": "sha256:1085e801d644b52a48e007f200334ccf4a5fe3c1ed753ae90533a1b58482fa6d",
+        "models": 2,
+        "optimizerStepsTotal": 1000,
+        "familyMixtureHypothesisSupported": false,
+        "baselineReproducedExactly": true,
+        "controlAttackedNoteLabels": 17676,
+        "interventionAttackedNoteLabels": 19658,
+        "v2bInferencePerformed": false,
+        "realAudioInference": 0
+      },
+      "resultPath": "docs/astra/V12_FAMILY_MIXTURE_RESULT_V1.json"
     }
   ]
 }
