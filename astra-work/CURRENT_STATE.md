@@ -4447,3 +4447,103 @@ This review used:
 Main/Production unchanged.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, freeze the negative-structure-inactive family-mixture study first. Empirical execution must still wait for fresh authorization after that contract/preflight is visible.
+
+
+## Explicit next steps — saved 2026-09-29
+
+These are the exact next steps to follow from the current frozen state.
+
+1. **Do not execute any model work at a generic “continue”.**
+   - No rendering.
+   - No dataset regeneration.
+   - No optimizer steps.
+   - No inference.
+   - No V2B.
+   - No threshold/sampler/loss retuning.
+   - No mutation of main or Production.
+
+2. **Preserve all frozen historical results exactly as they are.**
+   - V9 = frozen FAIL at synthetic sanity.
+   - V10 = frozen negative diagnostic for attacked-label exposure matching.
+   - V11 = frozen negative diagnostic for historical state-duration / legato-continuation restoration.
+   - V12 = frozen negative diagnostic for positive-onset family-mixture restoration.
+   - V13 = frozen negative diagnostic for active-non-onset family-mixture restoration.
+
+3. **If the user explicitly authorizes a new project, open V14 prospectively.**
+   Preferred V14 question:
+
+   > With the exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical comparator negative-structure-inactive family mixture materially recover common-population precision/F1 while preserving the negative-only false-positive ceiling?
+
+4. **Freeze V14 before any empirical execution.**
+   The V14 contract should specify one intervention only:
+   - control = exact executed-V9 batch plan;
+   - intervention changes only `negativeStructureInactive` selections;
+   - exactly 16,000 negative-structure-inactive slots in each arm;
+   - historical target allocation:
+     - legato **3,521**
+     - palmmute **5,385**
+     - mixed **7,094**
+   - positive-onset selections identical across arms;
+   - active-non-onset selections identical across arms;
+   - other-inactive selections identical across arms;
+   - same per-step 128-frame permutation;
+   - sampled attacked-note-label exposure identical;
+   - same V9 dataset arrays;
+   - same initialization/model/loss/thresholds/optimizer;
+   - exactly 500 updates/model, exactly 2 models;
+   - no threshold search;
+   - no scientific retry;
+   - no V2B or real-audio inference.
+
+5. **Run only a model-free preflight after V14 is prospectively frozen.**
+   Preflight must verify:
+   - contract/source pins;
+   - exact 16,000-slot arithmetic;
+   - exact 3,521 / 5,385 / 7,094 family allocation;
+   - zero waveform renders;
+   - zero optimizer steps;
+   - zero model inference;
+   - zero V2B inference.
+
+6. **Require a fresh explicit user authorization after the V14 contract and preflight are visible before empirical execution.**
+   Do not treat the authorization that opens V14 as empirical-training authorization.
+
+7. **If later empirically authorized, V14 control must reproduce frozen V9 exactly before interpreting the intervention.**
+   Required common comparator-test reproduction within 1e-12:
+   - precision **0.3244274809160305**
+   - recall **0.6589147286821705**
+   - F1 **0.43478260869565216**
+
+8. **Use the same material-recovery gate unless the future contract prospectively freezes a different justified gate before execution.**
+   Current recommended gate:
+   - common precision gain >= **+0.15**
+   - common F1 gain >= **+0.10**
+   - common recall decline <= **0.05**
+   - common negative-only FP <= **0.10/s**
+   - frozen-V9 test F1 decline <= **0.05**
+   - exact 500 updates/model
+   - exact 2 models
+   - finite metrics
+   - identical attacked-note-label exposure
+   - no threshold search/retry.
+
+9. **If V14 also fails, stop serial one-factor sampler micro-studies.**
+   Do not automatically open V15.
+
+   The preferred next scientific direction after a V14 failure should become a prospectively frozen **composite context/domain-shift study**, such as:
+   - a matched 2-second-context control using the successful V9 attack timing principles; or
+   - a whole-package matched-context factorial design.
+
+   The purpose would be to test whether the remaining failure is driven by the broader 2-second-to-4-second synthetic corpus/context construction rather than one isolated sampler statistic.
+
+10. **Keep causal wording narrow.**
+    Current evidence weakens simple explanations based on:
+    - marginal attack timing mismatch;
+    - attacked-note-label exposure alone;
+    - state-duration / legato-continuation semantics alone;
+    - positive-onset family mixture alone;
+    - active-non-onset family mixture alone.
+
+    Do not claim the true cause is known.
+
+**Immediate resume rule:** At the next generic “continue”, documentation/review only. At the next explicit authorization to open a project, prospectively define/freeze V14 negative-structure-inactive family-mixture isolation, run model-free preflight only, then stop for fresh empirical authorization.
