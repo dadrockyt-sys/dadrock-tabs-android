@@ -55,12 +55,12 @@ jobs:
           python -m pip check
       - name: Run pure final-contract tests
         run: |
-          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
-          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
       - name: Run model-free V9 static verification
         run: |
           mkdir -p /tmp/v9-preflight
-          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py verify             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/v9-preflight/preflight.json
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v9_empirical_v1.py verify             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/v9-preflight/preflight.json
           python - <<'PY'
           import json
           x=json.load(open('/tmp/v9-preflight/preflight.json'))
