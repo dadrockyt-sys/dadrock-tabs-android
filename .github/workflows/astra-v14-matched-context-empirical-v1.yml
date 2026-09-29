@@ -1,0 +1,31 @@
+name: Astra V14 matched-context empirical v1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v14:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install bounded dependencies
+        run: pip install --disable-pip-version-check numpy scipy torch
+      - name: Fail-closed pure validator tests
+        run: python -m unittest -v astra_backend.synthetic.test_v14_contract_validator_v1
+      - name: Execute frozen V14
+        run: python -m astra_backend.synthetic.v14_empirical_v1 --contract docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json --outdir v14_result
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-v14-matched-context-result-v1
+          path: v14_result
+          retention-days: 30
