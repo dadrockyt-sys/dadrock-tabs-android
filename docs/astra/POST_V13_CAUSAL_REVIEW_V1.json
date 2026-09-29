@@ -1,0 +1,52 @@
+{
+  "schema": "astra-post-v13-causal-review-v1",
+  "date": "2026-09-29",
+  "status": "documentation-review-only-no-v14-opened",
+  "historicalNegativeStructureInactiveByFamily": {
+    "legato": 1020,
+    "palmmute": 1560,
+    "mixed": 2055,
+    "total": 4635
+  },
+  "executedV9NegativeStructureInactiveByFamily": {
+    "legato": 3907,
+    "palmmute": 2403,
+    "mixed": 4558,
+    "total": 10868
+  },
+  "historicalNegativeStructureInactiveTargetSlots16000": {
+    "legato": 3521,
+    "palmmute": 5385,
+    "mixed": 7094,
+    "total": 16000
+  },
+  "preferredFutureQuestion": "With exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical comparator negative-structure-inactive family mixture materially recover common-population precision/F1 while preserving the negative-only false-positive ceiling?",
+  "preferredIntervention": {
+    "changeOnlyStratum": "negativeStructureInactive",
+    "slotsPerArm": 16000,
+    "keepPositiveOnsetSelectionsIdentical": true,
+    "keepActiveNonOnsetSelectionsIdentical": true,
+    "keepOtherInactiveSelectionsIdentical": true,
+    "keepPerStepShuffleIdentical": true,
+    "keepAttackedNoteLabelExposureIdentical": true,
+    "regenerateInterventionAudio": false,
+    "primaryEvaluation": "frozen 2-second comparator test",
+    "secondaryEvaluation": "frozen V9 test",
+    "v2b": false
+  },
+  "fallbackInterpretationIfFutureStudyFails": "Evidence would increasingly favor a composite 2-second versus 4-second corpus/context domain shift rather than one isolated sampler statistic.",
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0,
+    "workflowDispatches": 0
+  },
+  "boundaries": {
+    "v14Opened": false,
+    "v2b": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
