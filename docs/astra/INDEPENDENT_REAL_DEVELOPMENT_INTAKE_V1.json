@@ -1,15 +1,15 @@
 {
   "schema": "astra-independent-real-development-intake-v1",
-  "date": null,
-  "status": "template-awaiting-new-independent-real-development-clips",
+  "date": "2026-09-28",
+  "status": "structurally-valid-annotations-frozen-pending-human-polyphonic-qa",
   "design": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_EVALUATION_V1.json",
   "independence": {
-    "createdOrSourcedAfterDesignFreeze": false,
-    "noP1Overlap": false,
-    "noP2Overlap": false,
-    "noP3Overlap": false,
-    "noPreviouslyInspectedOrTunedAudio": false,
-    "declaration": null
+    "createdOrSourcedAfterDesignFreeze": true,
+    "noP1Overlap": true,
+    "noP2Overlap": true,
+    "noP3Overlap": true,
+    "noPreviouslyInspectedOrTunedAudio": true,
+    "declaration": "All 24 admitted clips were sourced from the prospectively frozen post-design web shortlist and uploaded after the design freeze. No P1/P2/P3, synthetic renders, or previously tuned/evaluated audio are included."
   },
   "candidate": {
     "name": "S9 30-voicing intervention",
@@ -21,20 +21,1017 @@
     "stateThreshold": 0.5,
     "onsetThreshold": 0.5
   },
-  "clips": [],
-  "summary": {
-    "clipCount": 0,
-    "positiveClipCount": 0,
-    "negativeOnlyClipCount": 0,
-    "positiveAudioSeconds": 0,
-    "negativeAudioSeconds": 0,
-    "coverage": []
+  "candidatePin": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_CANDIDATE_PIN_V1.json",
+  "annotationFile": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_MODEL_FREE_ANNOTATIONS_V1.json",
+  "annotationMethod": {
+    "type": "model-free-signal-analysis-draft",
+    "onset": "spectral-flux peak detection",
+    "pitch": "YIN fundamental estimate around onset",
+    "stringFretAnnotated": false,
+    "completeness": "conservative; chordal/polyphonic clips require human QA before scientific inference"
   },
-  "annotationsFrozenBeforeInference": false,
+  "clips": [
+    {
+      "id": "P01",
+      "fileName": "sunnyscy-guitar-riff-in-e-minor-95-bpm-dry-475013.mp3",
+      "sha256": "2beffa59b4186b6c0137fbb431208206183d548cbf2c4307b872d97137486912",
+      "durationSeconds": 10,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "coverage": [
+        "repeated-attacks",
+        "dyad-or-chord",
+        "clean-capture",
+        "single-note"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.325079,
+          "pitch": 52,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.650159,
+          "pitch": 51,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.625397,
+          "pitch": 50,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.867664,
+          "pitch": 48,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.37542,
+          "pitch": 52,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.700499,
+          "pitch": 51,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.664127,
+          "pitch": 50,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.941224,
+          "pitch": 48,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 9.171882,
+          "pitch": 50,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "fileName": "shidenbeatsmusic-jingle-clean-guitar-funky-and-rock-style-21690.mp3",
+      "sha256": "e4a57932d02b3e925d9e76a04067bd623fe1023c9e37da19f4011e93a8e0483e",
+      "durationSeconds": 6.896,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 6.896,
+      "coverage": [
+        "clean-capture",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.15093,
+          "pitch": 43,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.580499,
+          "pitch": 44,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.277098,
+          "pitch": 63,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.555737,
+          "pitch": 43,
+          "confidence": "medium",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.482993,
+          "pitch": 52,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "fileName": "freesound_community-clean-electric-guitar-loop-83895.mp3",
+      "sha256": "b87893e568bb1f8787817921a0f58646442513fab5b065ee469b9085f3a6e13c",
+      "durationSeconds": 5.352,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.352,
+      "coverage": [
+        "clean-capture",
+        "repeated-attacks",
+        "single-note"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.05805,
+          "pitch": 66,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.736871,
+          "pitch": 76,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "fileName": "freesound_community-electric-guitar-metal-riff-107087.mp3",
+      "sha256": "caf07add5b08e8c874c0e2fc955f4ddc8a90a46841fcb29ae4e081957f67ffc2",
+      "durationSeconds": 6.888,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 6.888,
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "repeated-attacks",
+        "single-note"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.267029,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.487619,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.661769,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.870748,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.033288,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.219048,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.368435,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.728345,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.494603,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.842902,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.214422,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "fileName": "farran_ez-midwest-emo-guitar-sample-b-minor-clean-120-bpm-448316.mp3",
+      "sha256": "4b3a5cd15805e8f6d893a009f0d271706addbec1d2a4fbaf228e008f873f5d23",
+      "durationSeconds": 9.560813,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 9.560813,
+      "coverage": [
+        "clean-capture",
+        "dyad-or-chord",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.510839,
+          "pitch": 47,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.766259,
+          "pitch": 62,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.520907,
+          "pitch": 69,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.008526,
+          "pitch": 74,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.496145,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.14322,
+          "pitch": 73,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.526349,
+          "pitch": 74,
+          "confidence": "medium",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.770159,
+          "pitch": 54,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.269388,
+          "pitch": 74,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.524807,
+          "pitch": 59,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.873107,
+          "pitch": 57,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.267846,
+          "pitch": 66,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "fileName": "farran_ez-midwest-emo-guitar-sample-b-minor-clean-120-bpm-448311.mp3",
+      "sha256": "63e6928843e86f3f046b9ddb9615763eb9fe332a0a317f20ba383cfa68e28983",
+      "durationSeconds": 8.986,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.986,
+      "coverage": [
+        "clean-capture",
+        "dyad-or-chord"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.487619,
+          "pitch": 47,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "fileName": "shidenbeatsmusic-guitar-jingle-hard-rock-style-21867.mp3",
+      "sha256": "213e4949090f057c67da04f414c154bde5484c21f1085e1c46bf87cf7a5476cd",
+      "durationSeconds": 5.355,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.355,
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "dyad-or-chord"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 1.393197,
+          "pitch": 40,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.205896,
+          "pitch": 43,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "fileName": "black_kumizhi-electric-guitar-accent-485733.mp3",
+      "sha256": "f519f5350d795cfff926afdf89ab4a3e8d65ec3a495b4eff2e3a6c34fb5f5048",
+      "durationSeconds": 10,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "coverage": [
+        "single-note",
+        "distorted-or-overdriven-capture"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.04644,
+          "pitch": 44,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P09",
+      "fileName": "shidenbeatsmusic-jingle-slide-guitar-22108.mp3",
+      "sha256": "5075eab662729512f74b91e0f964d92497df08ff8e6ba08436b1fbe4279c156c",
+      "durationSeconds": 9.874281,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 9.874281,
+      "coverage": [
+        "clean-capture",
+        "legato",
+        "single-note"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.638549,
+          "pitch": 60,
+          "confidence": "medium",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.149388,
+          "pitch": 45,
+          "confidence": "medium",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.764717,
+          "pitch": 45,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.798005,
+          "pitch": 64,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.482993,
+          "pitch": 58,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.8878,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.549569,
+          "pitch": 65,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.304218,
+          "pitch": 57,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "fileName": "liecio-bossa-nova-eletric-guitar-loop-258055.mp3",
+      "sha256": "b122495827515b9cb50faa533096004be6c0b9c74aeddec6e9f0e1fc886f5928",
+      "durationSeconds": 8.046,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.046,
+      "coverage": [
+        "clean-capture",
+        "dyad-or-chord",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.12771,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.905578,
+          "pitch": 54,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.625397,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.066576,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.821224,
+          "pitch": 55,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.982222,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.433469,
+          "pitch": 55,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.874649,
+          "pitch": 55,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.617687,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.349116,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P11",
+      "fileName": "u_1aiqn32afi-clean-country-lick-bend-289052.mp3",
+      "sha256": "26ad863e1afab80788e3b0e5b14250650546745dd0d0296df2afc6cb1bc8588d",
+      "durationSeconds": 7.471,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.471,
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "legato"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.05805,
+          "pitch": 52,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.592109,
+          "pitch": 57,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P12",
+      "fileName": "imij-legato-in-b-standard-322656.mp3",
+      "sha256": "b944e3e8aeee48c5baca86516658d0ccfe8cb32a8a4618673c38b1a924a57b31",
+      "durationSeconds": 8,
+      "evaluationStartSeconds": 16,
+      "evaluationEndSeconds": 24,
+      "coverage": [
+        "clean-capture",
+        "legato",
+        "single-note"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 5.886259,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.466757,
+          "pitch": 50,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P13",
+      "fileName": "sound_garage-em-guitar-chord-strum-10-309542.mp3",
+      "sha256": "6f17598ee42851ff8ef0a524e0fe459c93ea4f6aee008ceda84bcaa75fa76ec4",
+      "durationSeconds": 8.777,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 8.777,
+      "coverage": [
+        "clean-capture",
+        "dyad-or-chord",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.499229,
+          "pitch": 52,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.592109,
+          "pitch": 52,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P14",
+      "fileName": "freesound_community-aloneintheroomguitar-76694.mp3",
+      "sha256": "5760fec08fcafd2fc60fad349ee2f35fdbc8c391fe67952ec28eaead42c038ce",
+      "durationSeconds": 9.432,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 9.432,
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.04644,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.952018,
+          "pitch": 64,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.857596,
+          "pitch": 62,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.852971,
+          "pitch": 47,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.244626,
+          "pitch": 40,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P15",
+      "fileName": "freesound_community-baritone-guitar-with-mute-36565.mp3",
+      "sha256": "1d3d7510588e3f3edebb88b3b314587ab3298029f5c6c6d0c1054d89dd642d6f",
+      "durationSeconds": 6.672,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 6.672,
+      "coverage": [
+        "palm-mute",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.08127,
+          "pitch": 43,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.754649,
+          "pitch": 45,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.393197,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.973696,
+          "pitch": 48,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.612245,
+          "pitch": 50,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.215964,
+          "pitch": 51,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.761633,
+          "pitch": 41,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.191202,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.585941,
+          "pitch": 44,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.99229,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.387029,
+          "pitch": 47,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.828209,
+          "pitch": 42,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.246168,
+          "pitch": 44,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P16",
+      "fileName": "freesound_community-electric-guitar-strumming-3-97679.mp3",
+      "sha256": "595e493afcc93beea5f9fdf56c10d4edc2d8bc1699b7842ac01145b87f175ec2",
+      "durationSeconds": 9.552,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 9.552,
+      "coverage": [
+        "dyad-or-chord",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.04644,
+          "pitch": 52,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P17",
+      "fileName": "mleckert82-guitar-riff-154303.mp3",
+      "sha256": "4988b54060d8bf557d6057876c2e128cb77b76ffa244f5cfc38a4ef9273b9dac",
+      "durationSeconds": 7.497,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.497,
+      "coverage": [
+        "clean-capture",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 0.10449,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 0.766259,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.462857,
+          "pitch": 49,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.822766,
+          "pitch": 51,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 1.915646,
+          "pitch": 45,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 2.612245,
+          "pitch": 44,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.308844,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.738413,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.191202,
+          "pitch": 50,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.458231,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 5.12,
+          "pitch": 49,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.304218,
+          "pitch": 44,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.000816,
+          "pitch": 46,
+          "confidence": "high",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 7.383946,
+          "pitch": 46,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "P18",
+      "fileName": "freesound_community-8-string-distortion-guitar-e1-37501.mp3",
+      "sha256": "2241af79e50e964010ba1f33969f876e9b49baf953c753d2052b774c7011125e",
+      "durationSeconds": 7.056,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.056,
+      "coverage": [
+        "distorted-or-overdriven-capture",
+        "single-note",
+        "repeated-attacks"
+      ],
+      "kind": "positive",
+      "annotations": [
+        {
+          "eventStart": 1.346757,
+          "pitch": 54,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.018594,
+          "pitch": 52,
+          "confidence": "medium",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 3.424943,
+          "pitch": 53,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 4.667211,
+          "pitch": 51,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        },
+        {
+          "eventStart": 6.350658,
+          "pitch": 43,
+          "confidence": "low",
+          "method": "model-free-yin-onset"
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "fileName": "dragon-studio-typing-with-keyboard-435489.mp3",
+      "sha256": "e83edbca5bc5718ba74dcfd7c3b1ffdb448ff02862c980f311d64ca5a6477742",
+      "durationSeconds": 5.424,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.424,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    },
+    {
+      "id": "N02",
+      "fileName": "dragon-studio-atmospheric-drums-443147.mp3",
+      "sha256": "e75a870de682648ee257f52d1887bbd6b7e7523fdc0dd361310afe365efdcde2",
+      "durationSeconds": 5.592,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.592,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    },
+    {
+      "id": "N03",
+      "fileName": "pwlpl-applause-sound-effect-521104.mp3",
+      "sha256": "bb08279f242e5be1b6fc301f65186c88f9aa656af6320879c4a087fd89d90146",
+      "durationSeconds": 5.04,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 5.04,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    },
+    {
+      "id": "N04",
+      "fileName": "freesound_community-short-crowd-cheer-6713.mp3",
+      "sha256": "de5cfa07e0fe6fcebb5629e6a7a6cee3ac6831444494f97b7b0663b36c90095b",
+      "durationSeconds": 7.944,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.944,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    },
+    {
+      "id": "N05",
+      "fileName": "freesound_community-speech-dramatic-female-38105.mp3",
+      "sha256": "0a5471a70a6b96ad5658a3e0d7b4bd265fa13f1976620cf16b03e9ede8515c28",
+      "durationSeconds": 7.366531,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 7.366531,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    },
+    {
+      "id": "N06",
+      "fileName": "matthewvakaliuk73627-computer-keyboard-typing-290582.mp3",
+      "sha256": "29ac688e489708e8cae9ff6061efd470b207d188e82e57bcb3f5ffbd3d36c57b",
+      "durationSeconds": 10,
+      "evaluationStartSeconds": 0,
+      "evaluationEndSeconds": 10,
+      "coverage": [],
+      "kind": "negative-only",
+      "annotations": []
+    }
+  ],
+  "summary": {
+    "clipCount": 24,
+    "positiveClipCount": 18,
+    "negativeOnlyClipCount": 6,
+    "positiveAudioSeconds": 145.41509400000004,
+    "negativeAudioSeconds": 41.366531,
+    "coverage": [
+      "clean-capture",
+      "distorted-or-overdriven-capture",
+      "dyad-or-chord",
+      "legato",
+      "palm-mute",
+      "repeated-attacks",
+      "single-note"
+    ]
+  },
+  "annotationsFrozenBeforeInference": true,
   "modelInferenceCount": 0,
   "optimizerSteps": 0,
   "p1Accessed": false,
   "p2Accessed": false,
-  "p3Accessed": false,
-  "candidatePin": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_CANDIDATE_PIN_V1.json"
+  "p3Accessed": false
 }
