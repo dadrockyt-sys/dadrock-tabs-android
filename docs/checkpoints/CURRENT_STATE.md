@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V8A COMPLETE — NO ARM ADVANCES; V9 NOT LAUNCH-READY; NEXT: MODEL-FREE MEASUREMENT/IDENTITY AUDIT AND ONE DRAFT DESIGN; NO EMPIRICAL EXECUTION**
+Status: **PRE-V9 COMMON-UNIT MEASUREMENT COMPLETE; V9 EMPIRICAL EXECUTION NOT AUTHORIZED**
 
-Latest supervisory instructions are in **Supervisory review after V8 / before V9 — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
+Latest resume instructions are in **PRE-V9 common-unit measurement complete — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
 
 ## Standing policy
 
@@ -4695,3 +4695,103 @@ At a generic continue, perform only this bounded model-free measurement step fro
 Do not yet generate a V9 candidate timing arm, render waveforms, train models, run V2B model inference, dispatch a workflow/launch marker, access V1.1/P1/P2/P3, open A2, alter thresholds/decoder, or mutate main/Production.
 
 After PRE-V9-MEASUREMENT-V1, stop at the corrected reference table and readiness decision. If comparability is resolved, the next user decision is whether to authorize empirical V9 under a fully frozen numerical contract.
+
+
+## PRE-V9 common-unit measurement complete — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier PRE-V9-MEASUREMENT-V1 task wording.**
+
+Completed and saved:
+- `astra_backend/synthetic/pre_v9_common_unit_measurement_v1.py`
+- `astra_backend/synthetic/test_pre_v9_common_unit_measurement_v1.py`
+- `docs/astra/PRE_V9_COMMON_UNIT_MEASUREMENT_V1.json`
+- `docs/astra/PRE_V9_COMMON_UNIT_MEASUREMENT_V1.md`
+
+The post-V8 review was also amended with the committed V2C scoring-denominator provenance.
+
+### Frozen common-unit reference
+
+Prospective timing semantics are now fixed for V9 preparation:
+- acoustic attack groups are separate from note/string/fret labels;
+- simultaneous tolerance = 10 ms;
+- crop-local time;
+- exact corrected duration;
+- half-open [0,duration);
+- positive within-clip IOIs only;
+- repeat250 = fraction of positive IOIs <=250 ms;
+- longGap700 = fraction >=700 ms;
+- positive density excludes negative-only time;
+- linear quantiles at h=(n-1)*p.
+
+V2B:
+- 164 raw spectral-flux landmarks -> 164 attack groups (0 merges at 10 ms)
+- 110.023183673 s positive; 31.857959184 s negative
+- attack-group density 1.490594932/s
+- IOI p50 0.256 s
+- IOI p90 0.882358 s
+- repeat250 0.4701986755
+- longGap700 0.1258278146
+
+Retained V8 L0 source remeasured in the same unit:
+- 903 note labels -> 735 attack groups
+- 546 s positive
+- density 1.346153846/s
+- IOI p50 0.360 s
+- IOI p90 0.400 s
+- repeat250 0.0
+- longGap700 0.0909090909
+
+The historical 26.67% V8 L0 repeat fraction was simultaneous chord-note multiplicity, not distinct short-gap attacks. Historical V6/V7/V8 results remain frozen and are not rewritten.
+
+### Pitch scoring provenance resolved
+
+Committed V2C evidence records the single unrepresentable landmark excluded from scoring:
+- C06
+- 0.042667 s
+- MIDI 37
+- confidence high
+
+Thus raw 57 trusted / 50 high-confidence becomes 56 / 49 scorable references without inference.
+
+### Execution boundary preserved
+
+This measurement step used committed records/source only:
+- original audio decoded: 0
+- new annotations: 0
+- V9 candidate timing populations: 0
+- waveform renders: 0
+- model inference: 0
+- optimizer steps: 0
+- workflow dispatches: 0
+- V1.1/P1/P2/P3/A2 access: none
+- main/Production unchanged
+
+### Readiness decision
+
+Common-unit timing comparability is now sufficiently resolved to prepare a final V9 empirical contract. **V9 empirical execution is still not authorized.**
+
+The draft V9 design remains:
+- one 4-second fallback-free native generator only;
+- onsets + offsets/sustains feasible by construction;
+- no post-placement shift, clipping, compression, event deletion, hidden rejection loop, or reseed-to-pass;
+- fail closed on infeasibility;
+- maximum 2 models and 1,000 optimizer steps total if later authorized.
+
+### Exact next step requiring a fresh user decision
+
+Do not generate any V9 candidate timing output yet.
+
+The next project step is to finalize and freeze the V9 numerical contract and then, only if the user explicitly authorizes empirical V9, execute it in this order:
+
+1. freeze exact gap supports/weights, content counts, sustain supports, seeds/splits, same-runtime comparator, all numerical gates, distance weights/scales, render/inference/CPU/storage ceilings, and consumed one-shot launch scope;
+2. generate timing manifests only;
+3. apply the fail-closed timing/full-label gate;
+4. render baseline + one intervention only if the timing gate passes;
+5. train at most two 500-update models;
+6. apply synthetic sanity;
+7. allow one V2B development evaluation only if synthetic sanity passes;
+8. freeze the result; no automatic V10.
+
+Until that fresh decision: documentation review is allowed, but no V9 candidate generation, workflow dispatch, rendering, model weights, inference, optimizer, new audio/annotation, V1.1/P1/P2/P3/A2, main or Production changes.
+
+**Resume instruction:** Stop at the V9 empirical-decision boundary. If the user explicitly authorizes V9 empirical work, first freeze the complete numerical/spec/launch contract before generating candidate output. Otherwise do not execute V9.
