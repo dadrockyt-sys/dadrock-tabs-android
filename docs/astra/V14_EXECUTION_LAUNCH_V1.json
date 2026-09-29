@@ -8,15 +8,15 @@
     "validatorBlob": "4ab4028b3765933db64d0073359e844beec165ca",
     "validatorTestsBlob": "287d398147c3d2bbdefe5da99fab0b391c32ea3c",
     "runnerBlob": "fcee6f5896c45222e085f9fccce78869a8f2991d",
-    "workflowBlob": "0d707040f48186784454d1a4a0d94456d47149c9"
+    "workflowBlob": "dd5b5936c6b0a84d00038499a0f20834de6ba846"
   },
   "rule": "One workflow dispatch only. No automatic scientific retry. Workflow must run pure validator tests before V14 empirical runner.",
-  "status": "ready-for-single-carrier-dispatch",
-  "carrierWorkflow": {
-    "path": ".github/workflows/check-artist-duplicates.yml",
-    "branchBlob": "63d49e75c4b666cf4a6f2cca66216e3278ac3f95",
-    "defaultBranchRegisteredWorkflowName": "Check Artist SEO Duplicates",
-    "purpose": "Use a workflow_dispatch carrier already registered on the default branch while executing the astra-work branch-specific frozen V14 job. Main remains unchanged.",
-    "restoreAfterExecution": true
+  "status": "armed-awaiting-single-marker-commit",
+  "trigger": {
+    "type": "single push-path marker",
+    "workflowPath": ".github/workflows/astra-v14-matched-context-empirical-v1.yml",
+    "markerPath": ".github/one-shot/v14-matched-context-v1-20260929-01.txt",
+    "branch": "astra-work",
+    "rule": "Create marker exactly once; no rerun or second marker."
   }
 }
