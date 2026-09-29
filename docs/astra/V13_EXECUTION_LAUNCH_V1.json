@@ -1,0 +1,59 @@
+{
+  "schema": "astra-v13-execution-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-consumed",
+  "branch": "astra-work",
+  "launchIdentity": "v13-active-nononset-v1-20260929-01",
+  "preflight": {
+    "runId": 36539873506,
+    "jobId": 109312472318,
+    "artifactId": 11019923191,
+    "artifactDigest": "sha256:7d46e108c9fcfba1dbc3e1cfd767f62ffe8e3888cdfe3c98ef4da46044d6b96a",
+    "conclusion": "success",
+    "headSha": "98eaaeb87737582f59fde5755da88cb647af8c27"
+  },
+  "execution": {
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "syntheticOnly": true,
+    "v2b": false,
+    "realAudio": false,
+    "maxRenderCpuMinutes": 30,
+    "maxFitEvalCpuMinutes": 60,
+    "maxPersistedMiB": 700,
+    "paidComputeDollars": 0
+  },
+  "sourcePaths": {
+    "authorization": "docs/astra/V13_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json",
+    "history": "docs/astra/V13_EXECUTION_HISTORY_V1.json",
+    "contract": "docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json",
+    "preflightResult": "docs/astra/V13_PREFLIGHT_RESULT_V1.json",
+    "runner": "astra_backend/synthetic/v13_active_nononset_mixture_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v13_active_nononset_mixture_v1.py",
+    "validator": "astra_backend/synthetic/v13_contract_validator_v1.py",
+    "validatorTests": "astra_backend/synthetic/test_v13_contract_validator_v1.py",
+    "v9Empirical": "astra_backend/synthetic/v9_empirical_v1.py",
+    "s1": "astra_backend/synthetic/s1_pilot_v1.py",
+    "s6": "astra_backend/synthetic/s6_pilot_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v13-active-nononset-empirical-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "authorization": "fd8fef843f40d485268823a705e7688abea95546",
+    "history": "55fe091ec944f04ab1e04513f0bf23fb66d0e29e",
+    "contract": "967a7144f85b63af70c70ddb4246a5fb4fdb3a4d",
+    "preflightResult": "aa9eb84d65ca0ce6729e93cc0eb4bbbb049be23b",
+    "runner": "61b239bdd83c91e0f12335b67c016567569c3bdf",
+    "runnerTests": "147b7bad1fbb478bafd00b6110be481d47b6995f",
+    "validator": "92127b19b1941f5cc41121983b5287afe169462c",
+    "validatorTests": "0cba9a26c0ddaeae79210971a18ce5f9a928a1de",
+    "v9Empirical": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s6": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "d81b82abae68bca80ad4eea5d56264efc6bd2110"
+  }
+}
