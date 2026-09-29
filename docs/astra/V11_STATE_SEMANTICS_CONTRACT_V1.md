@@ -148,6 +148,8 @@ If later authorized:
 - S1 sampler: `bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf`
 - S6 training/model: `142168784e3dfebf8a5221017e40c8aa73be1fa5`
 - runtime lock: `174a5016cfe9e6c00816d2171210aa84c66081a8`
+- V11 contract validator: `0cedebf894357311188c8bce63551b8dce672ec2`
+- V11 validator tests: `bb8697e5acd33436f732e7c7a28fa1b6fc89173e`
 
 ## Boundary
 
