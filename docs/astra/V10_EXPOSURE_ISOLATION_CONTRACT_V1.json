@@ -1,0 +1,99 @@
+{
+  "schema": "astra-v10-exposure-isolation-contract-v1",
+  "date": "2026-09-29",
+  "status": "frozen-preparation-empirical-execution-not-authorized",
+  "question": "Does exact matching of sampled attacked-note-label exposure, while holding the frozen V9 dataset/model/loss/thresholds/update count/non-positive strata/per-step shuffle fixed, materially restore synthetic pitch-onset precision/F1?",
+  "predecessor": {
+    "v9ResultBlob": "d4d73b282915bb7073092cd1396cdfd11c2fa8a1",
+    "v9Failure": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "v9SampledAttackedNoteLabels": 17676,
+    "comparatorSampledAttackedNoteLabels": 19702
+  },
+  "arms": {
+    "control": "frozen V9 positive-onset sampler",
+    "intervention": "exact attacked-note-label exposure matched positive-onset sampler"
+  },
+  "fixed": {
+    "trainingDataset": "same regenerated frozen V9 4-second dataset arrays",
+    "commonEvaluationDataset": "same regenerated frozen 2-second comparator test split",
+    "secondaryEvaluationDataset": "same regenerated frozen V9 test split",
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "batchSize": 128,
+    "positiveOnsetSlotsPerBatch": 32,
+    "positiveOnsetSlotsTotal": 16000,
+    "stateActiveWeight": 9,
+    "onsetPositiveWeight": 8,
+    "onsetLossWeight": 4,
+    "learningRate": 0.003,
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0
+  },
+  "interventionExposure": {
+    "targetSampledAttackedNoteLabels": 19702,
+    "targetMultiLabelPositiveFrames": 1851,
+    "targetSingleLabelPositiveFrames": 14149,
+    "allowedPositiveFrameMultiplicities": [
+      1,
+      3
+    ],
+    "batchesWith4MultiFrames": 351,
+    "batchesWith3MultiFrames": 149,
+    "deterministicBalanceSeed": 20279928,
+    "identicalNonPositiveSelectionsAcrossArms": true,
+    "identicalPerStepShuffleAcrossArms": true
+  },
+  "reproductionGate": {
+    "precisionExactlyWithin1e12": 0.3244274809160305,
+    "recallExactlyWithin1e12": 0.6589147286821705,
+    "f1ExactlyWithin1e12": 0.43478260869565216,
+    "controlSampledAttackedNoteLabelsExactly": 17676
+  },
+  "supportGate": {
+    "commonPrecisionGainAtLeast": 0.2,
+    "commonF1GainAtLeast": 0.15,
+    "commonRecallDeclineAtMost": 0.08,
+    "commonNegativeFpPerSecondAtMost": 0.1,
+    "v9PrecisionDeclineAtMost": 0.05,
+    "v9F1DeclineAtMost": 0.05,
+    "balancedSampledAttackedNoteLabelsExactly": 19702,
+    "controlSampledAttackedNoteLabelsExactly": 17676,
+    "exactly500StepsPerModel": true,
+    "exactly2Models": true,
+    "finiteMetricsRequired": true
+  },
+  "compute": {
+    "maxRenderCpuMinutes": 30,
+    "maxFitEvalCpuMinutes": 60,
+    "maxPersistedMiB": 700,
+    "paidComputeDollars": 0
+  },
+  "sourcePins": {
+    "projectAuthorizationBlob": "e32f9b87fe76eb9e90f3b5610110fb76c192327b",
+    "runnerBlob": "2c25b80c553d600ba26d2a7729bc1f3d1050f944",
+    "testsBlob": "7becffdd0ae821636d7935ea53b5ad9e0cb386c1",
+    "v9ResultBlob": "d4d73b282915bb7073092cd1396cdfd11c2fa8a1",
+    "v9EmpiricalBlob": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s6Blob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "s1Blob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "runtimeLockBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "boundaries": {
+    "empiricalExecutionAuthorized": false,
+    "v2b": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
