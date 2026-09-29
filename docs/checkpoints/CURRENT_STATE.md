@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9/V10/V11/V12/V13 FROZEN; V13 ACTIVE-NON-ONSET FAMILY-MIXTURE HYPOTHESIS NOT SUPPORTED; NO V2B**
+Status: **V9/V10/V11/V12/V13 FROZEN; POST-V13 CAUSAL REVIEW COMPLETE; NO V14 OPEN**
 
-Latest resume instructions are in **V13 active-non-onset family-mixture empirical execution complete — hypothesis NOT SUPPORTED — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
+Latest resume instructions are in **Post-V13 causal review complete — negative-structure-inactive family mixture identified — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -6498,3 +6498,19 @@ Do not:
 - mutate main or Production.
 
 **Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. Any next causal study must be prospectively defined as a new project and explicitly authorized after its contract is frozen.
+
+
+## Post-V13 causal review complete — negative-structure-inactive family mixture identified — 2026-09-29
+
+Documentation/review only. No V14 was opened and no rendering, training, inference, V2B, or workflow dispatch occurred.
+
+Preferred next project if explicitly authorized: isolate only the negative-structure-inactive family mixture while holding the other three sampler strata, per-step shuffle, attacked-note-label exposure, model, loss, thresholds, optimizer, and V9 dataset fixed.
+
+Frozen historical target across 16,000 negative-structure-inactive slots:
+- legato **3,521**
+- palmmute **5,385**
+- mixed **7,094**
+
+If that single-factor study also fails, stop serial micro-studies and consider a prospectively frozen composite matched-context / 2-second-context design.
+
+**Resume instruction:** Stop model execution here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, freeze the negative-structure-inactive family-mixture study first. Empirical execution must still wait for fresh authorization after that contract/preflight is visible.
