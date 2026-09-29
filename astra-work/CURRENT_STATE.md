@@ -870,3 +870,51 @@ Do not silently substitute another non-historical runtime rerun and call it V2A.
 Do not begin V2B/V2C/V2D automatically.
 
 **Resume instruction:** Stop at the V2A infrastructure boundary. Generic continuation may extend design/documentation only. Any fresh calibration-development data collection or calibration search is a separate empirical project step and should be explicitly authorized.
+
+
+## V2B calibration-development design prepared — collection still not authorized — 2026-09-28
+
+Generic continuation was used only for design/documentation, per the V2A handoff boundary.
+
+New files:
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_DESIGN.md`
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_DESIGN.json`
+- `docs/astra/V2B_CALIBRATION_DEVELOPMENT_INTAKE.json`
+- `astra_backend/synthetic/v2b_calibration_intake_validator_v1.py`
+
+Frozen minimum V2B collection:
+- 16 clips total;
+- >=12 positive;
+- >=4 negative-only;
+- >=60 s positive;
+- >=20 s negative;
+- >=2 creators/capture chains;
+- clean + distorted;
+- >=4 primarily single-note;
+- >=3 repeated-attack;
+- >=2 legato/bend/slide;
+- >=2 chordal/polyphonic.
+
+V1.1 remains sealed and cannot be used for threshold selection, calibration fitting, gain selection, frontend retuning, decoder tuning, fine-tuning, candidate selection, or architecture selection.
+
+The V2B intake validator fails closed on:
+- V1.1 overlap and near-duplicate declarations;
+- P1/P2/P3 overlap;
+- previously model-inspected audio;
+- clip counts/durations;
+- creator diversity;
+- required coverage;
+- annotation freeze before inference;
+- zero model inference/optimizer steps;
+- no V1.1 tuning access.
+
+No new web sourcing occurred.
+No new audio was downloaded or inspected.
+No model inference occurred.
+No threshold search occurred.
+No training/fine-tuning occurred.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+**Resume instruction:** V2B design is ready, but collection is still a separate empirical step. Do not scrape/source/download new calibration audio or run inference/calibration until the user explicitly authorizes V2B collection.
