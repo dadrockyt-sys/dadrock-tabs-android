@@ -7,12 +7,23 @@
   "optimizerSteps": 0,
   "waveformRendering": false,
   "parameterSearch": false,
-  "attempt": 3,
+  "attempt": 4,
   "previousInfrastructureFailure": {
     "runId": 36522967333,
     "reason": "missing librosa import dependency before any V8A result was produced"
   },
   "previousPopulationBug": {
     "reason": "simultaneous chord onset references were collapsed before any accepted V8A result; corrected to preserve all onset references"
-  }
+  },
+  "previousInfrastructureFailures": [
+    {
+      "runId": 36522967333,
+      "reason": "missing librosa import before result"
+    },
+    {
+      "runId": 36523176261,
+      "reason": "numba/numpy incompatibility while importing unused audio frontend before result"
+    }
+  ],
+  "acceptedRunner": "standalone timing-only; no S0/librosa/torch import"
 }
