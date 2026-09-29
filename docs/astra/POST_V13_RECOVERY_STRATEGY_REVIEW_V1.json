@@ -1,0 +1,134 @@
+{
+  "schema": "astra-post-v13-recovery-strategy-review-v1",
+  "date": "2026-09-29",
+  "status": "model-free-review-complete-no-v14-opened",
+  "reference": {
+    "comparator": {
+      "precision": 0.8269230769230769,
+      "recall": 0.6666666666666666,
+      "f1": 0.7381974248927038
+    },
+    "v9": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "f1Deficit": 0.30341481619705163,
+    "precisionDeficit": 0.5024955960070463,
+    "fiftyPercentRecoveryF1": 0.586490016794178
+  },
+  "interventions": {
+    "v10": {
+      "f1": 0.43804034582132567,
+      "deltaVsV9": 0.00325773712567351,
+      "fractionDeficitRecovered": 0.01073690852182309,
+      "percentDeficitRecovered": 1.073690852182309
+    },
+    "v11": {
+      "f1": 0.4507042253521127,
+      "deltaVsV9": 0.015921616656460524,
+      "fractionDeficitRecovered": 0.052474750099613755,
+      "percentDeficitRecovered": 5.247475009961375
+    },
+    "v12": {
+      "f1": 0.45918367346938777,
+      "deltaVsV9": 0.024401064773735603,
+      "fractionDeficitRecovered": 0.08042146747998101,
+      "percentDeficitRecovered": 8.042146747998101,
+      "negativeFpPerSecond": 0.16666666666666666
+    },
+    "v13": {
+      "f1": 0.4396782841823056,
+      "deltaVsV9": 0.004895675486653428,
+      "fractionDeficitRecovered": 0.016135255186331934,
+      "percentDeficitRecovered": 1.6135255186331934
+    }
+  },
+  "confirmedContextDifferences": {
+    "clipSeconds": {
+      "comparator": 2,
+      "v9": 4
+    },
+    "logicalSeconds": {
+      "comparator": 588,
+      "v9": 1176
+    },
+    "firstAttackSeconds": {
+      "comparatorApproxRange": [
+        0.22,
+        0.36
+      ],
+      "v9": [
+        0.05,
+        0.12
+      ]
+    },
+    "v9GapSupportsSeconds": {
+      "short": [
+        0.08,
+        0.25
+      ],
+      "medium": [
+        0.251,
+        0.316
+      ],
+      "long": [
+        0.7,
+        1.36
+      ]
+    },
+    "v9SustainSupportSeconds": [
+      0.12,
+      0.48
+    ],
+    "legatoContinuationOmittedInExecutedV9": true,
+    "negativeStructureBurstCenterApproxSeconds": 1.7,
+    "postBurstTailApproxSeconds": {
+      "comparator": 0.3,
+      "v9": 2.3
+    },
+    "sameRuntimeControls": {
+      "renderer": "R3",
+      "frontend": "frozen RMS normalization + CQT",
+      "model": "S6 nonlinear five-frame",
+      "thresholds": [
+        0.5,
+        0.5
+      ],
+      "primaryEvaluation": "frozen 2-second comparator test"
+    }
+  },
+  "preferredFutureProject": {
+    "version": "V14",
+    "name": "2-second matched-context bridge",
+    "type": "package-recovery-not-single-factor-causal-isolation",
+    "opened": false,
+    "purpose": "Test whether V9 attack-timing principles can retain material benefit in a 2-second comparator-like temporal/context construction.",
+    "primaryGateSuggested": {
+      "commonF1AtLeast": 0.586490016794178,
+      "negativeFpPerSecondAtMost": 0.1
+    },
+    "exactAttackCountsAndGapSupportsFrozenByThisReview": false,
+    "requireModelFreeFeasibilityBeforeFreeze": true,
+    "requireFreshEmpiricalAuthorizationAfterPreflight": true,
+    "v2b": false,
+    "realAudio": false
+  },
+  "stopRule": "If the matched-context bridge fails material recovery, stop serial synthetic micro-optimization and choose one larger redesign/independent real-development/pause path; do not auto-open V15/V16.",
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0,
+    "workflowDispatches": 0
+  },
+  "boundaries": {
+    "v14Opened": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
