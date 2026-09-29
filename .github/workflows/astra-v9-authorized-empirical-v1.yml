@@ -1,0 +1,132 @@
+name: Astra V9 authorized empirical execution
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V9_EXECUTION_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-v9-authorized-empirical-v1
+  cancel-in-progress: false
+
+jobs:
+  v9:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify consumed launch scope and exact pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/V9_EXECUTION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V9_EXECUTION_LAUNCH_V1.json'))
+          h=json.load(open('docs/astra/V9_EXECUTION_HISTORY_V1.json'))
+          assert a['explicitlyAuthorized'] is True and a['userInstruction']=='I authorize'
+          assert l['schema']=='astra-v9-execution-launch-v1' and l['status']=='armed-consumed'
+          assert l['branch']=='astra-work' and os.environ.get('GITHUB_REF_NAME')=='astra-work'
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          assert h['schema']=='astra-v9-execution-history-v1'
+          lid=l['launchIdentity']
+          assert h['consumedLaunchIdentities'].count(lid)==1
+          assert l['preflight']['conclusion']=='success'
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceGitBlobs'][k]==blob(p),(k,p,l['sourceGitBlobs'][k],blob(p))
+          ex=l['execution']
+          assert ex['maxModels']==2 and ex['optimizerStepsPerModel']==500 and ex['maxTotalOptimizerSteps']==1000
+          assert ex['maxRenderCpuMinutes']==30 and ex['maxFitEvalCpuMinutes']==60
+          assert ex['automaticScientificRetry'] is False and ex['thresholdSearch'] is False
+          assert ex['v1_1'] is False and ex['p1'] is False and ex['p2'] is False and ex['p3'] is False and ex['a2'] is False
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Re-run frozen focused admission tests
+        run: |
+          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
+          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
+      - name: Generate single V9 timing manifest and apply V9A
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-v9
+          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py timing             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/astra-v9/timing.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-v9/timing.json'))
+          assert x['passed'] is True
+          assert x['summary']['attackGroupCount']==1638
+          assert x['summary']['attackedNoteLabelCount']==1806
+          assert x['summary']['fallbackOperationCount']==0
+          PY
+      - name: Render paired same-runtime datasets
+        run: |
+          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py render             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --timing /tmp/astra-v9/timing.json             --outdir /tmp/astra-v9/data
+      - name: Train exactly two models and apply synthetic sanity
+        run: |
+          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py train             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --datadir /tmp/astra-v9/data             --outdir /tmp/astra-v9/train
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-v9/train/result.json'))
+          assert x['execution']['models']==2
+          assert x['execution']['optimizerStepsTotal']==1000
+          assert x['execution']['automaticScientificRetries']==0
+          assert x['execution']['thresholdSearch'] is False
+          open('/tmp/astra-v9/SYNTHETIC_SANITY_STATUS.txt','w').write(
+              'PASS\n' if x['syntheticSanityPassed'] else 'FAIL\n'
+          )
+          PY
+      - name: Write bounded execution receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          root=pathlib.Path('/tmp/astra-v9')
+          receipt={
+            'schema':'astra-v9-execution-receipt-v1',
+            'githubRunId':os.environ.get('GITHUB_RUN_ID'),
+            'githubRunAttempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'headSha':os.environ.get('GITHUB_SHA'),
+            'timingResultExists':(root/'timing.json').exists(),
+            'renderReceiptExists':(root/'data/render-receipt.json').exists(),
+            'trainingResultExists':(root/'train/result.json').exists(),
+            'modelsExist':(root/'train/comparator.pt').exists() and (root/'train/intervention.pt').exists(),
+          }
+          if (root/'train/result.json').exists():
+              x=json.load(open(root/'train/result.json'))
+              receipt['optimizerStepsTotal']=x['execution']['optimizerStepsTotal']
+              receipt['syntheticSanityPassed']=x['syntheticSanityPassed']
+              receipt['v2bInferencePerformed']=False
+          (root/'execution-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-v9-authorized-empirical-v1
+          path: |
+            /tmp/astra-v9/timing.json
+            /tmp/astra-v9/data/render-receipt.json
+            /tmp/astra-v9/train/result.json
+            /tmp/astra-v9/train/comparator.pt
+            /tmp/astra-v9/train/intervention.pt
+            /tmp/astra-v9/execution-receipt.json
+            /tmp/astra-v9/SYNTHETIC_SANITY_STATUS.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/astra-v9
