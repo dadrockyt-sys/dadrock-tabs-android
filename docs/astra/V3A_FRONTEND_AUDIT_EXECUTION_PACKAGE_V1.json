@@ -1,0 +1,17 @@
+{
+  "schema": "astra-v3a-frontend-audit-execution-package-v1",
+  "date": "2026-09-28",
+  "status": "prepared-not-authorized-for-execution",
+  "runner": "astra_backend/synthetic/v3a_frontend_distribution_audit_v1.py",
+  "validator": "astra_backend/synthetic/v3a_frontend_distribution_validator_v1.py",
+  "requiredInputs": [
+    "historical synthetic NPZ containing frozen features",
+    "docs/astra/V2B_CALIBRATION_DEVELOPMENT_COLLECTED_AUDIO_V1.json",
+    "private V2B audio directory"
+  ],
+  "outputSchema": "astra-v3a-frontend-distribution-audit-result-v1",
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "v1_1Used": false,
+  "executionAuthorized": false
+}
