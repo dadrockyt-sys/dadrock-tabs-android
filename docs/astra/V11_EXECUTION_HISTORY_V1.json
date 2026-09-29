@@ -1,0 +1,21 @@
+{
+  "schema": "astra-v11-execution-history-v1",
+  "date": "2026-09-29",
+  "status": "launch-scope-consumed-before-dispatch",
+  "consumedLaunchIdentities": [
+    "v11-state-semantics-v1-20260929-01"
+  ],
+  "records": [
+    {
+      "launchIdentity": "v11-state-semantics-v1-20260929-01",
+      "authorization": "docs/astra/V11_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json",
+      "contract": "docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.json",
+      "preflightRunId": 36534288763,
+      "preflightJobId": 109294696440,
+      "preflightArtifactId": 11017093440,
+      "preflightArtifactDigest": "sha256:974b0c3a9e86448b0c4b70ec37dada523dfe5a0eb208ac297ce6a0e8e0d56e81",
+      "preflightConclusion": "success",
+      "scientificRetry": false
+    }
+  ]
+}
