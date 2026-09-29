@@ -1,0 +1,25 @@
+{
+  "schema": "astra-v7a-timing-manifest-identity-v1",
+  "date": "2026-09-29",
+  "deterministicGenerator": {
+    "rootSeed": 20260927,
+    "clipSeconds": 2,
+    "eventCountsPerClipFixed": true,
+    "contentTemplatesFixed": true
+  },
+  "manifests": {
+    "E0": {
+      "sha256": "596b6ff5ee935364d5ece217a806f3c9d2dc40189a4a388523dd4b3c96ef71b6"
+    },
+    "E1": {
+      "sha256": "d0e4dbb867c5c228c124eab360b4539ecbd1880593cba8b190b0a486d7126c95"
+    },
+    "E2": {
+      "sha256": "cfc167bea39978685b35a508d78af91c23152d8ea223838de62a6537f1f4b866"
+    },
+    "E3": {
+      "sha256": "dd1bf82b851a8b16c87700479e8ee0cd2a2e26386a2adda0f4f0f264c2e7e243"
+    }
+  },
+  "note": "Full deterministic manifests were generated locally from the frozen V7 rules. Their hashes are frozen here; no model output was involved."
+}
