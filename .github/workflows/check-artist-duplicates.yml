@@ -3,24 +3,29 @@ name: Check Artist SEO Duplicates
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
         with:
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Check duplicate artist SEO records
-        env:
-          MONGO_URL: ${{ secrets.MONGO_URL }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        run: node scripts/check-artist-seo-counts.js
+          ref: astra-work
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install bounded dependencies
+        run: pip install --disable-pip-version-check numpy scipy torch librosa
+      - name: Fail-closed V14 validator tests
+        run: python -m unittest -v astra_backend.synthetic.test_v14_contract_validator_v1
+      - name: Execute frozen V14 matched-context bridge
+        run: python -m astra_backend.synthetic.v14_empirical_v1 --contract docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json --outdir v14_result
+      - name: Upload frozen V14 result
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-v14-matched-context-result-v1
+          path: v14_result
+          retention-days: 30
