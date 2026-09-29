@@ -4,9 +4,9 @@ Updated: 2026-09-29 UTC
 Branch: `astra-work`
 Canonical file: `docs/checkpoints/CURRENT_STATE.md`
 
-Status: **V9/V10 FROZEN; POST-V10 INTEGRITY REVIEW COMPLETE; NO NEW PROJECT OPEN**
+Status: **V9/V10 FROZEN; V11 CONTRACT/PREFLIGHT PASS; V11 EMPIRICAL EXECUTION NOT AUTHORIZED**
 
-Latest resume instructions are in **Post-V10 causal/contract-integrity review complete — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections below are historical where superseded.
+Latest resume instructions are in **V11 state-semantics study prospectively frozen — preflight PASS — 2026-09-29** at the end of both handoffs. Earlier execution/resume sections are historical where superseded.
 
 ## Standing policy
 
@@ -5436,3 +5436,121 @@ Neither project is opened or authorized by this review.
 V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
 
 **Resume instruction:** Stop here. At a generic “continue”, documentation/review only. If the user explicitly authorizes a new project, prospectively define/freeze its contract first; preferred topic is state-duration / legato-continuation semantics under the already successful V9 attack timing. No V2B and no automatic V11 execution.
+
+
+## V11 state-semantics study prospectively frozen — preflight PASS — 2026-09-29
+
+**Current resume authority. This section supersedes the prior post-V10 generic-review boundary.**
+
+The user explicitly authorized opening the next project. That authorization was used only for prospective V11 definition, implementation, pure tests, and model-free preflight. It was not treated as empirical-training authorization because the exact V11 contract did not yet exist when authorization was given.
+
+Completed:
+- `docs/astra/V11_PROJECT_AUTHORIZATION_V1.json`
+- `docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.md`
+- `docs/astra/V11_STATE_SEMANTICS_CONTRACT_V1.json`
+- `astra_backend/synthetic/v11_state_semantics_v1.py`
+- `astra_backend/synthetic/test_v11_state_semantics_v1.py`
+- `astra_backend/synthetic/v11_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v11_contract_validator_v1.py`
+- `docs/astra/V11_PREFLIGHT_RESULT_V1.md`
+- `docs/astra/V11_PREFLIGHT_RESULT_V1.json`
+
+### Frozen V11 question
+
+With successful V9 attack timing/counts fixed, does restoring historical family-specific state/audio durations and the omitted non-attacked legato continuation materially recover common 2-second comparator-test precision/F1?
+
+### Intervention
+
+Control:
+- exact executed V9 4-second semantics.
+
+Intervention:
+- identical attacked string/fret/onset tuples;
+- restore S0 family duration targets:
+  - isolated 1.03 s
+  - scales 0.27 s
+  - chords 0.48 s
+  - repeated 0.31 s
+  - legato attacked 0.50 s
+  - legato non-attacked continuation 0.74 s
+  - palmmute 0.16 s
+  - mixed-positive 0.86 s
+- state ends truncate only at next same-string attack or 4.0 s;
+- legato continuation is created when temporal room exists.
+
+Attack timing is never moved, clipped, searched, or regenerated under a different policy.
+
+### Model-free preflight passed
+
+Run:
+- **36534288763**
+- job **109294696440**
+- head `d736257bf2181b1c1a936ac74b825000c15b4588`
+- artifact **11017093440**
+- digest `sha256:974b0c3a9e86448b0c4b70ec37dada523dfe5a0eb208ac297ce6a0e8e0d56e81`
+- conclusion **success**
+- retained through 2026-10-29
+
+Static audit:
+- clips 294
+- positive 273
+- negative-only 21
+- control/intervention attack groups **1,638 / 1,638**
+- control/intervention attacked note labels **1,806 / 1,806**
+- exact attacked signature SHA-256 `9129b31cec8c56a8275e269b25fd9ab686b15f91e8b5da711ef6490eddfffe97`
+- restored non-attacked legato continuation events **84**
+- attacked states truncated at same-string retrigger **789**
+- zero waveform renders
+- zero models
+- zero optimizer steps
+- zero inference
+- zero V2B inference
+
+Per-family retrigger truncations:
+- isolated 168
+- scales 37
+- chords 126
+- repeated 243
+- legato 84
+- palmmute 82
+- mixed-positive 49
+
+These truncations are expected consequences of combining historical duration targets with the denser frozen V9 attack schedule; they are the frozen intervention rule, not fallback corrections.
+
+### Frozen empirical gate if later authorized
+
+V11 control must exactly reproduce frozen V9 common-test precision/recall/F1 within 1e-12:
+- precision 0.3244274809160305
+- recall 0.6589147286821705
+- F1 0.43478260869565216
+
+Support requires all:
+- common precision gain >= +0.15
+- common F1 gain >= +0.10
+- common recall decline <=0.05
+- common joint-admission decline <=0.05
+- common negative FP <=0.10/s
+- frozen-V9 test F1 decline <=0.05
+- exact 500 updates/model
+- exact 2 models
+- finite metrics
+- no threshold search
+- no scientific retry
+
+There is no V2B stage in V11.
+
+### Current authorization boundary
+
+**Empirical V11 execution is not yet authorized.**
+
+A fresh explicit authorization after this frozen contract/preflight is required before:
+- waveform rendering/data generation for V11;
+- training the two models;
+- any optimizer step;
+- any model inference.
+
+Even after an empirical V11 result, V2B remains out of scope.
+
+V1.1/P1/P2/P3/A2 untouched. Main/Production unchanged.
+
+**Resume instruction:** Preserve V9 and V10 as frozen historical results with their post-review qualifications. Preserve V11 as contract-frozen/preflight-passed but not empirically executed. At a generic “continue”, documentation/review only. If the user explicitly authorizes empirical V11 after this point, consume one unique V11 launch scope and execute exactly the frozen two-arm synthetic-only study with no retries and no V2B.
