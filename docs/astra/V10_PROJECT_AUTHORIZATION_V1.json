@@ -1,0 +1,28 @@
+{
+  "schema": "astra-v10-project-authorization-v1",
+  "date": "2026-09-29",
+  "status": "authorized-for-prospective-study-definition-and-model-free-preparation-only",
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "predecessor": "docs/astra/V9_FALLBACK_FREE_CURRICULUM_RESULT_V1.json",
+  "question": "Does exactly matching positive attacked-note-label exposure, while holding the frozen V9 dataset/model/loss/thresholds/step count fixed, materially restore synthetic pitch-onset precision/F1?",
+  "authorizationScope": {
+    "prospectiveContract": true,
+    "staticImplementation": true,
+    "pureTests": true,
+    "modelFreePreflightPreparation": true,
+    "candidateTimingGeneration": false,
+    "waveformRendering": false,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "v2bEvaluation": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "empiricalExecutionRequiresFreshAuthorizationAfterContractFreeze": true
+}
