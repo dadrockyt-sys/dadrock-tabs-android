@@ -627,3 +627,85 @@ Complete human QA of the reference annotations. Then:
 5. only then run the single bounded candidate-model evaluation.
 
 **Resume instruction:** Do not run the candidate model yet. Continue only with pre-inference human annotation QA. No training/tuning/A2/P1/P2/P3.
+
+
+## Trustworthy scoring contract V1.1 frozen — 2026-09-28
+
+The pre-inference annotation QA has been converted into a narrower, scientifically supportable scoring contract rather than forcing uncertain polyphonic chord tones into the reference set.
+
+New frozen files:
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_TRUSTED_SCORING_CONTRACT_V1_1.md`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_TRUSTED_SCORING_CONTRACT_V1_1.json`
+- `docs/astra/INDEPENDENT_REAL_DEVELOPMENT_ZERO_INFERENCE_VERIFICATION_V1_1.json`
+
+### Trusted pitch population
+
+Exact MIDI pitch-onset landmark scoring is now limited to:
+
+P01, P03, P04, P05, P08, P09, P11, P12, P14, P15, P17, P18
+
+Combined duration: **97.803094 s**
+
+Frozen landmarks:
+- 84 total
+- 68 high-confidence
+- 4 medium-confidence
+- 12 low-confidence
+
+Primary trusted set:
+- **72 high+medium-confidence landmarks**
+
+The 12 low-confidence landmarks are sensitivity-only.
+
+### Polyphonic/onset-only population
+
+These remain in the real-development set but are explicitly excluded from exhaustive exact-pitch claims:
+
+P02, P06, P07, P10, P13, P16
+
+Combined duration: **47.612 s**
+
+They may be used only for onset/activity/prediction-density and qualitative behavior after primary metrics are frozen.
+
+### Negative-only population
+
+N01-N06 remain unchanged:
+- **41.366531 s**
+- primary negative metric remains raw decoded guitar false-positive events/sec.
+
+### Primary V1.1 metrics
+
+1. high+medium trusted pitch-landmark hit rate (72 landmarks)
+2. high-only trusted pitch-landmark hit rate (68 landmarks)
+3. negative-only false-positive events/sec
+4. per-clip trusted landmark hit rate
+
+### Claims now explicitly prohibited
+
+Do not report:
+- exhaustive positive precision;
+- exhaustive positive recall;
+- exhaustive positive F1;
+- exact string/fret accuracy;
+- production readiness
+
+from this V1.1 dataset.
+
+The original V1 exhaustive PR/F1 objective remains scientifically unmet because several positive clips are polyphonic and the prospectively created model-free annotations are not exhaustive simultaneous-note transcriptions.
+
+### Scientific readiness
+
+**PASS for one bounded candidate evaluation under V1.1 only.**
+
+This readiness is narrower than the original V1 objective and is intentionally claim-limited.
+
+No candidate-model output has been viewed.
+No thresholds changed.
+No decoder tuning.
+No retraining.
+No candidate reselection.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production remain unchanged.
+
+**Resume instruction:** The next authorized empirical action is one bounded evaluation of the already pinned S9 30-voicing intervention candidate under the frozen V1.1 scoring contract only. Do not restore exhaustive pitch PR/F1 claims, tune anything from these clips, or open P1/P2/P3/A2.
