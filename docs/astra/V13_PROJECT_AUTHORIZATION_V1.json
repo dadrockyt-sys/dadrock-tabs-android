@@ -1,0 +1,25 @@
+{
+  "schema": "astra-v13-project-authorization-v1",
+  "date": "2026-09-29",
+  "status": "authorized-for-prospective-study-definition-and-model-free-preparation-only",
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "predecessorReview": "docs/astra/POST_V12_CAUSAL_REVIEW_V1.json",
+  "question": "With the exact executed V9 dataset and exact V9 batch plan fixed everywhere else, does matching only the historical comparator active-non-onset family mixture materially recover common-population precision/F1 without increasing negative-only false positives?",
+  "authorizationScope": {
+    "prospectiveContract": true,
+    "staticImplementation": true,
+    "pureTests": true,
+    "modelFreePreflight": true,
+    "waveformRendering": false,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "v2b": false,
+    "realAudio": false,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "empiricalExecutionRequiresFreshAuthorizationAfterContractFreeze": true
+}
