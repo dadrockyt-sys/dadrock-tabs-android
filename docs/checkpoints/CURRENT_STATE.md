@@ -3114,3 +3114,67 @@ Do not automatically:
 The smallest next research question would be a **new prospectively frozen real-domain transfer/calibration diagnosis**, with a fresh development/training split if any tuning is to occur.
 
 **Resume instruction:** Stop at this decision boundary. The one authorized V1.1 evaluation is complete. Any calibration/domain-adaptation/fine-tuning/new-candidate work is a new project decision and must not silently tune on the V1.1 evidence set.
+
+
+## Real-domain transfer/calibration diagnosis V2 opened; V2A infrastructure-blocked — 2026-09-28
+
+A new diagnostic design was frozen without tuning on the sealed V1.1 evaluation set:
+
+- `docs/astra/REAL_DOMAIN_TRANSFER_CALIBRATION_DIAGNOSIS_V2.md`
+- `docs/astra/REAL_DOMAIN_TRANSFER_CALIBRATION_DIAGNOSIS_V2.json`
+
+The design explicitly seals V1.1 against:
+- threshold selection;
+- calibration fitting;
+- gain selection;
+- frontend retuning;
+- decoder tuning;
+- fine-tuning;
+- candidate selection;
+- architecture selection.
+
+### V2A exact-runtime reproduction attempt
+
+Frozen receipts:
+- `docs/astra/REAL_DOMAIN_TRANSFER_CALIBRATION_DIAGNOSIS_V2A_RUNTIME_RECEIPT.json`
+- `docs/astra/REAL_DOMAIN_TRANSFER_CALIBRATION_DIAGNOSIS_V2A_RUNTIME_RECEIPT.md`
+
+Target historical runtime:
+- Python 3.10.15
+- torch 1.11.0+cpu
+- librosa 0.9.1
+- numpy 1.21.6
+- scipy 1.8.1
+- resampy 0.4.3
+
+Current local runtime:
+- Python 3.13.5
+
+Attempts:
+1. local Python 3.10 discovery — unavailable;
+2. `uv python install 3.10.15` — blocked by sandbox DNS/network restriction;
+3. repository search for vendored Python 3.10 / historical wheels / wheelhouse — none found.
+
+No candidate model was loaded during V2A.
+No inference was run.
+No optimizer step occurred.
+No threshold/frontend/decoder/candidate change occurred.
+V1.1 was not used for tuning.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production remain unchanged.
+
+A GitHub Actions runner could recreate Python 3.10, but the 24 V1.1 audio files are intentionally not stored in the public repository because their source license does not permit standalone redistribution. The current tooling therefore cannot combine the exact historical runtime with the private uploaded V1.1 audio.
+
+### Current decision boundary
+
+V2A is **infrastructure-blocked**, not scientifically failed.
+
+Two legitimate next paths:
+1. provide/enable an exact historical-runtime environment that can access the private V1.1 audio; or
+2. explicitly open V2B and collect a fresh calibration-development set while keeping V1.1 sealed.
+
+Do not silently substitute another non-historical runtime rerun and call it V2A.
+Do not begin V2B/V2C/V2D automatically.
+
+**Resume instruction:** Stop at the V2A infrastructure boundary. Generic continuation may extend design/documentation only. Any fresh calibration-development data collection or calibration search is a separate empirical project step and should be explicitly authorized.
