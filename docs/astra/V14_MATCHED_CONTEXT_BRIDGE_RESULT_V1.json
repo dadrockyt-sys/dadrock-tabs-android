@@ -1,0 +1,604 @@
+{
+  "bridgeCommon": {
+    "admission": {
+      "jointAdmissionFraction": 0.2713178294573643,
+      "onsetAdmissionFraction": 0.5736434108527132,
+      "onsetProbability": {
+        "count": 129,
+        "max": 0.9986023306846619,
+        "mean": 0.5801122116011589,
+        "median": 0.6559972167015076,
+        "min": 0.009289438836276531,
+        "p25": 0.2224157452583313,
+        "p75": 0.9532505869865417
+      },
+      "positiveReferenceStringFrames": 129,
+      "silenceProbability": {
+        "count": 129,
+        "max": 0.9999673366546631,
+        "mean": 0.44236146000370946,
+        "median": 0.4185015857219696,
+        "min": 0.0007405487122014165,
+        "p25": 0.0510367676615715,
+        "p75": 0.7937932014465332
+      },
+      "stateAdmissionFraction": 0.2868217054263566,
+      "strongestIncorrectActiveProbability": {
+        "count": 129,
+        "max": 0.9154277443885803,
+        "mean": 0.21186532496237,
+        "median": 0.1138843297958374,
+        "min": 0.000011149106285301968,
+        "p25": 0.04121723026037216,
+        "p75": 0.29826346039772034
+      },
+      "trueMinusSilenceMargin": {
+        "count": 129,
+        "max": 0.9973732026992366,
+        "mean": -0.16678970923609868,
+        "median": -0.28043757379055023,
+        "min": -0.9999673366542692,
+        "p25": -0.7760226633399725,
+        "p75": 0.42669323086738586
+      },
+      "trueMinusStrongestIncorrectMargin": {
+        "count": 129,
+        "max": 0.9970173806650564,
+        "mean": 0.06370642580524076,
+        "median": -0.004918912425174866,
+        "min": -0.9154277434175087,
+        "p25": -0.22183827694971114,
+        "p75": 0.4490596354007721
+      },
+      "trueStateProbability": {
+        "count": 129,
+        "max": 0.998113751411438,
+        "mean": 0.2755717507676108,
+        "median": 0.07040868699550629,
+        "min": 3.939472446173875e-13,
+        "p25": 6.241731398404227e-7,
+        "p75": 0.5979516506195068
+      }
+    },
+    "familyPitchOnset": {
+      "chords": {
+        "f1": 0.28571428571428575,
+        "falseNegative": 27,
+        "falsePositive": 18,
+        "precision": 0.3333333333333333,
+        "recall": 0.25,
+        "truePositive": 9
+      },
+      "isolated": {
+        "f1": 0.3333333333333333,
+        "falseNegative": 2,
+        "falsePositive": 14,
+        "precision": 0.2222222222222222,
+        "recall": 0.6666666666666666,
+        "truePositive": 4
+      },
+      "legato": {
+        "f1": 0.7499999999999999,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "precision": 0.6,
+        "recall": 1,
+        "truePositive": 6
+      },
+      "mixed": {
+        "f1": 0.375,
+        "falseNegative": 0,
+        "falsePositive": 10,
+        "precision": 0.23076923076923078,
+        "recall": 1,
+        "truePositive": 3
+      },
+      "palmmute": {
+        "f1": 0.7945205479452055,
+        "falseNegative": 1,
+        "falsePositive": 14,
+        "precision": 0.6744186046511628,
+        "recall": 0.9666666666666667,
+        "truePositive": 29
+      },
+      "repeated": {
+        "f1": 0.5217391304347826,
+        "falseNegative": 12,
+        "falsePositive": 10,
+        "precision": 0.5454545454545454,
+        "recall": 0.5,
+        "truePositive": 12
+      },
+      "scales": {
+        "f1": 0.6538461538461539,
+        "falseNegative": 7,
+        "falsePositive": 11,
+        "precision": 0.6071428571428571,
+        "recall": 0.7083333333333334,
+        "truePositive": 17
+      }
+    },
+    "negativeOnlyFalsePositiveEvents": 0,
+    "negativeOnlyFalsePositiveEventsPerSecond": 0,
+    "negativeOnlySeconds": 6,
+    "pitchOnset": {
+      "f1": 0.5517241379310344,
+      "falseNegative": 49,
+      "falsePositive": 81,
+      "precision": 0.4968944099378882,
+      "recall": 0.6201550387596899,
+      "truePositive": 80
+    },
+    "pitchOnsetOffset": {
+      "f1": 0.4161073825503355,
+      "falseNegative": 67,
+      "falsePositive": 107,
+      "precision": 0.3668639053254438,
+      "recall": 0.4806201550387597,
+      "truePositive": 62
+    },
+    "repeatedAttackRecall": 0.7619047619047619,
+    "repeatedReferenceCount": 42,
+    "repeatedReferenceOnset": {
+      "currentFrameOnsetProbability": {
+        "count": 66,
+        "max": 0.9979569911956787,
+        "mean": 0.5294115180290784,
+        "median": 0.5529934465885162,
+        "min": 0.009289438836276531,
+        "p25": 0.17651807889342308,
+        "p75": 0.9393603205680847
+      },
+      "onsetAdmissionCount": 34,
+      "onsetAdmissionFraction": 0.5151515151515151,
+      "precedingFrameOnsetProbability": {
+        "count": 66,
+        "max": 0.9299764633178711,
+        "mean": 0.294822380118238,
+        "median": 0.12886127829551697,
+        "min": 0.000003216339337086538,
+        "p25": 0.02182563440874219,
+        "p75": 0.4845914840698242
+      },
+      "repeatedReferenceCount": 66
+    },
+    "testExampleCount": 42
+  },
+  "bridgeOwnTest": {
+    "admission": {
+      "jointAdmissionFraction": 0.2127659574468085,
+      "onsetAdmissionFraction": 0.46808510638297873,
+      "onsetProbability": {
+        "count": 141,
+        "max": 0.9981694221496582,
+        "mean": 0.4747500060692162,
+        "median": 0.40777069330215454,
+        "min": 0.00044767287909053266,
+        "p25": 0.10884362459182739,
+        "p75": 0.8800851106643677
+      },
+      "positiveReferenceStringFrames": 141,
+      "silenceProbability": {
+        "count": 141,
+        "max": 0.9994993209838867,
+        "mean": 0.4202665062260018,
+        "median": 0.2733003497123718,
+        "min": 0.00040330333285965025,
+        "p25": 0.03281465545296669,
+        "p75": 0.8478230237960815
+      },
+      "stateAdmissionFraction": 0.2765957446808511,
+      "strongestIncorrectActiveProbability": {
+        "count": 141,
+        "max": 0.9164612293243408,
+        "mean": 0.24541459535795565,
+        "median": 0.09743279218673706,
+        "min": 0.00006787934398744255,
+        "p25": 0.02391010709106922,
+        "p75": 0.44598516821861267
+      },
+      "trueMinusSilenceMargin": {
+        "count": 141,
+        "max": 0.9989107599831186,
+        "mean": -0.14444940701779468,
+        "median": -0.13395020800976454,
+        "min": -0.9994993209526488,
+        "p25": -0.8377454280154775,
+        "p75": 0.3390358090400696
+      },
+      "trueMinusStrongestIncorrectMargin": {
+        "count": 141,
+        "max": 0.9993501409044256,
+        "mean": 0.030402503850251474,
+        "median": -0.026840002258744278,
+        "min": -0.8991387190762907,
+        "p25": -0.3892536163330078,
+        "p75": 0.3668489009141922
+      },
+      "trueStateProbability": {
+        "count": 141,
+        "max": 0.9994180202484131,
+        "mean": 0.2758170992082071,
+        "median": 0.02639240212738514,
+        "min": 6.668053424956771e-14,
+        "p25": 6.98664521792125e-8,
+        "p75": 0.5450984835624695
+      }
+    },
+    "familyPitchOnset": {
+      "chords": {
+        "f1": 0.1851851851851852,
+        "falseNegative": 31,
+        "falsePositive": 13,
+        "precision": 0.2777777777777778,
+        "recall": 0.1388888888888889,
+        "truePositive": 5
+      },
+      "isolated": {
+        "f1": 0.32,
+        "falseNegative": 2,
+        "falsePositive": 15,
+        "precision": 0.21052631578947367,
+        "recall": 0.6666666666666666,
+        "truePositive": 4
+      },
+      "legato": {
+        "f1": 0.7499999999999999,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "precision": 0.6,
+        "recall": 1,
+        "truePositive": 6
+      },
+      "mixed": {
+        "f1": 0.4,
+        "falseNegative": 0,
+        "falsePositive": 9,
+        "precision": 0.25,
+        "recall": 1,
+        "truePositive": 3
+      },
+      "palmmute": {
+        "f1": 0.6835443037974683,
+        "falseNegative": 9,
+        "falsePositive": 16,
+        "precision": 0.627906976744186,
+        "recall": 0.75,
+        "truePositive": 27
+      },
+      "repeated": {
+        "f1": 0.5,
+        "falseNegative": 18,
+        "falsePositive": 6,
+        "precision": 0.6666666666666666,
+        "recall": 0.4,
+        "truePositive": 12
+      },
+      "scales": {
+        "f1": 0.3703703703703704,
+        "falseNegative": 14,
+        "falsePositive": 20,
+        "precision": 0.3333333333333333,
+        "recall": 0.4166666666666667,
+        "truePositive": 10
+      }
+    },
+    "negativeOnlyFalsePositiveEvents": 0,
+    "negativeOnlyFalsePositiveEventsPerSecond": 0,
+    "negativeOnlySeconds": 6,
+    "pitchOnset": {
+      "f1": 0.46048109965635736,
+      "falseNegative": 74,
+      "falsePositive": 83,
+      "precision": 0.44666666666666666,
+      "recall": 0.475177304964539,
+      "truePositive": 67
+    },
+    "pitchOnsetOffset": {
+      "f1": 0.30508474576271183,
+      "falseNegative": 96,
+      "falsePositive": 109,
+      "precision": 0.2922077922077922,
+      "recall": 0.3191489361702128,
+      "truePositive": 45
+    },
+    "repeatedAttackRecall": 0.5555555555555556,
+    "repeatedReferenceCount": 54,
+    "repeatedReferenceOnset": {
+      "currentFrameOnsetProbability": {
+        "count": 78,
+        "max": 0.9979591369628906,
+        "mean": 0.36567464692910645,
+        "median": 0.18789111822843552,
+        "min": 0.00044767287909053266,
+        "p25": 0.06180994771420956,
+        "p75": 0.6909485459327698
+      },
+      "onsetAdmissionCount": 24,
+      "onsetAdmissionFraction": 0.3076923076923077,
+      "precedingFrameOnsetProbability": {
+        "count": 78,
+        "max": 0.9551506638526917,
+        "mean": 0.12091986365693139,
+        "median": 0.017609208822250366,
+        "min": 0.000014583783013222273,
+        "p25": 0.003963975352235138,
+        "p75": 0.07147529907524586
+      },
+      "repeatedReferenceCount": 78
+    },
+    "testExampleCount": 42
+  },
+  "checks": {
+    "commonF1": false,
+    "commonPrecision": false,
+    "commonRecallDecline": true,
+    "controlReproduced": true,
+    "finite": true,
+    "negativeFp": true,
+    "retryFalse": true,
+    "steps": true,
+    "thresholdSearchFalse": true
+  },
+  "contractSha256": "8a62dbd5bee3edd491d0b35e1fb320f46dc5567e8131527c3297d6a2e0ca80de",
+  "controlCommon": {
+    "admission": {
+      "jointAdmissionFraction": 0.2868217054263566,
+      "onsetAdmissionFraction": 0.6201550387596899,
+      "onsetProbability": {
+        "count": 129,
+        "max": 0.9999933242797852,
+        "mean": 0.595924694310277,
+        "median": 0.7040765881538391,
+        "min": 0.000004726627594209276,
+        "p25": 0.1859467625617981,
+        "p75": 0.9526401162147522
+      },
+      "positiveReferenceStringFrames": 129,
+      "silenceProbability": {
+        "count": 129,
+        "max": 0.9999963045120239,
+        "mean": 0.5622580570246404,
+        "median": 0.6243377923965454,
+        "min": 0.0002492977655492723,
+        "p25": 0.13430167734622955,
+        "p75": 0.9782269597053528
+      },
+      "stateAdmissionFraction": 0.29457364341085274,
+      "strongestIncorrectActiveProbability": {
+        "count": 129,
+        "max": 0.8946796655654907,
+        "mean": 0.11106965062090733,
+        "median": 0.025241270661354065,
+        "min": 0.0000020457530354178743,
+        "p25": 0.002325416309759021,
+        "p75": 0.11823737621307373
+      },
+      "trueMinusSilenceMargin": {
+        "count": 129,
+        "max": 0.9973179445369169,
+        "mean": -0.26698801404512906,
+        "median": -0.5854593761832803,
+        "min": -0.9999963045120235,
+        "p25": -0.9775196625851095,
+        "p75": 0.48679494857788086
+      },
+      "trueMinusStrongestIncorrectMargin": {
+        "count": 129,
+        "max": 0.9981076695403317,
+        "mean": 0.18420039235860394,
+        "median": -0.000005477209912347313,
+        "min": -0.89467966556235,
+        "p25": -0.023333219810011647,
+        "p75": 0.598626121878624
+      },
+      "trueStateProbability": {
+        "count": 129,
+        "max": 0.9983391761779785,
+        "mean": 0.29527004297951126,
+        "median": 0.017871582880616188,
+        "min": 2.8161401177495392e-18,
+        "p25": 1.9814705431997481e-10,
+        "p75": 0.7162380814552307
+      }
+    },
+    "familyPitchOnset": {
+      "chords": {
+        "f1": 0.3846153846153846,
+        "falseNegative": 26,
+        "falsePositive": 6,
+        "precision": 0.625,
+        "recall": 0.2777777777777778,
+        "truePositive": 10
+      },
+      "isolated": {
+        "f1": 0.923076923076923,
+        "falseNegative": 0,
+        "falsePositive": 1,
+        "precision": 0.8571428571428571,
+        "recall": 1,
+        "truePositive": 6
+      },
+      "legato": {
+        "f1": 0.9090909090909091,
+        "falseNegative": 1,
+        "falsePositive": 0,
+        "precision": 1,
+        "recall": 0.8333333333333334,
+        "truePositive": 5
+      },
+      "mixed": {
+        "f1": 0.5,
+        "falseNegative": 0,
+        "falsePositive": 6,
+        "precision": 0.3333333333333333,
+        "recall": 1,
+        "truePositive": 3
+      },
+      "palmmute": {
+        "f1": 0.9152542372881356,
+        "falseNegative": 3,
+        "falsePositive": 2,
+        "precision": 0.9310344827586207,
+        "recall": 0.9,
+        "truePositive": 27
+      },
+      "repeated": {
+        "f1": 0.6666666666666666,
+        "falseNegative": 12,
+        "falsePositive": 0,
+        "precision": 1,
+        "recall": 0.5,
+        "truePositive": 12
+      },
+      "scales": {
+        "f1": 0.9199999999999999,
+        "falseNegative": 1,
+        "falsePositive": 3,
+        "precision": 0.8846153846153846,
+        "recall": 0.9583333333333334,
+        "truePositive": 23
+      }
+    },
+    "negativeOnlyFalsePositiveEvents": 0,
+    "negativeOnlyFalsePositiveEventsPerSecond": 0,
+    "negativeOnlySeconds": 6,
+    "pitchOnset": {
+      "f1": 0.7381974248927038,
+      "falseNegative": 43,
+      "falsePositive": 18,
+      "precision": 0.8269230769230769,
+      "recall": 0.6666666666666666,
+      "truePositive": 86
+    },
+    "pitchOnsetOffset": {
+      "f1": 0.6097560975609757,
+      "falseNegative": 54,
+      "falsePositive": 42,
+      "precision": 0.6410256410256411,
+      "recall": 0.5813953488372093,
+      "truePositive": 75
+    },
+    "repeatedAttackRecall": 0.7142857142857143,
+    "repeatedReferenceCount": 42,
+    "repeatedReferenceOnset": {
+      "currentFrameOnsetProbability": {
+        "count": 66,
+        "max": 0.9999508857727051,
+        "mean": 0.5280244032035515,
+        "median": 0.6456506550312042,
+        "min": 0.000004726627594209276,
+        "p25": 0.07634928822517395,
+        "p75": 0.9531593024730682
+      },
+      "onsetAdmissionCount": 36,
+      "onsetAdmissionFraction": 0.5454545454545454,
+      "precedingFrameOnsetProbability": {
+        "count": 66,
+        "max": 0.6367490887641907,
+        "mean": 0.057903292986776995,
+        "median": 0.0031078726751729846,
+        "min": 1.7172248594887057e-13,
+        "p25": 0.00011879050180141348,
+        "p75": 0.021783506963402033
+      },
+      "repeatedReferenceCount": 66
+    },
+    "testExampleCount": 42
+  },
+  "controlReproduction": {
+    "f1": true,
+    "precision": true,
+    "recall": true
+  },
+  "deltas": {
+    "f1BridgeMinusControl": -0.18647328696166943,
+    "precisionBridgeMinusControl": -0.3300286669851887,
+    "recallBridgeMinusControl": -0.046511627906976716
+  },
+  "execution": {
+    "automaticScientificRetries": 0,
+    "elapsedSeconds": 57.38489218800001,
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "realAudio": false,
+    "thresholdSearch": false,
+    "v2b": false,
+    "waveformDatasets": 2
+  },
+  "fit": {
+    "bridge": {
+      "optimizerSteps": 500,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 19294,
+      "sampledFrames": 64000
+    },
+    "control": {
+      "optimizerSteps": 500,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 19702,
+      "sampledFrames": 64000
+    }
+  },
+  "recovery": {
+    "f1FractionOfOriginalDeficit": 0.38541799211095534,
+    "precisionFractionOfOriginalDeficit": 0.34322077724127803
+  },
+  "render": {
+    "bridge": {
+      "attackGroups": 819,
+      "attackedNoteLabels": 987,
+      "examples": 294,
+      "frameCount": 87,
+      "seconds": 588,
+      "stateTruncations": 384
+    },
+    "control": {
+      "attackGroups": 735,
+      "attackedNoteLabels": 903,
+      "examples": 294,
+      "frameCount": 87,
+      "seconds": 588,
+      "stateTruncations": 0
+    }
+  },
+  "schema": "astra-v14-matched-context-bridge-result-v1",
+  "status": "complete",
+  "strata": {
+    "bridge": {
+      "activeNonOnset": 7440,
+      "negativeStructureInactive": 4559,
+      "otherInactive": 5686,
+      "positiveOnset": 585
+    },
+    "control": {
+      "activeNonOnset": 8220,
+      "negativeStructureInactive": 4635,
+      "otherInactive": 4890,
+      "positiveOnset": 525
+    }
+  },
+  "supported": false,
+  "provenance": {
+    "workflowRun": 36590057639,
+    "job": 109480499261,
+    "launchIdentity": "v14-matched-context-v1-20260929-02",
+    "launchCommit": "e6b3085493b90cecd3ce56d498609ce1afaf54b7",
+    "artifactId": 11043457682,
+    "artifactDigest": "sha256:bc69dfbc4de527e2cef9c85b7f0cc29bca27aea16f16f799222d7ef6de9f02fb",
+    "workflowBlob": "78a41f71f2c0ea66f37882bc8ef7ca82fc7bc6a8",
+    "runnerBlob": "68fd78964acc474337988182fc7c619adff691b2",
+    "contractBlob": "5984ccd902713e2e1147b7f683e77c8166d46c90",
+    "priorNonconformingRun": {
+      "run": 36546933952,
+      "classification": "technical invalidation: wrong batch root and runtime; no accepted scientific result"
+    }
+  },
+  "finalDecision": {
+    "v14GatePassed": false,
+    "reason": "Common F1 and common precision both failed the prospectively frozen 50%-recovery thresholds.",
+    "noAutomaticV15OrV16": true,
+    "serialSyntheticMicroOptimizationClosed": true,
+    "nextAction": "Documentation-only decision brief among larger synthetic-generator redesign, separately authorized independent real-development evidence, or pause model line."
+  }
+}
