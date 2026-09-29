@@ -221,7 +221,7 @@
   },
   "empiricalGate": {
     "commonF1AtLeast": 0.586490016794178,
-    "commonPrecisionAtLeast": 0.5756752789195302,
+    "commonPrecisionAtLeast": 0.5756752789195536,
     "maxRecallDeclineVsSuccessfulComparator": 0.05,
     "negativeFpPerSecondAtMost": 0.1,
     "exact500UpdatesPerModel": true,
@@ -232,7 +232,7 @@
   },
   "gateRationale": {
     "f1": "Requires at least 50% recovery of the original V9 common-test F1 deficit.",
-    "precision": "Requires at least 50% recovery of the original V9-to-comparator precision deficit: 0.3244274809 + 0.5*0.5024955960 = 0.5756752789."
+    "precision": "Requires at least 50% recovery of the original V9-to-comparator precision deficit: 0.3244274809160305 + 0.5*(0.8269230769230769 - 0.3244274809160305) = 0.5756752789195536."
   },
   "executionCeilings": {
     "waveformDatasets": 2,
