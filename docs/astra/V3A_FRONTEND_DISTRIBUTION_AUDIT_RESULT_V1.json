@@ -1,0 +1,47 @@
+{
+  "schema": "astra-v3a-frontend-distribution-audit-result-v1-summary",
+  "date": "2026-09-28",
+  "status": "completed-source-equivalent-same-runtime-proxy",
+  "syntheticReference": {
+    "method": "deterministic S9 intervention regeneration using identical frozen S0/S9 source under the same local runtime used for V2B frontend extraction",
+    "currentRuntimeFeatureArraySha256": "48f3a6d44e335a56794fbcde671dd5cd11ca00217eb9bee3854395623f6610c2",
+    "historicalExpectedFeatureArraySha256": "6d12754ba68360090d70408c8a2de8b5f99273d5bc51c003a2bf76a1ea79d113",
+    "historicalByteExact": false
+  },
+  "real": {
+    "v2bFrames": 6117,
+    "clips": 17
+  },
+  "synthetic": {
+    "examples": 294,
+    "framesPerExample": 87,
+    "featureBins": 192,
+    "totalFrames": 25578
+  },
+  "distances": {
+    "medianAbsoluteSmd": 0.8664814510448218,
+    "p95AbsoluteSmd": 1.5248853353503407,
+    "fractionAbsSmdAtLeast1": 0.390625,
+    "fractionAbsSmdAtLeast2": 0,
+    "wassersteinMedian": 0.20250876642069132,
+    "wassersteinP95": 0.3076085823131517,
+    "rangeOverlapMedian": 0.8875772265245514,
+    "rangeOverlapP05": 0.559833585061385
+  },
+  "decision": {
+    "substantialFrontendDistributionShiftObserved": true,
+    "v3bFrozenTransformsMayProceed": true,
+    "qualification": "This is a source-equivalent same-runtime proxy because the exact historical feature bytes are unavailable and exact-lock regeneration was not bitwise reproducible."
+  },
+  "execution": {
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "frontendChanged": false,
+    "v1_1Used": false
+  },
+  "localEvidenceHashes": {
+    "fullAuditResultSha256": "3c1baa75b349de7a5e847a488f90cf97f27ee9a1a080ed1d146b1c762dcad7ee",
+    "localAuditRunnerSha256": "459a6c4adecb84dd9da0d3a00278c77ebd583618681de22e7d4d99220c5288e2"
+  }
+}
