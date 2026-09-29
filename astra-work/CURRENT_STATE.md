@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V14 2-second matched-context bridge opened — contract frozen — model-free preflight complete — 2026-09-29** at the end of this file. V14 empirical execution is not authorized.
+Latest instructions: **V14 empirical attempt 1 consumed — INVALID / non-interpretable — corrected package prepared, not executed — 2026-09-29** at the end of this file. Fresh authorization is required for any corrected V14 execution.
 
 ## Current status
 
@@ -5019,3 +5019,135 @@ After that authorization:
 If V14 fails the material-recovery gates, do not auto-open V15/V16. Follow the previously frozen stop rule and choose one larger redesign/independent real-development/pause decision path.
 
 **Resume instruction:** Preserve V9-V13 and the V14 contract/preflight exactly. At a generic “continue”, documentation/review only. Await fresh explicit authorization for empirical V14 execution.
+
+
+## V14 empirical attempt 1 consumed — INVALID / non-interpretable — corrected package prepared, not executed — 2026-09-29
+
+**THIS IS THE CURRENT RESUME AUTHORITY. It supersedes the earlier “await empirical V14 authorization” boundary.**
+
+The user explicitly authorized empirical V14. That authorization was consumed by exactly one launch:
+
+- launch identity: `v14-matched-context-v1-20260929-01`
+- workflow run: **36546933952**
+- job: **109335463434**
+- head: `8487cc3a433df177285582b966d36ed54bec368f`
+- run attempt: **1**
+- conclusion: **failure**
+- artifact count: **0**
+
+Frozen failure records:
+- `docs/astra/V14_EXECUTION_ATTEMPT1_FAILURE_V1.md`
+- `docs/astra/V14_EXECUTION_ATTEMPT1_FAILURE_V1.json`
+
+### What passed before execution
+
+Fail-closed V14 validator:
+- **7/7 tests passed**
+- contract identity valid
+- schedule identity valid
+- recovery gates valid
+- no empirical-authorization mutation inside the frozen contract
+- no gate weakening
+
+### What executed
+
+The runner then:
+- generated two synthetic 2-second datasets;
+- trained exactly **2 models**;
+- completed **500 updates/model**;
+- completed **1,000 optimizer steps total**;
+- performed synthetic evaluation for the control reproduction guard.
+
+No:
+- V2B;
+- P1;
+- P2;
+- P3;
+- real-audio inference;
+- threshold search;
+- scientific retry;
+- main or Production mutation.
+
+### Failure classification
+
+The runner raised:
+
+`RuntimeError: control reproduction failed`
+
+This happened **after training both models**, but before a valid V14 result/artifact was written.
+
+Therefore attempt 1 is:
+- **not a V14 scientific PASS**;
+- **not a V14 scientific FAIL**;
+- **INVALID / NON-INTERPRETABLE** because the required historical control identity was not reproduced.
+
+Do not infer or reconstruct bridge metrics from this attempt.
+
+### Root cause
+
+The V14 runner incorrectly used the new bridge schedule root **20260929** for paired-batch sampling.
+
+Historical V9 used:
+- root **20260927**
+- paired-batch RNG seed `20260927 + 17001`
+
+Attempt 1 used:
+- root **20260929**
+- paired-batch RNG seed `20260929 + 17001`
+
+Thus the control training batch plan was not the frozen historical V9 control plan.
+
+A second prospective parity issue was also found:
+- attempt 1 used `ubuntu-latest`, Python 3.11 and freshly resolved packages;
+- historical V9 used **ubuntu-22.04**, **Python 3.10.15**, pip 24.0, and exact `astra_backend/tabcnn_runtime/requirements.lock.txt`.
+
+The reproduction guard correctly stopped interpretation.
+
+### Corrections prepared after failure — NOT empirically executed
+
+Corrected package now separates:
+- V14 timing/schedule seed = **20260929**
+- historical control batch root = **20260927**
+
+The workflow now uses:
+- ubuntu-22.04
+- Python 3.10.15
+- pip 24.0
+- exact historical CPU requirements lock
+
+Future reproduction failures also preserve a diagnostic JSON before raising.
+
+A focused guard now asserts:
+- `BATCH_ROOT == 20260927`
+
+Corrected blobs:
+- runner `68fd78964acc474337988182fc7c619adff691b2`
+- workflow `8be667ab11f6e1548c227f2d3b1ddb762ecfa408`
+- tests `c0ffdcf95759c0a5e54e95b1f4349f866f704a29`
+
+No corrected empirical execution has occurred.
+
+### Current authorization boundary
+
+**The prior empirical authorization is consumed. No retry is authorized.**
+
+At a generic “continue”:
+- documentation/review only;
+- no new marker;
+- no rerun of run 36546933952;
+- no corrected V14 launch;
+- no rendering/training/inference.
+
+A fresh explicit user authorization is required before one corrected V14 execution.
+
+If freshly authorized:
+1. verify corrected blobs and exact historical runtime pins;
+2. run focused validator/tests first;
+3. enforce historical control batch identity;
+4. consume a new unique corrected launch identity;
+5. execute exactly one corrected two-arm V14;
+6. if control reproduction fails, preserve the diagnostic artifact and stop;
+7. if control reproduces, apply the frozen material-recovery gates;
+8. no automatic retry, V2B, P1/P2/P3, or Production mutation.
+
+The scientific V14 question remains **unanswered** after attempt 1.
