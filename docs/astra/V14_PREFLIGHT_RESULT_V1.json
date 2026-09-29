@@ -1,0 +1,79 @@
+{
+  "schema": "astra-v14-preflight-result-v1",
+  "date": "2026-09-29",
+  "status": "model-free-contract-and-schedule-pass-unit-test-workflow-not-dispatched",
+  "contract": "docs/astra/V14_MATCHED_CONTEXT_BRIDGE_CONTRACT_V1.json",
+  "correctionCaughtDuringPreflight": {
+    "field": "empiricalGate.commonPrecisionAtLeast",
+    "incorrect": 0.5756752789195302,
+    "corrected": 0.5756752789195536,
+    "reason": "Exact arithmetic for 50% recovery of the frozen comparator-minus-V9 precision deficit.",
+    "correctedBeforeEmpiricalExecution": true
+  },
+  "checks": {
+    "positiveClipCount": true,
+    "attackGroupCount819": true,
+    "gapCount546": true,
+    "gapClassCounts252_225_69": true,
+    "density1_5": true,
+    "ioiP10Exact": true,
+    "ioiP50Exact": true,
+    "ioiP90Exact": true,
+    "repeat250Exact": true,
+    "longGap700Exact": true,
+    "minimumFinalMarginAtLeast0_12": true,
+    "f1RecoveryGateExact": true,
+    "precisionRecoveryGateExact": true,
+    "empiricalAuthorizationFalse": true,
+    "noV2b": true,
+    "noRealAudio": true
+  },
+  "summary": {
+    "positiveClipCount": 273,
+    "attackGroupCount": 819,
+    "gapCount": 546,
+    "gapClassCounts": {
+      "S": 252,
+      "M": 225,
+      "L": 69
+    },
+    "density": 1.5,
+    "ioiP10Seconds": 0.10616173218599859,
+    "ioiP50Seconds": 0.2520127044882436,
+    "ioiP90Seconds": 0.8704418107561172,
+    "repeat250Fraction": 0.46153846153846156,
+    "longGap700Fraction": 0.12637362637362637,
+    "maximumLastAttackSeconds": 1.7920413319826713,
+    "minimumPostLastAttackMarginSeconds": 0.20795866801732865,
+    "timingDistanceV1": 0.04306421123172013
+  },
+  "gates": {
+    "commonF1AtLeast": 0.586490016794178,
+    "commonPrecisionAtLeast": 0.5756752789195536,
+    "maxRecallDeclineVsSuccessfulComparator": 0.05,
+    "negativeFpPerSecondAtMost": 0.1
+  },
+  "validation": {
+    "method": "Independent model-free Python recomputation of the exact frozen SHA-based schedule and gate arithmetic.",
+    "committedValidator": "astra_backend/synthetic/v14_contract_validator_v1.py",
+    "committedTests": "astra_backend/synthetic/test_v14_contract_validator_v1.py",
+    "committedUnitTestsExecutedInThisEnvironment": false,
+    "reason": "Runtime container could not resolve raw.githubusercontent.com and the available GitHub connector exposes reads/writes but no workflow-dispatch action.",
+    "futureFailClosedRequirement": "Before any future V14 waveform render or optimizer step, execute the committed validator/tests against the branch contract; any failure stops with zero renders and zero optimizer steps."
+  },
+  "execution": {
+    "waveformRenders": 0,
+    "datasetsGenerated": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0,
+    "realAudioAccess": 0,
+    "workflowDispatches": 0
+  },
+  "authorization": {
+    "projectPreparationConsumed": true,
+    "empiricalRenderingTrainingAuthorized": false,
+    "freshExplicitAuthorizationRequired": true
+  }
+}
