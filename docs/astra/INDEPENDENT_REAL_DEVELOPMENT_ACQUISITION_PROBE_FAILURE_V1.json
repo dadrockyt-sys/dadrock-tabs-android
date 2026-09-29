@@ -1,0 +1,24 @@
+{
+  "schema": "astra-independent-real-development-acquisition-probe-failure-v1",
+  "date": "2026-09-28",
+  "status": "technical-acquisition-failed-before-audio-download",
+  "workflow": {
+    "run": 36508296736,
+    "job": 109214593700,
+    "head": "321391803e96dee3b2f9f13c705f9fe2a6654225",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "candidateId": "P01",
+  "sourceUrl": "https://pixabay.com/sound-effects/musical-guitar-riff-in-e-minor-95-bpm-dry-475013/",
+  "failure": "headless Playwright page automation observed no public Pixabay audio URL",
+  "audioDownloaded": false,
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false,
+  "automaticRetry": false,
+  "interpretation": "Technical web-acquisition failure only. It does not invalidate the candidate or the real-development program.",
+  "nextAction": "use a separately versioned direct-CDN acquisition probe based on the already-resolved public CDN URL; do not rerun V1"
+}
