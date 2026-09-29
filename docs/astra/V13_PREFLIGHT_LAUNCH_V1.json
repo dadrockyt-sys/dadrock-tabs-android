@@ -1,0 +1,29 @@
+{
+  "schema": "astra-v13-preflight-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-model-free-preflight-only",
+  "branch": "astra-work",
+  "optimizerSteps": 0,
+  "modelInference": false,
+  "waveformRendering": false,
+  "sourcePaths": {
+    "authorization": "docs/astra/V13_PROJECT_AUTHORIZATION_V1.json",
+    "contract": "docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json",
+    "runner": "astra_backend/synthetic/v13_active_nononset_mixture_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v13_active_nononset_mixture_v1.py",
+    "validator": "astra_backend/synthetic/v13_contract_validator_v1.py",
+    "validatorTests": "astra_backend/synthetic/test_v13_contract_validator_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v13-active-nononset-preflight-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "authorization": "a22401e24e6e6a4b9783fa482a260a20920ec2ff",
+    "contract": "967a7144f85b63af70c70ddb4246a5fb4fdb3a4d",
+    "runner": "61b239bdd83c91e0f12335b67c016567569c3bdf",
+    "runnerTests": "147b7bad1fbb478bafd00b6110be481d47b6995f",
+    "validator": "92127b19b1941f5cc41121983b5287afe169462c",
+    "validatorTests": "0cba9a26c0ddaeae79210971a18ce5f9a928a1de",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "196eec9ee73dcb64c1c97a3de97ad40b0ac76a01"
+  }
+}
