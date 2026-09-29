@@ -1,0 +1,30 @@
+{
+  "schema": "astra-v11-project-authorization-v1",
+  "date": "2026-09-29",
+  "status": "authorized-for-prospective-study-definition-and-model-free-preparation-only",
+  "userInstruction": "I authorize",
+  "branch": "astra-work",
+  "predecessorReview": "docs/astra/POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1.json",
+  "question": "With the successful V9 attack timing/counts and training/evaluation settings fixed, does restoring historical family-specific state-duration and legato-continuation semantics materially recover common-population precision/F1?",
+  "authorizationScope": {
+    "prospectiveContract": true,
+    "staticImplementation": true,
+    "pureTests": true,
+    "modelFreePreflight": true,
+    "waveformRendering": false,
+    "optimizerSteps": 0,
+    "modelInference": false,
+    "v2b": false,
+    "realAudio": false,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "empiricalExecutionRequiresFreshAuthorizationAfterContractFreeze": true
+}
