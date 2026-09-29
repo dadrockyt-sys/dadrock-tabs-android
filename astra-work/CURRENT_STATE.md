@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **PRE-V9 common-unit measurement complete — 2026-09-29** at the end of this file. Common-unit timing is reconciled; V9 empirical execution still requires a fresh user decision.
+Latest instructions: **V9 final empirical contract frozen — 2026-09-29** at the end of this file. No launch is armed; empirical V9 still requires explicit authorization.
 
 ## Current status
 
@@ -2659,3 +2659,156 @@ The next project step is to finalize and freeze the V9 numerical contract and th
 Until that fresh decision: documentation review is allowed, but no V9 candidate generation, workflow dispatch, rendering, model weights, inference, optimizer, new audio/annotation, V1.1/P1/P2/P3/A2, main or Production changes.
 
 **Resume instruction:** Stop at the V9 empirical-decision boundary. If the user explicitly authorizes V9 empirical work, first freeze the complete numerical/spec/launch contract before generating candidate output. Otherwise do not execute V9.
+
+
+## V9 final empirical contract frozen — 2026-09-29
+
+**Current resume authority. This section supersedes the earlier instruction to prepare the final V9 numerical/spec/launch contract.**
+
+Completed and saved:
+- `docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.md`
+- `docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json`
+- `astra_backend/synthetic/v9_final_contract_validator_v1.py`
+- `astra_backend/synthetic/test_v9_final_contract_validator_v1.py`
+
+The earlier V9 draft design is explicitly marked superseded.
+
+### Frozen intervention
+
+Exactly one intervention arm:
+- 4.0-second clips
+- 294 total slots
+- 273 positive / 21 negative-only
+- train/validation/test = 210/42/42
+- 1,638 acoustic attack groups across 1,092 positive seconds
+- attack-group density = 1.500000000/s
+- 1,806 attacked note labels
+- attacked-note-label density = 1.6538461538461537/s, preserving the historical V8 L0 attacked-label density
+
+Attack groups per positive clip:
+- isolated 5
+- scales 8
+- chords 2
+- repeated 8
+- legato 4
+- palmmute 10
+- mixed-positive 4
+
+Chord attacks retain three simultaneous note labels per acoustic group.
+
+### Frozen gap package
+
+Deterministic per-family class multisets, with SHA-256 permutation inside each clip:
+
+- isolated: S,S,S,M
+- scales: S,S,S,M,M,M,L
+- chords: M
+- repeated: S,S,S,M,M,M,L
+- legato: S,M,L
+- palmmute: S,S,S,S,M,M,M,M,L
+- mixed-positive: S,S,L
+
+Aggregate:
+- S = 630 / 1,365 = 0.4615384615
+- M = 546 / 1,365 = 0.4000000000
+- L = 189 / 1,365 = 0.1384615385
+
+Supports:
+- S [0.080, 0.250] s
+- M [0.251, 0.316] s
+- L [0.700, 1.360] s
+- first attack [0.050, 0.120] s
+- final margin 0.120 s
+- sustain [0.120, 0.480] s
+
+Worst-case palmmute support occupies 3.864 s, so the declared 4-second support fits without any planned fallback.
+
+No clipping, shifting, compression, deletion, hidden rejection loop, retry, or reseed-to-pass is allowed. Any infeasible clip fails closed.
+
+### Frozen corrected timing gate
+
+Corrected timing distance V1 now includes common-unit:
+- repeat250
+- IOI p50
+- IOI p90
+- attack-group density
+- longGap700
+
+Frozen V8 L0 common-unit distance = 1.6103247396.
+
+The one V9 manifest advances only if every condition passes, including:
+- relative distance improvement >=60%
+- density relative error <=5%
+- p50 error <=0.050 s
+- p90 error <=0.150 s
+- repeat250 error <=0.080
+- longGap700 error <=0.050
+- exactly 273 positive / 21 negative-only clips
+- exactly 1,638 attack groups / 1,806 attacked note labels
+- zero infeasible clips
+- zero invalid labels/offsets
+- zero fallback operations
+- exact split/source/spec/reference identity
+
+Failure stops before rendering with 0 optimizer steps and 0 model inference.
+
+### Frozen downstream ceiling if later explicitly authorized
+
+Rendering:
+- exactly 2 datasets
+- comparator 588 s
+- intervention 1,176 s
+- R3 fixed
+- <=30 CPU minutes render
+- <=700 MiB total persisted synthetic datasets
+- $0 paid compute
+
+Training:
+- exactly 2 S6 nonlinear models
+- 500 optimizer updates/model
+- <=1,000 total
+- active-state weight 9.0
+- onset positive weight 8.0
+- onset loss multiplier 4.0
+- Adam lr 0.003
+- batch size 128
+- exact-string/fret state objective
+- O0 exact-frame BCE onset objective
+- thresholds 0.50/0.50
+- decoder unchanged
+- paired initialization and strata
+- report actual frames/events/attack groups/seconds because equal update counts are not equal exposure
+- <=60 CPU minutes fit/eval
+- zero automatic scientific retries
+
+Synthetic sanity remains a technical gate before any V2B inference. V2B development scoring remains fixed to 56 trusted / 49 high-confidence refs and 31.857959184 negative seconds.
+
+### Launch state
+
+**No launch is armed. No V9 candidate timing population has been generated.**
+
+A future launch must bind:
+- final contract blob
+- implementation source blobs
+- workflow blob
+- common-unit reference and V2B record blobs
+- unique consumed launch identity
+- branch/ref and run-attempt=1
+- fail-if-output-exists paths
+- deadlines and partial-failure receipt
+- durable result/checkpoint retention
+
+### Current authorization boundary
+
+The user’s generic continue allowed final contract preparation only under the existing handoff. It did not authorize empirical V9 execution.
+
+Current counts remain:
+- V9 candidate outputs: 0
+- waveform renders: 0
+- model inference: 0
+- optimizer steps: 0
+- workflow dispatches: 0
+- V1.1/P1/P2/P3/A2 access: none
+- main/Production unchanged
+
+**Resume instruction:** Stop here. The next action is empirical V9 execution under the exact frozen contract, and it requires explicit user authorization. If authorization is given, first implement and pin the generator/runner/workflow and validate them model-free without generating candidate timing output; only then consume one launch scope and execute the ordered V9 gate chain. No automatic V10.
