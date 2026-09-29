@@ -1,0 +1,29 @@
+{
+  "schema": "astra-v10-preflight-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-model-free-preflight-only",
+  "branch": "astra-work",
+  "optimizerSteps": 0,
+  "modelInference": false,
+  "waveformRendering": false,
+  "sourcePaths": {
+    "authorization": "docs/astra/V10_PROJECT_AUTHORIZATION_V1.json",
+    "contract": "docs/astra/V10_EXPOSURE_ISOLATION_CONTRACT_V1.json",
+    "runner": "astra_backend/synthetic/v10_exposure_isolation_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v10_exposure_isolation_v1.py",
+    "validator": "astra_backend/synthetic/v10_contract_validator_v1.py",
+    "validatorTests": "astra_backend/synthetic/test_v10_contract_validator_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v10-exposure-isolation-preflight-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "authorization": "e32f9b87fe76eb9e90f3b5610110fb76c192327b",
+    "contract": "d6c990439f20086b0edb9809d50153397bbbc315",
+    "runner": "2c25b80c553d600ba26d2a7729bc1f3d1050f944",
+    "runnerTests": "7becffdd0ae821636d7935ea53b5ad9e0cb386c1",
+    "validator": "34d248f74812652fcd213fc420506c3f82b5a6d1",
+    "validatorTests": "32d6dac52a2e388f507ac958aab4ec7f6bbfc9b1",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "686eb9a58e4baa404c1252aca7cbb8c5204421c0"
+  }
+}
