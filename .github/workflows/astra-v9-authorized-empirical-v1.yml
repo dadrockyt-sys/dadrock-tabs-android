@@ -58,13 +58,13 @@ jobs:
           python -m pip check
       - name: Re-run frozen focused admission tests
         run: |
-          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
-          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
       - name: Generate single V9 timing manifest and apply V9A
         run: |
           set -euo pipefail
           mkdir -p /tmp/astra-v9
-          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py timing             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/astra-v9/timing.json
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v9_empirical_v1.py timing             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/astra-v9/timing.json
           python - <<'PY'
           import json
           x=json.load(open('/tmp/astra-v9/timing.json'))
@@ -75,10 +75,10 @@ jobs:
           PY
       - name: Render paired same-runtime datasets
         run: |
-          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py render             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --timing /tmp/astra-v9/timing.json             --outdir /tmp/astra-v9/data
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v9_empirical_v1.py render             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --timing /tmp/astra-v9/timing.json             --outdir /tmp/astra-v9/data
       - name: Train exactly two models and apply synthetic sanity
         run: |
-          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py train             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --datadir /tmp/astra-v9/data             --outdir /tmp/astra-v9/train
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v9_empirical_v1.py train             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --datadir /tmp/astra-v9/data             --outdir /tmp/astra-v9/train
           python - <<'PY'
           import json
           x=json.load(open('/tmp/astra-v9/train/result.json'))
