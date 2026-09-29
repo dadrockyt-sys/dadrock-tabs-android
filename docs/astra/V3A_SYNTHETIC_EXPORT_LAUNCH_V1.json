@@ -1,0 +1,15 @@
+{
+  "schema": "astra-v3a-synthetic-export-launch-v1",
+  "date": "2026-09-28",
+  "explicitlyAuthorized": true,
+  "userInstruction": "I authorize",
+  "purpose": "Regenerate exact historical S9 intervention synthetic features for model-free V3A distribution audit.",
+  "expectedInterventionFeatureArraySha256": "6d12754ba68360090d70408c8a2de8b5f99273d5bc51c003a2bf76a1ea79d113",
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "thresholdSearch": false,
+  "v1_1Used": false,
+  "p1Accessed": false,
+  "p2Accessed": false,
+  "p3Accessed": false
+}
