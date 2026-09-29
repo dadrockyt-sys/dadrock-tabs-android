@@ -165,5 +165,11 @@
     "a2": false,
     "mainMutation": false,
     "productionMutation": false
+  },
+  "postV10IntegrityQualification": {
+    "review": "docs/astra/POST_V10_CAUSAL_CONTRACT_INTEGRITY_REVIEW_V1.json",
+    "exactFamilyStateSemanticConformance": false,
+    "issue": "executed V9 template builder omitted original non-attacked legato continuation although frozen prose contract said it should remain",
+    "numericResultsPreserved": true
   }
 }
