@@ -1026,3 +1026,106 @@ Zero-inference verification:
 - main/Production: unchanged
 
 **Resume instruction:** V2B is complete. Stop before V2C. Do not run the candidate on V2B, inspect raw model probabilities, search thresholds, fit calibration, or tune anything until V2C is explicitly authorized. V1.1 remains sealed.
+
+
+## V2C calibration diagnostic complete — no calibration candidate — 2026-09-28
+
+V2C was explicitly authorized and completed on the fresh V2B calibration-development set only.
+
+Frozen execution contract:
+- `docs/astra/V2C_CALIBRATION_DIAGNOSTIC_EXECUTION_CONTRACT_V1.md`
+- `docs/astra/V2C_CALIBRATION_DIAGNOSTIC_EXECUTION_CONTRACT_V1.json`
+
+Preflight correction:
+- `docs/astra/V2C_PREFLIGHT_LANDMARK_SUPPORT_CORRECTION_V1.json`
+
+Frozen result:
+- `docs/astra/V2C_CALIBRATION_DIAGNOSTIC_RESULT_V1.json`
+- `docs/astra/V2C_CALIBRATION_DIAGNOSTIC_RESULT_V1.md`
+
+### Preflight support correction
+
+One C06 landmark at MIDI 37 was outside the pinned six-string model's representable pitch range and was excluded as unscorable rather than counted as a miss.
+
+Final scorable trusted set:
+- **56 high+medium landmarks**
+- **49 high-confidence**
+- **7 medium-confidence**
+
+The correction was frozen before grid metrics were produced.
+
+### Historical 0.50 / 0.50 raw diagnosis
+
+At the 56 true representable landmarks:
+- joint state+onset gate pass: **0**
+- state-only failure: **2**
+- onset-only failure: **1**
+- both gates fail: **53 (94.64%)**
+
+Raw landmark probability summaries:
+- median max compatible active-state probability: **1.3265e-9**
+- mean max active probability: **0.03445**
+- maximum active probability: **0.63777**
+- median max compatible onset probability: **5.2315e-14**
+- mean max onset probability: **0.03462**
+- maximum onset probability: **0.88764**
+
+At 0.50 / 0.50:
+- trusted pitch hits: **0 / 56**
+- high-confidence hits: **0 / 49**
+- negative false positives: **14 / 31.858 s**
+- negative FP rate: **0.43945 events/s**
+- all 14 baseline negative events occurred on D02 Ancient War Drums.
+
+### Frozen 4x4 threshold grid
+
+State: 0.20 / 0.30 / 0.40 / 0.50
+Onset: 0.20 / 0.30 / 0.40 / 0.50
+
+Frozen eligibility constraint:
+- negative FP rate <= **0.10 events/s**
+
+**No one of the 16 pairs was eligible.**
+
+Most permissive 0.20 / 0.20:
+- trusted hits: **1 / 56 (1.79%)**
+- high-confidence hits: **0 / 49**
+- negative events: **38**
+- negative FP rate: **1.193 events/s**
+
+Every pair with onset threshold >=0.30 produced **0 trusted hits**.
+Pairs with onset 0.20 produced at most **1 / 56**, never a high-confidence hit, while negative FP rates remained far above the frozen constraint.
+
+### V2C decision
+
+**No calibration candidate selected.**
+
+The evidence does not support a simple threshold-calibration explanation. Lower thresholds mainly create negative false positives without restoring meaningful real-guitar admission.
+
+Within the current local runtime, the failure is more consistent with an upstream representation/frontend/domain mismatch than with thresholds merely being too conservative. This is a diagnostic interpretation, not a causal isolation.
+
+Historical-runtime mismatch remains unresolved because V2A was infrastructure-blocked.
+
+### Execution identity / guards
+
+- checkpoint SHA-256 `8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036`
+- local V2C runner SHA-256 `26c8dc57b544ad9547347a41d47c1665b975c0e5d6b7369b148e538afc79be39`
+- full local result SHA-256 `bdac8be1f5d25f51fd23a17e9a85cc28d27f0e8eec63bb640e18cf9552d60489`
+- training: none
+- optimizer steps: 0
+- frontend/decoder/gain changes: none
+- candidate reselection: none
+- V1.1 used for calibration selection: no
+- P1/P2/P3: none
+- A2: closed
+- main/Production: unchanged
+
+### Current decision boundary
+
+Do **not** run V2D because there is no eligible V2C threshold pair to confirm.
+
+Do not continue lowering thresholds outside the frozen grid.
+
+The next scientifically useful project would be a new, prospectively frozen upstream transfer diagnosis aimed at representation/frontend/synthetic-to-real feature mismatch. It should not silently reuse V1.1 as a tuning target.
+
+**Resume instruction:** Stop at the V2C no-candidate boundary. Any upstream representation/frontend/domain-transfer experiment is a new project decision and requires explicit authorization.
