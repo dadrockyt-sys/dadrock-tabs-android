@@ -3,7 +3,7 @@
 Updated: 2026-09-29 UTC  
 Branch: `astra-work`
 
-Latest instructions: **V14 empirical attempt 1 consumed — INVALID / non-interpretable — corrected package prepared, not executed — 2026-09-29** at the end of this file. Fresh authorization is required for any corrected V14 execution.
+Latest instructions: **V14 empirical execution complete — FAILED material-recovery gate — serial micro-optimization closed — 2026-09-29** at the end of this file.
 
 ## Current status
 
