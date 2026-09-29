@@ -1595,3 +1595,140 @@ Main/Production unchanged.
 Any V5B success requires a fresh holdout; V1.1 is not the confirmation set.
 
 **Resume instruction:** V5 design is ready. Do not implement the new objective, train T0/T1/T2, or evaluate V2B until the user explicitly authorizes V5 empirical execution. Generic continuation remains design/documentation only.
+
+
+## V5 empirical execution complete — 2026-09-28
+
+The user explicitly authorized V5 empirical execution.
+
+Frozen source/results:
+- `astra_backend/synthetic/v5_target_structure_v1.py`
+- `astra_backend/synthetic/test_v5_target_structure_v1.py`
+- `docs/astra/V5_TARGET_STRUCTURE_ADEQUACY_RESULT_V1.json`
+- `docs/astra/V5_TARGET_STRUCTURE_ADEQUACY_RESULT_V1.md`
+
+Focused model-free helper checks:
+- **6 / 6 passed**
+- no model inference
+- no optimizer work
+
+### Identity / compute
+
+All arms used:
+- identical S9/S6-style nonlinear architecture
+- identical parameter count
+- identical R3 feature array
+- identical targets
+- identical initialization
+- identical batch plan
+- identical onset loss
+- thresholds 0.50/0.50
+- ordinary decoder unchanged
+
+Identity:
+- initial model SHA-256 `ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc`
+- R3 feature SHA-256 `622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6`
+- batch-plan SHA-256 `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`
+
+Training:
+- T0 exact objective: 500 steps
+- T1 pitch-equivalent objective: 500 steps
+- T2 fixed 50/50 objective: 500 steps
+- total optimizer work: **1500 / 1500 authorized steps**
+
+### V5A synthetic sanity
+
+T0:
+- precision **0.76471**
+- recall **0.60465**
+- F1 **0.67532**
+- negative FP **0.0/s**
+- eligible
+
+T1:
+- precision **0.67213**
+- recall **0.31783**
+- F1 **0.43158**
+- negative FP **0.0/s**
+- F1 decline vs T0 **0.24375**
+- recall decline vs T0 **0.28682**
+- **failed synthetic sanity; not V2B-eligible**
+
+T2:
+- precision **0.69811**
+- recall **0.57364**
+- F1 **0.62979**
+- negative FP **0.0/s**
+- F1 decline vs T0 **0.04554**
+- recall decline vs T0 **0.03101**
+- **passed synthetic sanity**
+
+### Protocol note
+
+The first local helper mistakenly evaluated T1 on V2B before applying the already-frozen synthetic-sanity decision.
+
+That readout is quarantined and excluded from V5 conclusions.
+
+No objective, threshold, gate, architecture, renderer parameter, or model choice was changed in response.
+
+The helper was corrected before T2:
+- T2 was evaluated on synthetic sanity first;
+- only after T2 passed did it reach V2B.
+
+### V5B V2B comparison
+
+Frozen compatible-pitch diagnostic:
+- state = noisy-OR over all physical string/fret positions for the trusted MIDI pitch
+- onset = maximum compatible-string onset probability
+- thresholds unchanged at 0.50/0.50
+- ordinary decoder used for negative FP
+
+T0:
+- trusted joint **0/56**
+- high-confidence joint **0/49**
+- state admission **0.03571**
+- onset admission **0.01786**
+- negative FP **0.15695/s**
+
+T2:
+- trusted joint **0/56**
+- high-confidence joint **0/49**
+- state admission **0.08929**
+- onset admission **0.01786**
+- negative FP **0.31389/s**
+- trusted joint gain **0.00**
+- onset admission decline **0.00**
+- **not development-interesting**
+
+Frozen gate required:
+- trusted joint gain >= +0.20
+- high-confidence joint >=25%
+- negative FP <=0.10/s
+- onset decline <=0.10
+
+T2 fails the complete gate.
+
+### Supported interpretation
+
+Relaxing exact string/fret supervision measurably increases compatible **state** admission, but it does not recover any joint real-guitar landmarks because onset admission remains only **1/56**, and negative selectivity worsens.
+
+Exact string/fret target specificity is therefore not sufficient to explain the transfer collapse.
+
+The evidence now points more strongly toward deeper representation/task/data adequacy, particularly **real-domain onset representation and synthetic-to-real event-statistics mismatch**.
+
+Do not claim causal isolation.
+
+### Guards
+
+- no threshold search
+- no decoder change
+- no architecture or parameter-count change
+- no real audio in training
+- V1.1 not used for tuning
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+No fresh V5 holdout is warranted because no alternative objective passed V5B.
+
+**Resume instruction:** Stop at the V5 no-development-interesting-objective boundary. Any next experiment on onset representation, synthetic event statistics, or fresh real-domain training is a new project decision and requires explicit authorization.
