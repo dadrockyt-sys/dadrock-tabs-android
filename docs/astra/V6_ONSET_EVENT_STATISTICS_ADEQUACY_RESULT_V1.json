@@ -1,0 +1,225 @@
+{
+  "schema": "astra-v6-onset-event-statistics-adequacy-result-v1",
+  "date": "2026-09-29",
+  "status": "completed-no-development-interesting-onset-arm",
+  "runtime": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.3.5",
+    "librosa": "0.11.0"
+  },
+  "identity": {
+    "initialModelSha256": "ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc",
+    "r3FeatureSha256": "622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6",
+    "batchPlanSha256": "2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd",
+    "sameInitialization": true,
+    "sameFeatures": true,
+    "sameStateTargets": true,
+    "sameBatches": true,
+    "architectureAndParameterCountIdentical": true
+  },
+  "objectives": {
+    "O0": "historical exact-frame BCE onset objective",
+    "O1": {
+      "type": "soft-target-window-BCE",
+      "windowFrames": 1,
+      "centerTarget": 1,
+      "adjacentTarget": 0.5
+    },
+    "O2": {
+      "type": "focal-exact-target",
+      "gamma": 2,
+      "alphaPositive": 0.75,
+      "alphaNegative": 0.25
+    },
+    "O3": {
+      "type": "soft-window-plus-focal",
+      "windowFrames": 1,
+      "gamma": 2,
+      "alphaPositive": 0.75,
+      "alphaNegative": 0.25
+    }
+  },
+  "training": {
+    "O0": {
+      "optimizerSteps": 500,
+      "modelSha256": "1410f309ea7cd29d41d580fdeffc662c5950257b7a38d8582fd543fefc585b84"
+    },
+    "O1": {
+      "optimizerSteps": 500,
+      "modelSha256": "e85d1fa3dd847d0b858c96be0725adfccc77c5b5239202550d74b73d88563bb9"
+    },
+    "O2": {
+      "optimizerSteps": 500,
+      "modelSha256": "9426d95b59a79201e50249260adcabe73d4f5ea43c4187489f806bf970e2ac3c"
+    },
+    "O3": {
+      "optimizerSteps": 500,
+      "modelSha256": "732146f17106485437ce1be9f1a087921250f407fc5ef88577ab86db0e2fed35"
+    },
+    "totalOptimizerSteps": 2000,
+    "maxAuthorized": 2000
+  },
+  "syntheticSanity": {
+    "rules": {
+      "maxPitchOnsetF1DeclineVsO0": 0.08,
+      "maxOnsetRecallDeclineVsO0": 0.08,
+      "onsetPrecisionAtLeast": 0.7,
+      "negativeFpPerSecondAtMost": 0.1,
+      "require500Steps": true
+    },
+    "O0": {
+      "precision": 0.7647058823529411,
+      "recall": 0.6046511627906976,
+      "f1": 0.6753246753246753,
+      "negativeFpPerSecond": 0,
+      "eligible": true
+    },
+    "O1": {
+      "precision": 0.6343283582089553,
+      "recall": 0.6589147286821705,
+      "f1": 0.6463878326996197,
+      "negativeFpPerSecond": 0,
+      "f1DeclineVsO0": 0.02893684262505558,
+      "recallDeclineVsO0": -0.05426356589147291,
+      "eligible": false,
+      "failureReason": "precision below frozen 0.70 minimum"
+    },
+    "O2": {
+      "precision": 0.75,
+      "recall": 0.6046511627906976,
+      "f1": 0.6695278969957081,
+      "negativeFpPerSecond": 0,
+      "f1DeclineVsO0": 0.005796778328967189,
+      "recallDeclineVsO0": 0,
+      "eligible": true
+    },
+    "O3": {
+      "precision": 0.7295081967213115,
+      "recall": 0.689922480620155,
+      "f1": 0.7091633466135459,
+      "negativeFpPerSecond": 0,
+      "f1DeclineVsO0": -0.03383867128887055,
+      "recallDeclineVsO0": -0.08527131782945736,
+      "eligible": true
+    }
+  },
+  "v2b": {
+    "O0": {
+      "trustedJointHits": 0,
+      "trustedRefs": 56,
+      "trustedJointRate": 0,
+      "highJointHits": 0,
+      "highRefs": 49,
+      "highJointRate": 0,
+      "stateAdmissionRate": 0.03571428571428571,
+      "onsetAdmissionRate": 0.017857142857142856,
+      "negativeEvents": 5,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.1569466509506483
+    },
+    "O2": {
+      "trustedJointHits": 0,
+      "trustedRefs": 56,
+      "trustedJointRate": 0,
+      "highJointHits": 0,
+      "highRefs": 49,
+      "highJointRate": 0,
+      "stateAdmissionRate": 0.17857142857142858,
+      "onsetAdmissionRate": 0.017857142857142856,
+      "negativeEvents": 25,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 0.7847332547532415,
+      "onsetAdmissionGainVsO0": 0,
+      "trustedJointGainVsO0": 0,
+      "stateAdmissionDeclineVsO0": -0.14285714285714288,
+      "developmentInteresting": false
+    },
+    "O3": {
+      "trustedJointHits": 0,
+      "trustedRefs": 56,
+      "trustedJointRate": 0,
+      "highJointHits": 0,
+      "highRefs": 49,
+      "highJointRate": 0,
+      "stateAdmissionRate": 0.16071428571428573,
+      "onsetAdmissionRate": 0.03571428571428571,
+      "negativeEvents": 51,
+      "negativeSeconds": 31.857959183673465,
+      "negativeFpPerSecond": 1.6008558396966128,
+      "onsetAdmissionGainVsO0": 0.017857142857142856,
+      "trustedJointGainVsO0": 0,
+      "stateAdmissionDeclineVsO0": -0.125,
+      "developmentInteresting": false
+    }
+  },
+  "excludedFromV2b": {
+    "O1": "failed frozen synthetic precision floor before V2B eligibility"
+  },
+  "v6bGate": {
+    "onsetAdmissionAbsoluteGainVsO0AtLeast": 0.2,
+    "trustedJointAdmissionAbsoluteGainVsO0AtLeast": 0.15,
+    "highConfidenceJointAdmissionAtLeast": 0.2,
+    "negativeFalsePositiveEventsPerSecondAtMost": 0.1,
+    "maxStateAdmissionDeclineVsO0": 0.1
+  },
+  "v6c": {
+    "synthetic": {
+      "clipCount": 273,
+      "eventCount": 903,
+      "audioSeconds": 546,
+      "aggregateOnsetsPerSecond": 1.6538461538461537,
+      "clipRateP10": 0.5,
+      "clipRateP50": 2,
+      "clipRateP90": 3,
+      "interOnsetIntervalP10": 0,
+      "interOnsetIntervalP50": 0.3482993197278912,
+      "interOnsetIntervalP90": 0.4179591836734693,
+      "repeatedAttackFractionWithin250ms": 0.26666666666666666,
+      "activeFrameFractionP10": 0.40229885057471265,
+      "activeFrameFractionP50": 0.5057471264367817,
+      "activeFrameFractionP90": 0.6091954022988506,
+      "onsetToActiveFrameRatio": 0.07375643224699828
+    },
+    "v2b": {
+      "clipCount": 13,
+      "eventCount": 164,
+      "audioSeconds": 110.023183673,
+      "aggregateOnsetsPerSecond": 1.4905949321319818,
+      "clipRateP10": 0.28371364653243847,
+      "clipRateP50": 1.1770244821092277,
+      "clipRateP90": 3.431737891737893,
+      "interOnsetIntervalP10": 0.10666699999999985,
+      "interOnsetIntervalP50": 0.2560000000000002,
+      "interOnsetIntervalP90": 0.882358,
+      "repeatedAttackFractionWithin250ms": 0.47019867549668876
+    },
+    "qualification": "V2B has frozen onset landmarks but not exhaustive sustain durations across all clips, so active-duration/onset-to-sustain comparisons are not fabricated."
+  },
+  "conclusion": "Fixed temporal tolerance and focal onset objectives do not restore meaningful V2B onset or joint admission. O3 improves synthetic onset F1/recall but transfers only 1 additional onset landmark and greatly worsens negative false positives. Event density means are similar, but real V2B timing structure contains substantially more short-gap repetition and a much longer IOI upper tail than the synthetic corpus.",
+  "execution": {
+    "modelsTrained": 4,
+    "optimizerSteps": 2000,
+    "thresholdSearch": false,
+    "lossParameterSearch": false,
+    "decoderChanged": false,
+    "architectureChanged": false,
+    "rendererChanged": false,
+    "v1_1Used": false
+  },
+  "localEvidence": {
+    "runnerSha256": "8e071c912b0f3804c0719fec1f4fa5eb60b97cea8c76214ea75ca566fb101c08",
+    "objectiveHelperSha256": "ad2d6450079eb447c48a4404b060562e7dc21f684d3fa505f1667991c6fb9ff6",
+    "testSha256": "2642dfb55a7246282e8cb43418f04323999e10d193d779e9a39bad5a86f12ad5",
+    "focusedTestsPassed": 7,
+    "focusedTestsTotal": 7
+  },
+  "guards": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
