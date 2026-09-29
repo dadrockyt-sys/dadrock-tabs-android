@@ -1,0 +1,175 @@
+{
+  "schema": "astra-v13-active-nononset-mixture-result-v1",
+  "date": "2026-09-29",
+  "status": "complete-active-nononset-family-mixture-hypothesis-not-supported",
+  "authorization": {
+    "explicit": true,
+    "userInstruction": "I authorize",
+    "launchIdentity": "v13-active-nononset-v1-20260929-01",
+    "contractPath": "docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json"
+  },
+  "execution": {
+    "runId": 36540511146,
+    "jobId": 109314523890,
+    "headSha": "fe293c9446e5ed4b5afc632bbf1fdabc0136df3a",
+    "conclusion": "success",
+    "artifactId": 11020985149,
+    "artifactDigest": "sha256:1610b51364e8589f812b1084a2d090ccf34be062cdfbe2ad6edbda26e8435109",
+    "artifactExpiresAt": "2026-10-29T08:07:18Z",
+    "models": 2,
+    "optimizerStepsTotal": 1000,
+    "elapsedSeconds": 68.165304176,
+    "thresholdSearch": false,
+    "automaticScientificRetries": 0,
+    "realAudioInference": 0,
+    "v2bInferencePerformed": false
+  },
+  "identity": {
+    "controlBatchPlanSha256": "8995265eb96a3a9833c9d1620eea1620a6a50914280aacd00474486f0508d4d7",
+    "interventionBatchPlanSha256": "1627721cd6f541edbf37bd58e4e5f92264d10b39f264855b195dbb6089539de4",
+    "strata": {
+      "positiveOnset": 1170,
+      "activeNonOnset": 10444,
+      "negativeStructureInactive": 10868,
+      "otherInactive": 13848
+    },
+    "positiveOnsetSelectionsIdenticalAcrossArms": true,
+    "negativeStructureInactiveSelectionsIdenticalAcrossArms": true,
+    "otherInactiveSelectionsIdenticalAcrossArms": true,
+    "samePerStepPermutationAcrossArms": true,
+    "attackedNoteLabelExposureIdentical": true,
+    "controlActiveNonOnsetFamilySlots": {
+      "isolated": 1907,
+      "scales": 3193,
+      "chords": 1207,
+      "repeated": 3304,
+      "legato": 1798,
+      "palmmute": 3711,
+      "mixed": 880
+    },
+    "interventionActiveNonOnsetFamilySlots": {
+      "isolated": 2511,
+      "scales": 2569,
+      "chords": 2219,
+      "repeated": 2861,
+      "legato": 3037,
+      "palmmute": 1752,
+      "mixed": 1051
+    }
+  },
+  "reproduction": {
+    "passed": true,
+    "frozenV9CommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "reproducedControlCommonComparatorMetrics": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    }
+  },
+  "trainingExposure": {
+    "control": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676,
+      "optimizerSteps": 500
+    },
+    "intervention": {
+      "sampledFrames": 64000,
+      "sampledFrameSeconds": 1486.077097505669,
+      "sampledAttackFrames": 16000,
+      "sampledAttackedNoteLabels": 17676,
+      "optimizerSteps": 500
+    }
+  },
+  "commonComparatorTest": {
+    "control": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.31007751937984496,
+      "onsetAdmission": 0.6821705426356589,
+      "jointAdmission": 0.2868217054263566
+    },
+    "historicalActiveNonOnsetMixture": {
+      "precision": 0.3360655737704918,
+      "recall": 0.6356589147286822,
+      "f1": 0.4396782841823056,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.26356589147286824,
+      "onsetAdmission": 0.6744186046511628,
+      "jointAdmission": 0.24031007751937986
+    },
+    "deltas": {
+      "precision": 0.011638092854461268,
+      "recall": -0.023255813953488302,
+      "f1": 0.004895675486653428,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": -0.046511627906976716,
+      "onsetAdmission": -0.007751937984496027,
+      "jointAdmission": -0.046511627906976716
+    }
+  },
+  "v9Test": {
+    "control": {
+      "precision": 0.48663101604278075,
+      "recall": 0.7054263565891473,
+      "f1": 0.5759493670886077,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2868217054263566,
+      "onsetAdmission": 0.6627906976744186,
+      "jointAdmission": 0.27906976744186046
+    },
+    "historicalActiveNonOnsetMixture": {
+      "precision": 0.4920212765957447,
+      "recall": 0.7170542635658915,
+      "f1": 0.583596214511041,
+      "negativeFpPerSecond": 0,
+      "stateAdmission": 0.2868217054263566,
+      "onsetAdmission": 0.6705426356589147,
+      "jointAdmission": 0.2713178294573643
+    },
+    "deltas": {
+      "precision": 0.005390260552963972,
+      "recall": 0.011627906976744207,
+      "f1": 0.007646847422433378,
+      "stateAdmission": 0,
+      "onsetAdmission": 0.007751937984496138,
+      "jointAdmission": -0.007751937984496138
+    }
+  },
+  "frozenChecks": {
+    "baselineReproducedExactly": true,
+    "commonPrecisionGainAtLeast0_15": false,
+    "commonF1GainAtLeast0_10": false,
+    "commonRecallDeclineAtMost0_05": true,
+    "commonNegativeFpPerSecondAtMost0_10": true,
+    "v9F1DeclineAtMost0_05": true,
+    "exact500StepsPerModel": true,
+    "attackedNoteLabelExposureIdentical": true
+  },
+  "decision": {
+    "activeNonOnsetFamilyMixtureHypothesisSupported": false,
+    "conclusion": "Matching only the historical active-non-onset family mixture produced negligible common-population precision/F1 improvement and did not satisfy the frozen material-recovery thresholds.",
+    "v2bEvaluationPerformed": false,
+    "automaticNextStudy": false
+  },
+  "artifactFileSha256": {
+    "artifactZip": "1610b51364e8589f812b1084a2d090ccf34be062cdfbe2ad6edbda26e8435109",
+    "resultJson": "f2fa222cacbca5d796767938d093649004dac24425bb826bb4a5e4eb798e2ab1",
+    "executionReceiptJson": "f65cfbbe10d90053121468d34fa78734bc93efe1cce4b3469a3cae166ad79fae",
+    "controlPt": "bdba8a2dab99fc61ea057a9511cc2ef7677eb88db889f00a517d546c446fd3d1",
+    "interventionPt": "889bab7c5eb1386ab1dd33c20ea99ed3914fecd2beae52e63693aaeece5b0448"
+  },
+  "guards": {
+    "v2b": false,
+    "realAudio": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
