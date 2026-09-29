@@ -1,0 +1,46 @@
+{
+  "schema": "astra-independent-real-development-zero-inference-verification-v1-1",
+  "date": "2026-09-28",
+  "status": "scientific-readiness-pass-under-narrowed-trusted-scoring-contract",
+  "structuralIntakePassed": true,
+  "trustedScoringContract": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_TRUSTED_SCORING_CONTRACT_V1_1.json",
+  "annotationSource": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_MODEL_FREE_ANNOTATIONS_V1.json",
+  "readiness": {
+    "oneBoundedCandidateEvaluation": true,
+    "exhaustivePitchPRF": false,
+    "trustedLandmarkScoring": true,
+    "negativeOnlyFpRate": true,
+    "exactStringFret": false
+  },
+  "counts": {
+    "clipsTotal": 24,
+    "trustedPitchClips": 12,
+    "onsetOnlyPositiveClips": 6,
+    "negativeOnlyClips": 6,
+    "primaryLandmarks": 72,
+    "highConfidenceLandmarks": 68,
+    "mediumConfidenceLandmarks": 4,
+    "lowConfidenceSensitivityLandmarks": 12
+  },
+  "durations": {
+    "trustedPitchSeconds": 97.803094,
+    "onsetOnlyPositiveSeconds": 47.612,
+    "negativeOnlySeconds": 41.366531
+  },
+  "execution": {
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "training": false,
+    "thresholdSearch": false,
+    "thresholdRetuning": false
+  },
+  "guards": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "nextAction": "one-bounded-candidate-evaluation-under-v1-1-only"
+}
