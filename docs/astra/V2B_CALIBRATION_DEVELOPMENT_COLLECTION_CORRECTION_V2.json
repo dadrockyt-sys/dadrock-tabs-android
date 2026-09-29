@@ -1,0 +1,27 @@
+{
+  "schema": "astra-v2b-calibration-development-collection-correction-v2",
+  "date": "2026-09-28",
+  "status": "pre-inference-clerical-correction",
+  "corrections": [
+    {
+      "id": "C04",
+      "field": "evaluationDurationSeconds",
+      "previouslyRecorded": 5.806,
+      "corrected": 5.799183673469388,
+      "reason": "direct decode of uploaded bytes is slightly shorter than the earlier nominal duration"
+    },
+    {
+      "id": "D01",
+      "field": "evaluationDurationSeconds",
+      "previouslyRecorded": 8.098,
+      "corrected": 8.097959183673469,
+      "reason": "use exact decoded duration"
+    }
+  ],
+  "correctedTotals": {
+    "positiveEvaluationSeconds": 110.023183673,
+    "negativeEvaluationSeconds": 31.857959184
+  },
+  "modelInferenceCount": 0,
+  "interpretation": "Clerical duration corrections frozen before any V2B candidate-model output."
+}
