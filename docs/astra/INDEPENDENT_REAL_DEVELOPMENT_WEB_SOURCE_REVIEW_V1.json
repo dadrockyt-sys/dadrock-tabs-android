@@ -1,0 +1,28 @@
+{
+  "schema": "astra-independent-real-development-web-source-review-v1",
+  "date": "2026-09-28",
+  "status": "web-candidates-sourced-no-audio-downloaded-no-inference",
+  "license": {
+    "provider": "Pixabay",
+    "summaryUrl": "https://pixabay.com/service/license-summary/",
+    "internalEvaluationOnly": true,
+    "doNotRedistributeStandaloneAudio": true
+  },
+  "counts": {
+    "positiveCandidates": 18,
+    "negativeCandidates": 6,
+    "positiveNominalSeconds": 139,
+    "negativeNominalSeconds": 39
+  },
+  "reserve": {
+    "title": "legato in B Standard",
+    "durationSeconds": 43,
+    "url": "https://pixabay.com/sound-effects/musical-legato-in-b-standard-322656/",
+    "rule": "crop 4-10 seconds and freeze before model output if used"
+  },
+  "nextAction": "download-hash-human-screen-annotate-freeze-intake-zero-inference-verify",
+  "p1p2p3Used": false,
+  "audioDownloaded": false,
+  "modelInference": false,
+  "optimizerSteps": 0
+}
