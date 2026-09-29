@@ -1,7 +1,7 @@
 {
   "schema": "astra-v9-execution-history-v1",
   "date": "2026-09-29",
-  "status": "launch-scope-consumed-before-dispatch",
+  "status": "completed-scientific-fail-at-synthetic-sanity",
   "consumedLaunchIdentities": [
     "v9-frozen-v1-20260929-01"
   ],
@@ -13,7 +13,21 @@
       "preflightArtifactId": 11014613083,
       "preflightArtifactDigest": "sha256:c764c270d0b280895fb755adcb32032b3d604e66ccef0ae627362d9b26a50b30",
       "preflightConclusion": "success",
-      "scientificRetry": false
+      "scientificRetry": false,
+      "empiricalRun": {
+        "runId": 36526450793,
+        "jobId": 109270456836,
+        "headSha": "f488e857c821fbee2846aa5ae3a511a2e30e8007",
+        "conclusion": "success",
+        "artifactId": 11015165684,
+        "artifactDigest": "sha256:e5ebb4c1450cbfac7453dc9613c33e0f64a5694044c2195ceeea36651f65af3c",
+        "v9aPassed": true,
+        "syntheticSanityPassed": false,
+        "v2bInferencePerformed": false,
+        "optimizerStepsTotal": 1000,
+        "modelCount": 2
+      },
+      "resultPath": "docs/astra/V9_FALLBACK_FREE_CURRICULUM_RESULT_V1.json"
     }
   ]
 }
