@@ -3825,3 +3825,81 @@ Do not claim causal isolation.
 - V4D does not run because no V4C model passed the frozen gate
 
 **Resume instruction:** Stop at the V4 no-development-interesting-renderer boundary. Any next experiment on representation/task adequacy, target structure, or fresh real-domain training is a new project decision and requires explicit authorization.
+
+
+## V5 target-structure adequacy design frozen — 2026-09-28
+
+Generic continuation was used only for design/documentation at the V4 no-development-interesting-renderer boundary.
+
+New files:
+- `docs/astra/TARGET_STRUCTURE_ADEQUACY_V5_DESIGN_V1.md`
+- `docs/astra/TARGET_STRUCTURE_ADEQUACY_V5_DESIGN_V1.json`
+
+V5 tests whether exact string/fret supervision itself contributes to the transfer collapse while keeping architecture and parameter count fixed.
+
+Frozen arms:
+- **T0** — historical exact string/fret state objective
+- **T1** — pitch-equivalent state objective: any physically compatible string/fret position for the target MIDI pitch may carry state probability
+- **T2** — fixed 50/50 exact + pitch-equivalent state objective
+
+Across T0/T1/T2, freeze:
+- identical model architecture and parameter count
+- identical R3 renderer
+- identical synthetic corpus/splits
+- identical batch plan
+- identical initialization
+- identical optimizer and learning rate
+- 500 optimizer steps/arm
+- identical onset loss
+- 0.50/0.50 thresholds
+- ordinary production decoder unchanged
+
+### V5A synthetic sanity
+
+Before V2B:
+- parameter/init identity must pass
+- all three arms exactly 500 steps
+- finite losses
+- T1/T2 pitch-onset F1 decline vs T0 <=0.10 absolute
+- onset recall decline <=0.10 absolute
+- synthetic negative FP <=0.10/s
+
+Only sanity-eligible arms may reach V2B.
+
+### V5B V2B development test
+
+For T1/T2 diagnostic scoring only:
+- state admission aggregates probability across physically compatible string/fret positions for the trusted MIDI pitch
+- onset admission uses maximum onset probability across compatible strings
+- thresholds remain 0.50/0.50
+- ordinary decoder still measures negative false positives
+
+Development-interest gate vs same-run T0:
+- trusted joint-admission gain >= +0.20
+- high-confidence joint admission >=25%
+- negative FP <=0.10/s
+- onset admission decline <=0.10 absolute
+
+### Compute ceiling
+
+- max 3 models
+- 500 steps/model
+- max 1500 optimizer steps total
+- no retries
+- no loss-weight search
+- no threshold search
+
+### Boundaries
+
+No empirical V5 work has been run.
+No model training or inference.
+No renderer/threshold/decoder change.
+No real audio training.
+V1.1 remains sealed.
+P1/P2/P3 remain closed.
+A2 remains closed.
+Main/Production unchanged.
+
+Any V5B success requires a fresh holdout; V1.1 is not the confirmation set.
+
+**Resume instruction:** V5 design is ready. Do not implement the new objective, train T0/T1/T2, or evaluate V2B until the user explicitly authorizes V5 empirical execution. Generic continuation remains design/documentation only.
