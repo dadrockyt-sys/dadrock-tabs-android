@@ -1,0 +1,15 @@
+{
+  "schema": "astra-v14-execution-launch-v1",
+  "date": "2026-09-29",
+  "launchIdentity": "v14-matched-context-v1-20260929-01",
+  "branch": "astra-work",
+  "sourcePins": {
+    "contractBlob": "5984ccd902713e2e1147b7f683e77c8166d46c90",
+    "validatorBlob": "4ab4028b3765933db64d0073359e844beec165ca",
+    "validatorTestsBlob": "287d398147c3d2bbdefe5da99fab0b391c32ea3c",
+    "runnerBlob": "fcee6f5896c45222e085f9fccce78869a8f2991d",
+    "workflowBlob": "0d707040f48186784454d1a4a0d94456d47149c9"
+  },
+  "rule": "One workflow dispatch only. No automatic scientific retry. Workflow must run pure validator tests before V14 empirical runner.",
+  "status": "ready-for-single-dispatch"
+}
