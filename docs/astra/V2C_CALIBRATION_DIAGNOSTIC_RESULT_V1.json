@@ -1,0 +1,373 @@
+{
+  "schema": "astra-v2c-calibration-diagnostic-result-v1-compact",
+  "date": "2026-09-28",
+  "status": "completed-authorized-v2c-no-calibration-candidate",
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036"
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "librosa": "0.11.0",
+    "numpy": "2.3.5",
+    "historicalLockExact": false,
+    "note": "Same local runtime family as V1.1 diagnostic; not exact historical reproduction."
+  },
+  "dataset": {
+    "name": "V2B fresh calibration-development",
+    "trustedPitchClips": [
+      "C01",
+      "C02",
+      "C05",
+      "C06",
+      "C07",
+      "C12"
+    ],
+    "onsetOnlyPositiveClips": [
+      "C03",
+      "C04",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C13"
+    ],
+    "negativeOnlyClips": [
+      "D01",
+      "D02",
+      "D03",
+      "D04"
+    ],
+    "trustedPitchLandmarksScorable": 56,
+    "unrepresentableLandmarksExcluded": [
+      {
+        "clipId": "C06",
+        "eventStart": 0.042667,
+        "pitch": 37,
+        "confidence": "high"
+      }
+    ],
+    "highConfidenceLandmarksScorable": 49,
+    "mediumConfidenceLandmarksScorable": 7
+  },
+  "historicalThresholdDiagnostics": {
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "gateCounts": {
+      "jointPass": 0,
+      "stateOnlyFail": 2,
+      "onsetOnlyFail": 1,
+      "bothFail": 53
+    },
+    "gateFractions": {
+      "jointPass": 0,
+      "stateOnlyFail": 0.03571428571428571,
+      "onsetOnlyFail": 0.017857142857142856,
+      "bothFail": 0.9464285714285714
+    },
+    "maxActiveProbabilitySummary": {
+      "min": 1.0630290463568002e-31,
+      "median": 1.3264939979773516e-9,
+      "mean": 0.03444869073268962,
+      "max": 0.6377696990966797
+    },
+    "maxOnsetProbabilitySummary": {
+      "min": 1.2412720821626284e-23,
+      "median": 5.231507738676696e-14,
+      "mean": 0.034621325919330696,
+      "max": 0.8876442909240723
+    },
+    "notableRows": [
+      {
+        "clipId": "C01",
+        "eventStart": 0.042667,
+        "pitch": 70,
+        "confidence": "high",
+        "gateClass": "stateOnlyFail",
+        "maxActiveProbability": 1.9160697206643817e-7,
+        "maxOnsetProbability": 0.7234299778938293
+      },
+      {
+        "clipId": "C05",
+        "eventStart": 0.02322,
+        "pitch": 52,
+        "confidence": "medium",
+        "gateClass": "onsetOnlyFail",
+        "maxActiveProbability": 0.6377696990966797,
+        "maxOnsetProbability": 0.2795564830303192
+      },
+      {
+        "clipId": "C07",
+        "eventStart": 6.272,
+        "pitch": 48,
+        "confidence": "medium",
+        "gateClass": "stateOnlyFail",
+        "maxActiveProbability": 0.024575460702180862,
+        "maxOnsetProbability": 0.8876442909240723
+      }
+    ]
+  },
+  "frozenGrid": [
+    {
+      "state": 0.2,
+      "onset": 0.2,
+      "hits": 1,
+      "refs": 56,
+      "hitRate": 0.017857142857142856,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 38,
+      "negativeFpPerSecond": 1.1927959761523568,
+      "eligible": false
+    },
+    {
+      "state": 0.2,
+      "onset": 0.3,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 33,
+      "negativeFpPerSecond": 1.035848138237572,
+      "eligible": false
+    },
+    {
+      "state": 0.2,
+      "onset": 0.4,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 29,
+      "negativeFpPerSecond": 0.9102917869348347,
+      "eligible": false
+    },
+    {
+      "state": 0.2,
+      "onset": 0.5,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 24,
+      "negativeFpPerSecond": 0.7533439490200496,
+      "eligible": false
+    },
+    {
+      "state": 0.3,
+      "onset": 0.2,
+      "hits": 1,
+      "refs": 56,
+      "hitRate": 0.017857142857142856,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 37,
+      "negativeFpPerSecond": 1.1614064085693998,
+      "eligible": false
+    },
+    {
+      "state": 0.3,
+      "onset": 0.3,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 33,
+      "negativeFpPerSecond": 1.035848138237572,
+      "eligible": false
+    },
+    {
+      "state": 0.3,
+      "onset": 0.4,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 29,
+      "negativeFpPerSecond": 0.9102917869348347,
+      "eligible": false
+    },
+    {
+      "state": 0.3,
+      "onset": 0.5,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 24,
+      "negativeFpPerSecond": 0.7533439490200496,
+      "eligible": false
+    },
+    {
+      "state": 0.4,
+      "onset": 0.2,
+      "hits": 1,
+      "refs": 56,
+      "hitRate": 0.017857142857142856,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 25,
+      "negativeFpPerSecond": 0.7847339833542184,
+      "eligible": false
+    },
+    {
+      "state": 0.4,
+      "onset": 0.3,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 22,
+      "negativeFpPerSecond": 0.6905659053517123,
+      "eligible": false
+    },
+    {
+      "state": 0.4,
+      "onset": 0.4,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 20,
+      "negativeFpPerSecond": 0.6277871866833747,
+      "eligible": false
+    },
+    {
+      "state": 0.4,
+      "onset": 0.5,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 18,
+      "negativeFpPerSecond": 0.5650084680150373,
+      "eligible": false
+    },
+    {
+      "state": 0.5,
+      "onset": 0.2,
+      "hits": 1,
+      "refs": 56,
+      "hitRate": 0.017857142857142856,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 21,
+      "negativeFpPerSecond": 0.6591765460175435,
+      "eligible": false
+    },
+    {
+      "state": 0.5,
+      "onset": 0.3,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 17,
+      "negativeFpPerSecond": 0.533619194714806,
+      "eligible": false
+    },
+    {
+      "state": 0.5,
+      "onset": 0.4,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 15,
+      "negativeFpPerSecond": 0.4708404760464686,
+      "eligible": false
+    },
+    {
+      "state": 0.5,
+      "onset": 0.5,
+      "hits": 0,
+      "refs": 56,
+      "hitRate": 0,
+      "highHits": 0,
+      "highRefs": 49,
+      "negativeEvents": 14,
+      "negativeFpPerSecond": 0.4394506226618153,
+      "eligible": false
+    }
+  ],
+  "baseline0505": {
+    "trustedHits": 0,
+    "trustedReferences": 56,
+    "highHits": 0,
+    "highReferences": 49,
+    "negativeFalsePositiveEvents": 14,
+    "negativeSeconds": 31.857959183673465,
+    "negativeFalsePositiveEventsPerSecond": 0.4394506226618153,
+    "negativePerClip": {
+      "D01": 0,
+      "D02": 14,
+      "D03": 0,
+      "D04": 0
+    },
+    "onsetOnlyPredictionCounts": {
+      "C03": 0,
+      "C04": 0,
+      "C08": 0,
+      "C09": 0,
+      "C10": 0,
+      "C11": 1,
+      "C13": 1
+    },
+    "trustedPredictionCounts": {
+      "C01": 0,
+      "C02": 1,
+      "C05": 0,
+      "C06": 1,
+      "C07": 1,
+      "C12": 0
+    }
+  },
+  "selectionRule": {
+    "eligibility": {
+      "negativeFalsePositiveEventsPerSecondAtMost": 0.1
+    },
+    "primary": "maximizeHighPlusMediumTrustedPitchLandmarkHitRate",
+    "tieBreak": [
+      "lowerNegativeFalsePositiveEventCount",
+      "higherStateThreshold",
+      "higherOnsetThreshold"
+    ]
+  },
+  "selectedCalibrationCandidate": null,
+  "conclusion": "No predeclared threshold pair is eligible. Lowering thresholds does not restore meaningful trusted landmark admission and substantially increases negative false positives.",
+  "execution": {
+    "training": false,
+    "optimizerSteps": 0,
+    "thresholdPairsEvaluated": 16,
+    "decoderChanged": false,
+    "frontendChanged": false,
+    "gainChanged": false,
+    "candidateReselected": false,
+    "v1_1UsedForSelection": false
+  },
+  "guards": {
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "localEvidence": {
+    "runnerSha256": "26c8dc57b544ad9547347a41d47c1665b975c0e5d6b7369b148e538afc79be39",
+    "fullResultSha256": "bdac8be1f5d25f51fd23a17e9a85cc28d27f0e8eec63bb640e18cf9552d60489"
+  },
+  "nextAction": "Do not run V2D because V2C selected no calibration candidate. Stop at a new diagnosis decision boundary."
+}
