@@ -1,0 +1,43 @@
+{
+  "schema": "astra-v2b-calibration-development-zero-inference-verification-v1",
+  "date": "2026-09-28",
+  "status": "passed",
+  "intake": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_INTAKE.json",
+  "annotations": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_ANNOTATIONS_V1.json",
+  "collectionCorrection": "docs/astra/V2B_CALIBRATION_DEVELOPMENT_COLLECTION_CORRECTION_V2.json",
+  "structuralValidation": {
+    "passed": true,
+    "clipCount": 17,
+    "positiveClipCount": 13,
+    "negativeOnlyClipCount": 4,
+    "positiveAudioSeconds": 110.023183673,
+    "negativeAudioSeconds": 31.857959184,
+    "creatorOrCaptureChains": 9,
+    "requiredCoverageComplete": true
+  },
+  "annotationValidation": {
+    "passed": true,
+    "onsetLandmarks": 164,
+    "trustedPitchLandmarks": 57,
+    "highConfidencePitchLandmarks": 50,
+    "mediumConfidencePitchLandmarks": 7,
+    "pitchTrustedClips": 6,
+    "onsetOnlyPositiveClips": 7,
+    "exhaustivePolyphonicPitchClaims": false
+  },
+  "execution": {
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "calibrationFitting": false,
+    "training": false
+  },
+  "guards": {
+    "v1_1UsedForTuning": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false
+  },
+  "nextAction": "V2B complete; V2C diagnostic inference/calibration remains separately gated"
+}
