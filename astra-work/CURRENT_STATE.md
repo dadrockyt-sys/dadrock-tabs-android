@@ -1234,3 +1234,96 @@ A2 remains closed.
 Main/Production unchanged.
 
 **Resume instruction:** V3A tooling is ready. Do not execute V3A until the user explicitly authorizes V3 empirical execution. Generic continuation remains documentation/tooling-only.
+
+
+## V3 empirical execution complete — 2026-09-28
+
+The user explicitly authorized V3 empirical execution.
+
+Frozen results:
+- `docs/astra/V3A_HISTORICAL_SYNTHETIC_EXPORT_FAILURE_V1.json`
+- `docs/astra/V3A_FRONTEND_DISTRIBUTION_AUDIT_RESULT_V1.json`
+- `docs/astra/V3C_REPRESENTATION_PROBE_RESULT_V1.json`
+- `docs/astra/V3_UPSTREAM_TRANSFER_DIAGNOSIS_RESULT_V1.md`
+
+### Exact-lock synthetic export limitation
+
+GitHub Actions run **36518666947**, job **109246542435**, recreated Python 3.10.15 / torch 1.11.0+cpu / librosa 0.9.1 / numpy 1.21.6 and regenerated the S9 synthetic dataset.
+
+The workflow failed closed because regenerated control feature SHA:
+`a9603d7997c6d8bc3d553f3605369bb0c6e02cecaf15475ca2c7db4fc3ef09ad`
+
+did not equal historical:
+`2119d9b953cf2fabde0dcab211004a89e385439108847d2e736a6cdea6e82ce4`.
+
+S0 source, S9 source, and runtime-lock blobs are identical between historical commit and current branch. No mismatched artifact was uploaded. Treat this as runner-level numerical non-bitwise reproducibility.
+
+### V3A same-runtime source-equivalent frontend audit
+
+To avoid cross-runtime confounding, synthetic S9 features were regenerated locally under the same frontend runtime used for V2B real audio.
+
+Source-equivalent synthetic feature SHA:
+`48f3a6d44e335a56794fbcde671dd5cd11ca00217eb9bee3854395623f6610c2`
+
+This is not historical-byte-exact.
+
+Observed shift:
+- median |SMD| **0.86648**
+- p95 |SMD| **1.52489**
+- fraction bins |SMD| >=1: **0.390625**
+- fraction bins |SMD| >=2: **0**
+- median Wasserstein **0.20251**
+- p95 Wasserstein **0.30761**
+- median robust range overlap **0.88758**
+- p05 overlap **0.55983**
+
+V3A therefore found substantial frontend-feature distribution shift.
+
+### V3C frozen affine probes at 0.50 / 0.50
+
+Identity:
+- trusted hits **0/56**
+- high-confidence **0/49**
+- negative FP **0.43945/s**
+
+Global affine:
+- trusted hits **1/56**
+- high-confidence **1/49**
+- negative FP **2.98199/s**
+- gain vs identity **+0.01786**
+
+Per-bin affine:
+- trusted hits **1/56**
+- high-confidence **1/49**
+- negative FP **0.34528/s**
+- gain vs identity **+0.01786**
+
+Frozen diagnostic gate:
+- >= +0.20 absolute trusted admission gain
+- >=25% high-confidence admission
+- <=0.10 negative FP/s
+
+**No transform was diagnostically interesting.**
+
+### Supported interpretation
+
+There is meaningful synthetic-vs-real frontend-feature distribution shift, but simple first/second-moment affine alignment is insufficient to restore useful real-guitar admission.
+
+This weakens a simple normalization/calibration explanation and points toward deeper synthetic-to-real representation/timbre/task mismatch or other higher-order frontend/model interaction.
+
+Do not claim causal isolation.
+
+### Boundaries
+
+- no training/fine-tuning
+- no threshold changes
+- no decoder changes
+- no arbitrary transform search
+- V1.1 not used for tuning
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+
+Do not run V3D because no transform passed the V3 diagnostic gate.
+
+**Resume instruction:** Stop at the V3 no-transform boundary. Any next experiment aimed at synthetic rendering adequacy, representation learning, or fresh real-domain training is a new project decision and requires explicit authorization.
