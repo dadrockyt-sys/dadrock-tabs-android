@@ -83,7 +83,9 @@
     "v9EmpiricalBlob": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
     "s6Blob": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
     "s1Blob": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
-    "runtimeLockBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+    "runtimeLockBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "contractValidatorBlob": "34d248f74812652fcd213fc420506c3f82b5a6d1",
+    "contractValidatorTestsBlob": "32d6dac52a2e388f507ac958aab4ec7f6bbfc9b1"
   },
   "boundaries": {
     "empiricalExecutionAuthorized": false,
