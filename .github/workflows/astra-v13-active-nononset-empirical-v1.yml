@@ -1,0 +1,124 @@
+name: Astra V13 active non-onset empirical execution
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V13_EXECUTION_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-v13-active-nononset-empirical-v1
+  cancel-in-progress: false
+
+jobs:
+  v13:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify authorization and launch scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/V13_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V13_EXECUTION_LAUNCH_V1.json'))
+          h=json.load(open('docs/astra/V13_EXECUTION_HISTORY_V1.json'))
+          c=json.load(open('docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json'))
+          assert a['schema']=='astra-v13-empirical-execution-authorization-v1'
+          assert a['explicitlyAuthorized'] is True and a['userInstruction']=='I authorize'
+          assert c['schema']=='astra-v13-active-nononset-mixture-contract-v1'
+          assert c['boundaries']['empiricalExecutionAuthorized'] is False
+          assert l['schema']=='astra-v13-execution-launch-v1'
+          assert l['status']=='armed-consumed'
+          assert l['branch']=='astra-work' and os.environ.get('GITHUB_REF_NAME')=='astra-work'
+          assert int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))==1
+          assert h['schema']=='astra-v13-execution-history-v1'
+          assert h['consumedLaunchIdentities'].count(l['launchIdentity'])==1
+          assert l['preflight']['conclusion']=='success'
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceGitBlobs'][k]==blob(p),(k,p,l['sourceGitBlobs'][k],blob(p))
+          ex=l['execution']
+          assert ex['models']==2
+          assert ex['optimizerStepsPerModel']==500
+          assert ex['maxOptimizerStepsTotal']==1000
+          assert ex['thresholdSearch'] is False
+          assert ex['automaticScientificRetry'] is False
+          assert ex['v2b'] is False and ex['realAudio'] is False
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Re-run frozen V13 admission tests
+        run: |
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v13_contract_validator_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/test_v13_active_nononset_mixture_v1.py
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v13_contract_validator_v1.py             --contract docs/astra/V13_ACTIVE_NONONSET_MIXTURE_CONTRACT_V1.json
+      - name: Execute exactly one V13 study
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-v13
+          PYTHONPATH=.:astra_backend python astra_backend/synthetic/v13_active_nononset_mixture_v1.py run             --outdir /tmp/astra-v13/run
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/astra-v13/run/result.json'))
+          assert x['schema']=='astra-v13-active-nononset-mixture-v1'
+          assert x['execution']['models']==2
+          assert x['execution']['optimizerStepsTotal']==1000
+          assert x['execution']['automaticScientificRetries']==0
+          assert x['execution']['thresholdSearch'] is False
+          assert x['execution']['realAudioInference']==0
+          assert x['execution']['v2bInference']==0
+          assert x['checks']['baselineReproducedExactly'] is True
+          assert x['checks']['attackedNoteLabelExposureIdentical'] is True
+          PY
+      - name: Write execution receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          root=pathlib.Path('/tmp/astra-v13/run')
+          receipt={
+            'schema':'astra-v13-execution-receipt-v1',
+            'githubRunId':os.environ.get('GITHUB_RUN_ID'),
+            'githubRunAttempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'headSha':os.environ.get('GITHUB_SHA'),
+            'resultExists':(root/'result.json').exists(),
+            'controlModelExists':(root/'control.pt').exists(),
+            'interventionModelExists':(root/'intervention.pt').exists(),
+            'v2bInferencePerformed':False,
+            'realAudioUsed':False
+          }
+          if (root/'result.json').exists():
+              x=json.load(open(root/'result.json'))
+              receipt['models']=x['execution']['models']
+              receipt['optimizerStepsTotal']=x['execution']['optimizerStepsTotal']
+              receipt['activeNonOnsetFamilyMixtureHypothesisSupported']=x['activeNonOnsetFamilyMixtureHypothesisSupported']
+              receipt['baselineReproducedExactly']=x['checks']['baselineReproducedExactly']
+          root.mkdir(parents=True,exist_ok=True)
+          (root/'execution-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: astra-v13-active-nononset-empirical-v1
+          path: |
+            /tmp/astra-v13/run/result.json
+            /tmp/astra-v13/run/control.pt
+            /tmp/astra-v13/run/intervention.pt
+            /tmp/astra-v13/run/execution-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
