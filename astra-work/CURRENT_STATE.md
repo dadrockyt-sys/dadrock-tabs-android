@@ -1402,3 +1402,118 @@ A2 remains closed.
 Main/Production unchanged.
 
 **Resume instruction:** V4 design is ready. Do not implement/run V4A, generate new renderer arms, train models, or evaluate V2B until the user explicitly authorizes V4 empirical execution. Generic continuation remains documentation/design only.
+
+
+## V4 empirical execution complete — 2026-09-28
+
+The user explicitly authorized V4 empirical execution.
+
+Frozen implementation/results:
+- `astra_backend/synthetic/v4_rendering_adequacy_v1.py`
+- `docs/astra/V4A_RENDERER_SCREEN_RESULT_V1.json`
+- `docs/astra/V4BC_RENDERER_TRAINING_TRANSFER_RESULT_V1.json`
+- `docs/astra/V4_SYNTHETIC_REAL_RENDERING_ADEQUACY_RESULT_V1.md`
+
+### V4A model-free renderer screen
+
+R0:
+- median |SMD| **0.86648**
+- fraction |SMD|>=1 **0.390625**
+- median Wasserstein **0.20251**
+- range overlap **0.88758**
+- did not advance
+
+R1:
+- median |SMD| **0.86695**
+- fraction |SMD|>=1 **0.375**
+- median Wasserstein **0.19704**
+- range overlap **0.90179**
+- did not advance
+
+R2:
+- median |SMD| **0.79400**
+- fraction |SMD|>=1 **0.27604**
+- median Wasserstein **0.18162**
+- range overlap **0.89874**
+- did not advance because median |SMD| improvement was only **8.36%**, below frozen 15% threshold
+
+R3:
+- median |SMD| **0.69539**
+- fraction |SMD|>=1 **0.171875**
+- median Wasserstein **0.15755**
+- range overlap **0.90728**
+- advanced
+
+R3 relative improvements vs R0:
+- median |SMD| **19.75%**
+- fraction |SMD|>=1 **56.0%**
+- median Wasserstein **22.20%**
+- range overlap improved by **0.01970 absolute**
+
+Only R3 met every frozen V4A advancement condition.
+
+### V4B paired bounded training
+
+Exactly two models were trained:
+- R0: 500 optimizer steps
+- R3: 500 optimizer steps
+- total: **1000**, below authorized 1500-step cap
+
+Identity:
+- initial model SHA-256 `ff680cadfc2fdcdc33d5375bbd79df45fe175163181057d43b8dfc43edef7ecc`
+- batch plan SHA-256 `2883748ca039986f8ccc81e7c2f40580fc17224c7a2d6dcea774938190953afd`
+- same initialization: yes
+- same targets: yes
+- same batch indices: yes
+
+Local paired runtime:
+- Python 3.13.5
+- torch 2.10.0+cpu
+- librosa 0.11.0
+- numpy 2.3.5
+
+This is not a historical-runtime reproduction.
+
+### V4C V2B transfer result
+
+R0-trained:
+- trusted hits **0/56**
+- high-confidence **0/49**
+- negative events **13**
+- negative FP **0.40806/s**
+
+R3-trained:
+- trusted hits **0/56**
+- high-confidence **0/49**
+- negative events **5**
+- negative FP **0.15695/s**
+
+R3 reduced negative false positives by about **61.5%** versus same-run R0, but trusted landmark gain was **0.00**.
+
+Frozen V4C gate required:
+- trusted joint-admission gain >= +0.20
+- high-confidence admission >=25%
+- negative FP <=0.10/s
+
+**R3 is not development-interesting.**
+
+### Supported interpretation
+
+The bounded R3 realism package materially improves synthetic-vs-real frontend statistics and lowers negative false positives after retraining, but it does not restore trusted real-guitar pitch admission.
+
+This weakens the hypothesis that missing simple acoustic/capture realism alone is the dominant transfer cause.
+
+Do not claim causal isolation.
+
+### Guards
+
+- no threshold search
+- no decoder change
+- no architecture change
+- no V1.1 tuning use
+- P1/P2/P3 untouched
+- A2 closed
+- main/Production unchanged
+- V4D does not run because no V4C model passed the frozen gate
+
+**Resume instruction:** Stop at the V4 no-development-interesting-renderer boundary. Any next experiment on representation/task adequacy, target structure, or fresh real-domain training is a new project decision and requires explicit authorization.
