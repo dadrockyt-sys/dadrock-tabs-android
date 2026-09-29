@@ -1,0 +1,98 @@
+{
+  "schema": "astra-v4a-renderer-screen-result-v1",
+  "date": "2026-09-28",
+  "status": "completed",
+  "runtime": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "librosa": "0.11.0"
+  },
+  "arms": [
+    {
+      "arm": "R0",
+      "featureArraySha256": "48f3a6d44e335a56794fbcde671dd5cd11ca00217eb9bee3854395623f6610c2",
+      "medianAbsoluteSmd": 0.8664814510448218,
+      "fractionAbsSmdAtLeast1": 0.390625,
+      "wassersteinMedian": 0.20250876642069132,
+      "rangeOverlapMedian": 0.8875772265245514,
+      "advances": false,
+      "relativeImprovementsVsR0": {
+        "medianAbsoluteSmd": 0,
+        "fractionAbsSmdAtLeast1": 0,
+        "wassersteinMedian": 0,
+        "rangeOverlapAbsoluteDecline": 0
+      }
+    },
+    {
+      "arm": "R1",
+      "featureArraySha256": "3b883fcc1a5ea1e4b5c28518e0eb764cac46157d26ea3cd27acb2a373868c1de",
+      "medianAbsoluteSmd": 0.8669526397196425,
+      "fractionAbsSmdAtLeast1": 0.375,
+      "wassersteinMedian": 0.1970370869205214,
+      "rangeOverlapMedian": 0.9017887939450355,
+      "advances": false,
+      "relativeImprovementsVsR0": {
+        "medianAbsoluteSmd": -0.000543795454885499,
+        "fractionAbsSmdAtLeast1": 0.04,
+        "wassersteinMedian": 0.02701946980805293,
+        "rangeOverlapAbsoluteDecline": -0.014211567420484128
+      }
+    },
+    {
+      "arm": "R2",
+      "featureArraySha256": "b66059e14ac70fd0c2d6b9e58310381c59ef6fd428a04ad8c7f195a5a0b6e4b5",
+      "medianAbsoluteSmd": 0.7940049195002699,
+      "fractionAbsSmdAtLeast1": 0.2760416666666667,
+      "wassersteinMedian": 0.18162369751154267,
+      "rangeOverlapMedian": 0.8987393830993397,
+      "advances": false,
+      "relativeImprovementsVsR0": {
+        "medianAbsoluteSmd": 0.08364464289126809,
+        "fractionAbsSmdAtLeast1": 0.2933333333333333,
+        "wassersteinMedian": 0.10313167809121927,
+        "rangeOverlapAbsoluteDecline": -0.011162156574788251
+      }
+    },
+    {
+      "arm": "R3",
+      "featureArraySha256": "622d8c2c95194f9b2e706a4c837941905a7c7d33f8f8ef5daa6abf4297d740e6",
+      "medianAbsoluteSmd": 0.695387949613332,
+      "fractionAbsSmdAtLeast1": 0.171875,
+      "wassersteinMedian": 0.15754844952084907,
+      "rangeOverlapMedian": 0.9072788990911318,
+      "advances": true,
+      "relativeImprovementsVsR0": {
+        "medianAbsoluteSmd": 0.19745777734212502,
+        "fractionAbsSmdAtLeast1": 0.56,
+        "wassersteinMedian": 0.22201664498040435,
+        "rangeOverlapAbsoluteDecline": -0.019701672566580397
+      }
+    }
+  ],
+  "advancementRule": {
+    "medianAbsoluteSmdRelativeImprovementAtLeast": 0.15,
+    "fractionAbsSmdAtLeast1RelativeImprovementAtLeast": 0.2,
+    "wassersteinMedianRelativeImprovementAtLeast": 0.1,
+    "rangeOverlapAbsoluteDeclineAtMost": 0.02
+  },
+  "advancingRenderers": [
+    "R3"
+  ],
+  "execution": {
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "rendererParameterSearch": false,
+    "v1_1Used": false
+  },
+  "localEvidence": {
+    "runnerSha256": "875798cba9f1fcba1b8949aacf553b4e3dc3f02633117a059050a54897dee114",
+    "fullResultSha256": "9011fca09277a016abfad02dd2cae36b2c5ee450da4882e463a7ef8e75e91f6e"
+  },
+  "guards": {
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false
+  }
+}
