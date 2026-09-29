@@ -1,0 +1,79 @@
+{
+  "schema": "astra-long-duration-synthetic-curriculum-v8-design-v1",
+  "date": "2026-09-29",
+  "status": "frozen-before-v8-output",
+  "explicitlyAuthorized": true,
+  "arms": [
+    {
+      "id": "L0",
+      "clipSeconds": 2,
+      "motifs": 1,
+      "timing": "historical"
+    },
+    {
+      "id": "L1",
+      "clipSeconds": 4,
+      "motifs": 2,
+      "interMotifGapSeconds": [
+        0.7,
+        1.1
+      ],
+      "repeatedAttackSpacingSeconds": 0.18
+    },
+    {
+      "id": "L2",
+      "clipSeconds": 6,
+      "motifs": 3,
+      "interMotifGapSeconds": [
+        0.7,
+        1.1
+      ],
+      "repeatedAttackSpacingSeconds": 0.18
+    }
+  ],
+  "v2bTargets": {
+    "rate": 1.4905949321319818,
+    "ioi50": 0.2560000000000002,
+    "ioi90": 0.882358,
+    "repeat250": 0.47019867549668876
+  },
+  "v8a": {
+    "advance": {
+      "timingDistanceRelativeImprovementAtLeast": 0.35,
+      "repeatErrorImprovementAtLeast": 0.1,
+      "ioiP90ErrorImprovementSecondsAtLeast": 0.25,
+      "rateWithinRelative": 0.15,
+      "maxFallbackPositiveClipFraction": 0.02,
+      "maxArms": 1
+    }
+  },
+  "v8b": {
+    "maxModels": 2,
+    "stepsPerModel": 500,
+    "maxTotalSteps": 1000,
+    "retries": 0,
+    "pairedStratumSchedule": true
+  },
+  "v8c": {
+    "maxF1Decline": 0.08,
+    "maxRecallDecline": 0.08,
+    "precisionAtLeast": 0.7,
+    "negativeFpPerSecondAtMost": 0.1
+  },
+  "v8d": {
+    "onsetAdmissionGainAtLeast": 0.15,
+    "jointGainAtLeast": 0.1,
+    "highConfidenceJointAtLeast": 0.15,
+    "negativeFpPerSecondAtMost": 0.1,
+    "maxStateDecline": 0.1
+  },
+  "boundaries": {
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
