@@ -12,12 +12,12 @@
     "declaration": null
   },
   "candidate": {
-    "name": null,
-    "weightsSha256": null,
-    "sourceCommit": null,
-    "modelSourcePath": null,
-    "frontendSourcePath": null,
-    "evaluatorSourcePath": null,
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036",
+    "sourceCommit": "4e6f92c9cb4f2dc56bc9b983ed33c8e97c3f5810",
+    "modelSourcePath": "astra_backend/synthetic/s6_pilot_v1.py",
+    "frontendSourcePath": "astra_backend/tabcnn_runtime/preprocessing.py",
+    "evaluatorSourcePath": "astra_backend/evaluation/evaluation_protocol_v2.py",
     "stateThreshold": 0.5,
     "onsetThreshold": 0.5
   },
@@ -35,5 +35,6 @@
   "optimizerSteps": 0,
   "p1Accessed": false,
   "p2Accessed": false,
-  "p3Accessed": false
+  "p3Accessed": false,
+  "candidatePin": "docs/astra/INDEPENDENT_REAL_DEVELOPMENT_CANDIDATE_PIN_V1.json"
 }
