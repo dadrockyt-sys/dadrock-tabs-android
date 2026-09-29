@@ -1,0 +1,73 @@
+{
+  "schema": "astra-post-v10-causal-contract-integrity-review-v1",
+  "date": "2026-09-29",
+  "status": "documentation-review-only-no-new-project-opened",
+  "newFindings": {
+    "v9LegatoContractImplementationMismatch": {
+      "contractRequirement": "non-attacked legato continuation remains a state-label event",
+      "implementationBehavior": "v9 template builder filters base prototypes to attack=true and does not re-add the non-attacked continuation",
+      "consequence": "V9/V10 metrics are valid for executed code but exact frozen family-state semantic conformance should not be claimed"
+    },
+    "v10ExposureIsolationConfound": {
+      "targetControlLabels": 17676,
+      "targetBalancedLabels": 19702,
+      "balancedThreeLabelPositiveFrames": 1851,
+      "balancedOneLabelPositiveFrames": 14149,
+      "mechanism": "three-label positive frames are chord attacks, so exact label-count matching also changes positive-onset chord/content mixture",
+      "consequence": "V10 rules out the specific chord-enriched exposure-matching scheme as a material rescue, not every possible pure label-mass explanation"
+    }
+  },
+  "crossPopulation": {
+    "commonComparatorTest": {
+      "precision": 0.3244274809160305,
+      "recall": 0.6589147286821705,
+      "f1": 0.43478260869565216
+    },
+    "v9Test": {
+      "precision": 0.48663101604278075,
+      "recall": 0.7054263565891473,
+      "f1": 0.5759493670886077
+    },
+    "v9MinusCommon": {
+      "precision": 0.16220353512675026,
+      "recall": 0.046511627906976716,
+      "f1": 0.14116675839295556
+    },
+    "interpretation": "consistent with synthetic-domain distribution shift; causal component unresolved"
+  },
+  "historicalS0StateDurationsSeconds": {
+    "isolated": 1.03,
+    "scales": 0.27,
+    "chords": 0.48,
+    "repeatedApprox": 0.31,
+    "legatoAttacked": 0.5,
+    "legatoNonAttackedContinuation": 0.74,
+    "palmmute": 0.16,
+    "mixedPositiveApprox": 0.86
+  },
+  "implementedV9SustainSupportSeconds": [
+    0.12,
+    0.48
+  ],
+  "preferredFutureQuestion": "With executed V9 attack timing/counts and all other training/evaluation settings fixed, does restoring historical family-specific state-duration and legato-continuation semantics materially recover common-population precision/F1?",
+  "alternativeFutureQuestion": "With exact frozen V9 batch indices fixed, does one preregistered positive-onset loss-mass correction materially recover common-population precision/F1?",
+  "execution": {
+    "waveformRenders": 0,
+    "modelsTrained": 0,
+    "optimizerSteps": 0,
+    "modelInference": 0,
+    "v2bInference": 0
+  },
+  "boundaries": {
+    "newProjectOpened": false,
+    "v11": false,
+    "v2b": false,
+    "v1_1": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  }
+}
