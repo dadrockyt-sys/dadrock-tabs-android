@@ -1,0 +1,107 @@
+{
+  "schema": "astra-independent-real-development-evaluation-result-v1-1",
+  "date": "2026-09-28",
+  "status": "completed-single-bounded-run",
+  "candidate": {
+    "name": "S9 30-voicing intervention",
+    "weightsSha256": "8428e7ced49331153e5bd3a038115235c06aac483dab6f82fbc0257d07dd5036",
+    "checkpointSchema": "astra-synthetic-data-diversity-s9-pilot-v1",
+    "arm": "30-voicing-intervention",
+    "historicalOptimizerSteps": 500
+  },
+  "fixed": {
+    "stateThreshold": 0.5,
+    "onsetThreshold": 0.5,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "decoder": "event_decoder_v2 rising-edge same-fret",
+    "onsetToleranceSeconds": 0.05
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "librosa": "0.11.0",
+    "numpy": "2.3.5",
+    "historicalLockExact": false,
+    "historicalLock": {
+      "python": "3.10.15 workflow",
+      "torch": "1.11.0+cpu",
+      "librosa": "0.9.1",
+      "numpy": "1.21.6"
+    },
+    "interpretation": "Exact frozen checkpoint, architecture, source math, decoder semantics and thresholds were used, but the locally available package runtime differs from the historical lock. Treat results as a bounded transfer diagnostic, not a bit-for-bit historical-runtime reproduction."
+  },
+  "primary": {
+    "trustedPitchLandmarkHitsHighPlusMedium": 1,
+    "trustedPitchLandmarkCountHighPlusMedium": 72,
+    "trustedPitchLandmarkHitRateHighPlusMedium": 0.013888888888888888,
+    "trustedPitchLandmarkHitsHighOnly": 1,
+    "trustedPitchLandmarkCountHighOnly": 68,
+    "trustedPitchLandmarkHitRateHighOnly": 0.014705882352941176,
+    "negativeOnlyFalsePositiveEvents": 1,
+    "negativeOnlySeconds": 41.3665306122449,
+    "negativeOnlyFalsePositiveEventsPerSecond": 0.02417413269132099
+  },
+  "sensitivity": {
+    "all84LandmarkHits": 1,
+    "all84LandmarkCount": 84,
+    "all84LandmarkHitRate": 0.011904761904761904
+  },
+  "perClip": {
+    "P01": {"predictionCount": 3, "primaryHits": 1, "primaryReferenceCount": 9},
+    "P02": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P03": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 2},
+    "P04": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 11},
+    "P05": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 10},
+    "P06": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P07": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P08": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 1},
+    "P09": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 7},
+    "P10": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P11": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 2},
+    "P12": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 1},
+    "P13": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P14": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 5},
+    "P15": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 13},
+    "P16": {"predictionCount": 0, "scoring": "onset-only-descriptive"},
+    "P17": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 10},
+    "P18": {"predictionCount": 0, "primaryHits": 0, "primaryReferenceCount": 1},
+    "N01": {"predictionCount": 0},
+    "N02": {"predictionCount": 1},
+    "N03": {"predictionCount": 0},
+    "N04": {"predictionCount": 0},
+    "N05": {"predictionCount": 0},
+    "N06": {"predictionCount": 0}
+  },
+  "observedPredictions": {
+    "P01": [
+      {"string": 1, "fret": 8, "pitch": 53, "start": 0.2786394557823129, "end": 0.3250793650793651},
+      {"string": 1, "fret": 7, "pitch": 52, "start": 0.3250793650793651, "end": 0.44117913832199546},
+      {"string": 0, "fret": 4, "pitch": 44, "start": 9.05578231292517, "end": 9.102222222222222}
+    ],
+    "N02": [
+      {"string": 0, "fret": 9, "pitch": 49, "start": 4.08671201814059, "end": 4.133151927437642}
+    ]
+  },
+  "guards": {
+    "training": false,
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "thresholdRetuning": false,
+    "candidateReselection": false,
+    "p1Accessed": false,
+    "p2Accessed": false,
+    "p3Accessed": false,
+    "a2Opened": false
+  },
+  "claimLimits": [
+    "No exhaustive positive precision/recall/F1",
+    "No exact string/fret accuracy",
+    "No production-readiness claim",
+    "Polyphonic/onset-only clips are descriptive only"
+  ],
+  "localEvidenceHashes": {
+    "fullLocalResultSha256": "f435d64dc92c939f4b7c5bc354c989b03c902abc7987da69752bc8278645207b",
+    "summaryLocalResultSha256": "33ee13da962ec35c5ef0f3a41074a7c7f6bf32019049d3fdf6ee63ab5fd29fb3"
+  }
+}
