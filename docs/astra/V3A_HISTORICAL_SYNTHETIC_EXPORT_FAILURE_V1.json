@@ -1,0 +1,31 @@
+{
+  "schema": "astra-v3a-historical-synthetic-export-failure-v1",
+  "date": "2026-09-28",
+  "status": "failed-closed-before-artifact-upload",
+  "workflow": {
+    "run": 36518666947,
+    "job": 109246542435,
+    "head": "d227923b946cf378e746b473e536a705d10c0402",
+    "conclusion": "failure"
+  },
+  "target": {
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu",
+    "librosa": "0.9.1",
+    "numpy": "1.21.6",
+    "expectedControlFeatureArraySha256": "2119d9b953cf2fabde0dcab211004a89e385439108847d2e736a6cdea6e82ce4",
+    "expectedInterventionFeatureArraySha256": "6d12754ba68360090d70408c8a2de8b5f99273d5bc51c003a2bf76a1ea79d113"
+  },
+  "observed": {
+    "controlFeatureArraySha256": "a9603d7997c6d8bc3d553f3605369bb0c6e02cecaf15475ca2c7db4fc3ef09ad"
+  },
+  "sourceIdentityCheck": {
+    "s0CurrentEqualsHistorical": true,
+    "s9CurrentEqualsHistorical": true,
+    "runtimeLockCurrentEqualsHistorical": true
+  },
+  "interpretation": "Identical pinned source and package versions did not reproduce the historical feature bytes on the current GitHub runner. This is a runner-level numerical non-bitwise reproducibility limitation, not a model result.",
+  "artifactUploaded": false,
+  "modelInferenceCount": 0,
+  "optimizerSteps": 0
+}
