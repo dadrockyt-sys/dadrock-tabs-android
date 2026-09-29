@@ -1,0 +1,37 @@
+{
+  "schema": "astra-v9-preflight-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-model-free-preflight-only",
+  "branch": "astra-work",
+  "candidateTimingGeneration": false,
+  "waveformRendering": false,
+  "modelInference": false,
+  "optimizerSteps": 0,
+  "authorizationGitBlob": "d28c4ed906061aaa0a1ca03e4ff253195303b967",
+  "sourcePaths": {
+    "contract": "docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json",
+    "runner": "astra_backend/synthetic/v9_empirical_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v9_empirical_v1.py",
+    "contractValidator": "astra_backend/synthetic/v9_final_contract_validator_v1.py",
+    "contractValidatorTests": "astra_backend/synthetic/test_v9_final_contract_validator_v1.py",
+    "s0": "astra_backend/synthetic/s0_pilot_v1.py",
+    "s1": "astra_backend/synthetic/s1_pilot_v1.py",
+    "s6": "astra_backend/synthetic/s6_pilot_v1.py",
+    "r3": "astra_backend/synthetic/v4_rendering_adequacy_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v9-authorized-preflight-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "contract": "04528060494a74982c4ffe398bde6fd16cc09c51",
+    "runner": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "runnerTests": "afd002a177bba928b03ebb53b57378aeebd050db",
+    "contractValidator": "058a625cfaa119610f2f8916895cbfb5c0bb7d55",
+    "contractValidatorTests": "7fb9bf34824dc9cbbb5c48c165913a9c7f383fcc",
+    "s0": "c05b6f986186dbe96245875833ab9564df99d4fb",
+    "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s6": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "r3": "badedb6c36ad389093b6f74b97f4452c44518501",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "32feaf79398dc58ab8315a5afdd6f92ac3c2987d"
+  }
+}
