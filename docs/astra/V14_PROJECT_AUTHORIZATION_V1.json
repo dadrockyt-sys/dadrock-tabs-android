@@ -1,0 +1,25 @@
+{
+  "schema": "astra-v14-project-authorization-v1",
+  "date": "2026-09-29",
+  "project": "V14 2-second matched-context bridge",
+  "userInstruction": "I authorize",
+  "scope": {
+    "openProject": true,
+    "designAndContract": true,
+    "modelFreeFeasibility": true,
+    "validatorAndTests": true,
+    "preflight": true,
+    "waveformRendering": false,
+    "datasetGeneration": false,
+    "optimizerSteps": false,
+    "modelInference": false,
+    "v2b": false,
+    "realAudio": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "requiresFreshEmpiricalAuthorizationAfterPreflight": true
+}
