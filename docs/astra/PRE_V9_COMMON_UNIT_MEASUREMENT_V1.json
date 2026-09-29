@@ -1,0 +1,132 @@
+{
+  "schema": "astra-pre-v9-common-unit-measurement-v1",
+  "date": "2026-09-29",
+  "status": "complete-reference-only-no-v9-candidate-generated",
+  "contract": {
+    "timingUnit": "acoustic-attack-group",
+    "noteLabelUnitSeparate": true,
+    "simultaneousToleranceSeconds": 0.01,
+    "cropOrigin": "evaluation-crop-local",
+    "endpointPolicy": "half-open [0,duration)",
+    "quantileConvention": "linear interpolation at h=(n-1)*p (NumPy default linear convention)",
+    "ioiDefinition": "positive difference between consecutive attack groups within one clip",
+    "repeat250Definition": "fraction of eligible positive IOIs <=0.250 s",
+    "longGap700Definition": "fraction of eligible positive IOIs >=0.700 s",
+    "positiveDensityDenominator": "positive evaluation seconds only",
+    "negativeDurationSeparate": true
+  },
+  "identity": {
+    "v2bManifestBlobSha": "c2912b1e2ba84ca28d67e1573dee6034210c0366",
+    "v2bCorrectionBlobSha": "1262937be952a72fa94196959d1bc7fd2759eee9",
+    "v2bAnnotationsBlobSha": "e95ced7525ed48de18e41c60d0b8904f90087dd8",
+    "v2cResultBlobSha": "490ea778085d9141d953580db59614cbd22da378",
+    "v8RunnerBlobSha": "3c7efea4ce00d737a9ed1bb2711185b7a5fb1955"
+  },
+  "v2b": {
+    "positiveClipCount": 13,
+    "negativeClipCount": 4,
+    "rawLandmarkCount": 164,
+    "attackGroupCount": 164,
+    "mergedWithin10msCount": 0,
+    "positiveSeconds": 110.02318367346939,
+    "negativeSeconds": 31.85795918367347,
+    "aggregateAttackGroupsPerSecond": 1.4905949321256224,
+    "clipRateP10": 0.28371364653243847,
+    "clipRateP50": 1.1770244821092277,
+    "clipRateP90": 3.431737891737893,
+    "eligiblePositiveIoiCount": 151,
+    "ioiP10Seconds": 0.10666699999999985,
+    "ioiP50Seconds": 0.2560000000000002,
+    "ioiP90Seconds": 0.882358,
+    "repeat250Fraction": 0.47019867549668876,
+    "longGap700Fraction": 0.12582781456953643,
+    "perClip": [
+      {"id":"C01","durationSeconds":8.0,"rawLandmarks":42,"attackGroups":42,"mergedWithin10ms":0,"rate":5.25,"ioiCount":41,"ioiP50Seconds":0.14933399999999963,"ioiP90Seconds":0.298667,"repeat250Fraction":0.7560975609756098,"longGap700Fraction":0.0},
+      {"id":"C02","durationSeconds":8.0,"rawLandmarks":15,"attackGroups":15,"mergedWithin10ms":0,"rate":1.875,"ioiCount":14,"ioiP50Seconds":0.19200000000000006,"ioiP90Seconds":0.31360009999999994,"repeat250Fraction":0.5714285714285714,"longGap700Fraction":0.0},
+      {"id":"C03","durationSeconds":10.0,"rawLandmarks":38,"attackGroups":38,"mergedWithin10ms":0,"rate":3.8,"ioiCount":37,"ioiP50Seconds":0.3199999999999994,"ioiP90Seconds":0.37120020000000015,"repeat250Fraction":0.4594594594594595,"longGap700Fraction":0.0},
+      {"id":"C04","durationSeconds":5.799183673469388,"rawLandmarks":7,"attackGroups":7,"mergedWithin10ms":0,"rate":1.2070664414414414,"ioiCount":6,"ioiP50Seconds":0.528254,"ioiP90Seconds":1.015873,"repeat250Fraction":0.3333333333333333,"longGap700Fraction":0.3333333333333333},
+      {"id":"C05","durationSeconds":10.0,"rawLandmarks":11,"attackGroups":11,"mergedWithin10ms":0,"rate":1.1,"ioiCount":10,"ioiP50Seconds":0.534059,"ioiP90Seconds":1.4361538999999999,"repeat250Fraction":0.1,"longGap700Fraction":0.4},
+      {"id":"C06","durationSeconds":8.496,"rawLandmarks":10,"attackGroups":10,"mergedWithin10ms":0,"rate":1.1770244821092277,"ioiCount":9,"ioiP50Seconds":0.3200000000000003,"ioiP90Seconds":0.6229328000000002,"repeat250Fraction":0.1111111111111111,"longGap700Fraction":0.0},
+      {"id":"C07","durationSeconds":6.96,"rawLandmarks":6,"attackGroups":6,"mergedWithin10ms":0,"rate":0.8620689655172414,"ioiCount":5,"ioiP50Seconds":0.38399999999999945,"ioiP90Seconds":3.1018668,"repeat250Fraction":0.4,"longGap700Fraction":0.4},
+      {"id":"C08","durationSeconds":10.0,"rawLandmarks":2,"attackGroups":2,"mergedWithin10ms":0,"rate":0.2,"ioiCount":1,"ioiP50Seconds":4.352,"ioiP90Seconds":4.352,"repeat250Fraction":0.0,"longGap700Fraction":1.0},
+      {"id":"C09","durationSeconds":7.152,"rawLandmarks":2,"attackGroups":2,"mergedWithin10ms":0,"rate":0.2796420581655481,"ioiCount":1,"ioiP50Seconds":4.224,"ioiP90Seconds":4.224,"repeat250Fraction":0.0,"longGap700Fraction":1.0},
+      {"id":"C10","durationSeconds":10.0,"rawLandmarks":4,"attackGroups":4,"mergedWithin10ms":0,"rate":0.4,"ioiCount":3,"ioiP50Seconds":0.170666,"ioiP90Seconds":0.18773320000000002,"repeat250Fraction":1.0,"longGap700Fraction":0.0},
+      {"id":"C11","durationSeconds":10.0,"rawLandmarks":3,"attackGroups":3,"mergedWithin10ms":0,"rate":0.3,"ioiCount":2,"ioiP50Seconds":4.7775055,"ioiP90Seconds":6.4725619000000005,"repeat250Fraction":0.0,"longGap700Fraction":1.0},
+      {"id":"C12","durationSeconds":5.616,"rawLandmarks":11,"attackGroups":11,"mergedWithin10ms":0,"rate":1.9586894586894588,"ioiCount":10,"ioiP50Seconds":0.2670295,"ioiP90Seconds":0.47716979999999953,"repeat250Fraction":0.3,"longGap700Fraction":0.1},
+      {"id":"C13","durationSeconds":10.0,"rawLandmarks":13,"attackGroups":13,"mergedWithin10ms":0,"rate":1.3,"ioiCount":12,"ioiP50Seconds":0.6079995000000002,"ioiP90Seconds":1.1989333,"repeat250Fraction":0.25,"longGap700Fraction":0.5}
+    ],
+    "qualification": "Frozen spectral-flux landmarks; not exhaustive human-verified audible attacks. No note multiplicity is inferred from detector timestamps."
+  },
+  "syntheticV8L0CommonUnit": {
+    "positiveClipCount": 273,
+    "positiveSeconds": 546.0,
+    "historicalNoteLabelCount": 903,
+    "attackGroupCount": 735,
+    "collapsedSimultaneousNoteMultiplicityCount": 168,
+    "aggregateAttackGroupsPerSecond": 1.3461538461538463,
+    "clipRateP10": 0.5,
+    "clipRateP50": 1.0,
+    "clipRateP90": 2.5,
+    "eligiblePositiveIoiCount": 462,
+    "ioiP10Seconds": 0.33999999999999997,
+    "ioiP50Seconds": 0.36,
+    "ioiP90Seconds": 0.4,
+    "repeat250Fraction": 0.0,
+    "longGap700Fraction": 0.09090909090909091,
+    "perFamily": {
+      "isolated":{"clips":42,"noteLabels":42,"attackGroups":42,"ioiCount":0},
+      "scales":{"clips":42,"noteLabels":168,"attackGroups":168,"ioiCount":126},
+      "chords":{"clips":42,"noteLabels":252,"attackGroups":84,"ioiCount":42},
+      "repeated":{"clips":42,"noteLabels":168,"attackGroups":168,"ioiCount":126},
+      "legato":{"clips":42,"noteLabels":42,"attackGroups":42,"ioiCount":0},
+      "palmmute":{"clips":42,"noteLabels":210,"attackGroups":210,"ioiCount":168},
+      "mixed":{"clips":21,"noteLabels":21,"attackGroups":21,"ioiCount":0}
+    },
+    "qualification": "Retained V8 L0 source-template reconstruction under the common attack-group contract. Historical V6/V7/V8 metrics and decisions are unchanged."
+  },
+  "comparison": {
+    "densityDeltaSyntheticMinusV2b": -0.1444410859717761,
+    "densityRelativeSyntheticMinusV2b": -0.09690163495041533,
+    "ioiP50DeltaSecondsSyntheticMinusV2b": 0.10399999999999976,
+    "ioiP90DeltaSecondsSyntheticMinusV2b": -0.48235799999999995,
+    "repeat250DeltaSyntheticMinusV2b": -0.47019867549668876,
+    "longGap700DeltaSyntheticMinusV2b": -0.034918723660445516
+  },
+  "pitchScoringProvenance": {
+    "rawTrustedPitchLandmarks": 57,
+    "rawHighConfidencePitchLandmarks": 50,
+    "scorableTrustedPitchLandmarks": 56,
+    "scorableHighConfidencePitchLandmarks": 49,
+    "recordedExcludedLandmark": {
+      "clipId": "C06",
+      "eventStart": 0.042667,
+      "pitch": 37,
+      "confidence": "high",
+      "reasonCategory": "unrepresentableLandmarkExcluded"
+    },
+    "source": "docs/astra/V2C_CALIBRATION_DIAGNOSTIC_RESULT_V1.json"
+  },
+  "focusedChecks": {
+    "measurementEquivalentChecksPassed": 6,
+    "measurementEquivalentChecksTotal": 6,
+    "existingContractFixtureTestsPreviouslyPassed": 10,
+    "existingContractFixtureTestsTotal": 10,
+    "note": "Six focused pure checks were executed locally against the frozen formulas/templates; network clone was unavailable. No audio/model dependencies were used."
+  },
+  "execution": {
+    "audioDecoded": false,
+    "newAnnotation": false,
+    "modelInferenceCount": 0,
+    "optimizerSteps": 0,
+    "workflowDispatches": 0,
+    "candidateV9TimingPopulationGenerated": false,
+    "v1_1Used": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "a2": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "decision": "Common-unit comparability is resolved sufficiently to freeze a reference table. V9 empirical execution remains unauthorized and numerical advancement gates are not yet frozen."
+}
