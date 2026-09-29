@@ -1,0 +1,76 @@
+name: Astra V9 authorized preflight
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/V9_PREFLIGHT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: astra-v9-authorized-preflight
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify authorization and exact source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          blob=lambda p: subprocess.check_output(['git','hash-object',p],text=True).strip()
+          a=json.load(open('docs/astra/V9_EXECUTION_AUTHORIZATION_V1.json'))
+          l=json.load(open('docs/astra/V9_PREFLIGHT_LAUNCH_V1.json'))
+          assert a['schema']=='astra-v9-execution-authorization-v1'
+          assert a['explicitlyAuthorized'] is True
+          assert a['userInstruction']=='I authorize'
+          assert a['branch']=='astra-work'
+          assert l['schema']=='astra-v9-preflight-launch-v1'
+          assert l['status']=='armed-model-free-preflight-only'
+          assert l['candidateTimingGeneration'] is False
+          assert l['waveformRendering'] is False
+          assert l['modelInference'] is False
+          assert l['optimizerSteps']==0
+          for k,p in l['sourcePaths'].items():
+              assert l['sourceGitBlobs'][k]==blob(p),(k,p,l['sourceGitBlobs'][k],blob(p))
+          assert l['authorizationGitBlob']==blob('docs/astra/V9_EXECUTION_AUTHORIZATION_V1.json')
+          PY
+      - name: Install exact CPU runtime
+        run: |
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Run pure final-contract tests
+        run: |
+          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_final_contract_validator_v1.py
+          PYTHONPATH=astra_backend python astra_backend/synthetic/test_v9_empirical_v1.py
+      - name: Run model-free V9 static verification
+        run: |
+          mkdir -p /tmp/v9-preflight
+          PYTHONPATH=astra_backend python astra_backend/synthetic/v9_empirical_v1.py verify             --contract docs/astra/FALLBACK_FREE_CURRICULUM_V9_FINAL_CONTRACT_V1.json             --out /tmp/v9-preflight/preflight.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/v9-preflight/preflight.json'))
+          assert x['contractValid'] and x['supportFeasible']
+          assert x['candidateTimingGenerated'] is False
+          assert x['waveformsRendered']==0 and x['modelInferenceCount']==0 and x['optimizerSteps']==0
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-v9-authorized-preflight-v1
+          path: /tmp/v9-preflight/preflight.json
+          if-no-files-found: error
+          retention-days: 30
