@@ -1,0 +1,59 @@
+{
+  "schema": "astra-v12-execution-launch-v1",
+  "date": "2026-09-29",
+  "status": "armed-consumed",
+  "branch": "astra-work",
+  "launchIdentity": "v12-family-mixture-v1-20260929-01",
+  "preflight": {
+    "runId": 36537123050,
+    "jobId": 109303603997,
+    "artifactId": 11018394264,
+    "artifactDigest": "sha256:b50fe403922d929fb2864b77868f83f57af23b20b240fbfe42f6e8aa8224959e",
+    "conclusion": "success",
+    "headSha": "250b08ddd7aca913ea0382122a259ca6e7a50f2a"
+  },
+  "execution": {
+    "models": 2,
+    "optimizerStepsPerModel": 500,
+    "maxOptimizerStepsTotal": 1000,
+    "thresholdSearch": false,
+    "automaticScientificRetry": false,
+    "syntheticOnly": true,
+    "v2b": false,
+    "realAudio": false,
+    "maxRenderCpuMinutes": 30,
+    "maxFitEvalCpuMinutes": 60,
+    "maxPersistedMiB": 700,
+    "paidComputeDollars": 0
+  },
+  "sourcePaths": {
+    "authorization": "docs/astra/V12_EMPIRICAL_EXECUTION_AUTHORIZATION_V1.json",
+    "history": "docs/astra/V12_EXECUTION_HISTORY_V1.json",
+    "contract": "docs/astra/V12_FAMILY_MIXTURE_CONTRACT_V1.json",
+    "preflightResult": "docs/astra/V12_PREFLIGHT_RESULT_V1.json",
+    "runner": "astra_backend/synthetic/v12_family_mixture_v1.py",
+    "runnerTests": "astra_backend/synthetic/test_v12_family_mixture_v1.py",
+    "validator": "astra_backend/synthetic/v12_contract_validator_v1.py",
+    "validatorTests": "astra_backend/synthetic/test_v12_contract_validator_v1.py",
+    "v9Empirical": "astra_backend/synthetic/v9_empirical_v1.py",
+    "s1": "astra_backend/synthetic/s1_pilot_v1.py",
+    "s6": "astra_backend/synthetic/s6_pilot_v1.py",
+    "runtimeLock": "astra_backend/tabcnn_runtime/requirements.lock.txt",
+    "workflow": ".github/workflows/astra-v12-family-mixture-empirical-v1.yml"
+  },
+  "sourceGitBlobs": {
+    "authorization": "feac9024b2f03dcee0439cd123727850e53baa86",
+    "history": "9f631dc06cc21db960e5ddc1ce94b821df424721",
+    "contract": "ddcc218e2c498ded142020e0afc6ab5811b05fda",
+    "preflightResult": "33b7c696b5a60cb757dd4302afe819c906e501ff",
+    "runner": "9aa5a381269f022eb75aa13308442250dd0e7a51",
+    "runnerTests": "e385d0a6ae958f974dca832ab91ec7051de9568d",
+    "validator": "91320bf8a9e095c146c0a6cd3670b0588c61ffad",
+    "validatorTests": "d8fd62abb165e3c1e489cb450ea0b70369a34e00",
+    "v9Empirical": "9f9af0e6d45ce2e4d284b41c2e8ebee534c26981",
+    "s1": "bbb8321411142f4f0f3a65ee2b96d60a8db3fbbf",
+    "s6": "142168784e3dfebf8a5221017e40c8aa73be1fa5",
+    "runtimeLock": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "workflow": "7ee39e44df5eb6bce0f02530cbe4373ae39691ba"
+  }
+}
