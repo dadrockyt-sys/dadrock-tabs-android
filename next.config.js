@@ -9,6 +9,15 @@ const artistSlugRedirects = {
   'steve-ray-vaughan': 'stevie-ray-vaughan',
   'red-hot-chilli-peppers': 'red-hot-chili-peppers',
   'the-red-hot-chili-peppers': 'red-hot-chili-peppers',
+
+  // Duplicate database artist labels. Redirect legacy/alternate slugs to the
+  // one canonical page that aggregates all matching lessons.
+  'black-crowes': 'the-black-crowes',
+  'the-black-crows': 'the-black-crowes',
+  'the-edgar-winter-group': 'edgar-winter-group',
+  'the-smashing-pumpkins': 'smashing-pumpkins',
+  'the-steve-miller-band': 'steve-miller-band',
+  'y-t': 'y-and-t',
 };
 
 const translatedLocales = [
