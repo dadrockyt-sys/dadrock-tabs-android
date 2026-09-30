@@ -62,7 +62,7 @@ async function findArtistBySlug(db, slug) {
 
   if (matchedArtists.length > 0) {
     return {
-      artistPattern: slugToArtistPattern(slug),
+      artistPattern: matchedArtists[0],
       artistPatterns: [...new Set(matchedArtists)],
       method: 'slug-match',
     };
