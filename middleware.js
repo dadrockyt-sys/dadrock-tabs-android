@@ -238,6 +238,11 @@ export function middleware(request) {
   const missingSongRedirects = {
     'pantera-walk': 'pantera',
     'dokken-tooth-and-nail': 'dokken',
+
+    // Historical song URLs from old title/artist parsing.
+    'jane-s-addiction-mountain-song': 'janes-addiction',
+    'jane-s-addiction-true-nature': 'janes-addiction',
+    'cities-on-flame-with-rock-and-roll-blue-oyster-cult': 'blue-oyster-cult',
   };
   const songSlugMatch = pathname.match(/^(?:\/[a-z]{2}(?:-[a-z]{2})?)?\/songs\/(.+)$/);
   if (songSlugMatch) {
@@ -293,6 +298,26 @@ export function middleware(request) {
   if (pathname.match(/^\/sitemap-[a-z]{2}\.xml$/)) {
     // Redirect to the real sitemap
     return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
+  }
+
+  // ─── 8a. Normalize legacy collection slugs before locale collapsing ───
+  // Older GSC URLs used shorthand era/genre names that no longer exist.
+  // Resolve them directly to the current English canonical in one hop.
+  const legacyCollectionAliases = {
+    '/era/70s': '/era/70s-rock',
+    '/era/80s': '/era/80s-rock',
+    '/era/90s': '/era/90s-rock',
+    '/genre/classic-rock': '/genre/classic-hard-rock',
+  };
+
+  const collectionPathWithoutLocale = pathname.replace(
+    /^\/(?:es|pt|pt-br|de|fr|it|ja|ko|zh|ru|hi|sv|fi)\//,
+    '/'
+  );
+
+  const legacyCollectionTarget = legacyCollectionAliases[collectionPathWithoutLocale];
+  if (legacyCollectionTarget) {
+    return NextResponse.redirect(new URL(legacyCollectionTarget, request.url), 301);
   }
 
   // ─── 8a. Collapse unsupported localized collection routes to English canonicals ───
