@@ -1,43 +1,68 @@
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
-import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
+import { slugToArtistPattern, artistToSlug, artistPatternsForSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 import { locales } from '@/lib/i18n';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { generateAlternates } from '@/lib/seo';
 import { getSeoMeta } from '@/lib/seoTranslations';
 
-async function findArtistBySlug(db, slug) {
-  const directPattern = slugToArtistPattern(slug);
-  const escapedDirect = directPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const directCount = await db.collection('videos').countDocuments({
-    artist: { $regex: new RegExp(`^${escapedDirect}`, 'i') }
+function buildArtistQuery(patterns) {
+  const clauses = patterns.map((pattern) => {
+    const escaped = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return { artist: { $regex: new RegExp(`^${escaped}`, 'i') } };
   });
 
+  return clauses.length === 1 ? clauses[0] : { $or: clauses };
+}
+
+async function findArtistBySlug(db, slug) {
+  const directPatterns = artistPatternsForSlug(slug);
+  const directCount = await db.collection('videos').countDocuments(
+    buildArtistQuery(directPatterns)
+  );
+
   if (directCount > 0) {
-    return { artistPattern: directPattern, method: 'direct' };
+    return {
+      artistPattern: slugToArtistPattern(slug),
+      artistPatterns: directPatterns,
+      method: directPatterns.length > 1 ? 'alias-group' : 'direct',
+    };
   }
 
   const allArtists = await db.collection('videos').distinct('artist');
-  for (const artist of allArtists) {
-    const generatedSlug = artistToSlug(artist);
-    if (generatedSlug === slug) {
-      return { artistPattern: artist.replace(/ -$/, '').trim(), method: 'slug-match' };
-    }
+  const matchedArtists = allArtists
+    .filter((artist) => artistToSlug(artist) === slug)
+    .map((artist) => artist.replace(/ -$/, '').trim());
+
+  if (matchedArtists.length > 0) {
+    return {
+      artistPattern: matchedArtists[0],
+      artistPatterns: [...new Set(matchedArtists)],
+      method: 'slug-match',
+    };
   }
 
   return null;
 }
-
 function normalizeArtistSeoCounts(content, slug, lessonCount) {
-  if (!content || slug !== 'black-sabbath' || !Number.isFinite(lessonCount)) {
+  if (!content || !Number.isFinite(lessonCount)) {
     return content;
   }
 
   try {
-    return JSON.parse(
-      JSON.stringify(content).replace(/\b75\b/g, String(lessonCount))
+    let serialized = JSON.stringify(content).replace(
+      /\b\d+(?=\s+lessons?\b)/gi,
+      String(lessonCount)
     );
+
+    // Preserve the older Black Sabbath cleanup for generated copy that
+    // contained a bare stale count without the word "lessons" beside it.
+    if (slug === 'black-sabbath') {
+      serialized = serialized.replace(/\b75\b/g, String(lessonCount));
+    }
+
+    return JSON.parse(serialized);
   } catch {
     return content;
   }
@@ -183,15 +208,13 @@ export async function generateMetadata({ params }) {
   }
 
   const artistPattern = result.artistPattern;
-  const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const lessonCount = await db.collection('videos').countDocuments({
-    artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') }
-  });
+  const artistQuery = buildArtistQuery(result.artistPatterns || [artistPattern]);
+  const lessonCount = await db.collection('videos').countDocuments(artistQuery);
 
   let ogImage = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
   try {
     const firstVideo = await db.collection('videos').findOne(
-      { artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } },
+      artistQuery,
       { projection: { thumbnail: 1 } }
     );
     if (firstVideo?.thumbnail) ogImage = firstVideo.thumbnail;
@@ -260,9 +283,9 @@ export default async function ArtistPage({ params }) {
   }
 
   const artistPattern = result.artistPattern;
-  const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const artistQuery = buildArtistQuery(result.artistPatterns || [artistPattern]);
   const videos = await db.collection('videos')
-    .find({ artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } })
+    .find(artistQuery)
     .sort({ created_at: -1 })
     .toArray();
 
