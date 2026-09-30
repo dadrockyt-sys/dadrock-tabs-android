@@ -18,19 +18,19 @@ function getLocalizedUrl(path, locale) {
   return `${baseUrl}/${locale}${cleanPath}`;
 }
 
-function getHomepageLanguageAlternates() {
+function getLanguageAlternates(path = '/') {
   const languages = {};
 
   for (const locale of locales) {
-    languages[locale] = getLocalizedUrl('/', locale);
+    languages[locale] = getLocalizedUrl(path, locale);
   }
 
-  languages['x-default'] = getLocalizedUrl('/', 'en');
+  languages['x-default'] = getLocalizedUrl(path, 'en');
   return languages;
 }
 
 function addLocalizedHomepages(routes) {
-  const languages = getHomepageLanguageAlternates();
+  const languages = getLanguageAlternates('/');
 
   for (const locale of locales) {
     routes.push({
@@ -90,12 +90,13 @@ const redirectedSongSlugs = new Set([
 export default async function sitemap() {
   const routes = [];
 
-  // Only the language homepages are independent multilingual search URLs.
-  // Their self-canonicals + hreflang metadata are handled by app/[lang]/page.js.
+  // Language homepages are independent multilingual search URLs.
+  // Individual localized Learn guides are added below as the second
+  // intentionally indexable multilingual route family.
   addLocalizedHomepages(routes);
 
-  // All subpage families use the English URL as the search canonical.
-  // Locale-prefixed variants remain available to visitors but stay out of the sitemap.
+  // Most subpage families use the English URL as the search canonical.
+  // Locale-prefixed variants stay out of the sitemap except localized Learn guides below.
   for (const path of englishStaticPaths) {
     addEnglishRoute(routes, path);
   }
@@ -103,9 +104,18 @@ export default async function sitemap() {
   // Backing Track Studio is English-only.
   addEnglishRoute(routes, '/bts');
 
-  // Individual learning guides: English canonical URLs only.
+  // Individual learning guides are indexable in every supported language.
+  // Each language URL is self-canonical and carries the same reciprocal hreflang set.
   for (const slug of Object.keys(GUIDES)) {
-    addEnglishRoute(routes, `/learn/${slug}`);
+    const path = `/learn/${slug}`;
+    const languages = getLanguageAlternates(path);
+
+    for (const locale of locales) {
+      routes.push({
+        url: getLocalizedUrl(path, locale),
+        alternates: { languages },
+      });
+    }
   }
 
   // Difficulty pages: English canonical URLs only.

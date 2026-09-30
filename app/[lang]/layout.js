@@ -1,9 +1,11 @@
-// Locale-prefixed subpages are visitor-facing translations, not independent
-// search landing pages. Default the entire locale subtree to noindex while
-// allowing crawling/following so Google can see each page's English canonical.
+// Most locale-prefixed subpages are visitor-facing translations, not independent
+// search landing pages. Default the locale subtree to noindex while allowing
+// crawling/following so Google can see each page's English canonical.
 //
-// app/[lang]/page.js explicitly overrides this for locale homepages, which are
-// intentionally indexable and self-canonical with hreflang alternates.
+// Exceptions explicitly override this metadata:
+// - app/[lang]/page.js: localized homepages
+// - app/[lang]/learn/[slug]/page.js via the shared guide metadata: localized
+//   Learn guides, which are indexable and use self-canonicals + hreflang
 export const metadata = {
   robots: {
     index: false,

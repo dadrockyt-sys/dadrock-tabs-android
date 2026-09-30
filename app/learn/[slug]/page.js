@@ -7,7 +7,7 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import LearnHeader from '@/components/LearnHeader';
-import { generateAlternates } from '@/lib/seo';
+import { generateHreflangLinks, generateLocalizedUrl } from '@/lib/seo';
 
 function getLocalizedValue(value, lang) {
   if (value && typeof value === 'object') {
@@ -65,11 +65,27 @@ export async function generateMetadata({ params }) {
 
   const pageUrl = `https://dadrocktabs.com${localizedPath}`;
 
+  const guidePath = `/learn/${slug}`;
+
   return {
     title: `${guideTitle} | DadRock Tabs`,
     description: guideDescription,
     keywords: guide.keywords,
-    alternates: generateAlternates(`/learn/${slug}`, lang),
+    alternates: {
+      canonical: generateLocalizedUrl(guidePath, lang),
+      languages: generateHreflangLinks(guidePath),
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
       title: guideTitle,
       description: guideDescription,
