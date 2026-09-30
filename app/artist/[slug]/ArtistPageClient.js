@@ -327,6 +327,10 @@ const t = getSubPageTranslation(lang);
   </Link>
 
   <span className="mx-2">/</span>
+  <Link href="/artists" className="hover:text-amber-500 transition-colors">
+    All Artists
+  </Link>
+  <span className="mx-2">/</span>
   <span className="text-white">{artistName}</span>
 </nav>
 
