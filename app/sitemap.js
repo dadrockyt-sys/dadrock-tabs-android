@@ -90,8 +90,9 @@ const redirectedSongSlugs = new Set([
 export default async function sitemap() {
   const routes = [];
 
-  // Only the language homepages are independent multilingual search URLs.
-  // Their self-canonicals + hreflang metadata are handled by app/[lang]/page.js.
+  // Language homepages are independent multilingual search URLs.
+  // Individual localized Learn guides are added below as the second
+  // intentionally indexable multilingual route family.
   addLocalizedHomepages(routes);
 
   // Most subpage families use the English URL as the search canonical.
