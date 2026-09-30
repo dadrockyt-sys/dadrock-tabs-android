@@ -368,9 +368,16 @@ export function middleware(request) {
     return continueWithLocale(matchedLocale);
   }
 
-  // Translated subpaths stay fully usable for visitors while being kept out of
-  // search results. Crawlers are allowed so they can see both noindex and the
-  // English rel=canonical emitted by the route metadata.
+  // Localized Learn guides are intentionally indexable search landing pages.
+  // They contain translated guide content and emit self-canonicals + reciprocal
+  // hreflang metadata, so do not attach the locale-subtree X-Robots-Tag here.
+  if (/^\/learn\/[^/]+$/.test(restPath)) {
+    return continueWithLocale(matchedLocale);
+  }
+
+  // Other translated subpaths stay fully usable for visitors while being kept
+  // out of search results. Crawlers are allowed so they can see noindex and the
+  // English rel=canonical emitted by each route's metadata.
   return continueWithLocale(matchedLocale, matchedLocale !== 'en');
 }
 
