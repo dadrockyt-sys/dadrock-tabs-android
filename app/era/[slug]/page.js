@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import GenrePageClient from '@/app/genre/[slug]/GenrePageClient';
+import { generateAlternates } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -16,6 +17,8 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords: `${era.name.toLowerCase()} guitar tabs, ${era.name.toLowerCase()} bass tabs, ${era.artists.map(a => `${a} tabs`).join(', ')}, learn ${era.name.toLowerCase()} guitar`,
+    alternates: generateAlternates(`/era/${slug}`),
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${era.name} Guitar & Bass Tabs - Free Video Lessons`,
       description,

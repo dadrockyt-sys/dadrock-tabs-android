@@ -4,8 +4,22 @@ import { generateAlternates } from '@/lib/seo';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 
+const INVALID_ARTIST_SLUGS = new Set([
+  'memorial-video-neverforget-johnlennon-bobmarley',
+  'face-the-slayer',
+  'children-of-the-grave',
+  'heart-roger-fisher-learn',
+]);
+
 // Find artist name from slug by checking the database
 async function findArtistBySlug(db, slug) {
+  // These slugs came from malformed video metadata, not real artist entities.
+  // Keep them out of the indexable artist surface instead of generating
+  // low-quality pseudo-artist pages.
+  if (INVALID_ARTIST_SLUGS.has(slug)) {
+    return null;
+  }
+
   const directPattern = slugToArtistPattern(slug);
   const escapedDirect = directPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

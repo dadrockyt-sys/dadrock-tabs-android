@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
+import { generateAlternates } from '@/lib/seo';
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const playlist = PLAYLISTS[slug];
@@ -12,6 +13,8 @@ export async function generateMetadata({ params }) {
     title: `${playlist.name} - Curated Guitar Tab Collection | DadRock Tabs`,
     description: playlist.description,
     keywords: `${playlist.name.toLowerCase()}, guitar playlist, curated guitar tabs, ${playlist.difficulty.toLowerCase()} guitar songs, rock guitar collection`,
+    alternates: generateAlternates(`/playlist/${slug}`),
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${playlist.name} - Curated Guitar Tab Collection`,
       description: playlist.description,
