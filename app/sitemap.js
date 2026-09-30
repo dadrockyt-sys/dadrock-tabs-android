@@ -53,6 +53,7 @@ function addEnglishRoute(routes, path, options = {}) {
 }
 
 const englishStaticPaths = [
+  '/ai-tab',
   '/artists',
   '/coming-soon',
   '/top-lessons',
