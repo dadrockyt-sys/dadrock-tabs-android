@@ -18,6 +18,30 @@ const artistSlugRedirects = {
   'the-smashing-pumpkins': 'smashing-pumpkins',
   'the-steve-miller-band': 'steve-miller-band',
   'y-t': 'y-and-t',
+
+  // High-confidence legacy/pseudo-artist slugs from the GSC 404 export.
+  // Each maps to the closest current artist collection rather than an
+  // unrelated homepage redirect.
+  '80s-fretmasters-ironmaiden': 'iron-maiden',
+  '80s-fretmasters-zztop-lagrange': 'zz-top',
+  'about-a-girl-coming-soon-dadrock': 'nirvana',
+  'carlos-cavazo': 'quiet-riot',
+  'children-of-the-grave': 'black-sabbath',
+  'cities-on-flame-with-rock-and-roll': 'blue-oyster-cult',
+  'dokken-coming-soon-dadrock': 'dokken',
+  'george-lynch-electric': 'dokken',
+  'hold-on-loosely': '38-special',
+  'jake-e-lee': 'ozzy-osbourne',
+  'jimi-hendrix-coming-soon-dadrock': 'jimi-hendrix',
+  'john-norum': 'europe',
+  'lead-singers-80smusic-vanhalen-hairmetal-metal-80s-metal': 'van-halen',
+  'megadeth-coming-soon-dadrock': 'megadeth',
+  'metallica-coming-soon-dadrock': 'metallica',
+  'reb-beach': 'winger',
+  'simple-man-coming-soon-dadrock': 'lynyrd-skynyrd',
+  'steppenwolf-be-the-first-heavy-metal-song-metal-music-first-debate': 'steppenwolf',
+  'steve-vai-coming-soon-dadrock': 'steve-vai',
+  'vito-bratta': 'white-lion',
 };
 
 const translatedLocales = [
