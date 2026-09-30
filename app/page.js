@@ -2091,6 +2091,9 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🔧 {homeT.resources}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href={getLocalizedPath('/learn', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.guides}</Link></li>
+                  {currentLang === 'en' && (
+                    <li><Link href="/artists" className="text-zinc-400 hover:text-white transition-colors">All Artists</Link></li>
+                  )}
                   <li><Link href={getLocalizedPath('/tools', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.guitarTools}</Link></li>
                   <li><Link href={getLocalizedPath('/whats-new', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.whatsNew}</Link></li>
                   <li><Link href={getLocalizedPath('/partners', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.partners}</Link></li>
