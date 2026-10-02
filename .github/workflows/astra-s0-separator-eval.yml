@@ -86,6 +86,7 @@ jobs:
             astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py \
             astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py \
             astra_backend/evaluation/stem_bleed_cleanup_v1.py \
+            astra_backend/evaluation/stem_bleed_diagnostics_v1.py \
             astra_backend/evaluation/run_bs_roformer_s0_v1.py
 
       - name: Generate deterministic S0 fixtures
