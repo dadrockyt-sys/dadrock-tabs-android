@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "kind": "unified-audio-recognition-set",
+  "status": "catalog_merged_execution_disabled",
+  "date": "2026-10-02",
+  "labels": [
+    "guitar",
+    "bass",
+    "other"
+  ],
+  "sourceCatalogs": [
+    "docs/astra/PIXABAY_GUITAR_AUDIO_CATALOG_V1.md",
+    "docs/astra/PIXABAY_BASS_AUDIO_CATALOG_V1.md"
+  ],
+  "summary": {
+    "totalFiles": 60,
+    "guitarFiles": 24,
+    "bassCandidateFiles": 30,
+    "otherFiles": 6,
+    "guitarSeconds": 244.11,
+    "bassSeconds": 340.805,
+    "otherSeconds": 41.45,
+    "totalSeconds": 626.365
+  },
+  "excludedPendingVerification": [
+    "B03",
+    "B30"
+  ],
+  "policy": {
+    "audioInGit": false,
+    "randomFileSplitForbidden": true,
+    "groupByContributorOrSourceFamily": true,
+    "trainingAuthorized": false,
+    "inferenceAuthorized": false,
+    "separationAuthorized": false
+  },
+  "nextMissingClasses": [
+    "vocals",
+    "piano_or_keyboard_music",
+    "additional_drums_percussion",
+    "synth",
+    "strings_or_orchestral",
+    "silence_or_room_tone",
+    "full_band_mix",
+    "guitar_plus_bass",
+    "bass_plus_drums",
+    "guitar_plus_drums"
+  ]
+}
