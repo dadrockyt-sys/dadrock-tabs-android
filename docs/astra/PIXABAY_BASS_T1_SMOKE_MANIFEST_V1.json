@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "kind": "pixabay-bass-t1-smoke-manifest",
+  "status": "prepared_execution_disabled",
+  "date": "2026-10-02",
+  "purpose": "non-study diagnostic of T1 bass input/range behavior; not paired feasibility Arm A/B",
+  "t1ConfigPath": "docs/astra/BASIC_PITCH_BASS_T1_CONFIG_V1.json",
+  "provenanceReviewPath": "docs/astra/PIXABAY_BASS_PROVENANCE_CLASSIFICATION_V1.md",
+  "admissionRules": {
+    "exactCount": 12,
+    "audioBinariesInGit": false,
+    "perAssetPixabayProvenanceMustBeFrozenBeforeExecution": true,
+    "modelOutputMustNotAlterCandidateSelection": true,
+    "noThresholdSweep": true,
+    "noSeparator": true,
+    "noTraining": true,
+    "noCustomerAudio": true
+  },
+  "candidates": [
+    {
+      "id": "B05",
+      "assetId": 93230,
+      "filename": "freesound_community-bass-b1-93230.mp3",
+      "sha256": "962b0b1d7ac768df504b2cace5f81258af3fd1b091ed88ea84b46a7eabe24be7",
+      "durationSeconds": 3.816,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "low_register_short_note"
+    },
+    {
+      "id": "B19",
+      "assetId": 101274,
+      "filename": "freesound_community-bass-guitar_c2-raw-101274.mp3",
+      "sha256": "18f37a0ec8e1e1b38bdb24045c564e1e1ac77726124329bd9d9888484dbe8492",
+      "durationSeconds": 1.872,
+      "sampleRateHz": 48000,
+      "channels": 1,
+      "role": "raw_mono_single_note"
+    },
+    {
+      "id": "B20",
+      "assetId": 100754,
+      "filename": "freesound_community-fretless-bass-open-d-bridge-pickup-100754.mp3",
+      "sha256": "6a762a66b4b30ec00d7624395844578b1c4e5bd6693b4c17ba78fd10a0f12471",
+      "durationSeconds": 6.034,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "role": "fretless_open_string_sustain"
+    },
+    {
+      "id": "B12",
+      "assetId": 100710,
+      "filename": "freesound_community-picked_bassnote_a-100710.mp3",
+      "sha256": "e6f830c859f6c3025e448513dd54ac33b2efe893af1d6a014ab04be87d608d4c",
+      "durationSeconds": 9.648,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "picked_articulation"
+    },
+    {
+      "id": "B15",
+      "assetId": 98127,
+      "filename": "freesound_community-simple-p-bass-slap-loop-100-bpm-98127.mp3",
+      "sha256": "fe579fc53c57fb67dff65302270c06343a102debbcdca10186d0c51eef129f94",
+      "durationSeconds": 4.848,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "slap_loop"
+    },
+    {
+      "id": "B21",
+      "assetId": 43765,
+      "filename": "freesound_community-bass-guitar-three-notes-43765.mp3",
+      "sha256": "f459e9f23d7bae7254e6e2a20d8f8e5658e30d44afb2ce3189cb841b6f150044",
+      "durationSeconds": 4.049,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "role": "compact_multi_note"
+    },
+    {
+      "id": "B23",
+      "assetId": 77385,
+      "filename": "freesound_community-027574_f-bass-note-guitar-string-77385.mp3",
+      "sha256": "1f4ce4fc4e57e440c17acce21567243a150fe78946c5640579b279f46cfaef00",
+      "durationSeconds": 43.992,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "long_clean_sustain"
+    },
+    {
+      "id": "B22",
+      "assetId": 77384,
+      "filename": "freesound_community-037384_f-distorted-bass-note-guitar-string-77384.mp3",
+      "sha256": "17370518cf46be246192c75db632ed9194532325624509e9acdc400d992e6334",
+      "durationSeconds": 25.92,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "long_distorted_sustain"
+    },
+    {
+      "id": "B01",
+      "assetId": 43631,
+      "filename": "freesound_community-electric-bass-guitar-loop-2-bpm-110-43631.mp3",
+      "sha256": "c197f9f78067079dae66b4044c2d9d7b3cb876297a98faf363ceeed7801562f3",
+      "durationSeconds": 8.784,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "regular_loop"
+    },
+    {
+      "id": "B06",
+      "assetId": 101327,
+      "filename": "freesound_community-bass-guitar-death-metal-loop-240-bpm-101327.mp3",
+      "sha256": "66c88298384a8e4f5306cc17e8a0e8ecb7b2eed8f36e91c462759c59e5eb754a",
+      "durationSeconds": 8.064,
+      "sampleRateHz": 24000,
+      "channels": 2,
+      "role": "fast_heavy_loop"
+    },
+    {
+      "id": "B08",
+      "assetId": 490940,
+      "filename": "idoberg-funk-rock-slap-bass-riff-em-106bpm-490940.mp3",
+      "sha256": "e2db4cdbea638e26608ce204507b168eb876241746b7ffcf1b658179f8b0a952",
+      "durationSeconds": 18.155,
+      "sampleRateHz": 44100,
+      "channels": 2,
+      "role": "expressive_slap_funk_phrase"
+    },
+    {
+      "id": "B26",
+      "assetId": 78680,
+      "filename": "freesound_community-bass60bpm-78680.mp3",
+      "sha256": "b3237b30e6881e74876d8dcdaaf6f8e43fcd210e24f49d5430e4e29e26fbf463",
+      "durationSeconds": 24.033,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "role": "slow_phrase"
+    }
+  ],
+  "executionBudget": {
+    "maxTranscriberInvocations": 12,
+    "maxRetries": 0,
+    "separatorInvocations": 0,
+    "trainingRuns": 0,
+    "paidSpendCAD": 0
+  },
+  "blockers": [
+    "per_asset_pixabay_url_and_contributor_not_frozen_for_all_12",
+    "t1_immutable_environment_not_frozen",
+    "t1_model_sha_not_reverified_in_execution_environment",
+    "runtime_and_peak_rss_ceiling_not_filled",
+    "explicit_bounded_execution_authorization_missing"
+  ]
+}
