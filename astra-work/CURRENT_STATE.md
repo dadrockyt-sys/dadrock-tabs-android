@@ -5541,3 +5541,17 @@ Updated `.gitignore` to exclude `/s0_sources/`, `/s0_generated/`, and `/models/b
 A local bundle `S0_FIXTURE_SOURCES_V1.zip` was created from the 14 exact user-uploaded fixture MP3s. It includes `manifest.json` with SHA-256 hashes and a private-use README. The connected GitHub writer cannot create a new private repository or upload binary MP3s, so the private repo itself still needs to be created/uploaded by the user once.
 
 After that one-time setup, Codespaces can sync fixtures with a single command using `S0_FIXTURE_REPO=owner/private-repo ./scripts/sync_s0_fixtures.sh`, then rebuild S0 with `./scripts/build_s0_fixtures.sh`.
+
+
+## GitHub Actions runner replaces routine Codespace execution — 2026-10-02
+
+Added:
+- `.github/workflows/astra-s0-separator-eval.yml`
+- `docs/astra/S0_SEPARATOR_RUN_TRIGGER.txt`
+- `docs/astra/GITHUB_ACTIONS_S0_SEPARATOR_RUNNER_V1.md`
+
+The workflow runs only when the trigger file changes on `astra-work`, avoiding normal-commit compute. It checks out the private fixture repo using an Actions secret `S0_FIXTURE_TOKEN`, verifies the expected fixture count, installs dependencies, downloads/verifies the exact FP16 ONNX model SHA, regenerates the 12 S0 mixtures, runs the frozen separator+cleanup evaluator, writes a GitHub summary, uploads only the result JSON, and deletes private audio/model assets from the ephemeral runner.
+
+No private audio is uploaded as an Actions artifact. Codespaces can remain stopped for routine S0 runs once the Actions repository secret exists.
+
+Important: the existing Codespaces secret does not automatically populate GitHub Actions. Add the same fine-grained read-only token as repository Actions secret `S0_FIXTURE_TOKEN` before triggering the workflow.
