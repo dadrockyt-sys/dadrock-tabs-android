@@ -1,0 +1,12 @@
+{
+  "runId": 37078702459,
+  "artifactId": 11257653088,
+  "artifactDigest": "sha256:ff36972b6765f1c5e80b404558ef2417070536d6384b2638a36168bd82f20874",
+  "mixtureCount": 12,
+  "totalWallSeconds": 345.07363598899997,
+  "meanCleanupImprovementDb": -0.6320576707062033,
+  "minimumCleanupImprovementDb": -5.161438919630463,
+  "maximumCleanupImprovementDb": 0.1530417811949203,
+  "decision": "freeze_current_cleanup_as_failed_transfer_experiment",
+  "nextDirection": "gated_cleanup_triggered_by_contamination_evidence"
+}
