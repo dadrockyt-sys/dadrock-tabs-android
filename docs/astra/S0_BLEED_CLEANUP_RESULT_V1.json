@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "mode": "deterministic_symmetric_bleed_injection",
+  "bleedDb": -18.0,
+  "cleanupConfig": {
+    "n_fft": 2048,
+    "hop": 512,
+    "power": 2.0,
+    "competition": 0.5,
+    "floor_gain": 0.6
+  },
+  "mixtureCount": 12,
+  "meanImprovementDb": 2.6648789834415605,
+  "minimumMixtureImprovementDb": 1.1745711157720642,
+  "maximumReconstructionAbsError": 5.960464477539063e-08,
+  "allMixturesImproved": true,
+  "interpretation": "Development-unit-test only; this is known injected bleed, not separator evidence."
+}
