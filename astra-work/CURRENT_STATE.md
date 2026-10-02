@@ -5403,3 +5403,19 @@ The 30 bass candidates are now conservatively classified into strong physical-ba
 A proposed 12-file **diagnostic smoke subset** is frozen for later consideration: B05, B19, B20, B12, B15, B21, B23, B22, B01, B06, B08 and B26. This subset is intentionally diverse across low-register notes, raw mono, fretless/open string, picked/slap articulation, long sustain, distortion, regular loop, fast metal, funk/slap and slow phrase material.
 
 This diagnostic subset does **not** replace the independent 12-performance paired isolated-bass + matching-mix study and no model execution is authorized by this review.
+
+
+## Pixabay bass T1 smoke diagnostic prepared — 2026-10-02
+
+Prepared a fully disabled metadata-only diagnostic package around the frozen 12-file Pixabay bass subset:
+- `docs/astra/PIXABAY_BASS_T1_SMOKE_MANIFEST_V1.json`
+- `docs/astra/PIXABAY_BASS_T1_SMOKE_EVALUATOR_CONTRACT_V1.md`
+- `astra_backend/evaluation/pixabay_bass_t1_smoke_v1.py`
+
+The manifest freezes the exact 12 IDs, filenames, asset IDs, SHA-256 hashes, durations, sample rates, channel counts and diagnostic roles. Scientific budget is fixed at 12 transcriber invocations, 0 separator calls, 0 training runs, 0 scientific retries and CAD $0.
+
+The evaluator contract explicitly forbids precision/recall/F1 because these fixtures do not yet have independent note-event ground truth. Allowed outputs are ingestion/reproducibility, runtime/memory, event-shape sanity, events/sec, pitch span and retrigger/octave-spread diagnostics only.
+
+The Python entry point is intentionally fail-closed and contains no model-execution implementation. No audio/model was opened and no inference occurred.
+
+Execution remains blocked on: frozen per-asset Pixabay provenance for all 12, immutable T1 environment/model/config hashes, measured runtime/peak-RSS ceilings, and one explicit bounded authorization.
