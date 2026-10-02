@@ -5453,3 +5453,25 @@ Primary optimization target is not zero audible bleed. It is preservation of tru
 The design proposes a future S0 synthetic-mixture experiment using the already cataloged rights-cleared guitar/bass/control fixtures, because exact component ground truth would be known. This is not equivalent to real commercial-song separation and remains a separate empirical boundary.
 
 No separator/model/checkpoint was downloaded or run. No audio was processed. No synthetic mixture was created. Next safe preparation step is a disabled synthetic-mixture matrix with frozen component identities, gains and expected stems.
+
+
+## S0 synthetic mixture fixture generated and frozen — 2026-10-02
+
+Created and verified the first controlled synthetic mixture set for separator/bleed research:
+- `docs/astra/S0_SYNTHETIC_MIXTURE_MANIFEST_V1.json`
+- `docs/astra/S0_SYNTHETIC_MIXTURE_FIXTURE_V1.md`
+- `astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py`
+
+Execution performed in the working container:
+- 12 deterministic mixtures generated from cataloged guitar, bass and control uploads;
+- 94.602 s total;
+- 44.1 kHz stereo PCM float32;
+- fixed -6 dB global headroom with prospectively fixed component-relative gains;
+- no clipping observed (max absolute sample peak 0.644333);
+- rendered component stems numerically reconstruct each generated mixture exactly in the verification pass (maximum absolute reconstruction error 0.0).
+
+Generated WAVs/stems remain outside Git; exact mix hashes and deterministic recipe are committed.
+
+This fixture provides exact component ground truth for future separator/bleed-cleanup evaluation. It does not establish performance on mastered commercial recordings.
+
+No source separator, recognizer, Basic Pitch inference, training, or tab decoder was run. The next empirical step is to select one rights-cleared separator/checkpoint and define a frozen evaluation contract comparing separated stems against these known ground-truth components before any cleanup optimization.
