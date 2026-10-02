@@ -7277,3 +7277,18 @@ Synthetic unit test: all 12 frozen S0 mixtures were contaminated deterministical
 This is a cleanup-math validation only, not separator evidence. No learned separator/model/checkpoint was downloaded or run. `separator_adapter_v1.py` remains fail-closed until one rights-cleared separator identity/checkpoint is frozen.
 
 **Next task:** select exactly one rights-cleared separator/checkpoint, implement its adapter without changing the frozen cleanup settings, run S0 separator outputs against exact ground truth, then compare raw separator vs cleaned separator SI-SDR/leakage/reconstruction and downstream transcription only if that first separator test justifies it.
+
+
+## BS-Roformer-SW 6-stem candidate frozen but rights-blocked — 2026-10-02
+
+Added:
+- `astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py`
+- `docs/astra/BS_ROFORMER_SW_6STEM_CANDIDATE_REVIEW_V1.md`
+
+Technical contract is now frozen for the exact 6-stem candidate: bass, drums, other, vocals, guitar, piano; 44.1 kHz stereo; STFT 2048 / hop 512; fixed 176400-sample chunks. Exact original checkpoint and ONNX export revisions/SHA-256 values are recorded.
+
+Rights conclusion: the original pretrained checkpoint is published with license **unknown**. Later ONNX rehosts mark their export/code lineage MIT, but explicitly acknowledge that the original pretrained-weight provenance/license is unresolved. Therefore no checkpoint download or separator execution is authorized from this candidate.
+
+The adapter remains fail-closed. The frozen S0 mixture fixture and bleed-cleanup settings remain unchanged.
+
+**Next task:** either obtain explicit enough rights/provenance for these weights, or reject this candidate and select one model whose pretrained-weight license is explicit before any separator run.
