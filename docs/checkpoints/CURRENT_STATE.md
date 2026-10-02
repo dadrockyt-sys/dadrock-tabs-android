@@ -7203,3 +7203,24 @@ The evaluator contract explicitly forbids precision/recall/F1 because these fixt
 The Python entry point is intentionally fail-closed and contains no model-execution implementation. No audio/model was opened and no inference occurred.
 
 Execution remains blocked on: frozen per-asset Pixabay provenance for all 12, immutable T1 environment/model/config hashes, measured runtime/peak-RSS ceilings, and one explicit bounded authorization.
+
+
+## Unified guitar+bass recognition set — 2026-10-02
+
+Merged the preserved guitar, bass and negative-control catalogs into a single recognition-layer design:
+- `docs/astra/UNIFIED_GUITAR_BASS_AUDIO_RECOGNITION_SET_V1.md`
+- `docs/astra/UNIFIED_GUITAR_BASS_AUDIO_RECOGNITION_SET_V1.json`
+
+Current pool:
+- 24 guitar files / 244.110 s
+- 30 bass candidates / 340.805 s
+- 6 other/negative controls / 41.450 s
+- 60 files total / 626.365 s (10 min 26.4 s)
+
+V1 recognition labels are `guitar`, `bass`, and `other`. B03 and B30 remain excluded from scored physical-bass recognition until manually verified.
+
+The recognition layer is deliberately separated from transcription and tablature. Recommended progression is recognition -> instrument-specific transcription -> verified note evaluation -> string/fret mapping -> mixed-song separation pipeline.
+
+Random file-level train/test splitting is forbidden because related files/contributors could leak across the split. Any learned classifier must group by contributor/source family and hold related series together.
+
+This is still a fixture pool, not authorized training/inference. No model execution occurred.
