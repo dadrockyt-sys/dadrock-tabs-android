@@ -5318,3 +5318,22 @@ Execution remains **disabled** because the exact 12-source rights-cleared manife
 **Next task:** metadata/documentation only. Identify and rights-review the 12 candidate performances without opening audio; resolve/freeze the bass-valid T1 configuration; select and rights-review exactly one S1 separator; fill measured runtime/memory/storage ceilings using only permitted non-study smoke material. Then update/freeze the packet and request one bounded authorization for exactly the admitted 12-performance run.
 
 Do not treat this preparation as execution authorization.
+
+
+## Independent bass metadata review — 2026-10-02
+
+**CURRENT RESUME POINTER.** Continued preparation only.
+
+Added:
+- `docs/astra/INDEPENDENT_BASS_FEASIBILITY_METADATA_REVIEW_V1.md`
+
+Progress:
+- official Basic Pitch metadata confirms the model note representation begins at MIDI 21 / A0, so standard bass E1 is inside the representation;
+- V1 T1 settings are now prospectively defined in the review: Basic Pitch 0.4.0, onset/frame 0.50/0.30, 127.7 ms minimum note length, returned MIDI 28-67 (E1-G4), using the bundled ICASSP-2022 TFLite model with the historical repository-asserted model SHA retained for later environment verification;
+- Open-Unmix UMX-HQ is the concrete provisional S1 technical candidate, but remains **not execution-eligible** because the reviewed weight/training-data rights do not establish the required use permission;
+- MedleyDB/MUSDB are not admitted under their non-commercial/academic restrictions; Cambridge-MT is not admitted without direct contributor permission;
+- a 3-group / 12-slot collaborator-acquisition design is frozen, with C03 held as the confirmation group.
+
+No real source identity, permission, file or hash was invented. No model/checkpoint was downloaded or loaded. No audio was opened. No inference, separation, training, decoder evaluation or workflow dispatch occurred. P1/P2/V2B remain closed; P3 sealed; main/Production unchanged.
+
+**Next task:** populate the 12 acquisition slots with real permissioned sources; resolve UMX-HQ weight-use rights or reject it and review one alternate separator; then benchmark T1/S1 only on a permitted non-study synthetic smoke asset and freeze runtime/memory/storage ceilings before requesting empirical authorization.
