@@ -17,7 +17,7 @@ import numpy as np
 import soundfile as sf
 
 from bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter, FP16_SHA256
-from stem_bleed_cleanup_v1 import CleanupConfig, exact_residual, si_sdr, suppress_cross_stem_bleed
+from stem_bleed_cleanup_v1 import CleanupConfig, exact_residual, si_sdr, suppress_cross_stem_bleed\nfrom stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
 
 def load(path: Path):
     x,fs=sf.read(path,always_2d=True,dtype="float32")
@@ -49,7 +49,7 @@ def main():
     args=ap.parse_args()
 
     adapter=BsRoformer6StemOnnxAdapter(Path(args.model))
-    cfg=CleanupConfig()
+    cfg=CleanupConfig()\n    diagnostic_cfg=DiagnosticConfig()
     root=Path(args.s0_root)
     rows=[]
     started=time.perf_counter()
@@ -67,7 +67,7 @@ def main():
         cleaned,_=suppress_cross_stem_bleed(raw,fs,cfg)
 
         length=len(mix)
-        row={"id":d.name,"separatorSeconds":sep_seconds,"stems":{}}
+        row={"id":d.name,"separatorSeconds":sep_seconds,"diagnostics":diagnostics,"stems":{}}
         for target in ("guitar","bass"):
             ref=collapse_truth(truth,target,length)
             ref_energy=float(np.sum(ref.astype(np.float64)**2))
@@ -103,7 +103,7 @@ def main():
         "schemaVersion":1,
         "kind":"bs-roformer-sw-6stem-s0-evaluation",
         "modelSha256":FP16_SHA256,
-        "cleanupConfig":cfg.to_dict(),
+        "cleanupConfig":cfg.to_dict(),\n        "diagnosticConfig":diagnostic_cfg.to_dict(),
         "mixtureCount":len(rows),
         "totalWallSeconds":time.perf_counter()-started,
         "meanCleanupImprovementDb":float(np.mean(present)) if present else None,
