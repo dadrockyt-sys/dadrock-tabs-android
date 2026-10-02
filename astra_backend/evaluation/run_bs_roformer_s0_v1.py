@@ -17,7 +17,8 @@ import numpy as np
 import soundfile as sf
 
 from bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter, FP16_SHA256
-from stem_bleed_cleanup_v1 import CleanupConfig, exact_residual, si_sdr, suppress_cross_stem_bleed\nfrom stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
+from stem_bleed_cleanup_v1 import CleanupConfig, exact_residual, si_sdr, suppress_cross_stem_bleed
+from stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
 
 def load(path: Path):
     x,fs=sf.read(path,always_2d=True,dtype="float32")
