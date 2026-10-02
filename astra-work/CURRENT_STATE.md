@@ -5299,3 +5299,22 @@ Qualify historical causal wording: the V14 package result does not isolate clip 
 **Next task for GPT-5.6:** prepare one concrete, metadata/documentation-only independent bass feasibility execution packet as specified in the brief. Establish sources/rights, annotation and grouped split plan, candidate identities, metrics, budget and prospective decision rules before requesting one bounded execution authorization. Reuse existing infrastructure; do not restart serial synthetic experiments. This review accessed no audio/weights and executed no models/tests/workflows.
 
 P1/P2/V2B remain closed; P3 sealed; no V15/V16, rendering/training/inference or main/Production changes authorized by this review. Earlier conflicting resume sections are historical.
+
+
+## Independent bass feasibility execution packet prepared — 2026-10-02
+
+**CURRENT RESUME POINTER.** The documentation-only packet requested by the post-V14 review is now prepared:
+
+- `docs/astra/INDEPENDENT_BASS_FEASIBILITY_EXECUTION_PACKET_V1.md`
+- `docs/astra/INDEPENDENT_BASS_FEASIBILITY_EXECUTION_PACKET_V1.json`
+- fail-closed entry point: `astra_backend/evaluation/independent_bass_feasibility_v1.py`
+
+No audio, corpus, checkpoint or model was opened or downloaded. No separation, transcription, rendering, inference, training, decoder execution or workflow dispatch occurred. P1/P2/V2B remain closed; P3 remains sealed; V15/V16 remain unopened; main/Production unchanged.
+
+The packet freezes the 12-performance / 8-development + 4-confirmation grouped design, annotation rubric, three-arm measurement structure, exact event matching rules, prospective engineering gates and scientific operation-count budget. It explicitly preserves the historical Basic Pitch bass-range mismatch instead of reusing that runner unchanged.
+
+Execution remains **disabled** because the exact 12-source rights-cleared manifest, bass-valid Basic Pitch configuration, one eligible separator, runtime/peak-memory evidence, temporary-storage ceiling and independent annotations are still missing. Current paid-spend ceiling is CAD $0.
+
+**Next task:** metadata/documentation only. Identify and rights-review the 12 candidate performances without opening audio; resolve/freeze the bass-valid T1 configuration; select and rights-review exactly one S1 separator; fill measured runtime/memory/storage ceilings using only permitted non-study smoke material. Then update/freeze the packet and request one bounded authorization for exactly the admitted 12-performance run.
+
+Do not treat this preparation as execution authorization.

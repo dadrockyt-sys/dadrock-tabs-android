@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-bass-feasibility-execution-packet",
+  "status": "prepared_execution_disabled",
+  "date": "2026-10-02",
+  "branch": "astra-work",
+  "empiricalExecutionAuthorized": false,
+  "study": {
+    "instrument": "bass",
+    "performanceCount": 12,
+    "minSecondsPerPerformance": 15,
+    "maxSecondsPerPerformance": 30,
+    "maxUniqueAudioSeconds": 360,
+    "minPerformerSessionGroups": 3,
+    "split": {
+      "development": 8,
+      "confirmation": 4,
+      "groupedBy": "performer_session",
+      "confirmationRequiresUnseenGroup": true
+    }
+  },
+  "candidates": {
+    "transcriberT1": {
+      "name": "Basic Pitch",
+      "integrationPath": "astra_backend/evaluation/run_basic_pitch_development.py",
+      "modelSha256Historical": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+      "historicalOnsetThreshold": 0.5,
+      "historicalFrameThreshold": 0.3,
+      "historicalMinimumNoteLengthMs": 127.7,
+      "historicalMinimumFrequencyHz": 82.4068892282175,
+      "status": "blocked_until_bass_valid_configuration_frozen",
+      "blockers": [
+        "verify model-supported low-frequency range",
+        "freeze bass minimum/maximum frequency",
+        "freeze package/model/config identity",
+        "no post-result threshold sweep"
+      ]
+    },
+    "transcriberT2": null,
+    "separatorS1": {
+      "status": "unselected_blocking",
+      "existingReview": "docs/astra/INDEPENDENT_SEPARATOR_REVIEW_V1.md",
+      "requiredFields": [
+        "repository_revision",
+        "checkpoint_identity_sha256",
+        "code_and_checkpoint_rights",
+        "target_stem_definition",
+        "fixed_inference_settings",
+        "runtime_seconds_per_audio_second",
+        "peak_memory",
+        "input_output_audio_contract"
+      ]
+    }
+  },
+  "annotation": {
+    "source": "original_isolated_bass",
+    "blindToPredictionsUntilFrozen": true,
+    "targetAbsentMinimumSeconds": 0.5,
+    "requiredEventFields": [
+      "event_id",
+      "midi",
+      "onset_seconds",
+      "offset_seconds",
+      "attack_group_id",
+      "uncertain"
+    ],
+    "exactStringFretOnlyWhenIndependentlyObserved": true
+  },
+  "metrics": {
+    "pitchOnset": {
+      "pitch": "exact_midi",
+      "onsetToleranceMs": 50,
+      "oneToOne": true
+    },
+    "pitchOnsetOffset": {
+      "offsetTolerance": "max(50ms,20pct_reference_duration)"
+    },
+    "repeatedNoteSubsetMaxPreviousSamePitchOnsetMs": 500,
+    "targetAbsentFpPerSecond": true,
+    "lowRegisterDiagnostic": {
+      "historicalBasicPitchMinimumHz": 82.4068892282175
+    },
+    "pairedArmBDeltas": true,
+    "decoder": [
+      "pitch_preservation",
+      "resolved_coverage",
+      "no_feasible_assignment_rate",
+      "candidate_count",
+      "invalid_shape_rate",
+      "conditional_exact_string_fret_accuracy",
+      "ambiguity_rate"
+    ],
+    "correctionEffort": [
+      "minutes_per_audio_minute",
+      "pitch_edits",
+      "onset_edits",
+      "offset_edits",
+      "insertions",
+      "deletions",
+      "fingering_edits"
+    ]
+  },
+  "gates": {
+    "armA": {
+      "confirmationMacroPitchOnsetF1Min": 0.85,
+      "confirmationMacroPitchOnsetOffsetF1Min": 0.75,
+      "targetAbsentFpPerSecondMax": 0.2,
+      "noZeroRecallRegisterWhenEligibleEventsAtLeast": 3
+    },
+    "armBRelativeToA": {
+      "macroPitchOnsetF1DropMax": 0.1,
+      "macroPrecisionDropMax": 0.1,
+      "targetAbsentFpPerSecondIncreaseMax": 0.1,
+      "systematicOctaveErrorRateMax": 0.2,
+      "systematicOctaveErrorMinimumEligibleEvents": 5
+    },
+    "armC": {
+      "pitchPreservationForResolved": 1,
+      "noFeasibleOrInvalidRateMax": 0.05,
+      "resolvedCoverageMin": 0.95,
+      "scope": "eligible_monophonic_attack_groups"
+    }
+  },
+  "budget": {
+    "armATranscriptionsMax": 12,
+    "separatorRunsMax": 12,
+    "armBTranscriptionsMax": 12,
+    "armCDecoderEvaluationsMax": 12,
+    "trainingRuns": 0,
+    "fineTuningRuns": 0,
+    "thresholdSweeps": 0,
+    "seedSweeps": 0,
+    "automaticScientificRetries": 0,
+    "paidSpendCadMax": 0,
+    "gitAudioBytesMax": 0,
+    "runtimeWallSecondsMax": null,
+    "peakMemoryBytesMax": null,
+    "temporaryStorageBytesMax": null,
+    "unresolvedBudgetFieldsAreExecutionBlockers": true
+  },
+  "prohibitedHistoricalSources": [
+    "P1",
+    "P2",
+    "V2B",
+    "P3"
+  ],
+  "admission": {
+    "sourceManifestRequired": true,
+    "sourceCountExact": 12,
+    "rightsCompleteRequired": true,
+    "sourceHashesRequired": true,
+    "transcriberFrozenRequired": true,
+    "separatorFrozenRequired": true,
+    "runtimeMemoryStorageCeilingsRequired": true,
+    "explicitBoundedUserAuthorizationRequired": true
+  },
+  "executionEntryPoint": "astra_backend/evaluation/independent_bass_feasibility_v1.py",
+  "executionEntryPointMode": "fail_closed_disabled",
+  "currentBlockers": [
+    "source_manifest_missing",
+    "bass_valid_t1_config_missing",
+    "separator_s1_unselected",
+    "runtime_memory_evidence_missing",
+    "temporary_storage_ceiling_missing",
+    "independent_annotations_missing",
+    "empirical_authorization_missing"
+  ]
+}
