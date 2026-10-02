@@ -908,3 +908,9 @@ credentials.json
 *.keystore
 *.pem
 *.key
+
+
+# Local/private audio fixture and model assets
+/s0_sources/
+/s0_generated/
+/models/bs-roformer/
