@@ -1,3 +1,5 @@
+> Current review (2026-10-02): see `astra-work/POST_V14_GPT56_HANDOFF_2026-10-02.md` and the final resume pointer below. Review complete; prepare an independent bass feasibility packet only. No empirical execution authorized.
+
 # Astra — current handoff
 
 Updated: 2026-09-29 UTC
@@ -7067,3 +7069,17 @@ The decision brief must:
 No new empirical project is currently authorized.
 
 **Resume instruction:** V14 is frozen as a failed result. At generic “continue,” produce the documentation-only post-V14 decision brief and update both handoffs. Do not run any model, render, inference, V2B, or real-data step without a new explicit authorization.
+
+
+## Post-V14 product-direction review — 2026-10-02
+
+**CURRENT RESUME POINTER.** The requested documentation-only decision brief is complete:
+- `astra-work/POST_V14_GPT56_HANDOFF_2026-10-02.md`
+
+Recommendation: **independent real-development evidence**, beginning with a bounded bass-first comparison of original isolated tracks versus separated versions of the same performances, plus a separate verified-note-to-tab evaluation. This is a recommendation for review, not empirical authorization. The brief compares all three required paths and includes V14's 384 truncations, event-level errors, six-second negative denominator, local-model limitations and historical Basic Pitch bass-range mismatch.
+
+Qualify historical causal wording: the V14 package result does not isolate clip duration; deterministic truncation is not automatically incorrect annotation. All original results remain frozen, including V14 FAIL.
+
+**Next task for GPT-5.6:** prepare one concrete, metadata/documentation-only independent bass feasibility execution packet as specified in the brief. Establish sources/rights, annotation and grouped split plan, candidate identities, metrics, budget and prospective decision rules before requesting one bounded execution authorization. Reuse existing infrastructure; do not restart serial synthetic experiments. This review accessed no audio/weights and executed no models/tests/workflows.
+
+P1/P2/V2B remain closed; P3 sealed; no V15/V16, rendering/training/inference or main/Production changes authorized by this review. Earlier conflicting resume sections are historical.
