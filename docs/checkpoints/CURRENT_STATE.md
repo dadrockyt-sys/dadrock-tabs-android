@@ -7339,3 +7339,14 @@ The workflow runs only when the trigger file changes on `astra-work`, avoiding n
 No private audio is uploaded as an Actions artifact. Codespaces can remain stopped for routine S0 runs once the Actions repository secret exists.
 
 Important: the existing Codespaces secret does not automatically populate GitHub Actions. Add the same fine-grained read-only token as repository Actions secret `S0_FIXTURE_TOKEN` before triggering the workflow.
+
+
+## Successful GitHub-only BS-Roformer S0 run — 2026-10-02
+
+GitHub Actions run `37078702459` completed successfully using the private fixture repo and exact FP16 ONNX model hash. Artifact `astra-s0-bs-roformer-result` (id `11257653088`, digest `sha256:ff36972b6765f1c5e80b404558ef2417070536d6384b2638a36168bd82f20874`) contains the evaluation JSON.
+
+Result: 12 mixtures, 345.074 s wall time. The frozen cleanup stage **did not improve real BS-Roformer outputs overall**: mean target-present SI-SDR change `-0.632 dB`, worst `-5.161 dB`, best `+0.153 dB`. Therefore freeze the current cleanup as a failed transfer experiment rather than tuning it blindly on the same 12 fixtures.
+
+The separator itself was strong on several fixtures (for example S0M01 guitar 20.052 dB, bass 23.584 dB raw; S0M05 guitar 34.022 dB raw). Absent-target leakage was near-zero in several cases, while S0M10 produced a materially harder false guitar output. Next direction: diagnostic/gated cleanup that only activates when contamination evidence is strong; preserve already-clean raw stems by default.
+
+Detailed records: `docs/astra/BS_ROFORMER_S0_GITHUB_RESULT_V1.md` and `docs/astra/BS_ROFORMER_S0_GITHUB_RESULT_V1.json`.
