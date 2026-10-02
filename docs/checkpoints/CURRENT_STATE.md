@@ -7121,3 +7121,25 @@ Progress:
 No real source identity, permission, file or hash was invented. No model/checkpoint was downloaded or loaded. No audio was opened. No inference, separation, training, decoder evaluation or workflow dispatch occurred. P1/P2/V2B remain closed; P3 sealed; main/Production unchanged.
 
 **Next task:** populate the 12 acquisition slots with real permissioned sources; resolve UMX-HQ weight-use rights or reject it and review one alternate separator; then benchmark T1/S1 only on a permitted non-study synthetic smoke asset and freeze runtime/memory/storage ceilings before requesting empirical authorization.
+
+
+## Guitar sample preservation/catalog checkpoint — 2026-10-02
+
+The user re-uploaded the complete previously collected guitar sample set: **15 MP3 files**, reported as individually downloaded from Pixabay in the earlier research workflow.
+
+Preservation:
+- all 15 original MP3 files were copied into the persistent ChatGPT Library folder:
+  `/Astra Audio/Guitar Samples 2026-10-02/`
+- catalog copies were stored there as `GUITAR_SAMPLE_CATALOG_V1.md` and `GUITAR_SAMPLE_CATALOG_V1.json`
+- original audio remains outside Git.
+
+Repository catalog:
+- `docs/astra/GUITAR_SAMPLE_CATALOG_V1.md`
+- each sample has a stable catalog ID `GTR-PXB-01` through `GTR-PXB-15`, exact filename, SHA-256, duration, sample rate, channels, and descriptive filename-derived tags.
+
+Rights/provenance boundary:
+- user reports Pixabay as the source;
+- exact asset URLs/license snapshots are not yet preserved;
+- do not treat filenames as verified lead/rhythm labels or as independently verified licensing evidence.
+
+This guitar set is preserved for the later guitar feasibility stage and does not alter the current bass-first execution boundary.
