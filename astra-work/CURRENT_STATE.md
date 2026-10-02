@@ -5440,3 +5440,16 @@ The recognition layer is deliberately separated from transcription and tablature
 Random file-level train/test splitting is forbidden because related files/contributors could leak across the split. Any learned classifier must group by contributor/source family and hold related series together.
 
 This is still a fixture pool, not authorized training/inference. No model execution occurred.
+
+
+## Clean stem separation / bleed suppression architecture — 2026-10-02
+
+Added `docs/astra/CLEAN_STEM_SEPARATION_BLEED_SUPPRESSION_ARCHITECTURE_V1.md`.
+
+Design direction: replace one-pass separation with a staged pipeline: six-stem RoFormer -> mixture residual -> cross-stem competition -> target-preserving bleed suppressor -> recognition feedback gate -> optional note-aware protection -> optional multi-separator agreement -> mixture-consistency reconstruction -> downstream transcription evaluation.
+
+Primary optimization target is not zero audible bleed. It is preservation of true guitar/bass notes while reducing false transcription events caused by competing stems. A cleaned stem is only better if downstream transcription improves without materially deleting target content.
+
+The design proposes a future S0 synthetic-mixture experiment using the already cataloged rights-cleared guitar/bass/control fixtures, because exact component ground truth would be known. This is not equivalent to real commercial-song separation and remains a separate empirical boundary.
+
+No separator/model/checkpoint was downloaded or run. No audio was processed. No synthetic mixture was created. Next safe preparation step is a disabled synthetic-mixture matrix with frozen component identities, gains and expected stems.
