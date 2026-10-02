@@ -5525,3 +5525,19 @@ The S0 runner verifies the exact FP16 model SHA-256, separates each frozen S0 mi
 Current execution blocker is environmental, not architectural: this ChatGPT runtime cannot currently install `onnxruntime` or download the 353 MB model because outbound package/model downloads are unavailable. No separator inference result is claimed. The code path is ready for an environment with the exact model file and ONNX Runtime.
 
 Exact FP16 model SHA-256 remains `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`.
+
+
+## Private S0 fixture sync packaging — 2026-10-02
+
+Prepared a private-fixture workflow so Codespaces does not require manually re-uploading the 14 S0 source files every session.
+
+Added:
+- `scripts/sync_s0_fixtures.sh`
+- `scripts/build_s0_fixtures.sh`
+- `docs/astra/PRIVATE_S0_FIXTURE_REPO_SETUP_V1.md`
+
+Updated `.gitignore` to exclude `/s0_sources/`, `/s0_generated/`, and `/models/bs-roformer/` from the public repo.
+
+A local bundle `S0_FIXTURE_SOURCES_V1.zip` was created from the 14 exact user-uploaded fixture MP3s. It includes `manifest.json` with SHA-256 hashes and a private-use README. The connected GitHub writer cannot create a new private repository or upload binary MP3s, so the private repo itself still needs to be created/uploaded by the user once.
+
+After that one-time setup, Codespaces can sync fixtures with a single command using `S0_FIXTURE_REPO=owner/private-repo ./scripts/sync_s0_fixtures.sh`, then rebuild S0 with `./scripts/build_s0_fixtures.sh`.
