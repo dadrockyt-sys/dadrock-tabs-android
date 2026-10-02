@@ -5566,3 +5566,14 @@ Result: 12 mixtures, 345.074 s wall time. The frozen cleanup stage **did not imp
 The separator itself was strong on several fixtures (for example S0M01 guitar 20.052 dB, bass 23.584 dB raw; S0M05 guitar 34.022 dB raw). Absent-target leakage was near-zero in several cases, while S0M10 produced a materially harder false guitar output. Next direction: diagnostic/gated cleanup that only activates when contamination evidence is strong; preserve already-clean raw stems by default.
 
 Detailed records: `docs/astra/BS_ROFORMER_S0_GITHUB_RESULT_V1.md` and `docs/astra/BS_ROFORMER_S0_GITHUB_RESULT_V1.json`.
+
+
+## S0 separator bleed diagnostics V1 — 2026-10-02
+
+Added `astra_backend/evaluation/stem_bleed_diagnostics_v1.py` and extended `run_bs_roformer_s0_v1.py` to record separator-output diagnostics during the same inference pass, without additional separator calls.
+
+Diagnostics are ground-truth independent and do not alter audio. Per stem they record stem-to-mixture energy, interference pressure (shared time-frequency energy), competitor-dominance fraction, target-dominance fraction, ambiguous fraction, strongest overlap competitor, and per-competitor overlap/energy ratios.
+
+Purpose: design a **gated cleanup** that preserves already-clean BS-Roformer stems and activates only when separator-output evidence indicates likely contamination. No V2 cleanup threshold has been chosen yet; this pass is diagnostic-only to avoid blind retuning on the same 12 S0 mixtures.
+
+GitHub Actions diagnostic run `37079756274` is in progress from trigger commit `57d823069f214825aeb977f6442905f1b777c90f`.
