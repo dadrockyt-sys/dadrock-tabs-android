@@ -7158,3 +7158,19 @@ Re-upload batch cataloged in `docs/astra/PIXABAY_GUITAR_AUDIO_CATALOG_V1.md`.
 - User reports these were individually downloaded from Pixabay.com in an earlier ChatGPT-guided session; per-asset Pixabay source/license records still need re-verification before empirical benchmark admission.
 
 These files are preserved as a future guitar-feasibility candidate pool plus negative controls. They are separate from the bass-first feasibility study and do not reopen V15/V16/P1/P2/V2B/P3.
+
+
+## Pixabay bass candidate pool complete — 2026-10-02
+
+Cataloged in `docs/astra/PIXABAY_BASS_AUDIO_CATALOG_V1.md`.
+
+- 30 uploaded bass candidates.
+- Total duration: 340.805 s (5 min 40.8 s).
+- Exact SHA-256, measured duration, sample rate and channel count recorded for every file.
+- Audio binaries were not committed to Git.
+- Coverage spans clean/simple phrases, slap/funk, picked bass, rock/death-metal, slow/fast riffs, isolated and sustained notes, low-register diagnostics, fretless/open-string material and distorted bass.
+- B30 (`cekketto-riff-dom-cm-603128.mp3`) is cataloged as a bass-heavy electronic-riff candidate and should stay separate until source/type verification.
+
+Important: this 30-file pool is not a substitute for the independent 12-performance paired isolated-bass + matching-mix study. Most candidates lack a matching full mix of the same performance, so they cannot answer the Arm-B separation-penalty question by themselves.
+
+**Next task:** freeze per-asset Pixabay page/license provenance, classify physical-bass vs synthesized/processed/uncertain, select a non-overlapping diagnostic subset for T1 smoke/range testing, and keep the paired 12-source study separate. No empirical model run is authorized by this catalog.
