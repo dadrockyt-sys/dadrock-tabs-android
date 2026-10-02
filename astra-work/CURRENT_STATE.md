@@ -5508,3 +5508,20 @@ Rights conclusion: the original pretrained checkpoint is published with license 
 The adapter remains fail-closed. The frozen S0 mixture fixture and bleed-cleanup settings remain unchanged.
 
 **Next task:** either obtain explicit enough rights/provenance for these weights, or reject this candidate and select one model whose pretrained-weight license is explicit before any separator run.
+
+
+## User-authorized BS-Roformer ONNX S0 integration — 2026-10-02
+
+The user explicitly directed the project to use the `elicwhite/bs-roformer-sw-6stem-onnx` package for educational/development evaluation. This direction is recorded as authorization to proceed technically; it is **not** recorded as a legal conclusion that fair use resolves the pretrained-weight license/provenance issue.
+
+Updated/built:
+- `astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py`
+- `astra_backend/evaluation/run_bs_roformer_s0_v1.py`
+
+Important correction made during integration: the ONNX graph does **not** accept waveform audio directly. It consumes `spec_real` and `spec_imag` tensors with shape [1,2,1025,345] generated using Hann-window STFT (n_fft 2048, hop 512, center=true) for 176400-sample / 4-second chunks, and returns real/imag six-stem spectrograms [1,6,2,1025,345]. The adapter now implements that exact contract, iSTFT reconstruction, stem order bass/drums/other/vocals/guitar/piano, and 25% chunk overlap-add.
+
+The S0 runner verifies the exact FP16 model SHA-256, separates each frozen S0 mixture, scores raw guitar/bass outputs against exact synthetic ground truth, applies the already-frozen bleed cleanup without retuning, scores cleaned outputs, and records runtime/reconstruction metrics.
+
+Current execution blocker is environmental, not architectural: this ChatGPT runtime cannot currently install `onnxruntime` or download the 353 MB model because outbound package/model downloads are unavailable. No separator inference result is claimed. The code path is ready for an environment with the exact model file and ONNX Runtime.
+
+Exact FP16 model SHA-256 remains `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`.
