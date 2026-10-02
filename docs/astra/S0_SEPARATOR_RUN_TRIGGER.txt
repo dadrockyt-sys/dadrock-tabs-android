@@ -3,4 +3,4 @@ Astra S0 separator evaluation trigger.
 This file is intentionally used as a narrow GitHub Actions trigger on the astra-work branch.
 Change the run marker below and commit to astra-work to request one S0 separator evaluation.
 
-run_marker=2026-10-02T19:45:00-04:00-retry-python-cache-fixed
+run_marker=2026-10-02T20:05:00-04:00-diagnostic-pass-v1
