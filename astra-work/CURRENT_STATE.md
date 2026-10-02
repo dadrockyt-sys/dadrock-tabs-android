@@ -5359,3 +5359,18 @@ Rights/provenance boundary:
 - do not treat filenames as verified lead/rhythm labels or as independently verified licensing evidence.
 
 This guitar set is preserved for the later guitar feasibility stage and does not alter the current bass-first execution boundary.
+
+
+## Pixabay guitar/control audio cataloged — 2026-10-02
+
+Re-upload batch cataloged in `docs/astra/PIXABAY_GUITAR_AUDIO_CATALOG_V1.md`.
+
+- 30 MP3 files received.
+- 24 filename-identified guitar samples.
+- 6 non-guitar/control samples (drums, speech, typing, crowd/applause).
+- Exact SHA-256, duration, sample rate and channel count recorded for every uploaded file.
+- Audio binaries were not committed to Git.
+- Musical descriptors are filename-derived only, not reference annotations.
+- User reports these were individually downloaded from Pixabay.com in an earlier ChatGPT-guided session; per-asset Pixabay source/license records still need re-verification before empirical benchmark admission.
+
+These files are preserved as a future guitar-feasibility candidate pool plus negative controls. They are separate from the bass-first feasibility study and do not reopen V15/V16/P1/P2/V2B/P3.
