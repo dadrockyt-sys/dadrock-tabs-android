@@ -7259,3 +7259,21 @@ Generated WAVs/stems remain outside Git; exact mix hashes and deterministic reci
 This fixture provides exact component ground truth for future separator/bleed-cleanup evaluation. It does not establish performance on mastered commercial recordings.
 
 No source separator, recognizer, Basic Pitch inference, training, or tab decoder was run. The next empirical step is to select one rights-cleared separator/checkpoint and define a frozen evaluation contract comparing separated stems against these known ground-truth components before any cleanup optimization.
+
+
+## S0 bleed-cleanup engine built and unit-tested — 2026-10-02
+
+Built:
+- `astra_backend/evaluation/stem_bleed_cleanup_v1.py`
+- `astra_backend/evaluation/evaluate_s0_bleed_cleanup_v1.py`
+- `astra_backend/evaluation/separator_adapter_v1.py`
+- `docs/astra/S0_BLEED_CLEANUP_RESULT_V1.json`
+- `docs/astra/S0_BLEED_CLEANUP_DEVELOPMENT_V1.md`
+
+The cleanup engine uses soft cross-stem STFT competition with a conservative floor so target energy is never hard-zeroed. Current frozen development settings: FFT 2048, hop 512, magnitude power 2.0, competition weight 0.50, minimum retained gain 0.60. An exact residual is retained so cleaned stems + residual reconstruct the input mixture.
+
+Synthetic unit test: all 12 frozen S0 mixtures were contaminated deterministically with -18 dB of each competing ground-truth stem. The cleanup improved mean SI-SDR on all 12 mixtures. Mean improvement +2.665 dB; worst mixture +1.175 dB; maximum reconstruction absolute error 5.96e-08. An earlier more aggressive cleanup setting that harmed some mixtures was rejected.
+
+This is a cleanup-math validation only, not separator evidence. No learned separator/model/checkpoint was downloaded or run. `separator_adapter_v1.py` remains fail-closed until one rights-cleared separator identity/checkpoint is frozen.
+
+**Next task:** select exactly one rights-cleared separator/checkpoint, implement its adapter without changing the frozen cleanup settings, run S0 separator outputs against exact ground truth, then compare raw separator vs cleaned separator SI-SDR/leakage/reconstruction and downstream transcription only if that first separator test justifies it.
