@@ -5390,3 +5390,16 @@ Cataloged in `docs/astra/PIXABAY_BASS_AUDIO_CATALOG_V1.md`.
 Important: this 30-file pool is not a substitute for the independent 12-performance paired isolated-bass + matching-mix study. Most candidates lack a matching full mix of the same performance, so they cannot answer the Arm-B separation-penalty question by themselves.
 
 **Next task:** freeze per-asset Pixabay page/license provenance, classify physical-bass vs synthesized/processed/uncertain, select a non-overlapping diagnostic subset for T1 smoke/range testing, and keep the paired 12-source study separate. No empirical model run is authorized by this catalog.
+
+
+## Pixabay bass provenance/classification review — 2026-10-02
+
+Added `docs/astra/PIXABAY_BASS_PROVENANCE_CLASSIFICATION_V1.md`.
+
+Current Pixabay terms were reviewed as the governing provenance baseline: downloaded non-CC0 content is licensed for commercial or non-commercial use/adaptation subject to prohibited uses, including no standalone redistribution; asset/source records should be retained. This project continues to keep audio binaries out of Git.
+
+The 30 bass candidates are now conservatively classified into strong physical-bass candidates, probable physical-bass candidates, and uncertain assets. B03 (Simple Bass) and B30 (riff dom Cm) remain outside physical-bass evaluation until manually verified.
+
+A proposed 12-file **diagnostic smoke subset** is frozen for later consideration: B05, B19, B20, B12, B15, B21, B23, B22, B01, B06, B08 and B26. This subset is intentionally diverse across low-register notes, raw mono, fretless/open string, picked/slap articulation, long sustain, distortion, regular loop, fast metal, funk/slap and slow phrase material.
+
+This diagnostic subset does **not** replace the independent 12-performance paired isolated-bass + matching-mix study and no model execution is authorized by this review.
