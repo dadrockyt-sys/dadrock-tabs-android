@@ -1,0 +1,6 @@
+Astra S0 separator evaluation trigger.
+
+This file is intentionally used as a narrow GitHub Actions trigger on the astra-work branch.
+Change the run marker below and commit to astra-work to request one S0 separator evaluation.
+
+run_marker=not_requested
