@@ -1,0 +1,21 @@
+{
+  "runId": 37085818797,
+  "artifactId": 11261055511,
+  "artifactDigest": "sha256:d5ca77065ff570ca8400c7b1458d4f1633a315c0f425cbd56122b90ba53e8ed4",
+  "classifications": {
+    "S0M01": "complementary_pair",
+    "S0M02": "complementary_pair",
+    "S0M03": "missing_or_silent_member",
+    "S0M04": "complementary_pair",
+    "S0M05": "complementary_pair",
+    "S0M06": "complementary_pair",
+    "S0M07": "missing_or_silent_member",
+    "S0M08": "missing_or_silent_member",
+    "S0M09": "missing_or_silent_member",
+    "S0M10": "duplicate_bass_candidate",
+    "S0M11": "missing_or_silent_member",
+    "S0M12": "ambiguous_pair"
+  },
+  "decision": "bounded_duplicate_action_experiment_allowed_on_s0_only",
+  "keyFixture": "S0M10"
+}
