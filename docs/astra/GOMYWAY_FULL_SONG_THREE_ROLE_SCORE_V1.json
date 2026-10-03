@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "gomyway-full-song-three-role-professional-score-v1-record",
+  "date": "2026-10-03",
+  "runId": 37095137423,
+  "headCommit": "3b555b10be0b25df207a9178b145d5b9f05efe3b",
+  "artifact": {
+    "id": 11264400463,
+    "digest": "sha256:63c86d9ca40af348dd98796c1a08e7946cc473aed7a75793e16abd7cb64a2f75"
+  },
+  "targets": {
+    "rhythm": 971,
+    "bass": 547,
+    "lead": 447,
+    "total": 1965
+  },
+  "scores": {
+    "rhythm": {
+      "exactF1": 0.036072144288577156,
+      "pitchClassF1": 0.0781563126252505,
+      "onsetOnlyF1": 0.2535070140280561,
+      "wholeMixExactF1": 0.02072538860103627,
+      "separatorDelta": 0.015346755687540885
+    },
+    "lead": {
+      "exactF1": 0.059782608695652176,
+      "pitchClassF1": 0.08831521739130435,
+      "onsetOnlyF1": 0.22282608695652173,
+      "wholeMixExactF1": 0.00989282769991756,
+      "separatorDelta": 0.049889780995734614
+    },
+    "bass": {
+      "exactF1": 0.0821256038647343,
+      "pitchClassF1": 0.09017713365539452,
+      "onsetOnlyF1": 0.3172302737520129,
+      "wholeMixExactF1": 0.09291698400609291,
+      "separatorDelta": -0.010791380141358609
+    }
+  },
+  "macroExactF1": 0.05932678561632121,
+  "scoringOnly": true,
+  "modelExecution": false,
+  "sealedHoldout": false
+}
