@@ -8460,3 +8460,42 @@ Relaunched authoritative run:
 Resume from run `37148021444`.
 If green, record the pitch-error buckets and decide the next recognizer experiment from the dominant measured error class.
 If it fails again, fix only runtime/import plumbing and preserve all frozen scientific inputs unchanged.
+
+
+## V4-origin pitch-error diagnostic V1 — second runtime-only failure and clean relaunch 2026-10-03
+
+Second failed run:
+- run `37148021444`
+- frozen note evidence verified;
+- V4-origin map verified;
+- failure occurred before diagnostic logic executed;
+- error: `ModuleNotFoundError: No module named 'scipy'`;
+- root cause was the diagnostic importing helpers from the full benchmark module, which recursively imported inference/cleanup dependencies not needed for a JSON-only analysis.
+
+Clean runtime fix:
+- removed the dependency on `evaluate_gomyway_full_song_professional_v2.py`;
+- copied only the small deterministic JSON/scoring helpers needed by this diagnostic:
+  - SHA verification;
+  - scorer reference validation;
+  - excluded-measure handling;
+  - timing-map target conversion;
+  - measure lookup/filtering;
+- the diagnostic is now self-contained and requires NumPy only;
+- frozen predictions, references, timing map, onset tolerance, and matching semantics are unchanged.
+
+Commits:
+- self-contained diagnostic: `6344e6379f0882a4a4c9121f80069236105c9b7d`
+- NumPy-only workflow: `6d85e55a78c1378eaa97f6c798db54eb69dfaa99`
+
+Reruns:
+- intermediate run `37148106233` was triggered by the script commit;
+- latest authoritative run is `37148114794`;
+- head `6d85e55a78c1378eaa97f6c798db54eb69dfaa99`;
+- status at this update: QUEUED;
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37148114794
+
+### Exact next resume instruction
+
+Resume from latest run `37148114794`, not the intermediate `37148106233`.
+If green, record the pitch-error diagnostic artifact and dominant error buckets.
+If it fails, inspect the self-contained script directly; do not reinstall inference dependencies.
