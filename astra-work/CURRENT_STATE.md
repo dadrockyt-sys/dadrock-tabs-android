@@ -9645,3 +9645,79 @@ If green:
 5. if recovery improves TP but precision collapses, reject this broad activation decoder and do not tune thresholds against Go My Way;
 6. if it materially improves lead or combined guitar without catastrophic precision loss, preserve it as the new strongest guitar candidate and move next to string/fret mapping;
 7. preserve spectral bass V1, V4-origin timing, frozen note evidence, and main unchanged.
+
+
+## Basic Pitch activation recovery V1 — authoritative green workflow, scientific rejection
+
+Run `37160922200` completed successfully.
+
+Frozen candidate:
+- artifact id `11286989859`
+- artifact digest `sha256:a0dff7a58cff70fd9e2ba2d8b2580152e998f10f202b117f6c737a4a0d2cc975`
+- frozen thresholded input: 1065
+- raw activation proposals: 1275
+- recovered additions after deduplication: 1119
+- combined candidate notes: 2184
+
+Score artifact:
+- artifact id `11287725710`
+- artifact digest `sha256:658768a61147d5da2fef4674bd531064477521037eec7d342feac5543f39bd3f`
+- score JSON SHA-256 `8cb47a3c676a21378d9fb72861b7f92814d2ef643c3d876d49fdcfa3c507a960`
+
+Scientific result:
+- rhythm:
+  - TP 320 -> 338 (+18)
+  - F1 31.82% -> 21.62% (-10.21 percentage points)
+- lead:
+  - TP 133 -> 165 (+32)
+  - F1 17.84% -> 12.74% (-5.10 percentage points)
+- combined guitar:
+  - TP 427 -> 473 (+46)
+  - F1 35.04% -> 26.75% (-8.29 percentage points)
+
+Conclusion:
+- raw activation evidence does contain additional true notes;
+- broad recovery using both frozen Basic Pitch thresholds adds far too many false positives;
+- reject activation recovery V1 as a candidate;
+- do not tune the 0.5/0.3 thresholds against Go My Way;
+- future recovery, if attempted, must use stronger reference-blind structural evidence/ranking rather than broad threshold admission.
+
+## Separator / cleaner clarification for current guitar pipeline
+
+The current raw-activation path DOES use the separator:
+1. immutable `public/gomywayfullaitest.m4a`
+2. ffmpeg decode to PCM
+3. frozen BS-Roformer 6-stem model
+4. extract the separated guitar stem
+5. Basic Pitch on that separated guitar stem
+6. freeze raw activations / thresholded note evidence
+7. only then post-freeze professional scoring
+
+The current activation path does NOT invoke the separate bleed-cleanup engine after separation.
+
+Relevant cleanup state:
+- `stem_bleed_cleanup_v1.py` proved its cleanup math on deterministic injected bleed:
+  - mean synthetic SI-SDR improvement +2.6649 dB
+  - all 12 synthetic mixtures improved
+  - this was development-only injected bleed, not real separator evidence.
+- Recognizer-gated cleanup V1 on real development mixtures was safe but too conservative:
+  - 12 mixtures
+  - cleanup applied to 0 stems
+  - mean target SI-SDR change 0.000 dB
+  - worst/best 0.000 dB
+- therefore inserting the CURRENT recognizer-gated cleaner into this guitar path would presently be functionally a pass-through, not a quality improvement.
+
+Preserve this distinction:
+- separator: active and essential in current pipeline;
+- cleaner: built and safety-tested, but not active here and not yet shown to improve real separated stems.
+
+### Exact next resume instruction
+
+1. Preserve the separator-fed raw guitar stem workflow.
+2. Keep broad activation recovery V1 rejected.
+3. Do not add the current conservative cleanup gate merely for completeness; it currently performs no real cleanup.
+4. Before more guitar decoder work, decide whether to:
+   - improve the real-stem cleanup/false-stem handling using reference-blind multi-stem evidence, then re-freeze guitar activations; or
+   - continue directly with a stricter reference-blind activation-ranking decoder on the existing raw guitar stem.
+5. Do not threshold-search against Go My Way.
+6. Preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifacts, and `main` unchanged.
