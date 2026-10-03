@@ -114,7 +114,6 @@ def main():
     ap.add_argument("--s0-root",required=True)
     ap.add_argument("--model",required=True)
     ap.add_argument("--output-json",required=True)
-    ap.add_argument("--hub-url",default="https://tfhub.dev/google/yamnet/1")
     args=ap.parse_args()
 
     bp=basic_pitch_model_identity()
