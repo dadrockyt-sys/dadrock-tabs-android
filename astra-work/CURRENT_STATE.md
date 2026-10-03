@@ -5772,3 +5772,105 @@ Do not:
 ### Immediate resume instruction
 
 **Next GPT-5.6 task:** implement `Duplicate Consolidation Safety Gate V1` and its diagnostic evaluator/workflow on `astra-work`, using the frozen 16-case non-collinear set and the success/stop rules above. Save results back into this file before moving to holdout or real-audio work.
+
+
+## Duplicate Consolidation Safety Gate V1 result — 2026-10-02
+
+Implemented and evaluated the exact follow-up requested above.
+
+### Implementation
+
+Added:
+- `astra_backend/evaluation/duplicate_consolidation_safety_gate_v1.py`
+- `astra_backend/evaluation/evaluate_duplicate_consolidation_safety_gate_v1.py`
+- `.github/workflows/astra-duplicate-consolidation-safety-gate-v1.yml`
+
+The decision layer uses separator-output / pair evidence only:
+- corrected zero-lag and bounded best-lag waveform correlation
+- best lag in samples/ms
+- spectral shared and unique energy fractions
+- low/high-band balance
+- active-bin phase consistency
+- framewise energy correlation
+- time-varying energy-share swing
+- frozen pair-classifier state and existing recognizer evidence
+
+Reference/source audio is not available to the gate decision. It is used only afterward by the evaluator for retrospective SI-SDR scoring.
+
+Important implementation note: the pre-existing `pair_coherence_v1.max_short_lag_corr` initializes its best absolute correlation in a way that can leave a bogus perfect value. Safety Gate V1 therefore computes its own bounded-lag correlation correctly and does not alter the old helper or the frozen pair classifier.
+
+### GitHub Actions evidence
+
+Run: `37089667900` — **success**  
+Workflow: `Astra Duplicate Consolidation Safety Gate V1`  
+Head commit: `8e44afc86a81caedd9ec4dbf94f9a4a77ebf9a83`
+
+Artifact:
+- id: `11262196258`
+- digest: `sha256:18ff6d8fae150b179e6fc666e28aff645e3680fe54ca92b83d077e7904b5f67c`
+
+### Prospective result
+
+Frozen 16-case development suite:
+- pair-classifier accuracy remained **15/16 = 93.75%**
+- `merge_safe`: **0**
+- `preserve_separate`: **16**
+- `uncertain`: **0**
+- automatic merges: **0**
+- minimum automatic-action delta: **0.0 dB**
+- automatic merge reconstruction error: **0.0**
+
+Success criteria:
+- preserve frozen pair-classifier behavior: **PASS**
+- permit all four time-varying split merges: **FAIL**
+- avoid all negative full-merge cases: **PASS**
+- no harmful automatic action worse than -0.5 dB: **PASS**
+- numerical reconstruction when merge is applied: **PASS**
+- overall gate: **FAIL**
+
+The four time-varying split cases were all conservatively preserved even though retrospective merge gains were extremely large:
+- B01: +142.32 dB
+- B08: +142.37 dB
+- G09: +140.36 dB
+- G14: +142.06 dB
+
+Their no-reference diagnostics were internally consistent:
+- zero-lag correlation ~0.79–0.83
+- spectral shared fraction ~0.27–0.33
+- phase consistency ~0.9999
+- energy-share swing ~0.73
+
+The frozen V1 rule required much stronger waveform/spectral overlap, so it did not authorize them.
+
+At the same time, every negative full-merge case was correctly blocked, including:
+- B01 frequency partition: -0.47 dB
+- B01 delayed high-band leak: -0.38 dB
+- B01 filtered + contamination: -1.97 dB
+- G14 frequency partition: -2.89 dB
+- G14 delayed high-band leak: -3.06 dB
+- G14 filtered + contamination: -0.25 dB
+
+### Decision required by the prior stop rule
+
+**STOP automatic duplicate consolidation at this stage.**
+
+Do **not** retune Safety Gate V1 thresholds on these same 16 cases. That would be post-hoc fitting after the prospective result.
+
+Keep:
+- `PairClassifierConfig V1` frozen
+- duplicate-class detection as diagnostic / flagging evidence only
+- automatic consolidation disabled
+- real recordings untouched
+- `main` unchanged
+
+Do **not** move to the synthetic holdout or real-audio consolidation validation, because the prerequisite gate did not pass.
+
+Detailed records:
+- `docs/astra/DUPLICATE_CONSOLIDATION_SAFETY_GATE_V1_RESULT.md`
+- `docs/astra/DUPLICATE_CONSOLIDATION_SAFETY_GATE_V1_RESULT.json`
+
+### Explicit next resume instruction
+
+The duplicate-consolidation branch of research is now closed at **diagnostic-only** status unless a genuinely new consolidation hypothesis and new development protocol are introduced.
+
+**Next GPT-5.6 task:** do not tune this gate further. Return to the broader separator -> recognizer -> transcription objective and identify the highest-value next diagnostic that can improve final guitar/bass tablature accuracy **without destructive stem mutation**. Prefer measurement of downstream transcription failure modes and confidence/flagging over another separator-action heuristic. Preserve all frozen boundaries above.
