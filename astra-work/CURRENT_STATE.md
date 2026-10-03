@@ -7683,3 +7683,58 @@ Preferred direction:
 5. do not use the professional map to select tracker parameters or candidates;
 6. do not alter cleanup, separator, or note recognition;
 7. keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V6 — launched 2026-10-03
+
+Goal:
+- test a genuinely independent beat-tracking family after V1–V5 repeatedly converged on the same slower rhythmic mode.
+
+V6 estimator:
+- Essentia `RhythmExtractor2013`;
+- both `multifeature` and `degara` methods;
+- raw full mix and raw BS-Roformer drum stem as independent inputs.
+
+Reference-blind V6 candidates:
+- `mix_multifeature`
+- `drums_multifeature`
+- `mix_degap` (Essentia method `degara`)
+- `drums_degap` (Essentia method `degara`)
+
+Primary selection:
+- audio-only quality score;
+- tie estimator confidence;
+- tie bar confidence;
+- frozen before professional reference access.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v6.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v6.yml`
+
+Commits:
+- V6 implementation: `ea8fe5db66999c795194cd7b78bd869ee53d37c6`
+- V6 workflow launch: `2195a3b096adb37e7144f6d868ea9eeeba164e29`
+
+Authoritative V6 run:
+- run `37138941466`
+- head `2195a3b096adb37e7144f6d868ea9eeeba164e29`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37138941466
+
+### Exact next resume instruction
+
+Resume from run `37138941466`.
+
+1. If runtime fails because of Essentia packaging/API differences, fix runtime only; do not alter candidate semantics.
+2. If freeze succeeds, record artifact identity, bundle SHA, Essentia version, prospectively selected primary, reported BPM/confidence/bar-confidence/beat count for all four candidates.
+3. If comparison succeeds, record:
+   - beat-count difference;
+   - best beat-index shift;
+   - median/mean/p95 beat error;
+   - early/middle/late signed error;
+   - predicted full-song beat drift;
+   - measure diagnostics.
+4. If an independent estimator collapses beat drift, freeze that beat trajectory and move next to downbeat/meter labeling.
+5. If all independent trackers still drift similarly, investigate whether the professional timing map/audio binding itself needs a separate integrity audit before more estimator development; do not assume either side is correct without checking immutable source binding.
+6. Do not remap guitar/bass until timing is coherent.
+7. Keep `main` unchanged.
