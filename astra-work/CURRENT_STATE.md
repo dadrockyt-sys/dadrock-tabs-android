@@ -8234,3 +8234,66 @@ If green:
 5. do not call V4-origin validated solely from this post-hoc song-specific test;
 6. if promising, preserve it as a research candidate and then validate the origin-selection rule prospectively on independent material;
 7. keep all prior maps and `main` unchanged.
+
+
+## Timing-origin V4 diagnostic — authoritative green result 2026-10-03
+
+Authoritative run:
+- run `37144194576`
+- result: GREEN
+- artifact id: `11281478980`
+- artifact name: `gomyway-timing-origin-v4-diagnostic`
+- artifact digest: `sha256:b6efd9d9e6b3d9766e90aa97a43da26ba3c95e4bcec76b92172f68b51d27926f`
+- V3-vs-V4 attribution JSON SHA-256: `d39a13638b5757fa149131c693ce8220e1eed497bda227d035b00a673b0d14d9`
+
+V4 origin map:
+- forced origin: `0.5166439712047577 s`
+- source support: dual-source (mix + drums)
+- average tempo: `129.13091670756597 BPM`
+- median tempo: `129.19862000985708 BPM`
+- first measure start: `0.5166439712047577 s`
+- last measure end: `209.4904327392578 s`
+- dual-source selected beats: `443 / 450`
+- single-source selected beats: `7 / 450`
+- same professional meter structure: 113 measures, 450 quarter-note beats, 2/4 at measure 104.
+
+Identical-prediction V3 -> V4-origin separator results:
+
+Rhythm:
+- V3: TP 53, P 4.99%, R 5.60%, F1 5.28%
+- V4-origin: TP 320, P 30.05%, R 33.83%, F1 31.82%
+- delta: TP +267, F1 +26.55 percentage points
+
+Lead:
+- V3: TP 34, P 3.27%, R 7.61%, F1 4.57%
+- V4-origin: TP 133, P 12.74%, R 29.75%, F1 17.84%
+- delta: TP +99, F1 +13.27 percentage points
+
+Combined guitar:
+- V3: TP 76, P 7.30%, R 5.46%, F1 6.24%
+- V4-origin: TP 427, P 40.90%, R 30.65%, F1 35.04%
+- delta: TP +351, F1 +28.80 percentage points
+
+Bass:
+- V3: TP 157, P 22.66%, R 28.70%, F1 25.32%
+- V4-origin: TP 365, P 52.82%, R 66.73%, F1 58.97%
+- delta: TP +208, F1 +33.64 percentage points
+
+Scientific interpretation:
+- the one-beat-earlier origin dramatically improves every role with identical predictions;
+- this strongly supports the hypothesis that V3 was one beat late in measure origin;
+- tempo did NOT need retuning;
+- the dominant timing problem was coordinate origin, not beat-period estimation;
+- however V4-origin is explicitly POST-HOC because the hypothesis was motivated by Go My Way scoring diagnostics;
+- do not call V4-origin independently validated or production-ready;
+- preserve all older timing maps and artifacts.
+
+### Exact next resume instruction
+
+1. Treat V4-origin as the current strongest RESEARCH timing candidate for Go My Way only.
+2. Do not tune further on Go My Way.
+3. Extract an audio-only origin-selection rule from the frozen evidence that would have selected the earliest stable dual-source beat without professional scoring.
+4. Test that rule prospectively on independent material/reference songs before promoting the rule.
+5. For Go My Way downstream diagnostics, V4-origin may be used as the research timing candidate, clearly labeled post-hoc.
+6. Next note-recognition work should focus on remaining pitch/voicing/string-fret errors under V4-origin, not tempo.
+7. Keep `main` unchanged.
