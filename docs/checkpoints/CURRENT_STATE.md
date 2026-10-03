@@ -7361,3 +7361,16 @@ Diagnostics are ground-truth independent and do not alter audio. Per stem they r
 Purpose: design a **gated cleanup** that preserves already-clean BS-Roformer stems and activates only when separator-output evidence indicates likely contamination. No V2 cleanup threshold has been chosen yet; this pass is diagnostic-only to avoid blind retuning on the same 12 S0 mixtures.
 
 GitHub Actions diagnostic run `37079756274` is in progress from trigger commit `57d823069f214825aeb977f6442905f1b777c90f`.
+
+
+## S0 bleed diagnostics completed — 2026-10-02
+
+GitHub Actions run `37080742780` completed successfully and produced diagnostic artifact `11258307460` (digest `sha256:2901f82fa01d9ed88886e02e23a3e3ef24519dbbc0af6c29ee714bc174b7fb6b`).
+
+Key result: simple spectral overlap/dominance metrics do **not** provide a safe cleanup gate on the current 12-mixture S0 set. Descriptive correlations with cleanup improvement were weak (interference pressure ~0.08, competitor dominance ~-0.01, target dominance ~0.04, stem-to-mixture energy ~-0.11).
+
+Diagnostics correctly identify several already-near-silent absent-target stems, but the hard S0M10 false guitar output looks structurally like a legitimate strong guitar stem, while S0M03 guitar and S0M11 bass are genuine targets that the separator nearly misses and therefore look absent. Conclusion: low energy does not prove target absence and high target dominance does not prove target presence.
+
+**Next direction:** recognizer-gated cleanup. Combine separator diagnostics with an independent guitar/bass/other recognizer; preserve raw stems by default when the recognizer agrees, permit conservative cleanup/reassignment only on strong disagreement + contamination evidence, and preserve/flag uncertain cases rather than destructively suppressing them. S0M10 guitar is the key hard false-positive fixture.
+
+Detailed records: `docs/astra/S0_BLEED_DIAGNOSTICS_RESULT_V1.md` and `docs/astra/S0_BLEED_DIAGNOSTICS_RESULT_V1.json`.
