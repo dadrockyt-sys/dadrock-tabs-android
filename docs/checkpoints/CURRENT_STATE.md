@@ -7408,3 +7408,16 @@ Result: cleanup was applied to **0 stems**. Mean/worst/best target SI-SDR change
 Decision: keep preserve-by-default. Do not loosen thresholds just to force actions on the same 12 fixtures. Split the next work into (1) target-present bleed cleanup and (2) false-stem suppression/reassignment. S0M10 guitar remains the key false-stem fixture. Next experiment should compare claimed-stem vs competing-stem YAMNet evidence, reassignment consequences, and downstream transcription behavior rather than spectral attenuation alone.
 
 Detailed records: `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.md` and `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.json`.
+
+
+## Corrected duplicate-class action result — 2026-10-02
+
+GitHub Actions run `37087791658` completed successfully. Artifact `11260744333` digest `sha256:54c0717f54147c0473f5db2b1bace917aac61c9a0e157e901a6a202922ed02c5`.
+
+Only S0M10 was classified as a duplicate-class candidate. Correct mapping: false guitar stem + true bass companion. Raw bass SI-SDR was `0.0728 dB`. Muting the false guitar left bass unchanged at `0.0728 dB` and increased reconstruction max error from `0.008216` to `0.329865`. Merging the false guitar waveform into bass raised bass SI-SDR to `30.5695 dB` (**+30.4966 dB**) while preserving reconstruction error at `0.008216`.
+
+Interpretation: in S0M10, BS-Roformer split one bass source across the guitar and bass outputs rather than creating an unrelated false guitar source. This strongly supports **duplicate-class consolidation** as a distinct post-separator correction: when both substantial guitar/bass outputs strongly support the same instrument class and satisfy mutual-overlap/energy-consistency checks, consolidate the mislabeled companion into the correct-class stem and zero the false-class stem. Otherwise preserve raw output.
+
+This remains S0-only evidence from one duplicate-class fixture. Next task: expand the controlled duplicate-class fixture set in both directions and across split ratios before any real-audio or production use.
+
+Detailed records: `docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.md` and `docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json`.
