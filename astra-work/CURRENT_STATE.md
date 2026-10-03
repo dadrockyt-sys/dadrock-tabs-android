@@ -6836,3 +6836,172 @@ Requirements:
 7. keep raw Basic Pitch settings, separator model, all uncertainty contracts, and `main` unchanged.
 
 The full three-role scorer coverage problem is solved. The next architecture gap is the candidate's own trustworthy musical timebase plus stronger transcription evidence.
+
+
+## Go My Way Full-Song Professional Benchmark — 2026-10-03
+
+User explicitly redirected the next development benchmark to the existing Go My Way full-song material and professional references.
+
+### Source/reference inventory now confirmed
+
+Pinned `main` head used for source verification:
+
+`74dacf322bb979c26a47786e2380c59d2d40e364`
+
+Full-song audio selected:
+
+- `main/public/gomywayfullaitest.m4a`
+- Git blob: `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+
+Authoritative professional references confirmed on `main/public`:
+
+- bass: `public/Gomywaybassreference.pdf`
+  - Git blob: `9b39fec0e55d60d5ee509863dfc55c1d6bc1f4f4`
+  - SHA-256 already recorded in Astra intake: `18e6822394980d22a960a1bd4d923aaddf677f3341b8cc1a2dbb29ea1e8771d0`
+  - measures 1–113
+- lead: `public/Gomywayleadreference.pdf`
+  - Git blob: `3e5822be398f64b72d806970b27c22503d4e494c`
+  - SHA-256 already recorded in Astra intake: `a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56`
+  - measures 1–113
+
+Rhythm full-song scoring source is available on `astra-work` as:
+- intro measures 1–16:
+  - `analyzer/fixtures/gomyway_professional_intro_reference_v1.json`
+- human-approved measures 17–113:
+  - `public/gomyway-professional-rhythm-reference-17-113.json`
+- timing:
+  - `public/gomyway-professional-timing-map-v2.json`
+
+Important distinction:
+- rhythm already has machine-readable note-level scoring data across the full song when intro 1–16 and approved 17–113 are joined;
+- bass and lead have complete authoritative professional PDFs for 1–113, but equivalent normalized machine-readable note-level scorer JSONs were not found in current/reachable Git history.
+
+### Historical scorer recovery
+
+Implemented:
+- `astra_backend/evaluation/recover_gomyway_full_scorer_history_v1.py`
+- `.github/workflows/astra-gomyway-full-scorer-recovery-v1.yml`
+
+Successful recovery run:
+- run `37094036423`
+- artifact `11263598848`
+- digest `sha256:79e5b9414f4e753dba7eeba8114234728f94618b3f5113d929042fc5c4544b43`
+
+Scan summary:
+- reachable Git objects: 54,116
+- relevant historical Go My Way JSON paths: 2,888
+- candidate scorer/reference JSONs: 2,861
+- full/113-ish candidates: 95
+
+Key result:
+- true full-song rhythm reference found;
+- no equivalent normalized full-song bass/lead note-label scorer found in reachable history.
+
+Do not treat this as missing source coverage: bass/lead professional source coverage is complete in the PDFs. Only machine normalization is missing.
+
+### Full-song current-pipeline benchmark V1
+
+Implemented:
+- `astra_backend/evaluation/evaluate_gomyway_full_song_professional_v1.py`
+- `.github/workflows/astra-gomyway-full-song-professional-v1.yml`
+
+Current benchmark definition:
+
+Inference:
+1. pinned `main/public/gomywayfullaitest.m4a`
+2. decoded to 44.1 kHz stereo float WAV
+3. untouched frozen BS-Roformer-SW 6-stem FP16 ONNX
+4. frozen Basic Pitch 0.4.0 defaults
+5. collect whole-mix, raw-guitar-stem, and raw-bass-stem note streams
+
+Scoring V1:
+- rhythm measures 1–113 only
+- exact MIDI + onset
+- one-to-one matching
+- fixed 50 ms onset tolerance
+- no alignment search
+- no threshold search
+- no reference access during inference
+- professional timing map used only after inference for scoring
+
+The benchmark also caches:
+- whole-mix notes
+- raw guitar notes
+- raw bass notes
+
+This is deliberate so bass and lead can be scored later against their normalized professional references without rerunning separator or Basic Pitch.
+
+Bass/lead in V1:
+- full professional PDFs are hash-locked and bound to the run;
+- prediction streams are cached;
+- score remains intentionally absent until PDF note labels are machine-normalized.
+
+Current GitHub Actions run:
+- workflow: `Astra Go My Way Full Song Professional Benchmark V1`
+- run ID: `37094392537`
+- status at handoff time: **in progress**
+- source/reference identity verification passed
+- environment installation had started
+- full benchmark result not yet available at the time this handoff was written
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task: resume from GitHub Actions run `37094392537`.**
+
+1. Check whether run `37094392537` completed.
+2. If green:
+   - inspect the uploaded benchmark artifact;
+   - record:
+     - whole-mix event count;
+     - raw-guitar event count;
+     - raw-bass event count;
+     - whole-mix rhythm precision/recall/F1;
+     - raw-guitar rhythm precision/recall/F1;
+     - separator F1 delta vs whole mix;
+     - mean absolute onset error;
+     - strongest/weakest measures;
+   - preserve the full prediction cache for later bass/lead scoring;
+   - commit a result record under `docs/astra/`.
+3. If failed:
+   - inspect the failed step/log;
+   - fix only the runtime/scoring implementation defect;
+   - do not alter:
+     - audio identity;
+     - BS-Roformer model identity;
+     - Basic Pitch settings;
+     - professional reference identities;
+     - 50 ms tolerance;
+     - scoring semantics.
+
+4. After the rhythm full-song result is safely recorded, start **Bass/Lead Professional PDF Normalization V1**:
+   - source authority must remain the two pinned `main/public` PDFs above;
+   - reuse existing PDF raster/localization machinery where practical;
+   - do not infer labels from model output;
+   - do not copy candidate predictions into the reference;
+   - preserve measures 1–113, including printed rests and known annotations;
+   - normalize bass and lead into machine-readable measure/event structures;
+   - record PDF SHA-256 and provenance in every normalized output.
+
+5. Once bass/lead normalized references exist:
+   - score the already-cached raw bass stream against bass 1–113;
+   - score the already-cached raw guitar stream against lead 1–113;
+   - keep rhythm, lead, and bass as separate role scores;
+   - do not collapse them into a single trust threshold.
+
+6. Do not:
+   - call this a sealed holdout;
+   - use Go My Way to satisfy the 96-case trust/flag holdout protocol;
+   - tune thresholds from the professional references;
+   - alter note events to improve the score;
+   - modify production;
+   - modify `main`.
+
+### Current scientific interpretation boundary
+
+Go My Way is an **existing-reference development benchmark**, not a fresh holdout.
+
+Its purpose now is to answer the practical product question:
+
+> How close is the current separator + transcription stack to a full professional tab across rhythm, lead, and bass?
+
+Use the professional references strictly for scoring and error analysis, not for hidden correction of the model output.
