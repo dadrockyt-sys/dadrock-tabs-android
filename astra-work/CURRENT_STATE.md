@@ -8636,3 +8636,57 @@ Build a reference-blind local octave-consensus resolver:
 5. score original vs corrected predictions afterward;
 6. treat as Go My Way development only, not holdout validation;
 7. keep V4-origin timing and `main` unchanged.
+
+
+## Reference-blind octave consensus V1 — launched
+
+Measured motivation from octave/voicing attribution:
+- rhythm wrong-pitch events: 242; pitch-class-correct wrong octave: 90 (37.19%); ±12-only recoverable: 85
+- lead wrong-pitch events: 122; pitch-class-correct wrong octave: 47 (38.52%); ±12-only recoverable: 44
+- bass wrong-pitch events: 101; pitch-class-correct wrong octave: 62 (61.39%); ±12-only recoverable: 62
+
+Candidate design:
+- uses only frozen prediction timing/MIDI/amplitude;
+- no professional reference read during candidate construction;
+- fixed local window: 2.0 s;
+- octave candidates limited to MIDI ±12 within fixed physical ranges:
+  - guitar 40..88
+  - bass 28..67
+- nearby same-pitch-class events provide octave support;
+- change requires at least 2 supporting neighbors and a fixed support margin;
+- only octave displacement is allowed; no arbitrary pitch correction.
+
+Scientific separation:
+- job 1 freezes candidate and uploads SHA;
+- job 2 downloads frozen candidate and only then reads professional references for scoring;
+- V4-origin timing stays frozen;
+- note evidence stays frozen.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_blind_octave_consensus_v1.py`
+- `astra_backend/evaluation/score_gomyway_reference_blind_octave_consensus_v1.py`
+- `.github/workflows/astra-gomyway-reference-blind-octave-consensus-v1.yml`
+
+Commits:
+- candidate implementation: `ccbae6a9bbaa34b70a8cd77d3a99c1d8642cdbcb`
+- post-freeze scorer: `254f349a650c41872b8e8dd9aa4114483653919b`
+- workflow launch: `9a2ac00b62db15a56913e78f7c2808530465a819`
+
+Authoritative run:
+- run `37156148873`
+- head `9a2ac00b62db15a56913e78f7c2808530465a819`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37156148873
+
+### Exact next resume instruction
+
+Resume from run `37156148873`.
+If green:
+1. record frozen candidate artifact ID/digest and candidate SHA;
+2. record guitar/bass octave change counts before reference read;
+3. record score artifact ID/digest and score JSON SHA;
+4. compare original vs corrected TP/P/R/F1 for rhythm, lead, bass;
+5. reject the resolver if it harms any role materially;
+6. if bass improves strongly and guitar is neutral/positive, consider role-specific octave resolver development;
+7. if guitar degrades while bass improves, split guitar and bass octave policies rather than forcing one rule;
+8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
