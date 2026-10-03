@@ -1,0 +1,158 @@
+name: Astra Go My Way Reference-Independent Timebase V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_reference_independent_timebase_v2.py'
+      - '.github/workflows/astra-gomyway-reference-independent-timebase-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-gomyway-reference-independent-timebase-v2
+  cancel-in-progress: false
+
+jobs:
+  freeze-v2-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
+
+      - name: Verify source identity
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+
+      - name: Decode source
+        run: |
+          ffmpeg -hide_banner -loglevel error -y -i public/gomywayfullaitest.m4a -ar 44100 -ac 2 -c:a pcm_f32le gomywayfullaitest.wav
+
+      - name: Download and verify BS-Roformer
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve(
+            "https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",p)
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected: raise SystemExit(actual)
+          PY
+
+      - name: Generate and freeze V2 bundle reference-blind
+        env:
+          PYTHONPATH: ${{ github.workspace }}/analyzer:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python astra_backend/evaluation/gomyway_reference_independent_timebase_v2.py generate             --audio-source public/gomywayfullaitest.m4a             --audio-wav gomywayfullaitest.wav             --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx             --output-json out/gomyway-reference-independent-timebase-v2-bundle.json
+          (cd out && sha256sum gomyway-reference-independent-timebase-v2-bundle.json > gomyway-reference-independent-timebase-v2-bundle.sha256)
+
+      - name: Verify blind provenance
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open("out/gomyway-reference-independent-timebase-v2-bundle.json"))
+          assert d["referenceBlindGeneration"] is True
+          assert d["professionalTimingMapReadDuringGeneration"] is False
+          assert d["professionalScorerRowsReadDuringGeneration"] is False
+          assert len(d["candidates"]) == 7
+          assert d["primaryCandidateName"] in {c["name"] for c in d["candidates"]}
+          print("primary:",d["primaryCandidateName"])
+          for c in d["candidates"]:
+              print(c["name"],c["estimator"]["tempoBpm"],c["estimator"]["beatConfidence"],c["estimator"]["barConfidence"])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-independent-timebase-v2-frozen
+          path: |
+            out/gomyway-reference-independent-timebase-v2-bundle.json
+            out/gomyway-reference-independent-timebase-v2-bundle.sha256
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf models/bs-roformer gomywayfullaitest.wav
+
+  post-freeze-professional-comparison:
+    needs: freeze-v2-candidates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install comparison runtime
+        run: python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-independent-timebase-v2-frozen
+          path: frozen
+
+      - name: Verify frozen bytes before reference read
+        run: |
+          set -euo pipefail
+          cd frozen
+          sha256sum -c gomyway-reference-independent-timebase-v2-bundle.sha256
+
+      - name: Compare frozen V2 candidates diagnostically
+        env:
+          PYTHONPATH: ${{ github.workspace }}/analyzer:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python astra_backend/evaluation/gomyway_reference_independent_timebase_v2.py compare             --candidate-json frozen/gomyway-reference-independent-timebase-v2-bundle.json             --professional-timing-map public/gomyway-professional-timing-map-v2.json             --output-json out/gomyway-reference-independent-timebase-v2-professional-comparison.json
+          cp frozen/gomyway-reference-independent-timebase-v2-bundle.json out/
+          cp frozen/gomyway-reference-independent-timebase-v2-bundle.sha256 out/
+          (cd out && sha256sum -c gomyway-reference-independent-timebase-v2-bundle.sha256)
+          (cd out && sha256sum gomyway-reference-independent-timebase-v2-professional-comparison.json > gomyway-reference-independent-timebase-v2-professional-comparison.sha256)
+
+      - name: Enforce no candidate mutation
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          a=Path("frozen/gomyway-reference-independent-timebase-v2-bundle.json")
+          b=Path("out/gomyway-reference-independent-timebase-v2-bundle.json")
+          assert a.read_bytes()==b.read_bytes()
+          d=json.load(open("out/gomyway-reference-independent-timebase-v2-professional-comparison.json"))
+          assert d["candidateMutatedAfterComparison"] is False
+          assert d["comparisonIsDiagnosticOnly"] is True
+          assert d["candidateFrozenSha256BeforeReferenceRead"]==hashlib.sha256(a.read_bytes()).hexdigest()
+          print("candidate unchanged:",d["candidateFrozenSha256BeforeReferenceRead"])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-independent-timebase-v2-result
+          path: out/
+          retention-days: 30
