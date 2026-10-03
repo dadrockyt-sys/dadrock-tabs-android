@@ -8190,3 +8190,47 @@ Requirements:
 6. report rhythm, lead, combined guitar, AND bass changes;
 7. promotion rule: only consider V4-origin as a research baseline if guitar improves strongly without materially breaking bass and the beat path remains audio-supported;
 8. keep old maps preserved and keep `main` unchanged.
+
+
+## Timing-origin V4 diagnostic — launched 2026-10-03
+
+Motivation:
+- guitar timing diagnostic found both rhythm and lead independently prefer an integer beat shift of -1;
+- rhythm TP at 50 ms rose from 53 direct matches to 326 under that diagnostic shift;
+- lead TP rose from 34 to 137;
+- the revalidation audit showed the 450-beat V3 path skipped an earlier dual-source cluster at `0.5166439712 s` and began at `1.0623129010 s`.
+
+V4 origin hypothesis:
+- preserve frozen V6 mix+drum evidence;
+- preserve ~129 BPM beat trajectory;
+- preserve 113 measures / 450 quarter-note beats / 2/4 at measure 104;
+- force the earliest dual-source cluster as the origin candidate;
+- do not retune tempo;
+- mark result as post-hoc diagnostic only, not prospective validation.
+
+Files:
+- `astra_backend/evaluation/gomyway_timing_origin_v4_diagnostic.py`
+- `.github/workflows/astra-gomyway-timing-origin-v4-diagnostic.yml`
+
+Commits:
+- implementation: `6349bdf8c2a4bc42e4c0c9ad6e83db9f2f992c6b`
+- workflow launch: `7494655cb6fdc4fac5d069ff2612479558632ab4`
+
+Authoritative run:
+- run `37144194576`
+- head `7494655cb6fdc4fac5d069ff2612479558632ab4`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37144194576
+
+### Exact next resume instruction
+
+Resume from run `37144194576`.
+
+If green:
+1. record V4 origin map SHA and audit SHA;
+2. record first measure start, last measure end, average/median BPM, dual-source vs single-source support;
+3. compare identical-prediction V3 vs V4-origin scores for rhythm, lead, combined guitar, and bass;
+4. V4-origin is only promising if guitar improves strongly while bass does not materially regress;
+5. do not call V4-origin validated solely from this post-hoc song-specific test;
+6. if promising, preserve it as a research candidate and then validate the origin-selection rule prospectively on independent material;
+7. keep all prior maps and `main` unchanged.
