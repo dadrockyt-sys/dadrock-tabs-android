@@ -8854,3 +8854,56 @@ If green:
 3. accept only if bass improves materially; guitar is unchanged by construction;
 4. if neutral/negative, abandon local octave consensus and move to a different bass octave discriminator;
 5. keep V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Bass-only octave resolver V2 — authoritative green result
+
+Run `37156933423` succeeded.
+
+Frozen candidate:
+- artifact id `11286157965`
+- digest `sha256:01d6f5878b26c140010a12a227f18dcd0deced6f91316ba4c4a643ac11cc72ce`
+- change count: 33 bass notes
+- guitar unchanged by construction
+
+Score artifact:
+- artifact id `11286038151`
+- digest `sha256:d30db42a77b7ae5d635e611c0ff3603c802d9b396903fd66a4b0faedb5bdc71f`
+- score JSON SHA-256 `2b77dc5f14b12e183b000be6f263a12e276758b28ba7af715a123bad638e7dfa`
+
+Bass original:
+- TP 365
+- precision 52.82%
+- recall 66.73%
+- F1 58.97%
+
+Bass corrected:
+- TP 369
+- precision 53.40%
+- recall 67.46%
+- F1 59.61%
+
+Delta:
+- TP +4
+- F1 +0.65 percentage points
+
+Conclusion:
+- V2 is technically positive but only marginally so;
+- changing 33 bass notes yielded only 4 additional true positives;
+- do not continue tuning local octave-consensus thresholds against Go My Way;
+- local pitch-class/register consensus is not strong enough as the main octave discriminator;
+- preserve this as a positive-but-weak development result, not a promoted policy.
+
+### Exact next resume instruction
+
+1. Keep V4-origin timing frozen.
+2. Keep frozen note evidence unchanged.
+3. Stop tuning local octave-consensus heuristics on Go My Way.
+4. Next diagnostic should investigate **why** the +12 bass errors occur:
+   - harmonic/subharmonic ambiguity,
+   - source-separation residuals,
+   - Basic Pitch octave bias,
+   - local spectral fundamental-vs-second-harmonic evidence.
+5. Build a reference-blind spectral octave discriminator using the original bass audio/stem and frozen event times, then freeze before scoring.
+6. For guitar, do not apply octave heuristics; remaining problem is broader harmonic/voicing modeling.
+7. Keep `main` unchanged.
