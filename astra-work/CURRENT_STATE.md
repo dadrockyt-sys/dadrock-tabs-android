@@ -5874,3 +5874,142 @@ Detailed records:
 The duplicate-consolidation branch of research is now closed at **diagnostic-only** status unless a genuinely new consolidation hypothesis and new development protocol are introduced.
 
 **Next GPT-5.6 task:** do not tune this gate further. Return to the broader separator -> recognizer -> transcription objective and identify the highest-value next diagnostic that can improve final guitar/bass tablature accuracy **without destructive stem mutation**. Prefer measurement of downstream transcription failure modes and confidence/flagging over another separator-action heuristic. Preserve all frozen boundaries above.
+
+
+## S0 Transcription Failure Attribution V1 — 2026-10-02
+
+Returned from duplicate-consolidation work to the broader separator -> recognizer -> transcription objective without mutating stems.
+
+Implemented:
+- `astra_backend/evaluation/evaluate_s0_transcription_failure_attribution_v1.py`
+- `.github/workflows/astra-s0-transcription-failure-attribution-v1.yml`
+
+Purpose: run the same frozen Basic Pitch 0.4.0 front end on each exact clean S0 guitar/bass component and on the corresponding untouched raw BS-Roformer stem, then compare exact-MIDI onsets at a fixed 50 ms tolerance. The clean-component transcription is an oracle-audio transcriber baseline, **not** asserted musical ground truth.
+
+First workflow run `37090038784` failed only from a NumPy 2.x / Basic Pitch TFLite binary incompatibility (`_ARRAY_API not found`). Runtime was corrected by pinning NumPy 1.26.4. No scientific parameter changed.
+
+Successful run: `37090246256`  
+Head: `57386ca1a0cc98bed124debbd1b2f4c5ed2f3552`  
+Artifact: `11262262754`  
+Digest: `sha256:e0a1b42c60f2c8aacb10a477b6f70efa8fbfdc418ac049868fcfcebdad4b74ca`
+
+Results:
+- 12 mixtures
+- 24 role probes
+- 20 target-present probes
+- 4 target-absent probes
+- present-target micro precision **0.789**
+- recall **0.632**
+- F1 **0.702**
+- macro F1 **0.663**
+- 5 severe role failures with F1 < 0.5
+- all 4 absent-target outputs generated false note events; 53 total
+
+Severe cases:
+- S0M03 guitar: SI-SDR -14.84 dB, F1 0.000
+- S0M04 guitar: -6.91 dB, F1 0.230
+- S0M10 bass: 0.07 dB, F1 0.302
+- S0M11 bass: -14.08 dB, F1 0.261
+- S0M12 guitar: -5.16 dB, F1 0.071
+
+Descriptive Pearson correlation between raw separator SI-SDR and transcription agreement F1: **0.896**.
+
+For description only:
+- SI-SDR >= 15 dB: 12 probes, mean F1 0.864
+- SI-SDR < 5 dB: 6 probes, mean F1 0.250
+
+Error morphology across target-present probes:
+- 137 unmatched separated events / false positives
+- 299 unmatched clean-baseline events / misses
+- 38 octave-related FPs
+- 31 timing-only FPs
+- 30 octave-related misses
+- 36 timing-only misses
+- only 1 near-semitone miss
+
+Conclusion: source-separation quality can dominate downstream transcription stability. Do not tune Basic Pitch from these S0 outcomes. Instead investigate whether separator/transcriber signals available without ground truth can flag unreliable note output.
+
+Detailed:
+- `docs/astra/S0_TRANSCRIPTION_FAILURE_ATTRIBUTION_V1_RESULT.md`
+- `docs/astra/S0_TRANSCRIPTION_FAILURE_ATTRIBUTION_V1_RESULT.json`
+
+
+## S0 Transcription Reliability Observability V1 — 2026-10-02
+
+Implemented:
+- `astra_backend/evaluation/evaluate_s0_transcription_reliability_observability_v1.py`
+- `.github/workflows/astra-s0-transcription-reliability-observability-v1.yml`
+
+This stage remained descriptive only:
+- no separator mutation
+- no threshold search
+- no fitted confidence gate
+- no automatic accept/reject action
+
+GitHub Actions run: `37090800270` — **success**  
+Head: `977b1883f96d55ce3c690ed25950c8a832b3bbe3`  
+Artifact: `11262263768`  
+Digest: `sha256:4fb1caa6253b3cd89a98209b3160901c4aea6b9fbb6ad8d214b79dc887ae6427`
+
+No-reference features were collected from:
+- separator-output interference/dominance/energy diagnostics
+- Basic Pitch event density/amplitude/duration
+- dominant-pitch concentration
+- octave-event behavior
+
+Strongest descriptive single-feature associations with transcription-agreement F1:
+- stem-to-mixture energy dB: Spearman +0.594
+- interference pressure: -0.542
+- strongest competitor energy ratio dB: -0.533
+- mean note duration: +0.477
+- event density: +0.464
+- octave-related event fraction: +0.434
+- competitor dominance: -0.427
+- target dominance: +0.427
+
+These are only moderate associations. Do **not** turn them into an S0-fitted reliability threshold.
+
+Three absent-target cases are trivially recognizable as near-silent/interference-dominated:
+- S0M07 bass: ~-92.55 dB stem-to-mixture, competitor dominance 1.0
+- S0M08 guitar: ~-93.24 dB, competitor dominance 1.0
+- S0M09 bass: ~-92.02 dB, competitor dominance 1.0
+
+But **S0M10 guitar is the hard exception**. Guitar is absent in ground truth, yet its separator output looks internally strong:
+- stem-to-mixture -3.03 dB
+- interference pressure 0.120
+- target dominance 0.776
+- 33 Basic Pitch note events
+- event density 4.48/s
+- dominant MIDI share 0.545
+- octave-related event fraction 0.485
+
+The true S0M10 bass output also has 33 note events but poor agreement with the clean bass baseline (F1 0.302). Together with prior duplicate-class evidence, this is consistent with one bass source being represented across both labeled outputs.
+
+### Current decision
+
+Ordinary single-stem no-reference observability is not sufficient for a robust reliability flag on the hard case.
+
+Do not:
+- fit an S0 reliability cutoff
+- retune Basic Pitch
+- reopen automatic consolidation
+- merge/mute/reassign audio
+- change `main`
+
+Detailed:
+- `docs/astra/S0_TRANSCRIPTION_RELIABILITY_OBSERVABILITY_V1_RESULT.md`
+- `docs/astra/S0_TRANSCRIPTION_RELIABILITY_OBSERVABILITY_V1_RESULT.json`
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task:** build **Cross-Stem Transcription Overlap / Role Ambiguity Diagnostic V1** on `astra-work`.
+
+Keep it diagnostic-only. For each S0 mixture:
+1. independently transcribe untouched raw guitar and bass separator outputs with the same frozen Basic Pitch settings;
+2. compute exact-MIDI onset overlap at 50 ms, pitch-class overlap, octave-related near-onset overlap, and event-density balance between stems;
+3. retain the frozen pair-classifier state / duplicate-class evidence as context when available;
+4. specifically test whether S0M10 shows unusually high cross-stem musical-event overlap compared with ordinary complementary guitar+bass mixtures;
+5. report distributions descriptively only — **do not choose an automatic role-ambiguity threshold on these same S0 fixtures**;
+6. no audio mutation, consolidation, reassignment, suppression, production deployment, or `main` change.
+
+If cross-stem transcription overlap meaningfully isolates S0M10-like duplicate-role behavior, use that pattern only to preregister a future holdout flagging test with thresholds frozen before evaluation. If it does not isolate the hard case, keep reliability flagging diagnostic-only and move downstream toward explicit uncertainty presentation rather than automatic correction.
