@@ -9721,3 +9721,58 @@ Preserve this distinction:
    - continue directly with a stricter reference-blind activation-ranking decoder on the existing raw guitar stem.
 5. Do not threshold-search against Go My Way.
 6. Preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifacts, and `main` unchanged.
+
+
+## Real-song guitar/bass pair diagnostic V1 — launched
+
+Purpose:
+- improve the separated guitar stem upstream before further Basic Pitch decoding;
+- inspect whether the real Go My Way guitar and bass stems contain duplicate-class contamination or remain complementary;
+- remain fully reference-blind during this diagnostic.
+
+Important correction:
+- the older `pair_coherence_v1.py` short-lag helper initializes its best correlation in a way that can force a bogus absolute-correlation result of 1.0;
+- this new diagnostic does NOT use that broken short-lag metric;
+- it uses fresh zero-lag correlation, fixed-window spectral overlap, energy balance, and YAMNet class evidence instead.
+
+Fixed diagnostic contract:
+- immutable source `public/gomywayfullaitest.m4a`;
+- verified BS-Roformer FP16 separator SHA `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`;
+- separate guitar and bass stems from the real song;
+- fixed 8.0 s windows, 4.0 s hop;
+- no professional tabs, timing map, or note scorer read;
+- no cleanup, suppression, reassignment, threshold search, or audio mutation;
+- inherited synthetic pair-classification evidence thresholds only for descriptive state labels;
+- report:
+  - guitar-vs-bass YAMNet evidence for each stem;
+  - winner/margin;
+  - stem energies and energy gap;
+  - zero-lag correlation;
+  - spectral shared-energy fractions;
+  - complementary / duplicate-guitar / duplicate-bass / ambiguous / silent states by window.
+
+Files:
+- `astra_backend/evaluation/gomyway_real_guitar_bass_pair_diagnostic_v1.py`
+- `.github/workflows/astra-gomyway-real-guitar-bass-pair-diagnostic-v1.yml`
+
+Commits:
+- diagnostic `5f652e3cc12518faf044292022ec2b7eb68424ac`
+- workflow launch `5973662ad3d84bbd9eefc5e4b9976b768dbcde03`
+
+Authoritative run:
+- run `37161317425`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37161317425
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37161317425`.
+If green:
+1. record diagnostic artifact ID/digest and JSON SHA;
+2. record exact guitar/bass stem SHA values;
+3. summarize global guitar/bass class evidence, energy gap, zero-lag correlation, and spectral overlap;
+4. summarize fixed-window state counts and locations of duplicate-class candidate windows;
+5. if duplicate-bass or duplicate-guitar windows are substantial and localized, build a separately versioned reference-blind LOCAL cleaner/reassignment candidate using only separator/recognizer/signal evidence;
+6. if stems are mostly complementary and duplicate-class windows are rare/weak, do not force cleanup; return to stricter activation ranking instead;
+7. do not score professional tabs until any cleaned-audio candidate has been frozen;
+8. preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifacts, and `main` unchanged.
