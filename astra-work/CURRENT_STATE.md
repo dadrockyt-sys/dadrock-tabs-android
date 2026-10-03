@@ -7970,3 +7970,66 @@ Scientific interpretation:
 6. Quantify how much previous poor guitar/bass performance was due to the bad 133.8-BPM timing map versus note/pitch recognition.
 7. If timing-corrected scores improve materially, continue from the revalidated map toward string/fret/pitch refinement.
 8. Keep `main` unchanged.
+
+
+## Timing-map attribution rescore V1 — launched 2026-10-03
+
+Goal:
+- quantify how much of the previous low guitar/bass professional-reference agreement was caused by the historical 133.8-BPM timing map versus note/pitch recognition.
+
+Important implementation decision:
+- previous full-song benchmark artifact retained scores but not the raw Basic Pitch prediction lists;
+- therefore inference must be regenerated;
+- separator model, Basic Pitch package/model/default thresholds, source audio, and scorer-ready professional references are all kept frozen;
+- inference is run exactly once;
+- the same prediction lists are then scored against BOTH timing maps in the same process.
+
+Timing maps:
+1. historical V2: `public/gomyway-professional-timing-map-v2.json`
+2. revalidated V3 research map downloaded from authoritative revalidation run `37141537153`
+   - expected SHA-256 `1aeb65d69c8305f79d8a18995464379a28ed56626c8fc2ba32d036e9a63ab4ac`
+
+Frozen inference:
+- source audio Git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+- BS-Roformer-SW 6-stem FP16 ONNX SHA-256 `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`
+- Basic Pitch 0.4.0 frozen identity/defaults
+- no cleanup
+- no threshold search
+- no automatic correction
+
+Professional scorer references remain unchanged:
+- rhythm `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`
+- lead `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`
+- bass `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`
+
+Files:
+- `astra_backend/evaluation/gomyway_timing_map_attribution_rescore_v1.py`
+- `.github/workflows/astra-gomyway-timing-map-attribution-rescore-v1.yml`
+
+Commits:
+- implementation: `d96ade0bc6c7d1439f4c574c33c5d21d4e3821da`
+- workflow launch: `fc11f06873866419574d2cdc059999375961cfb1`
+
+Authoritative run:
+- run `37141748903`
+- head `fc11f06873866419574d2cdc059999375961cfb1`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37141748903
+
+### Exact next resume instruction
+
+Resume from run `37141748903`.
+
+If green:
+1. record artifact ID/digest and output JSON SHA;
+2. record identical prediction counts for whole mix, guitar stem, bass stem;
+3. for historical V2 and revalidated V3 timing maps, record separator:
+   - rhythm TP/P/R/F1/MAE;
+   - lead TP/P/R/F1/MAE;
+   - combined guitar TP/P/R/F1/MAE;
+   - bass TP/P/R/F1/MAE;
+4. record revalidated-minus-historical deltas;
+5. interpret how much error was timing-map-induced versus remaining note recognition;
+6. if scores improve materially, keep the V3 timing map frozen and move next to pitch/string/fret refinement rather than more timing work;
+7. if scores do not improve, diagnose scorer/reference step-coordinate assumptions before changing recognizer thresholds;
+8. keep `main` unchanged.
