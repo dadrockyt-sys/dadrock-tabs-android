@@ -1,0 +1,160 @@
+name: Astra Go My Way Specialized Guitar AMT V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'analyzer/gomyway_specialized_guitar_amt_freeze_v1.py'
+      - 'analyzer/score_gomyway_specialized_guitar_amt_v1.py'
+      - '.github/workflows/astra-gomyway-specialized-guitar-amt-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg git
+          python -m pip install --upgrade pip
+          python -m pip install             'numpy==1.26.4' 'scipy==1.11.4' 'librosa==0.10.2.post1'             soundfile pyyaml 'torch==2.7.1' onnxruntime
+
+      - name: Acquire pinned guitar-AMT code/config/checkpoint
+        run: |
+          set -euo pipefail
+          git clone --no-checkout https://github.com/ErenReyhanlioglu/Guitar-Transcription.git /tmp/guitar-transcription
+          cd /tmp/guitar-transcription
+          git checkout 9f8e31d2ed42c2f8d155d6164ea2fdb43e285482
+          test "$(git rev-parse HEAD)" = "9f8e31d2ed42c2f8d155d6164ea2fdb43e285482"
+          test "$(git hash-object src/models/cnn_mtl.py)" = "cfe5a8e91d7315ad43f976bc114fdaba82838fbd"
+
+          cd "$GITHUB_WORKSPACE"
+          mkdir -p /tmp/guitar-amt-assets
+          curl --fail --location --retry 5             -o /tmp/guitar-amt-assets/config.yaml             https://raw.githubusercontent.com/ErenReyhanlioglu/Guitar-Transcription-Weights/e2be2c66a71b76ced009afcd0f6bf837c0b9b8a3/cnn_mtl_20251210_113013/config.yaml
+          curl --fail --location --retry 5             -o /tmp/guitar-amt-assets/model_best.pt             https://raw.githubusercontent.com/ErenReyhanlioglu/Guitar-Transcription-Weights/e2be2c66a71b76ced009afcd0f6bf837c0b9b8a3/cnn_mtl_20251210_113013/fold_1/model_best.pt
+          test "$(git hash-object /tmp/guitar-amt-assets/config.yaml)" = "8fb170c504a7a43e49d65d14ae47944cee77d52e"
+          test "$(git hash-object /tmp/guitar-amt-assets/model_best.pt)" = "82094eecad83603b331b1bfbce0f0310f8942df8"
+          sha256sum /tmp/guitar-amt-assets/config.yaml
+          sha256sum /tmp/guitar-amt-assets/model_best.pt
+
+      - name: Verify source and decode full mix
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+          ffmpeg -hide_banner -loglevel error -y             -i public/gomywayfullaitest.m4a             -ar 44100 -ac 2 -c:a pcm_f32le /tmp/gomyway-fullmix.wav
+
+      - name: Acquire and verify BS-Roformer
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("/tmp/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve("https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",p)
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual!=expected: raise SystemExit(actual)
+          PY
+
+      - name: Separate guitar stem
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import soundfile as sf
+          from astra_backend.evaluation.bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter
+          x,sr=sf.read("/tmp/gomyway-fullmix.wav",dtype="float32",always_2d=True)
+          stems=BsRoformer6StemOnnxAdapter(Path("/tmp/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")).separate_array(x,sr)
+          sf.write("/tmp/gomyway-guitar-stem.wav",stems["guitar"],sr,subtype="FLOAT")
+          PY
+
+      - name: Freeze specialized AMT events
+        env:
+          PYTHONPATH: ${{ github.workspace }}/analyzer
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python analyzer/gomyway_specialized_guitar_amt_freeze_v1.py             --audio /tmp/gomyway-fullmix.wav             --upstream-code /tmp/guitar-transcription             --config /tmp/guitar-amt-assets/config.yaml             --checkpoint /tmp/guitar-amt-assets/model_best.pt             --device cpu             --label full_mix             --output-json out/specialized-guitar-amt-full-mix-v1.json
+
+          python analyzer/gomyway_specialized_guitar_amt_freeze_v1.py             --audio /tmp/gomyway-guitar-stem.wav             --upstream-code /tmp/guitar-transcription             --config /tmp/guitar-amt-assets/config.yaml             --checkpoint /tmp/guitar-amt-assets/model_best.pt             --device cpu             --label bs_roformer_guitar_stem             --output-json out/specialized-guitar-amt-guitar-stem-v1.json
+
+          sha256sum out/specialized-guitar-amt-full-mix-v1.json > out/specialized-guitar-amt-full-mix-v1.sha256
+          sha256sum out/specialized-guitar-amt-guitar-stem-v1.json > out/specialized-guitar-amt-guitar-stem-v1.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-specialized-guitar-amt-v1-frozen
+          path: out/
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf /tmp/guitar-transcription /tmp/guitar-amt-assets /tmp/bs-roformer /tmp/gomyway-fullmix.wav /tmp/gomyway-guitar-stem.wav
+
+  score-after-freeze:
+    needs: freeze-candidates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-specialized-guitar-amt-v1-frozen
+          path: candidate
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+
+      - name: Verify frozen candidates
+        run: |
+          set -euo pipefail
+          cd candidate
+          sha256sum -c specialized-guitar-amt-full-mix-v1.sha256
+          sha256sum -c specialized-guitar-amt-guitar-stem-v1.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+
+      - name: Score after freeze
+        run: |
+          set -euo pipefail
+          mkdir -p scores
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py             --candidate candidate/specialized-guitar-amt-full-mix-v1.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json scores/specialized-guitar-amt-full-mix-v1-score.json
+
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py             --candidate candidate/specialized-guitar-amt-guitar-stem-v1.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json scores/specialized-guitar-amt-guitar-stem-v1-score.json
+
+          sha256sum scores/*.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-specialized-guitar-amt-v1-scores
+          path: scores/
+          retention-days: 30
