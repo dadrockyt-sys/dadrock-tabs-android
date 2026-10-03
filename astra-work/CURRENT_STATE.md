@@ -7920,3 +7920,53 @@ Relaunched authoritative run:
 Resume from run `37141537153`.
 If green, record exact revalidated map/audit metrics and artifact hashes.
 If it fails, inspect only the new runtime/script error and preserve all frozen scientific inputs unchanged.
+
+
+## Professional timing revalidation V1 — authoritative green result 2026-10-03
+
+Authoritative run:
+- run `37141537153`
+- result: GREEN
+- artifact id: `11280532281`
+- artifact name: `gomyway-professional-timing-revalidation-v1`
+- artifact digest: `sha256:c7b8dd1f3937628d36cbfa3ab3f790f7faefa60359b041b03fce496987fb3c04`
+
+Generated research timing map:
+- file: `gomyway-professional-timing-map-v3-revalidated.json`
+- SHA-256: `1aeb65d69c8305f79d8a18995464379a28ed56626c8fc2ba32d036e9a63ab4ac`
+- exact selected quarter-beat count: `450`
+- clustered V6 beat events before path selection: `460`
+- skipped cluster count: `10`
+- average tempo: `129.15967204325972 BPM`
+- median tempo: `129.19862000985708 BPM`
+- first measure start: `1.06231290102005 s`
+- last measure end: `209.98965454101562 s`
+- audio duration from integrity audit: `211.440907 s`
+- remaining audio tail after revalidated map: ~`1.451252459 s`
+
+Consensus support:
+- dual-source selected beats (mix + drums): `443 / 450`
+- single-source selected beats: `7 / 450`
+- therefore 98.44% of selected beat positions have independent support from both frozen V6 source families.
+
+Revalidation audit:
+- file: `gomyway-professional-timing-revalidation-v1-audit.json`
+- SHA-256: `aa901ca31745c52d41170d37cc6cd069d8063603a69c57f2a21a72b7a4f217da`
+
+Scientific interpretation:
+- this new research timing baseline is strongly supported by frozen independent audio evidence and the professional notation structure;
+- it resolves the repeated ~7-second mismatch created by the old 133.8-BPM map;
+- the old V2 map remains preserved unchanged as historical diagnostic evidence;
+- V3 revalidated map is research-only and not production-promoted yet;
+- next step is diagnostic rescoring of existing raw guitar/bass note events against this revalidated timing map with separator and Basic Pitch settings unchanged.
+
+### Exact next resume instruction
+
+1. Materialize/use artifact `11280532281` and preserve its map/audit hashes.
+2. Build a diagnostic scorer path that uses `gomyway-professional-timing-map-v3-revalidated.json` for timing only.
+3. Reuse the already-generated/raw Basic Pitch note events from the full-song benchmark; do NOT regenerate or retune note inference if avoidable.
+4. Score rhythm, lead, combined guitar, and bass using the same matching definitions as the previous benchmark.
+5. Report side-by-side old-map vs revalidated-map precision/recall/F1 and absolute timing alignment.
+6. Quantify how much previous poor guitar/bass performance was due to the bad 133.8-BPM timing map versus note/pitch recognition.
+7. If timing-corrected scores improve materially, continue from the revalidated map toward string/fret/pitch refinement.
+8. Keep `main` unchanged.
