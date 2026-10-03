@@ -8137,3 +8137,56 @@ If green:
 5. identify measures with strongest/weakest exact-match concentration;
 6. decide whether guitar still has a coordinate-phase problem or should move to pitch/voicing recognition;
 7. keep bass on revalidated timing V3 and keep `main` unchanged.
+
+
+## Guitar timing/coordinate diagnostic V1 — authoritative green result 2026-10-03
+
+Authoritative run:
+- run `37142945400`
+- result: GREEN
+- artifact id: `11281422316`
+- artifact name: `gomyway-guitar-timing-coordinate-diagnostic-v1`
+- artifact digest: `sha256:993f67c0cb5c9b9da6f2883a07ccfe51a02e38b7bdf7a6735a6231a153a7380a`
+- result JSON SHA-256: `9fbc9e5388188def88045ff0a69466e98ec2c87e3ace326f730b7a505e8c9563`
+
+Rhythm guitar:
+- nearest exact-MIDI median absolute onset error: `0.4699158430 s`
+- mean absolute error: `7.4542163611 s` (heavy outlier effect)
+- early/middle/late median absolute errors: 0.4697 / 0.4641 / 0.4855 s
+- best integer beat shift: `-1`
+- TP at 50 ms under -1 beat diagnostic shift: `326`
+- direct unshifted TP on revalidated map was only 53.
+
+Lead guitar:
+- nearest exact-MIDI median absolute onset error: `3.0095193133 s`
+- mean absolute error: `17.3067080424 s`
+- early/middle/late median absolute errors: 3.1814 / 4.4592 / 1.9611 s
+- best integer beat shift: `-1`
+- TP at 50 ms under -1 beat diagnostic shift: `137`
+- direct unshifted TP on revalidated map was only 34.
+
+Critical shared-coordinate finding:
+- BOTH rhythm and lead independently prefer the SAME -1 beat shift.
+- This is strong evidence of a shared downbeat/measure-origin error rather than separate role-specific timing failures.
+
+Revalidation audit follow-up:
+- the exact 450-beat revalidation path began at `1.0623129010 s`;
+- it skipped an earlier cluster at `0.5166439712 s`;
+- that skipped early cluster has **dual-source support from both drums and mix** with only ~11.6 ms source spread;
+- this makes an audio-side one-beat-earlier origin hypothesis plausible and directly explains the guitar -1 beat result.
+- do NOT change tempo; tempo remains ~129.16 BPM.
+- do NOT silently overwrite the V3 map. Any phase-origin correction must be separately versioned and explicitly marked as a new hypothesis.
+
+### Exact next resume instruction
+
+Build a separately versioned **timing-origin V4 diagnostic candidate** that preserves the frozen ~129.16 BPM beat trajectory but tests the earlier dual-source origin near 0.516644 s.
+
+Requirements:
+1. derive it from the same frozen V6 mix+drum evidence;
+2. include the early dual-source cluster as the start-origin hypothesis;
+3. preserve professional structure of 450 quarter-note beats / 113 measures / 2/4 at m104;
+4. do not retune tempo;
+5. score identical Basic Pitch predictions against V3 and V4-origin maps in one run;
+6. report rhythm, lead, combined guitar, AND bass changes;
+7. promotion rule: only consider V4-origin as a research baseline if guitar improves strongly without materially breaking bass and the beat path remains audio-supported;
+8. keep old maps preserved and keep `main` unchanged.
