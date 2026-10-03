@@ -8297,3 +8297,56 @@ Scientific interpretation:
 5. For Go My Way downstream diagnostics, V4-origin may be used as the research timing candidate, clearly labeled post-hoc.
 6. Next note-recognition work should focus on remaining pitch/voicing/string-fret errors under V4-origin, not tempo.
 7. Keep `main` unchanged.
+
+
+## V4-origin frozen note evidence V1 — launched 2026-10-03
+
+Purpose:
+- stop repeatedly regenerating identical Basic Pitch predictions;
+- freeze raw whole-mix, guitar-stem, and bass-stem note events once under the V4-origin research timing candidate;
+- enable all future pitch/voicing/string-fret diagnostics to reuse byte-identical note evidence.
+
+Inputs remain frozen:
+- source audio unchanged;
+- BS-Roformer unchanged;
+- Basic Pitch 0.4.0 defaults unchanged;
+- V4-origin timing map from run `37144194576`;
+- no professional note reference is read during generation;
+- no threshold search, cleanup, or automatic correction.
+
+Files:
+- `astra_backend/evaluation/gomyway_v4_origin_freeze_note_evidence_v1.py`
+- `.github/workflows/astra-gomyway-v4-origin-freeze-note-evidence-v1.yml`
+
+Commits:
+- implementation: `2ac24fcbb32ae003da271fd514d458afffffc6dd`
+- workflow launch: `30c8fcb518ab7c222f5e976ca29310a6ef7ac4f6`
+
+Authoritative run:
+- run `37146481347`
+- head `30c8fcb518ab7c222f5e976ca29310a6ef7ac4f6`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37146481347
+
+### Exact next resume instruction
+
+Resume from run `37146481347`.
+
+If green:
+1. record artifact ID/digest and frozen note-evidence JSON SHA;
+2. verify prediction counts remain whole 787 / guitar 1065 / bass 701;
+3. use this artifact for the next pitch-error diagnostic instead of rerunning Basic Pitch;
+4. analyze, under V4-origin:
+   - target notes with correct onset but wrong MIDI;
+   - semitone/octave error distribution;
+   - chord/voicing collision patterns;
+   - rhythm vs lead pitch-confusion separately;
+   - bass residual pitch errors separately;
+5. do not retune timing further on Go My Way;
+6. preserve V4-origin as post-hoc research timing candidate only;
+7. keep `main` unchanged.
+
+Independent-origin validation status:
+- repo contains Stairway audio and a trusted position/voicing reference, but that fixture lacks absolute beat/onset timing;
+- therefore Stairway cannot honestly validate the V4 origin clock yet;
+- do not claim prospective origin-rule validation from it.
