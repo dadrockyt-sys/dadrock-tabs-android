@@ -1,0 +1,116 @@
+name: Astra Go My Way Basic Pitch Activation Recovery V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_basic_pitch_activation_recovery_v2.py'
+      - 'astra_backend/evaluation/score_gomyway_basic_pitch_activation_recovery_v2.py'
+      - '.github/workflows/astra-gomyway-basic-pitch-activation-recovery-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install runtime
+        run: python -m pip install 'numpy==1.26.4'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-basic-pitch-guitar-activations-v1-frozen
+          path: activations
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37159748378
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - name: Verify frozen inputs
+        run: |
+          set -euo pipefail
+          test "$(sha256sum activations/gomyway-basic-pitch-guitar-activations-v1.npz | awk '{print $1}')" = "63891ae6581fa157c3a81e250e83dd227a983995c8bd68f6aa74ba76950a757a"
+          test "$(sha256sum activations/gomyway-basic-pitch-guitar-activations-v1.json | awk '{print $1}')" = "f22ac8425a853fb132722f8b1472b702848f3ed1e2f7ac11f5b7634c0ecdf4a1"
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+      - name: Build reference-blind contour-corroborated candidate
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_basic_pitch_activation_recovery_v2.py \
+            --activations-npz activations/gomyway-basic-pitch-guitar-activations-v1.npz \
+            --activations-meta activations/gomyway-basic-pitch-guitar-activations-v1.json \
+            --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json \
+            --output-json guitar-activation-recovery-v2.json
+          sha256sum guitar-activation-recovery-v2.json > guitar-activation-recovery-v2.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-basic-pitch-activation-recovery-v2-frozen
+          path: |
+            guitar-activation-recovery-v2.json
+            guitar-activation-recovery-v2.sha256
+          retention-days: 30
+
+  score-after-freeze:
+    needs: freeze-candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-basic-pitch-activation-recovery-v2-frozen
+          path: candidate
+      - name: Verify frozen candidate
+        run: |
+          set -euo pipefail
+          cd candidate
+          sha256sum -c guitar-activation-recovery-v2.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+      - name: Score only after freeze
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/score_gomyway_basic_pitch_activation_recovery_v2.py \
+            --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json \
+            --candidate candidate/guitar-activation-recovery-v2.json \
+            --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json \
+            --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+            --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
+            --output-json guitar-activation-recovery-v2-score.json
+          sha256sum guitar-activation-recovery-v2-score.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-basic-pitch-activation-recovery-v2-score
+          path: guitar-activation-recovery-v2-score.json
+          retention-days: 30
