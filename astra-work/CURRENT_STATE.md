@@ -6013,3 +6013,148 @@ Keep it diagnostic-only. For each S0 mixture:
 6. no audio mutation, consolidation, reassignment, suppression, production deployment, or `main` change.
 
 If cross-stem transcription overlap meaningfully isolates S0M10-like duplicate-role behavior, use that pattern only to preregister a future holdout flagging test with thresholds frozen before evaluation. If it does not isolate the hard case, keep reliability flagging diagnostic-only and move downstream toward explicit uncertainty presentation rather than automatic correction.
+
+
+## Cross-Stem Transcription Overlap / Role Ambiguity Diagnostic V1 — 2026-10-02
+
+Implemented:
+- `astra_backend/evaluation/evaluate_s0_cross_stem_transcription_overlap_v1.py`
+- `.github/workflows/astra-s0-cross-stem-transcription-overlap-v1.yml`
+
+Goal: determine whether the hard S0M10 duplicate-role case can be recognized from musical-event overlap between independently transcribed raw guitar and bass separator outputs.
+
+No audio was modified and no threshold was fitted.
+
+### Runtime boundary correction
+
+Initial run `37091545955` failed because TensorFlow installation for YAMNet caused Basic Pitch to silently choose its TensorFlow SavedModel directory instead of the previously frozen TFLite file. This was rejected as a backend identity change.
+
+Intermediate run `37091775151` still used the older TensorFlow-containing workflow and failed for the same reason.
+
+Final implementation isolates Basic Pitch on its exact frozen TFLite model and imports the already-frozen duplicate-class context from `docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json` rather than re-running YAMNet in the same process.
+
+### Successful evidence
+
+Run: `37091792312` — **success**  
+Head: `75b4bfb8b36f56e726aca7b32d05ce047c93f1d1`  
+Artifact: `11263730676`  
+Digest: `sha256:7cc5b69125dbc042c219a63fa73c4627a359bca7ed9b20591c0f6ecb0a795ed5`
+
+Prior frozen pair context:
+- only duplicate candidate: **S0M10**
+- state: `duplicate_bass_candidate`
+
+S0M10 vs 8 ordinary both-present guitar+bass mixtures:
+
+- exact-MIDI onset F1: **0.0303**
+  - rank 4/9
+  - ordinary max 0.0851
+  - z +0.34
+- pitch-class onset F1: **0.0909**
+  - rank 2/9
+  - ordinary max 0.1176
+  - z +1.12
+- octave-related onset F1: **0.0606**
+  - rank 2/9
+  - ordinary max 0.1176
+  - z +0.66
+- any-pitch onset coincidence F1: **0.0909**
+  - rank 7/9
+  - ordinary median 0.1878
+  - z -0.86
+- event-density balance:
+  - guitar events 33
+  - bass events 33
+  - min/max density ratio **1.000**
+  - rank **1/9**
+  - ordinary max 0.654
+  - z **+3.14**
+
+### Conclusion
+
+The same-note-overlap hypothesis did **not** isolate S0M10.
+
+The hard duplicate-role case has unusually symmetric transcription quantity, but not unusually strong identity overlap. Ordinary complementary mixtures can have equal or greater exact/pitch-class/octave/onset overlap.
+
+Do **not** freeze an automatic cross-stem role-ambiguity gate from this result. Event-count symmetry from a single positive fixture is not specific enough.
+
+Detailed records:
+- `docs/astra/S0_CROSS_STEM_TRANSCRIPTION_OVERLAP_V1_RESULT.md`
+- `docs/astra/S0_CROSS_STEM_TRANSCRIPTION_OVERLAP_V1_RESULT.json`
+
+Decision required by previous handoff: keep reliability/role ambiguity diagnostic-only and move toward explicit uncertainty presentation rather than automatic correction.
+
+
+## Transcription Uncertainty Presentation Contract V1 — 2026-10-02
+
+Implemented:
+- `astra_backend/transcriptionUncertaintyPresentation.mjs`
+- `astra_backend/tests/transcriptionUncertaintyPresentation.test.mjs`
+- `.github/workflows/astra-transcription-uncertainty-presentation-v1.yml`
+
+GitHub Actions run: `37092615121` — **success**  
+Head: `7b92c09a858a12b72968bfadc530b5e370a04d7d`
+
+The contract:
+- preserves exact note pitch/onset identity;
+- keeps uncertain evidence visible rather than silently deleting it;
+- defines no composite confidence score;
+- authorizes no automatic correction;
+- authorizes no automatic stem mutation;
+- authorizes no automatic role reassignment;
+- uses no S0-fitted thresholds.
+
+Presentation states:
+- `complete_tab_eligible`
+- `evidence_visible_review_required`
+- `no_reliable_note_evidence`
+
+Fail-closed reason codes include:
+- `PAIR_ROLE_AMBIGUITY_DUPLICATE_CLASS_CANDIDATE`
+- `PAIR_MEMBER_MISSING_OR_SILENT`
+- `PAIR_ROLE_RELATIONSHIP_AMBIGUOUS`
+- all existing note-evidence evaluator failure reasons
+
+Descriptive cross-stem diagnostics can be attached to the presentation packet only when explicitly marked descriptive-only; they cannot own a hidden acceptance rule.
+
+Detailed:
+- `docs/astra/TRANSCRIPTION_UNCERTAINTY_PRESENTATION_V1.md`
+- `docs/astra/TRANSCRIPTION_UNCERTAINTY_PRESENTATION_V1.json`
+
+### Current project position
+
+The recent separator branch has now established:
+
+1. raw separator quality strongly affects downstream transcription stability;
+2. simple single-stem observability is insufficient for the hard duplicate-role case;
+3. same-note cross-stem transcription overlap also does not uniquely isolate that case;
+4. the frozen pair classifier can identify the known S0M10 duplicate-class condition, but safe automatic consolidation could not be prospectively established;
+5. therefore the safest useful behavior is to expose uncertainty explicitly rather than make hidden audio/note corrections.
+
+Keep all prior freezes:
+- `PairClassifierConfig V1` unchanged;
+- Basic Pitch settings unchanged;
+- duplicate consolidation disabled;
+- no S0-fitted reliability/overlap threshold;
+- no real-recording automatic action;
+- `main` unchanged.
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task:** integrate **Transcription Uncertainty Presentation V1** into a development-only end-to-end evidence packet, without connecting it to production delivery.
+
+Build one deterministic integration test/path that composes:
+1. adapted note evidence / evaluator result;
+2. `noteEventExposure.mjs`;
+3. pair-context diagnostics when present;
+4. descriptive cross-stem diagnostics when present;
+5. `transcriptionUncertaintyPresentation.mjs`.
+
+Required proof cases:
+- clean complementary pair + accepted note evidence -> `complete_tab_eligible`;
+- duplicate-class pair + otherwise accepted note evidence -> exact notes remain visible but state becomes `evidence_visible_review_required`;
+- unresolved note-evidence failure -> evaluator reason codes remain visible and complete-tab events are empty;
+- no component is allowed to change MIDI or onset identity;
+- no confidence score or automatic correction may appear.
+
+Do not connect this packet to the user-facing app, production API, commercial recordings, or `main` yet. The next scientific step after the integration proof should be to define what new holdout evidence would be required before any automatic trust/flagging threshold could be considered.
