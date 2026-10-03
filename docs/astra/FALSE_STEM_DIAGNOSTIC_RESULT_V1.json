@@ -1,0 +1,32 @@
+{
+  "runId": 37084524274,
+  "artifactId": 11260511674,
+  "artifactDigest": "sha256:d7960c731d3815f49654bc1edec3aacaf9cf64232c535bc03e0ed016779f4470",
+  "absentClaims": [
+    {
+      "id": "S0M07_bass",
+      "kind": "near_silent_false_stem"
+    },
+    {
+      "id": "S0M08_guitar",
+      "kind": "near_silent_false_stem"
+    },
+    {
+      "id": "S0M09_bass",
+      "kind": "near_silent_false_stem"
+    },
+    {
+      "id": "S0M10_guitar",
+      "kind": "substantial_false_stem"
+    }
+  ],
+  "keyPattern": {
+    "fixture": "S0M10",
+    "guitarStemWinner": "bass",
+    "bassStemWinner": "bass",
+    "guitarStemEnergy": 0.004934578234461636,
+    "bassStemEnergy": 0.004115092236599554,
+    "energyDifferenceDb": 0.7887046478321211
+  },
+  "nextDirection": "pair_level_duplicate_class_detector"
+}
