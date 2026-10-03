@@ -1,0 +1,18 @@
+{
+  "runId": 37087791658,
+  "artifactId": 11260744333,
+  "artifactDigest": "sha256:54c0717f54147c0473f5db2b1bace917aac61c9a0e157e901a6a202922ed02c5",
+  "duplicateCandidateCount": 1,
+  "keyFixture": "S0M10",
+  "falseStem": "guitar",
+  "companionStem": "bass",
+  "rawBassSiSdrDb": 0.07280805691751822,
+  "mutedBassSiSdrDb": 0.07280805691751822,
+  "mergedBassSiSdrDb": 30.569452709265875,
+  "mergeImprovementDb": 30.49664465234836,
+  "rawReconstructionMaxAbsError": 0.008215859532356262,
+  "muteReconstructionMaxAbsError": 0.32986539602279663,
+  "mergeReconstructionMaxAbsError": 0.008215859532356262,
+  "decision": "duplicate_class_consolidation_is_promising_s0_only",
+  "nextDirection": "expand_controlled_duplicate_class_fixture_set_before_real_audio"
+}
