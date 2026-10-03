@@ -9068,3 +9068,58 @@ If green:
 6. decide whether next step is chord-set matching/role assignment versus a different polyphonic front end;
 7. preserve spectral bass V1 as current strongest bass research candidate;
 8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Guitar chord/voicing diagnostic V1 — authoritative green result
+
+Run `37158245543` succeeded.
+- artifact id `11286531241`
+- artifact digest `sha256:269d90fc5501cade98c5d0ccb24d189f2983c40ff88fd5a60640dcb9fd09470a`
+- result JSON SHA-256 `97a2f0a9cf0e88cb4b92dc60be019894433bbb750fbf805c287937b28e4df878`
+
+Rhythm:
+- targets: 946
+- nearby prediction cluster found: 596 = 63.00%
+- exact target MIDI present anywhere in cluster: 314 / 596 = 52.68%
+- target pitch class present anywhere in cluster: 400 / 596 = 67.11%
+- matched-cluster multiplicity:
+  - 1 note: 290
+  - 2 notes: 246
+  - 3 notes: 60
+- mean extra predicted notes per found cluster: 0.614
+- when exact MIDI missing, strongest intervals include 12, 5, 9, 4, 7, 3 semitones.
+
+Lead:
+- targets: 447
+- nearby prediction cluster found: 240 = 53.69%
+- exact target MIDI present anywhere in cluster: 135 / 240 = 56.25%
+- target pitch class present anywhere in cluster: 166 / 240 = 69.17%
+- matched-cluster multiplicity:
+  - 1 note: 147
+  - 2 notes: 79
+  - 3 notes: 14
+- mean extra predicted notes per found cluster: 0.446
+- when exact MIDI missing, strongest intervals include 12, 5, 3, 2, 9, 7, 4 semitones.
+
+Interpretation:
+- Basic Pitch is often producing useful polyphonic information near the correct onset;
+- a substantial fraction of current guitar misses are likely decoding/assignment/voicing problems rather than complete absence of pitch evidence;
+- pitch-class presence is materially higher than exact-MIDI presence, so octave/voicing placement still matters;
+- do not replace the transcription front end yet;
+- next work should build a reference-blind chord-cluster decoder / role assignment layer that operates on frozen predictions and V4-origin timing;
+- candidate must be frozen before professional scoring.
+
+### Exact next resume instruction
+
+1. Preserve spectral bass V1 as current strongest bass research candidate.
+2. Keep guitar frozen note evidence and V4-origin timing unchanged.
+3. Build a reference-blind guitar chord-cluster decoder:
+   - group near-simultaneous notes;
+   - use local continuity and register to assign likely rhythm vs lead roles;
+   - preserve multiple notes when evidence supports a chord;
+   - do not read professional references during candidate construction;
+   - freeze candidate before scoring.
+4. First version should avoid arbitrary pitch invention; only select/reassign among already-predicted notes, with optional octave normalization only if independently justified.
+5. Score rhythm, lead, and combined guitar after freeze.
+6. If this materially improves guitar, continue toward string/fret mapping.
+7. Keep `main` unchanged.
