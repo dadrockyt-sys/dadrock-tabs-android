@@ -8033,3 +8033,55 @@ If green:
 6. if scores improve materially, keep the V3 timing map frozen and move next to pitch/string/fret refinement rather than more timing work;
 7. if scores do not improve, diagnose scorer/reference step-coordinate assumptions before changing recognizer thresholds;
 8. keep `main` unchanged.
+
+
+## Timing-map attribution rescore V1 — authoritative green result 2026-10-03
+
+Authoritative run:
+- run `37141748903`
+- result: GREEN
+- artifact id: `11280744097`
+- artifact name: `gomyway-timing-map-attribution-rescore-v1`
+- artifact digest: `sha256:955fc8d261d6a24c29cbc3093573f81168abca649490b5fdf11e77590434039c`
+- result JSON SHA-256: `25d11929d5da30f6a5269219be24d402c6e9437fcd503dc0833311e205389515`
+
+Frozen inference was run once and shared across both timing maps:
+- whole mix predictions: 787
+- guitar stem predictions: 1065
+- bass stem predictions: 701
+
+Historical V2 map (133.8 BPM) separator scores:
+- rhythm: TP 56, P 5.4741%, R 5.9197%, F1 5.6882%, onset MAE 24.640 ms
+- lead: TP 45, P 4.4776%, R 10.0671%, F1 6.1983%, onset MAE 27.387 ms
+- combined guitar: TP 96, P 9.5522%, R 6.8916%, F1 8.0067%, onset MAE 26.096 ms
+- bass: TP 50, P 7.2886%, R 9.1408%, F1 8.1103%, onset MAE 22.036 ms
+
+Revalidated V3 map (~129.16 BPM) separator scores:
+- rhythm: TP 53, P 4.9906%, R 5.6025%, F1 5.2789%, onset MAE 24.619 ms
+- lead: TP 34, P 3.2661%, R 7.6063%, F1 4.5699%, onset MAE 22.414 ms
+- combined guitar: TP 76, P 7.3007%, R 5.4559%, F1 6.2449%, onset MAE 24.292 ms
+- bass: TP 157, P 22.6551%, R 28.7020%, F1 25.3226%, onset MAE 19.443 ms
+
+Revalidated-minus-historical deltas:
+- rhythm: TP -3, F1 -0.409 percentage points
+- lead: TP -11, F1 -1.628 percentage points
+- combined guitar: TP -20, F1 -1.762 percentage points
+- bass: TP +107, F1 +17.212 percentage points
+
+Scientific interpretation:
+- bass was strongly timing-map limited; correcting the clock increased bass TP from 50 to 157 and F1 from 8.11% to 25.32% with identical predictions;
+- guitar did not improve under the new global clock and actually declined slightly;
+- therefore the remaining guitar bottleneck is not the same global tempo error that affected bass;
+- before changing Basic Pitch thresholds or separator settings, diagnose guitar beat/bar phase and scorer step-coordinate assumptions against the revalidated map;
+- preserve the revalidated timing map frozen while performing this diagnosis.
+
+### Exact next resume instruction
+
+Build a guitar-only timing/coordinate diagnostic using the revalidated V3 map and the same frozen inference stack.
+1. Do not tune or mutate the map.
+2. For rhythm and lead separately, measure nearest exact-MIDI onset errors without the 50 ms cutoff.
+3. Test diagnostic integer beat shifts / bar-phase offsets only after inference.
+4. Report early/middle/late error, per-measure concentration, and whether a simple beat/bar phase correction explains the missed matches.
+5. If no simple timing-phase explanation exists, move to pitch/voicing/string-fret recognition.
+6. Keep bass on the revalidated V3 map.
+7. Keep `main` unchanged.
