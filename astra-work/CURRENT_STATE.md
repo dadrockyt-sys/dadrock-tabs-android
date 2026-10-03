@@ -9168,3 +9168,51 @@ If green:
 5. if it fails, conclude Basic Pitch chord evidence is insufficiently separable by simple register/continuity and consider a different polyphonic front end;
 6. preserve spectral bass V1 as current strongest bass candidate;
 7. keep V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Reference-blind guitar chord-role decoder V1 — authoritative green result
+
+Run `37158385869` succeeded.
+
+Frozen candidate:
+- artifact id `11285559715`
+- digest `sha256:795ebbdd20ec1723ef8a45d54d0caee88c30a70f47bfec7aba5f51406e6ab31f`
+- input guitar predictions: 1065
+- rhythm candidate: 1062
+- lead candidate: 263
+
+Score artifact:
+- artifact id `11286890764`
+- digest `sha256:fa150224cd992f11c6b4ae58cf95bfa05553b8b5a13a1ad5e30b74c68a0bb928`
+- score JSON SHA-256 `41c2aaa360aec1a843487fffe19be6d7d448ee18cebce58ce8bd332b0d21f415`
+
+Rhythm:
+- baseline TP 320, F1 31.82%
+- decoded TP 320, F1 31.87%
+- effectively neutral
+
+Lead:
+- baseline TP 133, F1 17.84%
+- decoded TP 40, F1 11.36%
+- severe recall collapse
+
+Combined guitar:
+- baseline TP 427, F1 35.04%
+- decoded TP 436, F1 32.40%
+- TP +9 but precision loss causes F1 -2.64 percentage points
+
+Conclusion:
+- reject simple register/continuity role assignment V1;
+- preserving many rhythm notes while choosing one upper lead voice is too aggressive for lead;
+- Basic Pitch contains useful polyphonic evidence, but simple local role splitting cannot reliably map it into rhythm vs lead;
+- do not tune this heuristic against Go My Way.
+
+### Exact next resume instruction
+
+1. Keep spectral bass V1 as current strongest bass research candidate.
+2. Keep V4-origin timing and frozen guitar note evidence unchanged.
+3. Stop simple guitar role-assignment heuristics.
+4. Next direction: richer polyphonic/chord-set modeling or an alternate polyphonic transcription front end.
+5. Before introducing a new model, audit available repo/dependency options for guitar-capable polyphonic transcription and/or harmonic salience representations.
+6. Prefer a reference-blind candidate generation path with post-freeze professional scoring.
+7. Keep `main` unchanged.
