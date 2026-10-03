@@ -8350,3 +8350,82 @@ Independent-origin validation status:
 - repo contains Stairway audio and a trusted position/voicing reference, but that fixture lacks absolute beat/onset timing;
 - therefore Stairway cannot honestly validate the V4 origin clock yet;
 - do not claim prospective origin-rule validation from it.
+
+
+## V4-origin frozen note evidence V1 — authoritative green result 2026-10-03
+
+Authoritative run:
+- run `37146481347`
+- result: GREEN
+- artifact id: `11282827368`
+- artifact name: `gomyway-v4-origin-frozen-note-evidence-v1`
+- artifact digest: `sha256:2725447db591a39902baa16f7d33cb985694f01ba382084ab6c8608d0aa3d32b`
+
+Frozen prediction counts:
+- whole mix: 787
+- guitar stem: 1065
+- bass stem: 701
+
+Frozen timing map binding:
+- V4-origin timing-map SHA-256: `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`
+
+Scientific value:
+- future pitch/voicing/string-fret diagnostics can reuse exact saved note evidence;
+- no need to rerun BS-Roformer or Basic Pitch for each diagnostic;
+- removes accidental inference variation and shortens subsequent experiments.
+
+## V4-origin pitch-error diagnostic V1 — launched 2026-10-03
+
+Purpose:
+- determine what remains after the major timing-origin correction;
+- onset-match frozen predictions to professional targets without requiring MIDI equality first;
+- then inspect MIDI error distribution.
+
+Diagnostics by role:
+- rhythm from frozen guitar stem;
+- lead from frozen guitar stem;
+- bass from frozen bass stem.
+
+Reported categories:
+- exact MIDI;
+- ±1 semitone;
+- ±2 semitones;
+- ±3–5 semitones;
+- ±12 semitone octave errors;
+- other pitch/voicing errors;
+- median/mean absolute MIDI error among onset-matched pairs;
+- onset-matched target recall.
+
+No prediction mutation, no threshold search, no timing tuning.
+
+Files:
+- `astra_backend/evaluation/gomyway_v4_origin_pitch_error_diagnostic_v1.py`
+- `.github/workflows/astra-gomyway-v4-origin-pitch-error-diagnostic-v1.yml`
+
+Commits:
+- implementation: `b102d5a3fa8f447bd940e13a80b93edd3d924bcc`
+- workflow launch: `717497b5098de2281df7fc066437b3d115efa338`
+
+Authoritative run:
+- run `37147588363`
+- head `717497b5098de2281df7fc066437b3d115efa338`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37147588363
+
+### Exact next resume instruction
+
+Resume from run `37147588363`.
+
+If green:
+1. record artifact ID/digest and JSON SHA;
+2. record onset-matched target recall for rhythm/lead/bass;
+3. record exact-MIDI rate among onset-matched pairs;
+4. record semitone/octave/error buckets and MIDI delta histogram;
+5. determine whether the next bottleneck is:
+   - small pitch displacement,
+   - octave confusion,
+   - chord/voicing confusion,
+   - or missing onset evidence;
+6. build the next recognizer experiment only around the dominant measured error class;
+7. do not retune timing further on Go My Way;
+8. keep V4-origin post-hoc/research-only and keep `main` unchanged.
