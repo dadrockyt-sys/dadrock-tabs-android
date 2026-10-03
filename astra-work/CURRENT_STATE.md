@@ -7292,3 +7292,65 @@ Required boundaries:
 7. compare with the same diagnostic metrics and never post-hoc repair the frozen candidate;
 8. only integrate note events into V154 coordinates if V3 becomes materially coherent;
 9. keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V3 — launched 2026-10-03
+
+Goal:
+- remove the major long-range timing drift before doing more guitar/bass note work;
+- test whether accurate beat timing can provide a stable coordinate system for later transcription.
+
+Key V3 change:
+- the V143 estimator quantizes tempo to an integer STFT-frame lag, which can create meaningful BPM error and seconds of accumulated drift over a full song;
+- V3 replaces that dependency with long-range beat tracking via pinned `librosa==0.10.2.post1`.
+
+Reference-blind V3 candidates:
+- `raw_drums_t100`
+- `raw_drums_t300`
+- `raw_mix_t100`
+- `raw_mix_t300`
+
+Generation boundaries:
+- source audio unchanged;
+- fixed BS-Roformer raw drums used as the primary rhythm-bearing source family;
+- raw mix retained as control;
+- no professional timing map or scorer rows are read during candidate generation;
+- primary candidate is selected before reference access using audio-only beat activity, interval regularity, and bar confidence;
+- all candidates remain provisionally 4/4 for measure labeling.
+
+New diagnostic:
+- post-freeze comparison now includes beat-level nearest-reference timing errors in addition to measure-start alignment;
+- this separates true beat tracking quality from bar-phase/measure-number errors.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v3.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v3.yml`
+
+Commits:
+- V3 implementation: `a36e52767e6deb42a429794d989c129eb0497aaf`
+- V3 workflow launch: `cf2fa794a5a8d92dd313c794ee8bf81772898247`
+
+Authoritative V3 run:
+- run `37124430872`
+- head `cf2fa794a5a8d92dd313c794ee8bf81772898247`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37124430872
+
+### Exact next resume instruction
+
+Resume from run `37124430872`.
+
+1. If freeze succeeds, record:
+   - frozen artifact id/digest and JSON SHA-256;
+   - prospectively selected primary candidate;
+   - tracked median BPM, quality score, bar confidence, beat count for all four candidates.
+2. If comparison succeeds, record for each candidate:
+   - beat-level median/mean/p95 absolute error;
+   - measure best shift and median/mean absolute error;
+   - predicted drift across 113 measures.
+3. Determine first whether beat tracking itself is materially accurate.
+4. If beat-level timing is strong but measure alignment remains weak, focus V4 specifically on downbeat/bar phase and meter exception detection rather than changing beat tracking.
+5. If beat-level timing is still drifting, improve long-range beat trajectory in a separately frozen V4.
+6. Do not use the professional map to alter V3 candidates.
+7. Only after timing is coherent should guitar/bass events be remapped and rescored.
+8. Keep `main` unchanged.
