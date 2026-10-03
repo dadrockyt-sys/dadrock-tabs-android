@@ -8499,3 +8499,47 @@ Reruns:
 Resume from latest run `37148114794`, not the intermediate `37148106233`.
 If green, record the pitch-error diagnostic artifact and dominant error buckets.
 If it fails, inspect the self-contained script directly; do not reinstall inference dependencies.
+
+
+## V4-origin pitch-error diagnostic V1 — green result
+
+Run `37148114794` succeeded.
+- artifact id `11282548854`
+- artifact digest `sha256:123c33abf2dee36b93b6f867648f899c4293e6ec9b1ceb1bc9d0e8453cc18337`
+- result JSON SHA-256 `80ee32f11b24e77972305ad16d2ae4f6d5ce6ba24329f2aa0ef6972e0d8c716b`
+
+Rhythm guitar:
+- onset-matched 444/946 targets = 46.93%
+- exact MIDI among onset matches 147/444 = 33.11%
+- median absolute MIDI error 5 semitones
+- octave errors 102; ±3–5 semitone errors 73; other 110
+
+Lead guitar:
+- onset-matched 222/447 targets = 49.66%
+- exact MIDI among onset matches 90/222 = 40.54%
+- median absolute MIDI error 4 semitones
+- octave errors 48; ±3–5 semitone errors 26; other 49
+
+Bass:
+- onset-matched 419/547 targets = 76.60%
+- exact MIDI among onset matches 318/419 = 75.89%
+- median absolute MIDI error 0 semitones
+- octave errors 62 are the dominant residual error class
+
+Interpretation:
+- V4-origin timing is no longer the main bottleneck.
+- Bass is now mostly correct when an onset is found; residual bass error is primarily octave confusion.
+- Guitar still has both missing-onset coverage and large pitch/voicing errors.
+- Guitar errors are not mainly ±1 semitone tuning mistakes.
+
+### Next resume instruction
+
+Keep V4-origin timing frozen and reuse note-evidence artifact `11282827368`.
+Build an octave/voicing attribution diagnostic only:
+1. measure wrong guitar pitches recoverable by ±12;
+2. measure pitch-class-correct but octave-wrong cases;
+3. measure common interval errors separately for rhythm and lead;
+4. measure bass +12 recovery upper bound;
+5. do not apply corrections yet;
+6. choose the next recognizer experiment from the dominant measured error class;
+7. keep `main` unchanged.
