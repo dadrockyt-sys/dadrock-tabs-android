@@ -7549,3 +7549,70 @@ Required direction:
 8. post-freeze, report beat-count difference, early/middle/late signed error, sequence-aligned drift, and measure diagnostics;
 9. do not tune cleanup, separator, or guitar/bass recognizer during this timing phase;
 10. keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V5 — launched 2026-10-03
+
+Goal:
+- reject the recurring ~129 BPM false periodic interpretation that survived V1–V4;
+- derive timing from cross-source transient consensus rather than single-envelope autocorrelation.
+
+V5 design:
+- high-resolution onset envelopes from raw drums and raw mix;
+- continuous global BPM search from 100–160 BPM;
+- coarse 0.10 BPM search followed by 0.005 BPM refinement;
+- beat phase optimized from joint transient support;
+- lattice score rewards:
+  - drum onset support;
+  - mix onset support;
+  - cross-source agreement;
+  - lower fraction of weakly supported beat positions;
+- separate global and slowly varying local-tempo candidates;
+- local tempo profile constrained near the global consensus and smoothed generically;
+- professional timing/reference data absent from generation and primary selection.
+
+Reference-blind candidates:
+- `consensus_global`
+- `consensus_local`
+
+Post-freeze diagnostics:
+- candidate vs reference beat-count difference;
+- best beat-index shift;
+- median/mean/p95 beat error;
+- beat-drift slope and predicted full-song drift;
+- early/middle/late signed-error summaries;
+- separate measure-shift diagnostics.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v5.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v5.yml`
+
+Commits:
+- implementation: `f5ecc12c2d138ecb766bbc078ffff672caa0b19d`
+- workflow launch: `afe925cc19ac97de71aae0fd1f238bce84f13bc6`
+
+Authoritative V5 run:
+- run `37126810211`
+- head `afe925cc19ac97de71aae0fd1f238bce84f13bc6`
+- status at this update: IN PROGRESS
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37126810211
+
+### Exact next resume instruction
+
+Resume from run `37126810211`.
+
+1. If freeze succeeds, record:
+   - frozen artifact id/digest and bundle SHA-256;
+   - primary candidate chosen before reference access;
+   - global consensus BPM, quality score, bar confidence, beat count, local tempo summary.
+2. If comparison succeeds, prioritize:
+   - beat-count difference;
+   - best beat-index shift;
+   - median/mean/p95 beat error;
+   - early/middle/late signed errors;
+   - predicted full-song beat drift.
+3. If drift collapses materially, proceed next to downbeat/bar/meter labeling while keeping the V5 beat trajectory frozen.
+4. If drift does not collapse, diagnose whether inserted/missing beats or tempo trajectory remain the dominant issue; do not tune against the professional reference.
+5. Do not change cleanup, separator, or note recognition.
+6. Do not remap guitar/bass until beat timing is coherent.
+7. Keep `main` unchanged.
