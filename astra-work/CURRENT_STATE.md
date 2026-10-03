@@ -9776,3 +9776,107 @@ If green:
 6. if stems are mostly complementary and duplicate-class windows are rare/weak, do not force cleanup; return to stricter activation ranking instead;
 7. do not score professional tabs until any cleaned-audio candidate has been frozen;
 8. preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifacts, and `main` unchanged.
+
+
+## Real-song guitar/bass pair diagnostic V1 — authoritative green result
+
+Run `37161317425` succeeded.
+
+Artifact:
+- id `11287014871`
+- digest `sha256:0add7bf42c15c9e3704e7c340ec01bc94460d8025906b31af6abdcad6fdf421b`
+- JSON SHA-256 `54e53f41ec0d1e857db36da44d86cfe954ef1d0ae55cd92b726c80dd4f3a8de3`
+
+Separated stem identities:
+- guitar stem SHA-256 `9e85726183277ef21792cadb1376c6955c5d45f3dcded28897267c028331cc03`
+- bass stem SHA-256 `295262f57678353230db491452b379beeb68e98b2b8bfa798f094cd05f5d01d5`
+
+Window result:
+- total windows: 53
+- complementary_pair: 49
+- missing_or_silent_member: 3
+- ambiguous_pair: 1
+- duplicate-class candidate windows: 0
+
+Whole-song evidence:
+- guitar stem YAMNet:
+  - guitar 0.1586953
+  - bass 0.0228594
+- bass stem YAMNet:
+  - guitar 0.0676297
+  - bass 0.1119774
+- guitar energy 0.01813694
+- bass energy 0.03246500
+- zero-lag correlation 0.0038796
+- guitar shared spectral fraction 0.0076854
+- bass shared spectral fraction 0.0042933
+- symmetric shared spectral fraction 0.0059894
+
+Conclusion:
+- separator is already producing a strongly complementary guitar/bass pair on this real song;
+- there is no evidence for localized duplicate-class guitar<->bass contamination under the frozen diagnostic;
+- do NOT force cleanup or reassignment;
+- preserve the raw BS-Roformer guitar stem as current upstream guitar source.
+
+## Contour-corroborated Basic Pitch activation recovery V2 — launched
+
+Reason:
+- cleanup is not justified by the real-stem diagnostic;
+- activation recovery V1 proved additional true-note evidence exists, but broad onset+frame admission caused precision collapse;
+- Basic Pitch exposes an independent contour representation at 3 bins per semitone;
+- V2 requires contour-local corroboration while keeping onset/frame thresholds unchanged.
+
+Verified Basic Pitch mapping:
+- MIDI note offset: 21
+- contour bins per semitone: 3
+- annotation base frequency: 27.5 Hz
+- contour tensor: 264 bins = 88 semitones x 3 bins
+
+V2 construction:
+- frozen raw activation artifact only;
+- no professional reference read during candidate construction;
+- onset >= 0.5 unchanged;
+- frame >= 0.3 unchanged;
+- minimum note scale 127.70 ms unchanged;
+- onset must be a local temporal maximum;
+- candidate semitone's contour group max must be >= adjacent semitone contour-group maxima at the same frame;
+- no role assignment;
+- no threshold search;
+- freeze candidate before scoring.
+
+Files:
+- `astra_backend/evaluation/gomyway_basic_pitch_activation_recovery_v2.py`
+- `astra_backend/evaluation/score_gomyway_basic_pitch_activation_recovery_v2.py`
+- `.github/workflows/astra-gomyway-basic-pitch-activation-recovery-v2.yml`
+
+Commits:
+- decoder `a553b2cc7790e491dafbad3a9d6c514960b54765`
+- scorer `5febd82e656532fcd7d34858da5d2b1a8542ccd8`
+- workflow launch `7fe62969dcf48bc7b5244efd0bd5822449445cab`
+
+Authoritative run:
+- run `37162403098`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37162403098
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37162403098`.
+If green:
+1. record frozen candidate artifact ID/digest and candidate JSON SHA;
+2. record counts:
+   - raw onset/frame peaks;
+   - contour-corroborated peaks;
+   - proposals after separation;
+   - recovered additions;
+   - combined candidate count;
+3. record score artifact ID/digest and score JSON SHA;
+4. compare rhythm, lead, and combined guitar TP/P/R/F1 against:
+   - V4-origin baseline rhythm F1 31.82%
+   - lead F1 17.84%
+   - combined guitar F1 35.04%
+   - rejected recovery V1 combined F1 26.75%
+5. if V2 restores substantial precision while keeping useful TP gains, preserve it as strongest guitar candidate;
+6. if V2 still collapses precision, stop raw-activation recovery and move to a different polyphonic guitar front end rather than tuning against Go My Way;
+7. do not add audio cleanup;
+8. preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifact, and `main` unchanged.
