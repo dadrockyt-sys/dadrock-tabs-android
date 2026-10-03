@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "kind": "gomyway-full-song-professional-benchmark-v1-result",
+  "date": "2026-10-03",
+  "runId": 37094392537,
+  "headCommit": "b36c99a51fca367d288862dda351515457e6d3af",
+  "artifactId": 11262994060,
+  "artifactDigest": "sha256:ae73d963ef985beaf26cf9e7c1cbd1780e0bb1e4757e40f6ae3c85c3662045b0",
+  "source": {
+    "mainCommit": "74dacf322bb979c26a47786e2380c59d2d40e364",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioGitBlob": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+  },
+  "predictions": {
+    "wholeMix": 787,
+    "rawGuitarStem": 1065,
+    "rawBassStem": 701
+  },
+  "rhythm": {
+    "pitchedTargets": 971,
+    "wholeMix": {
+      "predictions": 766,
+      "tp": 18,
+      "fp": 748,
+      "fn": 953,
+      "precision": 0.02349869451697128,
+      "recall": 0.018537590113285273,
+      "f1": 0.02072538860103627,
+      "maeSeconds": 0.03055007878243643
+    },
+    "rawGuitarStem": {
+      "predictions": 1025,
+      "tp": 36,
+      "fp": 989,
+      "fn": 935,
+      "precision": 0.0351219512195122,
+      "recall": 0.037075180226570546,
+      "f1": 0.036072144288577156,
+      "maeSeconds": 0.022826398628433067
+    },
+    "f1Delta": 0.015346755687540885
+  },
+  "interpretation": "separator_improves_exact_reference_agreement_but_transcription_remains_major_bottleneck",
+  "bassLeadPredictionCacheFrozen": true,
+  "productionPromotionAllowed": false,
+  "thresholdDefined": false
+}
