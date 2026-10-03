@@ -48,7 +48,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb  public/gomywayfullaitest.m4a" | sha256sum -c -
+          test "$(git hash-object "public/gomywayfullaitest.m4a")" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+          sha256sum "public/gomywayfullaitest.m4a"
           echo "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555  research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json" | sha256sum -c -
           echo "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1  research/v154-professional-references/scorer-ready/bass-scorer-ready.json" | sha256sum -c -
           echo "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be  research/v154-professional-references/scorer-ready/lead-scorer-ready.json" | sha256sum -c -
