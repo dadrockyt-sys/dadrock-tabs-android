@@ -1,0 +1,148 @@
+name: Astra Go My Way Spectral Bass Octave V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_reference_blind_spectral_bass_octave_v1.py'
+      - '.github/workflows/astra-gomyway-spectral-bass-octave-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' soundfile torch onnxruntime
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+
+      - name: Verify frozen note evidence and source
+        run: |
+          set -euo pipefail
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+          cd ..
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+
+      - name: Decode source
+        run: ffmpeg -hide_banner -loglevel error -y -i public/gomywayfullaitest.m4a -ar 44100 -ac 2 -c:a pcm_f32le gomywayfullaitest.wav
+
+      - name: Download and verify BS-Roformer
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve("https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",p)
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual!=expected: raise SystemExit(actual)
+          PY
+
+      - name: Separate bass stem
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import soundfile as sf
+          from astra_backend.evaluation.bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter
+          x,sr=sf.read("gomywayfullaitest.wav",dtype="float32",always_2d=True)
+          stems=BsRoformer6StemOnnxAdapter(Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")).separate_array(x,sr)
+          sf.write("gomyway-bass-stem.wav",stems["bass"],sr,subtype="FLOAT")
+          PY
+
+      - name: Build reference-blind spectral candidate
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_reference_blind_spectral_bass_octave_v1.py             --bass-wav gomyway-bass-stem.wav             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --output-json spectral-bass-octave-v1.json
+          sha256sum spectral-bass-octave-v1.json > spectral-bass-octave-v1.sha256
+          sha256sum gomyway-bass-stem.wav > gomyway-bass-stem.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-spectral-bass-octave-v1-frozen
+          path: |
+            spectral-bass-octave-v1.json
+            spectral-bass-octave-v1.sha256
+            gomyway-bass-stem.sha256
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf models/bs-roformer gomywayfullaitest.wav gomyway-bass-stem.wav
+
+  score-after-freeze:
+    needs: freeze-candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-blind-spectral-bass-octave-v1-frozen
+          path: candidate
+
+      - name: Verify frozen candidate
+        run: |
+          set -euo pipefail
+          cd candidate
+          sha256sum -c spectral-bass-octave-v1.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+
+      - name: Score after freeze
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/score_gomyway_reference_blind_bass_octave_resolver_v2.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --candidate candidate/spectral-bass-octave-v1.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --bass-reference research/v154-professional-references/scorer-ready/bass-scorer-ready.json             --output-json spectral-bass-octave-v1-score.json
+          sha256sum spectral-bass-octave-v1-score.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-spectral-bass-octave-v1-score
+          path: spectral-bass-octave-v1-score.json
+          retention-days: 30
