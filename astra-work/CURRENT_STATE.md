@@ -8962,3 +8962,62 @@ If green:
 6. if neutral/negative, stop octave correction on Go My Way and move to broader bass onset/pitch modeling;
 7. guitar remains untouched; its next work is harmonic/polyphonic voicing modeling;
 8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Spectral bass octave discriminator V1 — authoritative green result
+
+Run `37157163727` succeeded.
+
+Frozen candidate:
+- artifact id `11286259572`
+- digest `sha256:28909c85a24f25f6941fe17cd9c71b8673aca76bf1d1e10d319c583c27ff8798`
+- spectral octave changes: 68 bass notes
+- candidate construction remained reference-blind
+
+Score artifact:
+- artifact id `11285384776`
+- digest `sha256:dd2e0168fa411a0091b478bf67a2cf88e16f18f2b276bd548dad237bfb17a303`
+- score JSON SHA-256 `4d51869936784f9cffa8d7c7619fba73d8124d593c2c6e482f47075fc378c19b`
+
+Bass original:
+- TP 365
+- precision 52.82%
+- recall 66.73%
+- F1 58.97%
+
+Spectral corrected:
+- TP 372
+- precision 53.84%
+- recall 68.01%
+- F1 60.10%
+
+Delta vs baseline:
+- TP +7
+- F1 +1.13 percentage points
+
+Comparison to local-consensus V2:
+- V2 TP 369, F1 59.61%
+- spectral V1 TP 372, F1 60.10%
+- spectral V1 is the strongest bass research candidate so far, but improvement remains modest relative to 68 changed notes.
+
+Interpretation:
+- direct spectral evidence is more useful than local pitch-class/register consensus for bass octave discrimination;
+- keep spectral V1 as the current strongest bass research candidate;
+- do not threshold-tune further on Go My Way;
+- next major bottleneck is guitar harmonic/polyphonic voicing recognition, not bass octave placement.
+
+### Exact next resume instruction
+
+1. Preserve spectral bass V1 as current strongest bass research candidate.
+2. Do not tune its thresholds further on Go My Way.
+3. Move to guitar harmonic/voicing analysis using the frozen guitar note evidence and V4-origin timing.
+4. Measure chord-onset structure:
+   - how many simultaneous/near-simultaneous predicted notes occur per target onset;
+   - whether correct target pitch classes are present elsewhere in the local predicted chord even when the one-to-one greedy match chose a wrong MIDI;
+   - common missing/additional interval patterns for rhythm vs lead.
+5. Use this to decide whether the next recognizer needs:
+   - chord-set matching,
+   - role assignment,
+   - harmonic-context filtering,
+   - or a different polyphonic transcription front end.
+6. Keep `main` unchanged.
