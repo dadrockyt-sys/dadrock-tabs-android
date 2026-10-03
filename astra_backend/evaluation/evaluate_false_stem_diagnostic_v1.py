@@ -20,6 +20,7 @@ import tensorflow_hub as hub
 from bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter, FP16_SHA256
 from stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
 from pair_consistency_classifier_v1 import PairClassifierConfig, classify_pair
+from pair_coherence_v1 import pair_coherence_metrics
 
 TARGET_SR=16000
 GUITAR_LABELS={"Guitar","Electric guitar","Acoustic guitar","Steel guitar, slide guitar","Tapping (guitar technique)","Strum"}
@@ -126,7 +127,8 @@ def main():
     for mixture in sorted(set(r["mixture"] for r in rows)):
         guitar_row=next(r for r in rows if r["mixture"]==mixture and r["claimedStem"]=="guitar")
         bass_row=next(r for r in rows if r["mixture"]==mixture and r["claimedStem"]=="bass")
-        pairs.append({"mixture":mixture, **classify_pair(guitar_row,bass_row,pair_cfg)})
+        coherence=pair_coherence_metrics(raw["guitar"],raw["bass"],fs)
+        pairs.append({"mixture":mixture, **classify_pair(guitar_row,bass_row,pair_cfg), "pairCoherence":coherence})
     result={
         "schemaVersion":1,
         "kind":"s0-false-stem-diagnostic-v1",
