@@ -7354,3 +7354,63 @@ Resume from run `37124430872`.
 6. Do not use the professional map to alter V3 candidates.
 7. Only after timing is coherent should guitar/bass events be remapped and rescored.
 8. Keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V3 — authoritative green result 2026-10-03
+
+Authoritative workflow run:
+- run `37124430872`
+- both jobs GREEN.
+
+Frozen artifact:
+- id: `11275385622`
+- name: `gomyway-reference-independent-timebase-v3-frozen`
+- digest: `sha256:fe96731320da6e2a401cb7022cd3cd622e7b1ac8fee559a35202580d833325bc`
+- frozen bundle SHA-256: `a100b26a8cdb23f684973c741e82488262378abee5019122b98f8ca235536d65`
+
+Result artifact:
+- id: `11275260248`
+- name: `gomyway-reference-independent-timebase-v3-result`
+- digest: `sha256:a302b60997cd18fb817567a31532e0195241bb415533d916cf1de0eda1377ca3`
+
+Prospectively selected primary:
+- `raw_drums_t300`
+- median tracked tempo: `129.19921875 BPM`
+- audio-only quality score: `0.7815096352500305`
+- bar confidence: `0.06693575596776007`
+- beat count: `452`
+
+Beat-level post-freeze diagnostic for primary:
+- pair count: 452
+- median absolute error: `0.12508844160997512 s`
+- mean absolute error: `0.23974702913731824 s`
+- p95 absolute error: `0.22184693599774158 s`
+- mean signed error: `-0.10191760701242293 s`
+
+Measure-level post-freeze diagnostic for primary:
+- best integer shift: -1
+- median absolute error: `1.840728310657596 s`
+- mean absolute error: `2.013082533001295 s`
+- predicted drift across 113 measures: `7.899588849492435 s`
+
+V3 interpretation:
+- Beat placement is now materially closer than V1/V2 measure timing, with ~125 ms median nearest-reference beat error.
+- However long-range tempo remains too slow and accumulates ~7.9 s of drift.
+- This establishes that the next bottleneck is continuous/global tempo accuracy and sub-frame beat placement, not cleanup.
+- The measure/bar layer should not yet be repaired while the beat trajectory itself has this systematic drift.
+
+### Exact next resume instruction
+
+Build **reference-independent timebase V4** focused narrowly on continuous tempo and sub-frame beat timing.
+
+Required direction:
+1. keep raw drums as the primary rhythm-bearing source family and raw mix as a control;
+2. estimate tempo continuously rather than selecting an integer frame-lag/bin;
+3. use higher-resolution onset analysis and/or quadratic interpolation around autocorrelation/periodicity peaks;
+4. optimize beat phase/period against audio onset evidence only;
+5. allow slowly varying beat period if justified by audio;
+6. freeze candidate(s) and audio-only selection before reference access;
+7. add beat-error drift diagnostics that show early/middle/late behavior;
+8. do not change cleanup or note recognition;
+9. do not map guitar/bass events until the timebase no longer has material systematic drift;
+10. keep `main` unchanged.
