@@ -9478,3 +9478,50 @@ Important correction discovered before launch:
    - threshold optimization against the Go My Way professional reference.
 
 This section is the authoritative resume point for the next model.
+
+
+## Raw Basic Pitch guitar activation diagnostic V1 — prepared, not launched
+
+Freeze run:
+- authoritative freeze run: `37159748378`
+- head: `53486477f9df3ff70abd88c8461c98a9a4a74fcd`
+- current observed state at this checkpoint: IN PROGRESS
+- completed successfully through immutable-source verification, source decode, and BS-Roformer download/SHA verification
+- current active step: `Separate guitar stem`
+- no activation artifact exists yet, so no professional-reference activation analysis has been launched
+
+Post-freeze diagnostic prepared:
+- `astra_backend/evaluation/gomyway_basic_pitch_guitar_activation_diagnostic_v1.py`
+- commit `c261c3caef82daa6058ae8127622e13a7b1fadc6`
+- `.github/workflows/astra-gomyway-basic-pitch-guitar-activation-diagnostic-v1.yml`
+- commit `908720e3be36322950ab806346d4cfe9d81b8e83`
+- workflow trigger is MANUAL ONLY (`workflow_dispatch`) so preparation cannot accidentally read professional references before freeze completion
+
+Frozen diagnostic contract:
+- download raw activation artifact only from run `37159748378`;
+- verify NPZ SHA against frozen metadata;
+- verify V4-origin timing SHA remains `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`;
+- use existing frozen thresholded note evidence from run `37146481347`;
+- read rhythm/lead professional references only in the diagnostic job after activation freeze;
+- descriptive only: no threshold search, no pitch correction, no candidate mutation;
+- measure exact target frame/onset activation, octave-alias activation, nearby semitone activation, target pitch rank, and missing-thresholded-event activation;
+- fixed descriptive bins and the existing Basic Pitch 0.5 onset / 0.3 frame thresholds are attribution markers only, not tuned decoder thresholds.
+
+### Exact next resume instruction
+
+1. Resume from freeze run `37159748378`.
+2. If the freeze run fails, inspect the failed job/log and repair only the failure; do not launch the diagnostic.
+3. If the freeze run is green:
+   - record artifact ID/digest;
+   - record NPZ SHA and metadata JSON SHA;
+   - record model-output keys/shapes/ranges and thresholded note-event count;
+   - verify the frozen artifact before any reference analysis.
+4. Only after that verification, manually dispatch `Astra Go My Way Basic Pitch Guitar Activation Diagnostic V1`.
+5. When diagnostic is green, record its artifact ID/digest and JSON SHA, then summarize rhythm vs lead:
+   - exact target activation distributions;
+   - octave-alias strength;
+   - nearby semitone/chord-neighbor strength;
+   - pitch-rank distributions;
+   - missing-thresholded-event counts with activation at/above the already-frozen Basic Pitch defaults.
+6. Decide from that descriptive evidence whether a new reference-blind activation decoder is justified or whether Basic Pitch's guitar front end should be retired for this material.
+7. Preserve spectral bass V1, V4-origin timing, frozen note evidence, and `main` unchanged.
