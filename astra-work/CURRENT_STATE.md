@@ -9021,3 +9021,50 @@ Interpretation:
    - harmonic-context filtering,
    - or a different polyphonic transcription front end.
 6. Keep `main` unchanged.
+
+
+## Guitar chord/voicing diagnostic V1 — launched
+
+Purpose:
+- investigate the largest remaining transcription bottleneck after timing and bass-octave improvements;
+- reuse frozen V4-origin guitar predictions;
+- determine whether correct target pitches are already present inside nearby predicted polyphonic clusters even when one-note matching reports the wrong MIDI.
+
+Method:
+- cluster frozen guitar predictions within 60 ms;
+- for each rhythm/lead target, find a prediction cluster within ±50 ms;
+- report:
+  - target-onset cluster coverage;
+  - exact target MIDI present anywhere in the cluster;
+  - target pitch class present anywhere in the cluster;
+  - cluster-size distribution;
+  - average extra notes per matched cluster;
+  - common interval distances when exact MIDI is missing;
+- diagnostic only; no prediction mutation.
+
+Files:
+- `astra_backend/evaluation/gomyway_v4_origin_guitar_chord_voicing_diagnostic_v1.py`
+- `.github/workflows/astra-gomyway-guitar-chord-voicing-diagnostic-v1.yml`
+
+Commits:
+- implementation: `49debb73c7f982ebc43d9648e601a87f212c5c0e`
+- workflow launch: `90ddf48b51c67750ccea217eb0caf2fbac65920d`
+
+Authoritative run:
+- run `37158245543`
+- head `90ddf48b51c67750ccea217eb0caf2fbac65920d`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37158245543
+
+### Exact next resume instruction
+
+Resume from run `37158245543`.
+If green:
+1. record artifact ID/digest and JSON SHA;
+2. record rhythm/lead target cluster coverage;
+3. record exact-MIDI-present-anywhere-in-cluster rates;
+4. record pitch-class-present-anywhere-in-cluster rates;
+5. record cluster multiplicity/extra-note statistics;
+6. decide whether next step is chord-set matching/role assignment versus a different polyphonic front end;
+7. preserve spectral bass V1 as current strongest bass research candidate;
+8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
