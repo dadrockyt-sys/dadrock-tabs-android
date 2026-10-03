@@ -7791,3 +7791,102 @@ Resume from audit run `37140101179`.
 5. If the audit unexpectedly supports 133.8 strongly, then resume estimator work.
 6. Do not remap guitar/bass until the timing reference itself is trustworthy.
 7. Keep `main` unchanged.
+
+
+## Professional timing integrity audit V1 — authoritative green result 2026-10-03
+
+Audit run:
+- `37140101179`
+- result: GREEN
+- artifact id: `11280530014`
+- artifact digest: `sha256:d25f548da6848d18de4ea7b18ea0a2eec78e7beb442a384f0c5c6e3466670c83`
+
+Immutable source:
+- `public/gomywayfullaitest.m4a`
+- SHA-256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- duration: `211.440907 s`
+
+Existing professional timing map V2:
+- base tempo: `129.0 BPM`
+- resolved tempo override: `133.8 BPM`
+- first measure offset: `7.1 s`
+- mapped span: `201.793722 s`
+- last measure end: `208.893722 s`
+- audio tail after mapped end: `2.547185 s`
+- 450 quarter-note beats implied by meter regions.
+- span at base 129 BPM would be `209.30232558139534 s`.
+- span at resolved 133.8 BPM is `201.79372197309416 s`.
+- base-vs-resolved span difference: `7.508603608301172 s`, essentially the same scale as the repeated candidate-vs-map drift.
+- map metadata still says `performanceDriftCorrection: pending`, no manual anchors, and `productionPromotionAllowed: false`.
+
+Alignment diagnosis provenance:
+- event count: 1629
+- best resolved tempo: 133.8 BPM
+- best offset: 7.1 s
+- correct candidate slots: 8
+- total matching occurrences: 19
+- diagnosis itself has `productionPromotionAllowed: false`.
+
+Scientific conclusion:
+- V2 timing map is internally consistent with its own 133.8-BPM assumption, but that assumption is not strong enough to remain the timing gold standard.
+- Multiple independent audio trackers converge near 129 BPM, while the old map's 7.5 s faster-span difference closely matches the apparent full-song drift.
+- Preserve V2 unchanged as historical diagnostic evidence, but do not continue forcing candidate timing toward 133.8 BPM.
+
+## Professional timing revalidation V1 — launched 2026-10-03
+
+Purpose:
+- construct a separately versioned research-only timing map using:
+  1. frozen V6 `mix_multifeature` beat ticks;
+  2. frozen V6 `drums_multifeature` beat ticks;
+  3. professional notation structure only: 113 measures, meter regions, exactly 450 quarter-note beats.
+- old V2 timing coordinates, 133.8 BPM, and 7.1 s offset are explicitly excluded from fitting.
+
+Revalidation method:
+- cluster V6 mix+drum ticks within 150 ms;
+- derive target interval from the audio clusters themselves;
+- dynamic-programming path selects exactly 450 beat starts;
+- rewards dual-source support and regular intervals;
+- penalizes single-source pulses and skipped cluster events;
+- uses professional measure/meter structure only after the 450-beat path is selected;
+- old timing map remains untouched.
+
+Offline sanity check of the frozen V6 evidence before workflow launch:
+- exact 450-beat consensus path was feasible;
+- provisional first beat ~`1.0623 s`;
+- provisional average tempo ~`129.16 BPM`;
+- provisional final measure endpoint ~`210.1 s`;
+- this leaves a short plausible audio tail rather than requiring the old ~7.5 s tempo compression.
+
+Files:
+- `astra_backend/evaluation/gomyway_professional_timing_revalidation_v1.py`
+- `.github/workflows/astra-gomyway-professional-timing-revalidation-v1.yml`
+
+Commits:
+- implementation: `ff4fe8c13349ea5f4e891759dcab6e6a1d24d0e8`
+- workflow launch: `a3a51eafbf45422563ccd94eef1b8dcfae86813c`
+
+Authoritative revalidation run:
+- run `37141135823`
+- head `a3a51eafbf45422563ccd94eef1b8dcfae86813c`
+- status at this update: IN PROGRESS
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37141135823
+
+### Exact next resume instruction
+
+Resume from run `37141135823`.
+
+1. If green, record:
+   - revalidated timing-map artifact ID/digest;
+   - exact map SHA-256 and audit SHA-256;
+   - cluster count;
+   - selected 450-beat path;
+   - first measure start;
+   - last measure end;
+   - average/median BPM;
+   - selected dual-source vs single-source counts;
+   - skipped cluster diagnostics.
+2. Do not overwrite `public/gomyway-professional-timing-map-v2.json`.
+3. Treat new V3 map as research-only until it passes diagnostic rescoring and independent anchor checks.
+4. Next, rescore existing raw Basic Pitch guitar/bass events against the revalidated timing map without changing Basic Pitch/separator settings.
+5. Compare against the old 133.8-map results to quantify how much of the previous poor guitar/bass score was timing-map error.
+6. Keep `main` unchanged.
