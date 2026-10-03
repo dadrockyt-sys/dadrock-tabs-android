@@ -1,0 +1,55 @@
+name: Astra Go My Way Guitar Chord Voicing Diagnostic V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_v4_origin_guitar_chord_voicing_diagnostic_v1.py'
+      - '.github/workflows/astra-gomyway-guitar-chord-voicing-diagnostic-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - name: Verify frozen inputs
+        run: |
+          set -euo pipefail
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+      - name: Run guitar chord/voicing diagnostic
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_v4_origin_guitar_chord_voicing_diagnostic_v1.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json gomyway-v4-origin-guitar-chord-voicing-diagnostic-v1.json
+          sha256sum gomyway-v4-origin-guitar-chord-voicing-diagnostic-v1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-v4-origin-guitar-chord-voicing-diagnostic-v1
+          path: gomyway-v4-origin-guitar-chord-voicing-diagnostic-v1.json
+          retention-days: 30
