@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "gomyway-three-role-professional-failure-anatomy-v1-record",
+  "date": "2026-10-03",
+  "runId": 37095293247,
+  "headCommit": "bedb64979c67a812dfb836d32a592be1ca921080",
+  "artifact": {
+    "id": 11264455653,
+    "digest": "sha256:c01753615a1caf6b3294d16321fd1fdbfbde01576fbdd5db114ca1f1de63f1fa"
+  },
+  "targets": 1965,
+  "aggregate": {
+    "noPredictionWithin50ms": 1183,
+    "exactMidiAvailable": 131,
+    "samePitchClassWrongOctave": 77,
+    "nearPitch1To2Semitones": 120,
+    "fourthFifthClassRelation": 217,
+    "otherWrongPitchOnly": 237
+  },
+  "roles": {
+    "rhythm": {
+      "noPredictionRate": 0.5859938208032955,
+      "exactAvailabilityRate": 0.037075180226570546,
+      "referenceMedianMidi": 55,
+      "predictionMedianMidi": 62
+    },
+    "lead": {
+      "noPredictionRate": 0.5906040268456376,
+      "exactAvailabilityRate": 0.09843400447427293,
+      "referenceMedianMidi": 64,
+      "predictionMedianMidi": 62
+    },
+    "bass": {
+      "noPredictionRate": 0.6398537477148081,
+      "exactAvailabilityRate": 0.09323583180987204,
+      "referenceMedianMidi": 38,
+      "predictionMedianMidi": 40
+    }
+  },
+  "decision": "prioritize_note_front_end_accuracy_against_full_professional_scorer_no_separator_mutation"
+}
