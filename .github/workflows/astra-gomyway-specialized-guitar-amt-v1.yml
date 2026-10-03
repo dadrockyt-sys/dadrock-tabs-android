@@ -33,7 +33,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg git
           python -m pip install --upgrade pip
-          python -m pip install             'numpy==1.26.4' 'scipy==1.11.4' 'librosa==0.10.2.post1'             soundfile pyyaml 'torch==2.7.1' onnxruntime
+          python -m pip install             'numpy==1.26.4' 'scipy==1.11.4' 'librosa==0.10.2.post1'             soundfile pyyaml tqdm 'torch==2.7.1' onnxruntime
 
       - name: Acquire pinned guitar-AMT code/config/checkpoint
         run: |
