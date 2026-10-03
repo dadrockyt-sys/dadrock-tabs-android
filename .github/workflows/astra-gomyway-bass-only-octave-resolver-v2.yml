@@ -1,0 +1,96 @@
+name: Astra Go My Way Bass-Only Octave Resolver V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_reference_blind_bass_octave_resolver_v2.py'
+      - 'astra_backend/evaluation/score_gomyway_reference_blind_bass_octave_resolver_v2.py'
+      - '.github/workflows/astra-gomyway-bass-only-octave-resolver-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - name: Verify note evidence
+        run: |
+          set -euo pipefail
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+      - name: Build reference-blind bass-only candidate
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_reference_blind_bass_octave_resolver_v2.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --output-json bass-octave-v2.json
+          sha256sum bass-octave-v2.json > bass-octave-v2.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-bass-octave-v2-frozen
+          path: |
+            bass-octave-v2.json
+            bass-octave-v2.sha256
+          retention-days: 30
+
+  score-after-freeze:
+    needs: freeze-candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-blind-bass-octave-v2-frozen
+          path: candidate
+      - name: Verify frozen candidate
+        run: |
+          set -euo pipefail
+          cd candidate
+          sha256sum -c bass-octave-v2.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+      - name: Score only after freeze
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/score_gomyway_reference_blind_bass_octave_resolver_v2.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --candidate candidate/bass-octave-v2.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --bass-reference research/v154-professional-references/scorer-ready/bass-scorer-ready.json             --output-json bass-octave-v2-score.json
+          sha256sum bass-octave-v2-score.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-bass-octave-v2-score
+          path: bass-octave-v2-score.json
+          retention-days: 30
