@@ -27,7 +27,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install runtime
-        run: python -m pip install 'numpy==1.26.4'
+        run: python -m pip install 'numpy==1.26.4' soundfile
 
       - uses: actions/download-artifact@v4
         with:
