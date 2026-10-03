@@ -1,0 +1,101 @@
+name: Astra YAMNet Recognizer Evaluation
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-yamnet-recognizer-eval
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    name: YAMNet zero-shot recognizer
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout astra-work
+        uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - name: Checkout private S0 fixtures
+        uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-private-fixtures
+          token: ${{ secrets.S0_FIXTURE_TOKEN }}
+          path: .private-s0-fixtures
+          fetch-depth: 1
+
+      - name: Prepare fixture directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d .private-s0-fixtures/s0_sources
+          rm -rf s0_sources
+          cp -R .private-s0-fixtures/s0_sources ./s0_sources
+          test "$(find s0_sources -maxdepth 1 -type f | wc -l)" -eq 16
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install recognizer runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile tensorflow-cpu==2.16.1 tensorflow-hub==0.16.1
+
+      - name: Compile recognizer evaluator
+        shell: bash
+        run: |
+          python -m py_compile astra_backend/evaluation/evaluate_yamnet_recognizer_v1.py
+
+      - name: Run zero-shot recognition evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/evaluate_yamnet_recognizer_v1.py \
+            --fixture-dir s0_sources \
+            --output-json yamnet_recognizer_result.json
+
+      - name: Write GitHub summary
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("yamnet_recognizer_result.json"))
+          s=d["summary"]
+          print("# Astra YAMNet zero-shot recognition")
+          print()
+          print(f"- Fixtures: **{d['fixtureCount']}**")
+          print(f"- Guitar correct vs bass evidence: **{s['guitarCorrectVsBassOnly']}/{s['guitarFixtures']}**")
+          print(f"- Bass correct vs guitar evidence: **{s['bassCorrectVsGuitarOnly']}/{s['bassFixtures']}**")
+          print(f"- Other mean guitar evidence: **{s['otherMeanGuitarEvidence']:.4f}**")
+          print(f"- Other mean bass evidence: **{s['otherMeanBassEvidence']:.4f}**")
+          print()
+          print("Zero-shot feasibility only; no cleanup gate threshold is frozen.")
+          PY
+
+      - name: Upload recognition JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-yamnet-recognizer-result
+          path: yamnet_recognizer_result.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Remove private fixtures
+        if: always()
+        shell: bash
+        run: rm -rf s0_sources .private-s0-fixtures
