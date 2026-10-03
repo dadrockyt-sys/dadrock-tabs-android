@@ -9567,3 +9567,81 @@ If green:
 6. do not threshold-search or tune against the reference;
 7. decide whether a new reference-blind activation decoder is justified or whether Basic Pitch should be retired for guitar on this material;
 8. preserve spectral bass V1, V4-origin timing, frozen note evidence, and main unchanged.
+
+
+## Raw Basic Pitch activation diagnostic V1 — authoritative green result
+
+Run `37160802070` succeeded.
+- diagnostic artifact id `11286754949`
+- artifact digest `sha256:08c68acf4fe2c3a76999e440c5fc6fc549af4ddddf52f38e14c4ba466e68b58d`
+- JSON SHA-256 `4c768d101f7d3726739b8cddbbfc9f5f967f45c04076b343223870d44a9d5f5a`
+
+Headline frozen counts:
+- rhythm targets 946; thresholded exact-event present 320; missing 626
+- lead targets 447; thresholded exact-event present 133; missing 314
+
+Missing-target activation evidence:
+- rhythm missing exact events:
+  - note >= frozen 0.3 frame threshold: 94 / 626 = 15.02%
+  - onset >= frozen 0.5 onset threshold: 45 / 626 = 7.19%
+  - either frozen threshold crossed: 110 / 626 = 17.57%
+  - note exact median 0.1074, p90 0.4135
+  - onset exact median 0.1647, p90 0.4211
+- lead missing exact events:
+  - note >= frozen 0.3 frame threshold: 70 / 314 = 22.29%
+  - onset >= frozen 0.5 onset threshold: 47 / 314 = 14.97%
+  - either frozen threshold crossed: 86 / 314 = 27.39%
+  - note exact median 0.1171, p90 0.5055
+  - onset exact median 0.1819, p90 0.6100
+
+Interpretation:
+- a nontrivial subset of missed professional guitar targets still has strong raw activation under the already-frozen Basic Pitch defaults;
+- this is stronger for lead than rhythm;
+- therefore Basic Pitch is not yet rejected as a guitar front end;
+- one bounded reference-blind activation-recovery decoder is justified;
+- do not threshold-search against Go My Way.
+
+## Reference-blind Basic Pitch activation recovery V1 — launched
+
+Construction:
+- starts from the frozen 1065 thresholded guitar notes;
+- reads only frozen raw activation NPZ + metadata + frozen note evidence;
+- no professional reference read during candidate construction;
+- no rhythm/lead role assignment;
+- uses the existing frozen Basic Pitch defaults:
+  - onset >= 0.5
+  - frame >= 0.3
+  - minimum note scale 127.70 ms
+- adds only local onset peaks supported by both frozen thresholds;
+- deduplicates against the frozen event list;
+- candidate is frozen before any professional scoring.
+
+Files:
+- `astra_backend/evaluation/gomyway_basic_pitch_activation_recovery_v1.py`
+- `astra_backend/evaluation/score_gomyway_basic_pitch_activation_recovery_v1.py`
+- `.github/workflows/astra-gomyway-basic-pitch-activation-recovery-v1.yml`
+
+Commits:
+- decoder `2f47099b3ff664899c89319eed389d98c0e7cb31`
+- scorer `2a1eb1f0ee4dfa7efc2bbfc8a52b98f6d725d8b9`
+- workflow launch `6cc224704c58cf85d82cee560b20dcba860c27aa`
+
+Authoritative run:
+- run `37160922200`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37160922200
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37160922200`.
+If green:
+1. record frozen candidate artifact ID/digest and candidate JSON SHA;
+2. record counts: raw activation proposals, recovered additions, combined candidate count;
+3. record score artifact ID/digest and score JSON SHA;
+4. compare rhythm, lead, and combined guitar TP/P/R/F1 against the unchanged V4-origin baseline:
+   - rhythm F1 31.82%
+   - lead F1 17.84%
+   - combined guitar F1 35.04%
+5. if recovery improves TP but precision collapses, reject this broad activation decoder and do not tune thresholds against Go My Way;
+6. if it materially improves lead or combined guitar without catastrophic precision loss, preserve it as the new strongest guitar candidate and move next to string/fret mapping;
+7. preserve spectral bass V1, V4-origin timing, frozen note evidence, and main unchanged.
