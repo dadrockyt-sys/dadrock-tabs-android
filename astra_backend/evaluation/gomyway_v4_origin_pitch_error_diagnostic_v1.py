@@ -7,13 +7,80 @@ Post-inference diagnostic only:
 - does not mutate or retune predictions
 """
 from __future__ import annotations
-import argparse, json
+import argparse, hashlib, json
 from pathlib import Path
 import numpy as np
 
-from evaluate_gomyway_full_song_professional_v2 import (
-    validate_reference, scorer_targets, filter_predictions, sha256_file
-)
+EXPECTED_SCORER_SHA256 = {
+    "rhythm": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+    "bass": "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1",
+    "lead": "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+}
+
+def sha256_file(path):
+    h=hashlib.sha256()
+    with Path(path).open("rb") as fh:
+        for chunk in iter(lambda:fh.read(1024*1024),b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def validate_reference(role,path):
+    actual=sha256_file(path)
+    if actual != EXPECTED_SCORER_SHA256[role]:
+        raise RuntimeError(f"{role} scorer SHA mismatch: {actual}")
+    d=json.loads(Path(path).read_text())
+    if int(d.get("counts",{}).get("measures",-1)) != 113:
+        raise RuntimeError(f"{role} scorer measure count mismatch")
+    return d
+
+def excluded_measures(ref):
+    p=ref.get("normalizationPolicy",{})
+    out=set(int(x) for x in p.get("excludedSourceMeasures",[]))
+    if p.get("measure88Excluded") is True:
+        out.add(88)
+    return out
+
+def boundaries_map(timing):
+    rows={int(r["measureNumber"]):r for r in timing["measureBoundaries"]}
+    if set(rows) != set(range(1,114)):
+        raise RuntimeError("timing map must cover measures 1..113")
+    return rows
+
+def scorer_targets(role,ref,timing):
+    bounds=boundaries_map(timing)
+    excluded=excluded_measures(ref)
+    targets=[]
+    for i,note in enumerate(ref.get("notes",[])):
+        m=int(note["measure"])
+        if m in excluded:
+            raise RuntimeError(f"{role} scorer unexpectedly contains excluded measure {m}")
+        step=float(note["step"])
+        b=bounds[m]
+        start=float(b["startSeconds"])+(step/16.0)*float(b["durationSeconds"])
+        targets.append({"id":f"{role}:{i}:m{m}:s{step}","role":role,"midi":int(note["midi"]),
+                        "start":start,"measure":m,"step":step})
+    targets.sort(key=lambda x:(x["start"],x["midi"],x["id"]))
+    return targets,excluded
+
+def measure_for_time(t,timing):
+    for row in timing["measureBoundaries"]:
+        if float(row["startSeconds"]) <= t < float(row["endSeconds"]):
+            return int(row["measureNumber"])
+    return None
+
+def filter_predictions(predictions,timing,excluded):
+    first=float(timing["measureBoundaries"][0]["startSeconds"])
+    last=float(timing["measureBoundaries"][-1]["endSeconds"])
+    out=[]
+    for p in predictions:
+        t=float(p["start"])
+        if t < first or t >= last:
+            continue
+        m=measure_for_time(t,timing)
+        if m is None or m in excluded:
+            continue
+        q=dict(p); q["measure"]=m; out.append(q)
+    return out
 
 ONSET_TOL=0.05
 
