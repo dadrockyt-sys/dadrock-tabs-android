@@ -1,0 +1,13 @@
+{
+  "runId": 37082340739,
+  "artifactId": 11259456727,
+  "artifactDigest": "sha256:90ac2d210d8df9a0ee1b9b9d6ae3e09041acedaf477aeaa564d07c2445627b5d",
+  "mixtureCount": 12,
+  "cleanupAppliedCount": 0,
+  "meanTargetImprovementDb": 0,
+  "minimumTargetImprovementDb": 0,
+  "maximumTargetImprovementDb": 0,
+  "decision": "preserve_default_gate_passed_but_too_conservative",
+  "nextDirection": "separate_false_stem_suppression_from_target_bleed_cleanup",
+  "keyFalseStemFixture": "S0M10_guitar"
+}
