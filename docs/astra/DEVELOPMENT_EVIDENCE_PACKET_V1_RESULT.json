@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "development-end-to-end-evidence-packet-v1-result",
+  "date": "2026-10-02",
+  "runId": 37093151254,
+  "headCommit": "1652424308d9542f3eb4d8194ba0609f87dde5c8",
+  "conclusion": "success",
+  "proofs": {
+    "cleanComplementaryCompleteTabEligible": true,
+    "duplicatePairNotesRemainVisibleButReviewRequired": true,
+    "evaluatorFailureReasonsPreserved": true,
+    "exactMidiAndOnsetIdentityPreserved": true,
+    "compositeConfidenceScoreAbsent": true,
+    "automaticCorrectionAbsent": true,
+    "regressionSuitesPassed": true
+  },
+  "productionDeliveryAuthorized": false,
+  "mainChanged": false
+}
