@@ -9216,3 +9216,80 @@ Conclusion:
 5. Before introducing a new model, audit available repo/dependency options for guitar-capable polyphonic transcription and/or harmonic salience representations.
 6. Prefer a reference-blind candidate generation path with post-freeze professional scoring.
 7. Keep `main` unchanged.
+
+
+## Specialized guitar AMT V1 — launched
+
+Reason for pivot:
+- simple guitar chord-role decoder V1 failed to improve combined guitar and severely hurt lead recall;
+- repo audit found two alternate front-end paths:
+  - MR-MT3: previously failed its frozen Stage-A gate because zero predictions survived the predeclared guitar-program projection;
+  - specialized HCQT+Mel cascaded guitar transcription model: purpose-built six-string/fret-state network with MIT-labeled code and weights.
+- the older public GuitarProFX TabCNN checkpoint remains execution-blocked for commercial-use provenance and is not used here.
+
+Pinned specialized-guitar upstream:
+- code repo: `ErenReyhanlioglu/Guitar-Transcription`
+- code commit: `9f8e31d2ed42c2f8d155d6164ea2fdb43e285482`
+- code license: MIT
+- model source blob `src/models/cnn_mtl.py`: `cfe5a8e91d7315ad43f976bc114fdaba82838fbd`
+- weights repo: `ErenReyhanlioglu/Guitar-Transcription-Weights`
+- weights commit: `e2be2c66a71b76ced009afcd0f6bf837c0b9b8a3`
+- weights repo license: MIT
+- config path: `cnn_mtl_20251210_113013/config.yaml`
+- config git blob: `8fb170c504a7a43e49d65d14ae47944cee77d52e`
+- fold-1 checkpoint path: `cnn_mtl_20251210_113013/fold_1/model_best.pt`
+- checkpoint git blob: `82094eecad83603b331b1bfbce0f0310f8942df8`
+
+Model contract:
+- HCQT + Mel active features;
+- 6 strings;
+- 19 frets + silence;
+- standard tuning [40,45,50,55,59,64];
+- sample rate 22050;
+- hop 512;
+- 19-frame context;
+- cascaded auxiliary heads include multipitch, hand position, string activity, pitch class;
+- generic guitar output; no rhythm/lead identity during candidate construction.
+
+Experiment:
+- generate two reference-blind frozen candidates:
+  1. full decoded mix;
+  2. BS-Roformer guitar stem;
+- convert per-string frame-state transitions to note-onset events;
+- do not read professional references during candidate generation;
+- freeze both candidate JSON files + hashes first;
+- post-freeze score rhythm, lead, and combined guitar against V4-origin timing;
+- no threshold search or model mutation.
+
+Files:
+- `analyzer/gomyway_specialized_guitar_amt_freeze_v1.py`
+- `analyzer/score_gomyway_specialized_guitar_amt_v1.py`
+- `.github/workflows/astra-gomyway-specialized-guitar-amt-v1.yml`
+
+Commits:
+- freezer: `a8e9f694c8fe108fef02893d11be64cc37f7c2f4`
+- scorer: `2f3b0d9d44bfe86116bdd43e0274cb0b7a1a08b2`
+- workflow launch: `1f83cd483bb7a8e3efa65ce3cf82c36c1e6f5bee`
+
+Authoritative run:
+- run `37158683727`
+- head `1f83cd483bb7a8e3efa65ce3cf82c36c1e6f5bee`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37158683727
+
+### Exact next resume instruction
+
+Resume from run `37158683727`.
+If green:
+1. record frozen candidate artifact ID/digest;
+2. record exact config/checkpoint SHA-256 values emitted by workflow;
+3. record full-mix vs guitar-stem prediction counts;
+4. record score artifact ID/digest and per-input rhythm/lead/combined TP/P/R/F1;
+5. compare both candidates against Basic Pitch V4 baseline:
+   - rhythm F1 31.82%;
+   - lead F1 17.84%;
+   - combined guitar F1 35.04%;
+6. if specialized model materially improves combined guitar or lead, continue with its direct string/fret outputs;
+7. if both candidates underperform, stop generic front-end swapping and revisit training a clean Guitar-TECHS-derived model;
+8. preserve spectral bass V1 as strongest bass research candidate;
+9. keep `main` unchanged.
