@@ -1,0 +1,14 @@
+{
+  "runId": 37080742780,
+  "artifactId": 11258307460,
+  "artifactDigest": "sha256:2901f82fa01d9ed88886e02e23a3e3ef24519dbbc0af6c29ee714bc174b7fb6b",
+  "decision": "do_not_gate_cleanup_on_spectral_diagnostics_alone",
+  "descriptiveCorrelations": {
+    "interferencePressureVsCleanupImprovement": 0.0793,
+    "competitorDominanceVsCleanupImprovement": -0.0137,
+    "targetDominanceVsCleanupImprovement": 0.0401,
+    "stemToMixtureEnergyDbVsCleanupImprovement": -0.1078
+  },
+  "keyFalsePositiveFixture": "S0M10_guitar",
+  "nextDirection": "recognizer_gated_cleanup"
+}
