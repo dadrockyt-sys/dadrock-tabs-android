@@ -9880,3 +9880,77 @@ If green:
 6. if V2 still collapses precision, stop raw-activation recovery and move to a different polyphonic guitar front end rather than tuning against Go My Way;
 7. do not add audio cleanup;
 8. preserve spectral bass V1, V4-origin timing, frozen note evidence, raw activation artifact, and `main` unchanged.
+
+
+## Contour-corroborated Basic Pitch activation recovery V2 — authoritative green workflow, scientific rejection
+
+Run `37162403098` completed successfully.
+
+Frozen candidate:
+- artifact id `11288331810`
+- artifact digest `sha256:f4d02b5b9d03b0ce8f7116828a4881c85bbf308238d4c338c693478c919f40a3`
+- raw onset/frame peaks: 1490
+- contour-corroborated peaks: 1328
+- recovery proposals after separation: 1131
+- recovered additions: 984
+- combined candidate notes: 2049
+
+Score artifact:
+- artifact id `11288451308`
+- artifact digest `sha256:1042fd19687f2de071034e197ce5abc7c9d7865df79b24cfbc1efd3ad8072faa`
+
+Scientific result:
+- rhythm:
+  - TP 320 -> 338 (+18)
+  - F1 31.82% -> 22.59% (-9.23 percentage points)
+- lead:
+  - TP 133 -> 164 (+31)
+  - F1 17.84% -> 13.34% (-4.50 percentage points)
+- combined guitar:
+  - TP 427 -> 472 (+45)
+  - F1 35.04% -> 27.73% (-7.31 percentage points)
+
+Conclusion:
+- contour corroboration trims some false admissions versus recovery V1, but precision remains unacceptable;
+- raw Basic Pitch activation recovery is now CLOSED for this material;
+- do not continue threshold/search/ranking tuning against Go My Way;
+- preserve the original V4-origin Basic Pitch guitar baseline as the stronger Basic Pitch candidate.
+
+## Specialized guitar AMT V1 — runtime repair and relaunch
+
+Earlier run `37158683727` did NOT fail scientifically.
+It failed during the specialized AMT freeze step with:
+- `ModuleNotFoundError: No module named 'tqdm'`
+
+Before failure, the run had already:
+- acquired the pinned guitar-AMT code/config/checkpoint;
+- verified source identities;
+- acquired and verified BS-Roformer;
+- separated the guitar stem successfully.
+
+No model, checkpoint, config, scoring, or experiment contract is changed.
+Only the missing runtime dependency `tqdm` was added.
+
+Repair commit:
+- `83a2fb45dedd41507796e9b58343a9d1e4065db2`
+
+Authoritative relaunch:
+- run `37162480842`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37162480842
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37162480842`.
+If green:
+1. record frozen candidate artifact ID/digest;
+2. record config/checkpoint SHA-256 values emitted by workflow;
+3. record full-mix vs separated-guitar-stem event counts;
+4. record score artifact ID/digest and both score JSON SHA values;
+5. compare full-mix and guitar-stem specialized AMT results against the unchanged Basic Pitch V4 baseline:
+   - rhythm F1 31.82%
+   - lead F1 17.84%
+   - combined guitar F1 35.04%
+6. if specialized AMT materially improves lead or combined guitar, preserve it and continue using its native string/fret outputs;
+7. if both inputs underperform, close generic front-end swapping and return to a clean Guitar-TECHS-derived training path;
+8. preserve spectral bass V1, V4-origin timing, separator result, frozen Basic Pitch evidence, and `main` unchanged.
