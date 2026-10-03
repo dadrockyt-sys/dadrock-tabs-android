@@ -21,6 +21,7 @@ from scipy.signal import butter, sosfilt, resample_poly
 import tensorflow_hub as hub
 
 from pair_consistency_classifier_v1 import PairClassifierConfig, classify_pair
+from pair_coherence_v1 import pair_coherence_metrics
 from stem_bleed_cleanup_v1 import si_sdr
 from stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
 
@@ -179,6 +180,8 @@ def main():
             merged_score = si_sdr(source, merged_companion)
             recon_error = float(np.max(np.abs(merged_companion - mixture)))
 
+            coherence = pair_coherence_metrics(stems["guitar"], stems["bass"], fs)
+
             rows.append({
                 "id": f"{source_id}_{mode}",
                 "sourceClass": source_class,
@@ -190,6 +193,7 @@ def main():
                 "guitarEvidence": ev["guitar"],
                 "bassEvidence": ev["bass"],
                 "energyGapDb": pair["energyGapDb"],
+                "pairCoherence": coherence,
                 "falseClaimStem": false_claim,
                 "companionStem": companion,
                 "rawCompanionSiSdrDb": raw_score,
