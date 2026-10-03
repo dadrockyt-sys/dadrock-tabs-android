@@ -47,6 +47,22 @@ def resolve_stream(events,source):
     out=[]; changes=[]
     for i,p in enumerate(events):
         midi=int(p["midi"])
+        # Preserve out-of-range frozen predictions unchanged in V1.
+        # Do not clamp or invent an octave correction without valid
+        # in-range evidence.
+        if not (lo <= midi <= hi):
+            q=dict(p)
+            q["originalMidi"]=midi
+            q["octaveResolverApplied"]=False
+            q["octaveResolverSupport"]={
+                "current":None,
+                "best":None,
+                "bestMidi":midi,
+                "bestNeighborCount":0,
+                "reason":"original-midi-outside-fixed-instrument-range"
+            }
+            out.append(q)
+            continue
         candidates=[m for m in (midi-12,midi,midi+12) if lo<=m<=hi]
         scored=[]
         for m in candidates:
