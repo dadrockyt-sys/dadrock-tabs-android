@@ -1,0 +1,127 @@
+name: Astra S0 Transcription Failure Attribution V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-s0-transcription-failure-attribution-v1.yml'
+      - 'astra_backend/evaluation/evaluate_s0_transcription_failure_attribution_v1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-s0-transcription-failure-attribution-v1
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-private-fixtures
+          token: ${{ secrets.S0_FIXTURE_TOKEN }}
+          path: .private-s0-fixtures
+          fetch-depth: 1
+
+      - name: Prepare fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf s0_sources
+          cp -R .private-s0-fixtures/s0_sources ./s0_sources
+          test "$(find s0_sources -maxdepth 1 -type f | wc -l)" -eq 16
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile torch onnxruntime
+          python -m pip install 'basic-pitch==0.4.0'
+
+      - name: Download and verify BS-Roformer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve(
+              "https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",
+              p,
+          )
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected:
+              raise SystemExit(f"model SHA mismatch: {actual}")
+          PY
+
+      - name: Compile diagnostic
+        run: |
+          python -m py_compile             astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py             astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py             astra_backend/evaluation/pretrained_note_front_end_v1.py             astra_backend/evaluation/score_note_onsets.py             astra_backend/evaluation/stem_bleed_cleanup_v1.py             astra_backend/evaluation/evaluate_s0_transcription_failure_attribution_v1.py
+
+      - name: Build frozen S0
+        run: |
+          rm -rf s0_generated
+          python astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py             --source-dir s0_sources             --output-dir s0_generated
+
+      - name: Run failure attribution diagnostic
+        run: |
+          PYTHONPATH=astra_backend:astra_backend/evaluation           python astra_backend/evaluation/evaluate_s0_transcription_failure_attribution_v1.py             --s0-root s0_generated             --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx             --output-json s0_transcription_failure_attribution_v1.json
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("s0_transcription_failure_attribution_v1.json"))
+          print("# S0 Transcription Failure Attribution V1")
+          print(f"- Mixtures: **{d['mixtureCount']}**")
+          print(f"- Present-target probes: **{d['targetPresentProbeCount']}**")
+          print(f"- Present-target micro F1 vs clean-component transcriber baseline: **{d['presentTargetMicroAgreement']['f1']:.3f}**")
+          print(f"- Macro F1: **{d['presentTargetMacroF1']:.3f}**")
+          print(f"- Minimum per-role F1: **{d['presentTargetMinimumF1']:.3f}**")
+          print(f"- Severe agreement failures (F1 < 0.5): **{d['severeAgreementFailureCountF1Below0_5']}**")
+          print(f"- Absent-target false-note events: **{d['absentTargetTotalSeparatedFalseNoteCount']}**")
+          print(f"- Absent-target probes with any false notes: **{d['absentTargetProbesWithAnySeparatedFalseNotes']}/{d['targetAbsentProbeCount']}**")
+          print("## Per role")
+          for r in d["results"]:
+              if r["targetPresent"]:
+                  a=r["eventAgreement"]
+                  print(
+                      f"- {r['id']} {r['target']}: SI-SDR={r['rawSiSdrDb']:.2f} dB, "
+                      f"oracle={r['oracleEventCount']}, separated={r['separatedEventCount']}, "
+                      f"F1={a['f1'] if a['f1'] is not None else 'NA'}"
+                  )
+              else:
+                  print(
+                      f"- {r['id']} {r['target']} ABSENT: separated false-note events="
+                      f"{r['separatedEventCount']}"
+                  )
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-s0-transcription-failure-attribution-v1
+          path: s0_transcription_failure_attribution_v1.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf s0_sources s0_generated .private-s0-fixtures models/bs-roformer
