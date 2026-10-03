@@ -19,11 +19,87 @@ import hashlib
 import json
 from pathlib import Path
 
-from evaluate_gomyway_full_song_professional_v1 import (
-    ONSET_TOLERANCE_SECONDS,
-    build_rhythm_reference,
-)
 from score_note_onsets import score_note_onsets
+
+ONSET_TOLERANCE_SECONDS = 0.05
+GUITAR_OPEN_MIDI = [64, 59, 55, 50, 45, 40]
+
+
+def expand_intro_reference(intro: dict) -> list[dict]:
+    base = intro["notes"]
+    source_measures = intro.get("repeat", {}).get("sourceMeasures", [1, 2])
+    target_starts = [1] + list(intro.get("repeat", {}).get("targetMeasureStarts", []))
+    if source_measures != [1, 2] or target_starts != [1, 3, 5, 7, 9, 11, 13, 15]:
+        raise RuntimeError("unexpected intro repeat contract")
+    out = []
+    for start in target_starts:
+        for note in base:
+            source_measure = int(note["measure"])
+            measure = start + (source_measure - 1)
+            string_index = int(note["stringIndex"])
+            fret = int(note["fret"])
+            out.append({
+                "measure": measure,
+                "step": float(note["step"]),
+                "midi": GUITAR_OPEN_MIDI[string_index] + fret,
+                "stringIndex": string_index,
+                "fret": fret,
+                "source": "intro-fixture-expanded",
+            })
+    return out
+
+
+def build_rhythm_reference(intro: dict, later: dict, timing: dict):
+    boundaries = {int(x["measureNumber"]): x for x in timing["measureBoundaries"]}
+    raw_notes = expand_intro_reference(intro)
+    unpitched = []
+
+    if int(later.get("measureStart", -1)) != 17 or int(later.get("measureEnd", -1)) != 113:
+        raise RuntimeError("17-113 rhythm reference range mismatch")
+    if int(later.get("humanApprovedMeasureCount", -1)) != 97:
+        raise RuntimeError("17-113 rhythm reference is not fully human-approved")
+    if later.get("professionalReferenceUsedForScoringOnly") is not True:
+        raise RuntimeError("professional reference scoring-only boundary missing")
+
+    for measure in later["measures"]:
+        m = int(measure["measureNumber"])
+        for event_index, event in enumerate(measure.get("events", [])):
+            step = float(event["quantizedStep"])
+            for note_index, note in enumerate(event.get("notes", [])):
+                string_one_based = int(note["string"])
+                fret = int(note["fret"])
+                common = {
+                    "measure": m,
+                    "step": step,
+                    "stringIndex": string_one_based - 1,
+                    "fret": fret,
+                    "eventIndex": event_index,
+                    "noteIndex": note_index,
+                    "source": "human-approved-17-113",
+                }
+                if fret < 0:
+                    unpitched.append(common)
+                    continue
+                common["midi"] = GUITAR_OPEN_MIDI[string_one_based - 1] + fret
+                raw_notes.append(common)
+
+    targets = []
+    for index, row in enumerate(raw_notes):
+        m = int(row["measure"])
+        b = boundaries[m]
+        onset = float(b["startSeconds"]) + (float(row["step"]) / 16.0) * float(b["durationSeconds"])
+        targets.append({
+            "id": f"rhythm:{index}:m{m}:s{row['step']}",
+            "midi": int(row["midi"]),
+            "start": onset,
+            "measure": m,
+            "step": row["step"],
+            "stringIndex": row["stringIndex"],
+            "fret": row["fret"],
+            "source": row["source"],
+        })
+    targets.sort(key=lambda x: (x["start"], x["midi"], x["id"]))
+    return targets, unpitched
 
 
 def sha256_file(path: Path) -> str:
