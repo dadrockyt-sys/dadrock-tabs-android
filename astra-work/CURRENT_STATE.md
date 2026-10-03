@@ -7064,3 +7064,20 @@ Resume from Actions run `37121584921`.
 5. If the reference-independent grid is coherent enough for canonical candidate coordinates, freeze that conclusion before integrating note events.
 6. If it is not coherent, diagnose the structural failure from the frozen candidate only; do not use the professional timing map to repair it.
 7. Keep `main` unchanged and preserve the full three-role professional scorer bundle as scoring-only evidence.
+
+
+### Provenance hardening update — 2026-10-03
+
+Before accepting the queued run as the frozen candidate source, the workflow checkout was tightened from the moving branch ref to the immutable trigger SHA (`${{ github.sha }}`) in both jobs.
+
+Commit:
+- `82ae2166ad2ea02afe725d07cfcf455d30ecf766`
+
+New authoritative run:
+- `37121658447`
+- head: `82ae2166ad2ea02afe725d07cfcf455d30ecf766`
+- status at this update: QUEUED.
+
+Run `37121584921` is superseded for scientific provenance because its workflow checked out the moving branch name. Do not use it as the canonical frozen candidate even if it later turns green.
+
+**Resume from run `37121658447`.**
