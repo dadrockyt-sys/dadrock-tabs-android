@@ -43,7 +43,8 @@ jobs:
           set -euo pipefail
           mkdir -p out
           python astra_backend/evaluation/gomyway_reference_independent_timebase_v1.py generate --audio-source public/gomywayfullaitest.m4a --audio-wav /tmp/gomywayfullaitest.wav --output-json out/gomyway-reference-independent-grid-v1.json
-          sha256sum out/gomyway-reference-independent-grid-v1.json | tee out/gomyway-reference-independent-grid-v1.sha256
+          (cd out && sha256sum gomyway-reference-independent-grid-v1.json > gomyway-reference-independent-grid-v1.sha256)
+          cat out/gomyway-reference-independent-grid-v1.sha256
 
       - name: Verify frozen candidate provenance
         run: |
