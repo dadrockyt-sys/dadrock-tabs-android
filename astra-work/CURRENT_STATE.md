@@ -8543,3 +8543,45 @@ Build an octave/voicing attribution diagnostic only:
 5. do not apply corrections yet;
 6. choose the next recognizer experiment from the dominant measured error class;
 7. keep `main` unchanged.
+
+
+## V4-origin octave/voicing attribution V1 — launched
+
+Purpose:
+- quantify how much remaining pitch error is attributable specifically to octave placement versus broader voicing/chord-tone confusion;
+- reuse frozen note evidence from run `37146481347`;
+- keep V4-origin timing frozen;
+- no prediction mutation or correction.
+
+Measured upper bounds:
+- pitch-class-correct but wrong-octave count;
+- recoverable-by-±12 count;
+- recoverable-by-any-octave-multiple count;
+- exact-MIDI upper bound if only ±12 octave mistakes were resolved;
+- wrong-pitch interval histograms for rhythm, lead, and bass separately.
+
+Files:
+- `astra_backend/evaluation/gomyway_v4_origin_octave_voicing_attribution_v1.py`
+- `.github/workflows/astra-gomyway-v4-origin-octave-voicing-attribution-v1.yml`
+
+Commits:
+- implementation: `3f9319f9f7853b80e9768a1e0fb776c3d943660b`
+- workflow launch: `76b33bf6d24d434eb15348aef253db8f6f5ade10`
+
+Authoritative run:
+- run `37148533276`
+- head `76b33bf6d24d434eb15348aef253db8f6f5ade10`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37148533276
+
+### Exact next resume instruction
+
+Resume from run `37148533276`.
+If green:
+1. record artifact ID/digest and JSON SHA;
+2. record pitch-class-correct/wrong-octave counts and ±12 recovery upper bounds for rhythm, lead, bass;
+3. compare octave-recoverable share of wrong-pitch events with broader interval-class errors;
+4. if octave recovery is substantial enough, build a reference-blind octave-resolution heuristic next;
+5. otherwise move directly toward harmonic/polyphonic voicing modeling;
+6. do not alter V4-origin timing or frozen note evidence;
+7. keep `main` unchanged.
