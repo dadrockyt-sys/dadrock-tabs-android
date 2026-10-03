@@ -13,10 +13,10 @@ def run(*args: str) -> str:
     return subprocess.check_output(args, text=True, errors="replace")
 
 
-def blob_text(rev: str, path: str) -> str | None:
+def cat_blob(blob: str) -> str | None:
     try:
         return subprocess.check_output(
-            ["git", "show", f"{rev}:{path}"],
+            ["git", "cat-file", "-p", blob],
             text=True,
             errors="replace",
             stderr=subprocess.DEVNULL,
@@ -26,124 +26,140 @@ def blob_text(rev: str, path: str) -> str | None:
 
 
 def measure_numbers(obj):
-    out = set()
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            lk = str(key).lower()
-            if lk in {"measurenumber", "measure", "bar", "barnumber"}:
-                if isinstance(value, (int, float)):
-                    out.add(int(value))
+    out=set()
+    if isinstance(obj,dict):
+        for key,value in obj.items():
+            lk=str(key).lower()
+            if lk in {"measurenumber","measure","bar","barnumber"} and isinstance(value,(int,float)):
+                out.add(int(value))
             out |= measure_numbers(value)
-    elif isinstance(obj, list):
+    elif isinstance(obj,list):
         for value in obj:
             out |= measure_numbers(value)
     return out
 
 
-def roles_in(obj, path: str, raw: str):
-    hay = (path + "\n" + raw[:10000]).lower()
-    return [role for role in ROLE_WORDS if role in hay]
-
-
-def coverage_hint(obj, raw: str):
-    nums = measure_numbers(obj)
-    direct = {}
-    if isinstance(obj, dict):
-        for key in ("measureStart", "measureEnd", "measureCount", "coverage"):
-            if key in obj:
-                direct[key] = obj[key]
-    text_113 = bool(re.search(r"\b113\b", raw))
+def coverage_hint(obj,raw):
+    nums=measure_numbers(obj)
+    direct={}
+    if isinstance(obj,dict):
+        for key in (
+            "measureStart","measureEnd","measureCount","coverage",
+            "measures","measureRange","humanApprovedMeasureCount"
+        ):
+            if key in obj and key!="measures":
+                direct[key]=obj[key]
     return {
         "minMeasure": min(nums) if nums else None,
         "maxMeasure": max(nums) if nums else None,
         "distinctMeasureCount": len(nums),
         "direct": direct,
-        "mentions113": text_113,
-        "appearsFull1to113": bool(nums and min(nums) <= 1 and max(nums) >= 113),
+        "mentions113": bool(re.search(r"\b113\b",raw)),
+        "appearsFull1to113": bool(nums and min(nums)<=1 and max(nums)>=113),
     }
 
 
+def roles_in(path,raw):
+    hay=(path+"\n"+raw[:20000]).lower()
+    return [role for role in ROLE_WORDS if role in hay]
+
+
 def main():
-    subprocess.run(["git", "fetch", "origin", "main", "--prune"], check=True)
-    subprocess.run(["git", "fetch", "origin", "astra-work", "--prune"], check=True)
+    subprocess.run(["git","fetch","origin","main","astra-work","--prune"],check=True)
 
-    commits = []
-    for ref in ("origin/main", "origin/astra-work"):
-        commits.extend(run("git", "rev-list", ref).splitlines())
-    # Preserve order, newest-ish first across refs.
-    commits = list(dict.fromkeys(commits))
+    # One pass over reachable object identities. A blob may have multiple historical paths;
+    # preserve each relevant path but inspect blob content only once.
+    objects=run("git","rev-list","--objects","--all").splitlines()
+    relevant=[]
+    for line in objects:
+        parts=line.split(" ",1)
+        if len(parts)!=2:
+            continue
+        blob,path=parts
+        low=path.lower()
+        if "gomyway" not in low or not low.endswith(".json"):
+            continue
+        if not any(w in low for w in SIGNAL_WORDS) and not any(r in low for r in ROLE_WORDS):
+            continue
+        relevant.append((blob,path))
 
-    seen_blob = set()
-    candidates = []
+    cache={}
+    candidates=[]
+    seen_pairs=set()
+    for blob,path in relevant:
+        key=(blob,path)
+        if key in seen_pairs:
+            continue
+        seen_pairs.add(key)
 
-    for rev in commits:
-        names = run("git", "ls-tree", "-r", "--name-only", rev).splitlines()
-        for path in names:
-            low = path.lower()
-            if "gomyway" not in low or not low.endswith(".json"):
-                continue
-            if not any(word in low for word in SIGNAL_WORDS) and not any(role in low for role in ROLE_WORDS):
-                continue
+        if blob not in cache:
+            raw=cat_blob(blob)
+            if raw is None or len(raw)>6_000_000:
+                cache[blob]=None
+            else:
+                try:
+                    cache[blob]=(raw,json.loads(raw))
+                except Exception:
+                    cache[blob]=None
+        item=cache[blob]
+        if item is None:
+            continue
+        raw,obj=item
+        roles=roles_in(path,raw)
+        cov=coverage_hint(obj,raw)
+        if not roles and not cov["mentions113"]:
+            continue
+        candidates.append({
+            "path":path,
+            "blob":blob,
+            "bytes":len(raw.encode("utf-8",errors="replace")),
+            "roles":roles,
+            "coverage":cov,
+            "topLevelKeys":list(obj.keys())[:50] if isinstance(obj,dict) else [],
+        })
 
-            try:
-                blob = run("git", "rev-parse", f"{rev}:{path}").strip()
-            except subprocess.CalledProcessError:
-                continue
-            if blob in seen_blob:
-                continue
-            seen_blob.add(blob)
-
-            raw = blob_text(rev, path)
-            if raw is None or len(raw) > 6_000_000:
-                continue
-            try:
-                obj = json.loads(raw)
-            except Exception:
-                continue
-
-            roles = roles_in(obj, path, raw)
-            cov = coverage_hint(obj, raw)
-            if not roles and not cov["mentions113"]:
-                continue
-
-            candidates.append({
-                "commit": rev,
-                "path": path,
-                "blob": blob,
-                "bytes": len(raw.encode("utf-8", errors="replace")),
-                "roles": roles,
-                "coverage": cov,
-                "topLevelKeys": list(obj.keys())[:40] if isinstance(obj, dict) else [],
-            })
-
-    fullish = [
+    fullish=[
         c for c in candidates
         if c["coverage"]["appearsFull1to113"]
         or (
             c["coverage"]["mentions113"]
             and any(role in c["roles"] for role in ROLE_WORDS)
+            and (
+                c["coverage"]["direct"].get("measureEnd")==113
+                or c["coverage"]["direct"].get("measureCount")==113
+                or c["coverage"]["direct"].get("coverage")==[1,113]
+                or c["coverage"]["direct"].get("measureRange")==[1,113]
+            )
         )
     ]
 
-    result = {
-        "schemaVersion": 1,
-        "kind": "gomyway-full-scorer-history-recovery-v1",
-        "searchedRefs": ["origin/main", "origin/astra-work"],
-        "uniqueJsonBlobsInspected": len(seen_blob),
-        "candidateCount": len(candidates),
-        "fullCoverageCandidateCount": len(fullish),
-        "fullCoverageCandidates": fullish,
-        "allCandidates": candidates,
+    # Deduplicate identical blob/path summaries and favor concise output.
+    fullish.sort(key=lambda c:(c["path"],c["blob"]))
+    candidates.sort(key=lambda c:(c["path"],c["blob"]))
+
+    result={
+        "schemaVersion":1,
+        "kind":"gomyway-full-scorer-history-recovery-v1",
+        "searchedRefs":["origin/main","origin/astra-work","all-reachable-git-objects"],
+        "reachableObjects":len(objects),
+        "relevantHistoricalJsonPaths":len(relevant),
+        "uniqueJsonBlobsInspected":sum(v is not None for v in cache.values()),
+        "candidateCount":len(candidates),
+        "fullCoverageCandidateCount":len(fullish),
+        "fullCoverageCandidates":fullish,
+        "allCandidates":candidates,
     }
     Path("gomyway_full_scorer_history_recovery_v1.json").write_text(
-        json.dumps(result, indent=2) + "\n"
+        json.dumps(result,indent=2)+"\n"
     )
     print(json.dumps({
-        "candidateCount": len(candidates),
-        "fullCoverageCandidateCount": len(fullish),
-        "fullCoverageCandidates": fullish[:100],
-    }, indent=2))
+        "reachableObjects":len(objects),
+        "relevantHistoricalJsonPaths":len(relevant),
+        "candidateCount":len(candidates),
+        "fullCoverageCandidateCount":len(fullish),
+        "fullCoverageCandidates":fullish[:100],
+    },indent=2))
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
