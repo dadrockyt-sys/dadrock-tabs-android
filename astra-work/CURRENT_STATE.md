@@ -5638,3 +5638,137 @@ Important correction: the stress generator used exact scaled copies of the same 
 Decision: freeze PairClassifierConfig V1 unchanged. Next task is a **non-collinear duplicate split stress** using complementary frequency partitions, time-varying leakage, phase/filter differences, and/or mild independent contamination while keeping the detector frozen. Do not move to automatic real-audio consolidation yet.
 
 Detailed records: `docs/astra/CONTROLLED_DUPLICATE_STRESS_RESULT_V1.md` and `docs/astra/CONTROLLED_DUPLICATE_STRESS_RESULT_V1.json`.
+
+
+## EXPLICIT NEXT STEPS — non-collinear duplicate stress follow-up — 2026-10-02
+
+### Evidence just completed
+
+GitHub Actions run `37089070395` (`Astra Non-Collinear Duplicate Stress`) completed successfully.
+
+Artifact:
+- id: `11262155308`
+- digest: `sha256:17af190d0224c0654052baa02f35e0002c215147cd0432e1f21a3832b6c5b192`
+
+Frozen `PairClassifierConfig V1` result:
+- 16 controlled non-collinear cases
+- pair accuracy: **15/16 = 93.75%**
+- only miss: `G09_delayed_highband_leak`, classified `ambiguous_pair` because the energy gap was ~6.44 dB, just outside the frozen 6 dB gate
+- detector thresholds remain **frozen**; do not loosen them from this result alone
+
+Merge action result is **mixed**:
+- time-varying split cases improved dramatically after consolidation:
+  - B01: +142.32 dB
+  - B08: +142.37 dB
+  - G09: +140.36 dB
+  - G14: +142.06 dB
+- some frequency/filter/delay cases improved modestly
+- some correctly detected duplicate cases worsened after full merge:
+  - B01 frequency partition: -0.47 dB
+  - B01 delayed high-band leak: -0.38 dB
+  - B01 filtered + contamination: -1.97 dB
+  - G14 frequency partition: -2.89 dB
+  - G14 delayed high-band leak: -3.06 dB
+  - G14 filtered + contamination: -0.25 dB
+
+Therefore **duplicate detection and duplicate consolidation are separate problems**.
+
+### Current conclusion
+
+Keep `PairClassifierConfig V1` frozen.
+
+Do **not** automatically merge every detected duplicate-class pair.
+
+The next stage must answer:
+
+> When a duplicate-class pair is detected, can we decide whether the two stems are complementary fragments of the same source (safe to consolidate) versus differently filtered/phase-shifted/contaminated versions where full summation may reduce source fidelity?
+
+### Exact next implementation task
+
+Build **Duplicate Consolidation Safety Gate V1** as a diagnostic-only layer.
+
+It must use only separator outputs / pair evidence at decision time and must not inspect ground-truth reference audio for the decision.
+
+For each duplicate-class candidate, record at least:
+
+1. **Waveform coherence**
+   - zero-lag correlation
+   - best-lag normalized cross-correlation over a small bounded lag window
+   - best lag in samples/ms
+
+2. **Spectral complementarity**
+   - per-bin magnitude overlap
+   - fraction of energy unique to each stem
+   - fraction of energy shared by both stems
+   - low-band vs high-band energy balance between pair members
+
+3. **Phase consistency**
+   - phase-consistency / coherence summary over active bins
+   - flag strong delayed/phase-shifted duplicate behavior
+
+4. **Temporal complementarity**
+   - framewise energy correlation
+   - anti-correlation/complementarity score for time-varying splits
+
+5. **Recognizer consistency**
+   - retain existing YAMNet guitar/bass evidence for both stems
+   - retain pair-classifier state unchanged
+
+6. **Action simulation**
+   - raw companion
+   - full merge
+   - optional bounded weighted merge candidates chosen prospectively, not tuned per fixture
+   - reconstruction error for every simulated action
+
+### Prospective evaluation design
+
+Use the same 16 frozen non-collinear cases.
+
+Do not change `PairClassifierConfig V1`.
+
+Before seeing new action results, freeze a small rule set for the consolidation safety gate.
+
+At minimum the gate must produce:
+- `merge_safe`
+- `preserve_separate`
+- `uncertain`
+
+The safety objective is more important than forcing actions.
+
+### Success criteria
+
+The next action gate should:
+
+- keep pair detection at the existing frozen classifier behavior
+- avoid full merge on the known harmful merge cases above
+- permit merge on the four time-varying split cases that showed very large gains
+- make **no harmful automatic action worse than -0.5 dB SI-SDR** on this frozen 16-case development set
+- preserve mixture reconstruction to numerical precision whenever a merge is applied
+
+If the gate cannot separate helpful from harmful merge cases without looking at ground truth:
+- STOP automatic consolidation work at this stage
+- keep duplicate detection as a diagnostic/flagging feature only
+- do not retune PairClassifierConfig V1 to compensate
+
+### After this gate
+
+Only if the consolidation safety gate passes the frozen synthetic criteria:
+
+1. add a small **new holdout synthetic set** with new source identities and perturbation seeds;
+2. freeze all thresholds before evaluating that holdout;
+3. require no destructive false positives before considering any bounded real-recording validation;
+4. only then connect the safe duplicate-class consolidation stage into the broader separator -> recognizer -> transcription pipeline.
+
+### Boundaries
+
+Do not:
+- deploy to production
+- change `main`
+- automatically consolidate real recordings
+- retune the pair classifier on these same 16 cases
+- claim commercial-song or real-world generalization from this synthetic evidence
+- reopen archived V15/V16, P1/P2/P3, V2B, or older failed model lines
+
+### Immediate resume instruction
+
+**Next GPT-5.6 task:** implement `Duplicate Consolidation Safety Gate V1` and its diagnostic evaluator/workflow on `astra-work`, using the frozen 16-case non-collinear set and the success/stop rules above. Save results back into this file before moving to holdout or real-audio work.
