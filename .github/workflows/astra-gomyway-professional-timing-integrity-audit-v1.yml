@@ -1,0 +1,42 @@
+name: Astra Go My Way Professional Timing Integrity Audit V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_professional_timing_integrity_audit_v1.py'
+      - '.github/workflows/astra-gomyway-professional-timing-integrity-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Verify immutable source
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+      - name: Run timing integrity audit
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_professional_timing_integrity_audit_v1.py             --audio public/gomywayfullaitest.m4a             --timing-map public/gomyway-professional-timing-map-v2.json             --alignment-diagnosis public/gomyway-jimmy-paige-full-song-alignment-diagnosis.json             --output-json gomyway-professional-timing-integrity-audit-v1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-professional-timing-integrity-audit-v1
+          path: gomyway-professional-timing-integrity-audit-v1.json
+          retention-days: 30
