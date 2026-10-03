@@ -1,0 +1,142 @@
+name: Astra Go My Way Full Professional Scorer V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-gomyway-full-professional-scorer-v1.yml'
+      - 'astra_backend/evaluation/evaluate_gomyway_full_professional_scorer_v1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-gomyway-full-professional-scorer-v1
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
+          python -m pip install 'basic-pitch==0.4.0'
+          python - <<'PY'
+          import numpy
+          assert numpy.__version__ == '1.26.4'
+          PY
+
+      - name: Download and verify BS-Roformer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve(
+              "https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",
+              p,
+          )
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected:
+              raise SystemExit(f"model SHA mismatch: {actual}")
+          PY
+
+      - name: Verify frozen scorer payload identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          expected = {
+              "research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json":
+                  "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+              "research/v154-professional-references/scorer-ready/bass-scorer-ready.json":
+                  "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1",
+              "research/v154-professional-references/scorer-ready/lead-scorer-ready.json":
+                  "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+              "research/v154-professional-references/scorer-ready/frontend-reference-payload.json":
+                  "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+          }
+          for path, sha in expected.items():
+              actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              if actual != sha:
+                  raise SystemExit(f"{path} SHA mismatch: {actual}")
+          d=json.loads(Path("research/v154-professional-references/scorer-ready/frontend-reference-payload.json").read_text())
+          assert d["counts"] == {"bass":547,"combinedGuitar":1393,"lead":447,"rhythm":946}
+          PY
+
+      - name: Convert exact public source audio to PCM
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -hide_banner -loglevel error             -i "public/gomywayfullaitest.m4a"             -acodec pcm_f32le -ar 44100 -ac 2             gomywayfullaitest.wav
+          test -s gomywayfullaitest.wav
+
+      - name: Compile
+        run: |
+          python -m py_compile             astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py             astra_backend/evaluation/pretrained_note_front_end_v1.py             astra_backend/evaluation/evaluate_gomyway_full_professional_scorer_v1.py
+
+      - name: Run reference-blind candidate generation and retrospective scoring
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend:astra_backend/evaluation           python astra_backend/evaluation/evaluate_gomyway_full_professional_scorer_v1.py             --audio gomywayfullaitest.wav             --source-container "public/gomywayfullaitest.m4a"             --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx             --reference-payload research/v154-professional-references/scorer-ready/frontend-reference-payload.json             --timing-map public/gomyway-professional-timing-map-v2.json             --output-json gomyway_full_professional_scorer_v1.json
+
+      - name: Summary
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("gomyway_full_professional_scorer_v1.json"))
+          print("# Go My Way Full Professional Scorer V1")
+          print(f"- Source SHA-256: `{d['sourceContainerSha256']}`")
+          print(f"- References: rhythm={d['referenceCounts']['rhythm']}, lead={d['referenceCounts']['lead']}, bass={d['referenceCounts']['bass']}")
+          print(f"- Unique combined guitar reference rows: **{d['referenceCounts']['combinedGuitarUnique']}**")
+          print(f"- Candidate events: guitar={d['candidateCounts']['guitarBasicPitch']}, bass={d['candidateCounts']['bassBasicPitch']}, mix={d['candidateCounts']['mixBasicPitch']}")
+          for name in [
+              "bassSeparatedVsBassReference",
+              "guitarSeparatedVsCombinedGuitarReference",
+              "fullMixVsAllInstrumentReferences",
+          ]:
+              s=d["scores"][name]
+              print(f"- {name}: precision={s['precision']:.3f}, recall={s['recall']:.3f}, F1={s['f1']:.3f}, TP={s['tp']}, FP={s['fp']}, FN={s['fn']}")
+          for name in [
+              "rhythmReferenceCoverageByGuitarStem",
+              "leadReferenceCoverageByGuitarStem",
+          ]:
+              s=d["scores"][name]
+              print(f"- {name}: recall={s['recall']:.3f}, matched={s['matchedReferenceCount']}/{s['referenceCount']}")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-gomyway-full-professional-scorer-v1
+          path: gomyway_full_professional_scorer_v1.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf models/bs-roformer gomywayfullaitest.wav
