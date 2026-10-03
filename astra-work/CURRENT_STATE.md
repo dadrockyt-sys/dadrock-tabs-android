@@ -8085,3 +8085,55 @@ Build a guitar-only timing/coordinate diagnostic using the revalidated V3 map an
 5. If no simple timing-phase explanation exists, move to pitch/voicing/string-fret recognition.
 6. Keep bass on the revalidated V3 map.
 7. Keep `main` unchanged.
+
+
+## Guitar timing/coordinate diagnostic V1 — launched 2026-10-03
+
+Purpose:
+- explain why bass improved strongly on the revalidated timing map while rhythm/lead guitar did not.
+
+Frozen inputs:
+- revalidated V3 timing map SHA-256 `1aeb65d69c8305f79d8a18995464379a28ed56626c8fc2ba32d036e9a63ab4ac`
+- source audio unchanged
+- BS-Roformer unchanged
+- Basic Pitch 0.4.0 unchanged
+- rhythm/lead professional scorer references unchanged
+- no threshold tuning
+- no timing-map mutation
+
+Diagnostics:
+1. nearest exact-MIDI onset error without a 50 ms cutoff;
+2. early/middle/late signed and absolute error;
+3. post-inference integer beat-shift diagnostics from -8 to +8 beats;
+4. per-measure TP concentration;
+5. rhythm and lead analyzed independently.
+
+Decision rule:
+- if a simple beat/bar phase shift explains the guitar misses, fix coordinate interpretation in a new separately versioned layer;
+- if not, preserve the clock and move to pitch/voicing/string-fret recognition.
+
+Files:
+- `astra_backend/evaluation/gomyway_guitar_timing_coordinate_diagnostic_v1.py`
+- `.github/workflows/astra-gomyway-guitar-timing-coordinate-diagnostic-v1.yml`
+
+Commits:
+- implementation: `094a99b51f69443e75810b2bfba5b8ccb26810e6`
+- workflow launch: `30ccbd22c871b8d08555203e46694720d44e9927`
+
+Authoritative run:
+- run `37142945400`
+- head `30ccbd22c871b8d08555203e46694720d44e9927`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37142945400
+
+### Exact next resume instruction
+
+Resume from run `37142945400`.
+If green:
+1. record artifact identity and JSON SHA;
+2. record rhythm/lead nearest-exact-MIDI median/mean errors;
+3. record early/middle/late timing errors;
+4. record best integer beat shift and TP at 50 ms for each role;
+5. identify measures with strongest/weakest exact-match concentration;
+6. decide whether guitar still has a coordinate-phase problem or should move to pitch/voicing recognition;
+7. keep bass on revalidated timing V3 and keep `main` unchanged.
