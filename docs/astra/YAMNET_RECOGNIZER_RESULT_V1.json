@@ -1,0 +1,14 @@
+{
+  "runId": 37081779592,
+  "artifactId": 11258687346,
+  "artifactDigest": "sha256:b097366a43d0e1ee4d095234065fe0ced4d5c1861666df3d0fcc467a34b8ae33",
+  "fixtureCount": 14,
+  "guitarCorrectVsBassOnly": "6/6",
+  "bassCorrectVsGuitarOnly": "5/6",
+  "otherMeanGuitarEvidence": 0.0005425879789981991,
+  "otherMeanBassEvidence": 0.00028633724059545784,
+  "ambiguousBassFixture": "B12",
+  "lowEvidenceTrueGuitarFixture": "G13",
+  "decision": "use_yamnet_as_independent_evidence_not_hard_gate",
+  "nextDirection": "margin_plus_absolute_evidence_plus_uncertain_state"
+}
