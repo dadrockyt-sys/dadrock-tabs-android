@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "kind": "duplicate-consolidation-safety-gate-v1-record",
+  "date": "2026-10-02",
+  "branch": "astra-work",
+  "workflowRunId": 37089667900,
+  "headCommit": "8e44afc86a81caedd9ec4dbf94f9a4a77ebf9a83",
+  "artifact": {
+    "id": 11262196258,
+    "digest": "sha256:18ff6d8fae150b179e6fc666e28aff645e3680fe54ca92b83d077e7904b5f67c"
+  },
+  "caseCount": 16,
+  "pairAccuracy": 0.9375,
+  "gateDecisionCounts": {
+    "merge_safe": 0,
+    "preserve_separate": 16,
+    "uncertain": 0
+  },
+  "automaticMergeCount": 0,
+  "minimumAutomaticActionImprovementDb": 0,
+  "maximumAutomaticMergeReconstructionMaxAbsError": 0,
+  "successCriteria": {
+    "pairClassifierBehaviorPreserved": true,
+    "allFourTimeVaryingSplitsMergeSafe": false,
+    "allNegativeFullMergeCasesAvoided": true,
+    "noAutomaticActionWorseThanMinus0_5Db": true,
+    "mergeReconstructionNumericallyExact": true
+  },
+  "passed": false,
+  "decision": "stop_automatic_duplicate_consolidation_keep_diagnostic_only",
+  "noRetuneOnSameDevelopmentSet": true
+}
