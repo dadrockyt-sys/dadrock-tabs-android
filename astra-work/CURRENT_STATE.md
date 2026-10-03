@@ -9335,3 +9335,61 @@ Conclusion:
 - preserve spectral bass V1 as strongest bass research candidate;
 - keep V4-origin timing and frozen note evidence unchanged;
 - keep `main` unchanged.
+
+
+## Guitar chord-role decoder V1 — workflow green, scientific failure
+
+Run `37158385869` completed successfully at the workflow level.
+Artifacts:
+- frozen candidate id `11285559715`, digest `sha256:795ebbdd20ec1723ef8a45d54d0caee88c30a70f47bfec7aba5f51406e6ab31f`
+- score artifact id `11286890764`, digest `sha256:fa150224cd992f11c6b4ae58cf95bfa05553b8b5a13a1ad5e30b74c68a0bb928`
+- score JSON SHA-256 `41c2aaa360aec1a843487fffe19be6d7d448ee18cebce58ce8bd332b0d21f415`
+
+Scientific result:
+- rhythm: TP 320 -> 320, F1 31.82% -> 31.87% (essentially neutral)
+- lead: TP 133 -> 40, F1 17.84% -> 11.36% (large failure)
+- combined guitar: TP 427 -> 436, F1 35.04% -> 32.40% (precision loss)
+- reject simple register/continuity role assignment;
+- do not tune this heuristic against Go My Way.
+
+## Raw Basic Pitch guitar activation freeze V1 — launched
+
+Purpose:
+- inspect richer pre-threshold Basic Pitch evidence from the separated guitar stem;
+- determine whether useful chord tones exist below current note-event thresholds before replacing the front end.
+
+Reference-blind construction:
+- immutable source audio;
+- frozen BS-Roformer guitar stem;
+- Basic Pitch 0.4.0 exact model SHA `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`;
+- save raw `model_output` arrays from Basic Pitch `predict()` to compressed NPZ;
+- no professional references, no threshold search, no candidate correction.
+
+Files:
+- `astra_backend/evaluation/gomyway_freeze_basic_pitch_guitar_activations_v1.py`
+- `.github/workflows/astra-gomyway-freeze-basic-pitch-guitar-activations-v1.yml`
+
+Commits:
+- initial implementation `dbac6746d574a67832bc74b3958fc5380477e091`
+- corrected model identity `d28e223c391a53b8ee38534d698e6da074f9b45c`
+- workflow launch `53486477f9df3ff70abd88c8461c98a9a4a74fcd`
+
+Authoritative run:
+- run `37159748378`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37159748378
+
+### Exact next resume instruction
+
+Resume from run `37159748378`.
+If green:
+1. record artifact ID/digest and NPZ/metadata JSON hashes;
+2. record Basic Pitch model-output keys, array shapes, ranges, and thresholded note-event count;
+3. build a diagnostic that samples raw activation energy at professional target onset/pitch positions only AFTER the raw activation artifact is frozen;
+4. compare activation strength for:
+   - exact target pitch;
+   - octave aliases;
+   - nearby chord tones;
+   - targets absent from thresholded note events;
+5. decide whether sub-threshold evidence is recoverable by a better decoder or whether the polyphonic guitar front end itself should be replaced;
+6. preserve spectral bass V1, V4-origin timing, frozen note evidence, and `main`.
