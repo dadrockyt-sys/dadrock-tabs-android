@@ -2,4 +2,4 @@ Astra YAMNet recognizer evaluation trigger.
 
 Change run_marker and commit this file on astra-work to request one bounded zero-shot recognition evaluation.
 
-run_marker=2026-10-02T22:20:00-04:00-duplicate-class-action-v1-clean-rewrite
+run_marker=2026-10-02T22:25:00-04:00-controlled-duplicate-stress-v1
