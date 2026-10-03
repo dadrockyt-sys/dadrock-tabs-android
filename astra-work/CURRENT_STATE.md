@@ -6696,3 +6696,143 @@ Workflow run started:
 At this handoff update the run is still in progress.
 
 Do not fall back to the earlier rhythm-only 17..113 benchmark. The scorer-ready 113-measure three-role bundle above is the authoritative scoring target for this development benchmark.
+
+
+## Go My Way full-song three-role professional benchmark V2 — final result 2026-10-03
+
+User correctly clarified that a complete scorer-ready professional reference already exists for all three roles across the 113-measure song structure.
+
+### Final frozen scorer-ready bundle
+
+Canonical V154 references:
+- Rhythm: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`
+  - SHA-256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`
+  - 113-measure contract, **946** scored note rows
+- Lead: `research/v154-professional-references/scorer-ready/lead-scorer-ready.json`
+  - SHA-256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`
+  - **447** scored rows
+  - frozen exclusions: measures 28, 39
+- Bass: `research/v154-professional-references/scorer-ready/bass-scorer-ready.json`
+  - SHA-256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`
+  - **547** scored rows
+  - frozen exclusion: measure 88
+
+Combined rhythm+lead reference rows: **1393**.
+
+The rhythm equivalence audit
+`research/v154-professional-references/rhythm-scorer-ready-equivalence-audit.json`
+is PASS and proves the two final V154 rhythm scorer-ready forms are exact normalized multiset equivalents at 946 rows. The older 971-row intro+17..113 normalization should not be used as the canonical V154 scorer-ready rhythm bundle.
+
+### Fresh current-pipeline run
+
+Implementation:
+- `astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py`
+- `.github/workflows/astra-gomyway-full-song-professional-v2.yml`
+
+Source:
+- `public/gomywayfullaitest.m4a`
+- repository Git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+
+Successful run:
+- run `37096244645`
+- head `15474cd6cdff2f9792950d72a02508915484e5cc`
+- artifact `11264986579`
+- digest `sha256:a8997135b0251aa8f4ed8f98b5c91650209f50840b9b6964b73b0e0f85b7e48f`
+- runtime **877.64 s**
+
+Inference remained reference-blind:
+- raw BS-Roformer guitar/bass stems
+- frozen Basic Pitch 0.4.0
+- no cleanup
+- no threshold search
+- no consolidation
+- no automatic correction
+
+Fresh exact-MIDI + 50 ms absolute-time scores:
+
+**Rhythm from raw guitar stem**
+- 946 targets
+- TP 56
+- precision 5.47%
+- recall 5.92%
+- F1 **5.69%**
+- whole-mix F1 3.04%
+
+**Lead from raw guitar stem**
+- 447 targets
+- TP 45
+- precision 4.48%
+- recall 10.07%
+- F1 **6.20%**
+- whole-mix F1 1.00%
+
+**Combined rhythm+lead from raw guitar stem**
+- 1393 targets
+- TP 96
+- precision 9.55%
+- recall 6.89%
+- F1 **8.01%**
+- whole-mix F1 2.89%
+
+**Bass from raw bass stem**
+- 547 targets
+- TP 50
+- precision 7.29%
+- recall 9.14%
+- F1 **8.11%**
+- whole-mix F1 9.05%
+
+Role-confusion diagnostics:
+- bass stem vs rhythm F1 2.56%
+- bass stem vs lead F1 0.18%
+- guitar stem vs bass F1 1.66%
+
+### What this establishes
+
+The current separator materially improves the generic guitar transcription compared with whole-mix Basic Pitch, especially for lead-like content.
+
+However, the absolute professional-reference agreement remains very low. Bass separation does not improve the Basic Pitch score on this song.
+
+This confirms that the main downstream bottleneck is still note/structure recognition rather than simply lack of professional reference coverage.
+
+### Canonical V154 scorer boundary
+
+The exact frozen canonical scorer is:
+`validation/v154_cpu_multitrack/score_frontend_reference.py`
+
+Git blob:
+`9644e65719fbd361a9b39778ae9950c5e983e855`
+
+Its primary metric is exact MIDI within ±0.5 **measure-grid steps**. It assumes the generated candidate already owns an independently generated measure/step grid.
+
+The current BS-Roformer + Basic Pitch benchmark produces absolute-time events only.
+
+Do **not** convert those timestamps to measure/step coordinates using the professional timing map and then claim `referenceRead=false`. That would leak the professional reference timebase into generated-candidate structure.
+
+Historical V154 candidate context only:
+- combined-guitar canonical primary F1: 4.92%
+- bass canonical primary F1: 11.17%
+
+Those are not directly comparable to the V2 direct-time results because they use a different generated architecture / coordinate contract.
+
+Detailed final records:
+- `docs/astra/GOMYWAY_FULL_SONG_PROFESSIONAL_V2_RESULT.md`
+- `docs/astra/GOMYWAY_FULL_SONG_PROFESSIONAL_V2_RESULT.json`
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task:** focus on a **reference-independent full-song musical structure/timebase diagnostic** for `public/gomywayfullaitest.m4a`, before attempting another canonical V154 score.
+
+Goal:
+produce measure/beat/step coordinates from audio only, with no professional-reference timing map available to candidate generation.
+
+Requirements:
+1. inspect existing reference-blind structure/grid code and any previously generated Go My Way structure evidence;
+2. do not read scorer-ready note rows or professional timing values while generating a candidate grid;
+3. freeze one candidate structure/grid output first;
+4. only after it is frozen, compare its measure/downbeat/tempo alignment diagnostically against the professional timing map;
+5. do not tune the same candidate after seeing that comparison;
+6. if the reference-independent grid is sufficiently coherent, use that grid in a future candidate payload compatible with the canonical V154 scorer;
+7. keep raw Basic Pitch settings, separator model, all uncertainty contracts, and `main` unchanged.
+
+The full three-role scorer coverage problem is solved. The next architecture gap is the candidate's own trustworthy musical timebase plus stronger transcription evidence.
