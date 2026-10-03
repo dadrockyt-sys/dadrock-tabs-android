@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-EXPECTED_BP_SHA256="206bc0de22c9c9e4d5710ee9f32ca7316ad70d8e5d6f0838887e772aa143866d"
+EXPECTED_BP_SHA256="3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
 
 def sha(path):
     h=hashlib.sha256()
