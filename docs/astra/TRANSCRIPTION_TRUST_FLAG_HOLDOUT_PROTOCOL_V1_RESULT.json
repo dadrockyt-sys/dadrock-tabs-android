@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "kind": "transcription-trust-flag-holdout-protocol-v1-admission-result",
+  "date": "2026-10-02",
+  "runId": 37093326513,
+  "headCommit": "91f9fdabb10a815f98039523b37d229843fe3f20",
+  "conclusion": "success",
+  "protocolValidated": true,
+  "thresholdDefined": false,
+  "minimumNewCalibrationCases": 48,
+  "minimumNewHoldoutCases": 48,
+  "totalMinimumNewCases": 96,
+  "sourceLeakageChecksImplemented": true,
+  "actualStudyCohortAdmitted": false,
+  "automaticCorrectionAuthorized": false,
+  "productionDeliveryAuthorized": false
+}
