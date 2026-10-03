@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "transcription-trust-flag-holdout-study-protocol-v1",
+  "date": "2026-10-02",
+  "status": "model_free_admission_design",
+  "thresholdDefined": false,
+  "automaticCorrectionAuthorized": false,
+  "productionDeliveryAuthorized": false,
+  "phases": {
+    "calibration": {
+      "minimumCases": 48,
+      "strata": {
+        "complementary_both_present": 12,
+        "target_absent_guitar": 6,
+        "target_absent_bass": 6,
+        "duplicate_role_guitar": 6,
+        "duplicate_role_bass": 6,
+        "hard_complementary_confuser": 12
+      }
+    },
+    "holdout": {
+      "minimumCases": 48,
+      "sameStrataAsCalibration": true,
+      "sealedUntilCandidateRuleFrozen": true
+    }
+  },
+  "sourceIdentityRequirements": {
+    "disjointFromS0AndPriorDevelopment": true,
+    "calibrationHoldoutDisjoint": true,
+    "sha256Required": true,
+    "duplicateCaseIdsForbidden": true
+  },
+  "totalMinimumNewCases": 96,
+  "nextAuthorizationBoundary": "manifest_admission_only_no_audio_or_model_execution"
+}
