@@ -1,0 +1,119 @@
+name: Astra Go My Way Full Song Professional Benchmark V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py'
+      - '.github/workflows/astra-gomyway-full-song-professional-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-gomyway-full-song-professional-v2
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
+          python -m pip install 'basic-pitch==0.4.0'
+          python - <<'PY'
+          import numpy
+          assert numpy.__version__ == '1.26.4'
+          PY
+
+      - name: Verify frozen references and source audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb  public/gomywayfullaitest.m4a" | sha256sum -c -
+          echo "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555  research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json" | sha256sum -c -
+          echo "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1  research/v154-professional-references/scorer-ready/bass-scorer-ready.json" | sha256sum -c -
+          echo "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be  research/v154-professional-references/scorer-ready/lead-scorer-ready.json" | sha256sum -c -
+
+      - name: Decode full-song audio
+        run: |
+          ffmpeg -hide_banner -loglevel error -y             -i "public/gomywayfullaitest.m4a"             -ar 44100 -ac 2 -c:a pcm_f32le             gomywayfullaitest.wav
+
+      - name: Download and verify BS-Roformer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve(
+              "https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",
+              p,
+          )
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected:
+              raise SystemExit(f"model SHA mismatch: {actual}")
+          PY
+
+      - name: Compile benchmark
+        run: |
+          python -m py_compile             astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py             astra_backend/evaluation/pretrained_note_front_end_v1.py             astra_backend/evaluation/evaluate_s0_transcription_failure_attribution_v1.py             astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py
+
+      - name: Run full-song three-role benchmark
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=astra_backend:astra_backend/evaluation           python astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py             --audio-source "public/gomywayfullaitest.m4a"             --audio-wav gomywayfullaitest.wav             --timing-map public/gomyway-professional-timing-map-v2.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --bass-reference research/v154-professional-references/scorer-ready/bass-scorer-ready.json             --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx             --output-json gomyway_full_song_professional_v2.json
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("gomyway_full_song_professional_v2.json"))
+          print("# Go My Way Full Song Three-Role Professional Benchmark V2")
+          print(f"- Targets: **{d['scoring']['targetCounts']}**")
+          print(f"- Excluded measures: **{d['scoring']['excludedMeasures']}**")
+          print("## Separator output")
+          for name,s in d["scores"]["separator"].items():
+              f1="NA" if s["f1"] is None else f"{s['f1']:.3f}"
+              print(f"- {name}: F1 **{f1}**, P={s['precision']}, R={s['recall']}, TP={s['tp']}, FP={s['fp']}, FN={s['fn']}")
+          print("## Whole-mix controls")
+          for name,s in d["scores"]["wholeMixControls"].items():
+              f1="NA" if s["f1"] is None else f"{s['f1']:.3f}"
+              print(f"- {name}: F1 **{f1}**, P={s['precision']}, R={s['recall']}")
+          print("## Role-confusion diagnostics")
+          for name,s in d["scores"]["roleConfusionDiagnostics"].items():
+              f1="NA" if s["f1"] is None else f"{s['f1']:.3f}"
+              print(f"- {name}: F1 **{f1}**, P={s['precision']}, R={s['recall']}")
+          print(f"- Runtime: **{d['runtimeSeconds']:.1f}s**")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-gomyway-full-song-professional-v2
+          path: gomyway_full_song_professional_v2.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf models/bs-roformer gomywayfullaitest.wav
