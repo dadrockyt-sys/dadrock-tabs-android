@@ -108,7 +108,7 @@ jobs:
           python astra_backend/evaluation/gomyway_reference_independent_timebase_v1.py compare --candidate-json frozen/gomyway-reference-independent-grid-v1.json --professional-timing-map public/gomyway-professional-timing-map-v2.json --output-json out/gomyway-reference-independent-grid-v1-professional-comparison.json
           cp frozen/gomyway-reference-independent-grid-v1.json out/
           cp frozen/gomyway-reference-independent-grid-v1.sha256 out/
-          sha256sum -c out/gomyway-reference-independent-grid-v1.sha256
+          (cd out && sha256sum -c gomyway-reference-independent-grid-v1.sha256)
           sha256sum out/gomyway-reference-independent-grid-v1-professional-comparison.json > out/gomyway-reference-independent-grid-v1-professional-comparison.sha256
 
       - name: Enforce no candidate mutation
