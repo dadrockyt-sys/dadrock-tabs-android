@@ -129,8 +129,7 @@ def main():
             results.append(row)
             continue
 
-        duplicate="guitar" if pair["state"]=="duplicate_guitar_candidate" else "bass"
-        companion="bass" if duplicate=="guitar" else "guitar"
+        # "duplicate_bass_candidate" means both claimed stems look bass-like,\n        # so the guitar-claimed stem is the false duplicate and bass is the companion.\n        # Likewise, "duplicate_guitar_candidate" means the bass-claimed stem is false.\n        if pair["state"]=="duplicate_bass_candidate":\n            duplicate="guitar"\n            companion="bass"\n        else:\n            duplicate="bass"\n            companion="guitar"
         length=len(mix)
         ref_comp=collapse_truth(truth,companion,length)
         raw_comp=si_sdr(ref_comp,raw[companion]) if companion in presence else None
