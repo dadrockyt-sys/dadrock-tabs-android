@@ -6351,3 +6351,293 @@ Until new source material exists, do not continue tuning S0. The current safe en
 - no automatic threshold;
 - no automatic correction;
 - no production delivery.
+
+
+## Go My Way full professional scorer recovery + current-pipeline baseline — 2026-10-03
+
+User directed use of the Go My Way audio/reference assets in `main/public` and clarified that full scorer coverage should exist for bass, lead, and rhythm across measures 1-113.
+
+This was treated as **existing-reference development benchmarking**, not as the new sealed 96-case trust/flag holdout, because Go My Way has extensive prior development exposure.
+
+### Pinned main audio/reference intake
+
+Pinned main commit:
+`74dacf322bb979c26a47786e2380c59d2d40e364`
+
+Full-song audio:
+- `public/gomywayfullaitest.m4a`
+- git blob: `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+
+Full professional PDFs on main:
+- bass: `public/Gomywaybassreference.pdf`
+  - git blob `9b39fec0e55d60d5ee509863dfc55c1d6bc1f4f4`
+  - SHA256 `18e6822394980d22a960a1bd4d923aaddf677f3341b8cc1a2dbb29ea1e8771d0`
+- lead: `public/Gomywayleadreference.pdf`
+  - git blob `3e5822be398f64b72d806970b27c22503d4e494c`
+  - SHA256 `a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56`
+
+The existing professional timing map is explicitly bound to:
+`public/gomywayfullaitest.m4a`
+
+### Full scorer history recovery
+
+Initial path-oriented history recovery:
+- workflow: `Astra Go My Way Full Scorer Recovery V1`
+- run: `37094036423` — success
+- artifact: `11263598848`
+- digest: `sha256:79e5b9414f4e753dba7eeba8114234728f94618b3f5113d929042fc5c4544b43`
+
+That scan found rhythm-facing full-song references but initially appeared not to find normalized bass/lead scorers.
+
+A deeper provenance scan by frozen PDF/source-set hashes found the older full V154 scorer system under generic research paths:
+
+Bass:
+- `research/v154-professional-references/bass-professional-reference-machine-readable.json`
+- blob `0773c98556d00837eaea28ee77cfc513498cc21f`
+- frozen source-local timing:
+  `research/v154-professional-references/bass-source-local-attack-timing.json`
+- timing blob `251d4986965c823b288d4a7d0428ec32cc9231cf`
+
+Lead:
+- `research/v154-professional-references/lead-professional-reference-machine-readable.json`
+- blob `b018d93bb5e2119ee843fbd3fbc9139484fde0d1`
+- frozen source-local timing:
+  `research/v154-professional-references/lead-source-local-attack-timing.json`
+- timing blob `577a4a07514cdca63d544998f6c5b590ccd2b125`
+
+Shared meter transform:
+- `research/v154-professional-references/source-meter-to-fixed-grid-mapping.json`
+- blob `c7856d2879f4ac1524e68016e979728c92c487fd`
+- preserves measure 104 as a real 2/4 bar rather than stretching it.
+
+Provenance recovery workflow:
+- run `37094671478` — success
+- artifact `11262639696`
+- digest `sha256:3f64e1c493788502696d6516b11849290ea2a273531008ea9e1737893f288013`
+
+### Full frozen professional scorer coverage
+
+Rhythm:
+- measures 1-16: `analyzer/fixtures/gomyway_professional_intro_reference_v1.json`
+- measures 17-113: `public/gomyway-professional-rhythm-reference-17-113.json`
+- pitched targets: **971**
+- unpitched/dead targets excluded from MIDI score: 71
+
+Bass:
+- measures 1-113
+- source events: 569
+- frozen pitched scorer rows: **547**
+- measure 88 timing uncertainty remains excluded through null timing
+- event/timing arrays validated with no length mismatches
+
+Lead:
+- measures 1-113
+- source events: 487
+- frozen pitched scorer rows: **447**
+- source uncertainty/exclusions preserved, including the measure-39 source-error passage
+- event/timing arrays validated with no length mismatches
+
+Total pitched professional targets:
+**1,965**
+
+### Current pipeline inference freeze
+
+Implemented:
+- `astra_backend/evaluation/evaluate_gomyway_full_song_professional_v1.py`
+- `.github/workflows/astra-gomyway-full-song-professional-v1.yml`
+
+Current stack:
+- BS-Roformer-SW 6-stem FP16 ONNX, frozen SHA
+- Basic Pitch 0.4.0 frozen defaults
+- no stem mutation
+- no threshold search
+- professional references unavailable to inference
+
+Full-song inference run:
+- `37094392537` — **success**
+- head `b36c99a51fca367d288862dda351515457e6d3af`
+- artifact `11262994060`
+- digest `sha256:ae73d963ef985beaf26cf9e7c1cbd1780e0bb1e4757e40f6ae3c85c3662045b0`
+
+Frozen prediction counts:
+- whole mix: 787
+- raw guitar stem: 1065
+- raw bass stem: 701
+
+The artifact retains all three prediction streams for scoring-only reuse.
+
+### Full-song rhythm score
+
+971 professional pitched targets.
+
+Whole mix exact MIDI + onset (50 ms):
+- TP 18
+- precision 2.35%
+- recall 1.85%
+- F1 **2.07%**
+
+Raw guitar stem:
+- TP 36
+- precision 3.51%
+- recall 3.71%
+- F1 **3.61%**
+
+Separator delta:
+**+1.53 F1 percentage points**
+
+The separator helps rhythm, but absolute accuracy is poor.
+
+Detailed:
+- `docs/astra/GOMYWAY_FULL_SONG_CURRENT_PIPELINE_PROFESSIONAL_V1.md`
+- `docs/astra/GOMYWAY_FULL_SONG_CURRENT_PIPELINE_PROFESSIONAL_V1.json`
+
+### Full three-role score
+
+Implemented scoring-only:
+- `astra_backend/evaluation/score_gomyway_full_song_three_role_v1.py`
+- `.github/workflows/astra-gomyway-three-role-score-v1.yml`
+
+The scoring stage downloads frozen predictions from run `37094392537` and performs no inference.
+
+Two early attempts failed before scoring due accidental inference-module runtime imports. The final scorer was made inference-runtime-free instead of expanding the scoring environment.
+
+Successful run:
+- `37095137423`
+- head `3b555b10be0b25df207a9178b145d5b9f05efe3b`
+- artifact `11264400463`
+- digest `sha256:63c86d9ca40af348dd98796c1a08e7946cc473aed7a75793e16abd7cb64a2f75`
+
+Primary metric: one-to-one exact MIDI + onset within fixed 50 ms.
+
+Rhythm / raw generic guitar:
+- targets 971
+- exact F1 **3.61%**
+- pitch-class/onset F1 **7.82%**
+- onset-only F1 **25.35%**
+- whole-mix exact F1 2.07%
+- separator delta +1.53 points
+
+Lead / same raw generic guitar:
+- targets 447
+- exact F1 **5.98%**
+- pitch-class/onset F1 **8.83%**
+- onset-only F1 **22.28%**
+- whole-mix exact F1 0.99%
+- separator delta **+4.99 points**
+
+Bass / raw bass:
+- targets 547
+- exact F1 **8.21%**
+- pitch-class/onset F1 **9.02%**
+- onset-only F1 **31.72%**
+- whole-mix exact F1 **9.29%**
+- separator delta **-1.08 points**
+
+Three-role macro exact MIDI/onset F1:
+**5.93%**
+
+Important:
+- rhythm and lead share the same generic guitar separator output; this is musical-evidence scoring, not proof of rhythm-vs-lead role separation.
+- bass is the only role where the current separator makes exact professional-reference agreement slightly worse than whole-mix Basic Pitch.
+
+Detailed:
+- `docs/astra/GOMYWAY_FULL_SONG_THREE_ROLE_SCORE_V1.md`
+- `docs/astra/GOMYWAY_FULL_SONG_THREE_ROLE_SCORE_V1.json`
+
+### Three-role professional failure anatomy
+
+Implemented:
+- `astra_backend/evaluation/analyze_gomyway_three_role_failure_anatomy_v1.py`
+- `.github/workflows/astra-gomyway-three-role-failure-anatomy-v1.yml`
+
+Run:
+- `37095293247` — **success**
+- head `bedb64979c67a812dfb836d32a592be1ca921080`
+- artifact `11264455653`
+- digest `sha256:c01753615a1caf6b3294d16321fd1fdbfbde01576fbdd5db114ca1f1de63f1fa`
+
+Across all 1,965 professional targets:
+- **60.20%**: no prediction within 50 ms
+- **6.67%**: exact MIDI candidate available
+- **3.92%**: same pitch class, wrong octave
+- **6.11%**: within +/-1-2 semitones
+- **11.04%**: fourth/fifth-class relation
+- **12.06%**: other wrong pitch only
+
+Rhythm:
+- no nearby prediction 58.60%
+- exact candidate 3.71%
+- professional median MIDI 55
+- generic guitar prediction median MIDI 62
+- strong high-register/harmonic bias
+
+Lead:
+- no nearby prediction 59.06%
+- exact candidate 9.84%
+- professional median MIDI 64
+- generic guitar prediction median MIDI 62
+- register is much closer than for rhythm
+
+Bass:
+- no nearby prediction 63.99%
+- exact candidate 9.32%
+- near +/-1-2 semitones 11.15%
+- professional median MIDI 38
+- bass prediction median MIDI 40
+- professional P90 41 vs prediction P90 50
+
+Detailed:
+- `docs/astra/GOMYWAY_THREE_ROLE_FAILURE_ANATOMY_V1.md`
+- `docs/astra/GOMYWAY_THREE_ROLE_FAILURE_ANATOMY_V1.json`
+
+### Current scientific conclusion
+
+The full real professional scorer changes the priority.
+
+The dominant current end-to-end limitation is **note evidence extraction / transcription**, not duplicate consolidation.
+
+Evidence:
+1. most professional attacks have no Basic Pitch event within 50 ms;
+2. many nearby events have the wrong pitch/harmonic identity;
+3. the generic guitar stream is biased high for rhythm;
+4. bass has high-register contamination / near-pitch errors;
+5. current separator helps guitar roles but not bass exact score.
+
+Do **not** reopen duplicate consolidation or tune its thresholds from this result.
+
+Also preserve earlier generic front-end decisions:
+- Basic Pitch already failed the separately frozen Stage-A advancement gate;
+- MR-MT3 failed its frozen program-projection gate;
+- prior stop rule says do not simply try a third generic frozen AMT front end on the same development evidence.
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task:** use the full professional Go My Way scorer as a **development diagnostic**, not a holdout, to design a new reference-blind note-evidence front-end hypothesis that specifically addresses the observed failure modes.
+
+Preferred direction:
+1. do not tune Basic Pitch thresholds;
+2. do not try another generic off-the-shelf AMT model merely as a third substitution;
+3. keep BS-Roformer outputs unchanged;
+4. design a candidate-generating note front end that can expose richer pitch evidence at independently detected attacks rather than committing immediately to one pitch;
+5. explicitly target:
+   - missing attack evidence;
+   - rhythm high-register/harmonic bias;
+   - fourth/fifth and octave harmonic confusion;
+   - bass upper-register contamination / +/-1-2 semitone instability;
+6. preserve ambiguity in the evidence packet instead of auto-correcting notes;
+7. preregister the extraction algorithm/settings before scoring it on the full professional reference.
+
+A reasonable next experiment is a **reference-blind attack + multi-pitch evidence diagnostic**:
+- attack candidates from audio-domain spectral/onset evidence independent of Basic Pitch note acceptance;
+- multi-pitch candidates per attack from harmonic-consistency evidence within instrument-specific physical ranges;
+- no reference-driven threshold search;
+- score candidate availability separately from final one-note decisions.
+
+Go My Way can be used to evaluate this development hypothesis after it is frozen, but any eventual generalization claim still requires genuinely new source-disjoint material under the previously defined holdout protocol.
+
+Keep:
+- uncertainty presentation;
+- development evidence packet;
+- trust/flag holdout protocol;
+- no production connection;
+- `main` unchanged.
