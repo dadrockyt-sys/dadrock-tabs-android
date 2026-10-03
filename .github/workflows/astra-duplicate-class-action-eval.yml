@@ -4,7 +4,7 @@ on:
   push:
     branches: [astra-work]
     paths:
-      - 'docs/astra/DUPLICATE_CLASS_ACTION_RUN_TRIGGER.txt'
+      - 'docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt'
 
 permissions:
   contents: read
