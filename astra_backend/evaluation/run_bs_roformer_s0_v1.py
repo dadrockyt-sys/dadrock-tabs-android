@@ -50,7 +50,8 @@ def main():
     args=ap.parse_args()
 
     adapter=BsRoformer6StemOnnxAdapter(Path(args.model))
-    cfg=CleanupConfig()\n    diagnostic_cfg=DiagnosticConfig()
+    cfg=CleanupConfig()
+    diagnostic_cfg=DiagnosticConfig()
     root=Path(args.s0_root)
     rows=[]
     started=time.perf_counter()
