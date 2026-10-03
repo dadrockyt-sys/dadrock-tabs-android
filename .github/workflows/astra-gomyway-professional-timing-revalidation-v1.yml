@@ -1,0 +1,50 @@
+name: Astra Go My Way Professional Timing Revalidation V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_professional_timing_revalidation_v1.py'
+      - '.github/workflows/astra-gomyway-professional-timing-revalidation-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  revalidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-independent-timebase-v6-frozen
+          path: frozen-v6
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37138941466
+
+      - name: Verify frozen V6 bundle
+        run: |
+          set -euo pipefail
+          cd frozen-v6
+          sha256sum -c gomyway-reference-independent-timebase-v6-bundle.sha256
+
+      - name: Revalidate professional timing
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python astra_backend/evaluation/gomyway_professional_timing_revalidation_v1.py             --v6-bundle frozen-v6/gomyway-reference-independent-timebase-v6-bundle.json             --old-timing-map public/gomyway-professional-timing-map-v2.json             --output-map out/gomyway-professional-timing-map-v3-revalidated.json             --output-audit out/gomyway-professional-timing-revalidation-v1-audit.json
+          sha256sum out/gomyway-professional-timing-map-v3-revalidated.json
+          sha256sum out/gomyway-professional-timing-revalidation-v1-audit.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-professional-timing-revalidation-v1
+          path: out/
+          retention-days: 30
