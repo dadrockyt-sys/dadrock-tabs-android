@@ -17,20 +17,12 @@ import time
 from pathlib import Path
 
 import numpy as np
-import tensorflow_hub as hub
 
 from bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter, FP16_SHA256
-from evaluate_duplicate_class_actions_v1 import (
-    class_names,
-    diagnose_stems,
-    evidence,
-    energy,
-    load,
-    row_for_claim,
-    truth_presence,
-)
+import soundfile as sf
+
+from stem_bleed_diagnostics_v1 import DiagnosticConfig, diagnose_stems
 from evaluate_s0_transcription_failure_attribution_v1 import run_probe
-from pair_consistency_classifier_v1 import PairClassifierConfig, classify_pair
 from pretrained_note_front_end_v1 import (
     BASIC_PITCH_VERSION,
     FRAME_THRESHOLD,
@@ -38,9 +30,24 @@ from pretrained_note_front_end_v1 import (
     ONSET_THRESHOLD,
     basic_pitch_model_identity,
 )
-from stem_bleed_diagnostics_v1 import DiagnosticConfig
 
 ONSET_TOLERANCE_SECONDS = 0.05
+
+
+def load(path):
+    return sf.read(path, always_2d=True, dtype="float32")
+
+
+def truth_presence(directory):
+    return {
+        p.stem.split("_", 1)[1]
+        for p in directory.glob("*.wav")
+        if not p.name.endswith("_mix.wav")
+    }
+
+
+def energy(x):
+    return float(np.mean(np.asarray(x, dtype=np.float64) ** 2))
 
 
 def _candidate_pairs(a, b, predicate):
@@ -117,11 +124,14 @@ def main():
         raise RuntimeError("Basic Pitch model SHA mismatch")
 
     sep=BsRoformer6StemOnnxAdapter(Path(args.model))
-    yam=hub.load(args.hub_url)
-    names=class_names(yam)
     diag_cfg=DiagnosticConfig()
-    pair_cfg=PairClassifierConfig()
     rows=[]
+
+    prior_path=Path("docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json")
+    prior=json.loads(prior_path.read_text())
+    prior_duplicate_fixture=prior["keyFixture"]
+    if prior_duplicate_fixture != "S0M10" or prior["duplicateCandidateCount"] != 1:
+        raise RuntimeError("prior frozen duplicate-class context mismatch")
     started=time.perf_counter()
 
     with tempfile.TemporaryDirectory(prefix="astra_cross_stem_overlap_") as td:
@@ -144,18 +154,6 @@ def main():
                 f"{directory.name}:bass"
             )
             duration=len(mix)/float(fs)
-
-            ev={
-                "guitar": evidence(yam,names,raw["guitar"],fs),
-                "bass": evidence(yam,names,raw["bass"],fs),
-            }
-            guitar_row=row_for_claim(
-                directory.name,"guitar",raw,diagnostics,ev,presence
-            )
-            bass_row=row_for_claim(
-                directory.name,"bass",raw,diagnostics,ev,presence
-            )
-            pair=classify_pair(guitar_row,bass_row,pair_cfg)
 
             exact=_metrics(
                 guitar_events,bass_events,
@@ -181,15 +179,14 @@ def main():
                     "guitar":"guitar" in presence,
                     "bass":"bass" in presence,
                 },
-                "pairClassifier":{
-                    "state":pair["state"],
-                    "guitarWinner":pair["guitarWinner"],
-                    "bassWinner":pair["bassWinner"],
-                    "energyGapDb":pair["energyGapDb"],
-                    "mutualOverlap":pair.get("mutualOverlap"),
-                    "reason":pair["reason"],
+                "priorFrozenPairContext":{
+                    "duplicateCandidateReported": directory.name == prior_duplicate_fixture,
+                    "reportedState": (
+                        "duplicate_bass_candidate"
+                        if directory.name == prior_duplicate_fixture else None
+                    ),
+                    "sourceRecord":"docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json",
                 },
-                "recognizerEvidence":ev,
                 "stemEnergy":{
                     "guitar":energy(raw["guitar"]),
                     "bass":energy(raw["bass"]),
@@ -265,12 +262,13 @@ def main():
             "minimumNoteLengthMs":MIN_NOTE_LENGTH_MS,
             "onsetToleranceSeconds":ONSET_TOLERANCE_SECONDS,
         },
-        "pairClassifierConfig":pair_cfg.to_dict(),
-        "mixtureCount":len(rows),
-        "pairStateCounts":{
-            state:sum(r["pairClassifier"]["state"]==state for r in rows)
-            for state in sorted({r["pairClassifier"]["state"] for r in rows})
+        "priorFrozenPairContext":{
+            "sourceRecord":"docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json",
+            "duplicateCandidateCount":prior["duplicateCandidateCount"],
+            "keyFixture":prior_duplicate_fixture,
+            "reportedStateForKeyFixture":"duplicate_bass_candidate",
         },
+        "mixtureCount":len(rows),
         "s0m10VsOrdinaryBothPresent":comparison,
         "results":rows,
         "totalWallSeconds":time.perf_counter()-started,
