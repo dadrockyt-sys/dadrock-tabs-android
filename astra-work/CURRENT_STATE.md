@@ -8907,3 +8907,58 @@ Conclusion:
 5. Build a reference-blind spectral octave discriminator using the original bass audio/stem and frozen event times, then freeze before scoring.
 6. For guitar, do not apply octave heuristics; remaining problem is broader harmonic/voicing modeling.
 7. Keep `main` unchanged.
+
+
+## Spectral bass octave discriminator V1 — launched
+
+Reason for pivot:
+- local octave-consensus V2 was only marginally positive: bass F1 58.97% -> 59.61%, TP +4 after 33 changed notes;
+- stop threshold-tuning local-consensus heuristics on Go My Way;
+- investigate the physical failure mode directly: Basic Pitch may sometimes lock to the second harmonic rather than the bass fundamental.
+
+Candidate construction:
+- regenerate the frozen BS-Roformer bass stem once from immutable source audio;
+- reuse frozen Basic Pitch bass event times/MIDI from note-evidence artifact `11282827368`;
+- no professional note reference is read during candidate construction;
+- for eligible bass events, compare spectral energy around:
+  - predicted frequency;
+  - one-octave-lower candidate frequency;
+  - harmonic-series support for both hypotheses;
+- only -12 semitone correction is allowed;
+- fixed parameters before scoring:
+  - 120 ms event window;
+  - FFT size 8192;
+  - bass MIDI range 28..67;
+  - minimum MIDI for shift 40;
+  - lower/current fundamental ratio >= 0.28;
+  - lower-hypothesis score >= 1.20x current-hypothesis score;
+  - lower-fundamental absolute spectral share >= 0.08.
+- candidate is frozen before any professional scoring.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_blind_spectral_bass_octave_v1.py`
+- reuses `score_gomyway_reference_blind_bass_octave_resolver_v2.py`
+- `.github/workflows/astra-gomyway-spectral-bass-octave-v1.yml`
+
+Commits:
+- spectral candidate implementation: `a27768e5719cd25ca08d4254e5396ecd7120673d`
+- workflow launch: `79c2853f963e33eb537f79d9e95ea9d6ffbce50e`
+
+Authoritative run:
+- run `37157163727`
+- head `79c2853f963e33eb537f79d9e95ea9d6ffbce50e`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37157163727
+
+### Exact next resume instruction
+
+Resume from run `37157163727`.
+If green:
+1. record frozen candidate artifact/digest and candidate SHA;
+2. record bass-stem SHA and spectral change count;
+3. record post-freeze score artifact/digest and original-vs-corrected bass TP/P/R/F1;
+4. compare against local-consensus V2 (TP 369, F1 59.61%);
+5. accept spectral direction only if it materially exceeds V2 or gives clearer precision per changed note;
+6. if neutral/negative, stop octave correction on Go My Way and move to broader bass onset/pitch modeling;
+7. guitar remains untouched; its next work is harmonic/polyphonic voicing modeling;
+8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
