@@ -1,0 +1,96 @@
+name: Astra Go My Way Reference-Blind Octave Consensus V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_reference_blind_octave_consensus_v1.py'
+      - 'astra_backend/evaluation/score_gomyway_reference_blind_octave_consensus_v1.py'
+      - '.github/workflows/astra-gomyway-reference-blind-octave-consensus-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - name: Verify note evidence
+        run: |
+          set -euo pipefail
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+      - name: Build reference-blind candidate
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_reference_blind_octave_consensus_v1.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --output-json octave-consensus-v1.json
+          sha256sum octave-consensus-v1.json > octave-consensus-v1.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-octave-consensus-v1-frozen
+          path: |
+            octave-consensus-v1.json
+            octave-consensus-v1.sha256
+          retention-days: 30
+
+  score-after-freeze:
+    needs: freeze-candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-blind-octave-consensus-v1-frozen
+          path: candidate
+      - name: Verify frozen candidate
+        run: |
+          set -euo pipefail
+          cd candidate
+          sha256sum -c octave-consensus-v1.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+      - name: Score only after freeze
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/score_gomyway_reference_blind_octave_consensus_v1.py             --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --candidate candidate/octave-consensus-v1.json             --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --bass-reference research/v154-professional-references/scorer-ready/bass-scorer-ready.json             --output-json octave-consensus-v1-score.json
+          sha256sum octave-consensus-v1-score.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-blind-octave-consensus-v1-score
+          path: octave-consensus-v1-score.json
+          retention-days: 30
