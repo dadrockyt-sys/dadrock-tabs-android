@@ -52,8 +52,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
           python -m pip install --upgrade pip
-          python -m pip install numpy scipy soundfile torch onnxruntime
+          # Basic Pitch 0.4.0's TFLite runtime requires NumPy 1.x.
+          # Pin this runtime dependency only; no model/scientific setting changes.
+          python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
           python -m pip install 'basic-pitch==0.4.0'
+          python - <<'PY'
+          import numpy
+          assert numpy.__version__ == '1.26.4'
+          PY
 
       - name: Download and verify BS-Roformer
         shell: bash
