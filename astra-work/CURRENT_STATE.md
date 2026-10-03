@@ -7005,3 +7005,62 @@ Its purpose now is to answer the practical product question:
 > How close is the current separator + transcription stack to a full professional tab across rhythm, lead, and bass?
 
 Use the professional references strictly for scoring and error analysis, not for hidden correction of the model output.
+
+
+## Go My Way reference-independent full-song timebase V1 — launched 2026-10-03
+
+Continued from the full-song three-role professional benchmark V2 resume instruction.
+
+Implemented:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v1.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v1.yml`
+
+Design boundary:
+- candidate generation reads decoded `public/gomywayfullaitest.m4a` audio only;
+- generation reuses the existing V143 reference-free timing estimator plus reference-free beat-grid repair;
+- candidate uses an explicit 4/4 / 16-step measure-grid assumption from the existing adapter;
+- no professional timing map or scorer-ready note rows are read by the generation mode;
+- candidate JSON is SHA-256 frozen and uploaded in the first Actions job;
+- a separate dependent job verifies the frozen bytes before reading `public/gomyway-professional-timing-map-v2.json`;
+- professional comparison is diagnostic only and cannot rewrite the candidate;
+- integer measure-shift search, if reported, is post-freeze diagnostic alignment only;
+- the candidate remains unchanged after the comparison;
+- raw Basic Pitch, separator identities and `main` are untouched.
+
+Commits:
+- implementation: `250f95224ce52b2c3fe012be6043024cdcd2f790`
+- initial workflow: `fabad18170f46697394deffcc7a882cd2f5c55d7`
+- runtime-only ffmpeg fix: `0c5b3b7ff4bb73fec62899661fba29f6e98a75a7`
+
+First workflow run:
+- run `37121531152`
+- result: FAILED before candidate generation because `ffmpeg` was absent on the runner;
+- source Git-blob identity check passed before that failure;
+- no candidate grid was generated;
+- no professional timing comparison was run.
+
+Runtime-only correction:
+- workflow now installs `ffmpeg`;
+- no audio, estimator, grid or comparison semantics changed.
+
+Corrected workflow run:
+- run `37121584921`
+- head `0c5b3b7ff4bb73fec62899661fba29f6e98a75a7`
+- status at this handoff update: QUEUED.
+
+### Exact next resume instruction
+
+Resume from Actions run `37121584921`.
+
+1. If the blind-grid job succeeds, record the frozen candidate artifact ID/digest and candidate JSON SHA-256.
+2. Record candidate tempo, beat count, measure count, first-beat-in-measure, beat/bar confidence and beat-interval summary.
+3. Then inspect the dependent post-freeze professional comparison result:
+   - same-numbering error;
+   - best diagnostic integer measure shift;
+   - median/mean absolute downbeat error;
+   - signed drift across the song;
+   - effect of the professional 2/4 measure 104 against the candidate's intentionally reference-independent 4/4-only assumption.
+4. Do not retune or regenerate the same candidate after seeing the professional comparison.
+5. If the reference-independent grid is coherent enough for canonical candidate coordinates, freeze that conclusion before integrating note events.
+6. If it is not coherent, diagnose the structural failure from the frozen candidate only; do not use the professional timing map to repair it.
+7. Keep `main` unchanged and preserve the full three-role professional scorer bundle as scoring-only evidence.
