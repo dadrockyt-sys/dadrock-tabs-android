@@ -6641,3 +6641,58 @@ Keep:
 - trust/flag holdout protocol;
 - no production connection;
 - `main` unchanged.
+
+
+## Go My Way full 113-measure scorer-ready reference correction — 2026-10-03
+
+User clarified that complete scorer references already exist for rhythm, lead, and bass across the full 113-measure song structure.
+
+Confirmed frozen scorer-ready files:
+- `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`
+  - SHA-256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`
+  - 113 measures, 603 events, 946 scored MIDI/step rows
+- `research/v154-professional-references/scorer-ready/bass-scorer-ready.json`
+  - SHA-256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`
+  - 113 measures, 569 source events, 547 scored rows
+  - measure 88 explicitly excluded by frozen normalization policy
+- `research/v154-professional-references/scorer-ready/lead-scorer-ready.json`
+  - SHA-256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`
+  - 113 measures, 487 source events, 447 scored rows
+  - measures 28 and 39 explicitly excluded by frozen normalization policy
+
+These references were normalized without reading generated candidates; receipts state scoring had not been performed during normalization.
+
+Full-song audio:
+- `public/gomywayfullaitest.m4a`
+- SHA-256 `60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb`
+- timing map: `public/gomyway-professional-timing-map-v2.json`, measures 1..113
+
+### Full-song professional benchmark V2
+
+Added:
+- `astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py`
+- `.github/workflows/astra-gomyway-full-song-professional-v2.yml`
+
+Benchmark contract:
+- existing-reference development benchmark, **not** the future sealed 96-case holdout;
+- reference-blind inference;
+- untouched BS-Roformer guitar/bass outputs;
+- frozen Basic Pitch 0.4.0;
+- exact MIDI + onset at 50 ms;
+- rhythm and lead scored separately against the raw guitar stem;
+- combined rhythm+lead reference also scored against the raw guitar stem;
+- bass scored against the raw bass stem;
+- whole-mix controls and cross-role confusion diagnostics included;
+- frozen reference uncertainty exclusions honored;
+- no threshold search;
+- no audio mutation;
+- no automatic correction;
+- no `main` modification.
+
+Workflow run started:
+- run `37096098308`
+- head `627d9ef60ccb4ef455c6be73e3fdb11d85b76c9f`
+
+At this handoff update the run is still in progress.
+
+Do not fall back to the earlier rhythm-only 17..113 benchmark. The scorer-ready 113-measure three-role bundle above is the authoritative scoring target for this development benchmark.
