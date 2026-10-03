@@ -9123,3 +9123,48 @@ Interpretation:
 5. Score rhythm, lead, and combined guitar after freeze.
 6. If this materially improves guitar, continue toward string/fret mapping.
 7. Keep `main` unchanged.
+
+
+## Reference-blind guitar chord-role decoder V1 — launched
+
+Motivation from chord/voicing diagnostic:
+- rhythm cluster coverage 63.00%; exact MIDI present somewhere in cluster 52.68%; target pitch class present 67.11%;
+- lead cluster coverage 53.69%; exact MIDI present somewhere in cluster 56.25%; target pitch class present 69.17%;
+- this suggests useful polyphonic evidence is already present and current misses may partly be decoding/role-assignment errors.
+
+V1 decoder:
+- uses frozen guitar predictions only;
+- groups notes within 60 ms;
+- no pitch invention;
+- rhythm candidate keeps up to 3 notes/cluster using local register + continuity preference;
+- lead candidate keeps up to 1 note/cluster using continuity + upper-register preference;
+- singleton clusters are assigned rhythm-only;
+- professional references are not read during candidate construction;
+- candidate is frozen before scoring.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_blind_guitar_chord_role_decoder_v1.py`
+- `astra_backend/evaluation/score_gomyway_reference_blind_guitar_chord_role_decoder_v1.py`
+- `.github/workflows/astra-gomyway-guitar-chord-role-decoder-v1.yml`
+
+Commits:
+- decoder: `d6dcc4331a6b1520012e0f09bfefd6c23ca1e1fd`
+- scorer: `5fdac662329fc436bd489f23dd71865bb4e844b9`
+- workflow: `94d4999df709b6f2850e911dc4a7c7bf4d7556ac`
+
+Authoritative run:
+- run `37158385869`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37158385869
+
+### Exact next resume instruction
+
+Resume from run `37158385869`.
+If green:
+1. record frozen candidate artifact/digest and rhythm/lead candidate counts;
+2. record post-freeze rhythm/lead/combined-guitar TP/P/R/F1;
+3. compare against V4-origin baseline rhythm 31.82%, lead 17.84%, combined 35.04%;
+4. if role-aware decoding improves precision without catastrophic recall loss, iterate structurally—not by tuning against reference;
+5. if it fails, conclude Basic Pitch chord evidence is insufficiently separable by simple register/continuity and consider a different polyphonic front end;
+6. preserve spectral bass V1 as current strongest bass candidate;
+7. keep V4-origin timing, frozen note evidence, and `main` unchanged.
