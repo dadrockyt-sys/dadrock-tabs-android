@@ -1,0 +1,53 @@
+name: Astra Development Evidence Packet V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/developmentEvidencePacket.mjs'
+      - 'astra_backend/transcriptionUncertaintyPresentation.mjs'
+      - 'astra_backend/noteEventExposure.mjs'
+      - 'astra_backend/noteEvidenceEvaluator.mjs'
+      - 'astra_backend/noteEvidenceAdapter.mjs'
+      - 'astra_backend/tests/developmentEvidencePacket.test.mjs'
+      - '.github/workflows/astra-development-evidence-packet-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run end-to-end packet integration tests
+        run: node --test astra_backend/tests/developmentEvidencePacket.test.mjs
+
+      - name: Run uncertainty contract regression tests
+        run: node --test astra_backend/tests/transcriptionUncertaintyPresentation.test.mjs
+
+      - name: Run note-event exposure regression tests
+        run: node --test astra_backend/tests/noteEventExposure.test.mjs
+
+      - name: Summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          # Development End-to-End Evidence Packet V1
+          - Adapted note evidence -> evaluator -> event exposure -> uncertainty presentation: **integrated**
+          - Development-only: **yes**
+          - Production delivery authorized: **no**
+          - MIDI/onset identity mutation: **forbidden and tested**
+          - Composite confidence score: **none**
+          - Automatic correction / stem mutation / role reassignment: **none**
+          - S0-fitted thresholds: **none**
+          EOF
