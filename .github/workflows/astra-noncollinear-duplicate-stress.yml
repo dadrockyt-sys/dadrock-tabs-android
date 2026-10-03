@@ -1,0 +1,82 @@
+name: Astra Non-Collinear Duplicate Stress
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-private-fixtures
+          token: ${{ secrets.S0_FIXTURE_TOKEN }}
+          path: .private-s0-fixtures
+          fetch-depth: 1
+
+      - name: Prepare fixtures
+        run: |
+          set -euo pipefail
+          rm -rf s0_sources
+          cp -R .private-s0-fixtures/s0_sources ./s0_sources
+          test "$(find s0_sources -maxdepth 1 -type f | wc -l)" -eq 16
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile tensorflow-cpu==2.16.1 tensorflow-hub==0.16.1
+
+      - name: Compile
+        run: |
+          python -m py_compile \
+            astra_backend/evaluation/stem_bleed_cleanup_v1.py \
+            astra_backend/evaluation/stem_bleed_diagnostics_v1.py \
+            astra_backend/evaluation/pair_consistency_classifier_v1.py \
+            astra_backend/evaluation/evaluate_noncollinear_duplicate_stress_v1.py
+
+      - name: Run non-collinear stress
+        run: |
+          python astra_backend/evaluation/evaluate_noncollinear_duplicate_stress_v1.py \
+            --fixture-dir s0_sources \
+            --output-json noncollinear_duplicate_stress_result.json
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("noncollinear_duplicate_stress_result.json"))
+          print("# Non-Collinear Duplicate Stress V1")
+          print(f"- Cases: **{d['caseCount']}**")
+          print(f"- Pair accuracy: **{d['pairAccuracy']:.1%}**")
+          print(f"- Mean merge improvement: **{d['meanMergeImprovementDb']:.2f} dB**")
+          print(f"- Minimum merge improvement: **{d['minimumMergeImprovementDb']:.2f} dB**")
+          print(f"- Maximum merge improvement: **{d['maximumMergeImprovementDb']:.2f} dB**")
+          print(f"- Minimum merged SI-SDR: **{d['minimumMergedSiSdrDb']:.2f} dB**")
+          print(f"- Max reconstruction error: **{d['maximumMergeReconstructionMaxAbsError']:.3e}**")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-noncollinear-duplicate-stress-result
+          path: noncollinear_duplicate_stress_result.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf s0_sources .private-s0-fixtures
