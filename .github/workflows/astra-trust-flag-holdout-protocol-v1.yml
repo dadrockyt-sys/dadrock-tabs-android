@@ -1,0 +1,45 @@
+name: Astra Trust Flag Holdout Protocol V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/trustFlagHoldoutProtocol.mjs'
+      - 'astra_backend/tests/trustFlagHoldoutProtocol.test.mjs'
+      - 'docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1.md'
+      - 'docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1.json'
+      - '.github/workflows/astra-trust-flag-holdout-protocol-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run holdout admission tests
+        run: node --test astra_backend/tests/trustFlagHoldoutProtocol.test.mjs
+
+      - name: Summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          # Transcription Trust / Flag Holdout Protocol V1
+          - Threshold defined: **no**
+          - Minimum new calibration cases: **48**
+          - Minimum sealed holdout cases: **48**
+          - Source overlap with prior development/S0: **forbidden**
+          - Calibration/holdout source overlap: **forbidden**
+          - Automatic correction: **not authorized**
+          - Production delivery: **not authorized**
+          EOF
