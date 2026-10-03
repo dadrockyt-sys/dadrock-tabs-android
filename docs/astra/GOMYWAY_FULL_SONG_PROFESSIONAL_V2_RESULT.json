@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "kind": "gomyway-full-song-three-role-professional-benchmark-v2-record",
+  "date": "2026-10-03",
+  "runId": 37096244645,
+  "headCommit": "15474cd6cdff2f9792950d72a02508915484e5cc",
+  "artifact": {
+    "id": 11264986579,
+    "digest": "sha256:a8997135b0251aa8f4ed8f98b5c91650209f50840b9b6964b73b0e0f85b7e48f"
+  },
+  "canonicalReferenceCounts": {
+    "rhythm": 946,
+    "lead": 447,
+    "bass": 547,
+    "combinedGuitar": 1393
+  },
+  "exclusions": {
+    "lead": [
+      28,
+      39
+    ],
+    "bass": [
+      88
+    ],
+    "rhythm": []
+  },
+  "directTime50msScores": {
+    "rhythmFromGuitarStem": {
+      "precision": 0.05474095796676442,
+      "recall": 0.05919661733615222,
+      "f1": 0.056881665820213305,
+      "tp": 56,
+      "fp": 967,
+      "fn": 890
+    },
+    "leadFromGuitarStem": {
+      "precision": 0.04477611940298507,
+      "recall": 0.10067114093959731,
+      "f1": 0.06198347107438017,
+      "tp": 45,
+      "fp": 960,
+      "fn": 402
+    },
+    "combinedGuitarFromGuitarStem": {
+      "precision": 0.0955223880597015,
+      "recall": 0.06891600861450108,
+      "f1": 0.08006672226855713,
+      "tp": 96,
+      "fp": 909,
+      "fn": 1297
+    },
+    "bassFromBassStem": {
+      "precision": 0.0728862973760933,
+      "recall": 0.09140767824497258,
+      "f1": 0.08110300081103,
+      "tp": 50,
+      "fp": 636,
+      "fn": 497
+    }
+  },
+  "wholeMixControls": {
+    "rhythmF1": 0.030373831775700934,
+    "leadF1": 0.010008340283569641,
+    "combinedGuitarF1": 0.028904428904428906,
+    "bassF1": 0.09049079754601227
+  },
+  "canonicalV154HistoricalContext": {
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "priorCandidateCombinedGuitarPrimaryF1": 0.04915390813859791,
+    "priorCandidateBassPrimaryF1": 0.1116751269035533,
+    "directlyComparableToV2": false
+  },
+  "scoringBoundary": "Do not map current raw timestamps to professional measure/step coordinates and claim reference-blind generation. A reference-independent structure grid is required before canonical step-space scoring of this candidate.",
+  "sealedHoldout": false,
+  "productionActionAuthorized": false
+}
