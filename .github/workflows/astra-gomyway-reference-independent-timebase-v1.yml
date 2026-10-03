@@ -1,0 +1,132 @@
+name: Astra Go My Way Reference-Independent Timebase V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-gomyway-reference-independent-timebase-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  freeze-candidate-grid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install timing runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile
+
+      - name: Verify source identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+          ffmpeg -hide_banner -loglevel error -y -i public/gomywayfullaitest.m4a -ar 44100 -ac 2 /tmp/gomywayfullaitest.wav
+
+      - name: Generate and freeze candidate grid reference-blind
+        env:
+          PYTHONPATH: ${{ github.workspace }}/analyzer:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python astra_backend/evaluation/gomyway_reference_independent_timebase_v1.py generate --audio-source public/gomywayfullaitest.m4a --audio-wav /tmp/gomywayfullaitest.wav --output-json out/gomyway-reference-independent-grid-v1.json
+          sha256sum out/gomyway-reference-independent-grid-v1.json | tee out/gomyway-reference-independent-grid-v1.sha256
+
+      - name: Verify frozen candidate provenance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('out/gomyway-reference-independent-grid-v1.json')
+          d=json.loads(p.read_text())
+          assert d['referenceBlindGeneration'] is True
+          assert d['professionalTimingMapReadDuringGeneration'] is False
+          assert d['professionalScorerRowsReadDuringGeneration'] is False
+          assert d['status']=='frozen-before-professional-comparison'
+          assert d['audio']['sourcePath']=='public/gomywayfullaitest.m4a'
+          assert d['grid']['beatCount'] >= 100
+          assert d['grid']['slotCount'] >= 400
+          print('candidate freeze provenance: PASS')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-independent-grid-v1
+          path: |
+            out/gomyway-reference-independent-grid-v1.json
+            out/gomyway-reference-independent-grid-v1.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+  post-freeze-professional-comparison:
+    needs: freeze-candidate-grid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install comparison runtime
+        run: python -m pip install numpy
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-reference-independent-grid-v1
+          path: frozen
+
+      - name: Verify candidate bytes before reference read
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd frozen
+          sha256sum -c gomyway-reference-independent-grid-v1.sha256
+
+      - name: Compare frozen grid to professional timing map diagnostically
+        env:
+          PYTHONPATH: ${{ github.workspace }}/analyzer:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python astra_backend/evaluation/gomyway_reference_independent_timebase_v1.py compare --candidate-json frozen/gomyway-reference-independent-grid-v1.json --professional-timing-map public/gomyway-professional-timing-map-v2.json --output-json out/gomyway-reference-independent-grid-v1-professional-comparison.json
+          cp frozen/gomyway-reference-independent-grid-v1.json out/
+          cp frozen/gomyway-reference-independent-grid-v1.sha256 out/
+          sha256sum -c out/gomyway-reference-independent-grid-v1.sha256
+          sha256sum out/gomyway-reference-independent-grid-v1-professional-comparison.json > out/gomyway-reference-independent-grid-v1-professional-comparison.sha256
+
+      - name: Enforce no candidate mutation
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          frozen=Path('frozen/gomyway-reference-independent-grid-v1.json')
+          copied=Path('out/gomyway-reference-independent-grid-v1.json')
+          assert frozen.read_bytes()==copied.read_bytes()
+          c=json.loads(Path('out/gomyway-reference-independent-grid-v1-professional-comparison.json').read_text())
+          assert c['candidateMutatedAfterComparison'] is False
+          assert c['comparisonIsDiagnosticOnly'] is True
+          digest=hashlib.sha256(frozen.read_bytes()).hexdigest()
+          assert digest==c['candidateFrozenSha256BeforeReferenceRead']
+          print('post-freeze comparison invariants: PASS')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-reference-independent-timebase-v1-result
+          path: out/
+          if-no-files-found: error
+          retention-days: 30
