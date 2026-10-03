@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "s0-cross-stem-transcription-overlap-role-ambiguity-v1-record",
+  "date": "2026-10-02",
+  "runId": 37091792312,
+  "headCommit": "75b4bfb8b36f56e726aca7b32d05ce047c93f1d1",
+  "artifact": {
+    "id": 11263730676,
+    "digest": "sha256:7cc5b69125dbc042c219a63fa73c4627a359bca7ed9b20591c0f6ecb0a795ed5"
+  },
+  "descriptiveOnly": true,
+  "thresholdFitPerformed": false,
+  "s0m10": {
+    "exactMidiF1": {
+      "value": 0.030303030303030304,
+      "rank": 4,
+      "z": 0.3422589749904977
+    },
+    "pitchClassF1": {
+      "value": 0.09090909090909091,
+      "rank": 2,
+      "z": 1.1198734457835338
+    },
+    "octaveRelatedF1": {
+      "value": 0.06060606060606061,
+      "rank": 2,
+      "z": 0.6568053683037424
+    },
+    "anyPitchOnsetCoincidenceF1": {
+      "value": 0.09090909090909091,
+      "rank": 7,
+      "z": -0.864908508239645
+    },
+    "eventDensityBalance": {
+      "value": 1,
+      "rank": 1,
+      "z": 3.1412649344793704,
+      "guitarEvents": 33,
+      "bassEvents": 33
+    }
+  },
+  "decision": "cross_stem_note_overlap_does_not_isolate_hard_case_move_to_explicit_uncertainty_presentation",
+  "automaticRoleGateAuthorized": false
+}
