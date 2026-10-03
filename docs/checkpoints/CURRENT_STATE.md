@@ -7397,3 +7397,14 @@ Built:
 V1 gate is conservative and prospectively frozen before evaluation. It uses absolute YAMNet string evidence, guitar-vs-bass margin, separator interference pressure, competitor-dominance evidence, and an explicit uncertain state. Raw stems are preserved by default. Cleanup is only eligible on strong recognizer disagreement plus separator contamination evidence. Cleanup itself is softened relative to V1 blanket cleanup (floor gain 0.85, competition 0.35).
 
 Because the platform blocked creation of a new tiny trigger file, the workflow temporarily reuses `docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt`. Trigger commit `6873fd8b8c547ca100f214fed0a25b10a0aa4261` launched recognizer-gated cleanup run `37082340739`. This also launches the existing YAMNet evidence workflow and normal backend tests from the same commit; those are incidental and do not change the gated-cleanup experiment.
+
+
+## Recognizer-gated cleanup V1 result — 2026-10-02
+
+GitHub Actions run `37082340739` completed successfully. Artifact `11259456727` digest `sha256:90ac2d210d8df9a0ee1b9b9d6ae3e09041acedaf477aeaa564d07c2445627b5d`.
+
+Result: cleanup was applied to **0 stems**. Mean/worst/best target SI-SDR change were all `0.000 dB`. This means the preserve-by-default safety principle worked: the gate prevented the destructive blanket-cleanup behavior seen earlier. However, the gate is too conservative to improve hard false-stem cases such as S0M10 guitar.
+
+Decision: keep preserve-by-default. Do not loosen thresholds just to force actions on the same 12 fixtures. Split the next work into (1) target-present bleed cleanup and (2) false-stem suppression/reassignment. S0M10 guitar remains the key false-stem fixture. Next experiment should compare claimed-stem vs competing-stem YAMNet evidence, reassignment consequences, and downstream transcription behavior rather than spectral attenuation alone.
+
+Detailed records: `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.md` and `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.json`.
