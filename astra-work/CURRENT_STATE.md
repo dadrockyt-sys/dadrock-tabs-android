@@ -9525,3 +9525,45 @@ Frozen diagnostic contract:
    - missing-thresholded-event counts with activation at/above the already-frozen Basic Pitch defaults.
 6. Decide from that descriptive evidence whether a new reference-blind activation decoder is justified or whether Basic Pitch's guitar front end should be retired for this material.
 7. Preserve spectral bass V1, V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Raw Basic Pitch activation freeze V1 — authoritative green result
+
+Freeze run `37159748378` completed successfully.
+
+Frozen artifact:
+- artifact id `11287608492`
+- artifact digest `sha256:1f6b172728aefb8f5f499936ceb39510f1429a095985bf329c9d358c5beb0ac7`
+- NPZ SHA-256 `63891ae6581fa157c3a81e250e83dd227a983995c8bd68f6aa74ba76950a757a`
+- metadata JSON SHA-256 `f22ac8425a853fb132722f8b1472b702848f3ed1e2f7ac11f5b7634c0ecdf4a1`
+- Basic Pitch model SHA-256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+- guitar stem SHA-256 `7364372dfb63502577ef9b204f32e374e32126121b960eead0f3c4e5310b4342`
+- thresholded note-event count: 1065
+
+Raw model outputs:
+- note: shape [18183, 88], min 0.0642519742, max 0.9418171048, mean 0.1143930256
+- onset: shape [18183, 88], min 0.0118072061, max 0.9718373418, mean 0.1342910081
+- contour: shape [18183, 264], min 0.0293238871, max 0.8707188368, mean 0.1062054858
+
+## Post-freeze activation diagnostic V1 — launched
+
+Launch commit:
+- `786562bae5a99b3d065e1d167f39c0b2867ca1a2`
+
+Authoritative run:
+- run `37160802070`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37160802070
+- status at this update: IN PROGRESS
+
+### Exact next resume instruction
+
+Resume from diagnostic run `37160802070`.
+If green:
+1. record diagnostic artifact ID/digest and JSON SHA;
+2. summarize rhythm vs lead exact note/onset activation distributions;
+3. summarize octave-alias and nearby-semitone activation;
+4. summarize target pitch-rank distributions;
+5. focus on professional targets absent from the frozen 1065 thresholded events and count how many still show meaningful activation under the already-frozen Basic Pitch defaults;
+6. do not threshold-search or tune against the reference;
+7. decide whether a new reference-blind activation decoder is justified or whether Basic Pitch should be retired for guitar on this material;
+8. preserve spectral bass V1, V4-origin timing, frozen note evidence, and main unchanged.
