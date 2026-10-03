@@ -1,6 +1,10 @@
 name: Astra Go My Way Basic Pitch Guitar Activation Diagnostic V1
 
 on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-gomyway-basic-pitch-guitar-activation-diagnostic-v1.yml'
   workflow_dispatch:
 
 permissions:
