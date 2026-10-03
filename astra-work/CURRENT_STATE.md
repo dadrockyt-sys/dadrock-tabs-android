@@ -8429,3 +8429,34 @@ If green:
 6. build the next recognizer experiment only around the dominant measured error class;
 7. do not retune timing further on Go My Way;
 8. keep V4-origin post-hoc/research-only and keep `main` unchanged.
+
+
+## V4-origin pitch-error diagnostic V1 — runtime-only failure and relaunch 2026-10-03
+
+Failed run:
+- run `37147588363`
+- frozen note-evidence artifact verified successfully;
+- V4-origin timing map verified successfully;
+- failure occurred before diagnostic execution;
+- error: `ModuleNotFoundError: No module named 'soundfile'`;
+- no pitch diagnostic result was produced;
+- this was a runtime packaging failure only, not a scientific failure.
+
+Runtime-only fix:
+- added `soundfile` to the diagnostic workflow runtime;
+- frozen evidence, timing map, professional references, onset tolerance, matching logic, and all diagnostic semantics remain unchanged.
+
+Fix commit:
+- `2e79dff796edaf0814c11df260321d9583b99b14`
+
+Relaunched authoritative run:
+- run `37148021444`
+- head `2e79dff796edaf0814c11df260321d9583b99b14`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37148021444
+
+### Exact next resume instruction
+
+Resume from run `37148021444`.
+If green, record the pitch-error buckets and decide the next recognizer experiment from the dominant measured error class.
+If it fails again, fix only runtime/import plumbing and preserve all frozen scientific inputs unchanged.
