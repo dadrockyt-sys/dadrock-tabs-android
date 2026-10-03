@@ -9954,3 +9954,45 @@ If green:
 6. if specialized AMT materially improves lead or combined guitar, preserve it and continue using its native string/fret outputs;
 7. if both inputs underperform, close generic front-end swapping and return to a clean Guitar-TECHS-derived training path;
 8. preserve spectral bass V1, V4-origin timing, separator result, frozen Basic Pitch evidence, and `main` unchanged.
+
+
+## Specialized guitar AMT V1 — second runtime repair and relaunch
+
+Run `37162480842` failed in the same freeze step after successfully completing:
+- runtime install;
+- pinned code/config/checkpoint acquisition;
+- immutable source verification and decode;
+- BS-Roformer acquisition/verification;
+- guitar-stem separation.
+
+Failure:
+- `ModuleNotFoundError: No module named 'matplotlib'`
+
+This is a runtime dependency failure, not a scientific/model result.
+
+Repair:
+- added `matplotlib` only;
+- no change to model, config, checkpoint, audio, separator, inference code, scorer, or scientific contract.
+
+Repair commit:
+- `145b100c98c37c13840ecd937409a43250abdbba`
+
+Authoritative relaunch:
+- run `37163428072`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37163428072
+- status at this update: IN PROGRESS
+
+### Exact next resume instruction
+
+Resume from run `37163428072`.
+If it fails:
+1. inspect the exact exception;
+2. repair only the missing runtime/integration issue;
+3. do not change the model/scorer/thresholds;
+4. relaunch and record the new run.
+
+If green:
+1. record candidate artifact ID/digest;
+2. record config/checkpoint SHA-256 values and prediction counts;
+3. record score artifact ID/digest and both full-mix/guitar-stem score JSON hashes;
+4. compare against Basic Pitch V4 baseline and decide whether specialized AMT becomes strongest guitar path.
