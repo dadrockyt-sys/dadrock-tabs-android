@@ -52,7 +52,6 @@ jobs:
           sudo apt-get install -y ffmpeg
           python -m pip install --upgrade pip
           python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
-          python -m pip install 'tensorflow-cpu==2.16.1' 'tensorflow-hub==0.16.1'
           python -m pip install 'basic-pitch==0.4.0'
           python - <<'PY'
           import numpy
@@ -97,7 +96,7 @@ jobs:
           d=json.load(open("s0_cross_stem_transcription_overlap_v1.json"))
           print("# Cross-Stem Transcription Overlap / Role Ambiguity V1")
           print(f"- Mixtures: **{d['mixtureCount']}**")
-          print(f"- Pair states: **{d['pairStateCounts']}**")
+          print(f"- Prior frozen duplicate candidate: **{d['priorFrozenPairContext']['keyFixture']}**")
           print("- Threshold fit: **False**")
           print("## S0M10 vs ordinary both-present mixtures")
           for k,v in d["s0m10VsOrdinaryBothPresent"].items():
@@ -110,7 +109,7 @@ jobs:
           print("## Per mixture")
           for r in d["results"]:
               print(
-                  f"- {r['id']}: pair={r['pairClassifier']['state']}, "
+                  f"- {r['id']}: priorDuplicate={r['priorFrozenPairContext']['duplicateCandidateReported']}, "
                   f"exact={r['exactMidiOnsetOverlap']['symmetricF1']}, "
                   f"pitchClass={r['pitchClassOnsetOverlap']['symmetricF1']}, "
                   f"octave={r['octaveRelatedOnsetOverlap']['symmetricF1']}, "
