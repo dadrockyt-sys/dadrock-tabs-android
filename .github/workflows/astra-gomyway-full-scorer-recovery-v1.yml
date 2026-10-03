@@ -1,0 +1,48 @@
+name: Astra Go My Way Full Scorer Recovery V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/recover_gomyway_full_scorer_history_v1.py'
+      - '.github/workflows/astra-gomyway-full-scorer-recovery-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Recover scorer candidates from Git history
+        run: python astra_backend/evaluation/recover_gomyway_full_scorer_history_v1.py
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("gomyway_full_scorer_history_recovery_v1.json"))
+          print("# Go My Way Full Scorer History Recovery V1")
+          print(f"- JSON blobs inspected: **{d['uniqueJsonBlobsInspected']}**")
+          print(f"- candidates: **{d['candidateCount']}**")
+          print(f"- full/113 candidates: **{d['fullCoverageCandidateCount']}**")
+          for x in d["fullCoverageCandidates"][:30]:
+              print(f"- {x['path']} | roles={x['roles']} | coverage={x['coverage']}")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-gomyway-full-scorer-history-recovery-v1
+          path: gomyway_full_scorer_history_recovery_v1.json
+          retention-days: 30
