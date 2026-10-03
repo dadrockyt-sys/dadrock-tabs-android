@@ -7738,3 +7738,56 @@ Resume from run `37138941466`.
 5. If all independent trackers still drift similarly, investigate whether the professional timing map/audio binding itself needs a separate integrity audit before more estimator development; do not assume either side is correct without checking immutable source binding.
 6. Do not remap guitar/bass until timing is coherent.
 7. Keep `main` unchanged.
+
+
+## Go My Way professional timing-map integrity audit V1 — launched 2026-10-03
+
+Trigger for audit:
+- independent V6 Essentia estimators still converged near 128.9–129.0 BPM;
+- the preserved professional timing map itself declares `baseTempoBpm: 129`;
+- its current resolved override is `133.8 BPM`, derived from a sparse alignment diagnosis using only 19 matching occurrences;
+- the timing map metadata says `performanceDriftCorrection: pending`, has no manual anchor measures, and `productionPromotionAllowed: false`;
+- the repeated ~7-second candidate-vs-reference drift is numerically close to the duration difference created by using 133.8 BPM instead of 129 BPM across 450 quarter-note beats.
+
+Critical conclusion:
+- do NOT build V7 or force audio-derived beat trackers toward 133.8 until the preserved reference timing map is independently audited.
+- The next question is whether the reference map, not the candidate, is the dominant source of the apparent drift.
+
+Audit files:
+- `astra_backend/evaluation/gomyway_professional_timing_integrity_audit_v1.py`
+- `.github/workflows/astra-gomyway-professional-timing-integrity-audit-v1.yml`
+
+Commits:
+- audit script: `bd604572f3da32df27d7dbbed4ee4cd5f1e9d5af`
+- audit workflow: `93c5cf2e5f5dede69403a47f049a2b27f01944d0`
+
+Audit checks:
+- immutable source audio identity and exact duration;
+- timing-map first offset and last mapped end;
+- quarter-beat count implied by meter regions;
+- expected mapped span at base 129 BPM;
+- expected mapped span at resolved 133.8 BPM;
+- remaining audio tail under both hypotheses;
+- alignment-diagnosis evidence strength and promotion status;
+- internal metadata about pending drift correction/manual anchors.
+
+Authoritative audit run:
+- run `37140101179`
+- head `93c5cf2e5f5dede69403a47f049a2b27f01944d0`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37140101179
+
+### Exact next resume instruction
+
+Resume from audit run `37140101179`.
+
+1. Record exact source audio duration and SHA.
+2. Record map span, base-129 expected span/end, resolved-133.8 expected span/end, and remaining audio tail.
+3. Determine whether the current 133.8 map is internally well-supported enough to remain the timing gold standard.
+4. If the audit shows the map is likely miscalibrated:
+   - do not rewrite it from the same sparse alignment evidence;
+   - construct a separately versioned reference-timing revalidation using professional notation structure plus audio-only beat evidence and independent anchors;
+   - preserve the old map as historical evidence.
+5. If the audit unexpectedly supports 133.8 strongly, then resume estimator work.
+6. Do not remap guitar/bass until the timing reference itself is trustworthy.
+7. Keep `main` unchanged.
