@@ -1,0 +1,112 @@
+name: Astra False-Stem Diagnostic
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-private-fixtures
+          token: ${{ secrets.S0_FIXTURE_TOKEN }}
+          path: .private-s0-fixtures
+          fetch-depth: 1
+
+      - name: Prepare fixtures
+        run: |
+          set -euo pipefail
+          rm -rf s0_sources
+          cp -R .private-s0-fixtures/s0_sources ./s0_sources
+          test "$(find s0_sources -maxdepth 1 -type f | wc -l)" -eq 16
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile torch onnxruntime tensorflow-cpu==2.16.1 tensorflow-hub==0.16.1
+
+      - name: Download verified separator model
+        run: |
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve("https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx", p)
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected:
+              raise SystemExit(actual)
+          PY
+
+      - name: Compile
+        run: |
+          python -m py_compile \
+            astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py \
+            astra_backend/evaluation/bs_roformer_sw_6stem_adapter_v1.py \
+            astra_backend/evaluation/stem_bleed_diagnostics_v1.py \
+            astra_backend/evaluation/evaluate_false_stem_diagnostic_v1.py
+
+      - name: Build S0
+        run: |
+          rm -rf s0_generated
+          python astra_backend/evaluation/build_s0_synthetic_mixtures_v1.py \
+            --source-dir s0_sources \
+            --output-dir s0_generated
+
+      - name: Run false-stem diagnostic
+        run: |
+          python astra_backend/evaluation/evaluate_false_stem_diagnostic_v1.py \
+            --s0-root s0_generated \
+            --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx \
+            --output-json false_stem_diagnostic_result.json
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("false_stem_diagnostic_result.json"))
+          absent=[r for r in d["results"] if r["targetActuallyAbsent"]]
+          print("# False-stem diagnostic V1")
+          print(f"- Mixtures: **{d['mixtureCount']}**")
+          print(f"- Guitar/bass claims inspected: **{d['claimCount']}**")
+          print(f"- Known absent-target claims: **{d['absentClaimCount']}**")
+          print()
+          for r in absent:
+              print(
+                  f"- {r['mixture']} {r['claimedStem']}: "
+                  f"winner={r['stringWinner']}, "
+                  f"margin={r['stringMargin']:.4f}, "
+                  f"pressure={r['interferencePressure']:.3f}, "
+                  f"competitor={r['strongestOverlapCompetitor']}"
+              )
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-false-stem-diagnostic-result
+          path: false_stem_diagnostic_result.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf s0_sources s0_generated .private-s0-fixtures models/bs-roformer
