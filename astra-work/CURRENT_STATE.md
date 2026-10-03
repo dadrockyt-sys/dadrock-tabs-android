@@ -7890,3 +7890,33 @@ Resume from run `37141135823`.
 4. Next, rescore existing raw Basic Pitch guitar/bass events against the revalidated timing map without changing Basic Pitch/separator settings.
 5. Compare against the old 133.8-map results to quantify how much of the previous poor guitar/bass score was timing-map error.
 6. Keep `main` unchanged.
+
+
+## Professional timing revalidation V1 — runtime-only failure and relaunch 2026-10-03
+
+Failed run:
+- run `37141135823`
+- failure occurred after frozen V6 artifact download and checksum verification;
+- failure was `ModuleNotFoundError: No module named 'numpy'`;
+- the revalidation script did not execute;
+- no new timing map or audit artifact was produced;
+- this was a runtime packaging failure only, not a scientific failure.
+
+Runtime-only fix:
+- added Python 3.10 setup and `numpy==1.26.4` installation to the workflow;
+- candidate semantics, frozen V6 artifact, clustering rules, dynamic-programming path, notation structure, and exclusion of old V2 timing coordinates remain unchanged.
+
+Fix commit:
+- `0a3c1629c067bea2883ac71815e44e9b7ad09c2b`
+
+Relaunched authoritative run:
+- run `37141537153`
+- head `0a3c1629c067bea2883ac71815e44e9b7ad09c2b`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37141537153
+
+### Exact next resume instruction
+
+Resume from run `37141537153`.
+If green, record exact revalidated map/audit metrics and artifact hashes.
+If it fails, inspect only the new runtime/script error and preserve all frozen scientific inputs unchanged.
