@@ -1,0 +1,15 @@
+{
+  "runId": 37088717448,
+  "artifactId": 11261451719,
+  "artifactDigest": "sha256:c8b6864d90d43391e28a511e6edf2f84edc353d502b33e601394e7f7fb1a625f",
+  "sourceCount": 6,
+  "caseCount": 24,
+  "positiveCaseCount": 18,
+  "hardNegativeCaseCount": 6,
+  "positivePairAccuracy": 1,
+  "hardNegativeAccuracy": 1,
+  "maximumMergeReconstructionMaxAbsError": 0,
+  "mergeSiSdrMetricValidity": "invalid_for_exact_scaled_copy_stress_due_to_scale_invariance",
+  "decision": "freeze_pair_classifier_v1_detector_passed",
+  "nextDirection": "non_collinear_duplicate_split_stress"
+}
