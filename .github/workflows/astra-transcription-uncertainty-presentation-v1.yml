@@ -1,0 +1,42 @@
+name: Astra Transcription Uncertainty Presentation V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/transcriptionUncertaintyPresentation.mjs'
+      - 'astra_backend/tests/transcriptionUncertaintyPresentation.test.mjs'
+      - '.github/workflows/astra-transcription-uncertainty-presentation-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run uncertainty contract tests
+        run: node --test astra_backend/tests/transcriptionUncertaintyPresentation.test.mjs
+
+      - name: Contract summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          # Transcription Uncertainty Presentation V1
+          - Confidence score: **not defined**
+          - Automatic correction: **not authorized**
+          - Automatic stem mutation: **not authorized**
+          - Automatic role reassignment: **not authorized**
+          - S0-fitted thresholds: **none**
+          - Pitch/onset evidence remains visible and unchanged when review is required.
+          EOF
