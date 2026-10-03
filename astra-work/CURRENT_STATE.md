@@ -7216,3 +7216,79 @@ Resume from run `37123049554`.
 5. Do not use the professional timing map to tune cleanup settings, separator output, estimator settings, meter assumptions, or primary selection.
 6. If V2 is still structurally incoherent, diagnose the failure and version any future approach separately as V3.
 7. Keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V2 — authoritative green result 2026-10-03
+
+Authoritative workflow run:
+- run `37123049554`
+- head `307715ce9874939bae6a263fe22c5a7969b1cb66`
+- both jobs: GREEN.
+
+Frozen artifact:
+- name: `gomyway-reference-independent-timebase-v2-frozen`
+- id: `11273899364`
+- digest: `sha256:ae72a72a40c2313694e440c81c50d76cf79643bcf285a8a5d1be0b764bfd8a2b`
+- frozen bundle SHA-256: `4961631eaf3e8fdf16d81411bb8c3554d0dcbaf240433cdebf70802a9c57bf36`
+
+Result artifact:
+- name: `gomyway-reference-independent-timebase-v2-result`
+- id: `11274123598`
+- digest: `sha256:6b083dbf96ae96e94823fafa7cf4fdeb4e8a127421a064560b85e6aa87313043`
+
+Frozen primary candidate chosen before reference access:
+- `raw_drums`
+- tempo: `129.19921875 BPM`
+- beat confidence: `0.7315978626924113`
+- bar confidence: `0.20601149685263945`
+- selection was audio-only by max barConfidence, then beatConfidence, then beatCount.
+
+Audio-side candidate summary:
+- raw_mix: tempo 129.19921875, beatConfidence 0.7243903427458401, barConfidence 0.0
+- raw_guitar: tempo 215.33203125, beatConfidence 0.45773511983452364, barConfidence 0.0
+- raw_drums: tempo 129.19921875, beatConfidence 0.7315978626924113, barConfidence 0.20601149685263945
+- raw_guitar_drums_sum: tempo 129.19921875, beatConfidence 0.7338699974395781, barConfidence 0.1384239426979097
+- cleaned_guitar: tempo 215.33203125, beatConfidence 0.46439992618328796, barConfidence 0.0
+- cleaned_drums: tempo 129.19921875, beatConfidence 0.7293679193170994, barConfidence 0.0
+- cleaned_guitar_drums_sum: tempo 129.19921875, beatConfidence 0.7299707827777643, barConfidence 0.0
+
+Post-freeze professional diagnostics:
+- raw_mix: best shift -1; median abs error 1.7427739229025008 s; mean abs error 1.8156368385568522 s; predicted drift 7.358990429146868 s.
+- raw_guitar: best shift -8; median abs error 34.84675199546484 s; mean abs error 34.76997626263721 s; predicted drift -75.48155181340837 s.
+- raw_drums: best shift -2; median abs error 1.678168631519302 s; mean abs error 1.7082971722516207 s; predicted drift 7.163902921890054 s.
+- raw_guitar_drums_sum: best shift -1; median abs error 1.7652629580498882 s; mean abs error 1.8510887336005837 s; predicted drift 7.388452725107266 s.
+- cleaned_guitar: best shift -8; median abs error 32.65246628117913 s; mean abs error 33.37807611614793 s; predicted drift -72.75623130607177 s.
+- cleaned_drums: best shift -1; median abs error 1.5562638696145186 s; mean abs error 1.7029214056857314 s; predicted drift 7.090925984769514 s.
+- cleaned_guitar_drums_sum: best shift -1; median abs error 1.7652629580498882 s; mean abs error 1.851905060131196 s; predicted drift 7.3902083836012284 s.
+
+Cleanup interpretation:
+- cleanup did NOT solve the timebase problem;
+- cleaned drums improved median absolute error vs raw drums by about 0.122 s and mean absolute error by about 0.005 s;
+- however cleaned drums lost the only nonzero raw-drum bar confidence (0.206 -> 0.0) and still accumulated ~7.09 s drift;
+- raw/cleaned guitar remained grossly octave/tempo-confused at ~215.33 BPM;
+- guitar+drums cleanup was effectively neutral/slightly worse.
+- Therefore do not promote the cleanup output as a trusted timebase source and do not tune cleanup settings against the professional map.
+
+Scientific conclusion:
+- V2 is still structurally incoherent for canonical V154 measure/step coordinates.
+- The main unresolved issue is long-range tempo/downbeat structure, not stem cleanliness alone.
+- The raw drums candidate remains useful evidence because the audio-only selection rule chose it prospectively and it was slightly better than raw mix, but its ~7.16 s full-song drift is still far too large.
+
+### Exact next resume instruction
+
+Build a separately versioned **reference-independent timebase V3** focused on long-range structure, not cleanup parameter tuning.
+
+Required boundaries:
+1. keep the same source audio identity;
+2. professional timing map must remain completely absent from candidate generation and model/parameter selection;
+3. do not retune the V2 cleanup configuration using these results;
+4. use rhythm-bearing audio (raw drums is the strongest prospective V2 source) as one input, but preserve raw mix as a control;
+5. replace or augment the V143 local beat repair with a long-range method that can:
+   - estimate tempo trajectory across the whole song rather than one static BPM;
+   - stabilize downbeat/bar phase over long spans;
+   - detect/reset phase around structural transitions;
+   - detect meter exceptions from audio where possible rather than assuming 4/4 globally;
+6. freeze every V3 candidate before professional comparison;
+7. compare with the same diagnostic metrics and never post-hoc repair the frozen candidate;
+8. only integrate note events into V154 coordinates if V3 becomes materially coherent;
+9. keep `main` unchanged.
