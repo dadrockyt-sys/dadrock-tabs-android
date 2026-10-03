@@ -5601,3 +5601,14 @@ Result: guitar-vs-bass evidence was correct for 6/6 guitar fixtures and 5/6 bass
 Decision: YAMNet is useful as independent evidence but not yet as a hard winner-take-all gate. Next direction is a gate with absolute string evidence + guitar/bass margin + explicit uncertain state + separator diagnostics. Recognizer disagreement alone must not delete a stem.
 
 Detailed records: `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.md` and `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.json`.
+
+
+## Recognizer-gated cleanup V1 result — 2026-10-02
+
+GitHub Actions run `37082340739` completed successfully. Artifact `11259456727` digest `sha256:90ac2d210d8df9a0ee1b9b9d6ae3e09041acedaf477aeaa564d07c2445627b5d`.
+
+Result: cleanup was applied to **0 stems**. Mean/worst/best target SI-SDR change were all `0.000 dB`. This means the preserve-by-default safety principle worked: the gate prevented the destructive blanket-cleanup behavior seen earlier. However, the gate is too conservative to improve hard false-stem cases such as S0M10 guitar.
+
+Decision: keep preserve-by-default. Do not loosen thresholds just to force actions on the same 12 fixtures. Split the next work into (1) target-present bleed cleanup and (2) false-stem suppression/reassignment. S0M10 guitar remains the key false-stem fixture. Next experiment should compare claimed-stem vs competing-stem YAMNet evidence, reassignment consequences, and downstream transcription behavior rather than spectral attenuation alone.
+
+Detailed records: `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.md` and `docs/astra/RECOGNIZER_GATED_CLEANUP_RESULT_V1.json`.
