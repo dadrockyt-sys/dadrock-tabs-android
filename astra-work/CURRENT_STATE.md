@@ -9393,3 +9393,88 @@ If green:
    - targets absent from thresholded note events;
 5. decide whether sub-threshold evidence is recoverable by a better decoder or whether the polyphonic guitar front end itself should be replaced;
 6. preserve spectral bass V1, V4-origin timing, frozen note evidence, and `main`.
+
+
+## Explicit handoff — raw Basic Pitch guitar activation phase
+
+Current scientific state:
+- V4-origin timing remains the strongest Go My Way research timing candidate.
+- Spectral bass octave V1 remains the strongest bass research candidate:
+  - TP 372
+  - F1 60.10%
+- Simple guitar chord-role decoder V1 is rejected:
+  - rhythm essentially neutral;
+  - lead degraded strongly;
+  - combined-guitar F1 degraded.
+- Therefore do NOT continue tuning hand-written rhythm/lead register/continuity rules on Go My Way.
+
+Latest guitar interpretation:
+- Basic Pitch thresholded note events contain useful polyphonic evidence, but the thresholded event list is likely discarding sub-threshold chord tones and harmonic evidence.
+- Next phase should inspect/freeze raw Basic Pitch activation tensors from the separated guitar stem before any note-event thresholding.
+- Do not change V4-origin timing.
+- Do not tune thresholds against the professional reference.
+
+Work already started:
+- added `astra_backend/evaluation/gomyway_freeze_basic_pitch_guitar_activations_v1.py`
+- implementation commit: `dbac6746d574a67832bc74b3958fc5380477e091`
+- purpose: save raw Basic Pitch model-output arrays to compressed NPZ plus metadata JSON from the frozen separated guitar stem.
+- no workflow has been launched yet for this activation freeze.
+
+Important correction discovered before launch:
+- the new activation-freeze script currently contains the WRONG hard-coded Basic Pitch model SHA:
+  - currently in script: `206bc0de22c9c9e4d5710ee9f32ca7316ad70d8e5d6f0838887e772aa143866d`
+- the authoritative frozen Basic Pitch SHA already used by the existing full-song benchmark is:
+  - `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+- fix this hash BEFORE creating or launching the workflow.
+- do not weaken or remove the hash check.
+
+### Exact next resume steps
+
+1. Edit `astra_backend/evaluation/gomyway_freeze_basic_pitch_guitar_activations_v1.py`:
+   - replace the incorrect expected Basic Pitch SHA with:
+     `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+   - leave Basic Pitch version and frozen inference settings unchanged.
+
+2. Create a new workflow for raw guitar activation freeze:
+   - immutable source: `public/gomywayfullaitest.m4a`
+   - verify git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+   - BS-Roformer FP16 SHA `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`
+   - Basic Pitch 0.4.0 model SHA `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`
+   - separate guitar stem once;
+   - run Basic Pitch `predict()` with the frozen defaults;
+   - save raw model-output tensors to NPZ;
+   - save metadata JSON containing tensor keys/shapes/statistics, guitar-stem SHA, model SHA, thresholded note count, and NPZ SHA.
+   - do NOT read professional rhythm/lead references in this freeze job.
+
+3. Freeze and upload the activation artifact before any reference analysis.
+
+4. After freeze, build a separate diagnostic job that reads the frozen activation tensors plus V4-origin timing and professional references only for analysis.
+   Measure:
+   - activation strength at target MIDI/time for rhythm and lead;
+   - activation strength at target pitch class in neighboring octaves;
+   - how often a target absent from thresholded notes still has substantial sub-threshold activation;
+   - onset-vs-frame activation separately if both arrays are available;
+   - activation rank of the target pitch within the local chord/onset frame;
+   - difference between rhythm and lead recovery potential.
+
+5. Do NOT threshold-search against Go My Way in the same diagnostic.
+   The first activation diagnostic is descriptive/attribution only.
+
+6. Decision after diagnostic:
+   - if many missing guitar targets have strong sub-threshold activation, build a separately versioned reference-blind decoder using frozen activation evidence;
+   - if target activation itself is weak/absent, Basic Pitch has reached its front-end limit for this material and evaluate a different polyphonic transcription front end.
+
+7. Preserve:
+   - V4-origin timing candidate;
+   - frozen note-evidence artifact `11282827368`;
+   - spectral bass V1 as current strongest bass candidate;
+   - all old timing maps/results;
+   - `main` unchanged.
+
+8. Do not resume:
+   - timing tuning;
+   - local guitar octave heuristics;
+   - register/continuity role splitting;
+   - threshold optimization against the Go My Way professional reference.
+
+This section is the authoritative resume point for the next model.
