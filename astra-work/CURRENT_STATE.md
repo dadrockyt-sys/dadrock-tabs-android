@@ -7616,3 +7616,70 @@ Resume from run `37126810211`.
 5. Do not change cleanup, separator, or note recognition.
 6. Do not remap guitar/bass until beat timing is coherent.
 7. Keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V5 — authoritative green result 2026-10-03
+
+Authoritative workflow run:
+- run `37126810211`
+- both jobs GREEN.
+
+Frozen artifact:
+- id: `11274669899`
+- name: `gomyway-reference-independent-timebase-v5-frozen`
+- digest: `sha256:e2bd1b63e8bd467cc3cb8673d28e223988c1236ccb10ee3d1bc19e9b49327566`
+- frozen bundle SHA-256: `977287de3fd8985f5e07d0577606e2e4a019d4a947edffe847a56ae218aff9f4`
+
+Result artifact:
+- id: `11274979602`
+- name: `gomyway-reference-independent-timebase-v5-result`
+- digest: `sha256:4c37a0363eda4b677aeee6a8fa1c90e438d6f7677e17c364f9fc64c0087d73e5`
+
+Prospectively selected primary:
+- `consensus_global`
+- global search tempo: `129.49499999999802 BPM`
+- audio-only quality score: `0.321278453093014`
+- bar confidence: `0.0`
+- candidate beat count: `453`
+
+Post-freeze diagnostic for primary:
+- reference beat count: 450
+- beat-count difference: +3
+- best beat-index shift: -11
+- median absolute beat error: `1.6473187379541647 s`
+- p95 absolute beat error: `4.283788684243842 s`
+- predicted full-song beat drift: `6.69362912534666 s`
+- early mean signed error: `-0.8661315901393234 s`
+- middle mean signed error: `1.3327776991116633 s`
+- late mean signed error: `3.5242330586361246 s`
+
+Measure diagnostic for primary:
+- best measure shift: -2
+- median absolute error: `1.6696800172021895 s`
+- predicted drift across 113 measures: `7.035663786100665 s`
+
+V5 local candidate:
+- candidate beat count: 455
+- beat-count difference: +5
+- median absolute beat error: `1.674832128735595 s`
+- predicted full-song beat drift: `7.2643460562685656 s`
+- early/middle/late signed errors: -4.0281 / -1.4735 / +0.8198 s.
+
+Scientific interpretation:
+- cross-source consensus reduced beat-count mismatch substantially but did not remove systematic tempo drift;
+- the primary trajectory changes from early-negative to late-positive signed error, confirming a persistent period mismatch;
+- repeated ~129 BPM locking across independent approaches indicates the current onset-periodicity family is consistently selecting the wrong rhythmic mode;
+- do not remap guitar/bass yet.
+
+### Exact next resume instruction
+
+Build a separately versioned **reference-independent timebase V6** using an independent multi-feature beat-tracking family rather than another variation of the same onset autocorrelation/lattice objective.
+
+Preferred direction:
+1. preserve raw mix and raw drums as independent inputs;
+2. use a mature multi-feature rhythm tracker (e.g. Essentia RhythmExtractor2013 if runtime support is viable) as a genuinely independent estimator family;
+3. freeze outputs and any audio-only primary selection before professional comparison;
+4. retain beat-count, sequence-aligned drift, early/middle/late error, and measure diagnostics;
+5. do not use the professional map to select tracker parameters or candidates;
+6. do not alter cleanup, separator, or note recognition;
+7. keep `main` unchanged.
