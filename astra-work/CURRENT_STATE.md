@@ -7476,3 +7476,76 @@ Resume from run `37125736569`.
 4. Do not change cleanup, separator, or note-recognition settings as part of this run.
 5. Do not remap guitar/bass events until the beat trajectory itself is coherent.
 6. Keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V4 — authoritative green result 2026-10-03
+
+Authoritative workflow run:
+- run `37125736569`
+- both jobs GREEN.
+
+Frozen artifact:
+- id: `11275556266`
+- name: `gomyway-reference-independent-timebase-v4-frozen`
+- digest: `sha256:2143b54495c70f83c8718da97b0b6a4e0bb5f9acb0d7b982ec93ab90b3f472ed`
+- frozen bundle SHA-256: `2d395cb0cebfc0235beccdca04021ad12a20c55bc2652889e65af48ecca5a4ca`
+
+Result artifact:
+- id: `11275532312`
+- name: `gomyway-reference-independent-timebase-v4-result`
+- digest: `sha256:32a7b4e0df3c450ed366e1193241192cb35fd1c25be285410447a4230ad60fb1`
+
+Prospectively selected primary:
+- `raw_mix_global`
+- global fractional tempo: `129.25244238074436 BPM`
+- audio-only quality score: `0.4687510768030706`
+- bar confidence: `0.23848879557197833`
+- beat count: `456`
+
+Post-freeze sequence-aligned beat diagnostic for primary:
+- best beat-index shift: `-11`
+- pair count: `445`
+- median absolute beat error: `1.7574305573885152 s`
+- mean absolute beat error: `2.165800078740932 s`
+- p95 absolute beat error: `4.850131856087289 s`
+- seconds/reference-beat drift slope: `0.0157773696254933`
+- predicted full-song beat drift: `7.084038961846491 s`
+
+Measure diagnostic for primary:
+- best measure shift: `-3`
+- median absolute error: `1.7670655995928612 s`
+- mean absolute error: `1.914857025537496 s`
+- predicted drift across 113 measures: `7.425204115662205 s`
+
+Other V4 candidates:
+- raw_drums_global: 128.7583 BPM; predicted beat drift 7.8840 s
+- raw_drums_local: 128.7583 BPM; predicted beat drift 7.3957 s
+- raw_mix_local: 129.2524 BPM; predicted beat drift 6.9128 s
+
+Scientific interpretation:
+- increasing analysis resolution and using fractional autocorrelation did not remove the systematic drift;
+- therefore the dominant error is not merely integer-frame tempo quantization;
+- the tracker is consistently selecting a slower periodic interpretation around 129 BPM;
+- V4 candidates also contain 454–456 beats, indicating likely beat insertion/count/phase interpretation errors in addition to tempo mismatch;
+- do not proceed to guitar/bass remapping yet.
+
+### Exact next resume instruction
+
+Build **reference-independent timebase V5** around cross-source beat-lattice consensus rather than single-envelope autocorrelation.
+
+Required direction:
+1. keep professional reference completely absent from generation and candidate selection;
+2. use both raw drums and raw mix onset evidence;
+3. extract high-confidence transient peaks independently from both sources;
+4. construct a continuous candidate beat lattice by jointly optimizing:
+   - onset support in drums;
+   - onset support in mix;
+   - cross-source peak agreement;
+   - interval regularity;
+   - penalties for inserted/missing beats;
+5. search continuous tempo/phase hypotheses broadly and allow slow local tempo evolution;
+6. favor hypotheses whose predicted beat positions are independently supported by both sources over hypotheses that merely maximize autocorrelation;
+7. freeze all V5 candidates and the primary before any reference read;
+8. post-freeze, report beat-count difference, early/middle/late signed error, sequence-aligned drift, and measure diagnostics;
+9. do not tune cleanup, separator, or guitar/bass recognizer during this timing phase;
+10. keep `main` unchanged.
