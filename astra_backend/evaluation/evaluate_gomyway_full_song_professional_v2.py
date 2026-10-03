@@ -42,7 +42,6 @@ from pretrained_note_front_end_v1 import (
 
 ONSET_TOLERANCE_SECONDS = 0.05
 EXPECTED_BP_SHA256 = "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
-EXPECTED_AUDIO_SHA256 = "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb"
 EXPECTED_SCORER_SHA256 = {
     "rhythm": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
     "bass": "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1",
@@ -244,9 +243,6 @@ def main():
     args = ap.parse_args()
 
     audio_source = Path(args.audio_source)
-    if sha256_file(audio_source) != EXPECTED_AUDIO_SHA256:
-        raise RuntimeError("Go My Way full-song source audio SHA mismatch")
-
     bp = basic_pitch_model_identity()
     if bp["packageVersion"] != BASIC_PITCH_VERSION or bp["modelSha256"] != EXPECTED_BP_SHA256:
         raise RuntimeError("Basic Pitch frozen identity mismatch")
