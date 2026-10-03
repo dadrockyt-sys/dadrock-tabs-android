@@ -1,0 +1,70 @@
+name: Astra Go My Way Basic Pitch Guitar Activation Diagnostic V1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose-after-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install diagnostic runtime
+        run: python -m pip install 'numpy==1.26.4'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-basic-pitch-guitar-activations-v1-frozen
+          path: activations
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37159748378
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+      - name: Verify frozen inputs
+        run: |
+          set -euo pipefail
+          test "$(sha256sum activations/gomyway-basic-pitch-guitar-activations-v1.npz | awk '{print $1}')" = "$(python - <<'PY'
+          import json
+          print(json.load(open('activations/gomyway-basic-pitch-guitar-activations-v1.json'))['npzSha256'])
+          PY
+          )"
+          cd evidence
+          sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256
+          cd ..
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+      - name: Diagnose raw activation recovery potential
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_basic_pitch_guitar_activation_diagnostic_v1.py \
+            --activations-npz activations/gomyway-basic-pitch-guitar-activations-v1.npz \
+            --activations-meta activations/gomyway-basic-pitch-guitar-activations-v1.json \
+            --note-evidence evidence/gomyway-v4-origin-frozen-note-evidence-v1.json \
+            --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json \
+            --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+            --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
+            --output-json gomyway-basic-pitch-guitar-activation-diagnostic-v1.json
+          sha256sum gomyway-basic-pitch-guitar-activation-diagnostic-v1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-basic-pitch-guitar-activation-diagnostic-v1
+          path: gomyway-basic-pitch-guitar-activation-diagnostic-v1.json
+          retention-days: 30
