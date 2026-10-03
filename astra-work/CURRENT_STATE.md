@@ -8585,3 +8585,54 @@ If green:
 5. otherwise move directly toward harmonic/polyphonic voicing modeling;
 6. do not alter V4-origin timing or frozen note evidence;
 7. keep `main` unchanged.
+
+
+## V4-origin octave/voicing attribution V1 — authoritative green result
+
+Run `37148533276` succeeded.
+- artifact id `11283248180`
+- artifact digest `sha256:26846b3f3aae21356353584c02a7fb72ac0cd2a79c04ba99e55966cfbffea800`
+- result JSON SHA-256 `58b500ccb8a438f39c4727166786b07d9dbd9fa161ffd00d959e4418127a6593`
+
+Rhythm:
+- onset matched 444
+- exact MIDI 202
+- wrong MIDI 242
+- pitch-class correct but wrong octave 90 = 37.19% of wrong pitches
+- single ±12 recoverable 85
+- exact-MIDI upper bound under perfect ±12 resolution: 287/444 = 64.64%
+- strongest non-octave errors: 4 semitones (44), 3 (19), 5 (19), 2 (13), 19 (13)
+
+Lead:
+- onset matched 222
+- exact MIDI 100
+- wrong MIDI 122
+- pitch-class correct but wrong octave 47 = 38.52% of wrong pitches
+- single ±12 recoverable 44
+- exact-MIDI upper bound under perfect ±12 resolution: 144/222 = 64.86%
+- strongest non-octave errors: 3 semitones (13), 19 (10), 2 (9), 4 (9), 5 (7)
+
+Bass:
+- onset matched 419
+- exact MIDI 318
+- wrong MIDI 101
+- pitch-class correct but wrong octave 62 = 61.39% of wrong pitches
+- all 62 are single +12 octave errors
+- exact-MIDI upper bound under perfect ±12 resolution: 380/419 = 90.69%
+
+Interpretation:
+- octave resolution has substantial measured upside, especially bass;
+- guitar also has meaningful octave error, but broader chord/voicing intervals remain important;
+- next candidate should be reference-blind and audio/prediction-only;
+- do not blanket-shift notes based on professional reference.
+
+### Next action
+
+Build a reference-blind local octave-consensus resolver:
+1. use only frozen prediction timing/MIDI/amplitude;
+2. candidate octave shifts limited to ±12 within fixed physical instrument ranges;
+3. choose an octave shift only when nearby same-source pitch evidence strongly supports the alternate octave;
+4. freeze corrected predictions before reading professional references;
+5. score original vs corrected predictions afterward;
+6. treat as Go My Way development only, not holdout validation;
+7. keep V4-origin timing and `main` unchanged.
