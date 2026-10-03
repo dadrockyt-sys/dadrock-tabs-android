@@ -1,0 +1,90 @@
+name: Astra Go My Way Timing Map Attribution Rescore V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/gomyway_timing_map_attribution_rescore_v1.py'
+      - '.github/workflows/astra-gomyway-timing-map-attribution-rescore-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  rescore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' 'scipy==1.11.4' soundfile torch onnxruntime
+          python -m pip install 'basic-pitch==0.4.0'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-professional-timing-revalidation-v1
+          path: revalidated
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37141537153
+
+      - name: Verify source and references
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+          echo "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555  research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json" | sha256sum -c -
+          echo "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1  research/v154-professional-references/scorer-ready/bass-scorer-ready.json" | sha256sum -c -
+          echo "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be  research/v154-professional-references/scorer-ready/lead-scorer-ready.json" | sha256sum -c -
+          test "$(sha256sum revalidated/gomyway-professional-timing-map-v3-revalidated.json | awk '{print $1}')" = "1aeb65d69c8305f79d8a18995464379a28ed56626c8fc2ba32d036e9a63ab4ac"
+
+      - name: Decode source
+        run: ffmpeg -hide_banner -loglevel error -y -i public/gomywayfullaitest.m4a -ar 44100 -ac 2 -c:a pcm_f32le gomywayfullaitest.wav
+
+      - name: Download and verify BS-Roformer
+        run: |
+          set -euo pipefail
+          mkdir -p models/bs-roformer
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path("models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx")
+          urllib.request.urlretrieve("https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx",p)
+          expected="d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444"
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual != expected: raise SystemExit(actual)
+          PY
+
+      - name: Compile
+        run: |
+          python -m py_compile             astra_backend/evaluation/evaluate_gomyway_full_song_professional_v2.py             astra_backend/evaluation/gomyway_timing_map_attribution_rescore_v1.py
+
+      - name: Run identical-prediction dual-map rescore
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_timing_map_attribution_rescore_v1.py             --audio-source public/gomywayfullaitest.m4a             --audio-wav gomywayfullaitest.wav             --old-timing-map public/gomyway-professional-timing-map-v2.json             --new-timing-map revalidated/gomyway-professional-timing-map-v3-revalidated.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --bass-reference research/v154-professional-references/scorer-ready/bass-scorer-ready.json             --model models/bs-roformer/bs_roformer_sw_6stem_fp16.onnx             --output-json gomyway-timing-map-attribution-rescore-v1.json
+          sha256sum gomyway-timing-map-attribution-rescore-v1.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-timing-map-attribution-rescore-v1
+          path: gomyway-timing-map-attribution-rescore-v1.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf models/bs-roformer gomywayfullaitest.wav
