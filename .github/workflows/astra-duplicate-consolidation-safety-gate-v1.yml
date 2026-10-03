@@ -1,0 +1,91 @@
+name: Astra Duplicate Consolidation Safety Gate V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-duplicate-consolidation-safety-gate-v1.yml'
+      - 'astra_backend/evaluation/duplicate_consolidation_safety_gate_v1.py'
+      - 'astra_backend/evaluation/evaluate_duplicate_consolidation_safety_gate_v1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+
+      - uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-private-fixtures
+          token: ${{ secrets.S0_FIXTURE_TOKEN }}
+          path: .private-s0-fixtures
+          fetch-depth: 1
+
+      - name: Prepare fixtures
+        run: |
+          set -euo pipefail
+          rm -rf s0_sources
+          cp -R .private-s0-fixtures/s0_sources ./s0_sources
+          test "$(find s0_sources -maxdepth 1 -type f | wc -l)" -eq 16
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy soundfile tensorflow-cpu==2.16.1 tensorflow-hub==0.16.1
+
+      - name: Compile
+        run: |
+          python -m py_compile             astra_backend/evaluation/duplicate_consolidation_safety_gate_v1.py             astra_backend/evaluation/evaluate_duplicate_consolidation_safety_gate_v1.py             astra_backend/evaluation/evaluate_noncollinear_duplicate_stress_v1.py             astra_backend/evaluation/pair_consistency_classifier_v1.py             astra_backend/evaluation/stem_bleed_cleanup_v1.py             astra_backend/evaluation/stem_bleed_diagnostics_v1.py
+
+      - name: Run safety gate evaluation
+        run: |
+          python astra_backend/evaluation/evaluate_duplicate_consolidation_safety_gate_v1.py             --fixture-dir s0_sources             --output-json duplicate_consolidation_safety_gate_v1_result.json
+
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("duplicate_consolidation_safety_gate_v1_result.json"))
+          print("# Duplicate Consolidation Safety Gate V1")
+          print(f"- Cases: **{d['caseCount']}**")
+          print(f"- Frozen pair accuracy: **{d['pairAccuracy']:.2%}**")
+          print(f"- Gate decisions: **{d['gateDecisionCounts']}**")
+          print(f"- Automatic merges: **{d['automaticMergeCount']}**")
+          print(f"- Minimum automatic action delta: **{d['minimumAutomaticActionImprovementDb']:.3f} dB**")
+          print(f"- Max merge reconstruction error: **{d['maximumAutomaticMergeReconstructionMaxAbsError']:.3e}**")
+          print(f"- Overall pass: **{d['passed']}**")
+          print("## Criteria")
+          for k,v in d["successCriteria"].items():
+              print(f"- {k}: **{v}**")
+          print("## Cases")
+          for r in d["results"]:
+              m=r["safetyMetrics"]
+              print(
+                  f"- {r['id']}: pair={r['observedPairState']}, gate={r['gate']['decision']}, "
+                  f"corr={m['zeroLagCorr']:.3f}, lag={m['bestLagMs']:.2f} ms, "
+                  f"shared={m['spectralSharedFraction']:.3f}, phase={m['phaseConsistency']:.3f}, "
+                  f"swing={m['energyShareSwing']:.3f}, merge_delta={r['mergeImprovementDb']:.3f} dB"
+              )
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-duplicate-consolidation-safety-gate-v1-result
+          path: duplicate_consolidation_safety_gate_v1_result.json
+          retention-days: 30
+
+      - if: always()
+        run: rm -rf s0_sources .private-s0-fixtures
