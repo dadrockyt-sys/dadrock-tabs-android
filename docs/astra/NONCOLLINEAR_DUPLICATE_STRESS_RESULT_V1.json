@@ -1,0 +1,9 @@
+{
+  "runId": 37089070395,
+  "artifactId": 11262155308,
+  "artifactDigest": "sha256:17af190d0224c0654052baa02f35e0002c215147cd0432e1f21a3832b6c5b192",
+  "caseCount": 16,
+  "pairAccuracy": 0.9375,
+  "decision": "pair_detector_valid_but_merge_requires_coherence_gate",
+  "nextDirection": "no_reference_pair_coherence_gate"
+}
