@@ -8690,3 +8690,40 @@ If green:
 6. if bass improves strongly and guitar is neutral/positive, consider role-specific octave resolver development;
 7. if guitar degrades while bass improves, split guitar and bass octave policies rather than forcing one rule;
 8. keep V4-origin timing, frozen note evidence, and `main` unchanged.
+
+
+## Reference-blind octave consensus V1 — candidate-construction bug and relaunch
+
+Failed run:
+- run `37156148873`
+- freeze-candidate failed before any candidate artifact was produced;
+- score-after-freeze was skipped;
+- frozen note evidence verified successfully.
+
+Failure:
+- `StopIteration` in `resolve_stream`;
+- cause: for a frozen Basic Pitch note already outside the fixed physical instrument MIDI range, the candidate list excluded the original MIDI value, so the resolver could not find its current-state support row.
+
+Conservative fix:
+- if an original frozen prediction is outside the fixed instrument range, leave it unchanged;
+- do not clamp it into range;
+- do not invent an octave correction;
+- valid in-range notes still use the exact same ±12 local-consensus rule and thresholds.
+
+Fix commit:
+- `8ddc1ab1c2d9465bcf69ce9d814fd632ceb89279`
+
+Relaunched authoritative run:
+- run `37156291597`
+- head `8ddc1ab1c2d9465bcf69ce9d814fd632ceb89279`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37156291597
+
+### Exact next resume instruction
+
+Resume from run `37156291597`.
+If green:
+1. record frozen candidate SHA/artifact and guitar/bass change counts;
+2. record post-freeze score artifact and original-vs-corrected rhythm/lead/bass metrics;
+3. reject or split policies if any role is materially harmed;
+4. preserve V4-origin timing, frozen note evidence, and `main`.
