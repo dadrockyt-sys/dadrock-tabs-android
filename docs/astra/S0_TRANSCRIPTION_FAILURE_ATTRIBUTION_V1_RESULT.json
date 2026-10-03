@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "s0-transcription-failure-attribution-v1-record",
+  "date": "2026-10-02",
+  "runId": 37090246256,
+  "headCommit": "57386ca1a0cc98bed124debbd1b2f4c5ed2f3552",
+  "artifact": {
+    "id": 11262262754,
+    "digest": "sha256:e0a1b42c60f2c8aacb10a477b6f70efa8fbfdc418ac049868fcfcebdad4b74ca"
+  },
+  "mixtureCount": 12,
+  "roleProbeCount": 24,
+  "targetPresentProbeCount": 20,
+  "targetAbsentProbeCount": 4,
+  "presentTargetMicroAgreement": {
+    "precision": 0.7892307692307692,
+    "recall": 0.6317733990147784,
+    "f1": 0.7017783857729138,
+    "tp": 513,
+    "fp": 137,
+    "fn": 299
+  },
+  "presentTargetMacroF1": 0.6626315408792949,
+  "severeAgreementFailureCountF1Below0_5": 5,
+  "absentTargetTotalSeparatedFalseNoteCount": 53,
+  "absentTargetProbesWithAnySeparatedFalseNotes": 4,
+  "pearsonRawSiSdrVsTranscriptionAgreementF1": 0.8962509101979322,
+  "descriptiveGroups": {
+    "siSdrAtLeast15": {
+      "n": 12,
+      "meanF1": 0.8635602271165651,
+      "minF1": 0.5714285714285714
+    },
+    "siSdrBelow5": {
+      "n": 6,
+      "meanF1": 0.2504201174666218,
+      "maxF1": 0.6376811594202898
+    }
+  },
+  "errorMorphology": {
+    "totalFP": 137,
+    "totalFN": 299,
+    "octaveFP": 38,
+    "timingFP": 31,
+    "octaveFN": 30,
+    "nearPitchFN": 1,
+    "timingFN": 36
+  },
+  "decision": "proceed_to_no_reference_reliability_observability_descriptive_only_no_threshold_fit"
+}
