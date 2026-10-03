@@ -2,4 +2,4 @@ Astra YAMNet recognizer evaluation trigger.
 
 Change run_marker and commit this file on astra-work to request one bounded zero-shot recognition evaluation.
 
-run_marker=not_requested
+run_marker=2026-10-02T20:55:00-04:00-yamnet-zero-shot-v1
