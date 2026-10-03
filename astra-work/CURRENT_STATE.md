@@ -7414,3 +7414,65 @@ Required direction:
 8. do not change cleanup or note recognition;
 9. do not map guitar/bass events until the timebase no longer has material systematic drift;
 10. keep `main` unchanged.
+
+
+## Go My Way reference-independent full-song timebase V4 — launched 2026-10-03
+
+Goal:
+- eliminate the systematic long-range beat drift observed in V3 before any further guitar/bass remapping.
+
+V3 diagnosis that motivated V4:
+- V3 primary `raw_drums_t300` achieved ~0.125 s median beat error, but still accumulated ~7.90 s drift across the song;
+- the remaining issue is therefore continuous tempo accuracy / beat-period quantization rather than stem cleanup.
+
+V4 design:
+- high-resolution onset analysis at 22.05 kHz with 64-sample hop (~2.90 ms);
+- fractional autocorrelation lag using parabolic interpolation instead of integer frame-lag tempo;
+- audio-only beat-phase optimization at 1 ms offset resolution;
+- both constant-tempo and slowly varying local-tempo candidates;
+- raw drums primary source family, raw mix control;
+- no cleanup changes;
+- no professional timing/reference access during generation.
+
+Reference-blind V4 candidates:
+- `raw_drums_global`
+- `raw_drums_local`
+- `raw_mix_global`
+- `raw_mix_local`
+
+New post-freeze diagnostic:
+- sequence-aligned beat-index shift diagnostic, not just nearest-reference beat matching;
+- reports median/mean/p95 beat error and predicted full-song beat drift;
+- measure alignment remains a separate diagnostic layer.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v4.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v4.yml`
+
+Commits:
+- V4 implementation: `5fab5e045b2f09b5202e997f31ef7afcf20019cf`
+- V4 workflow launch: `7b8b4cc545e9d6e7933c3366fda02271c0e40ee8`
+
+Authoritative V4 run:
+- run `37125736569`
+- head `7b8b4cc545e9d6e7933c3366fda02271c0e40ee8`
+- status at this update: QUEUED
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37125736569
+
+### Exact next resume instruction
+
+Resume from run `37125736569`.
+
+1. If freeze succeeds, record:
+   - frozen artifact id/digest and JSON SHA-256;
+   - primary candidate chosen before reference access;
+   - global fractional BPM, local BPM summary, quality score, bar confidence, beat count for all candidates.
+2. If comparison succeeds, prioritize the sequence-aligned beat diagnostics:
+   - best beat-index shift;
+   - median/mean/p95 beat error;
+   - seconds/reference-beat slope;
+   - predicted full-song beat drift.
+3. Only after beat drift is materially removed should measure/downbeat/meter labeling become the next target.
+4. Do not change cleanup, separator, or note-recognition settings as part of this run.
+5. Do not remap guitar/bass events until the beat trajectory itself is coherent.
+6. Keep `main` unchanged.
