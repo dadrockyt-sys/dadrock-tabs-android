@@ -1,0 +1,55 @@
+name: Astra Go My Way Rhythm Timing Map Sensitivity V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/evaluation/evaluate_gomyway_rhythm_timing_map_sensitivity_v1.py'
+      - '.github/workflows/astra-gomyway-rhythm-timing-sensitivity-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: astra-work
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download frozen predictions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p upstream
+          gh run download 37094392537             -n astra-gomyway-full-song-professional-benchmark-v1             -D upstream
+      - name: Run timing sensitivity
+        run: |
+          PYTHONPATH=astra_backend:astra_backend/evaluation           python astra_backend/evaluation/evaluate_gomyway_rhythm_timing_map_sensitivity_v1.py             --prediction-benchmark upstream/gomyway_full_song_professional_benchmark_v1.json             --reference public/gomyway-professional-rhythm-reference-17-113.json             --timing-map public/gomyway-professional-timing-map-v2.json             --output-json gomyway_rhythm_timing_map_sensitivity_v1.json
+      - name: Summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d=json.load(open("gomyway_rhythm_timing_map_sensitivity_v1.json"))
+          print("# Rhythm Timing Map Sensitivity V1")
+          for name,r in d["results"].items():
+              print(f"## {name}")
+              print(f"- 50ms exact F1: **{r['50ms']['exactMidiOnset']['f1']:.4f}**")
+              print(f"- 50ms onset-only F1: **{r['50ms']['onsetOnly']['f1']:.4f}**")
+              print(f"- 85ms exact F1: **{r['85msHistoricalContext']['exactMidiOnset']['f1']:.4f}**")
+              print(f"- 85ms onset-only F1: **{r['85msHistoricalContext']['onsetOnly']['f1']:.4f}**")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astra-gomyway-rhythm-timing-map-sensitivity-v1
+          path: gomyway_rhythm_timing_map_sensitivity_v1.json
+          retention-days: 30
+      - if: always()
+        run: rm -rf upstream
