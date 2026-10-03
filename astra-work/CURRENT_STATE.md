@@ -8806,3 +8806,51 @@ Build a bass-only reference-blind octave resolver:
 5. freeze candidate before scoring;
 6. reject unless bass improves without any guitar change by construction;
 7. keep `main` unchanged.
+
+
+## Bass-only octave resolver V2 — launched
+
+Motivation:
+- shared guitar+bass octave consensus V1 failed as a shared policy;
+- guitar degraded, while bass improved only slightly;
+- bass remains the role with the clearest octave-dominant residual error.
+
+V2 constraints:
+- guitar predictions are never modified;
+- only frozen bass predictions are considered;
+- only -12 semitone correction is allowed;
+- correction requires:
+  - original MIDI inside fixed bass range 28..67;
+  - original MIDI >= 48;
+  - lower-octave candidate in range;
+  - at least 3 nearby same-pitch-class supporters within 1.5 s;
+  - lower-octave support >= 1.5x current support and >= current+0.2;
+  - local median-register proximity favoring the lower octave;
+- candidate construction is reference-blind;
+- scoring occurs only after freeze.
+
+Files:
+- `astra_backend/evaluation/gomyway_reference_blind_bass_octave_resolver_v2.py`
+- `astra_backend/evaluation/score_gomyway_reference_blind_bass_octave_resolver_v2.py`
+- `.github/workflows/astra-gomyway-bass-only-octave-resolver-v2.yml`
+
+Commits:
+- candidate: `09ab1000a2e704a9dffe725ddaece6695d20c3df`
+- scorer: `cad0b96af9bf4590b13078a6ba3c1a3883548626`
+- workflow launch: `e1cb9cd65d11ee3d67c38960d5e8509747703028`
+
+Authoritative run:
+- run `37156933423`
+- head `e1cb9cd65d11ee3d67c38960d5e8509747703028`
+- status at this update: IN PROGRESS
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37156933423
+
+### Exact next resume instruction
+
+Resume from run `37156933423`.
+If green:
+1. record frozen candidate artifact/digest and bass change count;
+2. record score artifact/digest and original-vs-corrected bass TP/P/R/F1;
+3. accept only if bass improves materially; guitar is unchanged by construction;
+4. if neutral/negative, abandon local octave consensus and move to a different bass octave discriminator;
+5. keep V4-origin timing, frozen note evidence, and `main` unchanged.
