@@ -7149,3 +7149,70 @@ Preferred direction:
 7. keep `main` unchanged and do not alter Basic Pitch/separator settings as part of this timebase task.
 
 Do not use the professional timing map as a repair target. It remains scoring/diagnostic evidence only.
+
+
+## Go My Way reference-independent full-song timebase V2 — launched 2026-10-03
+
+Implemented:
+- `astra_backend/evaluation/gomyway_reference_independent_timebase_v2.py`
+- `.github/workflows/astra-gomyway-reference-independent-timebase-v2.yml`
+
+Purpose:
+- incorporate the existing audio-separation and fixed soft bleed-cleanup work into the timebase experiment without allowing professional-reference conditioning.
+
+Reference-blind V2 candidate inputs frozen before professional comparison:
+1. `raw_mix`
+2. `raw_guitar`
+3. `raw_drums`
+4. `raw_guitar_drums_sum`
+5. `cleaned_guitar`
+6. `cleaned_drums`
+7. `cleaned_guitar_drums_sum`
+
+Important cleanup evidence boundary:
+- fixed soft cleanup configuration remains `n_fft=2048, hop=512, power=2.0, competition=0.50, floor_gain=0.60`;
+- that configuration previously passed only the deterministic synthetic injected-bleed unit test;
+- recognizer-gated cleanup V1 applied cleanup to zero stems and therefore did not establish real-separator improvement;
+- V2 cleanup variants are experimental timing inputs, not trusted corrections.
+
+V2 primary-selection rule:
+- chosen BEFORE reference access;
+- maximize `barConfidence`, then `beatConfidence`, then `beatCount`;
+- professional timing map cannot select or alter the primary candidate.
+
+Provenance:
+- source audio remains `public/gomywayfullaitest.m4a`, expected Git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`;
+- separator remains BS-Roformer-SW 6-stem FP16 ONNX, SHA-256 `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`;
+- both workflow jobs checkout immutable `${{ github.sha }}`;
+- professional timing map is opened only in the dependent post-freeze comparison job;
+- comparison cannot rewrite the V2 bundle.
+
+Commits:
+- V2 script: `5c0c56057da4121ee2a7a0b734d9950609aee884`
+- V2 workflow launch: `307715ce9874939bae6a263fe22c5a7969b1cb66`
+
+Authoritative V2 run:
+- run `37123049554`
+- head `307715ce9874939bae6a263fe22c5a7969b1cb66`
+- status at this update: IN PROGRESS
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37123049554
+
+### Exact next resume instruction
+
+Resume from run `37123049554`.
+
+1. If the freeze job succeeds, record:
+   - frozen bundle artifact ID/digest;
+   - bundle SHA-256;
+   - audio-only-selected primary candidate;
+   - tempo, beatConfidence, barConfidence, beat count and measure count for all seven candidates.
+2. If the comparison job succeeds, record for every candidate:
+   - same-numbering error;
+   - best diagnostic integer shift;
+   - median/mean absolute error;
+   - signed drift across 113 measures.
+3. Compare raw vs cleaned variants descriptively, but do not retroactively change V2 or its frozen primary candidate.
+4. Specifically determine whether cleanup improves timing stability relative to the corresponding raw stem.
+5. Do not use the professional timing map to tune cleanup settings, separator output, estimator settings, meter assumptions, or primary selection.
+6. If V2 is still structurally incoherent, diagnose the failure and version any future approach separately as V3.
+7. Keep `main` unchanged.
