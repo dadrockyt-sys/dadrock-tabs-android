@@ -8749,3 +8749,60 @@ Action taken:
 Resume run `37156291597`, job `111301566606`.
 If green, record frozen candidate identity/change counts and post-freeze original-vs-corrected rhythm/lead/bass metrics.
 If it fails again only on artifact download, retry the scoring job without rebuilding the candidate.
+
+
+## Reference-blind octave consensus V1 — authoritative result
+
+Run `37156291597`:
+- freeze-candidate: GREEN
+- score-after-freeze rerun: GREEN
+
+Frozen candidate artifact:
+- id `11285877585`
+- digest `sha256:6202ddacf4e3330b02126407060a826c5c1fa414ac24c55a408850ca26c37808`
+- guitar changes: 169
+- bass changes: 101
+
+Score artifact:
+- id `11286097918`
+- digest `sha256:3382a86a6bf3600e883b5bb45a18023097349618a5a933681ef2b14c598dcd60`
+- score JSON SHA-256 `303ee5ce922f45585bd932cdd1dc77c806bcb3f8d07695110d49e9c195ce7e83`
+
+Original -> corrected:
+
+Rhythm:
+- TP 320 -> 275
+- F1 31.82% -> 27.35%
+- delta TP -45
+- delta F1 -4.48 percentage points
+
+Lead:
+- TP 133 -> 129
+- F1 17.84% -> 17.30%
+- delta TP -4
+- delta F1 -0.54 percentage points
+
+Bass:
+- TP 365 -> 369
+- F1 58.97% -> 59.61%
+- delta TP +4
+- delta F1 +0.65 percentage points
+
+Conclusion:
+- reject the shared guitar+bass octave-consensus V1 policy;
+- guitar local pitch-class consensus is too aggressive and destroys correct voicings;
+- bass improves slightly and remains the only role with a strong octave-dominant residual error profile;
+- next experiment should be bass-only and more conservative;
+- preserve V4-origin timing and frozen note evidence;
+- no further guitar octave correction until harmonic/voicing context is modeled.
+
+### Next action
+
+Build a bass-only reference-blind octave resolver:
+1. never modify guitar;
+2. operate only on frozen bass predictions;
+3. only consider -12 for high-octave bass predictions because the measured residual bass octave errors were all +12 relative to target;
+4. use conservative local register/continuity evidence;
+5. freeze candidate before scoring;
+6. reject unless bass improves without any guitar change by construction;
+7. keep `main` unchanged.
