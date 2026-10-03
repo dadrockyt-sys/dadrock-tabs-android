@@ -9293,3 +9293,45 @@ If green:
 7. if both candidates underperform, stop generic front-end swapping and revisit training a clean Guitar-TECHS-derived model;
 8. preserve spectral bass V1 as strongest bass research candidate;
 9. keep `main` unchanged.
+
+
+## Guitar chord-role decoder V1 — authoritative result
+
+Run `37158385869` is actually GREEN at the workflow level:
+- freeze-candidate: SUCCESS
+- score-after-freeze: SUCCESS
+- run conclusion: SUCCESS
+
+Artifacts:
+- frozen candidate id `11285559715`
+- frozen candidate digest `sha256:795ebbdd20ec1723ef8a45d54d0caee88c30a70f47bfec7aba5f51406e6ab31f`
+- score artifact id `11286890764`
+- score digest `sha256:fa150224cd992f11c6b4ae58cf95bfa05553b8b5a13a1ad5e30b74c68a0bb928`
+- score JSON SHA-256 `41c2aaa360aec1a843487fffe19be6d7d448ee18cebce58ce8bd332b0d21f415`
+
+Scientific result:
+
+Rhythm:
+- original TP 320, F1 31.82%
+- decoded TP 320, F1 31.87%
+- essentially neutral (+0 TP, +0.05 percentage points F1)
+
+Lead:
+- original TP 133, F1 17.84%
+- decoded TP 40, F1 11.36%
+- delta TP -93
+- delta F1 -6.48 percentage points
+
+Combined guitar:
+- original TP 427, F1 35.04%
+- decoded TP 436, F1 32.40%
+- TP +9 but precision loss causes F1 -2.64 percentage points
+
+Conclusion:
+- reject simple register/continuity role assignment as a general guitar decoder;
+- Basic Pitch contains useful polyphonic evidence, but a hand-written role splitter cannot reliably separate lead from rhythm;
+- do not tune these role-selection weights against Go My Way;
+- next direction should inspect richer front-end evidence or a different polyphonic transcription model rather than further heuristic role assignment;
+- preserve spectral bass V1 as strongest bass research candidate;
+- keep V4-origin timing and frozen note evidence unchanged;
+- keep `main` unchanged.
