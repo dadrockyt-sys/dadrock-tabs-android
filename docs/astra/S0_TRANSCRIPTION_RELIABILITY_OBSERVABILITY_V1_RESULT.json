@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "kind": "s0-transcription-reliability-observability-v1-record",
+  "date": "2026-10-02",
+  "runId": 37090800270,
+  "headCommit": "977b1883f96d55ce3c690ed25950c8a832b3bbe3",
+  "artifact": {
+    "id": 11262263768,
+    "digest": "sha256:4fb1caa6253b3cd89a98209b3160901c4aea6b9fbb6ad8d214b79dc887ae6427"
+  },
+  "descriptiveOnly": true,
+  "thresholdFitPerformed": false,
+  "rankedAssociations": [
+    [
+      "stemToMixtureEnergyDb",
+      0.5942083910249403,
+      0.6588262111448218
+    ],
+    [
+      "interferencePressure",
+      -0.5415570146050088,
+      -0.6222739943826112
+    ],
+    [
+      "strongestCompetitorEnergyRatioDb",
+      -0.5332832268818767,
+      -0.6720755037659214
+    ],
+    [
+      "durationMeanSeconds",
+      0.47740241541880446,
+      0.12897958497346254
+    ],
+    [
+      "eventDensityPerSecond",
+      0.46408427501568117,
+      0.5455130137269342
+    ],
+    [
+      "octaveRelatedEventFraction",
+      0.43367432884634244,
+      0.47020681720397023
+    ],
+    [
+      "competitorDominanceFraction",
+      -0.4266365688487584,
+      -0.5652349416017876
+    ],
+    [
+      "targetDominanceFraction",
+      0.4266365688487584,
+      0.5556538262073054
+    ]
+  ],
+  "hardCase": {
+    "id": "S0M10",
+    "absentTarget": "guitar",
+    "guitarStemToMixtureEnergyDb": -3.0297049550644504,
+    "guitarInterferencePressure": 0.12016024985181968,
+    "guitarTargetDominanceFraction": 0.7760265914735486,
+    "guitarEventCount": 33,
+    "guitarEventDensityPerSecond": 4.479720744680851,
+    "bassEventCount": 33,
+    "bassTranscriptionAgreementF1": 0.3023255813953488
+  },
+  "decision": "next_cross_stem_transcription_overlap_role_ambiguity_diagnostic_no_audio_action"
+}
