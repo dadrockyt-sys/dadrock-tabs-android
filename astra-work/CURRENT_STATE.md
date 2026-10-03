@@ -8727,3 +8727,25 @@ If green:
 2. record post-freeze score artifact and original-vs-corrected rhythm/lead/bass metrics;
 3. reject or split policies if any role is materially harmed;
 4. preserve V4-origin timing, frozen note evidence, and `main`.
+
+
+## Reference-blind octave consensus V1 — scoring infrastructure retry
+
+Run `37156291597`:
+- `freeze-candidate`: SUCCESS
+- frozen candidate was produced successfully
+- `score-after-freeze`: failed before scoring because GitHub Actions timed out downloading the already-frozen note-evidence artifact
+- error was infrastructure/network: "We couldn't respond to your request in time"
+- no scorer logic executed and the frozen candidate was not modified
+
+Action taken:
+- reran only the failed scoring job
+- frozen candidate remains unchanged
+- new score-after-freeze job id: `111301566606`
+- freeze-candidate remains green
+
+### Exact next resume instruction
+
+Resume run `37156291597`, job `111301566606`.
+If green, record frozen candidate identity/change counts and post-freeze original-vs-corrected rhythm/lead/bass metrics.
+If it fails again only on artifact download, retry the scoring job without rebuilding the candidate.
