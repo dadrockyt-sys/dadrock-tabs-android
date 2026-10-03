@@ -7081,3 +7081,71 @@ New authoritative run:
 Run `37121584921` is superseded for scientific provenance because its workflow checked out the moving branch name. Do not use it as the canonical frozen candidate even if it later turns green.
 
 **Resume from run `37121658447`.**
+
+
+## Go My Way reference-independent full-song timebase V1 — authoritative green result 2026-10-03
+
+Authoritative workflow run:
+- run `37122524144`
+- head: `65434c28830f0e23962d30751c95fdd31cc8e142`
+- result: GREEN / both jobs successful.
+
+Runtime-only fixes between the first launch and the green result:
+- `8fe4307085d7f9447b65bba47b6ce84059757830` — checksum artifact path;
+- `4b40cf9ec1161b9b236d111861abbaedea2f6b18` — comparison dependency attempt;
+- `c233ea2bbd1d8921b1734542d430c1b4616b1979` — fix exact comparison dependency install;
+- `22554b8ecc64449bf6f157f2d670dbb2feed1387` — install full comparison imports;
+- `65434c28830f0e23962d30751c95fdd31cc8e142` — verify copied frozen grid from the output directory.
+
+These changes did not alter the audio, estimator, repair logic, meter assumption, subdivision semantics, professional timing map, or comparison metric definitions.
+
+Frozen candidate artifact:
+- artifact name: `gomyway-reference-independent-grid-v1`
+- artifact id: `11273731974`
+- artifact digest: `sha256:863ff326b63dc7323ec51044cceae0406b08c4f191e1bcae756dd40877bdb6ef`
+- candidate JSON SHA-256: `18d8105a1325c23f7b36af868c7ac920818f54d577a8ee921cfed3f208a85cb5`
+
+Final result artifact:
+- artifact name: `gomyway-reference-independent-timebase-v1-result`
+- artifact id: `11274325986`
+- artifact digest: `sha256:d11685951a92d8685b6960381b60a421a16ce5f8d567041c6d446dd75a7dc4eb`
+
+Authoritative post-freeze diagnostic comparison:
+- candidate tempo: `129.19921875 BPM`;
+- best integer measure shift for diagnosis only: `-1`;
+- compared pair count: `112`;
+- median absolute downbeat error: `1.7427739229025008 s`;
+- mean absolute downbeat error: `1.8156368385568522 s`;
+- signed drift slope: `0.06570527168881132 s/reference-measure`;
+- predicted drift across 113 measures: `7.358990429146868 s`.
+
+Scientific interpretation:
+- the reference-independent grid is not coherent enough yet to serve as the canonical measure/step coordinate system for V154 professional-reference scoring;
+- the tempo estimate is relatively close in broad terms, but the measure alignment error and accumulated drift are too large for precise tab scoring;
+- the diagnostic best shift of -1 indicates an initial measure-phase/anchor mismatch, and the continuing positive drift shows that this is not only a fixed offset problem;
+- because the candidate intentionally assumes 4/4 throughout while the professional map contains a 2/4 measure at 104, some late-song divergence is expected, but the observed drift is already too large to attribute the structural failure only to measure 104;
+- therefore do NOT map note events into canonical V154 coordinates using this V1 grid.
+
+Critical integrity rule:
+- do not tune or regenerate this V1 candidate from the professional timing comparison;
+- the frozen V1 remains the evidence for this diagnostic;
+- any structural improvement must be a separately versioned V2 candidate generated reference-blind, with its design fixed before comparison.
+
+### Exact next resume instruction
+
+Next task: build a **reference-independent timebase V2** that addresses the structural failure without reading or conditioning on the professional timing map.
+
+Preferred direction:
+1. preserve the same full-song audio identity and provenance;
+2. keep professional references completely out of candidate generation;
+3. improve audio-only tempo/beat/downbeat structure with a stronger long-range method, especially:
+   - robust global tempo tracking;
+   - downbeat/bar-phase stability;
+   - handling of tempo drift or local tempo variation;
+   - detection of non-4/4 structural exceptions from audio if possible, without knowing where they occur;
+4. freeze the V2 candidate before any professional comparison;
+5. compare V2 using the same diagnostic metrics and do not post-hoc repair it;
+6. only if V2 becomes sufficiently coherent should its frozen grid be used for V154 note-event coordinate mapping;
+7. keep `main` unchanged and do not alter Basic Pitch/separator settings as part of this timebase task.
+
+Do not use the professional timing map as a repair target. It remains scoring/diagnostic evidence only.
