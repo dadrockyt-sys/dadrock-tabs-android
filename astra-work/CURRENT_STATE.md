@@ -6158,3 +6158,125 @@ Required proof cases:
 - no confidence score or automatic correction may appear.
 
 Do not connect this packet to the user-facing app, production API, commercial recordings, or `main` yet. The next scientific step after the integration proof should be to define what new holdout evidence would be required before any automatic trust/flagging threshold could be considered.
+
+
+## Development End-to-End Evidence Packet V1 — 2026-10-02
+
+Implemented:
+- `astra_backend/developmentEvidencePacket.mjs`
+- `astra_backend/tests/developmentEvidencePacket.test.mjs`
+- `.github/workflows/astra-development-evidence-packet-v1.yml`
+
+GitHub Actions run: `37093151254` — **success**  
+Head: `1652424308d9542f3eb4d8194ba0609f87dde5c8`
+
+The development-only packet now deterministically composes:
+1. structure-conditioned note-evidence adaptation;
+2. note-evidence evaluation;
+3. note-event exposure;
+4. optional pair diagnostics;
+5. optional descriptive-only cross-stem diagnostics;
+6. transcription uncertainty presentation.
+
+Required proof cases all passed:
+- clean complementary pair + accepted evidence -> `complete_tab_eligible`;
+- duplicate-class pair + otherwise accepted evidence -> notes remain visible, but presentation becomes `evidence_visible_review_required`;
+- unresolved evaluator failures remain visible end to end and complete-tab events remain empty;
+- exact MIDI/onset identity is invariant through all visible event layers;
+- no composite confidence score or automatic correction appears.
+
+The workflow also reran the uncertainty-presentation and note-event-exposure regression suites; both remained green.
+
+Detailed:
+- `docs/astra/DEVELOPMENT_EVIDENCE_PACKET_V1_RESULT.md`
+- `docs/astra/DEVELOPMENT_EVIDENCE_PACKET_V1_RESULT.json`
+
+Production delivery remains unauthorized. `main` remains unchanged.
+
+
+## Transcription Trust / Flag Holdout Study Protocol V1 — 2026-10-02
+
+Defined the minimum independent evidence required before any future automatic trust/flagging threshold may even be considered.
+
+Implemented:
+- `astra_backend/trustFlagHoldoutProtocol.mjs`
+- `astra_backend/tests/trustFlagHoldoutProtocol.test.mjs`
+- `docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1.md`
+- `docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1.json`
+- `.github/workflows/astra-trust-flag-holdout-protocol-v1.yml`
+
+GitHub Actions run: `37093326513` — **success**  
+Head: `91f9fdabb10a815f98039523b37d229843fe3f20`
+
+### Required future study shape
+
+Two source-disjoint phases are required.
+
+Calibration minimum: **48 new cases**
+- 12 complementary both-present
+- 6 target-absent guitar
+- 6 target-absent bass
+- 6 duplicate-role guitar
+- 6 duplicate-role bass
+- 12 hard complementary confusers
+
+Holdout minimum: **48 additional new cases** with the same balance.
+
+Total minimum new evidence: **96 cases**.
+
+Admission rules:
+- no source asset may overlap S0/prior development;
+- no source asset may overlap between calibration and holdout;
+- valid SHA-256 source identities required;
+- unique case IDs required;
+- threshold must still be undefined at admission;
+- automatic correction must remain unauthorized;
+- production delivery must remain unauthorized.
+
+The validator has green negative tests for:
+- threshold leakage;
+- calibration/holdout source leakage;
+- prior-development source leakage;
+- missing hard strata;
+- duplicate IDs;
+- malformed source hashes.
+
+Detailed:
+- `docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1_RESULT.md`
+- `docs/astra/TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1_RESULT.json`
+
+### Current scientific boundary
+
+No actual new calibration or holdout cohort has been admitted yet.
+
+Therefore:
+- no trust/flag threshold exists;
+- no automatic confidence gate may be introduced;
+- no further S0 threshold tuning is allowed;
+- no production integration is allowed;
+- uncertainty presentation remains the correct fail-closed behavior.
+
+### Explicit next resume instruction
+
+**Next GPT-5.6 task:** perform **model-free source inventory / study-manifest preparation only** for the new 96-case trust/flag study.
+
+Do not fabricate source identities.
+
+Required next work:
+1. inspect available private fixture/source inventory for genuinely new assets not used by S0 or other prior development;
+2. build a candidate manifest only from real accessible source identities/hashes;
+3. keep calibration and holdout source sets disjoint;
+4. report exactly which required strata can and cannot currently be populated;
+5. run `validateTrustFlagHoldoutStudyManifest()` only if a real candidate manifest can satisfy the protocol;
+6. if there are insufficient new sources, stop and record the shortfall instead of weakening the protocol or reusing S0.
+
+Do not:
+- render new audio yet;
+- run BS-Roformer;
+- run Basic Pitch;
+- define a threshold;
+- change any frozen classifier/model setting;
+- access commercial recordings;
+- connect to production or `main`.
+
+The next authorization boundary is **manifest admission only**.
