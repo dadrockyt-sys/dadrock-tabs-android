@@ -7385,3 +7385,15 @@ Result: guitar-vs-bass evidence was correct for 6/6 guitar fixtures and 5/6 bass
 Decision: YAMNet is useful as independent evidence but not yet as a hard winner-take-all gate. Next direction is a gate with absolute string evidence + guitar/bass margin + explicit uncertain state + separator diagnostics. Recognizer disagreement alone must not delete a stem.
 
 Detailed records: `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.md` and `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.json`.
+
+
+## Recognizer-gated cleanup V1 launched — 2026-10-02
+
+Built:
+- `astra_backend/evaluation/recognizer_gate_v1.py`
+- `astra_backend/evaluation/evaluate_recognizer_gated_cleanup_v1.py`
+- `.github/workflows/astra-recognizer-gated-cleanup-eval.yml`
+
+V1 gate is conservative and prospectively frozen before evaluation. It uses absolute YAMNet string evidence, guitar-vs-bass margin, separator interference pressure, competitor-dominance evidence, and an explicit uncertain state. Raw stems are preserved by default. Cleanup is only eligible on strong recognizer disagreement plus separator contamination evidence. Cleanup itself is softened relative to V1 blanket cleanup (floor gain 0.85, competition 0.35).
+
+Because the platform blocked creation of a new tiny trigger file, the workflow temporarily reuses `docs/astra/YAMNET_RECOGNIZER_RUN_TRIGGER.txt`. Trigger commit `6873fd8b8c547ca100f214fed0a25b10a0aa4261` launched recognizer-gated cleanup run `37082340739`. This also launches the existing YAMNet evidence workflow and normal backend tests from the same commit; those are incidental and do not change the gated-cleanup experiment.
