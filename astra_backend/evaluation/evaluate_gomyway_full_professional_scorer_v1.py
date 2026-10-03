@@ -11,6 +11,7 @@ No candidate correction, threshold sweep, or reference-guided generation occurs.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import tempfile
@@ -161,6 +162,7 @@ def recall_only(candidate, reference):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--audio", required=True)
+    ap.add_argument("--source-container", required=True)
     ap.add_argument("--model", required=True)
     ap.add_argument("--reference-payload", required=True)
     ap.add_argument("--timing-map", required=True)
@@ -174,6 +176,8 @@ def main():
         raise RuntimeError("Basic Pitch model SHA mismatch")
 
     audio_path = Path(args.audio)
+    source_container = Path(args.source_container)
+    source_container_sha256 = hashlib.sha256(source_container.read_bytes()).hexdigest()
     mix, fs = load_audio(audio_path)
     adapter = BsRoformer6StemOnnxAdapter(Path(args.model))
     started = time.perf_counter()
@@ -218,6 +222,8 @@ def main():
         "referenceGuidedCandidateModification": False,
         "thresholdSweep": False,
         "audioPath": str(audio_path),
+        "sourceContainerPath": str(source_container),
+        "sourceContainerSha256": source_container_sha256,
         "separatorModelSha256": FP16_SHA256,
         "transcriber": {
             "name": "Basic Pitch",
