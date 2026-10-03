@@ -6280,3 +6280,74 @@ Do not:
 - connect to production or `main`.
 
 The next authorization boundary is **manifest admission only**.
+
+
+## Trust / Flag Study Source Inventory — 2026-10-02
+
+Performed the next authorized step: model-free source inventory only.
+
+Inspected private repository:
+- `dadrockyt-sys/dadrock-tabs-private-fixtures`
+- branch `main`
+- head `13e86335bc87740932f49cf2dd5251ba49b8d519`
+
+Inventory contains:
+- S0 fixture ZIP
+- S0 README
+- S0 manifest
+- **14 source audio assets**
+
+The S0 manifest provides SHA-256 identities for all 14.
+
+### Eligibility result
+
+New source assets eligible for the new Trust / Flag Holdout Protocol V1: **0**.
+
+Every accessible source audio asset in the private fixture repo is already an S0 development source.
+
+Therefore there is currently no legitimate way to populate:
+- 48 new calibration cases
+- 48 new sealed holdout cases
+
+without violating source-disjointness.
+
+### Decision
+
+**STOP at manifest-admission boundary due to insufficient new source material.**
+
+Do not:
+- reuse S0 assets under newly rendered mixtures;
+- transform/copy S0 and call it new source material;
+- fabricate source identities/hashes;
+- weaken the 96-case study design;
+- define a threshold;
+- render study audio;
+- run BS-Roformer;
+- run Basic Pitch;
+- connect anything to production or `main`.
+
+Detailed records:
+- `docs/astra/TRUST_FLAG_SOURCE_INVENTORY_SHORTFALL_V1.md`
+- `docs/astra/TRUST_FLAG_SOURCE_INVENTORY_SHORTFALL_V1.json`
+
+### Explicit next resume instruction
+
+The research code path is now blocked on **genuinely new source-disjoint fixture material**.
+
+**Next GPT-5.6 task, once new fixtures are available:** inventory and SHA-256 hash the new assets first, record provenance, and build a real calibration/holdout candidate manifest satisfying `TRANSCRIPTION_TRUST_FLAG_HOLDOUT_PROTOCOL_V1`.
+
+Before any audio rendering or model run:
+1. prove all new source hashes are disjoint from the 14 S0 hashes;
+2. prove calibration and holdout source sets are mutually disjoint;
+3. satisfy every required stratum in both phases;
+4. run `validateTrustFlagHoldoutStudyManifest()`;
+5. commit the admitted manifest and its exact hashes.
+
+Only after a real manifest passes admission may a future step design fixture rendering.
+
+Until new source material exists, do not continue tuning S0. The current safe endpoint is:
+- evidence packet integrated and green;
+- uncertainty presentation integrated and green;
+- no automatic threshold;
+- no automatic correction;
+- no production delivery.
