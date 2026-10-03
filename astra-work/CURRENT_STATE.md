@@ -5590,3 +5590,14 @@ Diagnostics correctly identify several already-near-silent absent-target stems, 
 **Next direction:** recognizer-gated cleanup. Combine separator diagnostics with an independent guitar/bass/other recognizer; preserve raw stems by default when the recognizer agrees, permit conservative cleanup/reassignment only on strong disagreement + contamination evidence, and preserve/flag uncertain cases rather than destructively suppressing them. S0M10 guitar is the key hard false-positive fixture.
 
 Detailed records: `docs/astra/S0_BLEED_DIAGNOSTICS_RESULT_V1.md` and `docs/astra/S0_BLEED_DIAGNOSTICS_RESULT_V1.json`.
+
+
+## YAMNet zero-shot recognizer result — 2026-10-02
+
+GitHub Actions run `37081779592` completed successfully. Artifact `11258687346` digest `sha256:b097366a43d0e1ee4d095234065fe0ced4d5c1861666df3d0fcc467a34b8ae33`.
+
+Result: guitar-vs-bass evidence was correct for 6/6 guitar fixtures and 5/6 bass fixtures. B12 picked bass was the one bass miss (guitar 0.1557 vs bass 0.1390). Controls were extremely low-evidence (mean guitar 0.000543, mean bass 0.000286). G13 is an important low-evidence true-guitar fixture despite the correct relative winner.
+
+Decision: YAMNet is useful as independent evidence but not yet as a hard winner-take-all gate. Next direction is a gate with absolute string evidence + guitar/bass margin + explicit uncertain state + separator diagnostics. Recognizer disagreement alone must not delete a stem.
+
+Detailed records: `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.md` and `docs/astra/YAMNET_RECOGNIZER_RESULT_V1.json`.
