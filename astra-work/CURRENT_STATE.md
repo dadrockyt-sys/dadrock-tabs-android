@@ -5625,3 +5625,16 @@ Interpretation: in S0M10, BS-Roformer split one bass source across the guitar an
 This remains S0-only evidence from one duplicate-class fixture. Next task: expand the controlled duplicate-class fixture set in both directions and across split ratios before any real-audio or production use.
 
 Detailed records: `docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.md` and `docs/astra/DUPLICATE_CLASS_ACTION_RESULT_V1.json`.
+
+
+## Controlled duplicate-class stress V1 result — 2026-10-02
+
+GitHub Actions run `37088717448` completed successfully. Artifact `11261451719` digest `sha256:c8b6864d90d43391e28a511e6edf2f84edc353d502b33e601394e7f7fb1a625f`.
+
+Frozen PairClassifierConfig V1 generalized perfectly on the controlled detection task: **18/18 intended duplicate positives** (50/50, 40/60, 35/65 splits across 3 bass and 3 guitar sources) and **6/6 prospective hard negatives** (30/70, outside the frozen 6 dB energy-gap gate). This validates the detector on the controlled matrix in both guitar->bass and bass->guitar directions.
+
+Important correction: the stress generator used exact scaled copies of the same source in each pseudo stem, so SI-SDR is scale-invariant and the reported merge-improvement values are not valid action-quality evidence for this experiment. All 24 merges reconstruct exactly (max error 0.0). The prior S0M10 merge result remains meaningful because the separator outputs were imperfect/non-collinear and merging improved bass SI-SDR from 0.0728 dB to 30.5695 dB.
+
+Decision: freeze PairClassifierConfig V1 unchanged. Next task is a **non-collinear duplicate split stress** using complementary frequency partitions, time-varying leakage, phase/filter differences, and/or mild independent contamination while keeping the detector frozen. Do not move to automatic real-audio consolidation yet.
+
+Detailed records: `docs/astra/CONTROLLED_DUPLICATE_STRESS_RESULT_V1.md` and `docs/astra/CONTROLLED_DUPLICATE_STRESS_RESULT_V1.json`.
