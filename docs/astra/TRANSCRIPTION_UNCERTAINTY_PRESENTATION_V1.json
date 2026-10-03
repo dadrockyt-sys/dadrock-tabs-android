@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "transcription-uncertainty-presentation-contract-v1",
+  "date": "2026-10-02",
+  "runId": 37092615121,
+  "headCommit": "7b92c09a858a12b72968bfadc530b5e370a04d7d",
+  "workflowConclusion": "success",
+  "contract": {
+    "confidenceScoreDefined": false,
+    "automaticCorrectionAuthorized": false,
+    "automaticStemMutationAuthorized": false,
+    "automaticRoleReassignmentAuthorized": false,
+    "thresholdsLearnedFromS0": false,
+    "pitchOnsetIdentityPreserved": true,
+    "uncertainEvidenceHidden": false
+  },
+  "presentationStates": [
+    "complete_tab_eligible",
+    "evidence_visible_review_required",
+    "no_reliable_note_evidence"
+  ],
+  "decision": "keep_uncertainty_explicit_and_fail_closed_for_complete_tab_without_correcting_audio_or_notes"
+}
