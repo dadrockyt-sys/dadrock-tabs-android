@@ -10572,3 +10572,51 @@ If preflight passes:
 2. do not call intermediate green a scientific success;
 3. record resume artifact identity when produced;
 4. let serialized controller continue automatically.
+
+
+## V6 P1 segment guard failure — structural assertion repaired, same contract relaunched
+
+Run `37167811656`:
+- preflight: SUCCESS
+- P1 0->400 segment: FAILURE before media access
+- all later jobs skipped
+- no P1/P2 media prepared or downloaded
+- no real optimizer steps executed
+
+Exact cause:
+- segment guard asserted exact retained-string membership:
+  - expected `causal GRU hidden 96`
+  - frozen design actually stores `single-layer causal GRU hidden 96`
+- this was a brittle string-equality bug, not a scientific/model mismatch.
+
+Repair:
+- replaced brittle exact-string membership with structural checks:
+  - at least one retained architecture entry contains both `causal GRU` and `hidden 96`
+  - added architecture starts with `6-string learned event-admission head`
+  - thresholdTuning remains false
+- no model/objective/data/threshold/alignment/budget changes.
+
+Repair commits:
+- segment structural guard fix `b6fddd8a60508670ed8d1380ef6109e6c5b79896`
+- controller segment identity refresh `96385e8f280a4bfb95c027af895ca383ea4e50da`
+
+Final repaired workflow identities:
+- segment git blob `d3425d266735bb11dd5b539830e071626ded92df`
+- controller git blob `7de1fb37a384300f3ac3d2e88f70bb5850d124b4`
+
+Relaunch receipt commit:
+- `f4c63cd4b72ecc015ddd3fa2f5e1e02157a3bb58`
+
+Authoritative relaunched run:
+- run `37167968302`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37167968302
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37167968302`.
+If preflight and P1 identity guard pass:
+1. confirm first real media-preparation step begins;
+2. monitor whether the 256-path set reconstructs successfully;
+3. if failure occurs after media access, distinguish acquisition/preparation/runtime/training failure exactly;
+4. do not alter frozen V6 science to repair infrastructure.
