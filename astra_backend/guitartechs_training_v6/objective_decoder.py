@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import math
+from collections import Counter
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -19,6 +22,9 @@ ONSET_LOSS_WEIGHT=0.35
 ACTIVITY_LOSS_WEIGHT=0.35
 PITCH_LOSS_WEIGHT=0.25
 EVENT_LOSS_WEIGHT=0.75
+CONTENT_WEIGHT_MIN=0.75
+CONTENT_WEIGHT_MAX=1.50
+PRIMARY_CONTENT=("chords","scales","singlenotes","PalmMute")
 
 EVENT_START_CONFIDENCE=0.50
 ACTIVITY_CONTINUE_CONFIDENCE=0.45
@@ -28,6 +34,17 @@ STATE_START_VS_SILENCE_RATIO=0.70
 STATE_CONTINUE_VS_SILENCE_RATIO=0.60
 GAP_FRAMES=2
 MIN_RUN_FRAMES=2
+
+def bounded_content_weights(category_counts: dict[str,int]) -> dict[str,float]:
+    if set(category_counts)!=set(PRIMARY_CONTENT):
+        raise ValueError("all four primary content classes are required")
+    if any((not isinstance(v,int)) or v<=0 for v in category_counts.values()):
+        raise ValueError("content counts must be positive integers")
+    mean_count=sum(category_counts.values())/len(PRIMARY_CONTENT)
+    raw={name:math.sqrt(mean_count/category_counts[name]) for name in PRIMARY_CONTENT}
+    clipped={name:min(CONTENT_WEIGHT_MAX,max(CONTENT_WEIGHT_MIN,raw[name])) for name in PRIMARY_CONTENT}
+    weighted_mean=sum(clipped[name]*category_counts[name] for name in PRIMARY_CONTENT)/sum(category_counts.values())
+    return {name:min(CONTENT_WEIGHT_MAX,max(CONTENT_WEIGHT_MIN,clipped[name]/weighted_mean)) for name in PRIMARY_CONTENT}
 
 def normalized_targets(labels):
     target=labels.transpose(1,2).contiguous().clone()
@@ -74,8 +91,9 @@ def pitch_bce(logits,target,valid):
     raw=F.binary_cross_entropy_with_logits(logits,target.to(logits.dtype),pos_weight=pw,reduction="none")
     return raw[valid].mean()
 
-def v6_sequence_loss(outputs,labels):
+def v6_sequence_loss(outputs,labels,*,content_weight:float=1.0):
     req={"tablature","onset","activity","pitch","event"}
+    if not (CONTENT_WEIGHT_MIN <= content_weight <= CONTENT_WEIGHT_MAX): raise ValueError("content_weight outside frozen bounds")
     if not req.issubset(outputs): raise ValueError("missing V6 heads")
     t=targets(labels)
     batch,frames,strings=t["state"].shape
@@ -87,7 +105,7 @@ def v6_sequence_loss(outputs,labels):
     activity=mbce(outputs["activity"],t["activity"],t["valid"],ACTIVITY_POS_WEIGHT)
     event=mbce(outputs["event"],t["event"],t["onset_valid"],EVENT_POS_WEIGHT)
     pitch=pitch_bce(outputs["pitch"],t["pitch"],t["pitch_valid"])
-    total=(STATE_LOSS_WEIGHT*state + ONSET_LOSS_WEIGHT*onset + ACTIVITY_LOSS_WEIGHT*activity +
+    total=content_weight*(STATE_LOSS_WEIGHT*state + ONSET_LOSS_WEIGHT*onset + ACTIVITY_LOSS_WEIGHT*activity +
            PITCH_LOSS_WEIGHT*pitch + EVENT_LOSS_WEIGHT*event)
     return total,{"state":state,"onset":onset,"activity":activity,"pitch":pitch,"event":event}
 
