@@ -38,7 +38,7 @@ jobs:
           test "$(git hash-object astra_backend/guitartechs_training_v6/model.py)" = '78a17dd174bd86e804af0e9c75056055d6048295'
           test "$(git hash-object astra_backend/guitartechs_training_v6/objective_decoder.py)" = '3a3b8795be70e117c2b769c9bcb9e8ae5fdf0326'
           test "$(git hash-object astra_backend/guitartechs_training_v6/train_v6_resumable.py)" = '2e0c48235d15d85ac730eefd2334577a561dcd6d'
-          test "$(git hash-object .github/workflows/guitar-techs-v6-resumable-segment.yml)" = 'd6159dce7a4b4706de6ea32f8f8925c6dd58270c'
+          test "$(git hash-object .github/workflows/guitar-techs-v6-resumable-segment.yml)" = '9691e8f73333c0e6c43f82e5213c5f8067a40693'
           test "$(git hash-object astra_backend/guitartechs_training_v2/train_v2.py)" = '4db5add96c58a8e54868ea06dacb1da724675163'
           test "$(git hash-object astra_backend/guitartechs_training_v2/sampling.py)" = '9eb62fde56f592646077afa1e0ff3013a5dc6560'
           test "$(git hash-object astra_backend/guitartechs_real_training/real_training.py)" = 'd4a3dd99c4a2c3cda16c10bde1a5dc63f6380254'
