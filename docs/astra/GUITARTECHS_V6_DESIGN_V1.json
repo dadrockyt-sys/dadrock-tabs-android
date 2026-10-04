@@ -1,0 +1,53 @@
+{
+  "schema": "astra-guitar-techs-v6-design-v1",
+  "date": "2026-10-03",
+  "candidateId": "astra_guitartechs_tabcnn_v6_learned_event_admission",
+  "basis": {
+    "v5HeadGateDiagnosis": "docs/astra/GUITARTECHS_V5_HEAD_GATE_DIAGNOSIS_RESULT_V1.json",
+    "principalFinding": "V5 representation retained useful signal but hard onset>=0.50 gate catastrophically under-admitted true events."
+  },
+  "architecture": {
+    "retained": [
+      "192-bin frozen CQT",
+      "pinned TabCNN convolutional stack",
+      "128-d acoustic embedding",
+      "single-layer causal GRU hidden 96",
+      "onset head",
+      "activity head",
+      "44-bin pitch head",
+      "6x21 state head"
+    ],
+    "added": "6-string learned event-admission head from temporal state + soft onset/activity/pitch evidence",
+    "removed": "learned homoscedastic task weighting"
+  },
+  "objective": {
+    "taskWeights": {
+      "state": 1,
+      "onset": 0.35,
+      "activity": 0.35,
+      "pitch": 0.25,
+      "event": 0.75
+    },
+    "eventTarget": "reference event-start label per physical string",
+    "thresholdTuning": false
+  },
+  "decoder": {
+    "newEventRequires": [
+      "learned event probability >= 0.50",
+      "state probability >= 0.30",
+      "state-vs-silence ratio >= 0.70"
+    ],
+    "continuation": "activity/state only; repeated onset/event not required",
+    "fretChangeRequiresNewEvent": true
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p1p2MediaAccessAuthorized": false,
+    "p3Opened": false,
+    "thresholdRetuningAuthorized": false,
+    "paidComputeAuthorized": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "nextGate": "Synthetic exact-runtime verification only."
+}
