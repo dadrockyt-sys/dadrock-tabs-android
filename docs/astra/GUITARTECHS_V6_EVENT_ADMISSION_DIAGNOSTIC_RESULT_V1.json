@@ -1,0 +1,60 @@
+{
+  "schema":"astra-guitar-techs-v6-event-admission-diagnostic-result-v1",
+  "date":"2026-10-04",
+  "sourceRunId":37232153816,
+  "sourceTrainingRunId":37167968302,
+  "artifact":{
+    "artifactId":11315572721,
+    "archiveDigest":"sha256:a57845b38c4883421772c6c1165993caeb180724685c3308b68bb358ec009aef",
+    "jsonSha256":"b52bfaad18bd874fdc7da136caca318e467e78f9dddc284256c61414ffd575e4"
+  },
+  "principalFinding":"V6 learned-event admission repeats V5's under-admission pathology: useful ranking on the stronger fold but catastrophic probability calibration at the frozen 0.50 start gate.",
+  "folds":{
+    "p1-train-p2-validate":{
+      "eventAUROC":0.5037512050520393,
+      "onsetAUROC":0.5018877150601628,
+      "activityAUROC":0.640512149136396,
+      "referenceOnsets":21872,
+      "eventPassRate":0.0,
+      "statePassRate":0.0,
+      "eventStatePassRate":0.0,
+      "identityCorrectRate":0.06812362838332114,
+      "fullF1":0.0,
+      "stateOnlyStartF1":0.0,
+      "eventOnlyStartF1":0.0
+    },
+    "p2-train-p1-validate":{
+      "eventAUROC":0.9277153799361406,
+      "onsetAUROC":0.9330026894368509,
+      "activityAUROC":0.8822964993963764,
+      "referenceOnsets":26752,
+      "eventPassRate":0.004074461722488038,
+      "statePassRate":0.3268914473684211,
+      "eventStatePassRate":0.0020933014354066986,
+      "identityCorrectRate":0.5825732655502392,
+      "fullF1":0.005769989392842501,
+      "stateOnlyStartF1":0.20169351664994464,
+      "eventOnlyStartF1":0.007871488867693437
+    }
+  },
+  "interpretation":{
+    "p2Fold":"Underlying temporal/state representation is useful. The learned event head has strong ranking signal but its absolute probabilities are badly calibrated, so the fixed 0.50 gate suppresses almost all true events.",
+    "p1Fold":"This fold shows broader representation collapse, not merely event-gate calibration failure.",
+    "v6Verdict":"FAIL"
+  },
+  "designDecision":{
+    "closeThresholdGatedEventAdmission":true,
+    "doNotTuneEventThresholdOnValidation":true,
+    "doNotRetrainV6":true,
+    "doNotEvaluateV6OnProtectedSong":true,
+    "nextDirection":"Return to V4-class state/activity decoding strength and design event starts without a validation-sensitive probability threshold, e.g. train-time structured boundary/objective or relative/ranking-based admission fixed before validation."
+  },
+  "guards":{
+    "optimizerStepsExecuted":0,
+    "modelWeightsModified":false,
+    "thresholdsRetuned":false,
+    "p3Opened":false,
+    "protectedSongUsed":false,
+    "mainOrProductionModified":false
+  }
+}
