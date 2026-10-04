@@ -15,7 +15,7 @@
     "p3Accessed": false,
     "protectedSongUsed": false
   },
-  "runHeadSha": "9af9c965133e166a212b27b1ca0a134cbe5c7533",
+  "runHeadSha": "5a31d9ae36d24e76dab4b69f34db931552530331",
   "runtime": {
     "device": "cpu",
     "numpy": "1.21.6",
@@ -26,7 +26,7 @@
   "source": {
     "designGitBlob": "50b0638c631eadf44d0bf434c66ad6a3ff594e34",
     "modelGitBlob": "78a17dd174bd86e804af0e9c75056055d6048295",
-    "objectiveDecoderGitBlob": "edc7fcd105aea36ab9fbbe04e88ce038bea887d3",
+    "objectiveDecoderGitBlob": "3a3b8795be70e117c2b769c9bcb9e8ae5fdf0326",
     "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
     "syntheticHarnessGitBlob": "c0eeca0139761302a82f91fd36c806b057deca1a",
     "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7"
