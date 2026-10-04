@@ -5,7 +5,7 @@
   "singleLaunch": true,
   "authorization": {
     "userText": "Green",
-    "scope": "Run the guarded serialized V6 P1/P2 development training after synthetic and no-media trainer gates passed."
+    "scope": "Relaunch the same guarded serialized V6 P1/P2 development training after correcting preflight/workflow identity bugs only."
   },
   "sourceIdentities": {
     "authorizationGitBlob": "68c135de1df82e8fd88a547457da54470edcdd4a",
@@ -14,12 +14,19 @@
     "modelGitBlob": "78a17dd174bd86e804af0e9c75056055d6048295",
     "objectiveDecoderGitBlob": "3a3b8795be70e117c2b769c9bcb9e8ae5fdf0326",
     "trainerGitBlob": "2e0c48235d15d85ac730eefd2334577a561dcd6d",
-    "segmentWorkflowGitBlob": "d6159dce7a4b4706de6ea32f8f8925c6dd58270c",
-    "controllerWorkflowGitBlob": "c31e1254c3f29746f286cf3e9e71f22164af56a1"
+    "segmentWorkflowGitBlob": "9691e8f73333c0e6c43f82e5213c5f8067a40693",
+    "controllerWorkflowGitBlob": "20bebc59d198e92b13456a6a61943c6e9a848609"
   },
   "scope": {
-    "foldOrder": ["p1-train-p2-validate","p2-train-p1-validate"],
-    "resumeBoundariesEpochs": [400,800,1000],
+    "foldOrder": [
+      "p1-train-p2-validate",
+      "p2-train-p1-validate"
+    ],
+    "resumeBoundariesEpochs": [
+      400,
+      800,
+      1000
+    ],
     "serializedExecutionOnly": true,
     "p3Opened": false,
     "thresholdRetuning": false,
