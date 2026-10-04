@@ -10919,3 +10919,98 @@ Preserve:
 - V4-origin timing;
 - BS-Roformer separator;
 - `main` unchanged.
+
+
+## V7 synthetic verification — authoritative green result
+
+Run `37237231953` completed SUCCESS.
+
+Artifact:
+- id `11315842386`
+- digest `sha256:afec0d61248fb1613251c22c7505c005a9bc8751ada73e34cd908ee127f13329`
+- receipt JSON SHA-256 `c0a749912cb4fc67d5023353a672a10151dfb492997c47caa868466c06e4cd6a`
+
+Verified:
+- finite gradients PASS
+- calibration invariance PASS
+- local ranking admission PASS
+- no P1/P2 media
+- no P3
+- no protected song
+- zero real optimizer steps
+
+Authoritative frozen source identities:
+- V7 design git blob `ab86da84fabecf1f22f03cf7f805358ecf02661d`
+- V7 model git blob `cdb80274494782fc42774f3dd5c6859e9beb97d3`
+- V7 objective/decoder git blob `7e0f3a297e4ce8fa20b4bcca74842964e08aafd2`
+- V7 synthetic harness git blob `f49c71c160cebf2b78355b007034b906d38b8b12`
+- runtime lock git blob `174a5016cfe9e6c00816d2171210aa84c66081a8`
+
+Receipt committed:
+- `docs/astra/GUITARTECHS_V7_SYNTHETIC_VERIFICATION_V1.json`
+- commit `0cfcc9f8817fbe6fb64b83e038acc660b78b94a2`
+- receipt git blob `eac5e7f4fb33bfb665b074bfb843fa19e7edd73d`
+
+## V7 resumable trainer scaffold — no-media boundary
+
+Trainer:
+- `astra_backend/guitartechs_training_v7/train_v7_resumable.py`
+- initial scaffold commit `cd963c7b7171a5394b20f8bf4d725d43ac11d8ba`
+- bound-to-boundary commit `bd2e0ce6e55a58df0acd6248fb28ee6ec0f51243`
+
+Trainer behavior:
+- V7 model/objective
+- raw event scores, not sigmoid probabilities
+- decoder uses `decode_ranked_events`
+- fixed content balancing retained
+- same deterministic sampler, resume boundaries, and performer-disjoint evaluation infrastructure
+- no absolute event threshold introduced
+
+No-real-training boundary:
+- `docs/astra/GUITARTECHS_V7_REAL_TRAINING_BOUNDARY_V1.json`
+- commit `43d2ba34f3053b0230ae0111cd3f50e8fc11f545`
+- boundary git blob `7e2b596fb405e7f6e75a54c97ea7a5f939c3505e`
+
+Guards remain:
+- realP1P2TrainingAuthorized false
+- p1p2MediaAccessAuthorized false
+- p3Opened false
+- thresholdRetuningAuthorized false
+- protectedSongUseAuthorized false
+- mainOrProductionMutationAuthorized false
+
+## V7 resumable trainer no-media smoke — launched
+
+Workflow:
+- `.github/workflows/guitar-techs-v7-resumable-smoke.yml`
+- launch commit `e3cb9b593a9bccde987d16226e4cbe7b42715a92`
+
+Authoritative run:
+- run `37237539546`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37237539546
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37237539546`.
+
+If failed:
+1. inspect exact compile/resume-self-test issue;
+2. repair only V7 trainer integration;
+3. do not access P1/P2 or protected song;
+4. do not introduce absolute probability thresholds.
+
+If green:
+1. record smoke success and confirm zero real optimizer steps / zero P1/P2 media;
+2. freeze trainer/workflow identities;
+3. only then create a new explicit V7 P1/P2 real-training authorization receipt and serialized segment/controller workflows;
+4. keep P3 closed;
+5. preserve V4 clean supervised macro F1 `0.2435228031` as benchmark;
+6. keep Go My Way unused until a clean V7 model is frozen.
+
+Preserve:
+- Basic Pitch V4 Go My Way combined guitar F1 35.04%;
+- spectral bass V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
