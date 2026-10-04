@@ -1,0 +1,75 @@
+{
+  "schema": "astra-guitar-techs-v6-real-training-authorization-v1",
+  "date": "2026-10-03",
+  "authorization": {
+    "userText": "Green",
+    "interpretedScope": "Authorize the already-defined next step: guarded V6 P1/P2 development training after the no-media trainer smoke passed.",
+    "explicitP3Authorization": false
+  },
+  "candidateId": "astra_guitartechs_tabcnn_v6_learned_event_admission",
+  "frozenDesign": {
+    "path": "docs/astra/GUITARTECHS_V6_DESIGN_V1.json",
+    "gitBlob": "50b0638c631eadf44d0bf434c66ad6a3ff594e34"
+  },
+  "frozenSyntheticVerification": {
+    "path": "docs/astra/GUITARTECHS_V6_SYNTHETIC_VERIFICATION_V1.json",
+    "gitBlob": "197b3dcdccab366d199eda3966aea32b38ed671f",
+    "runId": 37166747299,
+    "artifactId": 11288779750,
+    "artifactDigest": "sha256:380dee99fcf0b2425c8c96dd782eb072ded49dcb99a5a9b82bb7b8aea50b4bae",
+    "rawJsonSha256": "89ed1a3a5b2fb8cf6ab92a957a7f64929a0a536343e7219abad9b1413f8b524a",
+    "passed": true
+  },
+  "noMediaTrainerSmoke": {
+    "runId": 37166862421,
+    "passed": true,
+    "p1p2MediaAccessed": false,
+    "realOptimizerStepsExecuted": 0
+  },
+  "scope": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": [
+      {"train":"P1","validate":"P2"},
+      {"train":"P2","validate":"P1"}
+    ],
+    "epochsPerFold": 1000,
+    "sequenceFrames": 200,
+    "batchSequences": 32,
+    "microbatchSequences": 1,
+    "optimizer": "Adadelta",
+    "learningRate": 1,
+    "seed": 20260921,
+    "validationCheckpointsPerFold": 50,
+    "checkpointEveryEpochs": 20,
+    "resumeBoundariesEpochs": [400,800,1000],
+    "serializedExecutionOnly": true,
+    "randomInitializationOnly": true,
+    "runner": "public GitHub-hosted ubuntu-22.04 CPU",
+    "developmentThresholdsChanged": false,
+    "alignmentAllowlistChanged": false,
+    "inputRepresentationChangedFromFrozenCqt": false
+  },
+  "authorizedActions": [
+    "verify frozen V6 identities before P1/P2 media access",
+    "reconstruct the exact frozen P1/P2 development population",
+    "execute both serialized V6 development folds with resume boundaries 400->800->1000",
+    "SHA-verify each V6 resume artifact before loading",
+    "evaluate with the frozen learned-event-admission V6 decoder",
+    "emit final fold artifacts only at epoch 1000"
+  ],
+  "guards": {
+    "realP1P2TrainingAuthorized": true,
+    "p3Opened": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "publishedCheckpointInitializationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "alignmentAllowlistMutationAuthorized": false,
+    "mainOrProductionMutationAuthorized": false,
+    "customerDeliveryEligible": false
+  },
+  "outcomeRule": {
+    "ifEitherFoldFails": "Freeze V6 development FAIL; diagnose P1/P2 only; no threshold rescue.",
+    "ifBothFoldsPass": "Record only eligible for separate P3 authorization; do not open P3 automatically."
+  }
+}
