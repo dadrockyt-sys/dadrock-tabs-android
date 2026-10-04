@@ -9996,3 +9996,37 @@ If green:
 2. record config/checkpoint SHA-256 values and prediction counts;
 3. record score artifact ID/digest and both full-mix/guitar-stem score JSON hashes;
 4. compare against Basic Pitch V4 baseline and decide whether specialized AMT becomes strongest guitar path.
+
+
+## Specialized guitar AMT V1 — third runtime repair and relaunch
+
+Run `37163428072` failed in `Freeze specialized AMT events`.
+
+Exact failure:
+- `ModuleNotFoundError: No module named 'torchaudio'`
+
+All upstream steps were successful again:
+- runtime install;
+- pinned guitar-AMT code/config/checkpoint acquisition;
+- immutable source verification and decode;
+- BS-Roformer acquisition and verification;
+- guitar-stem separation.
+
+Repair:
+- added `torchaudio==2.7.1` to match `torch==2.7.1`;
+- no model, config, checkpoint, separator, inference logic, thresholds, or scorer changes.
+
+Repair commit:
+- `c8742c7ecdc5e1d176357e6e20b42c922f047b75`
+
+Authoritative relaunch:
+- run `37164433110`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37164433110
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37164433110`.
+If it fails, inspect the exact exception and repair only the missing runtime/integration issue.
+Do not change the model/scorer/thresholds.
+If green, record artifacts, prediction counts, hashes, and full-mix vs guitar-stem scores against the unchanged Basic Pitch V4 baseline.
