@@ -10153,3 +10153,126 @@ Goals:
 3. Establish deterministic train/validation split, input preprocessing, string/fret target encoding, checkpoint hashing, and held-out metrics.
 4. Do not use Go My Way professional references during model selection.
 5. Only after a clean held-out model is frozen should it be evaluated on the separated Go My Way guitar stem.
+
+
+## Clean supervised guitar direction — V6 bounded design and synthetic gate launched
+
+Repository inspection showed substantial prior Guitar-TECHS work already exists:
+- V1 through V5 real-training pipelines;
+- resumable training workflows;
+- performer-disjoint P1/P2 development evaluation;
+- error decompositions and head/gate diagnostics;
+- exact-runtime TabCNN preprocessing/runtime locks.
+
+Important historical conclusions preserved:
+- V4 is the strongest existing clean supervised Guitar-TECHS development model:
+  - two-fold macro F1 `0.2435228031`
+  - macro completeness `0.2221579278`
+- V5 regressed severely:
+  - macro F1 `0.0641310886`
+  - dominant failure was recall/completeness collapse.
+- V5 head/gate diagnosis showed the underlying representation retained useful signal:
+  - onset AUROC ~0.85 / 0.88
+  - activity AUROC ~0.90 / 0.87
+  - pitch F1 at 0.50 ~0.864 / 0.779
+  - state identity correct at true onsets ~66.2% / 59.8%
+  - state-only diagnostic macro F1 `0.2188433`
+- principal V5 root cause:
+  - hard `onset >= 0.50` event-start gate admitted only ~2.4% / 8.6% of true onsets and catastrophically suppressed recall.
+- do NOT rescue V5 by tuning the onset threshold.
+
+Old V4 model artifacts from run `35961115171` are no longer available, so V4 cannot simply be reused as a checkpoint.
+
+### V6 frozen hypothesis
+
+Candidate:
+- `astra_guitartechs_tabcnn_v6_learned_event_admission`
+
+Retain:
+- frozen 192-bin CQT;
+- pinned TabCNN convolutional stack;
+- 128-d acoustic embedding;
+- single-layer causal GRU hidden size 96;
+- onset head;
+- activity head;
+- 44-bin pitch head;
+- 6x21 string/fret state head.
+
+Add:
+- six-string learned event-admission head;
+- input: temporal hidden state + soft onset/activity/pitch evidence;
+- target: reference event-start label per physical string.
+
+Remove:
+- learned homoscedastic task weighting.
+
+Frozen explicit task weights:
+- state 1.00
+- onset 0.35
+- activity 0.35
+- pitch 0.25
+- event admission 0.75
+
+Decoder:
+- new event requires learned event probability >= 0.50 plus unchanged state evidence;
+- continuation uses activity/state and does not require repeated event/onset evidence;
+- fret change requires a new learned event;
+- no validation threshold search.
+
+Files:
+- `astra_backend/guitartechs_training_v6/model.py`
+- `astra_backend/guitartechs_training_v6/objective_decoder.py`
+- `astra_backend/guitartechs_training_v6/verify_synthetic_v6.py`
+- `docs/astra/GUITARTECHS_V6_DESIGN_V1.json`
+- `.github/workflows/guitar-techs-v6-synthetic-verification.yml`
+
+Commits:
+- model `c2cfeee0548201e5944fbc4b0275a141db1f18ca`
+- objective/decoder `d800b660deecaf346a9e045ecdf369fb254c5bba`
+- synthetic verifier `8e3ca57744324747a01110ea8e7f1d8875e2519f`
+- frozen design `9330b0c3c65d75df72939ffe3f1bdf6a9f119b08`
+- workflow launch `9af9c965133e166a212b27b1ca0a134cbe5c7533`
+
+Synthetic gate contract:
+- exact frozen TabCNN runtime;
+- pinned TabCNN source only;
+- no P1/P2 media access;
+- no P3;
+- no protected Go My Way audio;
+- zero real optimizer steps;
+- verify exact head shapes;
+- finite gradients for state/onset/activity/pitch/event heads;
+- causal temporal context;
+- learned event admission required for new event;
+- activity/state continuation without repeated event;
+- deterministic serialized resume.
+
+Authoritative run:
+- run `37166132383`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37166132383
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37166132383`.
+
+If it fails:
+1. inspect the exact synthetic/runtime failure;
+2. repair only the implementation/integration issue;
+3. do not access real Guitar-TECHS media or Go My Way;
+4. do not alter thresholds based on validation evidence.
+
+If green:
+1. record synthetic artifact ID/digest and receipt SHA;
+2. freeze source identities;
+3. only then scaffold a V6 resumable P1/P2 training runner from the existing V5/V4 deterministic sampler/runtime;
+4. keep performer-disjoint P1->P2 and P2->P1 evaluation;
+5. keep existing frozen development thresholds and alignment allowlist;
+6. do not use P3;
+7. do not use Go My Way professional references for model selection;
+8. preserve current strongest production/research baselines:
+   - guitar Basic Pitch V4 combined F1 35.04%
+   - bass spectral V1 TP 372 / F1 60.10%
+   - timing V4-origin
+   - BS-Roformer separator strongly complementary on real song
+   - `main` unchanged.
