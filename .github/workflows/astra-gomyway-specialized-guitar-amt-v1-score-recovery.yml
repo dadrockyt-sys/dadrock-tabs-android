@@ -1,0 +1,73 @@
+name: Astra Go My Way Specialized Guitar AMT V1 Score Recovery
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-gomyway-specialized-guitar-amt-v1-score-recovery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score-frozen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-specialized-guitar-amt-v1-frozen
+          path: candidate
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37164433110
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: v4-origin
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+
+      - name: Verify frozen candidates
+        run: |
+          set -euo pipefail
+          test "$(sha256sum candidate/specialized-guitar-amt-full-mix-v1.json | awk '{print $1}')" = "b3ad5b0959b34f3327ed123a0aabfe43f0c950ecb1b243b7674590b1e74fb908"
+          test "$(sha256sum candidate/specialized-guitar-amt-guitar-stem-v1.json | awk '{print $1}')" = "55e163623f32744bfcf42bb2f0f9f7663beaf6aa9bbeb25064a022f7bee56161"
+          test "$(sha256sum v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3"
+
+      - name: Score frozen candidates
+        run: |
+          set -euo pipefail
+          mkdir -p scores
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py \
+            --candidate candidate/specialized-guitar-amt-full-mix-v1.json \
+            --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json \
+            --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+            --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
+            --output-json scores/specialized-guitar-amt-full-mix-v1-score.json
+
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py \
+            --candidate candidate/specialized-guitar-amt-guitar-stem-v1.json \
+            --timing-map v4-origin/gomyway-professional-timing-map-v4-origin-diagnostic.json \
+            --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+            --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
+            --output-json scores/specialized-guitar-amt-guitar-stem-v1-score.json
+
+          sha256sum scores/*.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-specialized-guitar-amt-v1-scores-recovered
+          path: scores/
+          retention-days: 30
