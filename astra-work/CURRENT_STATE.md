@@ -10730,3 +10730,88 @@ If green:
 If failed:
 - inspect exact runtime/diagnostic bug and repair only that;
 - do not retrain V6.
+
+
+## V6 event-admission diagnostic — authoritative green result and design closure
+
+Run `37232153816` completed SUCCESS.
+
+Diagnostic artifact:
+- artifact id `11315572721`
+- artifact digest `sha256:a57845b38c4883421772c6c1165993caeb180724685c3308b68bb358ec009aef`
+- JSON SHA-256 `b52bfaad18bd874fdc7da136caca318e467e78f9dddc284256c61414ffd575e4`
+
+Frozen result committed:
+- `docs/astra/GUITARTECHS_V6_EVENT_ADMISSION_DIAGNOSTIC_RESULT_V1.json`
+- commit `ec863342423ecfa23d0a410e11ff0ee001bbc04c`
+
+P1 train -> P2 validate:
+- event AUROC `0.5037512051`
+- onset AUROC `0.5018877151`
+- activity AUROC `0.6405121491`
+- reference onsets `21872`
+- event pass rate at frozen 0.50 `0.0`
+- state pass rate `0.0`
+- event+state pass rate `0.0`
+- state identity correct rate `0.0681236284`
+- full F1 `0.0`
+- state-only-start F1 `0.0`
+- event-only-start F1 `0.0`
+
+Interpretation:
+- this fold shows broad representation collapse; not merely calibration failure.
+
+P2 train -> P1 validate:
+- event AUROC `0.9277153799`
+- onset AUROC `0.9330026894`
+- activity AUROC `0.8822964994`
+- reference onsets `26752`
+- event pass rate at frozen 0.50 `0.0040744617` (~0.41%)
+- state pass rate `0.3268914474`
+- event+state pass rate `0.0020933014` (~0.21%)
+- state identity correct rate `0.5825732656`
+- full F1 `0.0057699894`
+- state-only-start F1 `0.2016935166`
+- event-only-start F1 `0.0078714889`
+
+Interpretation:
+- underlying temporal/state representation remains useful;
+- learned event head ranks true events very well;
+- absolute event probability is catastrophically miscalibrated;
+- fixed 0.50 event start gate suppresses nearly all true events;
+- removing the event gate recovers F1 from ~0.58% to ~20.17% immediately.
+
+Conclusion:
+- V6 learned-event admission repeats V5's under-admission pathology in a new form;
+- close threshold-gated event admission;
+- do NOT tune event threshold on validation data;
+- do NOT retrain V6;
+- do NOT evaluate V6 on Go My Way;
+- V6 scientific verdict: FAIL.
+
+## Exact next design direction
+
+Return toward the stronger V4-class state/activity representation while removing all validation-sensitive absolute-probability event-start gates.
+
+Allowed direction:
+- preserve causal temporal modeling and native string/fret state;
+- prefer train-time structured boundary/event objective or relative/ranking-based event admission;
+- admission rule must be fixed from training/synthetic design, not selected against P1/P2 validation thresholds;
+- synthetic verification must prove event-start behavior before any real optimizer run;
+- performer-disjoint P1/P2 remains development protocol;
+- P3 stays closed;
+- protected Go My Way remains unused until a clean model is frozen.
+
+Do NOT:
+- lower 0.50 event/onset threshold and call it a fix;
+- tune thresholds against validation;
+- add epochs as primary repair;
+- reuse failed V5/V6 gate designs.
+
+Preserve baselines:
+- clean supervised: V4 macro F1 `0.2435228031` remains strongest;
+- Go My Way guitar: Basic Pitch V4 combined F1 35.04%;
+- bass: spectral V1 TP 372 / F1 60.10%;
+- timing: V4-origin;
+- separator: BS-Roformer strongly complementary;
+- `main` unchanged.
