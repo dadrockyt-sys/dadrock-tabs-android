@@ -10402,3 +10402,113 @@ If green:
    - V4-origin timing;
    - BS-Roformer separator result;
    - `main` unchanged.
+
+
+## V6 no-media trainer smoke — authoritative green result
+
+Run `37166862421` completed SUCCESS.
+
+Verified:
+- V6 trainer compiled;
+- deterministic resume self-test passed;
+- `V6_RESUMABLE_TRAINER_SMOKE_PASS`;
+- `REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0`;
+- P1/P2 media access remained unauthorized and did not occur.
+
+## V6 guarded P1/P2 real-development authorization
+
+User response `Green` was interpreted in context as authorization to proceed with the already-defined next step:
+- guarded V6 P1/P2 development training only;
+- no P3;
+- no paid compute;
+- no threshold retuning;
+- no alignment mutation;
+- no main/production mutation.
+
+Authorization receipt:
+- `docs/astra/GUITARTECHS_V6_REAL_TRAINING_AUTHORIZATION_V1.json`
+- commit `1c33e8d51d2e7c735c6a467b1f365cef798eddb3`
+- git blob `68c135de1df82e8fd88a547457da54470edcdd4a`
+
+Trainer was rebound from the prior no-authorization boundary to the new authorization receipt:
+- commit `f7f8e79b9faf0ab1f1852e213f831a20f940ce50`
+- trainer git blob `2e0c48235d15d85ac730eefd2334577a561dcd6d`
+
+## V6 serialized real-training workflows
+
+Segment workflow:
+- `.github/workflows/guitar-techs-v6-resumable-segment.yml`
+- initial commit `3b20d32fc029afd4883b959d60a1ab3ae025b7b1`
+- trainer-identity refresh commit `b44e1702f51ab8068f3172ebc03ae6590e856f39`
+- final git blob `d6159dce7a4b4706de6ea32f8f8925c6dd58270c`
+
+Controller workflow:
+- `.github/workflows/guitar-techs-v6-resumable-real-training.yml`
+- commit `3729bb702dd96f4355f3aa6001cef62506828701`
+- git blob `c31e1254c3f29746f286cf3e9e71f22164af56a1`
+
+Frozen run contract:
+- exact 256-path P1/P2 population;
+- serialized fold order:
+  1. P1 train -> P2 validate
+  2. P2 train -> P1 validate
+- each fold 1000 epochs;
+- resume boundaries 400 -> 800 -> 1000;
+- seed 20260921;
+- sequence frames 200;
+- batch sequences 32;
+- microbatch 1;
+- Adadelta lr 1;
+- validation every 20 epochs / 50 checkpoints;
+- frozen development thresholds unchanged;
+- alignment corrections/allowlist unchanged;
+- random initialization only;
+- P3 closed.
+
+Launch receipt:
+- `docs/astra/GUITARTECHS_V6_RESUMABLE_LAUNCH_V1.json`
+- launch commit `3729fa3988e51a9b17fe96ebb4759ea9a607eaf4`
+
+Authoritative real-development run:
+- run `37167549590`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37167549590
+- status at this update: QUEUED
+
+Expected serialized jobs/artifacts:
+1. preflight
+2. P1 epoch 0->400 -> `guitar-techs-v6-p1-resume-e400`
+3. P1 epoch 400->800 -> `guitar-techs-v6-p1-resume-e800`
+4. P1 epoch 800->1000 -> `guitar-techs-v6-p1-final-development-result`
+5. P2 epoch 0->400 -> `guitar-techs-v6-p2-resume-e400`
+6. P2 epoch 400->800 -> `guitar-techs-v6-p2-resume-e800`
+7. P2 epoch 800->1000 -> `guitar-techs-v6-p2-final-development-result`
+
+### Exact next resume instruction
+
+Resume from run `37167549590`.
+
+While run is active:
+1. inspect the current job and do not confuse intermediate green segment jobs with final scientific success;
+2. if infrastructure fails, repair only the exact infrastructure/integration issue and preserve frozen V6 science;
+3. never change thresholds, alignment, population, fold order, epochs, or model design to force success.
+
+When P1 final fold completes:
+1. record final artifact ID/digest, model SHA, selected epoch, selection metrics, and full P2 validation metrics;
+2. allow controller to continue into P2 automatically.
+
+When P2 final fold completes:
+1. record final artifact ID/digest, model SHA, selected epoch, selection metrics, and full P1 validation metrics;
+2. compute two-fold macro F1/completeness and compare with:
+   - V4 clean supervised macro F1 `0.2435228031`
+   - V5 macro F1 `0.0641310886`
+3. apply the existing frozen development thresholds without retuning;
+4. if V6 is materially stronger and scientifically acceptable, freeze the stronger fold/model candidate before any protected-song use;
+5. do NOT open P3 automatically;
+6. do NOT evaluate on Go My Way until a final clean-development checkpoint/model is frozen and the next protected-song evaluation step is explicitly recorded.
+
+Preserve:
+- Basic Pitch V4 Go My Way guitar combined F1 35.04% as current protected-song baseline;
+- spectral bass V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
