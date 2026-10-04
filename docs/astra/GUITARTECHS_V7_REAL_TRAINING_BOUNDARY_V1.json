@@ -1,0 +1,23 @@
+{
+  "schema":"astra-guitar-techs-v7-real-training-boundary-v1",
+  "candidateId":"astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "syntheticVerification":{
+    "runId":37237231953,
+    "artifactId":11315842386,
+    "artifactDigest":"sha256:afec0d61248fb1613251c22c7505c005a9bc8751ada73e34cd908ee127f13329",
+    "receiptSha256":"c0a749912cb4fc67d5023353a672a10151dfb492997c47caa868466c06e4cd6a",
+    "receiptGitBlob":"eac5e7f4fb33bfb665b074bfb843fa19e7edd73d",
+    "passed":true
+  },
+  "guards":{
+    "realP1P2TrainingAuthorized":false,
+    "p1p2MediaAccessAuthorized":false,
+    "p3Opened":false,
+    "p3Authorized":false,
+    "paidComputeAuthorized":false,
+    "thresholdRetuningAuthorized":false,
+    "protectedSongUseAuthorized":false,
+    "mainOrProductionMutationAuthorized":false
+  },
+  "nextAllowedAction":"No-media V7 trainer smoke verification only."
+}
