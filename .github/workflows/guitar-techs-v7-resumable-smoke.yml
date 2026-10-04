@@ -1,0 +1,76 @@
+name: Guitar-TECHS V7 resumable trainer smoke
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/guitartechs_training_v7/train_v7_resumable.py'
+      - 'docs/astra/GUITARTECHS_V7_REAL_TRAINING_BOUNDARY_V1.json'
+      - '.github/workflows/guitar-techs-v7-resumable-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify no-media boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          b=json.load(open("docs/astra/GUITARTECHS_V7_REAL_TRAINING_BOUNDARY_V1.json"))
+          assert b["guards"]["realP1P2TrainingAuthorized"] is False
+          assert b["guards"]["p1p2MediaAccessAuthorized"] is False
+          assert b["guards"]["protectedSongUseAuthorized"] is False
+          assert b["guards"]["p3Opened"] is False
+          PY
+          echo "REAL_P1P2_OPTIMIZER_STEPS_AUTHORIZED=0"
+          echo "P1P2_MEDIA_ACCESS_AUTHORIZED=false"
+
+      - name: Install exact frozen runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+
+      - name: Acquire exact pinned TabCNN source only
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+
+      - name: Compile V7 trainer
+        run: |
+          set -euo pipefail
+          python -m py_compile astra_backend/guitartechs_training_v7/train_v7_resumable.py
+
+      - name: Run V7 resume self-test only
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v7/train_v7_resumable.py resume-self-test --source-root /tmp/tabcnn-source
+          echo "V7_RESUMABLE_TRAINER_SMOKE_PASS"
+          echo "REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0"
