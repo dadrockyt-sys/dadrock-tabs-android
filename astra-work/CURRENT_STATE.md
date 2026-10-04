@@ -10030,3 +10030,62 @@ Resume from run `37164433110`.
 If it fails, inspect the exact exception and repair only the missing runtime/integration issue.
 Do not change the model/scorer/thresholds.
 If green, record artifacts, prediction counts, hashes, and full-mix vs guitar-stem scores against the unchanged Basic Pitch V4 baseline.
+
+
+## Specialized guitar AMT V1 — freeze succeeded, scorer path bug isolated
+
+Run `37164433110` outcome:
+- freeze-candidates job: SUCCESS
+- score-after-freeze job: FAILURE in checksum verification only
+
+Frozen artifact:
+- artifact id `11289347630`
+- artifact digest `sha256:7a3e4ba8204deb3555bcef96aa415f0b25354882ff089e9801861fc1074be7ff`
+
+Frozen candidate identities:
+- full-mix JSON SHA-256 `b3ad5b0959b34f3327ed123a0aabfe43f0c950ecb1b243b7674590b1e74fb908`
+- guitar-stem JSON SHA-256 `55e163623f32744bfcf42bb2f0f9f7663beaf6aa9bbeb25064a022f7bee56161`
+- config SHA-256 `86b8e503dde1427281d1363bacfcc73ca90827058ee147dcc923407bd1d38a59`
+- checkpoint SHA-256 `2572b3fe58429668ec9aeaee56bf40af265726a6c3652151b176b21da2bde953`
+
+Prediction counts:
+- full mix: 1057
+- BS-Roformer guitar stem: 1699
+
+Exact failure:
+- checksum manifests stored paths as `out/specialized-...`
+- artifact download flattened the files into `candidate/`
+- `sha256sum -c` therefore failed on a nonexistent `out/` path
+- candidate contents themselves are intact and hash-verified
+
+No model/scientific rerun is required.
+
+## Specialized guitar AMT V1 — scoring-only recovery launched
+
+New workflow:
+- `.github/workflows/astra-gomyway-specialized-guitar-amt-v1-score-recovery.yml`
+
+Workflow commit:
+- `32bcad0147e034dc121251462744513d8e632f07`
+
+Authoritative scoring-only run:
+- run `37165846575`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37165846575
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37165846575`.
+If green:
+1. record score artifact ID/digest;
+2. record both score JSON SHA values;
+3. report rhythm/lead/combined TP/P/R/F1 for:
+   - full-mix specialized AMT;
+   - separated-guitar-stem specialized AMT;
+4. compare both against Basic Pitch V4 baseline:
+   - rhythm F1 31.82%
+   - lead F1 17.84%
+   - combined guitar F1 35.04%
+5. if specialized AMT materially improves lead or combined guitar, preserve it as strongest guitar path and continue with its native string/fret outputs;
+6. otherwise close this front-end and return to the clean Guitar-TECHS-derived training path;
+7. preserve spectral bass V1, V4-origin timing, strong separator result, and `main` unchanged.
