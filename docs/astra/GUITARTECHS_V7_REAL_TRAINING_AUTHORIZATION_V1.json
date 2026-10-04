@@ -1,0 +1,49 @@
+{
+  "schema":"astra-guitar-techs-v7-real-training-authorization-v1",
+  "date":"2026-10-04",
+  "authorization":{
+    "userText":"Green",
+    "interpretedScope":"Authorize the already-defined next step: guarded V7 P1/P2 performer-disjoint development training after the no-media trainer smoke passed.",
+    "explicitP3Authorization":false
+  },
+  "candidateId":"astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "frozenDesign":{"path":"docs/astra/GUITARTECHS_V7_DESIGN_V1.json","gitBlob":"ab86da84fabecf1f22f03cf7f805358ecf02661d"},
+  "frozenSyntheticVerification":{"path":"docs/astra/GUITARTECHS_V7_SYNTHETIC_VERIFICATION_V1.json","gitBlob":"eac5e7f4fb33bfb665b074bfb843fa19e7edd73d","runId":37237231953,"artifactId":11315842386,"artifactDigest":"sha256:afec0d61248fb1613251c22c7505c005a9bc8751ada73e34cd908ee127f13329","rawJsonSha256":"c0a749912cb4fc67d5023353a672a10151dfb492997c47caa868466c06e4cd6a","passed":true},
+  "noMediaTrainerSmoke":{"runId":37237539546,"passed":true,"p1p2MediaAccessed":false,"realOptimizerStepsExecuted":0},
+  "scope":{
+    "developmentPopulation":"exact frozen 256-path P1/P2 population",
+    "folds":[{"train":"P1","validate":"P2"},{"train":"P2","validate":"P1"}],
+    "epochsPerFold":1000,
+    "sequenceFrames":200,
+    "batchSequences":32,
+    "microbatchSequences":1,
+    "optimizer":"Adadelta",
+    "learningRate":1,
+    "seed":20260921,
+    "validationCheckpointsPerFold":50,
+    "checkpointEveryEpochs":20,
+    "resumeBoundariesEpochs":[400,800,1000],
+    "serializedExecutionOnly":true,
+    "randomInitializationOnly":true,
+    "runner":"public GitHub-hosted ubuntu-22.04 CPU",
+    "developmentThresholdsChanged":false,
+    "alignmentAllowlistChanged":false,
+    "eventAdmission":"local raw-score ranking only; no absolute probability threshold"
+  },
+  "guards":{
+    "realP1P2TrainingAuthorized":true,
+    "p3Opened":false,
+    "p3Authorized":false,
+    "paidComputeAuthorized":false,
+    "publishedCheckpointInitializationAuthorized":false,
+    "thresholdRetuningAuthorized":false,
+    "alignmentAllowlistMutationAuthorized":false,
+    "protectedSongUseAuthorized":false,
+    "mainOrProductionMutationAuthorized":false,
+    "customerDeliveryEligible":false
+  },
+  "outcomeRule":{
+    "ifEitherFoldFails":"Freeze V7 development FAIL; diagnose P1/P2 only; no threshold rescue.",
+    "ifBothFoldsPass":"Compare against frozen V4 clean supervised baseline; do not open P3 automatically."
+  }
+}
