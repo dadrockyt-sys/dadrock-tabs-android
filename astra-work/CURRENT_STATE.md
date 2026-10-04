@@ -10276,3 +10276,129 @@ If green:
    - timing V4-origin
    - BS-Roformer separator strongly complementary on real song
    - `main` unchanged.
+
+
+## Guitar-TECHS V6 synthetic verification — authoritative green result
+
+The initial V6 synthetic gate `37166132383` passed, then V6 objective support for the already-established fixed content balancing was added before any real training.
+
+Because that changed the objective source identity, a second authoritative synthetic gate was run.
+
+Authoritative gate:
+- run `37166747299`
+- conclusion: SUCCESS
+- artifact id `11288779750`
+- artifact digest `sha256:380dee99fcf0b2425c8c96dd782eb072ded49dcb99a5a9b82bb7b8aea50b4bae`
+- receipt JSON SHA-256 `89ed1a3a5b2fb8cf6ab92a957a7f64929a0a536343e7219abad9b1413f8b524a`
+
+Verified runtime:
+- Python 3.10.15
+- NumPy 1.21.6
+- Torch 1.11.0+cpu
+
+Authoritative source identities:
+- design git blob `50b0638c631eadf44d0bf434c66ad6a3ff594e34`
+- model git blob `78a17dd174bd86e804af0e9c75056055d6048295`
+- objective/decoder git blob `3a3b8795be70e117c2b769c9bcb9e8ae5fdf0326`
+- synthetic harness git blob `c0eeca0139761302a82f91fd36c806b057deca1a`
+- runtime lock git blob `174a5016cfe9e6c00816d2171210aa84c66081a8`
+- TabCNN revision `f50309ad06dc734ddae5e3a0eda756fca221e2e7`
+
+Verification:
+- exact head shapes PASS
+- all five heads finite gradients PASS
+- causal temporal context propagation PASS
+- learned event admission required for new event PASS
+- activity/state continuation without repeated event PASS
+- resume determinism PASS
+
+Guards:
+- P1/P2 media accessed: false
+- P3 accessed: false
+- protected song used: false
+- real optimizer steps: 0
+- thresholds retuned: false
+- main/production modified: false
+
+Authoritative receipt committed:
+- `docs/astra/GUITARTECHS_V6_SYNTHETIC_VERIFICATION_V1.json`
+- commit `7835ee4fbdb3b688b4e65fef6bd4e5cdfc7bedac`
+- receipt git blob `197b3dcdccab366d199eda3966aea32b38ed671f`
+
+## V6 resumable real-training scaffold — wired but NOT authorized
+
+A resumable V6 trainer was scaffolded from the already-proven V5 infrastructure:
+- `astra_backend/guitartechs_training_v6/train_v6_resumable.py`
+
+Key changes from V5:
+- model: `TemporalTabCNNV6`
+- loss: `v6_sequence_loss`
+- decoder: `decode_v6`
+- validation inference uses learned event-admission probabilities, not the V5 hard onset gate
+- fixed content balancing preserved
+- same deterministic sampler/exposure framework
+- same 1000 epoch budget and 400/800/1000 resume boundaries in the scaffold
+- same performer-disjoint P1->P2 and P2->P1 structure
+- same frozen development thresholds and alignment lineage
+- no threshold tuning
+
+Trainer commits:
+- initial scaffold `96d2588df9cc6b18c031cf979e81453997c96a6b`
+- bound to authoritative synthetic receipt / authorization boundary `5426dcebcd8ec04bc81d95469b44693a49185216`
+
+Important authorization boundary:
+- `docs/astra/GUITARTECHS_V6_REAL_TRAINING_BOUNDARY_V1.json`
+- commit `cb19e1b7d60924a49516e970c271ebc410083308`
+- boundary git blob `3c8d5d1ad6273a6f8f1b12b573019e389494086b`
+
+The boundary explicitly keeps:
+- `realP1P2TrainingAuthorized: false`
+- `p1p2MediaAccessAuthorized: false`
+- `p3Opened: false`
+- `p3Authorized: false`
+- `paidComputeAuthorized: false`
+- `thresholdRetuningAuthorized: false`
+- `mainOrProductionMutationAuthorized: false`
+
+Do NOT start real P1/P2 V6 optimizer training until a separate explicit authorization record is created.
+
+## V6 resumable trainer no-media smoke — launched
+
+Purpose:
+- compile the trainer;
+- acquire pinned TabCNN source only;
+- run V6 trainer resume-self-test;
+- access no real P1/P2 media;
+- execute zero real optimizer steps.
+
+Workflow:
+- `.github/workflows/guitar-techs-v6-resumable-smoke.yml`
+- launch commit `5fc3bc8523b24d22bc4267d9fdcbaf8106326dac`
+
+Authoritative run:
+- run `37166862421`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37166862421
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37166862421`.
+
+If it fails:
+1. inspect the exact compile/resume-smoke error;
+2. repair only V6 trainer integration;
+3. do not access P1/P2 real media;
+4. do not create a real-training authorization record automatically.
+
+If green:
+1. record no-media smoke success;
+2. verify no real optimizer steps / P1P2 media access occurred;
+3. freeze trainer/workflow identities;
+4. leave real P1/P2 training behind the explicit authorization boundary;
+5. the next action after user authorization is to create a V6-specific real-training authorization receipt and V6 resumable segment/orchestration workflows by adapting the proven V5 workflows;
+6. preserve:
+   - Basic Pitch V4 as current strongest guitar scorer baseline (combined F1 35.04%);
+   - spectral bass V1 TP 372 / F1 60.10%;
+   - V4-origin timing;
+   - BS-Roformer separator result;
+   - `main` unchanged.
