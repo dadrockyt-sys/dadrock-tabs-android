@@ -10089,3 +10089,67 @@ If green:
 5. if specialized AMT materially improves lead or combined guitar, preserve it as strongest guitar path and continue with its native string/fret outputs;
 6. otherwise close this front-end and return to the clean Guitar-TECHS-derived training path;
 7. preserve spectral bass V1, V4-origin timing, strong separator result, and `main` unchanged.
+
+
+## Specialized guitar AMT V1 — authoritative green score, scientific rejection
+
+Scoring-only recovery run `37165846575` completed successfully.
+
+Score artifact:
+- artifact id `11289343168`
+- artifact digest `sha256:f51f0a290906f5d8627aeafde93bed800f271147630aaf0b695b5c1f3bd3714f`
+
+Frozen source candidates from artifact `11289347630`:
+- full mix prediction count: 1057
+- BS-Roformer guitar-stem prediction count: 1699
+- full-mix JSON SHA-256 `b3ad5b0959b34f3327ed123a0aabfe43f0c950ecb1b243b7674590b1e74fb908`
+- guitar-stem JSON SHA-256 `55e163623f32744bfcf42bb2f0f9f7663beaf6aa9bbeb25064a022f7bee56161`
+- config SHA-256 `86b8e503dde1427281d1363bacfcc73ca90827058ee147dcc923407bd1d38a59`
+- checkpoint SHA-256 `2572b3fe58429668ec9aeaee56bf40af265726a6c3652151b176b21da2bde953`
+
+Scientific result — full mix:
+- rhythm: TP 33, P 3.12%, R 3.49%, F1 3.30%
+- lead: TP 16, P 1.54%, R 3.58%, F1 2.15%
+- combined guitar: TP 46, P 4.42%, R 3.30%, F1 3.78%
+
+Scientific result — BS-Roformer guitar stem:
+- rhythm: TP 105, P 6.18%, R 11.10%, F1 7.94%
+- lead: TP 30, P 1.80%, R 6.71%, F1 2.84%
+- combined guitar: TP 133, P 7.98%, R 9.55%, F1 8.69%
+
+Comparison to unchanged Basic Pitch V4 baseline:
+- rhythm F1 31.82%
+- lead F1 17.84%
+- combined guitar F1 35.04%
+
+Conclusion:
+- purpose-built specialized AMT is substantially worse than Basic Pitch on this material;
+- separated guitar stem helps that model versus full mix, which validates the separator again;
+- but the front end itself is not competitive;
+- reject specialized guitar AMT V1;
+- close generic pretrained front-end swapping for Go My Way.
+
+## Next scientific direction — clean supervised guitar model
+
+Proceed toward a clean Guitar-TECHS-derived training/fine-tuning path rather than more pretrained front-end swaps.
+
+Goals:
+- train/fine-tune on clean guitar-specific audio with native string/fret labels;
+- preserve BS-Roformer guitar separation as upstream input candidate;
+- evaluate first on held-out clean guitar data before Go My Way;
+- freeze model/checkpoint before any Go My Way professional-reference scoring;
+- do not tune on Go My Way;
+- preserve current strongest baselines:
+  - guitar: Basic Pitch V4 combined F1 35.04%
+  - bass: spectral bass V1 TP 372 / F1 60.10%
+  - timing: V4-origin
+  - separator: real-song guitar/bass pair strongly complementary
+  - main unchanged.
+
+### Exact next resume instruction
+
+1. Inspect existing Guitar-TECHS training assets/code already in the repo and determine whether a clean supervised training path exists or must be scaffolded.
+2. Prefer a small reproducible baseline model/training recipe over another large integration.
+3. Establish deterministic train/validation split, input preprocessing, string/fret target encoding, checkpoint hashing, and held-out metrics.
+4. Do not use Go My Way professional references during model selection.
+5. Only after a clean held-out model is frozen should it be evaluated on the separated Go My Way guitar stem.
