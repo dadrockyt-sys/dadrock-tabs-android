@@ -1,0 +1,41 @@
+{
+  "schema": "astra-guitar-techs-v7-design-v1",
+  "date": "2026-10-04",
+  "candidateId": "astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "basis": {
+    "v4": "strongest clean supervised macro F1 0.2435228031",
+    "v6": "event AUROC 0.9277 on stronger fold but only 0.41% true-onset pass at frozen 0.50; state-only-start F1 recovered to 0.2017",
+    "conclusion": "Absolute probability event gates are closed."
+  },
+  "architecture": {
+    "representation": "V6 causal temporal representation retained",
+    "eventHead": "raw event score only; no sigmoid threshold used by decoder",
+    "stateHead": "native 6-string x 21 class string/fret state"
+  },
+  "objective": {
+    "state": "V4-style active-weighted categorical CE + continuity + exact-string identity margin",
+    "auxiliaries": "activity and pitch BCE",
+    "event": "pairwise local ranking margin: each true event must outrank neighboring valid non-events on the same string",
+    "eventRankMargin": 0.5,
+    "eventRankRadiusFrames": 2,
+    "validationThresholdSearch": false
+  },
+  "decoder": {
+    "eventAdmission": "deterministic local maximum of raw event score within +/-2 frames; no absolute threshold",
+    "stateAdmission": "relative argmax over 20 frets plus silence; active iff argmax is not silence",
+    "continuation": "same active fret remains relative argmax",
+    "calibrationInvariant": true,
+    "gapFrames": 2,
+    "minimumRunFrames": 2
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "optimizerStepsAuthorized": 0,
+    "p1p2MediaAccessAuthorized": false,
+    "p3Opened": false,
+    "thresholdRetuningAuthorized": false,
+    "protectedSongUseAuthorized": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "nextGate": "Exact-runtime synthetic verification only."
+}
