@@ -1,0 +1,19 @@
+{
+  "schema":"astra-guitar-techs-v7-synthetic-verification-v1",
+  "candidateId":"astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "runHeadSha":"4017b6166ea2447cf26b2136d9aca9bcef78612b",
+  "source":{
+    "designGitBlob":"ab86da84fabecf1f22f03cf7f805358ecf02661d",
+    "modelGitBlob":"cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "objectiveDecoderGitBlob":"7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "syntheticHarnessGitBlob":"f49c71c160cebf2b78355b007034b906d38b8b12",
+    "runtimeLockGitBlob":"174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "tabcnnRevision":"f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+  },
+  "runtime":{"python":"3.10.15","numpy":"1.21.6","torch":"1.11.0+cpu","device":"cpu"},
+  "verification":{"finiteGradients":"PASS","calibrationInvariance":"PASS","localRankingAdmission":"PASS"},
+  "media":{"p1p2Accessed":false,"p3Accessed":false,"protectedSongUsed":false},
+  "execution":{"realOptimizerStepsExecuted":0,"syntheticOnly":true},
+  "guards":{"thresholdsRetuned":false,"mainOrProductionModified":false},
+  "artifact":{"id":11315842386,"digest":"sha256:afec0d61248fb1613251c22c7505c005a9bc8751ada73e34cd908ee127f13329","jsonSha256":"c0a749912cb4fc67d5023353a672a10151dfb492997c47caa868466c06e4cd6a"}
+}
