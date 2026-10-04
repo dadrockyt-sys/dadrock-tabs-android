@@ -83,7 +83,8 @@ jobs:
           assert auth['scope']['resumeBoundariesEpochs'] == [400,800,1000]
           design=json.load(open('docs/astra/GUITARTECHS_V6_DESIGN_V1.json'))
           assert design['candidateId'] == auth['candidateId']
-          assert 'causal GRU hidden 96' in design['architecture']['retained']
+          assert any('causal GRU' in x and 'hidden 96' in x for x in design['architecture']['retained'])
+          assert design['architecture']['added'].startswith('6-string learned event-admission head')
           assert design['objective']['thresholdTuning'] is False
           synth=json.load(open('docs/astra/GUITARTECHS_V6_SYNTHETIC_VERIFICATION_V1.json'))
           assert synth['candidateId'] == auth['candidateId']
