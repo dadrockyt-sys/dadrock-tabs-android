@@ -10512,3 +10512,63 @@ Preserve:
 - V4-origin timing;
 - BS-Roformer separator;
 - `main` unchanged.
+
+
+## V6 real-development preflight failure — identity bug repaired, same contract relaunched
+
+Initial real-development run:
+- run `37167549590`
+- outcome: FAILURE in preflight only
+- no P1/P2 media accessed
+- no real optimizer steps executed
+- all training jobs skipped
+
+Exact failure:
+- controller preflight asserted candidate ID `astra_guitartechs_tabcnn_v6_temporal_multitask`
+- frozen V6 authorization/launch correctly uses `astra_guitartechs_tabcnn_v6_learned_event_admission`
+- therefore preflight failed before any media/runtime/training step.
+
+Additional mechanical rename issue found during repair:
+- V6 controller/segment workflows had `actions/setup-python@v6` due text substitution from V5->V6.
+- It happened to execute, but it was not the intended pinned action identity.
+- Restored both workflows to `actions/setup-python@v5`.
+
+Repairs:
+- controller candidate identity corrected to `astra_guitartechs_tabcnn_v6_learned_event_admission`
+- segment/runtime setup-python action restored to @v5
+- controller/runtime setup-python action restored to @v5
+- segment workflow identity refreshed
+- controller hardcoded segment identity refreshed
+- launch receipt source identities refreshed
+- NO model/objective/dataset/threshold/alignment/training-budget changes
+
+Repair commits:
+- controller candidate/runtime fix `2e14dd670100e3e2939d717393861c591a36444a`
+- segment runtime fix `4afb0e6091863984825e0af7d2b4318a44aaa658`
+- controller segment identity refresh `7facec8b9a1be231953dcab5b57db9bdc697c566`
+
+Final repaired identities:
+- segment workflow git blob `9691e8f73333c0e6c43f82e5213c5f8067a40693`
+- controller workflow git blob `20bebc59d198e92b13456a6a61943c6e9a848609`
+
+Relaunch receipt commit:
+- `f3d82eef918012db94fc12ef21d1c245bbef415d`
+
+Authoritative relaunched run:
+- run `37167811656`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37167811656
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37167811656`.
+If preflight fails again:
+1. inspect exact assertion/log;
+2. repair only identity/runtime integration;
+3. preserve all frozen V6 science and P1/P2 contract.
+
+If preflight passes:
+1. monitor P1 0->400;
+2. do not call intermediate green a scientific success;
+3. record resume artifact identity when produced;
+4. let serialized controller continue automatically.
