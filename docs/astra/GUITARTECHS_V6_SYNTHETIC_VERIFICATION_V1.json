@@ -1,0 +1,42 @@
+{
+  "candidateId": "astra_guitartechs_tabcnn_v6_learned_event_admission",
+  "execution": {
+    "paidComputeUsed": false,
+    "realOptimizerStepsExecuted": 0,
+    "syntheticOnly": true
+  },
+  "guards": {
+    "customerDeliveryEligible": false,
+    "mainOrProductionModified": false,
+    "thresholdsRetuned": false
+  },
+  "media": {
+    "p1p2Accessed": false,
+    "p3Accessed": false,
+    "protectedSongUsed": false
+  },
+  "runHeadSha": "9af9c965133e166a212b27b1ca0a134cbe5c7533",
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.21.6",
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu"
+  },
+  "schema": "astra-guitar-techs-v6-synthetic-verification-v1",
+  "source": {
+    "designGitBlob": "50b0638c631eadf44d0bf434c66ad6a3ff594e34",
+    "modelGitBlob": "78a17dd174bd86e804af0e9c75056055d6048295",
+    "objectiveDecoderGitBlob": "edc7fcd105aea36ab9fbbe04e88ce038bea887d3",
+    "runtimeLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "syntheticHarnessGitBlob": "c0eeca0139761302a82f91fd36c806b057deca1a",
+    "tabcnnRevision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+  },
+  "verification": {
+    "activityStateContinuationWithoutRepeatedEvent": "PASS",
+    "allFiveHeadsFiniteGradients": "PASS",
+    "causalTemporalContextPropagation": "PASS",
+    "exactHeadShapes": "PASS",
+    "learnedEventAdmissionRequiredForNewEvent": "PASS",
+    "resumeDeterminism": "PASS"
+  }
+}
