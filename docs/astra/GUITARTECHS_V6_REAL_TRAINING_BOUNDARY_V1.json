@@ -1,0 +1,22 @@
+{
+  "schema": "astra-guitar-techs-v6-real-training-boundary-v1",
+  "candidateId": "astra_guitartechs_tabcnn_v6_learned_event_admission",
+  "syntheticVerification": {
+    "runId": 37166747299,
+    "artifactId": 11288779750,
+    "artifactDigest": "sha256:380dee99fcf0b2425c8c96dd782eb072ded49dcb99a5a9b82bb7b8aea50b4bae",
+    "receiptSha256": "89ed1a3a5b2fb8cf6ab92a957a7f64929a0a536343e7219abad9b1413f8b524a",
+    "receiptGitBlob": "197b3dcdccab366d199eda3966aea32b38ed671f",
+    "passed": true
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": false,
+    "p1p2MediaAccessAuthorized": false,
+    "p3Opened": false,
+    "p3Authorized": false,
+    "paidComputeAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "nextAllowedAction": "No-media trainer smoke verification only. A separate explicit authorization record is required before P1/P2 media access or real optimizer steps."
+}
