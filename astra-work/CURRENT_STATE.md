@@ -10815,3 +10815,107 @@ Preserve baselines:
 - timing: V4-origin;
 - separator: BS-Roformer strongly complementary;
 - `main` unchanged.
+
+
+## Guitar-TECHS V7 — calibration-free ranked-event design launched
+
+V6 was closed after zero-optimizer diagnosis proved:
+- stronger P2->P1 fold event AUROC `0.9277153799`;
+- only ~0.41% of true onsets crossed frozen event probability 0.50;
+- full F1 `0.0057699894`;
+- removing event gate recovered state-only-start F1 `0.2016935166`;
+- therefore absolute-probability event gates are not a viable design direction.
+
+V4 inspection confirmed:
+- strongest clean supervised Guitar-TECHS macro F1 remains `0.2435228031`;
+- V4 used active-weighted categorical state supervision, temporal continuity, exact-string identity margin, and deterministic temporal decoding;
+- V4 remains scientific benchmark, not an accepted final model.
+
+### V7 frozen hypothesis
+
+Candidate:
+- `astra_guitartechs_tabcnn_v7_ranked_event_transition`
+
+Representation:
+- retain verified V6 causal temporal representation;
+- retain native 6-string x 21 state head;
+- retain raw event-score head;
+- event scores are NOT interpreted as calibrated probabilities.
+
+Training objective:
+- V4-style active-weighted state CE;
+- V4-style continuity regularizer;
+- V4-style exact-string/pitch-equivalent identity margin;
+- auxiliary activity and pitch losses;
+- new event objective is local pairwise ranking:
+  - every true event score must outrank neighboring valid non-event frames on the same string;
+  - frozen ranking margin `0.50`;
+  - frozen local radius `+/-2` frames;
+- no event BCE calibration target is used for admission;
+- no validation threshold search.
+
+Decoder:
+- event admission = deterministic local maximum of raw event score in +/-2 frames;
+- no sigmoid/probability threshold;
+- state admission = relative argmax across 20 frets + silence;
+- active only when relative argmax is not silence;
+- continuation = same active fret remains relative argmax;
+- gap merge 2 frames;
+- minimum run 2 frames;
+- event decoding is invariant to positive affine rescaling/offset of raw event scores.
+
+This directly prevents the V5/V6 failure mode where useful event ranking was destroyed by absolute calibration.
+
+Files:
+- `astra_backend/guitartechs_training_v7/model.py`
+- `astra_backend/guitartechs_training_v7/objective_decoder.py`
+- `astra_backend/guitartechs_training_v7/verify_synthetic_v7.py`
+- `docs/astra/GUITARTECHS_V7_DESIGN_V1.json`
+- `.github/workflows/guitar-techs-v7-synthetic-verification.yml`
+
+Commits:
+- model `aa176a149b6a44e9f9c953631fd7c6bce8967677`
+- objective/decoder `ed9598329c384d89094fc42a849733fc5e5c9fc4`
+- synthetic verifier `069927eaf5cf6ac274bf3f4ae225fd9094754a6a`
+- design `017e8e1489c902d1eda08367ef2618f55b852413`
+- workflow launch `4017b6166ea2447cf26b2136d9aca9bcef78612b`
+
+Synthetic gate verifies:
+- finite gradients through state/activity/pitch/event heads;
+- calibration invariance: affine rescaling/offset of event scores cannot change decoded events;
+- local ranking behavior;
+- no P1/P2 media;
+- no P3;
+- no protected song;
+- zero real optimizer steps.
+
+Authoritative V7 synthetic run:
+- run `37237231953`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37237231953
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37237231953`.
+
+If failed:
+1. inspect exact synthetic/runtime failure;
+2. repair only V7 implementation/integration;
+3. do not access P1/P2 or protected song;
+4. do not introduce absolute probability thresholds.
+
+If green:
+1. record artifact ID/digest and receipt SHA;
+2. freeze source identities;
+3. scaffold V7 resumable trainer from proven V6/V5 infrastructure;
+4. run no-media trainer smoke before any real authorization;
+5. real P1/P2 training requires a new explicit authorization record;
+6. keep P3 closed and Go My Way unused;
+7. compare eventual V7 clean development against V4 macro F1 `0.2435228031`.
+
+Preserve:
+- Go My Way guitar baseline: Basic Pitch V4 combined F1 35.04%;
+- bass spectral V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
