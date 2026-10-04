@@ -1,0 +1,28 @@
+{
+  "schema": "astra-guitar-techs-v6-resumable-launch-v1",
+  "date": "2026-10-03",
+  "candidateId": "astra_guitartechs_tabcnn_v6_learned_event_admission",
+  "singleLaunch": true,
+  "authorization": {
+    "userText": "Green",
+    "scope": "Run the guarded serialized V6 P1/P2 development training after synthetic and no-media trainer gates passed."
+  },
+  "sourceIdentities": {
+    "authorizationGitBlob": "68c135de1df82e8fd88a547457da54470edcdd4a",
+    "designGitBlob": "50b0638c631eadf44d0bf434c66ad6a3ff594e34",
+    "syntheticVerificationGitBlob": "197b3dcdccab366d199eda3966aea32b38ed671f",
+    "modelGitBlob": "78a17dd174bd86e804af0e9c75056055d6048295",
+    "objectiveDecoderGitBlob": "3a3b8795be70e117c2b769c9bcb9e8ae5fdf0326",
+    "trainerGitBlob": "2e0c48235d15d85ac730eefd2334577a561dcd6d",
+    "segmentWorkflowGitBlob": "d6159dce7a4b4706de6ea32f8f8925c6dd58270c",
+    "controllerWorkflowGitBlob": "c31e1254c3f29746f286cf3e9e71f22164af56a1"
+  },
+  "scope": {
+    "foldOrder": ["p1-train-p2-validate","p2-train-p1-validate"],
+    "resumeBoundariesEpochs": [400,800,1000],
+    "serializedExecutionOnly": true,
+    "p3Opened": false,
+    "thresholdRetuning": false,
+    "mainMutation": false
+  }
+}
