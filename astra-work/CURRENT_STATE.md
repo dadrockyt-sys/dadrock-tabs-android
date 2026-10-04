@@ -11014,3 +11014,117 @@ Preserve:
 - V4-origin timing;
 - BS-Roformer separator;
 - `main` unchanged.
+
+
+## V7 no-media trainer smoke — authoritative green
+
+Run `37237539546` completed SUCCESS.
+
+Verified:
+- trainer compiled;
+- deterministic resume self-test passed;
+- `V7_RESUMABLE_TRAINER_SMOKE_PASS`;
+- `REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0`;
+- P1/P2 media access false.
+
+Frozen trainer identity before authorization:
+- git blob `26eaf267ce68986899ffc3731b024bf0ffa6463d`
+
+## V7 guarded P1/P2 authorization and launch
+
+User response `Green` was interpreted in context as authorization for the already-defined next step:
+- V7 P1/P2 performer-disjoint development only;
+- no P3;
+- no protected song;
+- no threshold tuning;
+- no alignment mutation;
+- no main/production mutation.
+
+Authorization:
+- `docs/astra/GUITARTECHS_V7_REAL_TRAINING_AUTHORIZATION_V1.json`
+- commit `676435f11bed17389245c6ee8feb4d9dcf0ed552`
+- git blob `ff6c3d76668050571a4d8f7a0fe116a363a59c24`
+
+Trainer rebound to real authorization:
+- commit `aff32f134f0073660b22a0f082423ff7183f6b1a`
+- final trainer git blob `5c9c5a7e7f0b16ad7dbc31ec9b190782ae53b8e3`
+
+Segment workflow:
+- `.github/workflows/guitar-techs-v7-resumable-segment.yml`
+- commit `df60271de2f77f45864d33ae9a3d3caaca04074f`
+- git blob `3abb1aef57c38cc22f7fcd485ad4d7550b79a2e7`
+
+Controller workflow:
+- `.github/workflows/guitar-techs-v7-resumable-real-training.yml`
+- commit `9e514b125618a065220038fc1a64d2a7dee8fefe`
+- git blob `9ba410b67ac985c3a91e0ef3bdb39acfa8232c27`
+
+Launch receipt:
+- `docs/astra/GUITARTECHS_V7_RESUMABLE_LAUNCH_V1.json`
+- commit `39deaa63327a4a2bcb462aac32f958ad89feee80`
+
+Frozen run contract:
+- exact 256-path P1/P2 population;
+- P1 train -> P2 validate;
+- P2 train -> P1 validate;
+- 1000 epochs per fold;
+- 400/800/1000 resume boundaries;
+- seed 20260921;
+- sequence frames 200;
+- batch 32;
+- microbatch 1;
+- Adadelta lr 1;
+- validation every 20 epochs;
+- no event probability threshold;
+- V7 decoder uses raw event-score local ranking;
+- frozen metric thresholds unchanged;
+- frozen alignment corrections unchanged;
+- P3 closed;
+- protected song closed.
+
+Authoritative V7 real-development run:
+- run `37237773631`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37237773631
+- status at this update: IN PROGRESS
+
+Expected jobs/artifacts:
+1. preflight
+2. P1 0->400 -> `guitar-techs-v7-p1-resume-e400`
+3. P1 400->800 -> `guitar-techs-v7-p1-resume-e800`
+4. P1 800->1000 -> `guitar-techs-v7-p1-final-development-result`
+5. P2 0->400 -> `guitar-techs-v7-p2-resume-e400`
+6. P2 400->800 -> `guitar-techs-v7-p2-resume-e800`
+7. P2 800->1000 -> `guitar-techs-v7-p2-final-development-result`
+
+### Exact next resume instruction
+
+Resume from run `37237773631`.
+
+If preflight fails:
+- inspect exact identity/runtime assertion;
+- repair only orchestration;
+- preserve frozen V7 science.
+
+If a segment fails after media access:
+- distinguish acquisition/preparation/runtime/training failure;
+- do not alter event ranking design, thresholds, population, folds, epochs, alignment, or sampler to force success.
+
+When P1 final completes:
+- record artifact ID/digest, result SHA, model SHA, selected epoch, selection/full validation metrics;
+- allow serialized controller to continue automatically.
+
+When P2 final completes:
+- record the same;
+- compute two-fold macro F1/completeness;
+- compare against V4 clean supervised macro F1 `0.2435228031`;
+- apply frozen development thresholds without retuning;
+- if V7 materially improves and is scientifically acceptable, freeze model before any protected-song test;
+- do NOT open P3 automatically;
+- do NOT evaluate on Go My Way until clean-development model is frozen and next protected-song evaluation step is explicitly recorded.
+
+Preserve:
+- Basic Pitch V4 Go My Way combined F1 35.04%;
+- spectral bass V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
