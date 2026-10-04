@@ -1,0 +1,136 @@
+name: Guitar-TECHS V6 synthetic verification
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/guitartechs_training_v6/model.py'
+      - 'astra_backend/guitartechs_training_v6/objective_decoder.py'
+      - 'astra_backend/guitartechs_training_v6/verify_synthetic_v6.py'
+      - 'docs/astra/GUITARTECHS_V6_DESIGN_V1.json'
+      - '.github/workflows/guitar-techs-v6-synthetic-verification.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify V6 guard contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          d=json.load(open("docs/astra/GUITARTECHS_V6_DESIGN_V1.json"))
+          assert d["candidateId"]=="astra_guitartechs_tabcnn_v6_learned_event_admission"
+          assert d["guards"]=={
+            "realP1P2TrainingAuthorized":False,
+            "optimizerStepsAuthorized":0,
+            "p1p2MediaAccessAuthorized":False,
+            "p3Opened":False,
+            "thresholdRetuningAuthorized":False,
+            "paidComputeAuthorized":False,
+            "mainOrProductionMutationAuthorized":False,
+          }
+          assert d["objective"]["thresholdTuning"] is False
+          PY
+          echo "REAL_P1P2_OPTIMIZER_STEPS_AUTHORIZED=0"
+          echo "P1P2_MEDIA_ACCESS_AUTHORIZED=false"
+
+      - name: Install exact frozen TabCNN runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import numpy,torch
+          assert numpy.__version__=="1.21.6"
+          assert torch.__version__=="1.11.0+cpu"
+          print("V6_RUNTIME_IDENTITY_PASS")
+          PY
+
+      - name: Acquire exact pinned TabCNN source only
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Compile V6
+        run: |
+          python -m py_compile             astra_backend/guitartechs_training_v6/model.py             astra_backend/guitartechs_training_v6/objective_decoder.py             astra_backend/guitartechs_training_v6/verify_synthetic_v6.py
+
+      - name: Run deterministic V6 synthetic verification
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v6/verify_synthetic_v6.py --source-root /tmp/tabcnn-source
+
+      - name: Build receipt
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,platform,subprocess
+          import numpy,torch
+          def blob(p): return subprocess.check_output(["git","hash-object",p],text=True).strip()
+          receipt={
+            "schema":"astra-guitar-techs-v6-synthetic-verification-v1",
+            "candidateId":"astra_guitartechs_tabcnn_v6_learned_event_admission",
+            "runHeadSha":subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(),
+            "source":{
+              "designGitBlob":blob("docs/astra/GUITARTECHS_V6_DESIGN_V1.json"),
+              "modelGitBlob":blob("astra_backend/guitartechs_training_v6/model.py"),
+              "objectiveDecoderGitBlob":blob("astra_backend/guitartechs_training_v6/objective_decoder.py"),
+              "syntheticHarnessGitBlob":blob("astra_backend/guitartechs_training_v6/verify_synthetic_v6.py"),
+              "runtimeLockGitBlob":blob("astra_backend/tabcnn_runtime/requirements.lock.txt"),
+              "tabcnnRevision":"f50309ad06dc734ddae5e3a0eda756fca221e2e7"
+            },
+            "runtime":{"python":platform.python_version(),"numpy":numpy.__version__,"torch":torch.__version__,"device":"cpu"},
+            "verification":{
+              "exactHeadShapes":"PASS",
+              "allFiveHeadsFiniteGradients":"PASS",
+              "causalTemporalContextPropagation":"PASS",
+              "learnedEventAdmissionRequiredForNewEvent":"PASS",
+              "activityStateContinuationWithoutRepeatedEvent":"PASS",
+              "resumeDeterminism":"PASS"
+            },
+            "media":{"p1p2Accessed":False,"p3Accessed":False,"protectedSongUsed":False},
+            "execution":{"realOptimizerStepsExecuted":0,"syntheticOnly":True,"paidComputeUsed":False},
+            "guards":{"thresholdsRetuned":False,"mainOrProductionModified":False,"customerDeliveryEligible":False}
+          }
+          out="GUITARTECHS_V6_SYNTHETIC_VERIFICATION_V1.json"
+          open(out,"w").write(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+          h=hashlib.sha256(open(out,"rb").read()).hexdigest()
+          print("V6_VERIFICATION_SHA256="+h)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v6-synthetic-verification-v1
+          path: GUITARTECHS_V6_SYNTHETIC_VERIFICATION_V1.json
+          retention-days: 30
