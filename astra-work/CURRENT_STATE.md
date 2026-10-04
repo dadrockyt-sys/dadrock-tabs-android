@@ -10620,3 +10620,113 @@ If preflight and P1 identity guard pass:
 2. monitor whether the 256-path set reconstructs successfully;
 3. if failure occurs after media access, distinguish acquisition/preparation/runtime/training failure exactly;
 4. do not alter frozen V6 science to repair infrastructure.
+
+
+## V6 real-development run — workflow green, scientific failure
+
+Run `37167968302` completed SUCCESS across all serialized jobs:
+- preflight
+- P1 0->400
+- P1 400->800
+- P1 800->1000
+- P2 0->400
+- P2 400->800
+- P2 800->1000
+
+This is an operational success only. Scientifically V6 FAILED the frozen development gates.
+
+P1 train -> P2 validate:
+- final artifact id `11301233849`
+- artifact digest `sha256:a14164115fd62e364e3695f93bda33359cb445652b210ca6c196cd0b1c84277a`
+- result JSON SHA-256 `14cdacbd6b5bc282bc6bf3fb55e9b43b3781c740a27a6ca470d7ea2a4605dfcb`
+- model SHA-256 `3a3603a744f74cf34af022513cd46fc941684adb605b40c2917017a39b67c6b0`
+- selected epoch 20
+- full validation:
+  - precision 0
+  - recall 0
+  - F1 0
+  - completeness 0
+  - frame accuracy 0
+- selectionSubsetQualified false
+- fullValidationQualified false
+
+P2 train -> P1 validate:
+- final artifact id `11313850176`
+- artifact digest `sha256:006db1134ecb47c7b94daebc58e09c2d316c4d7cd66dde27e9f4080a4253b015`
+- result JSON SHA-256 `e3b72e30934ee334bd2dd131f4b1c8faae2179d98b42a5ec2effc0fc7962ed11`
+- model SHA-256 `4cd24c1a98f5aa44e81c62a094f0e59a3b5515675b673e1e0a33b06523d7618e`
+- selected epoch 820
+- full validation:
+  - precision 0.2065911731
+  - recall 0.0029465011
+  - F1 0.0057699894
+  - completeness 0.0017886672
+  - frame accuracy 0.0015042119
+- selectionSubsetQualified false
+- fullValidationQualified false
+
+Two-fold macro F1 is ~0.002885, dramatically below:
+- V4 clean supervised macro F1 `0.2435228031`
+- V5 macro F1 `0.0641310886`
+
+Important training observation:
+- training sequence loss fell substantially on both folds;
+- decoded event recall remained near zero across the run;
+- P1 selection metrics were exactly zero at every checkpoint;
+- P2 had only tiny intermittent nonzero event scores late in training.
+
+Interpretation:
+- the V6 learned event-admission path appears to have severe under-admission/calibration failure;
+- do NOT tune the 0.50 event threshold on validation data;
+- do NOT evaluate V6 on Go My Way;
+- V6 verdict remains FAIL pending zero-optimizer diagnosis.
+
+## V6 zero-optimizer event-admission diagnosis — launched
+
+Purpose:
+- reproduce both frozen fold metrics;
+- measure learned event-head ranking/calibration;
+- measure true-reference event pass rate at the frozen 0.50 event gate;
+- compare full V6 decoding with state-only-start and event-only-start ablations;
+- also inspect onset/activity head discrimination;
+- zero optimizer steps;
+- no threshold tuning;
+- no P3;
+- no protected song.
+
+Runner:
+- `astra_backend/guitartechs_training_v6/run_v6_event_admission_diagnostic.py`
+- commit `2a4a91426ae414156122c60a353b534dea27e2db`
+- git blob `95b640a6bd1f0775763d8f6731cd9f4a1eb04ca8`
+
+Workflow:
+- `.github/workflows/guitar-techs-v6-event-admission-diagnostic.yml`
+- commit `6d782e5958a66aa3cb225648bdc0192324398f91`
+- git blob `7783b00a4de0ec61b2221f8f464e22d3ba797610`
+
+Launch:
+- `docs/astra/GUITARTECHS_V6_EVENT_ADMISSION_DIAGNOSTIC_LAUNCH_V1.json`
+- commit `72296890cd07de41657ee53e12c90835eaa05dd6`
+
+Authoritative diagnostic run:
+- run `37232153816`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37232153816
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37232153816`.
+
+If green:
+1. record diagnostic artifact ID/digest and JSON SHA;
+2. record event-head AUROC/ranking for both folds;
+3. record true-onset eventPassRate/statePassRate/eventStatePassRate/identityCorrectRate;
+4. record full vs stateOnlyStart vs eventOnlyStart F1/completeness;
+5. if stateOnlyStart recovers toward V4/V5 quality while eventPassRate is tiny, conclude learned event head repeated the V5 calibration failure and close V6 event-gated design;
+6. do not rescue with validation threshold tuning;
+7. next design must make event admission train-time calibrated/structurally constrained rather than threshold-sensitive;
+8. keep V4 as strongest clean supervised Guitar-TECHS architecture and Basic Pitch V4 as strongest Go My Way guitar baseline.
+
+If failed:
+- inspect exact runtime/diagnostic bug and repair only that;
+- do not retrain V6.
