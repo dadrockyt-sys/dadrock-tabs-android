@@ -24,7 +24,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10.15'
 
@@ -49,7 +49,7 @@ jobs:
           python - <<'PY'
           import json, subprocess
           auth=json.load(open('docs/astra/GUITARTECHS_V6_REAL_TRAINING_AUTHORIZATION_V1.json'))
-          assert auth['candidateId'] == 'astra_guitartechs_tabcnn_v6_temporal_multitask'
+          assert auth['candidateId'] == 'astra_guitartechs_tabcnn_v6_learned_event_admission'
           assert auth['guards']['realP1P2TrainingAuthorized'] is True
           assert auth['guards']['p3Opened'] is False
           assert auth['guards']['p3Authorized'] is False
