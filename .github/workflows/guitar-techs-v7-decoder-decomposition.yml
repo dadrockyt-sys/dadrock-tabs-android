@@ -1,0 +1,147 @@
+name: Guitar-TECHS V7 zero-optimizer decoder decomposition
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V7_DECODER_DECOMPOSITION_LAUNCH_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify frozen V7 diagnostic identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object astra_backend/guitartechs_training_v7/run_v7_decoder_decomposition.py)" = '41ca54aabcc8581b5d87d0047795b4cf6138c5c6'
+          test "$(git hash-object astra_backend/guitartechs_training_v7/model.py)" = 'cdb80274494782fc42774f3dd5c6859e9beb97d3'
+          test "$(git hash-object astra_backend/guitartechs_training_v7/objective_decoder.py)" = '7e0f3a297e4ce8fa20b4bcca74842964e08aafd2'
+          test "$(git hash-object astra_backend/guitartechs_training_v4/objective_decoder.py)" = 'b9a96f6b256de52bfbb5076482a03263415213cb'
+          python - <<'PY'
+          import json
+          x=json.load(open('docs/astra/GUITARTECHS_V7_DECODER_DECOMPOSITION_LAUNCH_V1.json'))
+          assert x['schema']=='astra-guitar-techs-v7-decoder-decomposition-launch-v1'
+          assert x['sourceRunId']==37237773631
+          assert x['guards']['optimizerStepsAuthorized']==0
+          assert x['guards']['thresholdRetuningAuthorized'] is False
+          assert x['guards']['p3Opened'] is False
+          assert x['guards']['protectedSongUseAuthorized'] is False
+          PY
+
+      - name: Install exact runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Acquire exact pinned TabCNN source
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+
+      - name: Download frozen V7 P1 result
+        uses: actions/download-artifact@v4
+        with:
+          name: guitar-techs-v7-p1-final-development-result
+          path: /tmp/p1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37237773631
+
+      - name: Download frozen V7 P2 result
+        uses: actions/download-artifact@v4
+        with:
+          name: guitar-techs-v7-p2-final-development-result
+          path: /tmp/p2
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37237773631
+
+      - name: Verify frozen V7 artifacts
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/p1/model.pt | awk '{print $1}')" = '072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763'
+          test "$(sha256sum /tmp/p2/model.pt | awk '{print $1}')" = '566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596'
+          test "$(sha256sum /tmp/p1/training-result.json | awk '{print $1}')" = 'aa136ef11d7b3faab6d50aafe9be08cb7d18fd743095696526537e3a681adadb'
+          test "$(sha256sum /tmp/p2/training-result.json | awk '{print $1}')" = 'f7af4c1b92199ee3648e778b69e8826b0a57c5b42f0a223e85219d1d774fa951'
+
+      - name: Prepare exact frozen 256-path P1/P2 set
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/prepared /tmp/extract
+          : > /tmp/prepared/manifest.jsonl
+          while IFS=$'\t' read -r file bytes md5 sha performer category; do
+            rm -rf /tmp/extract/*
+            download_ok=0
+            for url in               "https://zenodo.org/api/records/14963133/files/$file/content"               "https://zenodo.org/records/14963133/files/$file?download=1"; do
+              for attempt in 1 2 3 4 5; do
+                rm -f "/tmp/$file.part"
+                if curl --fail --location --connect-timeout 30 --max-time 1800 --retry 2 --retry-all-errors --retry-delay 5                   --user-agent 'Astra-Guitar-TECHS-V7-Diagnosis/1.0' -o "/tmp/$file.part" "$url"; then
+                  mv "/tmp/$file.part" "/tmp/$file"; download_ok=1; break 2
+                fi
+                sleep "$((attempt * 15))"
+              done
+            done
+            test "$download_ok" = '1'
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            unzip -q "/tmp/$file" -d /tmp/extract
+            rm -f "/tmp/$file"
+            python astra_backend/guitartechs_real_training/real_training.py prepare-archive               --root /tmp/extract --archive "$file" --performer "$performer" --category "$category"               --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json               --output-dir /tmp/prepared --manifest /tmp/prepared/manifest.jsonl
+          done <<'EOF'
+          P1_chords.zip	981741162	be9ef8bbdceb1912d565254e607a6d94	de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326	P1	chords
+          P1_scales.zip	453349723	9c0b98e8fb42a522df727ea8bf545e4f	79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509	P1	scales
+          P1_singlenotes.zip	108626613	ca0c4674dde3805574685a313f7c39eb	130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4	P1	singlenotes
+          P1_techniques.zip	326280863	18634a41a6db5a8de10d07eb3122a872	1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e	P1	techniques
+          P2_chords.zip	1150819056	eb6f74dd19162237189281688ad7ad2e	9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce	P2	chords
+          P2_scales.zip	471254783	96664853872f51e5f8aa4447313b7cf5	d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17	P2	scales
+          P2_singlenotes.zip	116133457	40fbf03d8b04bb2cf42df20f36dc2254	d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9	P2	singlenotes
+          P2_techniques.zip	395839610	f4189251ce50be25f06a173b2c2bba00	05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816	P2	techniques
+          EOF
+          test "$(wc -l < /tmp/prepared/manifest.jsonl)" = '256'
+
+      - name: Run zero-optimizer V7 decoder decomposition
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v7/run_v7_decoder_decomposition.py             --source-root /tmp/tabcnn-source             --manifest /tmp/prepared/manifest.jsonl             --data-dir /tmp/prepared             --p1-model /tmp/p1/model.pt             --p2-model /tmp/p2/model.pt             --out /tmp/GUITARTECHS_V7_DECODER_DECOMPOSITION_V1.json
+          echo "DIAGNOSTIC_SHA256=$(sha256sum /tmp/GUITARTECHS_V7_DECODER_DECOMPOSITION_V1.json | awk '{print $1}')"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v7-decoder-decomposition-v1
+          path: /tmp/GUITARTECHS_V7_DECODER_DECOMPOSITION_V1.json
+          retention-days: 30
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/p1 /tmp/p2 /tmp/P1_*.zip /tmp/P2_*.zip
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+          echo "GUITAR_TECHS_P3_OPENED=false"
