@@ -1,0 +1,24 @@
+{
+  "schema":"astra-guitar-techs-v7-development-result-v1",
+  "date":"2026-10-05",
+  "sourceRun":{"runId":37237773631,"headSha":"39deaa63327a4a2bcb462aac32f958ad89feee80","allSerializedJobsSuccessful":true},
+  "candidateId":"astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "folds":{
+    "p1-train-p2-validate":{
+      "artifact":{"id":11336573510,"archiveDigest":"sha256:9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6"},
+      "selectedCheckpointEpoch":1000,
+      "modelSha256":"072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763",
+      "fullValidationMetrics":{"precision":0.19432831140119275,"recall":0.24520448379018003,"f1":0.20980936769775616,"completeness":0.22463549322424098,"frameAccuracy":0.3039956966540916},
+      "selectionSubsetQualified":false,"fullValidationQualified":false
+    },
+    "p2-train-p1-validate":{
+      "artifact":{"id":11374640369,"archiveDigest":"sha256:0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c"},
+      "selectedCheckpointEpoch":940,
+      "modelSha256":"566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596",
+      "fullValidationMetrics":{"precision":0.10888461781694775,"recall":0.13377579975890871,"f1":0.11335774923901762,"completeness":0.09977624043898718,"frameAccuracy":0.23021309074950505},
+      "selectionSubsetQualified":false,"fullValidationQualified":false
+    }
+  },
+  "aggregate":{"macroF1":0.16158355846838688,"macroCompleteness":0.16220586683161408,"v4MacroF1":0.24352280312668845,"deltaVsV4":-0.08193924465830157},
+  "decision":{"status":"FAIL","reason":"V7 removes calibration collapse but underperforms V4 materially on performer-disjoint development, especially P2->P1.","thresholdRetuningAllowed":false,"p3Opened":false,"protectedSongUseAllowed":false}
+}
