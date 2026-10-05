@@ -11128,3 +11128,118 @@ Preserve:
 - V4-origin timing;
 - BS-Roformer separator;
 - `main` unchanged.
+
+
+## V7 real-development run — operational green, scientific fail
+
+Run `37237773631` completed SUCCESS across all serialized jobs.
+
+P1 train -> P2 validate:
+- final artifact id `11336573510`
+- artifact digest `sha256:9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6`
+- result JSON SHA-256 `aa136ef11d7b3faab6d50aafe9be08cb7d18fd743095696526537e3a681adadb`
+- model SHA-256 `072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763`
+- selected epoch 1000
+- full validation:
+  - precision `0.1943283114`
+  - recall `0.2452044838`
+  - F1 `0.2098093677`
+  - completeness `0.2246354932`
+  - frame accuracy `0.3039956967`
+- selectionSubsetQualified false
+- fullValidationQualified false
+
+P2 train -> P1 validate:
+- final artifact id `11374640369`
+- artifact digest `sha256:0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c`
+- result JSON SHA-256 `f7af4c1b92199ee3648e778b69e8826b0a57c5b42f0a223e85219d1d774fa951`
+- model SHA-256 `566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596`
+- selected epoch 940
+- full validation:
+  - precision `0.1088846178`
+  - recall `0.1337757998`
+  - F1 `0.1133577492`
+  - completeness `0.0997762404`
+  - frame accuracy `0.2302130907`
+- selectionSubsetQualified false
+- fullValidationQualified false
+
+Aggregate:
+- macro F1 `0.1615835585`
+- macro completeness `0.1622058668`
+- V4 benchmark macro F1 `0.2435228031`
+- delta vs V4 `-0.0819392447`
+
+Conclusion:
+- V7 successfully removed the catastrophic calibration/gating collapse seen in V5/V6;
+- but V7 still materially underperforms V4 on performer-disjoint development;
+- especially weak P2->P1 generalization;
+- V7 scientific verdict: FAIL;
+- do NOT open P3;
+- do NOT evaluate V7 on Go My Way;
+- do NOT tune validation thresholds.
+
+Frozen result:
+- `docs/astra/GUITARTECHS_V7_DEVELOPMENT_RESULT_V1.json`
+- commit `a56f4982a748381a8bc5f0fbf24a4a74b58ad760`
+
+## V7 zero-optimizer decoder decomposition — launched
+
+Purpose:
+- compare V7 native ranked-event decoder;
+- compare state-only relative argmax decoder;
+- compare frozen V4 hysteresis decoder applied to the exact same V7 state probabilities;
+- measure true-event local rank-1 rate;
+- determine whether V7's remaining loss comes primarily from event placement/decoder or representation/state quality;
+- zero optimizer steps;
+- no threshold tuning;
+- no P3;
+- no protected song.
+
+Runner:
+- `astra_backend/guitartechs_training_v7/run_v7_decoder_decomposition.py`
+- commit `c70a8272bec53fb54707f9dc452d68227eedb328`
+- git blob `41ca54aabcc8581b5d87d0047795b4cf6138c5c6`
+
+Workflow:
+- `.github/workflows/guitar-techs-v7-decoder-decomposition.yml`
+- commit `7c49fd72958ec1cf11c5f6a505e535d7f3ba14db`
+- git blob `b0afb064fefa8a7e8b8e41dedd8f29ee89327604`
+
+Launch:
+- `docs/astra/GUITARTECHS_V7_DECODER_DECOMPOSITION_LAUNCH_V1.json`
+- commit `ecdc7d16772404a51e52d1198f3006470dcb4399`
+
+Authoritative diagnostic run:
+- run `37381745534`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37381745534
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37381745534`.
+
+If green:
+1. record artifact ID/digest and JSON SHA;
+2. record both folds' F1/completeness for:
+   - ranked native V7 decoder
+   - stateRelative decoder
+   - frozen V4 hysteresis decoder
+3. record true-event local rank-1 rate and mean local rank;
+4. interpret:
+   - if V4 hysteresis on V7 state beats native V7 substantially, decoder/event-start logic is primary blocker;
+   - if stateRelative and V4 hysteresis are also weak, representation/generalization is primary blocker;
+5. do not tune thresholds;
+6. do not retrain until diagnosis is frozen.
+
+If failed:
+- repair only diagnostic infrastructure;
+- do not retrain V7.
+
+Preserve:
+- V4 clean supervised macro F1 `0.2435228031` strongest;
+- Basic Pitch V4 Go My Way combined guitar F1 35.04%;
+- spectral bass V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
