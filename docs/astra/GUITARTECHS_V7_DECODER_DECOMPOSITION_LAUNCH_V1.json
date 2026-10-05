@@ -1,0 +1,24 @@
+{
+  "schema":"astra-guitar-techs-v7-decoder-decomposition-launch-v1",
+  "sourceRunId":37237773631,
+  "candidateId":"astra_guitartechs_tabcnn_v7_ranked_event_transition",
+  "purpose":"Zero-optimizer decomposition of V7 native ranked-event decoding versus state-only relative decoding and frozen V4 hysteresis decoding.",
+  "sourceIdentities":{
+    "runnerGitBlob":"41ca54aabcc8581b5d87d0047795b4cf6138c5c6",
+    "workflowGitBlob":"b0afb064fefa8a7e8b8e41dedd8f29ee89327604",
+    "modelGitBlob":"cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "objectiveDecoderGitBlob":"7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "v4DecoderGitBlob":"b9a96f6b256de52bfbb5076482a03263415213cb"
+  },
+  "frozenArtifacts":{
+    "p1":{"artifactId":11336573510,"artifactDigest":"sha256:9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6","resultSha256":"aa136ef11d7b3faab6d50aafe9be08cb7d18fd743095696526537e3a681adadb","modelSha256":"072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763"},
+    "p2":{"artifactId":11374640369,"artifactDigest":"sha256:0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c","resultSha256":"f7af4c1b92199ee3648e778b69e8826b0a57c5b42f0a223e85219d1d774fa951","modelSha256":"566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596"}
+  },
+  "guards":{
+    "optimizerStepsAuthorized":0,
+    "thresholdRetuningAuthorized":false,
+    "p3Opened":false,
+    "protectedSongUseAuthorized":false,
+    "mainOrProductionMutationAuthorized":false
+  }
+}
