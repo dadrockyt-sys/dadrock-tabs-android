@@ -1,0 +1,120 @@
+{
+  "schema": "astra-gomyway-post-quantization-pitch-voicing-diagnostic-v2-result",
+  "date": "2026-10-06",
+  "status": "COMPLETE_MODEL_FREE_DIAGNOSTIC",
+  "run": {
+    "id": 37425440848,
+    "headSha": "59806cc6cb3a79f91a9c1d5bd8fcb751d928e5ef",
+    "conclusion": "success",
+    "artifactId": 11394362287,
+    "artifactDigest": "sha256:4c5621f3552adcff4a6214d690822c0a91284cb5bcdef0056dd0df69483f0f97",
+    "resultJsonSha256": "be2fa35794b3f8be0a23220a7683f8592eced40c220abcf9486fa81bb0ea825d",
+    "focusedTestLogSha256": "ccf75805b503ad02b052807c2885edda3be4477cea2d904b3a5e659a224d6358"
+  },
+  "frozenImplementation": {
+    "implementationBlob": "ed265b7e5ec710524b7991b157fd4044114cfd2f",
+    "testBlob": "489a04786c9d7336dc4c5d4d71f696a81f410f42",
+    "specBlob": "bc195c5cf731bdd966d942c94237593c19c8de3c",
+    "workflowBlob": "34af57567368f708b23f29f388e9d0af75ceb0c1"
+  },
+  "inputIdentity": {
+    "quantizedCandidateArtifactId": 11391794891,
+    "quantizedCandidateSha256": "880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
+    "candidateSha256AfterDiagnostic": "880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
+    "originalEvidenceArtifactId": 11282827368,
+    "originalEvidenceSha256": "8c305f23f9cea20df3bf22d9b206eeef97da68afb421ef64f337a16633186230",
+    "timingMapSha256": "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3",
+    "rhythmReferenceSha256": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+    "leadReferenceSha256": "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+    "eventCount": 1065,
+    "orderedIdentityMidiEqual": true,
+    "maxDurationErrorSeconds": 1.4210854715202004e-14
+  },
+  "primaryMatching": {
+    "policy": "maximum cardinality, then minimum total absolute onset error; pitch never selects a pair",
+    "toleranceSeconds": 0.05,
+    "rhythm": {
+      "original": {
+        "eligiblePredictions": 1065,
+        "eligibleTargets": 946,
+        "matched": 444,
+        "targetRecall": 0.4693446088794926,
+        "exactMidi": 184,
+        "exactMidiRate": 0.4144144144144144,
+        "unambiguousMatched": 158,
+        "unambiguousExactMidiRate": 0.5,
+        "ambiguousMatched": 286,
+        "ambiguousExactMidiRateAssignmentDependent": 0.36713286713286714,
+        "ambiguousPitchMultisetOverlapRate": 0.8426573426573427,
+        "unmatchedTargets": 502,
+        "wrongMidiAmongMatched": 260
+      },
+      "quantized": {
+        "eligiblePredictions": 1065,
+        "eligibleTargets": 946,
+        "matched": 467,
+        "targetRecall": 0.49365750528541225,
+        "exactMidi": 155,
+        "exactMidiRate": 0.33190578158458245,
+        "unambiguousMatched": 164,
+        "unambiguousExactMidiRate": 0.5,
+        "ambiguousMatched": 303,
+        "ambiguousExactMidiRateAssignmentDependent": 0.24092409240924093,
+        "ambiguousPitchMultisetOverlapRate": 0.834983498349835,
+        "unmatchedTargets": 479,
+        "wrongMidiAmongMatched": 312
+      }
+    },
+    "lead": {
+      "original": {
+        "eligiblePredictions": 1044,
+        "eligibleTargets": 447,
+        "matched": 222,
+        "targetRecall": 0.4966442953020134,
+        "exactMidi": 89,
+        "exactMidiRate": 0.4009009009009009,
+        "unambiguousMatched": 127,
+        "unambiguousExactMidiRate": 0.5748031496062992,
+        "ambiguousMatched": 95,
+        "ambiguousExactMidiRateAssignmentDependent": 0.16842105263157894,
+        "ambiguousPitchMultisetOverlapRate": 0.631578947368421,
+        "unmatchedTargets": 225,
+        "wrongMidiAmongMatched": 133
+      },
+      "quantized": {
+        "eligiblePredictions": 1044,
+        "eligibleTargets": 447,
+        "matched": 236,
+        "targetRecall": 0.5279642058165548,
+        "exactMidi": 108,
+        "exactMidiRate": 0.4576271186440678,
+        "unambiguousMatched": 134,
+        "unambiguousExactMidiRate": 0.5447761194029851,
+        "ambiguousMatched": 102,
+        "ambiguousExactMidiRateAssignmentDependent": 0.3431372549019608,
+        "ambiguousPitchMultisetOverlapRate": 0.6764705882352942,
+        "unmatchedTargets": 211,
+        "wrongMidiAmongMatched": 128
+      }
+    }
+  },
+  "audits": {
+    "boundaryMigrationCountPerRole": 45,
+    "eligibleToIneligible": 0,
+    "ineligibleToEligible": 0,
+    "measure104Meter": "2/4",
+    "measure105Meter": "4/4",
+    "gridSemantics": "16 equal subdivisions per measure duration, not universally notated sixteenth notes",
+    "crossRoleCoincidentSamePitchTargetCount": 75,
+    "combinedLegacyConvention": "rhythm+lead targets concatenated without cross-role deduplication; prediction exclusions use union of role exclusions"
+  },
+  "decision": {
+    "attribution": "AMBIGUITY_LIMITED",
+    "rhythm": "Do not interpret the lower assignment-dependent exact-MIDI rate after quantization as a new octave/voicing failure. Unambiguous exact-MIDI rate remains exactly 50%, while pairing-invariant ambiguous pitch-multiset overlap is high and nearly unchanged.",
+    "lead": "Quantization increases onset coverage and assignment-dependent exact-MIDI count; the unambiguous exact-MIDI count does not improve, so the gain is primarily timing/assignment exposure rather than proof of a new pitch correction opportunity.",
+    "nextHypothesis": "Missing or unsynchronized event evidence is a stronger next hypothesis than octave placement or a reference-derived voicing correction.",
+    "automaticNextExperiment": false,
+    "independentValidationPlan": "Before any prediction-changing experiment, predeclare a role-neutral missing-event/chord-evidence test on independent rights-cleared development material or held-out performer-disjoint clean data. Require improvement without using Go My Way references for parameter choice, and retain Go My Way only as exposed scoring material.",
+    "stopCondition": "Stop here; do not mutate the immutable 1065-event candidate from this diagnostic."
+  }
+}
