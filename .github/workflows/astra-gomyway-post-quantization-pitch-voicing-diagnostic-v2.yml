@@ -77,6 +77,7 @@ jobs:
             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
             --output-json /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json
           sha256sum /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json | tee /tmp/RESULT_SHA256.txt
+          python -m json.tool /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json >/dev/null
           test "$(sha256sum /tmp/candidate/guitar-grid-quantization-v1.json | awk '{print $1}')" = '880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e'
 
       - uses: actions/upload-artifact@v4
