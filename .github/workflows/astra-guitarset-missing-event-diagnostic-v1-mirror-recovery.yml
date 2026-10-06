@@ -32,7 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           test "$(git hash-object validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py)" = "972adf7215a180f703873950c96068b4f860bbc8"
-          test "$(git hash-object validation/open_corpus/materialize_guitarset_hf_mirror_refs_v1.py)" = "e9acf04110925a8c00a0678ce253a1d7a126c6c6"
+          test "$(git hash-object validation/open_corpus/materialize_guitarset_hf_mirror_refs_v1.py)" = "999476ee070d19b05eba4f80e339d2cbfdba8bc6"
           test "$(git hash-object docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_REFERENCE_SOURCE_AMENDMENT.json)" = "eb83efbf783669f0e6535ba3ba539c619fad46ea"
           python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py --self-test
           python - <<'PY'
