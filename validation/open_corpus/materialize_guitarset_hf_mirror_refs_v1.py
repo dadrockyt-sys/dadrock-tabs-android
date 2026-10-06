@@ -33,22 +33,36 @@ def verify_revision():
         raise RuntimeError(f"HuggingFace mirror revision mismatch: {actual}")
     return actual
 
-def fetch_player(player:int):
-    params={
-      "dataset":"jhartquist/guitarset",
-      "config":"default","split":"train",
-      "where":f'"player"={player}',
-      "orderby":'"track_id"',
-      "offset":"0","length":"100",
-    }
-    url="https://datasets-server.huggingface.co/filter?"+urllib.parse.urlencode(params)
-    payload=get_json(url)
-    if payload.get("partial") is True:
-        raise RuntimeError("mirror filter is partial")
-    rows=payload.get("rows",[])
-    if len(rows)!=EXPECTED_PER_PLAYER:
-        raise RuntimeError(f"player {player:02d}: expected {EXPECTED_PER_PLAYER} rows, got {len(rows)}")
-    return [x["row"] for x in rows]
+def fetch_eval_rows():
+    selected=[]
+    page_size=5
+    total_expected=360
+    for offset in range(0,total_expected,page_size):
+        params={
+          "dataset":"jhartquist/guitarset",
+          "config":"default","split":"train",
+          "offset":str(offset),"length":str(page_size),
+        }
+        url="https://datasets-server.huggingface.co/rows?"+urllib.parse.urlencode(params)
+        payload=get_json(url)
+        if payload.get("partial") is True:
+            raise RuntimeError("mirror rows response is partial")
+        if int(payload.get("num_rows_total",-1))!=total_expected:
+            raise RuntimeError(f"mirror total row count mismatch: {payload.get('num_rows_total')}")
+        rows=payload.get("rows",[])
+        if len(rows)!=page_size:
+            raise RuntimeError(f"mirror page offset {offset}: expected {page_size} rows, got {len(rows)}")
+        for wrapped in rows:
+            row=wrapped["row"]
+            if int(row["player"]) in PLAYERS:
+                selected.append(row)
+    if len(selected)!=EXPECTED_TOTAL:
+        raise RuntimeError(f"expected {EXPECTED_TOTAL} evaluation rows, got {len(selected)}")
+    counts={p:sum(int(r["player"])==p for r in selected) for p in PLAYERS}
+    if counts!={0:60,1:60,3:60}:
+        raise RuntimeError(f"evaluation player counts mismatch {counts}")
+    selected.sort(key=lambda r:str(r["track_id"]))
+    return selected
 
 def materialize_row(row:dict,out_dir:Path):
     import jams
@@ -83,9 +97,8 @@ def main():
     rev=verify_revision()
     a.output_dir.mkdir(parents=True,exist_ok=True)
     receipts=[]
-    for player in PLAYERS:
-        for row in fetch_player(player):
-            receipts.append(materialize_row(row,a.output_dir))
+    for row in fetch_eval_rows():
+        receipts.append(materialize_row(row,a.output_dir))
     if len(receipts)!=EXPECTED_TOTAL or len({r["trackStem"] for r in receipts})!=EXPECTED_TOTAL:
         raise RuntimeError("evaluation mirror materialization count/uniqueness failure")
     counts={p:sum(r["player"]==p for r in receipts) for p in ("00","01","03")}
