@@ -670,7 +670,7 @@ def main() -> None:
         },
         "interpretationBoundary": "Diagnostic only. Separate unmatched target events from wrong MIDI among onset-matched pairs. Ambiguous-component assignment-dependent pitch deltas are descriptive only. No pitch, timing, role, model, or threshold mutation is authorized by this result.",
     }
-    Path(args.output_json).write_text(json.dumps(out, indent=2, sort_keys=True) + "\\n")
+    Path(args.output_json).write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
     print(json.dumps({role: {variant: roles[role][variant]["primaryMaxCardinalityMinTimeError"]["summary"] for variant in ("original", "quantized")} for role in roles}, indent=2, sort_keys=True))
 
 
