@@ -11397,3 +11397,55 @@ If green:
    - original V4 `0.2435228031`;
 5. do not retune any threshold or decoder parameter;
 6. P3 and Go My Way remain closed.
+
+
+## V8 synthetic failure — fixture normalization bug repaired
+
+Initial V8 synthetic run:
+- run `37408374068`
+- outcome: FAILURE in synthetic verification only
+- compile passed
+- design guards passed
+- zero real optimizer steps
+- no P1/P2 media
+- no protected song
+
+Exact cause:
+- synthetic fixture constructed state rows whose probabilities did not sum to 1.0;
+- frozen V4 `decode_with_hysteresis` correctly rejected them with:
+  - `ValueError: probabilities must be finite normalized distributions`
+- V8 decoder logic itself was not the cause.
+
+Repair:
+- normalized every synthetic state row while preserving the intended relative/absolute conditions;
+- no V8 decoder logic changed;
+- no design parameter changed;
+- no threshold changed.
+
+Repair commit:
+- `6d3fe61f6d7b0eb394379f26e4790908d2ca2cb9`
+
+Authoritative relaunched V8 synthetic run:
+- run `37408775000`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37408775000
+- status at this update: IN PROGRESS
+
+### Exact next resume instruction
+
+Resume from run `37408775000`.
+
+If green:
+1. confirm:
+   - `V8_BACKSHIFT_ONLY_PASS`
+   - `V8_CALIBRATION_INVARIANCE_PASS`
+   - `V8_NO_NEW_RUNS_PASS`
+   - `V8_SYNTHETIC_VERIFICATION_PASS`
+2. freeze decoder/verifier/workflow identities;
+3. launch zero-optimizer exact P1/P2 evaluation using frozen V7 P1/P2 models and the single predeclared V8 decoder;
+4. do not tune any threshold/parameter;
+5. P3 and Go My Way remain closed.
+
+If failed:
+- inspect exact synthetic assertion;
+- repair only fixture/implementation bug;
+- preserve no-new-run/no-delete/no-threshold decoder contract.
