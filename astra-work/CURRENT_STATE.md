@@ -11600,3 +11600,80 @@ Before any protected-song use:
    - spectral bass V1 TP 372 / F1 60.10%
    - V4-origin timing
    - BS-Roformer separator.
+
+
+## V8 immutable clean-candidate freeze — complete
+
+The strongest clean Guitar-TECHS combination has now been frozen before any protected-song use.
+
+Freeze receipt:
+- `docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json`
+- commit `366c56403b60a97f2e6a13aaade4b06501b67e61`
+- git blob `40bf73a6c57c9f697d10a60b8b3c555b3199a82a`
+
+Frozen candidate:
+- `astra_guitartechs_v8_v4_hysteresis_event_rank_backshift`
+
+Frozen representation:
+- V7 model source git blob `cdb80274494782fc42774f3dd5c6859e9beb97d3`
+- P1 model artifact `11336573510`
+  - model SHA-256 `072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763`
+  - selected epoch 1000
+- P2 model artifact `11374640369`
+  - model SHA-256 `566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596`
+  - selected epoch 940
+
+Frozen decoder:
+- git blob `0d856504983afdeeba2c18ad11b3090164876243`
+- design git blob `4094b878f6c9252be7ff35966893119bf288c6cd`
+- frozen V4 hysteresis admission/continuation
+- V7 raw event-rank backshift only
+- no new-run creation
+- no deletion of admitted runs
+- no absolute event probability threshold
+- calibration invariant
+
+Frozen clean evaluation:
+- run `37409380940`
+- artifact `11390348256`
+- artifact digest `sha256:b3964b6373b00fa4cd58b60766cf5069cb3b5acac85438fcc7c15b3faa608646`
+- evaluation JSON SHA-256 `f7138835adac94cc445ee4e6200cdaf39ea4c5e0d7f88971b9f6384c597b0433`
+- result git blob `65d6ca5fce078e0151a4c6c0a8636cdf08706185`
+- P1->P2 F1 `0.2930545154`
+- P2->P1 F1 `0.2005571729`
+- macro F1 `0.2468058442`
+- macro completeness `0.2440526306`
+
+Scientific boundary:
+- construction remained reference-blind;
+- Go My Way was not used for V8 design, training, or decoder selection;
+- V8 parameters may not change after this freeze based on Go My Way;
+- any Go My Way use from here onward is post-freeze scoring/evaluation only.
+
+Guards:
+- V8 optimizer steps 0
+- V8 model weights unchanged
+- thresholds not retuned
+- P3 closed
+- protected song not yet used
+- main unchanged
+
+### Exact next resume instruction
+
+The next allowed action is a separate post-freeze Go My Way evaluation of this exact immutable V8 candidate.
+
+Requirements:
+1. use the frozen V8 candidate receipt above as the identity gate;
+2. use the frozen BS-Roformer guitar stem/source path already established;
+3. produce candidate output without consulting professional references;
+4. freeze V8 Go My Way candidate output/evidence before scoring;
+5. only then score against the professional rhythm/lead references;
+6. compare against existing Basic Pitch V4 guitar baseline:
+   - combined F1 35.04%
+   - rhythm F1 31.82%
+   - lead F1 17.84%;
+7. do not alter V8 based on Go My Way score;
+8. bass, timing, separator remain unchanged:
+   - spectral bass V1 TP 372 / F1 60.10%
+   - V4-origin timing
+   - BS-Roformer separator.
