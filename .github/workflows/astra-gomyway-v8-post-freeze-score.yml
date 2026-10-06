@@ -1,0 +1,118 @@
+name: Astra Go My Way V8 post-freeze scoring
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V8_GOMYWAY_SCORING_LAUNCH_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score-frozen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify scoring-only launch and frozen identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json)" = '40bf73a6c57c9f697d10a60b8b3c555b3199a82a'
+          python - <<'PY'
+          import json
+          x=json.load(open('docs/astra/GUITARTECHS_V8_GOMYWAY_SCORING_LAUNCH_V1.json'))
+          assert x['schema']=='astra-guitar-techs-v8-gomyway-scoring-launch-v1'
+          assert x['candidateArtifactId']==11392110587
+          assert x['candidateArtifactDigest']=='sha256:7d31acd84916f2de32e3eebaaa928d06b5a953e5b4dd306630f8c9098217cf40'
+          assert x['candidates']['p1']['sha256']=='9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7'
+          assert x['candidates']['p2']['sha256']=='2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006'
+          assert x['freezeManifestSha256']=='b1539b805ae7fba9f9a378ca3353dba54876dabfb4c76652b42689282dcd68a1'
+          assert x['guards']['parameterChangesAuthorized'] is False
+          assert x['guards']['optimizerStepsAuthorized']==0
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v8-reference-blind-candidates-frozen
+          path: /tmp/candidates
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37415737535
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: /tmp/timing
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+
+      - name: Verify frozen candidate artifact and scoring references
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/candidates/gomyway-v8-p1model-candidate.json | awk '{print $1}')" = '9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7'
+          test "$(sha256sum /tmp/candidates/gomyway-v8-p2model-candidate.json | awk '{print $1}')" = '2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006'
+          test "$(sha256sum /tmp/candidates/gomyway-v8-candidate-freeze-manifest.json | awk '{print $1}')" = 'b1539b805ae7fba9f9a378ca3353dba54876dabfb4c76652b42689282dcd68a1'
+          test "$(sha256sum /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = 'b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json | awk '{print $1}')" = 'd51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/lead-scorer-ready.json | awk '{print $1}')" = '8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be'
+
+      - name: Score both frozen V8 candidates
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/scores
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py             --candidate /tmp/candidates/gomyway-v8-p1model-candidate.json             --timing-map /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json /tmp/scores/gomyway-v8-p1model-score.json
+          python analyzer/score_gomyway_specialized_guitar_amt_v1.py             --candidate /tmp/candidates/gomyway-v8-p2model-candidate.json             --timing-map /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json /tmp/scores/gomyway-v8-p2model-score.json
+          sha256sum /tmp/scores/*.json
+
+      - name: Write immutable scoring summary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p1=json.load(open('/tmp/scores/gomyway-v8-p1model-score.json'))
+          p2=json.load(open('/tmp/scores/gomyway-v8-p2model-score.json'))
+          out={
+            'schema':'astra-gomyway-v8-post-freeze-score-summary-v1',
+            'candidateFreezeRunId':37415737535,
+            'candidateArtifactId':11392110587,
+            'candidates':{
+              'p1':{'candidateSha256':'9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7','roles':p1['roles']},
+              'p2':{'candidateSha256':'2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006','roles':p2['roles']}
+            },
+            'baseline':{'combinedF1':0.3504,'rhythmF1':0.3182,'leadF1':0.1784},
+            'guards':{
+              'scoringOnly':True,
+              'parameterChangesAfterScoringAuthorized':False,
+              'optimizerStepsExecuted':0,
+              'thresholdsRetuned':False,
+              'p3Opened':False
+            }
+          }
+          p=Path('/tmp/scores/gomyway-v8-post-freeze-score-summary.json')
+          p.write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print('SCORE_SUMMARY_SHA256='+hashlib.sha256(p.read_bytes()).hexdigest())
+          print(json.dumps(out,sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-v8-post-freeze-scores
+          path: /tmp/scores/
+          retention-days: 30
+
+      - name: Final guards
+        run: |
+          echo "PARAMETER_CHANGES_AFTER_SCORING_AUTHORIZED=false"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+          echo "GUITAR_TECHS_P3_OPENED=false"
