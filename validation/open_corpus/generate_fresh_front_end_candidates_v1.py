@@ -61,7 +61,7 @@ def main():
     if sha256_file(a.guitar_fl_checkpoint)!=EXPECTED_GUITAR_FL_SHA: raise RuntimeError("guitar-fl checkpoint SHA mismatch")
     from hf_midi_transcription.model import MidiTranscriptionModel
     bp_model=Model(Path(ICASSP_2022_MODEL_PATH))
-    alt=MidiTranscriptionModel(device="cpu",instrument="guitar_fl",checkpoint_path=str(a.guitar_fl_checkpoint),batch_size=8)
+    alt=MidiTranscriptionModel(device="cpu",instrument="guitar",checkpoint_path=str(a.guitar_fl_checkpoint),batch_size=8)
     audios=sorted(a.audio_dir.glob("*.wav"))
     if len(audios)!=EXPECTED_TRACKS: raise RuntimeError(f"expected {EXPECTED_TRACKS} audio files, got {len(audios)}")
     bp_dir=a.output_dir/"basic_pitch"; alt_dir=a.output_dir/"guitar_fl"
