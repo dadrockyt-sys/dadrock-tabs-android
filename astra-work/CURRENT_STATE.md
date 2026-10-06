@@ -11845,3 +11845,102 @@ If green:
    - spectral bass V1 TP 372 / F1 60.10%
    - V4-origin timing
    - BS-Roformer separator.
+
+
+## Go My Way V8 post-freeze scoring — authoritative green, transfer failure
+
+Run `37416986736` completed SUCCESS.
+
+Score artifact:
+- id `11391816770`
+- digest `sha256:166a04d9e755791d8aa28eb5d912b5eedea28f5567d48af42ddad3816a3096b3`
+- summary SHA-256 `4b66937c9038a19cc23bf9e1860884a315d02dfdfacc7dd69b4fa87e59efe1f2`
+- P1 score JSON SHA-256 `3f4cba8bd43d5b6847b268ad50bcf95d3dd74db74ac756c315e4e379e74c5809`
+- P2 score JSON SHA-256 `5315726ead6d7b81b8eb372437d5eb26cdf29a778cef4d839005b52268071d1a`
+
+P1-model frozen candidate:
+- candidate SHA-256 `9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7`
+- 1537 events
+- rhythm:
+  - TP 105
+  - precision 0.0683148992
+  - recall 0.1109936575
+  - F1 0.0845751108
+- lead:
+  - TP 159
+  - precision 0.1058588549
+  - recall 0.3557046980
+  - F1 0.1631605952
+- combined guitar:
+  - TP 241
+  - precision 0.1604527297
+  - recall 0.1730078966
+  - F1 0.1664939551
+
+P2-model frozen candidate:
+- candidate SHA-256 `2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006`
+- 1158 events
+- rhythm:
+  - TP 70
+  - precision 0.0604490501
+  - recall 0.0739957717
+  - F1 0.0665399240
+- lead:
+  - TP 135
+  - precision 0.1192579505
+  - recall 0.3020134228
+  - F1 0.1709943002
+- combined guitar:
+  - TP 185
+  - precision 0.1634275618
+  - recall 0.1328068916
+  - F1 0.1465346535
+
+Frozen Basic Pitch V4 Go My Way baseline:
+- rhythm F1 0.3182
+- lead F1 0.1784
+- combined guitar F1 0.3504
+
+Interpretation:
+- V8 remains the strongest clean Guitar-TECHS development combination;
+- protected-song transfer FAILED;
+- both frozen fold candidates are far below Basic Pitch V4 on Go My Way;
+- the biggest weakness is rhythm guitar;
+- lead is closer, especially P2 model at F1 0.17099 vs Basic Pitch 0.1784, but still does not beat it;
+- do not use V8 as the Go My Way guitar frontend;
+- do not choose/tune a fold model based on this score;
+- do not modify V8 from protected-song evidence;
+- Basic Pitch V4 remains the protected-song guitar baseline.
+
+Frozen result:
+- `docs/astra/GUITARTECHS_V8_GOMYWAY_POST_FREEZE_RESULT_V1.json`
+- commit `5fde629ccede09214f50f0dbdefa0a4cd88f463b`
+
+Scientific decision:
+- clean supervised Guitar-TECHS front-end swapping / V8 path is CLOSED for Go My Way;
+- retain V8 only as a clean-development research result;
+- return protected-song work to the strongest established reference-blind Go My Way path:
+  - Basic Pitch V4 guitar evidence
+  - V4-origin timing
+  - frozen BS-Roformer guitar stem
+  - spectral bass V1
+- no threshold tuning against professional Go My Way references.
+
+### Exact next resume direction
+
+For improving Go My Way, do NOT retrain or retune V8.
+
+Next work should diagnose/fix the existing Basic Pitch V4 guitar path using only reference-blind evidence before post-freeze scoring. Prior evidence already shows:
+- Basic Pitch V4 combined guitar F1 35.04%
+- rhythm F1 31.82%
+- lead F1 17.84%
+- raw activation recovery and generic specialized AMT front-end swapping are CLOSED
+- V8 transfer is now also CLOSED
+
+The likely remaining opportunity is structural/post-processing on the frozen Basic Pitch V4 note evidence without validation-threshold tuning, especially:
+- rhythm/lead role separation
+- timing alignment/quantization against the already frozen V4-origin timing
+- string/fret assignment from pitch + local guitar geometry
+- chord grouping / sustain structure
+- preserve bass independently at spectral bass V1 TP 372 / F1 60.10%
+- preserve separator and main unchanged.
