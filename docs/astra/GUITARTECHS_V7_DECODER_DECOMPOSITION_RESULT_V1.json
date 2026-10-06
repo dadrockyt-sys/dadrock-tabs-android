@@ -1,0 +1,61 @@
+{
+  "schema":"astra-guitar-techs-v7-decoder-decomposition-result-v1",
+  "date":"2026-10-05",
+  "sourceRunId":37381745534,
+  "sourceTrainingRunId":37237773631,
+  "artifact":{
+    "artifactId":11379643594,
+    "archiveDigest":"sha256:d307f5e3678597c897932ddb39f5ac0171709ea8de9f74deb237c3a03e751bbb",
+    "jsonSha256":"7a753de15f919de185edea568d27387a4d2bdf41696d177a60d8af0148337f11"
+  },
+  "folds":{
+    "p1-train-p2-validate":{
+      "rankedF1":0.20980936769775616,
+      "stateRelativeF1":0.25923053406436924,
+      "v4HysteresisF1":0.29250693719364185,
+      "rankedCompleteness":0.22463549322424098,
+      "stateRelativeCompleteness":0.2952997694104444,
+      "v4HysteresisCompleteness":0.3092299833262711,
+      "trueEventRank1Rate":0.6892373811265545,
+      "trueEventMeanLocalRank":1.483952084857352
+    },
+    "p2-train-p1-validate":{
+      "rankedF1":0.11335774923901762,
+      "stateRelativeF1":0.18601970708518514,
+      "v4HysteresisF1":0.19988006875570843,
+      "rankedCompleteness":0.09977624043898718,
+      "stateRelativeCompleteness":0.16910740488422757,
+      "v4HysteresisCompleteness":0.17726012362791588,
+      "trueEventRank1Rate":0.5926659688995215,
+      "trueEventMeanLocalRank":1.7571396531100478
+    }
+  },
+  "aggregate":{
+    "rankedMacroF1":0.16158355846838688,
+    "stateRelativeMacroF1":0.2226251205747772,
+    "v4HysteresisOnV7StateMacroF1":0.24619350297467514,
+    "v4BenchmarkMacroF1":0.24352280312668845,
+    "deltaHybridVsV4":0.002670699847986692
+  },
+  "interpretation":{
+    "primaryBlocker":"V7 native ranked-event decoder, not the learned V7 state representation.",
+    "evidence":"Applying frozen V4 hysteresis to unchanged V7 state probabilities improves macro F1 from 0.1616 to 0.2462 and slightly exceeds the V4 model benchmark without any retraining.",
+    "eventHead":"Ranking signal is useful but insufficiently precise as the sole event-start admission mechanism; true-event rank-1 rate is ~68.9% / 59.3%."
+  },
+  "decision":{
+    "v7NativeDecoder":"FAIL",
+    "v7Representation":"PRESERVE",
+    "nextDirection":"V8 should preserve frozen V7 representation/training objective and replace native ranked-event admission with a fixed hybrid decoder based on V4 hysteresis/state continuity, optionally using event rank only as secondary tie-break/support. No retraining until decoder-only synthetic and zero-optimizer development evaluation are complete.",
+    "thresholdRetuningAllowed":false,
+    "p3Opened":false,
+    "protectedSongUseAllowed":false
+  },
+  "guards":{
+    "optimizerStepsExecuted":0,
+    "modelWeightsModified":false,
+    "thresholdsRetuned":false,
+    "p3Opened":false,
+    "protectedSongUsed":false,
+    "mainOrProductionModified":false
+  }
+}
