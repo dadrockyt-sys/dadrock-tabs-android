@@ -1,0 +1,81 @@
+{
+  "schema": "astra-guitarset-missing-event-diagnostic-v1-result-receipt",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "authoritativeRunId": 37431884091,
+  "authoritativeRunHead": "710f2349c667b193f8962e352f455ade370c8201",
+  "status": "SUCCESS",
+  "artifact": {
+    "id": 11397417142,
+    "name": "guitarset-missing-event-diagnostic-v1-mirror-recovered",
+    "digest": "sha256:9e28ac5a9316f858eeaf14e2006c2df81c3a5204443d7d890176fc0516eb29ca"
+  },
+  "resultJsonSha256": "c91c603d031c367ce7fd4fc3a5011f2f5a225e08ea15c523395247c27f71a89f",
+  "mirrorReferenceManifestSha256": "8dc2cc8de57d13951a6d30ad2178a69ec86ddc6b98460f9ecc63b0aac9f4f84a",
+  "frozenCandidate": {
+    "sourceRunId": 37426492061,
+    "artifactId": 11395810007,
+    "artifactDigest": "sha256:6568a6daaca594dc216d61268a80012da7c63f26a7e77f2d7826b1b5f3b73cc5",
+    "manifestSha256": "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb",
+    "fileCount": 180,
+    "eventCount": 33327,
+    "players": [
+      "00",
+      "01",
+      "03"
+    ],
+    "predictionMutation": false,
+    "thresholdSearch": false
+  },
+  "scoring": {
+    "onsetToleranceSeconds": 0.05,
+    "matchingPolicy": "maximum-cardinality onset-only, then minimum total absolute onset error; pitch never selects primary pairs",
+    "trackCount": 180,
+    "referenceEventCount": 33849,
+    "pooled": {
+      "predictionCount": 33327,
+      "referenceCount": 33849,
+      "onsetMatchedCount": 26640,
+      "onsetMatchedReferenceRecall": 0.7870247274660994,
+      "unmatchedReferenceCount": 7209,
+      "unmatchedPredictionCount": 6687,
+      "assignmentDependentExactPitchCount": 14596,
+      "assignmentDependentWrongPitchCount": 12044,
+      "assignmentDependentExactPitchRate": 0.5478978978978979,
+      "ambiguityStablePitchErrorLowerBound": 1419,
+      "unmatchedToAssignmentDependentWrongRatio": 0.5985552972434407,
+      "unmatchedToStablePitchErrorLowerBoundRatio": 5.080338266384778
+    },
+    "players": {
+      "00": {
+        "unmatchedReferenceCount": 3273,
+        "assignmentDependentWrongPitchCount": 5264,
+        "onsetMatchedReferenceRecall": 0.7524767450654163,
+        "ambiguityStablePitchErrorLowerBound": 547
+      },
+      "01": {
+        "unmatchedReferenceCount": 2276,
+        "assignmentDependentWrongPitchCount": 3519,
+        "onsetMatchedReferenceRecall": 0.7980120695775648,
+        "ambiguityStablePitchErrorLowerBound": 410
+      },
+      "03": {
+        "unmatchedReferenceCount": 1660,
+        "assignmentDependentWrongPitchCount": 3261,
+        "onsetMatchedReferenceRecall": 0.8226116691600769,
+        "ambiguityStablePitchErrorLowerBound": 462
+      }
+    }
+  },
+  "preregisteredReplicationGate": {
+    "rule": "unmatchedReferenceCount > assignmentDependentWrongPitchCount pooled AND separately for each player 00/01/03",
+    "pooledPass": false,
+    "allPlayersPass": false,
+    "passed": false
+  },
+  "interpretation": {
+    "conclusion": "The preregistered independent replication gate failed. The Go My Way missing/unsynchronized-event hypothesis is not independently replicated under the frozen decision rule.",
+    "nuance": "Ambiguity-stable pitch-error lower bounds are much smaller than unmatched-reference counts, so ambiguity remains scientifically important; however this does not override or redefine the preregistered gate after seeing results.",
+    "nextAction": "Stop. Do not implement recovery, retune thresholds, mutate predictions, or reuse players 00/01/03 as fresh holdout from this result."
+  }
+}
