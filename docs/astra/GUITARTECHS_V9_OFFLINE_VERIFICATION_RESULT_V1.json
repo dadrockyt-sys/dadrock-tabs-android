@@ -1,0 +1,10 @@
+{
+  "schema": "astra-guitar-techs-v9-offline-verification-result-v1",
+  "date": "2026-10-06",
+  "sourceCommit": "f910b4292f88ef452d18541168d893790934a967",
+  "runId": 37538504464,
+  "conclusion": "success",
+  "optimizerSteps": 0,
+  "realMediaAccessed": false,
+  "consistencyWeight": 0.1
+}
