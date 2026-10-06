@@ -14,7 +14,7 @@
     "conclusion": "success"
   },
   "sourceBlobs": {
-    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "d437e4e0c2816bb9a3f3943ffe99836897695921",
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "d258daebf16bec864333402ef1649dad46695ca5",
     "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
     "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
     "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
@@ -53,5 +53,12 @@
     "mainMutation": false,
     "productionMutation": false
   },
-  "stopRule": "If either fold or the frozen V9 development gate fails, freeze failure. No automatic rescue, threshold change, seed search, protected-song tuning, P3 access, Stage-B access, V10 run, Production change, or main change."
+  "stopRule": "If either fold or the frozen V9 development gate fails, freeze failure. No automatic rescue, threshold change, seed search, protected-song tuning, P3 access, Stage-B access, V10 run, Production change, or main change.",
+  "repair": {
+    "priorFailedRun": 37539030065,
+    "repairCommit": "080834705a64d143ad10e6f1ec04eeca1d9361fb",
+    "semanticContractChanged": false,
+    "reason": "preflight-only stale symbol in resume self-test; no media access or optimizer steps occurred"
+  },
+  "relaunchSequence": 1
 }
