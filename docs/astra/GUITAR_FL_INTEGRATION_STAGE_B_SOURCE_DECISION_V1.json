@@ -1,0 +1,60 @@
+{
+  "schema": "astra-guitar-fl-integration-stage-b-source-decision-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "SOURCE_CLASS_SELECTED_NO_CAPTURE_AUTHORIZED",
+  "selectedSourceClass": "purpose-built untouched real-guitar holdout with independent physical pitch/string-fret and event-birth reference planes",
+  "rejectedPublicSources": {
+    "GAPS": [
+      "audio-derived timing truth",
+      "consumed test population",
+      "underlying third-party performance rights chain insufficient for product-validation authority"
+    ],
+    "FrancoisLeduc": [
+      "audio/model-derived performed timing",
+      "intervention training substrate",
+      "product-rights provenance unresolved"
+    ],
+    "GuitarSet": [
+      "project populations already consumed",
+      "not accepted as untouched Stage-B product-validation holdout"
+    ],
+    "GuitarTECHS": [
+      "consumed development/training/diagnosis",
+      "P3 remains sealed"
+    ],
+    "IDMT": [
+      "consumed prior official validation"
+    ],
+    "EGDB": [
+      "audio-derived onset truth",
+      "corpus-wide product-validation rights not established"
+    ],
+    "AGPTSet": [
+      "audio/spectrogram-derived onset labeling"
+    ],
+    "FiveGuitar": [
+      "no independent performed note-level reference"
+    ],
+    "KlangioGSTMM2025": [
+      "strum/chord rather than per-note truth",
+      "audio-derived onset component",
+      "dataset-audio rights not established"
+    ],
+    "GOAT": [
+      "CC BY-NC 4.0 / research-only",
+      "not intended for commercial product",
+      "prior research-access path closed"
+    ]
+  },
+  "requiredPlanes": [
+    "clean DI evaluated audio",
+    "independent physical string/fret state",
+    "independent excitation/event-birth evidence"
+  ],
+  "audioDerivedReferenceForbidden": true,
+  "captureAuthorized": false,
+  "spendingAuthorized": false,
+  "performerContactAuthorized": false,
+  "empiricalStageBAuthorized": false
+}
