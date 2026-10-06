@@ -89,6 +89,7 @@ def materialize_row(row:dict,out_dir:Path):
         if s not in by_string or not all(math.isfinite(x) for x in (onset,offset,midi)) or offset<onset:
             raise RuntimeError(f"invalid mirror note {track} index {i}")
         by_string[s].append((onset,offset,midi))
+    jam.file_metadata.duration=max((x[1] for rows in by_string.values() for x in rows), default=0.0)
     for s in range(6):
         ann=jams.Annotation(namespace="note_midi")
         ann.annotation_metadata.data_source=f"jhartquist/guitarset@{EXPECTED_REVISION}:notes:string{s}"
