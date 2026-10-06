@@ -1,0 +1,14 @@
+{
+  "schema": "astra-guitar-fl-integration-stage-a-authorization-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AUTHORIZED_BY_USER",
+  "userAuthorization": "Please continue",
+  "scope": "Stage A only: implement a model-free adapter from frozen guitar-fl note events to Astra's existing generic note-event contract and deterministic unit tests. No real audio, model inference, reference labels, scoring, or Production/main change.",
+  "empiricalExecutionAuthorized": false,
+  "realAudioAuthorized": false,
+  "modelInferenceAuthorized": false,
+  "referenceInspectionAuthorized": false,
+  "scoringAuthorized": false,
+  "productionChangeAuthorized": false
+}
