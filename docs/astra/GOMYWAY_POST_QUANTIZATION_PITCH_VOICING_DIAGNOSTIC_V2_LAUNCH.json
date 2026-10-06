@@ -11,7 +11,7 @@
   "candidateArtifactId": 11391794891,
   "candidateSha256": "880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
   "originalEvidenceArtifactId": 11282827368,
-  "repairCommit": "b1e7763e59a72c809d0389701d6c2189da4e126b",
-  "attempt": 3,
-  "repairScope": "Runtime optimization only: equivalent maximum-cardinality/minimum-total-onset-error dynamic program; no matcher objective, pitch use, threshold, identity, or scientific-rule change."
+  "repairCommit": "a94abd474accd731ee112c134a4a01631c7bcd41",
+  "attempt": 4,
+  "repairScope": "Serializer correctness only: emit one real trailing newline and require JSON parse success; no matcher objective, pitch use, threshold, identity, or scientific-rule change."
 }
