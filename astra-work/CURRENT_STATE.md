@@ -11677,3 +11677,96 @@ Requirements:
    - spectral bass V1 TP 372 / F1 60.10%
    - V4-origin timing
    - BS-Roformer separator.
+
+
+## V8 protected-song phase — reference-blind candidate freeze launched
+
+The immutable clean V8 candidate freeze is complete:
+- freeze receipt `docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json`
+- freeze git blob `40bf73a6c57c9f697d10a60b8b3c555b3199a82a`
+
+Protected-song generation is now allowed only as post-freeze evaluation.
+
+Reference-blind Go My Way generator:
+- `astra_backend/guitartechs_training_v8/generate_gomyway_v8_frozen_candidate.py`
+- commit `6b23a116dbfb9c84e28a039967f79221aeda7231`
+- git blob `effc32d9eec291d78422cb92a20ad98c2c6d0f15`
+
+Generation workflow:
+- `.github/workflows/astra-gomyway-v8-reference-blind-freeze.yml`
+- commit `82ea7a5ce171be93760b7feb12af7fc7871700d3`
+- git blob `3a738667df92cf5489a8b11cbc097de144c8a6d0`
+
+Launch receipt:
+- `docs/astra/GUITARTECHS_V8_GOMYWAY_CANDIDATE_LAUNCH_V1.json`
+- commit `ec6213345e3f9b8137e5662217ceed3efd045338`
+
+Frozen protected-song generation inputs:
+- source `public/gomywayfullaitest.m4a`
+- source git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+- BS-Roformer FP16 SHA-256 `d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444`
+- P1 V7 model artifact `11336573510`, SHA-256 `072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763`
+- P2 V7 model artifact `11374640369`, SHA-256 `566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596`
+
+Reference-blind protocol:
+1. decode immutable source;
+2. run frozen BS-Roformer separator;
+3. take guitar stem only;
+4. decode audio exactly like Guitar-TECHS training:
+   - mono
+   - 22050 Hz
+   - RMS normalization
+   - frozen 192-bin VQT/CQT
+5. run each frozen V7 fold model independently;
+6. apply frozen V8 decoder;
+7. convert decoded string/fret runs to MIDI/time events;
+8. freeze both candidate JSON files and a manifest;
+9. professional references are not read;
+10. timing map is not read;
+11. no optimizer steps;
+12. no parameter/threshold changes.
+
+Why both fold models are generated:
+- the clean freeze contains two performer-disjoint fold models;
+- no fold model was selected using Go My Way;
+- generating/scoring both independently preserves the reference-blind boundary and avoids post-hoc model selection.
+
+Authoritative candidate-freeze run:
+- run `37415737535`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37415737535
+- status at this update: IN PROGRESS
+
+Expected artifact:
+- `gomyway-v8-reference-blind-candidates-frozen`
+- expected contents:
+  - `gomyway-v8-p1model-candidate.json`
+  - `gomyway-v8-p2model-candidate.json`
+  - `gomyway-v8-candidate-freeze-manifest.json`
+  - `SHA256SUMS.txt`
+
+### Exact next resume instruction
+
+Resume from run `37415737535`.
+
+If failed:
+- inspect exact separator/runtime/model/generator issue;
+- repair infrastructure only;
+- professional references and timing map must remain inaccessible;
+- do not alter V8 decoder/model parameters.
+
+If green:
+1. record artifact ID/digest;
+2. record both candidate JSON SHA-256 values;
+3. record candidate event counts and guitar-stem SHA-256;
+4. record freeze-manifest SHA-256;
+5. only after those are frozen, launch a separate scoring-only workflow;
+6. scoring workflow may then read:
+   - frozen V4-origin timing map SHA-256 `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`
+   - rhythm ref SHA-256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`
+   - lead ref SHA-256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`
+7. score both frozen fold candidates independently;
+8. compare both against Basic Pitch V4:
+   - combined F1 35.04%
+   - rhythm F1 31.82%
+   - lead F1 17.84%
+9. do not change V8 based on the protected-song score.
