@@ -11522,3 +11522,81 @@ If green:
 If failed:
 - inspect only evaluation/runtime issue;
 - repair infrastructure without changing decoder rule.
+
+
+## V8 zero-optimizer evaluation — authoritative green and new strongest clean combination
+
+Run `37409380940` completed SUCCESS.
+
+Artifact:
+- id `11390348256`
+- digest `sha256:b3964b6373b00fa4cd58b60766cf5069cb3b5acac85438fcc7c15b3faa608646`
+- evaluation JSON SHA-256 `f7138835adac94cc445ee4e6200cdaf39ea4c5e0d7f88971b9f6384c597b0433`
+
+Fold results:
+
+P1 train -> P2 validate:
+- precision `0.2599843556`
+- recall `0.3472475123`
+- F1 `0.2930545154`
+- completeness `0.3102820602`
+- frame accuracy `0.3233553134`
+
+P2 train -> P1 validate:
+- precision `0.1785231508`
+- recall `0.2446501217`
+- F1 `0.2005571729`
+- completeness `0.1778232009`
+- frame accuracy `0.2560790866`
+
+Aggregate:
+- macro F1 `0.2468058442`
+- macro completeness `0.2440526306`
+
+Comparison:
+- native V7 macro F1 `0.1615835585`
+- V7 state-relative macro F1 `0.2226251206`
+- V7 state + pure frozen V4 hysteresis macro F1 `0.2461935030`
+- original V4 model macro F1 `0.2435228031`
+- V8 delta vs pure V4 hysteresis on V7 state `+0.0006123412`
+- V8 delta vs original V4 `+0.0032830410`
+
+Interpretation:
+- V8 improves both performer-disjoint folds;
+- gain is small but directionally consistent;
+- no retraining was used;
+- no model weights changed;
+- no thresholds retuned;
+- V8 is now the strongest clean Guitar-TECHS representation+decoder combination observed.
+
+Frozen result:
+- `docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json`
+- commit `48da123e5cd5f7cd76f6654f17a104f229b91b91`
+
+Current clean champion:
+- model representation: frozen V7 fold models;
+- decoder: V8 frozen V4 hysteresis plus event-rank backshift;
+- macro F1 `0.2468058442`;
+- macro completeness `0.2440526306`.
+
+### Exact next step
+
+Before any protected-song use:
+1. freeze the V8 clean configuration identities as one immutable candidate receipt;
+2. include:
+   - V7 model identities
+   - V8 decoder git blob
+   - V8 design git blob
+   - V8 evaluation result identity
+   - all guards showing zero optimizer / no retuning;
+3. only after that freeze may a separate protected-song Go My Way evaluation be considered;
+4. P3 remains closed;
+5. Go My Way must remain scoring-only and cannot influence decoder/model parameters;
+6. compare any eventual protected-song result against existing Basic Pitch V4 guitar baseline:
+   - combined F1 35.04%
+   - rhythm F1 31.82%
+   - lead F1 17.84%;
+7. bass/timing/separator remain unchanged:
+   - spectral bass V1 TP 372 / F1 60.10%
+   - V4-origin timing
+   - BS-Roformer separator.
