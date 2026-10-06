@@ -1,0 +1,29 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-empirical-authorization-request-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AWAITING_EXPLICIT_EMPIRICAL_AUTHORIZATION",
+  "stage0Selection": "docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json",
+  "gate": "docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json",
+  "requestedScope": [
+    "download/verify only the pinned guitar-fl.pth checkpoint and pinned GAPS test-split audio/MIDI needed for the 30 frozen test rows",
+    "generate Basic Pitch 0.4.0 and guitar-fl candidates from audio only and freeze both before reference parsing",
+    "perform one reference-facing score with the frozen 50 ms ambiguity-aware matcher",
+    "evaluate the frozen advancement gate once"
+  ],
+  "longRunExpected": true,
+  "userMonitoringPreference": "User will monitor long runs; assistant may handle short runs.",
+  "forbidden": [
+    "training",
+    "optimizer steps",
+    "threshold search",
+    "program/pitch remapping",
+    "reference-derived prediction mutation",
+    "Go My Way use",
+    "GuitarSet 00/01/03 reuse",
+    "automatic retry after a scientific gate failure",
+    "production/main changes"
+  ],
+  "executionAuthorized": false,
+  "note": "A future explicit user authorization is required before empirical model/dataset download, inference, or reference-facing scoring."
+}
