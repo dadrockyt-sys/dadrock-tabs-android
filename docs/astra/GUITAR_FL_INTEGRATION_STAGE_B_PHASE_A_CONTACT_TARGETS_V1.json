@@ -1,0 +1,56 @@
+{
+  "schema": "astra-guitar-fl-stage-b-phase-a-contact-targets-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "FROZEN_CONTACT_TARGETS_NO_SPENDING",
+  "hardwareCandidate": {
+    "manufacturer": "TASCAM",
+    "model": "US-16x08",
+    "requiredUse": "13 simultaneous authoritative analog inputs at 48 kHz / 24-bit",
+    "publicEvidence": {
+      "manualConfirmsSampleRates": [
+        44100,
+        48000,
+        88200,
+        96000
+      ],
+      "manualConfirmsBitDepths": [
+        16,
+        24
+      ],
+      "analogInputCount": 16,
+      "productSupportStatus": "legacy/old-product documentation observed; current unit/firmware/driver compatibility requires vendor/manufacturer confirmation"
+    }
+  },
+  "vendorContactTarget": {
+    "organization": "Musique Gagné",
+    "department": "Pro-Audio / Recording",
+    "address": "393 Raoul-Jobin, Québec, QC G1K 1M9, Canada",
+    "phone": "1-888-777-8601",
+    "observedListing": "TASCAM US-16x08",
+    "observedPriceCad": 719,
+    "purpose": [
+      "confirm new/used/open-box condition",
+      "confirm actual stock",
+      "obtain non-binding quote",
+      "identify exact unit/revision if available",
+      "confirm return/warranty terms"
+    ],
+    "purchaseAuthorized": false
+  },
+  "manufacturerTechnicalTarget": {
+    "organization": "TASCAM Product Support",
+    "phone": "1-323-726-0303",
+    "purpose": [
+      "confirm latest supported US-16x08 firmware",
+      "confirm current Windows/macOS driver or class-compliant requirements",
+      "confirm 16 simultaneous discrete inputs at 48 kHz / 24-bit",
+      "confirm support status for intended host OS"
+    ],
+    "purchaseAuthorized": false
+  },
+  "performerContactTarget": {
+    "status": "BLOCKED_NO_IDENTITIES_IN_REPOSITORY",
+    "reason": "Repository search found no frozen performer candidate/contact identities. No performer outreach can occur until specific recipients are identified and frozen."
+  }
+}
