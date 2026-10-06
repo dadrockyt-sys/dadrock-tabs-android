@@ -1,0 +1,57 @@
+{
+  "schema": "astra-guitar-techs-v9-resumable-launch-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "singleLaunch": true,
+  "authorization": {
+    "userText": "Green",
+    "authorizationPath": "docs/astra/GUITARTECHS_V9_REAL_TRAINING_AUTHORIZATION_V1.json"
+  },
+  "orchestrationCommit": "d46b7fe75605ccda479b0ca76e24c3488cfebdbe",
+  "candidateId": "astra_guitartechs_v9_paired_view_consistency",
+  "offlineVerification": {
+    "runId": 37538504464,
+    "conclusion": "success"
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "d437e4e0c2816bb9a3f3943ffe99836897695921",
+    "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
+    "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+    "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
+    ".github/workflows/guitar-techs-v9-resumable-segment.yml": "b6a665d514578738c1a559432442db7c710c8dc0",
+    ".github/workflows/guitar-techs-v9-resumable-real-training.yml": "374f1c9cbffadd5443bfb378e63a790790c7fd20",
+    "docs/astra/GUITARTECHS_V9_DOMAIN_GENERALIZATION_TRAINING_DESIGN_V1.json": "723cbe66cdcf075b73d948e3f4e3ab4a04cf238a",
+    "docs/astra/GUITARTECHS_V9_SYNTHETIC_NO_MEDIA_CONTRACT_V1.json": "e9e527db8728eab4c5b3fd35be1c31a2c3cfc052",
+    "docs/astra/GUITARTECHS_V9_REAL_TRAINING_AUTHORIZATION_V1.json": "9ca276e258f5963687086da79bc0d53233b55576",
+    "docs/astra/GUITARTECHS_V9_OFFLINE_VERIFICATION_RESULT_V1.json": "c8dcb75f528fc2fad7311626870cfd287939f9f9",
+    "docs/astra/GUITARTECHS_DEVELOPMENT_METRIC_THRESHOLDS_V1.json": "8e488ce4449fd3f35cf280af03fe1f1e017f3dc1",
+    "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "astra_backend/guitartechs_training_v2/train_v2.py": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "astra_backend/guitartechs_training_v2/sampling.py": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
+    "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "astra_backend/tabcnn_runtime/requirements.lock.txt": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "scope": {
+    "foldOrder": [
+      "p1-train-p2-validate",
+      "p2-train-p1-validate"
+    ],
+    "resumeBoundariesEpochs": [
+      400,
+      800,
+      1000
+    ],
+    "consistencyWeight": 0.1,
+    "serializedExecutionOnly": true,
+    "fixedDecoder": "V8 V4-hysteresis plus event-rank backshift",
+    "p3Opened": false,
+    "protectedSongUse": false,
+    "stageBHoldoutUse": false,
+    "thresholdRetuning": false,
+    "seedSelection": false,
+    "paidCompute": false,
+    "mainMutation": false,
+    "productionMutation": false
+  },
+  "stopRule": "If either fold or the frozen V9 development gate fails, freeze failure. No automatic rescue, threshold change, seed search, protected-song tuning, P3 access, Stage-B access, V10 run, Production change, or main change."
+}
