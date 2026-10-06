@@ -1,0 +1,21 @@
+{
+  "schema": "astra-guitar-fl-stage-b-precapture-authorization-request-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AWAITING_EXPLICIT_PRECAPTURE_AUTHORIZATION",
+  "alreadyFrozen": [
+    "Stage-B source class",
+    "population floors",
+    "numerical advancement gate",
+    "three-plane independence architecture",
+    "rights-manifest requirements",
+    "reuse of existing V2.3 capture governance"
+  ],
+  "requestedNextPhase": "Pre-capture implementation/planning only: select concrete hardware classes, freeze objective acquisition-QA thresholds, complete capture-plan validator/schema and synthetic tests, and prepare performer/content rights document templates. No spending, vendor/performer contact, procurement, calibration recording, holdout capture, model inference, or scoring.",
+  "spendingRequested": false,
+  "procurementRequested": false,
+  "performerContactRequested": false,
+  "vendorContactRequested": false,
+  "captureRequested": false,
+  "empiricalExecutionRequested": false
+}
