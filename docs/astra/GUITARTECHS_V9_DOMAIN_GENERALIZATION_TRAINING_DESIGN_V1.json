@@ -1,0 +1,94 @@
+{
+  "schema": "astra-guitar-techs-v9-domain-generalization-training-design-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "FROZEN_DESIGN_NO_REAL_TRAINING_EXECUTION",
+  "motivation": {
+    "v7Development": "Native V7 decoder failed, but V7 learned state representation remained useful.",
+    "v8Clean": "V8 decoder-only clean development combination reached macro F1 0.24680584415601026 without retraining.",
+    "v8ProtectedDiagnostic": "Frozen V8 generalized poorly to Go My Way; that protected-song result is diagnostic only and cannot tune parameters.",
+    "sourceDomainHistory": "Prior source-domain simulator V1/V3 experiments failed frozen preservation gates and may not be rerun, seed-selected, or threshold-rescued."
+  },
+  "trainingHypothesis": "Improve performer/domain robustness of the existing V7 causal temporal representation using only fresh reference-blind training-side augmentations and invariance regularization on the already-authorized clean P1/P2 development population; keep the frozen V8 decoder fixed during model selection.",
+  "preserved": {
+    "baseRepresentationFamily": "Guitar-TECHS V7 causal temporal representation",
+    "decoder": "Frozen V8 V4-hysteresis plus event-rank backshift",
+    "thresholds": "unchanged",
+    "alignmentAllowlist": "unchanged",
+    "protectedSongExcluded": true,
+    "p3Excluded": true,
+    "stageBHoldoutExcluded": true,
+    "productionExcluded": true,
+    "mainExcluded": true
+  },
+  "proposedTrainingChange": {
+    "name": "paired-view representation consistency",
+    "scope": "training-time only",
+    "description": "For each clean P1/P2 training sequence, construct two label-preserving feature views using preregistered input-space perturbations and add a consistency penalty between hidden/state outputs while retaining the existing supervised objective.",
+    "allowedPerturbations": [
+      "bounded gain scaling",
+      "bounded broadband noise injection",
+      "bounded frequency-response tilt",
+      "bounded time-local masking that does not alter target labels"
+    ],
+    "prohibited": [
+      "pitch shifting",
+      "time stretching",
+      "label mutation",
+      "protected-song-derived augmentation parameters",
+      "Go My Way-derived parameters",
+      "P3-derived parameters",
+      "threshold search",
+      "seed selection after results",
+      "architecture search after results"
+    ]
+  },
+  "frozenDevelopmentProtocol": {
+    "population": "exact frozen P1/P2 performer-disjoint development population only",
+    "folds": [
+      {
+        "train": "P1",
+        "validate": "P2"
+      },
+      {
+        "train": "P2",
+        "validate": "P1"
+      }
+    ],
+    "seeds": [
+      20260921
+    ],
+    "decoderDuringEvaluation": "frozen V8 decoder",
+    "compareAgainst": {
+      "v4MacroF1": 0.24352280312668845,
+      "v8MacroF1": 0.24680584415601026
+    }
+  },
+  "advancementGate": {
+    "required": [
+      "both folds complete successfully",
+      "macro F1 > 0.24680584415601026",
+      "macro completeness >= 0.24405263055855808",
+      "neither fold F1 regresses by more than 0.02 versus V8 corresponding fold",
+      "no threshold retuning",
+      "no protected-song, P3, or Stage-B holdout access"
+    ],
+    "stopRule": "If any criterion fails, freeze V9 FAIL. No rescue run, seed search, threshold rescue, or automatic V10 training."
+  },
+  "nextRequiredBeforeOptimizerSteps": [
+    "implement synthetic/no-media paired-view invariance smoke test",
+    "freeze perturbation numeric ranges and consistency-loss weight before real P1/P2 access",
+    "pass offline verification with zero optimizer steps",
+    "record a separate real-training authorization receipt"
+  ],
+  "authority": {
+    "syntheticNoMediaImplementationAuthorized": true,
+    "realP1P2OptimizerStepsAuthorized": false,
+    "p3Authorized": false,
+    "protectedSongAuthorized": false,
+    "stageBHoldoutAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "paidComputeAuthorized": false,
+    "productionOrMainAuthorized": false
+  }
+}
