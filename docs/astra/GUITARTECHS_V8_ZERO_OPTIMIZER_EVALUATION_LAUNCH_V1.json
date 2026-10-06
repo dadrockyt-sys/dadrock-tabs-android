@@ -1,0 +1,31 @@
+{
+  "schema":"astra-guitar-techs-v8-zero-optimizer-evaluation-launch-v1",
+  "sourceRunId":37408775000,
+  "candidateId":"astra_guitartechs_v8_v4_hysteresis_event_rank_backshift",
+  "purpose":"Evaluate exactly one frozen V8 decoder on frozen V7 P1/P2 models with zero optimizer steps and no tuning.",
+  "sourceIdentities":{
+    "decoderGitBlob":"0d856504983afdeeba2c18ad11b3090164876243",
+    "syntheticVerifierGitBlob":"2fe5431c64cfadec480c21324d331fd851bcd6dd",
+    "designGitBlob":"4094b878f6c9252be7ff35966893119bf288c6cd",
+    "evaluatorGitBlob":"29747b79af6b67ee300bbc2fb7e76eeb03716165",
+    "workflowGitBlob":"e79b8e7c99291e16310dd491b6d1755ec0c17132"
+  },
+  "frozenModels":{
+    "p1":{"artifactId":11336573510,"modelSha256":"072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763"},
+    "p2":{"artifactId":11374640369,"modelSha256":"566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596"}
+  },
+  "comparisonBaselines":{
+    "nativeV7MacroF1":0.16158355846838688,
+    "stateRelativeMacroF1":0.2226251205747772,
+    "v7StatePlusV4HysteresisMacroF1":0.24619350297467514,
+    "originalV4MacroF1":0.24352280312668845
+  },
+  "guards":{
+    "optimizerStepsAuthorized":0,
+    "modelWeightMutationAuthorized":false,
+    "thresholdRetuningAuthorized":false,
+    "p3Opened":false,
+    "protectedSongUseAuthorized":false,
+    "mainOrProductionMutationAuthorized":false
+  }
+}
