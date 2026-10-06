@@ -1,0 +1,52 @@
+{
+  "schema": "astra-gomyway-post-quantization-pitch-voicing-diagnostic-v2-spec",
+  "date": "2026-10-06",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "purpose": "Model-free ambiguity-aware post-quantization pitch/voicing diagnosis of the immutable Go My Way V4-origin guitar candidate.",
+  "inputs": {
+    "quantizedCandidateArtifactId": 11391794891,
+    "quantizedCandidateSha256": "880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
+    "originalEvidenceArtifactId": 11282827368,
+    "timingMapSha256": "b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3",
+    "rhythmReferenceSha256": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+    "leadReferenceSha256": "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+    "expectedOriginalEvents": 1065,
+    "expectedQuantizedEvents": 1065
+  },
+  "frozenRules": {
+    "onsetToleranceSeconds": 0.05,
+    "primaryPairing": "maximum cardinality first, then minimum total absolute onset error; pitch is not used to select pairs",
+    "legacyPairing": "retain greedy onset-first assignment only for historical comparability and mark it assignment-dependent",
+    "ambiguity": "connected onset-eligibility components with any node degree >1 are ambiguous; report pairing-invariant MIDI multiset overlap and ambiguous/unambiguous strata",
+    "pitchBuckets": ["exact", "abs1", "abs2", "abs3to5", "abs12", "other"],
+    "pitchClassRule": "all nonzero multiples of 12 count as pitch-class-correct octave errors; only +/-12 belongs to the disjoint abs12 bucket",
+    "predictionMutation": false,
+    "modelExecution": false,
+    "audioExecution": false,
+    "thresholdSearch": false
+  },
+  "requiredAudits": [
+    "original evidence manifest verification",
+    "candidate/timing/reference SHA verification",
+    "ordered event identity and MIDI equality",
+    "duration preservation within numerical tolerance",
+    "candidate byte identity before/after diagnostic",
+    "role-specific eligible/excluded/out-of-window counts",
+    "boundary migrations caused by quantization",
+    "16-equal-subdivisions-per-measure semantics including measures 104/105",
+    "combined-target union-exclusion and coincident same-pitch role-target convention"
+  ],
+  "focusedFixtures": [
+    "permuted chord ordering",
+    "duplicate notes and one-to-one use",
+    "greedy-cardinality counterexample",
+    "exact 50 ms boundary",
+    "+/-12 and +/-24 categorization",
+    "exclusions and final endpoint",
+    "empty input",
+    "invalid/nonfinite rejection",
+    "hash rejection",
+    "mutation guard"
+  ],
+  "interpretationBoundary": "Use original and quantized inputs under identical V2 rules. Separate unmatched target events from wrong pitches among matched events. If ambiguity prevents stable attribution, stop at that finding. No reference-derived prediction correction is authorized by this diagnostic."
+}

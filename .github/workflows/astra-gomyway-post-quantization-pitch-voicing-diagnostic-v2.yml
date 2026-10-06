@@ -1,0 +1,89 @@
+name: Astra Go My Way post-quantization pitch voicing diagnostic V2
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GOMYWAY_POST_QUANTIZATION_PITCH_VOICING_DIAGNOSTIC_V2_LAUNCH.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-guitar-grid-quantization-v1-frozen
+          path: /tmp/candidate
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37418651745
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: /tmp/evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: /tmp/timing
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+
+      - name: Verify frozen external identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/candidate/guitar-grid-quantization-v1.json | awk '{print $1}')" = '880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e'
+          (cd /tmp/evidence && sha256sum -c gomyway-v4-origin-frozen-note-evidence-v1.sha256)
+          test "$(sha256sum /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = 'b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json | awk '{print $1}')" = 'd51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/lead-scorer-ready.json | awk '{print $1}')" = '8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be'
+
+      - name: Run focused model-free fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd astra_backend/evaluation
+          python -m unittest -v test_gomyway_post_quantization_pitch_voicing_diagnostic_v2.py 2>&1 | tee /tmp/diagnostic-v2-tests.txt
+          sha256sum /tmp/diagnostic-v2-tests.txt
+
+      - name: Run frozen diagnostic once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/gomyway_post_quantization_pitch_voicing_diagnostic_v2.py \
+            --note-evidence /tmp/evidence/gomyway-v4-origin-frozen-note-evidence-v1.json \
+            --note-evidence-manifest /tmp/evidence/gomyway-v4-origin-frozen-note-evidence-v1.sha256 \
+            --candidate /tmp/candidate/guitar-grid-quantization-v1.json \
+            --timing-map /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json \
+            --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+            --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json \
+            --output-json /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json
+          sha256sum /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json | tee /tmp/RESULT_SHA256.txt
+          test "$(sha256sum /tmp/candidate/guitar-grid-quantization-v1.json | awk '{print $1}')" = '880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-post-quantization-pitch-voicing-diagnostic-v2
+          path: |
+            /tmp/gomyway-post-quantization-pitch-voicing-diagnostic-v2.json
+            /tmp/diagnostic-v2-tests.txt
+            /tmp/RESULT_SHA256.txt
+          retention-days: 30
