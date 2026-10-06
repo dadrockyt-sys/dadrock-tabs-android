@@ -1,0 +1,30 @@
+name: Astra Guitar-TECHS V9 Synthetic No-Media
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/guitartechs_training_v9/**'
+      - 'docs/astra/GUITARTECHS_V9_**'
+      - '.github/workflows/astra-guitartechs-v9-synthetic-no-media.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install minimal dependencies
+        run: python -m pip install --disable-pip-version-check numpy torch
+      - name: Compile V9 no-media module
+        run: python -m py_compile astra_backend/guitartechs_training_v9/paired_view.py astra_backend/guitartechs_training_v9/verify_synthetic_v9.py
+      - name: Run V9 synthetic no-media verification
+        working-directory: astra_backend/guitartechs_training_v9
+        run: python verify_synthetic_v9.py

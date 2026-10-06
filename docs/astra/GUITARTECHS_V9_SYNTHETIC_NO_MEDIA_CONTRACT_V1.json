@@ -1,0 +1,40 @@
+{
+  "schema": "astra-guitar-techs-v9-synthetic-no-media-contract-v1",
+  "date": "2026-10-06",
+  "status": "FROZEN_NO_MEDIA_CONTRACT",
+  "design": "docs/astra/GUITARTECHS_V9_DOMAIN_GENERALIZATION_TRAINING_DESIGN_V1.json",
+  "numericRanges": {
+    "gainDbMaxAbs": 3,
+    "noiseSnrDb": [
+      30,
+      50
+    ],
+    "tiltDbPerOctaveMaxAbs": 1.5,
+    "maskSpanFramesMax": 4,
+    "maskSpanCountMax": 2
+  },
+  "consistency": {
+    "loss": "symmetric KL over paired class logits",
+    "realTrainingWeight": null,
+    "note": "Real-training consistency-loss weight is intentionally not armed by this no-media contract and must be frozen before optimizer execution."
+  },
+  "failClosed": {
+    "pitchShift": false,
+    "timeStretch": false,
+    "labelMutation": false,
+    "referenceConditioning": false,
+    "p3Access": false,
+    "protectedSongAccess": false,
+    "stageBHoldoutAccess": false,
+    "realOptimizerSteps": false,
+    "thresholdSearch": false
+  },
+  "expectedSyntheticChecks": [
+    "deterministic augmentation for fixed seed",
+    "paired views differ while preserving 192 x T geometry",
+    "numeric ranges exactly frozen",
+    "finite positive symmetric-KL loss for differing logits",
+    "finite gradients",
+    "near-zero consistency loss for identical logits"
+  ]
+}
