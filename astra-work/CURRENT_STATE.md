@@ -12079,3 +12079,106 @@ If green:
 If failed:
 - repair scoring/runtime only;
 - do not regenerate or alter candidate.
+
+
+## Go My Way V4-origin guitar grid quantization V1 — authoritative result
+
+Initial two-stage run:
+- run `37418651745`
+- candidate-freeze job: SUCCESS
+- score-after-freeze job: FAILURE before scoring due artifact-path checksum bug only
+- exact bug: checksum manifest stored `/tmp/guitar-grid-quantization-v1.json`, but artifact was downloaded into `/tmp/candidate/`
+- frozen candidate itself was intact and unchanged
+
+Frozen candidate:
+- artifact id `11391794891`
+- artifact digest `sha256:b8b93b5dc5f563abe3576446c777e6e09230b7981e5a6bb63d6de62fb1af1b1e`
+- candidate JSON SHA-256 `880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e`
+- input notes 1065
+- output notes 1065
+- no MIDI changes
+- no note additions
+- no note deletions
+- all 1065 in-range onsets moved to nearest frozen V4-origin 1/16 grid point
+
+Movement:
+- mean absolute shift `0.0264581246 s`
+- median absolute shift `0.0248305164 s`
+- p90 absolute shift `0.0499573434 s`
+- max absolute shift `0.0654734907 s`
+
+Scoring-only recovery:
+- workflow `.github/workflows/astra-gomyway-v4-origin-guitar-grid-quantization-v1-score-recovery.yml`
+- successful recovery run `37418963067`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37418963067
+- score artifact id `11391253841`
+- score artifact digest `sha256:64832f78c136d275878dca8d653622187b88f9d18c97f894b12c0f0aeb621c11`
+- score JSON SHA-256 `2b7fce13b6b55aebeab3ae4be1a266d851b322f9dffefeb9ee16d5e5719deb39`
+
+Scientific result:
+
+Rhythm:
+- baseline TP 320, F1 `0.3182496271`
+- quantized TP 335, F1 `0.3331675783`
+- delta TP +15
+- delta F1 +0.0149179513
+
+Lead:
+- baseline TP 133, F1 `0.1784037559`
+- quantized TP 142, F1 `0.1904761905`
+- delta TP +9
+- delta F1 +0.0120724346
+
+Combined guitar:
+- baseline TP 427, F1 `0.3504308576`
+- quantized TP 451, F1 `0.3701272056`
+- delta TP +24
+- delta F1 +0.0196963480
+
+Interpretation:
+- this is a real structural improvement on both rhythm and lead;
+- the gain came from timing normalization only;
+- pitches and note counts were unchanged;
+- no snap-distance threshold existed;
+- no threshold tuning was performed;
+- the frozen V4-origin 1/16 grid is therefore the strongest current Go My Way guitar timing representation;
+- preserve this quantized candidate as the new timing baseline for future guitar diagnostics.
+
+Frozen result file:
+- `docs/astra/GOMYWAY_V4_ORIGIN_GUITAR_GRID_QUANTIZATION_V1_RESULT.json`
+- commit `fd4b8e5c46af7b97387fdc301b8742be9dc26eb5`
+
+### EXPLICIT NEXT STEPS
+
+1. Treat `gomyway-v4-origin-guitar-grid-quantization-v1-frozen` as the new strongest guitar timing candidate for Go My Way.
+2. Do NOT alter the 1/16 quantization rule based on scorer output.
+3. Keep all 1065 frozen MIDI notes and the quantized onset times byte-identical for the next diagnostic.
+4. Build a **post-quantization pitch/voicing diagnostic only**:
+   - onset-match the quantized candidate to rhythm and lead professional targets at the existing 50 ms tolerance;
+   - measure exact MIDI rate among onset-matched pairs;
+   - measure pitch-class-correct but octave-wrong cases;
+   - measure ±12, ±3–5, ±1–2, and other interval-error buckets;
+   - report rhythm and lead separately;
+   - do not mutate predictions.
+5. Compare the post-quantization pitch/voicing error profile with the earlier pre-quantization diagnostic:
+   - earlier rhythm onset-matched target recall 46.93%, exact MIDI among onset matches 33.11%;
+   - earlier lead onset-matched target recall 49.66%, exact MIDI among onset matches 40.54%.
+6. Use that diagnostic to decide whether the next structural experiment should target:
+   - chord/voicing selection,
+   - octave placement,
+   - or missing pitch evidence.
+7. Do NOT resume:
+   - Basic Pitch threshold tuning;
+   - raw activation recovery;
+   - generic pretrained front-end swapping;
+   - V8/Guitar-TECHS tuning on Go My Way;
+   - simple register/continuity role splitting;
+   - guitar local octave-consensus heuristics.
+8. Preserve:
+   - spectral bass V1 TP 372 / F1 60.10%;
+   - frozen BS-Roformer separator;
+   - V4-origin timing map;
+   - original Basic Pitch V4 note evidence artifact `11282827368`;
+   - quantized guitar candidate artifact `11391794891`;
+   - `main` unchanged.
+9. Next authoritative action: implement and launch the post-quantization pitch/voicing diagnostic described above, freeze its result, then decide the next bounded guitar structural experiment from the measured dominant error class.
