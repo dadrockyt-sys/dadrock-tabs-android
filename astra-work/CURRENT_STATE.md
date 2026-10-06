@@ -12015,3 +12015,67 @@ If green:
    - if combined degrades, reject grid quantization V1;
 5. do not change pitches or note counts based on scorer output;
 6. preserve spectral bass V1, V4-origin timing, BS-Roformer separator, and `main` unchanged.
+
+
+## Guitar grid quantization V1 — scoring checksum-path failure repaired
+
+Original run:
+- `37418651745`
+- freeze-candidate job: SUCCESS
+- score-after-freeze job: FAILURE before scoring
+
+Frozen candidate artifact:
+- artifact id `11391794891`
+- digest `sha256:b8b93b5dc5f563abe3576446c777e6e09230b7981e5a6bb63d6de62fb1af1b1e`
+- candidate SHA-256 `880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e`
+
+Candidate movement:
+- input count 1065
+- output count 1065
+- all 1065 in-range notes moved
+- mean absolute onset displacement `0.0264581246 s`
+- median `0.0248305164 s`
+- p90 `0.0499573434 s`
+- max `0.0654734907 s`
+
+Exact failure:
+- checksum manifest stored absolute path `/tmp/guitar-grid-quantization-v1.json`;
+- after artifact download, checksum verifier looked for the original absolute path;
+- candidate itself is valid and frozen;
+- professional-note scoring did not run.
+
+Repair:
+- main workflow checksum generation changed to artifact-local filename for future reruns;
+- repair commit `52f72f7ba1777789f9b69bdfc76d2b76f5528a86`;
+- no quantization rule, note content, timing map, threshold, or scorer semantics changed.
+
+Scoring-only recovery:
+- workflow `.github/workflows/astra-gomyway-v4-origin-guitar-grid-quantization-v1-score-recovery.yml`
+- launch commit `170e65c6582f5ec305b2f9d63ad0be002ecfe793`
+- verifies exact frozen candidate SHA directly;
+- does not regenerate candidate.
+
+Authoritative recovery run:
+- run `37418963067`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37418963067
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37418963067`.
+
+If green:
+1. record score artifact ID/digest and score JSON SHA;
+2. record rhythm/lead/combined original vs quantized TP/P/R/F1;
+3. compare against baseline:
+   - rhythm F1 31.82%
+   - lead F1 17.84%
+   - combined F1 35.04%;
+4. if combined improves, preserve this timing representation;
+5. if combined degrades, reject quantization V1;
+6. do not introduce a snap-distance threshold based on this result;
+7. preserve all other baselines and `main` unchanged.
+
+If failed:
+- repair scoring/runtime only;
+- do not regenerate or alter candidate.
