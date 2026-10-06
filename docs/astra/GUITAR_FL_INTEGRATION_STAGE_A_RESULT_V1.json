@@ -1,0 +1,53 @@
+{
+  "schema": "astra-guitar-fl-integration-stage-a-result-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "COMPLETE_PASS",
+  "authorization": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_A_AUTHORIZATION_V1.json",
+  "adapter": {
+    "path": "astra_backend/guitarFlNoteEventAdapter.mjs",
+    "gitBlob": "09712983bd704790b7f064822b2db1b9e1313876",
+    "modelInvoked": false,
+    "networkAccess": false,
+    "referenceBlind": true,
+    "roleAuthority": false,
+    "confidenceSynthesized": false,
+    "stringFretSynthesized": false,
+    "duplicateSimultaneousPitchesDeduplicated": false
+  },
+  "tests": {
+    "path": "astra_backend/tests/guitarFlNoteEventAdapter.test.mjs",
+    "gitBlob": "973055262f806457290ce5c6b5128486af740306",
+    "invariantTestCount": 5,
+    "firstCiRun": {
+      "runId": 37450042409,
+      "conclusion": "failure",
+      "reason": "float-only strict duration assertion 0.30000000000000004 vs 0.3"
+    },
+    "repairedCiRun": {
+      "runId": 37450146728,
+      "headSha": "321ff71de6b8437961908ad6bf3e36e4693053fa",
+      "conclusion": "success"
+    },
+    "fullBackendSuitePassed": true,
+    "focusedEvaluationSuitePassed": true
+  },
+  "verifiedInvariants": [
+    "event count preserved",
+    "MIDI pitch preserved",
+    "onset preserved",
+    "offset preserved when present",
+    "source ordering deterministic",
+    "simultaneous duplicate pitches not silently deduplicated",
+    "no role label invented",
+    "no string/fret invented upstream",
+    "no confidence synthesized from MIDI velocity",
+    "existing role-abstention guard remains fail-closed"
+  ],
+  "empiricalIntegrationExecuted": false,
+  "realAudioAccessed": false,
+  "modelInferenceExecuted": false,
+  "referencesAccessed": false,
+  "scoreProduced": false,
+  "nextBoundary": "Stage B source/rights design and preregistration only; fresh empirical integration requires explicit authorization."
+}
