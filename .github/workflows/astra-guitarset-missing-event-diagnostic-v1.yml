@@ -1,0 +1,181 @@
+name: Astra GuitarSet missing-event diagnostic V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_LAUNCH.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freeze-candidates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen candidate runtime
+        run: |
+          python -m pip install --disable-pip-version-check numpy==1.26.4 tflite-runtime==2.14.0 basic-pitch==0.4.0
+
+      - name: Verify candidate implementation and self-test
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/generate_guitarset_missing_event_baseline_v1.py)" = "fef29e2fb010a694172c19b648a98a5adb05f55a"
+          python validation/open_corpus/generate_guitarset_missing_event_baseline_v1.py --self-test
+          python - <<'PY'
+          import hashlib, importlib.metadata as metadata
+          from pathlib import Path
+          from basic_pitch import ICASSP_2022_MODEL_PATH
+          assert metadata.version('basic-pitch') == '0.4.0'
+          assert metadata.version('tflite-runtime') == '2.14.0'
+          d=hashlib.sha256(Path(ICASSP_2022_MODEL_PATH).read_bytes()).hexdigest()
+          assert d == '3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676', d
+          print('GUITARSET_MISSING_EVENT_BP_IDENTITY_PASS', d)
+          PY
+
+      - name: Download verify and isolate sealed evaluation audio
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1"
+          mkdir -p "$ROOT/audio" "$ROOT/candidates"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 'https://zenodo.org/records/3371780/files/audio_mono-mic.zip?download=1' -o audio_mono-mic.zip
+          echo '275966d6610ac34999b58426beb119c3  audio_mono-mic.zip' | md5sum -c -
+          echo '237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28  audio_mono-mic.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.'); out=root/'audio'; keep={'00','01','03'}; forbidden={'02','04','05'}; selected=[]
+          with zipfile.ZipFile(root/'audio_mono-mic.zip') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('_mic.wav'): continue
+                  stem=name[:-8]
+                  if stem[:2] not in keep: continue
+                  if stem[:2] in forbidden: raise SystemExit('development audio selected')
+                  dest=out/name
+                  with z.open(info) as src, dest.open('wb') as dst: shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(keep)}
+          if counts!={'00':60,'01':60,'03':60}: raise SystemExit(counts)
+          if len(selected)!=180: raise SystemExit(len(selected))
+          print('GUITARSET_MISSING_EVENT_EVAL_AUDIO_SELECTION_PASS',counts)
+          PY
+          rm -f audio_mono-mic.zip
+          test "$(find audio -maxdepth 1 -type f -name '*.wav' | wc -l)" -eq 180
+          test "$(find "$ROOT" -type f -name '*.jams' | wc -l)" -eq 0
+
+      - name: Freeze reference-blind baseline candidates
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1"
+          python validation/open_corpus/generate_guitarset_missing_event_baseline_v1.py --audio-root "$ROOT/audio" --output-dir "$ROOT/candidates"
+          sha256sum "$ROOT/candidates/candidate-freeze-manifest.json" | tee "$ROOT/candidates/candidate-manifest-sha256.txt"
+          python -m json.tool "$ROOT/candidates/candidate-freeze-manifest.json" >/dev/null
+          rm -rf "$ROOT/audio"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-missing-event-v1-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-missing-event-v1/candidates/
+          retention-days: 30
+
+  score-after-freeze:
+    needs: freeze-candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install reference parser only
+        run: python -m pip install --disable-pip-version-check jams==0.3.4
+
+      - name: Verify scorer isolation and self-test
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py)" = "972adf7215a180f703873950c96068b4f860bbc8"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py --self-test
+          python - <<'PY'
+          import importlib.util
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('Basic Pitch unexpectedly importable in scorer')
+          print('GUITARSET_MISSING_EVENT_SCORER_NO_BASIC_PITCH_PASS')
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: guitarset-missing-event-v1-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-score/candidates
+
+      - name: Verify frozen candidates before references
+        run: |
+          set -euo pipefail
+          C="$RUNNER_TEMP/guitarset-missing-event-v1-score/candidates"
+          (cd "$C" && sha256sum -c candidate-manifest-sha256.txt)
+          python -m json.tool "$C/candidate-freeze-manifest.json" >/dev/null
+
+      - name: Download verify and isolate evaluation references
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-score"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 'https://zenodo.org/records/3371780/files/annotation.zip?download=1' -o annotation.zip
+          echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
+          echo '8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99  annotation.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.'); out=root/'reference'; keep={'00','01','03'}; selected=[]
+          with zipfile.ZipFile(root/'annotation.zip') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('.jams'): continue
+                  stem=name[:-5]
+                  if stem[:2] not in keep: continue
+                  dest=out/name
+                  with z.open(info) as src, dest.open('wb') as dst: shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(keep)}
+          if counts!={'00':60,'01':60,'03':60}: raise SystemExit(counts)
+          if len(selected)!=180: raise SystemExit(len(selected))
+          print('GUITARSET_MISSING_EVENT_EVAL_REFERENCE_SELECTION_PASS',counts)
+          PY
+          rm -f annotation.zip
+          test "$(find reference -maxdepth 1 -type f -name '*.jams' | wc -l)" -eq 180
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+
+      - name: Score once
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-score"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py --candidate-dir "$ROOT/candidates" --reference-dir "$ROOT/reference" --output "$ROOT/output/result.json"
+          python -m json.tool "$ROOT/output/result.json" >/dev/null
+          sha256sum "$ROOT/output/result.json" | tee "$ROOT/output/result-sha256.txt"
+          rm -rf "$ROOT/reference" "$ROOT/candidates"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-missing-event-diagnostic-v1-result
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-score/output/
+          retention-days: 30
