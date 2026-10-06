@@ -1,0 +1,16 @@
+{
+  "schema": "astra-guitar-fl-stage-b-precapture-authorization-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AUTHORIZED_BY_USER",
+  "userAuthorization": "Please continue 💚",
+  "scope": "Pre-capture implementation/planning only: concrete hardware classes, objective acquisition-QA thresholds, capture-plan validator/schema and synthetic tests, performer/content rights templates.",
+  "spendingAuthorized": false,
+  "procurementAuthorized": false,
+  "performerContactAuthorized": false,
+  "vendorContactAuthorized": false,
+  "calibrationRecordingAuthorized": false,
+  "holdoutCaptureAuthorized": false,
+  "modelInferenceAuthorized": false,
+  "referenceScoringAuthorized": false
+}
