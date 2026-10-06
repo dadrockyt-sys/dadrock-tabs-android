@@ -1,0 +1,54 @@
+{
+  "schema": "astra-guitar-fl-stage-b-capture-plan-schema-v2",
+  "date": "2026-10-06",
+  "status": "FROZEN_PRECAPTURE_CONTRACT_NO_CAPTURE_AUTHORITY",
+  "parentPreregistration": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_PREREGISTRATION_V1.json",
+  "governanceBase": "scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_3.py",
+  "population": {
+    "performersMin": 6,
+    "categories": ["chords", "scales", "singlenotes", "techniques", "music"],
+    "admittedPerformancesPerPerformerCategoryMin": 2,
+    "admittedPerformancesMin": 60,
+    "pooledIndependentReferenceNoteBirthsMin": 3000,
+    "independentReferenceNoteBirthsPerPerformerMin": 300,
+    "independentReferenceNoteBirthsPerCategoryMin": 400
+  },
+  "requiredPlanBindings": [
+    "rightsManifestId", "rightsManifestSha256", "hardwareConfigurationSha256",
+    "referenceDecoderSha256", "clockConfigurationSha256", "slots"
+  ],
+  "requiredSlotFields": [
+    "slotId", "populationId", "underlyingPerformanceId", "performerId", "contentId",
+    "category", "role", "views"
+  ],
+  "slotRules": {
+    "roleEnum": ["lead", "rhythm"],
+    "populationIdUnique": true,
+    "underlyingPerformanceIdUnique": true,
+    "multipleViewsCountAsOnePerformance": true,
+    "requiredViews": ["evaluated_di", "string_fret_truth", "event_birth_truth"],
+    "calibrationAndHoldoutPopulationMustBeDisjoint": true
+  },
+  "requiredAttemptFields": [
+    "attemptId", "slotId", "attemptNumber", "transportValid", "admitted",
+    "referenceNoteBirthCount", "evaluatedDiSha256", "stringFretTruthSha256",
+    "eventBirthTruthSha256", "clockOrSyncEvidenceSha256"
+  ],
+  "attemptAdmissionRule": {
+    "firstTransportValidTakeIrrevocablyAdmitted": true,
+    "laterTakeAdmissionForbidden": true,
+    "multipleAdmittedTakesPerSlotForbidden": true,
+    "playingQualityNeverRetakeReason": true,
+    "modelOrReferenceDisagreementNeverRetakeReason": true
+  },
+  "authority": {
+    "captureAuthorized": false,
+    "procurementAuthorized": false,
+    "spendingAuthorized": false,
+    "performerContactAuthorized": false,
+    "vendorContactAuthorized": false,
+    "calibrationRecordingAuthorized": false,
+    "modelInferenceAuthorized": false,
+    "referenceScoringAuthorized": false
+  }
+}

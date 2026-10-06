@@ -1,0 +1,33 @@
+name: Astra Stage-B pre-capture V2 contract tests
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'scripts/songsterr-fresh/guitar_fl_stage_b_precapture_validator_v2.py'
+      - 'scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py'
+      - 'docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_CAPTURE_PLAN_SCHEMA_V2.json'
+      - 'docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_RIGHTS_MANIFEST_SCHEMA_V2.json'
+      - 'docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_REFERENCE_ARCHITECTURE_DECISION_V2.md'
+      - '.github/workflows/astra-stage-b-precapture-contract-v2-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-contract-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compile V2 validator and tests
+        run: python -m py_compile scripts/songsterr-fresh/guitar_fl_stage_b_precapture_validator_v2.py scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py
+      - name: Run synthetic V2 pre-capture contract tests
+        run: python -m unittest scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py -v

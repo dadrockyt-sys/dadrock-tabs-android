@@ -1,0 +1,39 @@
+{
+  "schema": "astra-guitar-fl-stage-b-rights-manifest-schema-v2",
+  "date": "2026-10-06",
+  "status": "FROZEN_PRECAPTURE_RIGHTS_CONTRACT_NO_CONTACT_AUTHORITY",
+  "requiredManifestFields": ["manifestId", "manifestSha256", "protectedSongsExcluded", "documents", "performers", "contents"],
+  "requiredDocumentFields": ["documentId", "documentType", "sha256"],
+  "documentRules": {
+    "stableDocumentIdsRequired": true,
+    "documentIdsUnique": true,
+    "sha256Required": true,
+    "sha256Format": "64 lowercase hex characters"
+  },
+  "requiredPerformerFields": [
+    "performerId", "releaseDocumentId", "recordingOwnershipUseGrantDocumentId",
+    "recordingProductValidationUseGranted", "referenceSensorDataUseGranted", "internalRetentionGranted"
+  ],
+  "performerRules": {
+    "recordingProductValidationUseGrantedMustBeTrue": true,
+    "recordingOwnershipOrUseGrantMustBeDocumentLinked": true,
+    "referenceSensorDataUseGrantedMustBeTrue": true,
+    "researchOnlyPermissionInsufficient": true
+  },
+  "requiredContentFields": [
+    "contentId", "provenanceClass", "rightsDocumentId", "productValidationUseGranted", "protectedSong"
+  ],
+  "provenanceClasses": [
+    "original_project_composition", "public_domain", "commissioned_cleared", "explicit_rightsholder_grant"
+  ],
+  "contentRules": {
+    "rightsDocumentLinkRequired": true,
+    "productValidationUseGrantedMustBeTrue": true,
+    "protectedSongMustBeFalse": true,
+    "protectedSongsExcludedAtManifestLevelMustBeTrue": true,
+    "nonCommercialOnlyPermissionInsufficient": true
+  },
+  "captureMayBeginOnlyWhenEveryReferencedDocumentIsPresentAndHashBound": true,
+  "currentRightsManifestComplete": false,
+  "performerOrRightsholderContactAuthorized": false
+}
