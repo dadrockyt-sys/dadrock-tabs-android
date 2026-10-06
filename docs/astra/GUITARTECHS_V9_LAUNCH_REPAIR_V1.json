@@ -1,0 +1,15 @@
+{
+  "schema": "astra-guitar-techs-v9-launch-repair-v1",
+  "date": "2026-10-06",
+  "failedRun": 37539030065,
+  "failedJob": 112527193940,
+  "failureStage": "preflight_no_media_resume_self_test",
+  "failureClass": "INFRASTRUCTURE_SYMBOL_WIRING_PRE_OPTIMIZER",
+  "error": "NameError: v9_sequence_loss is not defined; imported frozen supervised loss is v7_sequence_loss",
+  "syntheticChecksPassed": true,
+  "realMediaAccessed": false,
+  "optimizerStepsExecuted": 0,
+  "scientificResultProduced": false,
+  "semanticContractChanged": false,
+  "repair": "Replace the single stale self-test symbol v9_sequence_loss with the already imported v7_sequence_loss. No training objective, augmentation, decoder, thresholds, folds, seed, data identities, or gates change."
+}

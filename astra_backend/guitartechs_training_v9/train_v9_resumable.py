@@ -590,7 +590,7 @@ def resume_self_test(args):
         xx = x * (1.0 + (py_scale + np_scale) * 1e-6) + jitter
         optimizer.zero_grad(set_to_none=True)
         outputs = model(xx)
-        loss, _ = v9_sequence_loss(outputs, y, content_weight=1.0)
+        loss, _ = v7_sequence_loss(outputs, y, content_weight=1.0)
         loss.backward()
         optimizer.step()
 
