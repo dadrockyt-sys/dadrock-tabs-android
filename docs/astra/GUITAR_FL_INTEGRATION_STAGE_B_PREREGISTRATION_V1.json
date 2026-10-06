@@ -1,0 +1,75 @@
+{
+  "schema": "astra-guitar-fl-integration-stage-b-preregistration-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "PREREGISTERED_NO_CAPTURE_AUTHORIZED",
+  "population": {
+    "performersMin": 6,
+    "categories": [
+      "chords",
+      "scales",
+      "singlenotes",
+      "techniques",
+      "music"
+    ],
+    "admittedPerformancesPerPerformerCategoryMin": 2,
+    "admittedPerformancesMin": 60,
+    "pooledReferenceNoteBirthsMin": 3000,
+    "referenceNoteBirthsPerPerformerMin": 300,
+    "referenceNoteBirthsPerCategoryMin": 400
+  },
+  "roles": [
+    "lead",
+    "rhythm"
+  ],
+  "bassExcluded": true,
+  "onsetToleranceSeconds": 0.05,
+  "gate": {
+    "pitchOnset": {
+      "f1DeltaMin": 0.15,
+      "f1Min": 0.7,
+      "precisionDeltaMin": 0.15,
+      "precisionMin": 0.65,
+      "recallDeltaMin": -0.03,
+      "recallMin": 0.68
+    },
+    "predictionReferenceRatio": {
+      "min": 0.8,
+      "max": 1.25
+    },
+    "stringFretOnset": {
+      "f1DeltaMin": 0.1,
+      "f1Min": 0.55,
+      "precisionDeltaMin": 0.1,
+      "recallDeltaMin": -0.05
+    },
+    "performerRegressionFloor": -0.05,
+    "categoryRegressionFloor": -0.05,
+    "categoryMacroPitchOnsetDeltaMin": 0.1,
+    "categoryMacroStringFretOnsetDeltaMin": 0.08,
+    "fretboardUnresolved": {
+      "maxComparatorDelta": 0.02,
+      "absoluteMax": 0.1
+    },
+    "zeroToleranceInvariants": [
+      "source event identity corruption",
+      "adapter MIDI corruption",
+      "adapter onset corruption",
+      "adapter offset corruption",
+      "adapter-created role labels",
+      "adapter-created confidence",
+      "adapter-created string/fret",
+      "promotion through abstained role",
+      "optimizer steps",
+      "threshold searches",
+      "reference-derived prediction mutation"
+    ]
+  },
+  "passRequiresAll": true,
+  "scientificRetryOnSameHoldout": false,
+  "captureAuthorized": false,
+  "performerContactAuthorized": false,
+  "spendingAuthorized": false,
+  "procurementAuthorized": false,
+  "empiricalExecutionAuthorized": false
+}
