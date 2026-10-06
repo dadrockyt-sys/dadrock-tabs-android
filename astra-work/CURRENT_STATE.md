@@ -11243,3 +11243,94 @@ Preserve:
 - V4-origin timing;
 - BS-Roformer separator;
 - `main` unchanged.
+
+
+## V7 decoder decomposition — authoritative green result
+
+Run `37381745534` completed SUCCESS.
+
+Artifact:
+- id `11379643594`
+- digest `sha256:d307f5e3678597c897932ddb39f5ac0171709ea8de9f74deb237c3a03e751bbb`
+- diagnostic JSON SHA-256 `7a753de15f919de185edea568d27387a4d2bdf41696d177a60d8af0148337f11`
+
+Frozen result:
+- `docs/astra/GUITARTECHS_V7_DECODER_DECOMPOSITION_RESULT_V1.json`
+- commit `970398b1ee59f743035950ccb70082401f3f5f82`
+
+P1 train -> P2 validate:
+- native V7 ranked decoder:
+  - F1 `0.2098093677`
+  - completeness `0.2246354932`
+- state-relative decoder:
+  - F1 `0.2592305341`
+  - completeness `0.2952997694`
+- frozen V4 hysteresis applied to unchanged V7 state probabilities:
+  - F1 `0.2925069372`
+  - completeness `0.3092299833`
+- true-event local rank-1 rate `0.6892373811`
+- true-event mean local rank `1.4839520849`
+
+P2 train -> P1 validate:
+- native V7 ranked decoder:
+  - F1 `0.1133577492`
+  - completeness `0.0997762404`
+- state-relative decoder:
+  - F1 `0.1860197071`
+  - completeness `0.1691074049`
+- frozen V4 hysteresis applied to unchanged V7 state probabilities:
+  - F1 `0.1998800688`
+  - completeness `0.1772601236`
+- true-event local rank-1 rate `0.5926659689`
+- true-event mean local rank `1.7571396531`
+
+Aggregate:
+- native V7 macro F1 `0.1615835585`
+- state-relative macro F1 `0.2226251206`
+- V4 hysteresis on V7 state macro F1 `0.2461935030`
+- original V4 model benchmark macro F1 `0.2435228031`
+- hybrid zero-retraining gain over V4 `+0.0026706998`
+
+Interpretation:
+- primary blocker is the native V7 ranked-event decoder, not the learned V7 state representation;
+- V7 representation should be preserved;
+- event ranking signal is useful but not precise enough to be sole start-admission mechanism;
+- applying the already-frozen V4 hysteresis decoder to V7 state probabilities slightly exceeds the V4 model benchmark with zero retraining.
+
+## Next exact direction — V8 decoder-only hybrid
+
+Do NOT retrain yet.
+
+V8 should:
+1. preserve frozen V7 model weights / representation and training objective;
+2. use frozen V4 hysteresis/state continuity as the primary decoder scaffold;
+3. optionally use raw V7 event-rank information only as secondary support/tie-break, never as an absolute probability threshold;
+4. remain threshold-retuning-free;
+5. first pass synthetic decoder tests;
+6. then run zero-optimizer P1/P2 evaluation on the frozen V7 models;
+7. only if decoder-only V8 materially beats `0.2461935030` macro F1 and remains balanced across folds should any new training be considered;
+8. P3 stays closed;
+9. Go My Way stays unused.
+
+Preserve:
+- strongest clean supervised *model architecture benchmark*: V4 `0.2435228031` macro F1;
+- strongest clean supervised *frozen representation+decoder combination currently observed*: V7 state + frozen V4 hysteresis `0.2461935030` macro F1;
+- Basic Pitch V4 Go My Way combined guitar F1 35.04%;
+- spectral bass V1 TP 372 / F1 60.10%;
+- V4-origin timing;
+- BS-Roformer separator;
+- `main` unchanged.
+
+### Exact next resume instruction
+
+Build V8 as a decoder-only experiment on the frozen V7 models:
+- no optimizer steps;
+- no model-weight changes;
+- no threshold tuning;
+- synthetic verification first;
+- then zero-optimizer P1/P2 evaluation;
+- compare directly against:
+  - native V7 macro F1 `0.1615835585`
+  - state-relative `0.2226251206`
+  - V7 state + V4 hysteresis `0.2461935030`
+  - original V4 `0.2435228031`.
