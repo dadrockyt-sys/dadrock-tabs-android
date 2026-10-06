@@ -228,8 +228,7 @@ def validate(package: Any) -> dict[str, Any]:
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--package", required=True); ap.add_argument("--output")
     a = ap.parse_args(); result = validate(json.loads(Path(a.package).read_text(encoding="utf-8")))
-    rendered = json.dumps(result, indent=2, sort_keys=True) + "
-"
+    rendered = json.dumps(result, indent=2, sort_keys=True) + "\\n"
     if a.output: Path(a.output).write_text(rendered, encoding="utf-8")
     print(rendered, end="")
     return 0 if result["contractValid"] else 2
