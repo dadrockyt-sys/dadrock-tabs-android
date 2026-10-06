@@ -17,13 +17,12 @@ def midi_events(path:Path):
     import mido
     mid=mido.MidiFile(path)
     tempo=500000
-    abs_ticks=0
+    sec=0.0
     merged=mido.merge_tracks(mid.tracks)
     active={}
     out=[]
     for msg in merged:
-        abs_ticks += msg.time
-        sec=mido.tick2second(abs_ticks,mid.ticks_per_beat,tempo)
+        sec += mido.tick2second(msg.time,mid.ticks_per_beat,tempo)
         if msg.type=="set_tempo":
             tempo=msg.tempo
         elif msg.type=="note_on" and msg.velocity>0:
