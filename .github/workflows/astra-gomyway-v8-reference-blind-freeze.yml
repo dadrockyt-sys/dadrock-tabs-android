@@ -1,0 +1,186 @@
+name: Astra Go My Way V8 reference-blind candidate freeze
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_V8_GOMYWAY_CANDIDATE_LAUNCH_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  generate-freeze:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify clean freeze and reference-blind identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json)" = '40bf73a6c57c9f697d10a60b8b3c555b3199a82a'
+          test "$(git hash-object astra_backend/guitartechs_training_v8/decoder.py)" = '0d856504983afdeeba2c18ad11b3090164876243'
+          test "$(git hash-object astra_backend/guitartechs_training_v8/generate_gomyway_v8_frozen_candidate.py)" = 'effc32d9eec291d78422cb92a20ad98c2c6d0f15'
+          test "$(git hash-object public/gomywayfullaitest.m4a)" = '5e34fb55fbd011c55b56bc40cc5d062735b3fcd0'
+          python - <<'PY'
+          import json
+          f=json.load(open('docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json'))
+          assert f['status']=='FROZEN_CLEAN_CANDIDATE'
+          assert f['scientificBoundary']['constructionReferenceBlind'] is True
+          assert f['scientificBoundary']['protectedSongUsedDuringDesign'] is False
+          assert f['scientificBoundary']['protectedSongUsedDuringTraining'] is False
+          assert f['scientificBoundary']['protectedSongUsedDuringDecoderSelection'] is False
+          assert f['scientificBoundary']['goMyWayParametersMayNotChangeAfterThisFreeze'] is True
+          launch=json.load(open('docs/astra/GUITARTECHS_V8_GOMYWAY_CANDIDATE_LAUNCH_V1.json'))
+          assert launch['schema']=='astra-guitar-techs-v8-gomyway-candidate-launch-v1'
+          assert launch['guards']['professionalReferencesAccessible'] is False
+          assert launch['guards']['timingMapAccessible'] is False
+          assert launch['guards']['optimizerStepsAuthorized']==0
+          PY
+          echo "PROFESSIONAL_REFERENCES_ACCESSED=false"
+          echo "TIMING_MAP_ACCESSED=false"
+
+      - name: Install exact model/runtime dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip install --disable-pip-version-check 'onnxruntime==1.19.2' 'soundfile==0.12.1' 'scipy==1.11.4'
+          python -m pip check
+
+      - name: Acquire exact pinned TabCNN source
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          curl --fail --location --retry 4 -o "$root/models/common.py" "$base/models/common.py"
+          curl --fail --location --retry 4 -o "$root/models/tabcnn.py" "$base/models/tabcnn.py"
+          curl --fail --location --retry 4 -o "$root/tools/instrument.py" "$base/tools/instrument.py"
+          curl --fail --location --retry 4 -o "$root/tools/constants.py" "$base/tools/constants.py"
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+
+      - name: Download frozen V7 fold models
+        uses: actions/download-artifact@v4
+        with:
+          pattern: guitar-techs-v7-*-final-development-result
+          path: /tmp/v7
+          merge-multiple: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37237773631
+
+      - name: Verify frozen V7 model files
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/v7/guitar-techs-v7-p1-final-development-result/model.pt | awk '{print $1}')" = '072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763'
+          test "$(sha256sum /tmp/v7/guitar-techs-v7-p2-final-development-result/model.pt | awk '{print $1}')" = '566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596'
+
+      - name: Decode immutable source
+        run: |
+          ffmpeg -hide_banner -loglevel error -y -i public/gomywayfullaitest.m4a -ar 44100 -ac 2 -c:a pcm_f32le /tmp/gomywayfullaitest.wav
+
+      - name: Download and verify frozen BS-Roformer
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/models
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, urllib.request
+          p=Path('/tmp/models/bs_roformer_sw_6stem_fp16.onnx')
+          urllib.request.urlretrieve('https://huggingface.co/elicwhite/bs-roformer-sw-6stem-onnx/resolve/main/bs_roformer_sw_6stem_fp16.onnx',p)
+          expected='d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444'
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          assert actual==expected,(actual,expected)
+          PY
+
+      - name: Separate frozen guitar stem
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend:${{ github.workspace }}/astra_backend/evaluation
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import soundfile as sf
+          from astra_backend.evaluation.bs_roformer_sw_6stem_adapter_v1 import BsRoformer6StemOnnxAdapter
+          x,sr=sf.read('/tmp/gomywayfullaitest.wav',dtype='float32',always_2d=True)
+          stems=BsRoformer6StemOnnxAdapter(Path('/tmp/models/bs_roformer_sw_6stem_fp16.onnx')).separate_array(x,sr)
+          sf.write('/tmp/gomyway-guitar-stem.wav',stems['guitar'],sr,subtype='FLOAT')
+          h=hashlib.sha256(Path('/tmp/gomyway-guitar-stem.wav').read_bytes()).hexdigest()
+          print('GUITAR_STEM_SHA256='+h)
+          PY
+
+      - name: Generate both reference-blind V8 fold candidates
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/candidates
+          python astra_backend/guitartechs_training_v8/generate_gomyway_v8_frozen_candidate.py             --guitar-wav /tmp/gomyway-guitar-stem.wav             --model /tmp/v7/guitar-techs-v7-p1-final-development-result/model.pt             --expected-model-sha 072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763             --fold p1-train-p2-validate             --source-root /tmp/tabcnn-source             --output-json /tmp/candidates/gomyway-v8-p1model-candidate.json
+          python astra_backend/guitartechs_training_v8/generate_gomyway_v8_frozen_candidate.py             --guitar-wav /tmp/gomyway-guitar-stem.wav             --model /tmp/v7/guitar-techs-v7-p2-final-development-result/model.pt             --expected-model-sha 566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596             --fold p2-train-p1-validate             --source-root /tmp/tabcnn-source             --output-json /tmp/candidates/gomyway-v8-p2model-candidate.json
+          sha256sum /tmp/candidates/*.json | tee /tmp/candidates/SHA256SUMS.txt
+          echo "PROFESSIONAL_REFERENCES_ACCESSED=false"
+          echo "TIMING_MAP_ACCESSED=false"
+
+      - name: Write freeze manifest
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          d={}
+          for name in ('gomyway-v8-p1model-candidate.json','gomyway-v8-p2model-candidate.json'):
+              p=Path('/tmp/candidates')/name
+              x=json.loads(p.read_text())
+              d[name]={
+                  'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),
+                  'eventCount':x['eventCount'],
+                  'fold':x['fold'],
+                  'guitarStemSha256':x['input']['wavSha256']
+              }
+          out={
+            'schema':'astra-gomyway-v8-candidate-freeze-manifest-v1',
+            'cleanCandidateFreezeGitBlob':'40bf73a6c57c9f697d10a60b8b3c555b3199a82a',
+            'sourceGitBlob':'5e34fb55fbd011c55b56bc40cc5d062735b3fcd0',
+            'separatorSha256':'d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444',
+            'candidates':d,
+            'guards':{
+              'professionalReferencesAccessed':False,
+              'timingMapAccessed':False,
+              'optimizerStepsExecuted':0,
+              'parametersChangedAfterCleanFreeze':False
+            }
+          }
+          p=Path('/tmp/candidates/gomyway-v8-candidate-freeze-manifest.json')
+          p.write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print('FREEZE_MANIFEST_SHA256='+hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-v8-reference-blind-candidates-frozen
+          path: /tmp/candidates/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Cleanup protected audio and models
+        if: always()
+        run: |
+          rm -rf /tmp/gomywayfullaitest.wav /tmp/gomyway-guitar-stem.wav /tmp/models /tmp/v7 /tmp/tabcnn-source
+          echo "PROFESSIONAL_REFERENCES_ACCESSED=false"
