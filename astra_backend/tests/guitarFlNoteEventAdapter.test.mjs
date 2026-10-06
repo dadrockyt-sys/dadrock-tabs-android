@@ -65,7 +65,8 @@ test('adapter preserves count, MIDI, onset, offset, order and duplicate simultan
   assert.deepEqual(adapted.events.map((e) => e.midi), [64, 67, 67]);
   assert.deepEqual(adapted.events.map((e) => e.start), [0.25, 0.5, 0.5]);
   assert.deepEqual(adapted.events.map((e) => e.end), [0.5, 0.75, 0.8]);
-  assert.deepEqual(adapted.events.map((e) => e.duration), [0.25, 0.25, 0.3]);
+  assert.deepEqual(adapted.events.slice(0, 2).map((e) => e.duration), [0.25, 0.25]);
+  assert.ok(Math.abs(adapted.events[2].duration - 0.3) < 1e-12);
   assert.equal(adapted.adapterContract.duplicateSimultaneousPitchesDeduplicated, false);
   assert.equal(adapted.adapterContract.confidenceSynthesized, false);
   assert.equal(adapted.adapterContract.roleAuthority, false);
