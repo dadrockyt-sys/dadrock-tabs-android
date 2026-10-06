@@ -1,0 +1,28 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-gate-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "FROZEN_BEFORE_EMPIRICAL_EXECUTION",
+  "scoring": {
+    "onsetToleranceSeconds": 0.05,
+    "pairing": "maximum-cardinality onset-only then minimum total absolute onset error; pitch never selects pairs",
+    "ambiguityAware": true
+  },
+  "primaryGate": {
+    "aggregateF1": "intervention >= comparator + 0.10 AND intervention >= 0.60",
+    "aggregatePrecision": "intervention >= comparator + 0.10 AND intervention >= 0.50",
+    "aggregateRecall": "intervention >= comparator - 0.05 AND intervention >= 0.65",
+    "predictionReferenceRatio": "0.75 <= intervention prediction/reference count ratio <= 1.50",
+    "performerFloor": "for every one of the 27 frozen performers, intervention F1 >= comparator F1 - 0.10",
+    "contentFamilyFloor": "for declared family 'classical solo guitar', intervention macro F1 >= comparator macro F1 + 0.10 AND >= 0.60",
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "referenceDerivedPredictionMutation": false
+  },
+  "rationale": "Require a material 10-point absolute F1 and precision gain, retain useful recall, prevent event-count flooding/underproduction, and forbid a gain purchased by severe performer-specific regressions.",
+  "noSingleMetricOverride": true,
+  "passRequiresAll": true,
+  "stopOnFailure": true,
+  "automaticRetry": false,
+  "automaticIntegration": false
+}
