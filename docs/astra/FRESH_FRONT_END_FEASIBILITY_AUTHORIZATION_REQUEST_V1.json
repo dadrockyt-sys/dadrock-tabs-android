@@ -1,0 +1,17 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-authorization-request-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AWAITING_EXPLICIT_AUTHORIZATION",
+  "design": "docs/astra/FRESH_FRONT_END_FEASIBILITY_DESIGN_V1.md",
+  "requestedNextPhase": "Stage 0 only: select exactly one alternative frozen front end and one fresh rights-cleared performer-disjoint evaluation source using non-performance criteria; freeze identities and proposed numerical gate. Do not run inference or inspect evaluation references.",
+  "empiricalExecutionRequested": false,
+  "modelDownloadForEvaluationRequested": false,
+  "referenceInspectionRequested": false,
+  "inferenceRequested": false,
+  "scoringRequested": false,
+  "trainingRequested": false,
+  "thresholdSearchRequested": false,
+  "predictionMutationRequested": false,
+  "note": "A later separate authorization would still be required for any empirical candidate generation or reference-facing score."
+}
