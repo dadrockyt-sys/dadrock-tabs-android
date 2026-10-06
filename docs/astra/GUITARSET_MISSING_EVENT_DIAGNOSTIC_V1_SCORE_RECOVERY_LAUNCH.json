@@ -1,0 +1,14 @@
+{
+  "schema": "astra-guitarset-missing-event-diagnostic-v1-score-recovery-launch",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "recoveryWorkflowCommit": "db72c4d10dbd3b4e6a4b0a05b375316acdae4522",
+  "sourceRunId": 37426492061,
+  "sourceCandidateArtifactId": 11395810007,
+  "sourceCandidateArtifactDigest": "sha256:6568a6daaca594dc216d61268a80012da7c63f26a7e77f2d7826b1b5f3b73cc5",
+  "candidateManifestSha256": "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb",
+  "candidateFileCount": 180,
+  "candidateTotalEventCount": 33327,
+  "failureCause": "Candidate checksum receipt stored an absolute runner path; scorer failed before downloading references.",
+  "repairScope": "Scoring-only recovery from the exact frozen candidate artifact. No candidate regeneration, threshold change, prediction mutation, or scorer-semantic change."
+}
