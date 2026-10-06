@@ -59,7 +59,8 @@ jobs:
         run: |
           set -euo pipefail
           python astra_backend/evaluation/gomyway_v4_origin_guitar_grid_quantization_v1.py             --note-evidence /tmp/evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --timing-map /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json             --output-json /tmp/guitar-grid-quantization-v1.json
-          sha256sum /tmp/guitar-grid-quantization-v1.json | tee /tmp/guitar-grid-quantization-v1.sha256
+          (cd /tmp && sha256sum guitar-grid-quantization-v1.json > guitar-grid-quantization-v1.sha256)
+          cat /tmp/guitar-grid-quantization-v1.sha256
           echo "PROFESSIONAL_NOTE_REFERENCES_ACCESSED=false"
 
       - uses: actions/upload-artifact@v4
