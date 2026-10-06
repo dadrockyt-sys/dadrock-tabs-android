@@ -1,0 +1,56 @@
+name: Guitar-TECHS V8 decoder synthetic verification
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/guitartechs_training_v8/decoder.py'
+      - 'astra_backend/guitartechs_training_v8/verify_synthetic_v8.py'
+      - 'docs/astra/GUITARTECHS_V8_DECODER_DESIGN_V1.json'
+      - '.github/workflows/guitar-techs-v8-decoder-synthetic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Verify V8 design guards
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          d=json.load(open('docs/astra/GUITARTECHS_V8_DECODER_DESIGN_V1.json'))
+          assert d['decoder']['canCreateNewRun'] is False
+          assert d['decoder']['canDeleteAdmittedRun'] is False
+          assert d['decoder']['eventProbabilityThreshold'] is None
+          assert d['decoder']['calibrationInvariant'] is True
+          assert d['guards']['optimizerStepsAuthorized'] == 0
+          assert d['guards']['thresholdRetuningAuthorized'] is False
+          assert d['guards']['protectedSongUseAuthorized'] is False
+          PY
+      - name: Install exact runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+      - name: Compile V8 decoder
+        run: |
+          python -m py_compile astra_backend/guitartechs_training_v8/decoder.py astra_backend/guitartechs_training_v8/verify_synthetic_v8.py
+      - name: Run V8 synthetic verification
+        env:
+          PYTHONPATH: ${{ github.workspace }}/astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v8/verify_synthetic_v8.py
+          echo "REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0"
