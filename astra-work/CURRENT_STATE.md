@@ -11944,3 +11944,74 @@ The likely remaining opportunity is structural/post-processing on the frozen Bas
 - chord grouping / sustain structure
 - preserve bass independently at spectral bass V1 TP 372 / F1 60.10%
 - preserve separator and main unchanged.
+
+
+## Basic Pitch V4 structural path — guitar 16th-grid quantization V1 launched
+
+After closing:
+- broad raw-activation recovery;
+- contour-corroborated recovery;
+- simple rhythm/lead role splitting;
+- guitar octave heuristics;
+- specialized pretrained guitar AMT;
+- V8 Guitar-TECHS transfer to Go My Way;
+
+the remaining bounded structural lever selected is onset quantization/chord synchronization on the already-frozen Basic Pitch V4 guitar note evidence.
+
+Experiment:
+- preserve all 1065 frozen guitar MIDI note events;
+- no note additions;
+- no note deletions;
+- no MIDI/pitch changes;
+- use frozen V4-origin measure map only;
+- every in-range onset snaps to the nearest 1/16 grid position;
+- note duration is preserved by shifting end time by the same delta;
+- no snap-distance threshold exists;
+- therefore no tunable timing parameter is searched against Go My Way;
+- professional rhythm/lead note references are inaccessible during candidate construction;
+- candidate is frozen before scoring.
+
+Files:
+- `astra_backend/evaluation/gomyway_v4_origin_guitar_grid_quantization_v1.py`
+  - commit `b6c02b10f85631ea48ff632f640aed4fdc8484c0`
+  - git blob `f0563cb1461c2f7fa17580ee305f11e0311b9f6c`
+- `astra_backend/evaluation/score_gomyway_v4_origin_guitar_grid_quantization_v1.py`
+  - commit `5548b22fc900b3644473339b1c42eab3064427c2`
+  - git blob `9b48ef38c72ee32a6a8596478d86a59b67c0b579`
+- `.github/workflows/astra-gomyway-v4-origin-guitar-grid-quantization-v1.yml`
+  - launch commit `a638c4f174d17014c0a706c3ec22ca266772410c`
+
+Frozen inputs:
+- Basic Pitch V4-origin note evidence artifact `11282827368`
+- V4-origin timing map SHA-256 `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`
+
+Baseline:
+- rhythm F1 `31.82%`
+- lead F1 `17.84%`
+- combined guitar F1 `35.04%`
+
+Authoritative run:
+- run `37418651745`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37418651745
+- status at this update: IN PROGRESS
+
+### Exact next resume instruction
+
+Resume from run `37418651745`.
+
+If failed:
+- inspect exact candidate-freeze/scoring infrastructure issue;
+- repair implementation/runtime only;
+- do not change quantization rule or add a snap threshold.
+
+If green:
+1. record frozen candidate artifact ID/digest and candidate JSON SHA;
+2. record movement statistics:
+   - mean/median/p90/max absolute onset displacement;
+3. record post-freeze rhythm/lead/combined TP/P/R/F1 and deltas versus baseline;
+4. interpret:
+   - if all/most roles improve, preserve quantized onset representation;
+   - if rhythm improves but lead degrades, do not tune a role-specific threshold from Go My Way; instead consider a structurally distinct role-neutral timing representation or preserve raw timing for lead;
+   - if combined degrades, reject grid quantization V1;
+5. do not change pitches or note counts based on scorer output;
+6. preserve spectral bass V1, V4-origin timing, BS-Roformer separator, and `main` unchanged.
