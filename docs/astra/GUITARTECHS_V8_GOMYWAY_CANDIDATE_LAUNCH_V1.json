@@ -1,0 +1,24 @@
+{
+  "schema":"astra-guitar-techs-v8-gomyway-candidate-launch-v1",
+  "date":"2026-10-06",
+  "candidateId":"astra_guitartechs_v8_v4_hysteresis_event_rank_backshift",
+  "cleanCandidateFreezeGitBlob":"40bf73a6c57c9f697d10a60b8b3c555b3199a82a",
+  "generatorGitBlob":"effc32d9eec291d78422cb92a20ad98c2c6d0f15",
+  "workflowGitBlob":"3a738667df92cf5489a8b11cbc097de144c8a6d0",
+  "sourceGitBlob":"5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+  "separatorSha256":"d3d2bac77a7023282cb5f35a5807179e34076b60589867b572275f1a8ec36444",
+  "frozenModels":{
+    "p1":{"artifactId":11336573510,"modelSha256":"072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763"},
+    "p2":{"artifactId":11374640369,"modelSha256":"566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596"}
+  },
+  "guards":{
+    "professionalReferencesAccessible":false,
+    "timingMapAccessible":false,
+    "optimizerStepsAuthorized":0,
+    "parameterChangesAuthorized":false,
+    "thresholdRetuningAuthorized":false,
+    "p3Opened":false,
+    "mainOrProductionMutationAuthorized":false
+  },
+  "nextGate":"Freeze both fold-model Go My Way candidate outputs before any scoring workflow may access professional references or timing map."
+}
