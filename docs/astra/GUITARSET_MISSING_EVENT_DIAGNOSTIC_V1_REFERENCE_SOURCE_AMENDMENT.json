@@ -1,0 +1,43 @@
+{
+  "schema": "astra-guitarset-missing-event-diagnostic-v1-reference-source-amendment",
+  "date": "2026-10-06",
+  "status": "FROZEN_BEFORE_ANY_CANDIDATE_REFERENCE_COMPARISON_OR_SCORE",
+  "reason": "The preregistered Zenodo v1.1.0 annotation.zip endpoint and API-content fallback repeatedly returned HTTP 503 on GitHub-hosted runners and was also unavailable from the working container. All failures occurred before successful archive acquisition or scoring.",
+  "preFreezeMirrorProbe": {
+    "purpose": "Verify that the Hugging Face dataset-viewer endpoint exposes the declared v1.1.0 note schema and pinned revision.",
+    "rowsFetched": 2,
+    "offset": 0,
+    "evaluationRowsExposed": true,
+    "candidatePredictionsLoadedOrCompared": false,
+    "scoreComputed": false,
+    "parameterOrRuleChangedFromLabels": false,
+    "impact": "The evaluation corpus is no longer perfectly label-unseen at the row level. However, the candidate artifact, hypothesis, scorer, tolerance and replication gate were all frozen before this probe and were not changed from its contents."
+  },
+  "unchanged": {
+    "candidateArtifactId": 11395810007,
+    "candidateArtifactDigest": "sha256:6568a6daaca594dc216d61268a80012da7c63f26a7e77f2d7826b1b5f3b73cc5",
+    "candidateManifestSha256": "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb",
+    "candidateFileCount": 180,
+    "candidateEventCount": 33327,
+    "scorerGitBlob": "972adf7215a180f703873950c96068b4f860bbc8",
+    "evaluationPlayers": ["00", "01", "03"],
+    "onsetToleranceSeconds": 0.05,
+    "replicationGate": "unmatchedReferenceCount > assignmentDependentWrongPitchCount pooled AND separately for each player 00/01/03"
+  },
+  "amendedReferenceTransport": {
+    "source": "https://huggingface.co/datasets/jhartquist/guitarset",
+    "mirrorRevision": "4aca25487bef5cb0d2c4ec146218f9145402a776",
+    "mirrorRepositoryHistoryAtFreeze": "single commit",
+    "declaredDataset": "GuitarSet v1.1.0",
+    "declaredLabelProvenance": "canonical labels derived from the original JAMS",
+    "notesSchema": "onset_s, offset_s, continuous midi, string",
+    "mirrorErrata": [
+      "04_BN3-154-E_comp timing correction",
+      "04_Jazz1-200-B_comp timing correction",
+      "02_Funk2-119-G_comp duplicate-note correction"
+    ],
+    "evaluationIntersectsMirrorErrata": false,
+    "materialization": "Convert only mirror notes for players 00/01/03 into six minimal note_midi JAMS annotations, preserving onset, offset, continuous MIDI and string. The frozen scorer then rounds MIDI and performs exactly the preregistered onset-only matching."
+  },
+  "scientificBoundary": "This amendment changes transport/provenance only, not candidate, scorer, matcher, tolerance, gate, or hypothesis. No candidate-reference comparison or score existed before this amendment. Because two mirror rows were exposed during schema probing and the full mirror will now be consumed, players 00/01/03 must not be described as fresh after this point."
+}
