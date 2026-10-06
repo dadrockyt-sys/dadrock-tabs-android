@@ -1,0 +1,12 @@
+{
+  "schema": "astra-guitarset-missing-event-diagnostic-v1-launch",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "preregistrationCommit": "bfb5c0744c169f7aefc55f0e1990bd8537ffb565",
+  "spec": "docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_SPEC.json",
+  "candidateGenerator": "validation/open_corpus/generate_guitarset_missing_event_baseline_v1.py",
+  "scorer": "validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py",
+  "workflow": ".github/workflows/astra-guitarset-missing-event-diagnostic-v1.yml",
+  "scope": "One independent diagnostic-only evaluation on previously sealed GuitarSet players 00/01/03. Freeze Basic Pitch candidates before parsing references. No threshold search, correction, training, production change, or Go My Way mutation.",
+  "holdoutConsumption": "Players 00/01/03 cease to be fresh after this one reference-facing score."
+}
