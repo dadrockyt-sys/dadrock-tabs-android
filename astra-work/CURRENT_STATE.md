@@ -11449,3 +11449,76 @@ If failed:
 - inspect exact synthetic assertion;
 - repair only fixture/implementation bug;
 - preserve no-new-run/no-delete/no-threshold decoder contract.
+
+
+## V8 synthetic verification — authoritative green
+
+Corrected synthetic run `37408775000` completed SUCCESS.
+
+Verified:
+- `V8_BACKSHIFT_ONLY_PASS`
+- `V8_CALIBRATION_INVARIANCE_PASS`
+- `V8_NO_NEW_RUNS_PASS`
+- `V8_SYNTHETIC_VERIFICATION_PASS`
+- `REAL_P1P2_OPTIMIZER_STEPS_EXECUTED=0`
+
+Frozen identities after fixture repair:
+- V8 decoder git blob `0d856504983afdeeba2c18ad11b3090164876243`
+- V8 synthetic verifier git blob `2fe5431c64cfadec480c21324d331fd851bcd6dd`
+- V8 design git blob `4094b878f6c9252be7ff35966893119bf288c6cd`
+- V8 synthetic workflow git blob `887c18215b62fad5dcdc39478496112b2f0a6c6a`
+
+## V8 zero-optimizer exact P1/P2 evaluation — launched
+
+Evaluator:
+- `astra_backend/guitartechs_training_v8/run_v8_zero_optimizer_evaluation.py`
+- commit `956a318bff492d86d9499ddc8b9035e1c8a89ad5`
+- git blob `29747b79af6b67ee300bbc2fb7e76eeb03716165`
+
+Workflow:
+- `.github/workflows/guitar-techs-v8-zero-optimizer-evaluation.yml`
+- commit `f976cde006c6247cd704fbc5399e20303d42948b`
+- git blob `e79b8e7c99291e16310dd491b6d1755ec0c17132`
+
+Launch:
+- `docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_LAUNCH_V1.json`
+- commit `332ff2e0ac004a82229358982f82410038851ebb`
+
+Frozen V7 models reused:
+- P1 artifact `11336573510`, model SHA-256 `072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763`
+- P2 artifact `11374640369`, model SHA-256 `566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596`
+
+Only one predeclared V8 decoder is being evaluated:
+- frozen V4 hysteresis admission/continuation;
+- raw V7 event-rank local maxima may only backshift an already-admitted run by <=2 frames under same-fret relative evidence;
+- no new run creation;
+- no deletion;
+- no threshold tuning;
+- zero optimizer steps.
+
+Authoritative V8 evaluation run:
+- run `37409380940`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37409380940
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37409380940`.
+
+If green:
+1. record artifact ID/digest and evaluation JSON SHA;
+2. record both fold precision/recall/F1/completeness/frameAccuracy;
+3. compute macro F1/completeness;
+4. compare directly against:
+   - native V7 `0.1615835585`
+   - state-relative `0.2226251206`
+   - V7 state + pure V4 hysteresis `0.2461935030`
+   - original V4 `0.2435228031`;
+5. if V8 beats `0.2461935030` without destabilizing the weaker fold, freeze it as strongest clean decoder combination;
+6. if it does not, retain pure V4 hysteresis on V7 state as strongest clean combination;
+7. do not retrain or tune from this result;
+8. P3 and Go My Way remain closed.
+
+If failed:
+- inspect only evaluation/runtime issue;
+- repair infrastructure without changing decoder rule.
