@@ -1,0 +1,58 @@
+{
+  "schema": "astra-guitar-fl-integration-study-design-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "DESIGN_FROZEN_EMPIRICAL_INTEGRATION_NOT_AUTHORIZED",
+  "evidenceSource": "docs/astra/FRESH_FRONT_END_FEASIBILITY_RESULT_V1.json",
+  "intervention": {
+    "sourceCommit": "96f6797881e9497cbfc8f8e5deccea9c1f2f7adc",
+    "checkpoint": "guitar-fl.pth",
+    "checkpointSha256": "50d93dba89bdd3401849bc735614478e83d9f46d21fa3f71d8aca5acc0a52028",
+    "thresholds": {
+      "onset": 0.3,
+      "offset": 0.3,
+      "frame": 0.1
+    },
+    "optimizerSteps": 0,
+    "thresholdSearch": false
+  },
+  "integrationBoundary": {
+    "replaceOnly": "generic-guitar note-event producer",
+    "preserve": [
+      "role evidence and abstention",
+      "structure map",
+      "V4-origin timing authority",
+      "structure snapping/quantization",
+      "contextual rhythm spelling",
+      "fretboard path optimizer",
+      "separator identity",
+      "bass path",
+      "downstream evaluator thresholds"
+    ],
+    "roleInferenceByFrontEnd": false
+  },
+  "stageA": {
+    "type": "model-free adapter contract",
+    "authorizationRequired": true,
+    "realAudio": false,
+    "referenceLabels": false
+  },
+  "stageB": {
+    "type": "fresh empirical integration evaluation",
+    "authorizationRequired": true,
+    "sourceIdentityNotYetSelected": true,
+    "consumedSourcesForbidden": [
+      "GAPS v1.1 test",
+      "Go My Way",
+      "consumed GuitarSet populations",
+      "consumed Guitar-TECHS development material"
+    ]
+  },
+  "rightsBoundary": {
+    "productIntegrationBlocked": true,
+    "reason": "MIT-labeled checkpoint/code does not establish commercial rights for all François-Leduc training substrates; dedicated lineage review required."
+  },
+  "automaticIntegration": false,
+  "productionChangeAuthorized": false,
+  "mainChangeAuthorized": false
+}
