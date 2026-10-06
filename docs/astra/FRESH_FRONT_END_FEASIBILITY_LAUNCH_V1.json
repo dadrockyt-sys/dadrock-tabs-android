@@ -1,0 +1,16 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-launch-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "authorizationCommit": "53e4f2592b04d87145937126825f40831a8854d2",
+  "authorization": "docs/astra/FRESH_FRONT_END_FEASIBILITY_EMPIRICAL_AUTHORIZATION_V1.json",
+  "stage0Selection": "docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json",
+  "gate": "docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json",
+  "workflow": ".github/workflows/astra-fresh-front-end-feasibility-v1.yml",
+  "workflowGitBlob": "127ea2a8ad99ff6c568ed0f60bb845018ec7fa08",
+  "scientificRetry": false,
+  "thresholdSearch": false,
+  "optimizerSteps": 0,
+  "predictionMutation": false,
+  "userMonitoringPreference": "User monitors long empirical runs; assistant handles short CI/tests."
+}
