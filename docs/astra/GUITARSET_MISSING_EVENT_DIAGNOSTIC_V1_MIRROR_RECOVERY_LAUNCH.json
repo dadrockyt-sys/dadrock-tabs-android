@@ -11,5 +11,9 @@
   "mirror": "jhartquist/guitarset",
   "mirrorRevision": "4aca25487bef5cb0d2c4ec146218f9145402a776",
   "scorerGitBlob": "972adf7215a180f703873950c96068b4f860bbc8",
-  "scope": "Transport-only recovery using pinned GuitarSet v1.1.0 mirror canonical notes for players 00/01/03. Existing frozen candidates and preregistered scorer/gate remain unchanged. No prediction mutation, threshold search, or correction."
+  "scope": "Transport-only recovery using pinned GuitarSet v1.1.0 mirror canonical notes for players 00/01/03. Existing frozen candidates and preregistered scorer/gate remain unchanged. No prediction mutation, threshold search, or correction.",
+  "attempt": 2,
+  "materializerRepairCommit": "ebc1ef1fe865385692c1cea6a4ea69e5bd1172c6",
+  "materializerBlob": "999476ee070d19b05eba4f80e339d2cbfdba8bc6",
+  "materializerRepairScope": "Transport implementation only: replace failing 60-row /filter calls with 5-row /rows streaming across the same pinned 360-row mirror, then locally retain evaluation players 00/01/03. No scorer, candidate, tolerance, gate, or hypothesis change."
 }
