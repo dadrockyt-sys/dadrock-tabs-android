@@ -8,12 +8,25 @@ def synthetic():
     T=12
     state=np.zeros((T,NUM_STRINGS,NUM_CLASSES),float)
     state[...,20]=1.0
+
+    def set_normalized_row(t,string,fret,active_p,silence_p):
+        row=np.zeros(NUM_CLASSES,float)
+        remainder=1.0-active_p-silence_p
+        assert remainder >= 0.0
+        others=[i for i in range(NUM_CLASSES) if i not in (fret,20)]
+        if others:
+            row[others]=remainder/len(others)
+        row[fret]=active_p
+        row[20]=silence_p
+        assert np.isclose(row.sum(),1.0)
+        state[t,string]=row
+
     # An admitted fret-4 run begins at frame 4 by V4 confidence.
     # Frame 3 already has fret 4 > silence, but not enough absolute confidence
     # for V4 start. Event ranking marks frame 3 as local maximum.
-    state[3,0,:]=0;state[3,0,4]=0.38;state[3,0,20]=0.36
+    set_normalized_row(3,0,4,0.38,0.36)
     for t in range(4,8):
-        state[t,0,:]=0;state[t,0,4]=0.60;state[t,0,20]=0.20
+        set_normalized_row(t,0,4,0.60,0.20)
     ev=np.zeros((T,NUM_STRINGS),float)
     ev[3,0]=2.0;ev[4,0]=1.0
 
@@ -31,7 +44,7 @@ def synthetic():
 
     # An event peak with a different relative fret cannot invent/change a note.
     bad=ev.copy();bad[2,0]=100
-    state[2,0,:]=0;state[2,0,7]=0.6;state[2,0,20]=0.2
+    set_normalized_row(2,0,7,0.60,0.20)
     h3=decode_v8_hybrid(state,bad)
     assert h3[2,0] == -1
     assert count_active_runs(h3)==count_active_runs(decode_with_hysteresis(state))
