@@ -1,0 +1,28 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-empirical-authorization-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AUTHORIZED_BY_USER",
+  "userAuthorization": "I authorize",
+  "scope": "Exactly the previously frozen empirical request: pinned guitar-fl checkpoint plus the 30 frozen GAPS test rows; freeze Basic Pitch and guitar-fl candidates from audio only; then one reference-facing score and one frozen gate evaluation.",
+  "workflow": ".github/workflows/astra-fresh-front-end-feasibility-v1.yml",
+  "workflowGitBlob": "127ea2a8ad99ff6c568ed0f60bb845018ec7fa08",
+  "sourceBlobs": {
+    "fetchAudio": "c556b385f7b96bd2c415c382411d848b0057179e",
+    "generateCandidates": "96001d37853d001a346284ecac1bb1424caf02e7",
+    "fetchReferences": "799840d6ba1d485624a5942793e0cbd76bdd8b20",
+    "scorer": "fdc345ba2e379b058944fd591dc35c646cf547e2"
+  },
+  "stage0SelectionBlob": "4cf88f5ef3716d3cc97ddb0fe1b73777ab54686f",
+  "gateBlob": "aa1de4925ab382187f08bc30791eaf6cf18d52f3",
+  "forbidden": [
+    "training",
+    "optimizer steps",
+    "threshold search",
+    "reference-derived prediction mutation",
+    "Go My Way use",
+    "GuitarSet 00/01/03 reuse",
+    "automatic scientific retry",
+    "main/Production changes"
+  ]
+}
