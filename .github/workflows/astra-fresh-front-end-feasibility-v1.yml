@@ -32,7 +32,7 @@ jobs:
           test "$(git hash-object validation/open_corpus/generate_fresh_front_end_candidates_v1.py)" = "96001d37853d001a346284ecac1bb1424caf02e7"
           test "$(git hash-object validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py)" = "799840d6ba1d485624a5942793e0cbd76bdd8b20"
           test "$(git hash-object validation/open_corpus/score_fresh_front_end_feasibility_v1.py)" = "fdc345ba2e379b058944fd591dc35c646cf547e2"
-          test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json)" = "4cf88f5ef3716d3cc97ddb0fe1b73777ab54686f"
+          test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json)" = "1b13ce2843a0af31bf53670b5baf68b3bedf1bd4"
           test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json)" = "aa1de4925ab382187f08bc30791eaf6cf18d52f3"
           python -m py_compile validation/open_corpus/fetch_gaps_fresh_front_end_audio_v1.py validation/open_corpus/generate_fresh_front_end_candidates_v1.py validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py validation/open_corpus/score_fresh_front_end_feasibility_v1.py
 
