@@ -11770,3 +11770,78 @@ If green:
    - rhythm F1 31.82%
    - lead F1 17.84%
 9. do not change V8 based on the protected-song score.
+
+
+## Go My Way V8 reference-blind candidate freeze — authoritative green
+
+Run `37415737535` completed SUCCESS.
+
+Frozen artifact:
+- id `11392110587`
+- name `gomyway-v8-reference-blind-candidates-frozen`
+- digest `sha256:7d31acd84916f2de32e3eebaaa928d06b5a953e5b4dd306630f8c9098217cf40`
+
+Frozen guitar stem:
+- SHA-256 `20e1f8179665c62022d8e949d57092520f3b352d8cee956194f78a654fbbdffd`
+
+Frozen candidates:
+- P1-model candidate:
+  - events `1537`
+  - SHA-256 `9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7`
+- P2-model candidate:
+  - events `1158`
+  - SHA-256 `2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006`
+
+Freeze manifest:
+- SHA-256 `b1539b805ae7fba9f9a378ca3353dba54876dabfb4c76652b42689282dcd68a1`
+
+Scientific guards confirmed in logs:
+- `PROFESSIONAL_REFERENCES_ACCESSED=false`
+- `TIMING_MAP_ACCESSED=false`
+- zero optimizer steps
+- V8 parameters unchanged.
+
+## Go My Way V8 scoring-only evaluation — launched
+
+Scoring workflow:
+- `.github/workflows/astra-gomyway-v8-post-freeze-score.yml`
+- commit `31805ef8bbaf1d1a4748ab09778531eb633ca89b`
+- git blob `5eb19e56d3d2dd089b7fa0e17509eedde56c20c0`
+
+Launch:
+- `docs/astra/GUITARTECHS_V8_GOMYWAY_SCORING_LAUNCH_V1.json`
+- commit `55a825322f7023c4b4d4848d20e30066ef105f33`
+
+Scoring-only inputs now permitted:
+- V4-origin timing map SHA-256 `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`
+- rhythm professional ref SHA-256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`
+- lead professional ref SHA-256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`
+
+Scoring run:
+- run `37416986736`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37416986736
+- status at this update: QUEUED
+
+### Exact next resume instruction
+
+Resume from run `37416986736`.
+
+If failed:
+- repair scoring/runtime only;
+- never regenerate or alter the frozen candidates;
+- no model/decoder/threshold changes.
+
+If green:
+1. record score artifact ID/digest and summary SHA;
+2. record P1-model candidate rhythm/lead/combined TP, precision, recall, F1;
+3. record P2-model candidate rhythm/lead/combined TP, precision, recall, F1;
+4. compare both independently against Basic Pitch V4:
+   - combined F1 35.04%
+   - rhythm F1 31.82%
+   - lead F1 17.84%;
+5. do not select/tune a model based on protected-song score;
+6. freeze the post-freeze scoring result as diagnostic evidence only;
+7. preserve bass/timing/separator:
+   - spectral bass V1 TP 372 / F1 60.10%
+   - V4-origin timing
+   - BS-Roformer separator.
