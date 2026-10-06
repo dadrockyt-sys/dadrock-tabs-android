@@ -1,0 +1,53 @@
+{
+  "schema": "astra-post-guitarset-contradiction-review-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "DOCUMENTATION_REVIEW_ONLY",
+  "closedPaths": {
+    "goMyWayPitchVoicingCorrection": "unsupported_by_ambiguity_aware_v2",
+    "missingUnsynchronizedEventDominance": "failed_preregistered_independent_gate",
+    "serialSyntheticMicroOptimization": "closed_by_v14_stop_rule",
+    "basicPitchThresholdTuning": "not_authorized"
+  },
+  "evidence": {
+    "guitarset": {
+      "runId": 37431884091,
+      "pooledUnmatchedReferenceCount": 7209,
+      "pooledAssignmentDependentWrongPitchCount": 12044,
+      "gatePassed": false
+    },
+    "v14": {
+      "f1": 0.5517241379,
+      "requiredF1": 0.5864900168,
+      "originalDeficitRecoveryFraction": 0.3854,
+      "stateTruncations": 384,
+      "gatePassed": false
+    },
+    "realDomainLocalization": {
+      "p1ExactStringFretTop1Rate": 0.0625,
+      "p1PitchOnlyTop1Rate": 0.3125,
+      "p1MedianAbsoluteSemitoneError": 11.5,
+      "p2CandidateOnsetWindow4ThresholdCrossRate": 0
+    },
+    "basicPitchFeasibility": {
+      "aggregateF1": 0.4909090909090909,
+      "aggregatePrecision": 0.34177215189873417,
+      "advancementGatePassed": false
+    }
+  },
+  "preferredFutureProjectClass": "fresh_independent_representation_front_end_feasibility",
+  "automaticExecutionAuthorized": false,
+  "predictionMutationAuthorized": false,
+  "thresholdSearchAuthorized": false,
+  "nextGenericContinue": "prepare concrete design/authorization packet only",
+  "preserve": [
+    "Go My Way 1065-event quantized candidate",
+    "GuitarSet consumed-player status",
+    "spectral bass V1",
+    "BS-Roformer separator",
+    "V4-origin timing",
+    "original Basic Pitch V4 evidence",
+    "V9-V14 frozen results",
+    "main"
+  ]
+}
