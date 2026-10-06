@@ -1,0 +1,67 @@
+{
+  "schema":"astra-guitar-techs-v8-clean-candidate-freeze-v1",
+  "date":"2026-10-06",
+  "candidateId":"astra_guitartechs_v8_v4_hysteresis_event_rank_backshift",
+  "status":"FROZEN_CLEAN_CANDIDATE",
+  "representation":{
+    "family":"Guitar-TECHS V7 causal temporal representation",
+    "modelSourceGitBlob":"cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "p1Fold":{
+      "artifactId":11336573510,
+      "artifactDigest":"sha256:9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6",
+      "modelSha256":"072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763",
+      "selectedCheckpointEpoch":1000,
+      "fold":"p1-train-p2-validate"
+    },
+    "p2Fold":{
+      "artifactId":11374640369,
+      "artifactDigest":"sha256:0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c",
+      "modelSha256":"566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596",
+      "selectedCheckpointEpoch":940,
+      "fold":"p2-train-p1-validate"
+    }
+  },
+  "decoder":{
+    "sourceGitBlob":"0d856504983afdeeba2c18ad11b3090164876243",
+    "designGitBlob":"4094b878f6c9252be7ff35966893119bf288c6cd",
+    "rule":"Frozen V4 hysteresis admission/continuation plus V7 event-rank backshift of already-admitted starts only.",
+    "canCreateNewRun":false,
+    "canDeleteAdmittedRun":false,
+    "eventProbabilityThreshold":null,
+    "calibrationInvariant":true
+  },
+  "cleanEvaluation":{
+    "resultPath":"docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json",
+    "resultGitBlob":"65d6ca5fce078e0151a4c6c0a8636cdf08706185",
+    "sourceRunId":37409380940,
+    "artifactId":11390348256,
+    "artifactDigest":"sha256:b3964b6373b00fa4cd58b60766cf5069cb3b5acac85438fcc7c15b3faa608646",
+    "evaluationJsonSha256":"f7138835adac94cc445ee4e6200cdaf39ea4c5e0d7f88971b9f6384c597b0433",
+    "p1TrainP2Validate":{"f1":0.29305451541821204,"completeness":0.31028206022827787},
+    "p2TrainP1Validate":{"f1":0.20055717289380845,"completeness":0.1778232008888383},
+    "macroF1":0.24680584415601026,
+    "macroCompleteness":0.24405263055855808
+  },
+  "comparison":{
+    "originalV4MacroF1":0.24352280312668845,
+    "v7StatePlusPureV4HysteresisMacroF1":0.24619350297467514,
+    "deltaVsOriginalV4":0.003283041029321807,
+    "deltaVsPureV4HysteresisOnV7":0.000612341181335119
+  },
+  "scientificBoundary":{
+    "constructionReferenceBlind":true,
+    "protectedSongUsedDuringDesign":false,
+    "protectedSongUsedDuringTraining":false,
+    "protectedSongUsedDuringDecoderSelection":false,
+    "goMyWayParametersMayNotChangeAfterThisFreeze":true
+  },
+  "guards":{
+    "optimizerStepsExecutedForV8":0,
+    "v8ModelWeightsModified":false,
+    "thresholdsRetuned":false,
+    "p3Opened":false,
+    "protectedSongUsed":false,
+    "mainOrProductionModified":false
+  },
+  "nextAllowedAction":"Separate post-freeze protected-song Go My Way evaluation only. No model/decoder parameter changes based on that result."
+}
