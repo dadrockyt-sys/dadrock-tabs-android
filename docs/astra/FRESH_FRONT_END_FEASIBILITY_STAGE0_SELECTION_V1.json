@@ -21,7 +21,7 @@
     "checkpointRepository": "xavriley/midi-transcription-models",
     "checkpointFile": "guitar-fl.pth",
     "checkpointSha256": "50d93dba89bdd3401849bc735614478e83d9f46d21fa3f71d8aca5acc0a52028",
-    "checkpointBytes": 98900000,
+    "checkpointBytes": 98916957,
     "modelRepositoryLicense": "MIT",
     "inferenceDependency": {
       "repository": "xavriley/piano_transcription_inference",
@@ -43,7 +43,13 @@
       "zero optimizer steps and no evaluation-label calibration required"
     ],
     "selectionDidNotUseFutureEvaluationScores": true,
-    "note": "The wrapper exposes threshold constructor arguments but does not forward them into _init_transcriptor; execution must therefore pin the exact code/dependency commits above and use their effective published defaults rather than introduce a threshold control."
+    "note": "The wrapper exposes threshold constructor arguments but does not forward them into _init_transcriptor; execution must therefore pin the exact code/dependency commits above and use their effective published defaults rather than introduce a threshold control.",
+    "identityMetadataCorrection": {
+      "previousRecordedBytes": 98900000,
+      "correctedBytes": 98916957,
+      "reason": "First authorized empirical run downloaded the pinned checkpoint before any evaluation media/reference access and revealed the Stage-0 byte count was a metadata typo. SHA-256 identity remains unchanged and authoritative.",
+      "scientificSemanticsChanged": false
+    }
   },
   "evaluationSource": {
     "name": "GAPS (Guitar-Aligned Performance Scores)",
