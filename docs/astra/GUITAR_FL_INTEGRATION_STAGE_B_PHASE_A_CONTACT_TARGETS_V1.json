@@ -38,9 +38,28 @@
     ],
     "purchaseAuthorized": false,
     "outreach": {
-      "status": "PENDING",
+      "status": "PREPARED_NOT_SUBMITTED_RECAPTCHA_BLOCKED",
       "publicContactRoute": "https://www.musiquegagne.com/contact-us",
-      "blocker": "Public form requires sender identity/contact fields; no grounded sender identity was supplied in the frozen packet. No form was submitted and no paid browser automation was used."
+      "preferredContactMethod": "email",
+      "formPreparedFor": {
+        "name": "Stephen McNally",
+        "city": "Thunder Bay",
+        "province": "ON",
+        "postalCode": "P7B 4Y7",
+        "country": "Canada"
+      },
+      "selectedDepartment": "Pro-audio, piano and lighting",
+      "inquiryScope": [
+        "actual stock status",
+        "new/used/refurbished/open-box condition",
+        "current non-binding CAD quote",
+        "hardware revision or serial-number range if available before purchase",
+        "warranty and return terms"
+      ],
+      "explicitNonCommitment": true,
+      "observedListingPriceCad": 719,
+      "automationRunId": "15ee2fbd-5646-411c-a522-f18b36b99254",
+      "blocker": "Google reCAPTCHA image challenge required human interaction; form was not submitted."
     }
   },
   "manufacturerTechnicalTarget": {
