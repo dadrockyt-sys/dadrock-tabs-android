@@ -1,0 +1,68 @@
+name: Astra Go My Way V4-origin guitar grid quantization V1 score recovery
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - '.github/workflows/astra-gomyway-v4-origin-guitar-grid-quantization-v1-score-recovery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score-frozen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-guitar-grid-quantization-v1-frozen
+          path: /tmp/candidate
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37418651745
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-v4-origin-frozen-note-evidence-v1
+          path: /tmp/evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37146481347
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gomyway-timing-origin-v4-diagnostic
+          path: /tmp/timing
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37144194576
+
+      - name: Verify exact frozen candidate and scoring inputs
+        run: |
+          set -euo pipefail
+          test "$(sha256sum /tmp/candidate/guitar-grid-quantization-v1.json | awk '{print $1}')" = '880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e'
+          test "$(git hash-object astra_backend/evaluation/score_gomyway_v4_origin_guitar_grid_quantization_v1.py)" = '9b48ef38c72ee32a6a8596478d86a59b67c0b579'
+          test "$(sha256sum /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json | awk '{print $1}')" = 'b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json | awk '{print $1}')" = 'd51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555'
+          test "$(sha256sum research/v154-professional-references/scorer-ready/lead-scorer-ready.json | awk '{print $1}')" = '8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be'
+
+      - name: Score frozen candidate only
+        run: |
+          set -euo pipefail
+          python astra_backend/evaluation/score_gomyway_v4_origin_guitar_grid_quantization_v1.py             --note-evidence /tmp/evidence/gomyway-v4-origin-frozen-note-evidence-v1.json             --candidate /tmp/candidate/guitar-grid-quantization-v1.json             --timing-map /tmp/timing/gomyway-professional-timing-map-v4-origin-diagnostic.json             --rhythm-reference research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json             --lead-reference research/v154-professional-references/scorer-ready/lead-scorer-ready.json             --output-json /tmp/guitar-grid-quantization-v1-score.json
+          sha256sum /tmp/guitar-grid-quantization-v1-score.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-v4-origin-guitar-grid-quantization-v1-score-recovered
+          path: /tmp/guitar-grid-quantization-v1-score.json
+          retention-days: 30
