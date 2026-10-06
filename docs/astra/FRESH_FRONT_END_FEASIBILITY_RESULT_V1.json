@@ -1,0 +1,76 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-frozen-result-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "workflow": {
+    "runId": 37448533631,
+    "headSha": "b097a45dc6c7d8fd29cc4ae13a7cbbb0d17b209f",
+    "conclusion": "success"
+  },
+  "sourceCandidateArtifact": {
+    "id": 11403758166,
+    "digest": "sha256:128f7b954b8d10b57ca4b581eef6534d6d15f9db38563035aa73b7947620fd50",
+    "basicPitchManifestSha256": "0b907962ae1302ba936a532729b7eca240bf6c3baa2baeb500c156edb2a5fbc6",
+    "guitarFlManifestSha256": "041caeb7845c45f7b561f5b900c6b1c1b78d8543f0bf0c164418aaf0ced644df"
+  },
+  "outputArtifact": {
+    "id": 11404537641,
+    "name": "fresh-front-end-feasibility-v1-score-recovery-result",
+    "digest": "sha256:a2af12b7636c2429e455f84ac43a86fb69a2fc30a97a57d55565ea0d5ebba290",
+    "resultJsonSha256": "36a17b8a77c7cde03ae21f014a73a8af54e4e3e272e42c6b574be9a8a6bb567c",
+    "referenceManifestSha256": "a96e23776b884bfd4a4d83cc4d21926ea868a4b00471e7c759dbe146e5829da5"
+  },
+  "population": {
+    "trackCount": 30,
+    "performerCount": 27,
+    "referenceEventCount": 25030
+  },
+  "comparator": {
+    "name": "Basic Pitch 0.4.0",
+    "predictionCount": 33465,
+    "exactPitchOnsetCount": 14081,
+    "precision": 0.42076796653219783,
+    "recall": 0.5625649220934879,
+    "f1": 0.4814428583639628,
+    "predictionReferenceRatio": 1.3369956052736716,
+    "contentFamilyMacroF1": 0.49167846295988826
+  },
+  "intervention": {
+    "name": "Xavier Riley guitar-fl.pth",
+    "predictionCount": 25195,
+    "exactPitchOnsetCount": 21034,
+    "precision": 0.8348481841635245,
+    "recall": 0.8403515781062725,
+    "f1": 0.8375908412145345,
+    "predictionReferenceRatio": 1.0065920894926088,
+    "contentFamilyMacroF1": 0.8422192871584453
+  },
+  "deltas": {
+    "precision": 0.4140802176313267,
+    "recall": 0.2777866560127846,
+    "f1": 0.3561479828505717,
+    "contentFamilyMacroF1": 0.350540824198557
+  },
+  "gate": {
+    "passed": true,
+    "checks": {
+      "aggregateF1": true,
+      "aggregatePrecision": true,
+      "aggregateRecall": true,
+      "predictionReferenceRatio": true,
+      "performerFloor": true,
+      "contentFamilyFloor": true,
+      "optimizerSteps": true,
+      "thresholdSearch": true,
+      "referenceDerivedPredictionMutation": true
+    }
+  },
+  "execution": {
+    "optimizerSteps": 0,
+    "thresholdSearch": false,
+    "referenceDerivedPredictionMutation": false
+  },
+  "decision": "ADVANCE_TO_SEPARATELY_DESIGNED_INTEGRATION_STUDY_ONLY",
+  "automaticIntegration": false,
+  "automaticProductionChange": false
+}
