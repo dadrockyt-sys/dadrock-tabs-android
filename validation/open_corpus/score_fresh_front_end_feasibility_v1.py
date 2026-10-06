@@ -36,11 +36,10 @@ def read_candidate_dir(root:Path):
 def midi_refs(path:Path):
     import mido
     mid=mido.MidiFile(path)
-    tempo=500000; abs_ticks=0; out=[]
+    tempo=500000; sec=0.0; out=[]
     active=collections.defaultdict(list)
     for msg in mido.merge_tracks(mid.tracks):
-        abs_ticks+=msg.time
-        sec=mido.tick2second(abs_ticks,mid.ticks_per_beat,tempo)
+        sec+=mido.tick2second(msg.time,mid.ticks_per_beat,tempo)
         if msg.type=="set_tempo": tempo=msg.tempo
         elif msg.type=="note_on" and msg.velocity>0: active[int(msg.note)].append(sec)
         elif msg.type in ("note_off","note_on") and (msg.type=="note_off" or msg.velocity==0):
