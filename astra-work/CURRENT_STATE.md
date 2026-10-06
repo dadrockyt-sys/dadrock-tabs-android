@@ -11334,3 +11334,66 @@ Build V8 as a decoder-only experiment on the frozen V7 models:
   - state-relative `0.2226251206`
   - V7 state + V4 hysteresis `0.2461935030`
   - original V4 `0.2435228031`.
+
+
+## V8 decoder-only experiment — launched
+
+V7 decoder decomposition proved the learned V7 representation is stronger than its native ranked decoder:
+- V7 native ranked macro F1 `0.1615835585`
+- V7 state-relative macro F1 `0.2226251206`
+- V7 state + frozen V4 hysteresis macro F1 `0.2461935030`
+- original V4 benchmark macro F1 `0.2435228031`
+
+Therefore V8 is decoder-only. No retraining is authorized or needed at this stage.
+
+Candidate:
+- `astra_guitartechs_v8_v4_hysteresis_event_rank_backshift`
+
+Frozen V8 rule:
+1. frozen V4 hysteresis remains the sole admission/continuation scaffold;
+2. V7 raw event ranking may only backshift an already-admitted active run start by at most 2 frames;
+3. backshift frame must be a deterministic local event-score maximum;
+4. the same admitted fret must already be the relative active-state argmax there;
+5. that same fret must outrank silence;
+6. event ranking cannot create a new run;
+7. event ranking cannot delete a V4-admitted run;
+8. no absolute event probability threshold exists;
+9. decoder remains invariant to positive affine transforms of event scores.
+
+Files:
+- `astra_backend/guitartechs_training_v8/decoder.py`
+- `astra_backend/guitartechs_training_v8/verify_synthetic_v8.py`
+- `docs/astra/GUITARTECHS_V8_DECODER_DESIGN_V1.json`
+
+Commits:
+- decoder `884d231a2a4d52e83b6b0fff9c81a3d9fa047038`
+- synthetic verifier `759f5eefcf2434511b39af17018d113a015834b7`
+- design `d2a3c72fafc9bd905fb35f1e07f7c89e3f121a61`
+- workflow launch `248acc9a6ff59bab859b58de953faeee704f967f`
+
+Authoritative V8 synthetic run:
+- run `37408374068`
+- monitor: https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37408374068
+- status at this update: IN PROGRESS
+
+### Exact next resume instruction
+
+Resume from run `37408374068`.
+
+If failed:
+- repair only V8 decoder/synthetic implementation;
+- preserve decoder-only/no-new-run/no-threshold contract;
+- do not touch V7 weights;
+- no P1/P2 or protected song use.
+
+If green:
+1. freeze decoder/workflow identities;
+2. build zero-optimizer P1/P2 evaluation using frozen V7 P1/P2 models;
+3. evaluate only this one predeclared V8 decoder;
+4. compare against:
+   - native V7 `0.1615835585`
+   - state-relative `0.2226251206`
+   - V7 state + frozen V4 hysteresis `0.2461935030`
+   - original V4 `0.2435228031`;
+5. do not retune any threshold or decoder parameter;
+6. P3 and Go My Way remain closed.
