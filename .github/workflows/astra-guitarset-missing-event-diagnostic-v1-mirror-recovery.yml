@@ -1,0 +1,97 @@
+name: Astra GuitarSet missing-event diagnostic V1 mirror recovery
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_MIRROR_RECOVERY_LAUNCH.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score-frozen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install reference parser only
+        run: python -m pip install --disable-pip-version-check jams==0.3.4
+
+      - name: Verify frozen code identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py)" = "972adf7215a180f703873950c96068b4f860bbc8"
+          test "$(git hash-object validation/open_corpus/materialize_guitarset_hf_mirror_refs_v1.py)" = "e9acf04110925a8c00a0678ce253a1d7a126c6c6"
+          test "$(git hash-object docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_REFERENCE_SOURCE_AMENDMENT.json)" = "eb83efbf783669f0e6535ba3ba539c619fad46ea"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py --self-test
+          python - <<'PY'
+          import importlib.util
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('Basic Pitch unexpectedly importable in scorer')
+          print('GUITARSET_MIRROR_RECOVERY_NO_BASIC_PITCH_PASS')
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: guitarset-missing-event-v1-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-mirror/candidates
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37426492061
+
+      - name: Verify exact frozen candidate artifact
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-mirror"
+          C="$ROOT/candidates"
+          test "$(sha256sum "$C/candidate-freeze-manifest.json" | awk '{print $1}')" = "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          c=Path(os.environ['RUNNER_TEMP'])/'guitarset-missing-event-v1-mirror/candidates'
+          m=json.loads((c/'candidate-freeze-manifest.json').read_text())
+          assert m['candidateFileCount']==180
+          assert m['totalEventCount']==33327
+          assert m['players']==['00','01','03']
+          assert m['referenceRead'] is False and m['jamsNoteEventsRead']==0
+          assert m['predictionMutation'] is False and m['thresholdSearch'] is False
+          print('GUITARSET_MIRROR_RECOVERY_FROZEN_CANDIDATE_PASS')
+          PY
+
+      - name: Materialize pinned mirror references
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-mirror"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          python validation/open_corpus/materialize_guitarset_hf_mirror_refs_v1.py --output-dir "$ROOT/reference"
+          python -m json.tool "$ROOT/reference/mirror-reference-manifest.json" >/dev/null
+          test "$(find "$ROOT/reference" -maxdepth 1 -type f -name '*.jams' | wc -l)" -eq 180
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+
+      - name: Score exact frozen candidates once
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-mirror"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py             --candidate-dir "$ROOT/candidates"             --reference-dir "$ROOT/reference"             --output "$ROOT/output/result.json"
+          python -m json.tool "$ROOT/output/result.json" >/dev/null
+          sha256sum "$ROOT/output/result.json" | tee "$ROOT/output/result-sha256.txt"
+          cp "$ROOT/reference/mirror-reference-manifest.json" "$ROOT/output/"
+          sha256sum "$ROOT/output/mirror-reference-manifest.json" | tee "$ROOT/output/mirror-reference-manifest-sha256.txt"
+          rm -rf "$ROOT/reference" "$ROOT/candidates"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-missing-event-diagnostic-v1-mirror-recovered
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-mirror/output/
+          retention-days: 30
