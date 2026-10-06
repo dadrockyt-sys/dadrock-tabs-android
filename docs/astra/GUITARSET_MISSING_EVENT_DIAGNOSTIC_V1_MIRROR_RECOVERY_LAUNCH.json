@@ -1,0 +1,15 @@
+{
+  "schema": "astra-guitarset-missing-event-diagnostic-v1-mirror-recovery-launch",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "workflowCommit": "96c51fc890073ff081e75a3f10cc87585f942209",
+  "sourceCandidateRunId": 37426492061,
+  "sourceCandidateArtifactId": 11395810007,
+  "sourceCandidateArtifactDigest": "sha256:6568a6daaca594dc216d61268a80012da7c63f26a7e77f2d7826b1b5f3b73cc5",
+  "candidateManifestSha256": "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb",
+  "referenceSourceAmendment": "docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_REFERENCE_SOURCE_AMENDMENT.json",
+  "mirror": "jhartquist/guitarset",
+  "mirrorRevision": "4aca25487bef5cb0d2c4ec146218f9145402a776",
+  "scorerGitBlob": "972adf7215a180f703873950c96068b4f860bbc8",
+  "scope": "Transport-only recovery using pinned GuitarSet v1.1.0 mirror canonical notes for players 00/01/03. Existing frozen candidates and preregistered scorer/gate remain unchanged. No prediction mutation, threshold search, or correction."
+}
