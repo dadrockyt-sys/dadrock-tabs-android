@@ -12,8 +12,11 @@
   "mirrorRevision": "4aca25487bef5cb0d2c4ec146218f9145402a776",
   "scorerGitBlob": "972adf7215a180f703873950c96068b4f860bbc8",
   "scope": "Transport-only recovery using pinned GuitarSet v1.1.0 mirror canonical notes for players 00/01/03. Existing frozen candidates and preregistered scorer/gate remain unchanged. No prediction mutation, threshold search, or correction.",
-  "attempt": 3,
+  "attempt": 4,
   "materializerRepairCommit": "29e30bcf0f9b5c92defb9fccedeea65b71f4bd9a",
   "materializerBlob": "74b7950e48946b93abed09f7f185eb3c9dc99002",
-  "materializerRepairScope": "Transport implementation only: retain 5-row /rows streaming and add bounded retries for transient 5xx/network errors. No source, labels, scorer, candidate, tolerance, gate, or hypothesis change."
+  "materializerRepairScope": "Transport implementation only: retain 5-row /rows streaming and add bounded retries for transient 5xx/network errors. No source, labels, scorer, candidate, tolerance, gate, or hypothesis change.",
+  "workflowRepairCommit": "b2142e892d839833aa27e4f4ba08b348252e247f",
+  "workflowBlob": "d030d9fefef1c748056676f386ab51b7966ad7fc",
+  "workflowRepairScope": "Runtime dependency only: pin NumPy 1.26.4 so frozen JAMS 0.3.4 can import after mirror rows are fetched. No source, labels, scorer, candidate, tolerance, gate, or hypothesis change."
 }
