@@ -1,0 +1,47 @@
+{
+  "schema":"astra-gomyway-v4-origin-guitar-grid-quantization-v1-result",
+  "date":"2026-10-06",
+  "sourceRunId":37418651745,
+  "recoveryScoreRunId":37418963067,
+  "candidate":{
+    "artifactId":11391794891,
+    "artifactDigest":"sha256:b8b93b5dc5f563abe3576446c777e6e09230b7981e5a6bb63d6de62fb1af1b1e",
+    "candidateSha256":"880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
+    "inputCount":1065,
+    "outputCount":1065,
+    "movement":{
+      "meanAbsSeconds":0.02645812460573875,
+      "medianAbsSeconds":0.024830516387865487,
+      "p90AbsSeconds":0.04995734341506797,
+      "maxAbsSeconds":0.06547349070722852
+    }
+  },
+  "score":{
+    "artifactId":11391253841,
+    "artifactDigest":"sha256:64832f78c136d275878dca8d653622187b88f9d18c97f894b12c0f0aeb621c11",
+    "scoreJsonSha256":"2b7fce13b6b55aebeab3ae4be1a266d851b322f9dffefeb9ee16d5e5719deb39",
+    "rhythm":{
+      "baseline":{"tp":320,"f1":0.3182496270512183},
+      "quantized":{"tp":335,"f1":0.33316757831924415},
+      "delta":{"tp":15,"f1":0.014917951268025864}
+    },
+    "lead":{
+      "baseline":{"tp":133,"f1":0.1784037558685446},
+      "quantized":{"tp":142,"f1":0.19047619047619047},
+      "delta":{"tp":9,"f1":0.012072434607645871}
+    },
+    "combinedGuitar":{
+      "baseline":{"tp":427,"f1":0.3504308576118178},
+      "quantized":{"tp":451,"f1":0.37012720558063195},
+      "delta":{"tp":24,"f1":0.019696347968814143}
+    }
+  },
+  "decision":{
+    "status":"IMPROVEMENT",
+    "preserveQuantizedTimingCandidate":true,
+    "pitchChanged":false,
+    "noteCountChanged":false,
+    "thresholdTuned":false,
+    "nextDirection":"Freeze quantized-timing candidate as new strongest Go My Way guitar timing representation, then diagnose remaining pitch/voicing errors on this quantized candidate without changing timing."
+  }
+}
