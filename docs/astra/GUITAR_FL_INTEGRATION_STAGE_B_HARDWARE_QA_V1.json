@@ -1,0 +1,40 @@
+{
+  "schema": "astra-guitar-fl-stage-b-hardware-qa-v1",
+  "date": "2026-10-06",
+  "status": "FROZEN_NO_PROCUREMENT",
+  "clockTopology": "single_shared_authoritative_hardware_clock_only",
+  "planeA": {
+    "sourceClass": "clean_magnetic_guitar_di",
+    "sampleRateHz": 48000,
+    "bitDepth": 24,
+    "channels": 1,
+    "fullScaleClippedSamplesMax": 0
+  },
+  "planeB": {
+    "sourceClass": "six_string_physical_fret_contact_matrix",
+    "minScanRateHz": 1000,
+    "maxTimestampGapMs": 2,
+    "unknownTransportStatesMax": 0
+  },
+  "planeC": {
+    "sourceClass": "six_independent_string_excitation_sensors",
+    "channelsRequired": 6,
+    "minWaveformSampleRateHz": 48000,
+    "missingClockFramesMax": 0,
+    "fullScaleClippedSamplesMax": 0
+  },
+  "clock": {
+    "gapsMax": 0,
+    "duplicatesMax": 0,
+    "strictlyMonotonic": true
+  },
+  "identity": {
+    "configurationExactMatch": true,
+    "calibrationExactMatch": true,
+    "firmwareExactMatch": true,
+    "sha256Required": true
+  },
+  "vendorSelected": false,
+  "procurementAuthorized": false,
+  "captureAuthorized": false
+}
