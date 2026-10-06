@@ -1,0 +1,27 @@
+{
+  "schema":"astra-guitar-techs-v8-gomyway-scoring-launch-v1",
+  "date":"2026-10-06",
+  "candidateId":"astra_guitartechs_v8_v4_hysteresis_event_rank_backshift",
+  "candidateFreezeRunId":37415737535,
+  "candidateArtifactId":11392110587,
+  "candidateArtifactDigest":"sha256:7d31acd84916f2de32e3eebaaa928d06b5a953e5b4dd306630f8c9098217cf40",
+  "freezeManifestSha256":"b1539b805ae7fba9f9a378ca3353dba54876dabfb4c76652b42689282dcd68a1",
+  "candidates":{
+    "p1":{"sha256":"9b67baab3040ba1fc181103f810759638ba70c6178c57be8252dcc5833dd81a7","eventCount":1537},
+    "p2":{"sha256":"2323c843a4b9770e6d676dc6b8d72b199a2f54c49b4101f36d94230d5e5a2006","eventCount":1158}
+  },
+  "scoringInputs":{
+    "timingMapSha256":"b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3",
+    "rhythmReferenceSha256":"d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+    "leadReferenceSha256":"8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be"
+  },
+  "workflowGitBlob":"5eb19e56d3d2dd089b7fa0e17509eedde56c20c0",
+  "guards":{
+    "scoringOnly":true,
+    "parameterChangesAuthorized":false,
+    "optimizerStepsAuthorized":0,
+    "thresholdRetuningAuthorized":false,
+    "p3Opened":false,
+    "mainOrProductionMutationAuthorized":false
+  }
+}
