@@ -76,7 +76,10 @@ jobs:
           ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-recovery"
           mkdir -p "$ROOT/reference" "$ROOT/output"
           cd "$ROOT"
-          curl -L --fail --retry 3 --retry-delay 3 'https://zenodo.org/records/3371780/files/annotation.zip?download=1' -o annotation.zip
+          if ! curl -L --fail --retry 8 --retry-all-errors --retry-delay 5 'https://zenodo.org/records/3371780/files/annotation.zip?download=1' -o annotation.zip; then
+            rm -f annotation.zip
+            curl -L --fail --retry 8 --retry-all-errors --retry-delay 5 'https://zenodo.org/api/records/3371780/files/annotation.zip/content' -o annotation.zip
+          fi
           echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
           echo '8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99  annotation.zip' | sha256sum -c -
           python - <<'PY'
