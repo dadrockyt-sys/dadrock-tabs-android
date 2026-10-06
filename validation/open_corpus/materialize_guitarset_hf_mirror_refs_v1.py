@@ -6,7 +6,7 @@ players 00/01/03 from the single-commit jhartquist/guitarset mirror and writes
 minimal JAMS files consumed by the already-frozen scorer.
 """
 from __future__ import annotations
-import argparse, hashlib, json, math, urllib.parse, urllib.request
+import argparse, hashlib, json, math, time, urllib.parse, urllib.request, urllib.error
 from pathlib import Path
 
 EXPECTED_REVISION="4aca25487bef5cb0d2c4ec146218f9145402a776"
@@ -22,9 +22,18 @@ def sha256_file(path:Path)->str:
     return h.hexdigest()
 
 def get_json(url:str):
-    req=urllib.request.Request(url,headers={"User-Agent":"dadrock-tabs-astra-guitarset-recovery/1"})
-    with urllib.request.urlopen(req,timeout=120) as r:
-        return json.loads(r.read().decode("utf-8"))
+    last=None
+    for attempt in range(10):
+        req=urllib.request.Request(url,headers={"User-Agent":"dadrock-tabs-astra-guitarset-recovery/1"})
+        try:
+            with urllib.request.urlopen(req,timeout=120) as r:
+                return json.loads(r.read().decode("utf-8"))
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            last=exc
+            if attempt==9:
+                break
+            time.sleep(min(15,2+attempt*2))
+    raise RuntimeError(f"mirror request failed after retries: {url}: {last}")
 
 def verify_revision():
     info=get_json("https://huggingface.co/api/datasets/jhartquist/guitarset/revision/main")
