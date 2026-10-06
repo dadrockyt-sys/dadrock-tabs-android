@@ -1,0 +1,19 @@
+{
+  "schema": "astra-guitar-techs-v9-synthetic-no-media-launch-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "sourceCommit": "9574850ad2aac90f094fc959de6d5b3838029807",
+  "workflowRun": 37536539420,
+  "workflowUrl": "https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37536539420",
+  "statusAtFreeze": "IN_PROGRESS",
+  "scope": {
+    "syntheticOnly": true,
+    "realMediaAccess": false,
+    "optimizerTrainingOnP1P2": false,
+    "p3Access": false,
+    "protectedSongAccess": false,
+    "stageBHoldoutAccess": false,
+    "thresholdRetuning": false,
+    "productionOrMainMutation": false
+  }
+}
