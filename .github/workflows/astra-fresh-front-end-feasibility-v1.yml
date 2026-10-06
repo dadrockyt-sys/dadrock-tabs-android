@@ -1,0 +1,160 @@
+name: Astra fresh front-end feasibility V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/FRESH_FRONT_END_FEASIBILITY_LAUNCH_V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  freeze-candidates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify frozen source identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/fetch_gaps_fresh_front_end_audio_v1.py)" = "c556b385f7b96bd2c415c382411d848b0057179e"
+          test "$(git hash-object validation/open_corpus/generate_fresh_front_end_candidates_v1.py)" = "96001d37853d001a346284ecac1bb1424caf02e7"
+          test "$(git hash-object validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py)" = "799840d6ba1d485624a5942793e0cbd76bdd8b20"
+          test "$(git hash-object validation/open_corpus/score_fresh_front_end_feasibility_v1.py)" = "fdc345ba2e379b058944fd591dc35c646cf547e2"
+          test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json)" = "4cf88f5ef3716d3cc97ddb0fe1b73777ab54686f"
+          test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json)" = "aa1de4925ab382187f08bc30791eaf6cf18d52f3"
+          python -m py_compile validation/open_corpus/fetch_gaps_fresh_front_end_audio_v1.py validation/open_corpus/generate_fresh_front_end_candidates_v1.py validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py validation/open_corpus/score_fresh_front_end_feasibility_v1.py
+
+      - name: Install frozen inference runtimes
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy==1.26.4 tflite-runtime==2.14.0 basic-pitch==0.4.0 huggingface-hub==0.35.3 mido==1.3.3
+          python -m pip install --disable-pip-version-check "git+https://github.com/xavriley/piano_transcription_inference.git@7568dc7f78b625e40cf9776e2806d164006610e3"
+          python -m pip install --disable-pip-version-check --no-deps "git+https://github.com/xavriley/hf_midi_transcription.git@96f6797881e9497cbfc8f8e5deccea9c1f2f7adc"
+
+      - name: Verify runtime and checkpoint identity
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/fresh-front-end-v1"
+          mkdir -p "$ROOT/model" "$ROOT/audio" "$ROOT/candidates"
+          python - <<'PY'
+          import hashlib, importlib.metadata as md
+          from pathlib import Path
+          from huggingface_hub import hf_hub_download
+          from basic_pitch import ICASSP_2022_MODEL_PATH
+          assert md.version('basic-pitch') == '0.4.0'
+          bp=hashlib.sha256(Path(ICASSP_2022_MODEL_PATH).read_bytes()).hexdigest()
+          assert bp == '3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676', bp
+          p=Path(hf_hub_download('xavriley/midi-transcription-models','guitar-fl.pth'))
+          out=Path(__import__('os').environ['RUNNER_TEMP'])/'fresh-front-end-v1/model/guitar-fl.pth'
+          out.write_bytes(p.read_bytes())
+          assert out.stat().st_size == 98900000, out.stat().st_size
+          h=hashlib.sha256(out.read_bytes()).hexdigest()
+          assert h == '50d93dba89bdd3401849bc735614478e83d9f46d21fa3f71d8aca5acc0a52028', h
+          print('FRESH_FRONT_END_RUNTIME_IDENTITY_PASS',bp,h)
+          PY
+
+      - name: Download only frozen GAPS test audio
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/fresh-front-end-v1"
+          python validation/open_corpus/fetch_gaps_fresh_front_end_audio_v1.py --output-dir "$ROOT/audio"
+          test "$(find "$ROOT" -type f \( -name '*.mid' -o -name '*.midi' -o -name '*.musicxml' -o -name '*.match' \) | wc -l)" -eq 0
+
+      - name: Freeze both reference-blind candidate sets
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/fresh-front-end-v1"
+          python validation/open_corpus/generate_fresh_front_end_candidates_v1.py --audio-dir "$ROOT/audio" --output-dir "$ROOT/candidates" --guitar-fl-checkpoint "$ROOT/model/guitar-fl.pth"
+          cp "$ROOT/audio/audio-manifest.json" "$ROOT/candidates/"
+          sha256sum "$ROOT/candidates/basic_pitch-candidate-freeze-manifest.json" | tee "$ROOT/candidates/basic-pitch-manifest-sha256.txt"
+          sha256sum "$ROOT/candidates/guitar_fl-candidate-freeze-manifest.json" | tee "$ROOT/candidates/guitar-fl-manifest-sha256.txt"
+          rm -rf "$ROOT/audio" "$ROOT/model"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.mid' -o -name '*.midi' -o -name '*.musicxml' -o -name '*.match' -o -name '*.pth' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fresh-front-end-v1-frozen-candidates
+          path: ${{ runner.temp }}/fresh-front-end-v1/candidates/
+          retention-days: 30
+
+  score-after-freeze:
+    needs: freeze-candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install reference-only runtime
+        run: python -m pip install --disable-pip-version-check huggingface-hub==0.35.3 mido==1.3.3
+
+      - name: Verify scorer isolation and frozen identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py)" = "799840d6ba1d485624a5942793e0cbd76bdd8b20"
+          test "$(git hash-object validation/open_corpus/score_fresh_front_end_feasibility_v1.py)" = "fdc345ba2e379b058944fd591dc35c646cf547e2"
+          test "$(git hash-object docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json)" = "aa1de4925ab382187f08bc30791eaf6cf18d52f3"
+          python -m py_compile validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py validation/open_corpus/score_fresh_front_end_feasibility_v1.py
+          python - <<'PY'
+          import importlib.util
+          assert importlib.util.find_spec('basic_pitch') is None
+          assert importlib.util.find_spec('hf_midi_transcription') is None
+          print('FRESH_FRONT_END_SCORER_ISOLATION_PASS')
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: fresh-front-end-v1-frozen-candidates
+          path: ${{ runner.temp }}/fresh-front-end-v1-score/candidates
+
+      - name: Verify candidate freeze before references
+        run: |
+          set -euo pipefail
+          C="$RUNNER_TEMP/fresh-front-end-v1-score/candidates"
+          (cd "$C" && sha256sum -c basic-pitch-manifest-sha256.txt && sha256sum -c guitar-fl-manifest-sha256.txt)
+          python -m json.tool "$C/basic_pitch-candidate-freeze-manifest.json" >/dev/null
+          python -m json.tool "$C/guitar_fl-candidate-freeze-manifest.json" >/dev/null
+
+      - name: Download only frozen GAPS test MIDI references
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/fresh-front-end-v1-score"
+          mkdir -p "$ROOT/references" "$ROOT/output"
+          python validation/open_corpus/fetch_gaps_fresh_front_end_refs_v1.py --output-dir "$ROOT/references"
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+
+      - name: Score once and evaluate frozen gate
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/fresh-front-end-v1-score"
+          python validation/open_corpus/score_fresh_front_end_feasibility_v1.py --candidate-root "$ROOT/candidates" --reference-dir "$ROOT/references" --output "$ROOT/output/result.json"
+          python -m json.tool "$ROOT/output/result.json" >/dev/null
+          sha256sum "$ROOT/output/result.json" | tee "$ROOT/output/result-sha256.txt"
+          cp "$ROOT/references/reference-manifest.json" "$ROOT/output/"
+          sha256sum "$ROOT/output/reference-manifest.json" | tee "$ROOT/output/reference-manifest-sha256.txt"
+          rm -rf "$ROOT/references" "$ROOT/candidates"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.mid' -o -name '*.midi' -o -name '*.pth' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fresh-front-end-feasibility-v1-result
+          path: ${{ runner.temp }}/fresh-front-end-v1-score/output/
+          retention-days: 30
