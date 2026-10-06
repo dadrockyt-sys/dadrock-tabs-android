@@ -10,5 +10,8 @@
   "candidateFileCount": 180,
   "candidateTotalEventCount": 33327,
   "failureCause": "Candidate checksum receipt stored an absolute runner path; scorer failed before downloading references.",
-  "repairScope": "Scoring-only recovery from the exact frozen candidate artifact. No candidate regeneration, threshold change, prediction mutation, or scorer-semantic change."
+  "repairScope": "Scoring-only recovery from the exact frozen candidate artifact. No candidate regeneration, threshold change, prediction mutation, or scorer-semantic change.",
+  "attempt": 2,
+  "transportRepairCommit": "c2b3fbf301c1c6e0464971aa61c083a017c93a2f",
+  "transportRepairScope": "Download transport only: retry exact Zenodo record URL, then exact-record API content fallback; archive must still match frozen MD5 and SHA-256 before extraction/scoring."
 }
