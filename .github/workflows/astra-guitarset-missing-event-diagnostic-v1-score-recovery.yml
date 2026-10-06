@@ -1,0 +1,119 @@
+name: Astra GuitarSet missing-event diagnostic V1 score recovery
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARSET_MISSING_EVENT_DIAGNOSTIC_V1_SCORE_RECOVERY_LAUNCH.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  score-frozen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install reference parser only
+        run: python -m pip install --disable-pip-version-check jams==0.3.4
+
+      - name: Verify scorer isolation and frozen identity
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py)" = "972adf7215a180f703873950c96068b4f860bbc8"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py --self-test
+          python - <<'PY'
+          import importlib.util
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('Basic Pitch unexpectedly importable in scorer')
+          print('GUITARSET_MISSING_EVENT_RECOVERY_NO_BASIC_PITCH_PASS')
+          PY
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: guitarset-missing-event-v1-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-recovery/candidates
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37426492061
+
+      - name: Verify exact frozen candidate artifact before references
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-recovery"
+          C="$ROOT/candidates"
+          test "$(sha256sum "$C/candidate-freeze-manifest.json" | awk '{print $1}')" = "db721bca5dd22e7dc04d9a00dd04996b2cb52ed59d12172b9d056b01ea608ccb"
+          python -m json.tool "$C/candidate-freeze-manifest.json" >/dev/null
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          c=Path(os.environ['RUNNER_TEMP'])/'guitarset-missing-event-v1-recovery/candidates'
+          m=json.loads((c/'candidate-freeze-manifest.json').read_text())
+          assert m['candidateFileCount']==180
+          assert m['totalEventCount']==33327
+          assert m['players']==['00','01','03']
+          assert m['referenceRead'] is False
+          assert m['jamsNoteEventsRead']==0
+          assert m['predictionMutation'] is False
+          assert m['thresholdSearch'] is False
+          print('GUITARSET_MISSING_EVENT_RECOVERY_FROZEN_CANDIDATE_PASS')
+          PY
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+
+      - name: Download verify and isolate evaluation references
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-recovery"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 'https://zenodo.org/records/3371780/files/annotation.zip?download=1' -o annotation.zip
+          echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
+          echo '8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99  annotation.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.'); out=root/'reference'; keep={'00','01','03'}; forbidden={'02','04','05'}; selected=[]
+          with zipfile.ZipFile(root/'annotation.zip') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('.jams'): continue
+                  stem=name[:-5]
+                  if stem[:2] not in keep: continue
+                  if stem[:2] in forbidden: raise SystemExit('development reference selected')
+                  dest=out/name
+                  with z.open(info) as src, dest.open('wb') as dst: shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(keep)}
+          if counts!={'00':60,'01':60,'03':60}: raise SystemExit(counts)
+          if len(selected)!=180: raise SystemExit(len(selected))
+          print('GUITARSET_MISSING_EVENT_RECOVERY_REFERENCE_SELECTION_PASS',counts)
+          PY
+          rm -f annotation.zip
+          test "$(find reference -maxdepth 1 -type f -name '*.jams' | wc -l)" -eq 180
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+
+      - name: Score exact frozen candidates once
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-missing-event-v1-recovery"
+          python validation/open_corpus/score_guitarset_missing_event_diagnostic_v1.py             --candidate-dir "$ROOT/candidates"             --reference-dir "$ROOT/reference"             --output "$ROOT/output/result.json"
+          python -m json.tool "$ROOT/output/result.json" >/dev/null
+          sha256sum "$ROOT/output/result.json" | tee "$ROOT/output/result-sha256.txt"
+          rm -rf "$ROOT/reference" "$ROOT/candidates"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-missing-event-diagnostic-v1-score-recovered
+          path: ${{ runner.temp }}/guitarset-missing-event-v1-recovery/output/
+          retention-days: 30
