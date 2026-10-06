@@ -1,3 +1,5 @@
+> **Active resume pointer — supervisory review 2026-10-06:** Read the final section `GPT-5.6 supervisory review — frozen quantization and reliable pitch diagnostics` first. Preserve the 1065-event quantized candidate; next task is one model-free, ambiguity-aware post-quantization diagnostic. Older next-step/authorization statements below are historical and must be read in their dated scope. No new model experiment or production promotion is opened by this review.
+
 > Current review (2026-10-02): see `astra-work/POST_V14_GPT56_HANDOFF_2026-10-02.md` and the final resume pointer below. Review complete; prepare an independent bass feasibility packet only. No empirical execution authorized.
 
 # Astra — explicit next steps
@@ -12182,3 +12184,47 @@ Frozen result file:
    - quantized guitar candidate artifact `11391794891`;
    - `main` unchanged.
 9. Next authoritative action: implement and launch the post-quantization pitch/voicing diagnostic described above, freeze its result, then decide the next bounded guitar structural experiment from the measured dominant error class.
+
+
+## GPT-5.6 supervisory review — frozen quantization and reliable pitch diagnostics
+
+Date: 2026-10-06. Reviewed remote head `8e4a0e67c98e86b4ee98d178602bde0f60b13887`.
+This is the active next-step section. It clarifies the preceding diagnostic instruction; retain all historical results and applicable user authorizations.
+
+### Assessment and evidence boundary
+
+The committed result supports preserving the quantized candidate: rhythm F1 31.82496% -> 33.31676%; lead 17.84038% -> 19.04762%; combined 35.04309% -> 37.01272%, with combined TP 427 -> 451. Combined improvement is **1.96963 percentage points**, not 24 new pitches. Candidate construction preserves pitch/count and shifts onset/end together. Recovering scoring from the existing artifact rather than regenerating it was the correct action.
+
+Reviewed AGENTS.md, both handoffs, the quantizer, quantization scorer, scoring-recovery workflow, prior onset-first pitch diagnostic, and committed result JSON. This review did not independently download/recompute artifacts, run models, access audio, dispatch workflows, or reproduce the musical scores. Metrics above are committed evidence, not independent replication.
+
+Keep the interpretation narrow: an improvement under the existing scorer on repeatedly exposed Go My Way development material. Reference-note-blind construction does not make the post-hoc timing map or song an independent holdout. F1 is not overall percent-correct product accuracy. The same generic guitar predictions are evaluated against each role; separate rhythm/lead tables do not prove successful role separation. Duration, bend articulation, fingering and customer readiness remain unproven.
+
+### Concrete issues to address in the next diagnostic
+
+1. Prior `match_onset_only` sorts edges by `(time distance, prediction index, target index)` and greedily pairs them. Simultaneous chord tones can be paired arbitrarily; permutation can change pitch-error buckets without any musical change. Do not interpret that single assignment as proof of octave or voicing failure.
+2. Both that diagnostic and the frozen quantization scorer use greedy matching, which is not generally maximum-cardinality matching. Preserve historical scores unchanged. Any improved matcher is a separately named diagnostic version; compare original and quantized inputs with identical new semantics and retain the legacy result alongside it.
+3. The quantizer uses **16 equal subdivisions per measure**, not necessarily musical sixteenth notes in non-4/4 measures. The scorer also maps source `step/16` onto measure duration. Verify the existing source-step/meter convention, especially measures 104/105, and report limitations without changing candidate timing or reference normalization in this task.
+4. Quantization can move events across excluded measures or onto the final endpoint. Construction admits `lo <= t <= hi`; scoring filters `lo <= t < hi`. Equal total event counts alone do not establish identical evaluated populations. Account explicitly for scored/excluded/out-of-window counts and boundary migrations for each role, before attributing all score gain to within-window timing.
+5. Combined scoring concatenates role targets and uses the union of excluded measures for prediction filtering. Audit coincident same-pitch role targets and target/prediction exclusion symmetry. State the legacy convention; do not silently deduplicate or repair its frozen scores.
+
+### Exact next task for GPT-5.6
+
+Complete a single bounded **model-free post-quantization pitch/voicing diagnostic**, using existing artifacts only. Do not restart research or re-run separation/transcription.
+
+1. Fetch current `astra-work`, inspect HEAD/status and preserve unrelated unfinished work. Use the latest remote state, not older local checkouts. Read this section before historical queues.
+2. Freeze a short diagnostic spec and focused implementation/tests before launching. Reuse the existing artifact acquisition paths and exact role exclusions, timing map and 50 ms tolerance. Accept the quantized schema explicitly; the older diagnostic expects `evidence["timingMap"]["sha256"]`, whereas the quantized candidate has `timingMapSha256`. Do not rewrite the frozen input merely to satisfy the old parser.
+3. Verify candidate artifact `11391794891` and candidate SHA-256 `880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e`; original evidence artifact `11282827368`; timing SHA-256 `b87f122a007070d5a2abf0b676693c5ea7872ffcb04a06958ef103269c5f85f3`; rhythm SHA-256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`; lead SHA-256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`. Verify original evidence against its frozen manifest, not its own self-declared hash alone. Missing artifact/identity means report the precise blocker, not regenerate or substitute.
+4. Assert 1065 input/output events, identical ordered event identities/MIDI, unchanged durations within numerical tolerance, and unchanged candidate bytes before/after. Reject malformed/nonfinite events and identity mismatches before writing a result. Do not fetch bass references/audio/models for this guitar-only task.
+5. Produce legacy onset-first summaries for comparability, clearly marked assignment-dependent. Add a deterministic maximum-cardinality, then minimum-total-time-error onset-only matching diagnostic. Do not use pitch to choose that primary pairing. Quantify ambiguous matching components, especially simultaneous chords. Report stable event-group pitch-multiset overlap or explicitly labeled best/worst pitch-agreement bounds for ambiguous components; do not present pitch-optimized pairing as unbiased pitch accuracy. State the exact grouping/assignment convention prospectively.
+6. Report raw counts and denominators: eligible predictions/targets, onset-matched/unmatched counts, exact MIDI among matched, pitch-class-correct/nonzero-octave errors, signed interval histogram, disjoint exact/abs1/abs2/abs3–5/abs12/other buckets. Multiples of 12 beyond +/-12 belong to pitch-class agreement but remain in the disjoint other bucket. Include ambiguous versus unambiguous strata; empty denominators are null. Report both original and quantized inputs under the same diagnostic rules, not a new number versus an incompatible old percentage.
+7. Audit boundary migrations, meter semantics and combined-target conventions above. Preserve original legacy TP/P/R/F1 separately. Distinguish unpaired missing events from wrong pitches in matched events. If ambiguity explains the apparent dominant interval, report that rather than claiming a dominant musical cause.
+8. Run only focused model-free fixtures: permuted chord ordering, duplicate notes/one-to-one use, a greedy-cardinality counterexample, exact 50 ms boundary, +/-12 and +/-24 categorization, exclusions/final endpoint, empty input, invalid values/hash rejection, and mutation guards. Record actual commands/results. No broad suite, installs of model runtimes or model execution is needed.
+9. Complete the previously specified diagnostic execution using existing applicable authorization; do not seek repeat permission for already-authorized work. This review itself does not dispatch it or authorize new data/model/paid execution. Freeze spec/code first; use one diagnostic run, repair infrastructure only on failure, and preserve the exact candidate throughout. Record run/job/artifact identities, result SHA-256, counts and limitations. Avoid trigger edits that incidentally launch unrelated model workflows.
+10. Save a concise decision brief and result receipt. If error attribution is stable, recommend **one** next hypothesis with evidence and an independent development validation plan; do not automatically implement a reference-derived pitch correction. If attribution is ambiguous, say so and stop at that finding. Diagnosing errors against professional targets makes subsequent song-informed choices exposed development work even if the correction code never reads those targets.
+11. Commit/push the diagnostic and handoff together, verify remote ref and file contents, and put a short current pointer at the top of this file and `docs/checkpoints/CURRENT_STATE.md`. Do not append another hidden next step beneath stale top-of-file instructions.
+
+### Preserve and stop conditions
+
+Keep quantized and original candidates immutable; spectral bass V1 TP 372 / F1 60.10%, BS-Roformer separator, V4-origin timing and main/Production unchanged. Keep raw-activation recovery, threshold searches, generic front-end swapping, V8 song tuning, simple register role splitting and local octave heuristics closed. No new training or automatic structural experiment follows merely from completing this diagnostic. Do not promote the 37.01% result to customer readiness or independent validation.
+
+**Resume:** Build/test/freeze the ambiguity-aware diagnostic above, complete only its existing bounded evaluation scope, save the evidence and one decision brief, then stop before changing predictions.

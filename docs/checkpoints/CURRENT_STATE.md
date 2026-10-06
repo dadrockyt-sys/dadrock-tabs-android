@@ -1,3 +1,5 @@
+> **Active handoff — 2026-10-06:** Continue from the final supervisory-review section in `astra-work/CURRENT_STATE.md`. Current task: model-free, ambiguity-aware pitch/voicing diagnostic of the immutable 1065-event quantized guitar candidate. Older next-task sections below are historical; do not resume S0 stress or archived experiments from this file.
+
 > Current review (2026-10-02): see `astra-work/POST_V14_GPT56_HANDOFF_2026-10-02.md` and the final resume pointer below. Review complete; prepare an independent bass feasibility packet only. No empirical execution authorized.
 
 # Astra — current handoff
