@@ -31,3 +31,5 @@ jobs:
         run: python -m py_compile scripts/songsterr-fresh/guitar_fl_stage_b_precapture_validator_v2.py scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py
       - name: Run synthetic V2 pre-capture contract tests
         run: python -m unittest scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py -v
+
+# Frozen synthetic-only pre-capture contract verification.
