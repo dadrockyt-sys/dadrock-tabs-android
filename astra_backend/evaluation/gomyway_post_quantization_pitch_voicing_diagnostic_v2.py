@@ -281,71 +281,83 @@ def _add_edge(graph, u, v, cap, cost, meta=None):
 
 
 def max_cardinality_min_time_match(preds: Sequence[dict], targets: Sequence[dict], tol: float = ONSET_TOLERANCE_SECONDS) -> List[dict]:
-    edges = candidate_edges(preds, targets, tol)
-    p_count = len(preds)
-    t_count = len(targets)
-    source = 0
-    p0 = 1
-    t0 = p0 + p_count
-    sink = t0 + t_count
-    n = sink + 1
-    graph = [[] for _ in range(n)]
-    for pi in range(p_count):
-        _add_edge(graph, source, p0 + pi, 1, 0)
-    for ti in range(t_count):
-        _add_edge(graph, t0 + ti, sink, 1, 0)
-    max_matches = min(p_count, t_count)
-    tie_base = (p_count + 1) * (t_count + 1) * (max_matches + 1) + 1
-    for d, pi, ti in edges:
-        nanos = int(round(d * 1_000_000_000))
-        tie = pi * (t_count + 1) + ti
-        _add_edge(graph, p0 + pi, t0 + ti, 1, nanos * tie_base + tie, (d, pi, ti))
+    """Maximum-cardinality, then minimum-total-time-error onset matching on a line.
 
-    potential = [0] * n
-    while True:
-        inf = 10**80
-        dist = [inf] * n
-        prev_v = [-1] * n
-        prev_e = [-1] * n
-        dist[source] = 0
-        heap = [(0, source)]
-        while heap:
-            cur, u = heapq.heappop(heap)
-            if cur != dist[u]:
-                continue
-            for ei, e in enumerate(graph[u]):
-                if e.cap <= 0:
-                    continue
-                nd = cur + e.cost + potential[u] - potential[e.to]
-                if nd < dist[e.to] or (nd == dist[e.to] and (u, ei) < (prev_v[e.to], prev_e[e.to])):
-                    dist[e.to] = nd
-                    prev_v[e.to] = u
-                    prev_e[e.to] = ei
-                    heapq.heappush(heap, (nd, e.to))
-        if dist[sink] == inf:
-            break
-        for v in range(n):
-            if dist[v] < inf:
-                potential[v] += dist[v]
-        v = sink
-        while v != source:
-            u = prev_v[v]
-            ei = prev_e[v]
-            if u < 0:
-                raise RuntimeError("internal matching path reconstruction failure")
-            e = graph[u][ei]
-            e.cap -= 1
-            graph[v][e.rev].cap += 1
-            v = u
+    For absolute distance on sorted one-dimensional onset coordinates, an optimal
+    assignment always has a non-crossing representative. Dynamic programming
+    therefore preserves the frozen matching objective while avoiding the generic
+    min-cost-flow runtime on full-song chord-heavy data. Pitch is never consulted.
+    """
+    from array import array
+
+    pred_order = sorted(range(len(preds)), key=lambda i: (float(preds[i]["start"]), i))
+    target_order = sorted(range(len(targets)), key=lambda i: (float(targets[i]["start"]), i))
+    n = len(pred_order)
+    m = len(target_order)
+
+    # Full score/action tables are compact arrays: O(n*m) time and memory.
+    counts = [array("H", [0]) * (m + 1) for _ in range(n + 1)]
+    costs = [array("d", [0.0]) * (m + 1) for _ in range(n + 1)]
+    actions = [bytearray(m + 1) for _ in range(n + 1)]
+    # action: 1=skip prediction, 2=skip target, 3=match.
+
+    eps = 1e-12
+
+    def better(count_a, cost_a, action_a, count_b, cost_b, action_b):
+        if count_a != count_b:
+            return count_a > count_b
+        if abs(cost_a - cost_b) > eps:
+            return cost_a < cost_b
+        # Deterministic prospective tie break. Prefer match, then skip prediction,
+        # then skip target. Ambiguous components remain explicitly reported.
+        return action_a > action_b
+
+    for i in range(1, n + 1):
+        pi = pred_order[i - 1]
+        ps = float(preds[pi]["start"])
+        for j in range(1, m + 1):
+            ti = target_order[j - 1]
+            ts = float(targets[ti]["start"])
+
+            best_count = counts[i - 1][j]
+            best_cost = costs[i - 1][j]
+            best_action = 1
+
+            c2 = counts[i][j - 1]
+            e2 = costs[i][j - 1]
+            if better(c2, e2, 2, best_count, best_cost, best_action):
+                best_count, best_cost, best_action = c2, e2, 2
+
+            dtime = abs(ps - ts)
+            if dtime <= tol + eps:
+                c3 = counts[i - 1][j - 1] + 1
+                e3 = costs[i - 1][j - 1] + dtime
+                if better(c3, e3, 3, best_count, best_cost, best_action):
+                    best_count, best_cost, best_action = c3, e3, 3
+
+            counts[i][j] = best_count
+            costs[i][j] = best_cost
+            actions[i][j] = best_action
 
     chosen = []
-    for pi in range(p_count):
-        for e in graph[p0 + pi]:
-            if e.meta is not None and e.cap == 0:
-                chosen.append(e.meta)
-    chosen.sort(key=lambda x: (x[1], x[2]))
-    return match_rows(preds, targets, chosen)
+    i, j = n, m
+    while i > 0 and j > 0:
+        action = actions[i][j]
+        if action == 3:
+            pi = pred_order[i - 1]
+            ti = target_order[j - 1]
+            chosen.append((abs(float(preds[pi]["start"]) - float(targets[ti]["start"])), pi, ti))
+            i -= 1
+            j -= 1
+        elif action == 1:
+            i -= 1
+        elif action == 2:
+            j -= 1
+        else:
+            raise RuntimeError("internal dynamic-programming traceback failure")
 
+    chosen.reverse()
+    return match_rows(preds, targets, chosen)
 
 def match_rows(preds: Sequence[dict], targets: Sequence[dict], chosen: Iterable[Tuple[float, int, int]]) -> List[dict]:
     rows = []
