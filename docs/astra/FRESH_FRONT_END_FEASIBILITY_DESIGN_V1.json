@@ -1,0 +1,47 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-design-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "DESIGN_FROZEN_EXECUTION_NOT_AUTHORIZED",
+  "purpose": "Independent frozen-front-end feasibility on fresh performer-disjoint rights-cleared guitar material.",
+  "comparator": {
+    "name": "Basic Pitch",
+    "version": "0.4.0",
+    "configuration": "historical frozen defaults",
+    "thresholdSearch": false
+  },
+  "intervention": {
+    "count": 1,
+    "selection": "non-performance criteria only before reference scoring",
+    "frozenWeights": true,
+    "optimizerSteps": 0
+  },
+  "sourceRequirements": {
+    "rightsCleared": true,
+    "performerDisjoint": true,
+    "excludeGoMyWay": true,
+    "excludeGuitarSetPlayers": [
+      "00",
+      "01",
+      "03"
+    ],
+    "freezeIdentityBeforeReferenceFacingScore": true
+  },
+  "candidateIsolation": {
+    "audioAllowed": true,
+    "referencesAllowed": false,
+    "freezeBeforeReferenceParsing": true,
+    "predictionMutation": false
+  },
+  "scoring": {
+    "onsetToleranceSeconds": 0.05,
+    "pairing": "maximum-cardinality onset-only then minimum total absolute onset error",
+    "pitchSelectsPairs": false,
+    "ambiguityAware": true,
+    "oneScorePerFrozenFrontEnd": true
+  },
+  "gateStatus": "NUMERICAL_VALUES_MUST_BE_FROZEN_AFTER_STAGE0_IDENTITIES_AND_BEFORE_SCORING",
+  "stopOnFail": true,
+  "automaticIntegration": false,
+  "executionAuthorized": false
+}
