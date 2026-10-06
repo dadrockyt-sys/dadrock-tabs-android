@@ -2,7 +2,7 @@
   "schema": "astra-guitar-fl-stage-b-phase-a-contact-targets-v1",
   "date": "2026-10-06",
   "branch": "astra-work",
-  "status": "FROZEN_CONTACT_TARGETS_NO_SPENDING",
+  "status": "PHASE_A_IN_PROGRESS_MANUFACTURER_CONTACT_SENT_RETAILER_AND_PERFORMERS_PENDING",
   "hardwareCandidate": {
     "manufacturer": "TASCAM",
     "model": "US-16x08",
@@ -36,7 +36,12 @@
       "identify exact unit/revision if available",
       "confirm return/warranty terms"
     ],
-    "purchaseAuthorized": false
+    "purchaseAuthorized": false,
+    "outreach": {
+      "status": "PENDING",
+      "publicContactRoute": "https://www.musiquegagne.com/contact-us",
+      "blocker": "Public form requires sender identity/contact fields; no grounded sender identity was supplied in the frozen packet. No form was submitted and no paid browser automation was used."
+    }
   },
   "manufacturerTechnicalTarget": {
     "organization": "TASCAM Product Support",
@@ -47,7 +52,16 @@
       "confirm 16 simultaneous discrete inputs at 48 kHz / 24-bit",
       "confirm support status for intended host OS"
     ],
-    "purchaseAuthorized": false
+    "purchaseAuthorized": false,
+    "outreach": {
+      "status": "SENT",
+      "channel": "email",
+      "recipient": "service@support.tascam.com",
+      "subject": "US-16x08 compatibility confirmation for 13-channel 48 kHz / 24-bit capture",
+      "gmailMessageId": "1a113056250473cf",
+      "gmailThreadId": "1a113056250473cf",
+      "scope": "compatibility/support inquiry only; no purchase request or commitment"
+    }
   },
   "performerContactTarget": {
     "status": "BLOCKED_NO_IDENTITIES_IN_REPOSITORY",
