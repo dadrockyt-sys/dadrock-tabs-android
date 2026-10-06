@@ -1,0 +1,14 @@
+{
+  "schema": "astra-gomyway-post-quantization-pitch-voicing-diagnostic-v2-launch",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "frozenImplementationCommit": "fe5187fef1d161bca36188caa790c6e3cb133a82",
+  "spec": "docs/astra/GOMYWAY_POST_QUANTIZATION_PITCH_VOICING_DIAGNOSTIC_V2_SPEC.json",
+  "implementation": "astra_backend/evaluation/gomyway_post_quantization_pitch_voicing_diagnostic_v2.py",
+  "tests": "astra_backend/evaluation/test_gomyway_post_quantization_pitch_voicing_diagnostic_v2.py",
+  "workflow": ".github/workflows/astra-gomyway-post-quantization-pitch-voicing-diagnostic-v2.yml",
+  "scope": "One model-free diagnostic run only. Existing artifacts only; no separation, transcription, model execution, training, retuning, or prediction mutation.",
+  "candidateArtifactId": 11391794891,
+  "candidateSha256": "880446f4e93898395b91fa2b27a081817e93e7ed1883cf0d64940d22a453400e",
+  "originalEvidenceArtifactId": 11282827368
+}
