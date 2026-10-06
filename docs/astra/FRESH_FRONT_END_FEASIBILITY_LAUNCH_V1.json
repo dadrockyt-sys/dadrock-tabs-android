@@ -7,24 +7,24 @@
   "stage0Selection": "docs/astra/FRESH_FRONT_END_FEASIBILITY_STAGE0_SELECTION_V1.json",
   "gate": "docs/astra/FRESH_FRONT_END_FEASIBILITY_GATE_V1.json",
   "workflow": ".github/workflows/astra-fresh-front-end-feasibility-v1.yml",
-  "workflowGitBlob": "c6487b9aca3f9a81eecc65fb4e6adf2d6079cfeb",
+  "workflowGitBlob": "81a76bc01657f1b7f9df5a70d3ab5a51871956fb",
   "scientificRetry": false,
   "thresholdSearch": false,
   "optimizerSteps": 0,
   "predictionMutation": false,
   "userMonitoringPreference": "User monitors long empirical runs; assistant handles short CI/tests.",
-  "attempt": 2,
+  "attempt": 3,
   "infrastructureRecovery": {
-    "failedRunId": 37439139020,
-    "failureStage": "Verify runtime and checkpoint identity",
+    "failedRunId": 37441303622,
+    "failureStage": "Freeze both reference-blind candidate sets",
     "scientificScoreProduced": false,
-    "evaluationAudioAccessed": false,
+    "candidateFreezeCompleted": false,
+    "evaluationAudioAccessed": true,
     "evaluationReferencesAccessed": false,
     "repairCommits": [
-      "f90a155f2f0e0f9a345f07a2de0f1e8f9536fbed",
-      "7171f0464db0ad1aebbd8a9516b6f1b26eeaf38e",
-      "fe7ed28bee62faa40e84403adcf53ec42a265715"
+      "a467cc54a1411884429bf050a1a306e1bdf1c4e4",
+      "c419dd7bdd6f0b2141034e3df2e5140983eb3249"
     ],
-    "repairScope": "Correct checkpoint byte-count metadata from 98,900,000 to observed 98,916,957 while preserving frozen SHA-256 identity; pin resampy 0.4.2 for Basic Pitch 0.4.0 compatibility; update blob guard only. No model/source/scorer/gate/prediction semantic change."
+    "repairScope": "Packaging-only wrapper-key repair: installed hf-midi-transcription wheel omits instruments.json, so the wrapper fallback accepts 'guitar' but not alias 'guitar_fl'. Use instrument='guitar' while continuing to pass the exact frozen guitar-fl.pth checkpoint by path. Same checkpoint SHA, same non-piano CRNN architecture path, same defaults, same data, scorer, and gate."
   }
 }
