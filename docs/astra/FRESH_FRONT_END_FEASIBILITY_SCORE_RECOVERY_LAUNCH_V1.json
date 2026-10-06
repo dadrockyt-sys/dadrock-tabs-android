@@ -1,0 +1,23 @@
+{
+  "schema": "astra-fresh-front-end-feasibility-score-recovery-launch-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "AUTHORIZED_INFRASTRUCTURE_RECOVERY",
+  "sourceRunId": 37441935611,
+  "sourceCandidateArtifact": {
+    "id": 11403758166,
+    "name": "fresh-front-end-v1-frozen-candidates",
+    "digest": "sha256:128f7b954b8d10b57ca4b581eef6534d6d15f9db38563035aa73b7947620fd50",
+    "basicPitchManifestSha256": "0b907962ae1302ba936a532729b7eca240bf6c3baa2baeb500c156edb2a5fbc6",
+    "guitarFlManifestSha256": "041caeb7845c45f7b561f5b900c6b1c1b78d8543f0bf0c164418aaf0ced644df",
+    "basicPitchEventCount": 33465,
+    "guitarFlEventCount": 25195
+  },
+  "failedVerification": "Attempt 3 score job used sha256sum files containing absolute producer-job temp paths; candidate freeze itself succeeded.",
+  "repairScope": "Score-only recovery using the exact frozen attempt-3 artifact. Replace path-dependent SHA verification with direct checks against the frozen manifest hashes. No candidate regeneration, model/runtime change, reference/source change, scorer change, gate change, threshold change, prediction mutation, or scientific retry.",
+  "evaluationReferencesPreviouslyAccessed": false,
+  "scientificScorePreviouslyProduced": false,
+  "workflow": ".github/workflows/astra-fresh-front-end-feasibility-v1-score-recovery.yml",
+  "workflowGitBlob": "92acef223e27ff99b20f1a204ea37b1054f72b91",
+  "automaticScientificRetry": false
+}
