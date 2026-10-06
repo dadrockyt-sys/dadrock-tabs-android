@@ -1,0 +1,53 @@
+{
+  "schema":"astra-guitar-techs-v8-zero-optimizer-evaluation-result-v1",
+  "date":"2026-10-06",
+  "sourceRunId":37409380940,
+  "artifact":{
+    "artifactId":11390348256,
+    "archiveDigest":"sha256:b3964b6373b00fa4cd58b60766cf5069cb3b5acac85438fcc7c15b3faa608646",
+    "jsonSha256":"f7138835adac94cc445ee4e6200cdaf39ea4c5e0d7f88971b9f6384c597b0433"
+  },
+  "folds":{
+    "p1-train-p2-validate":{
+      "precision":0.25998435564305467,
+      "recall":0.34724751226150463,
+      "f1":0.29305451541821204,
+      "completeness":0.31028206022827787,
+      "frameAccuracy":0.3233553134214093
+    },
+    "p2-train-p1-validate":{
+      "precision":0.17852315080973158,
+      "recall":0.24465012166524247,
+      "f1":0.20055717289380845,
+      "completeness":0.1778232008888383,
+      "frameAccuracy":0.2560790865574589
+    }
+  },
+  "aggregate":{
+    "macroF1":0.24680584415601026,
+    "macroCompleteness":0.24405263055855808,
+    "nativeV7MacroF1":0.16158355846838688,
+    "stateRelativeMacroF1":0.2226251205747772,
+    "v7StatePlusPureV4HysteresisMacroF1":0.24619350297467514,
+    "originalV4MacroF1":0.24352280312668845,
+    "deltaVsPureV4HysteresisOnV7":0.000612341181335119,
+    "deltaVsOriginalV4":0.003283041029321807
+  },
+  "decision":{
+    "status":"CURRENT_STRONGEST_CLEAN_COMBINATION",
+    "modelRepresentation":"Frozen V7",
+    "decoder":"V8 V4-hysteresis plus event-rank backshift",
+    "retrainingRequired":false,
+    "thresholdRetuningUsed":false,
+    "p3Opened":false,
+    "protectedSongUseAllowed":false
+  },
+  "guards":{
+    "optimizerStepsExecuted":0,
+    "modelWeightsModified":false,
+    "thresholdsRetuned":false,
+    "p3Opened":false,
+    "protectedSongUsed":false,
+    "mainOrProductionModified":false
+  }
+}
