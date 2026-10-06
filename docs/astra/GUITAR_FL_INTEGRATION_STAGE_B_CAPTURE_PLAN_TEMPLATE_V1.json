@@ -1,0 +1,86 @@
+{
+  "schema": "astra-guitar-fl-stage-b-capture-plan-template-v1",
+  "date": "2026-10-06",
+  "status": "TEMPLATE_ONLY_NO_CAPTURE_AUTHORITY",
+  "parentPreregistration": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_PREREGISTRATION_V1.md",
+  "governanceBase": {
+    "captureManifestContract": "scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_3.py",
+    "qaStructuralMatrix": "docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CAPTURE_QA_STRUCTURAL_GATE_MATRIX_V1_2026-09-14.md"
+  },
+  "frozenPopulationRequirements": {
+    "performersMin": 6,
+    "categories": [
+      "chords",
+      "scales",
+      "singlenotes",
+      "techniques",
+      "music"
+    ],
+    "admittedPerformancesPerPerformerCategoryMin": 2,
+    "admittedPerformancesMin": 60,
+    "referenceNoteBirthsMin": 3000,
+    "referenceNoteBirthsPerPerformerMin": 300,
+    "referenceNoteBirthsPerCategoryMin": 400,
+    "roles": [
+      "lead",
+      "rhythm"
+    ]
+  },
+  "fieldsToFreezeBeforeCapture": {
+    "corpus": [
+      "corpusId",
+      "version",
+      "captureWindow",
+      "captureLocation",
+      "operatorIds",
+      "rightsManifestSha256",
+      "contentManifestSha256",
+      "hardwareConfigurationSha256",
+      "calibrationPackageSha256",
+      "referenceDecoderSha256",
+      "clockSyncConfigurationSha256"
+    ],
+    "performer": [
+      "performerId",
+      "rightsEntryId",
+      "instrumentSetupId",
+      "sessionId"
+    ],
+    "slot": [
+      "slotId",
+      "performerId",
+      "contentId",
+      "category",
+      "role",
+      "tempoPlan",
+      "techniquePlan",
+      "plannedOrder"
+    ],
+    "attempt": [
+      "attemptId",
+      "slotId",
+      "attemptNumber",
+      "captureTimestamp",
+      "acquisitionQaStatus",
+      "acquisitionQaReason",
+      "evaluatedDiSha256",
+      "hardwareSourceSha256",
+      "birthStreamSha256",
+      "pitchLatchStreamSha256",
+      "clockSyncSourceSha256",
+      "admitted"
+    ]
+  },
+  "forbiddenBeforeExplicitAuthorization": [
+    "performer contact",
+    "vendor contact",
+    "purchase",
+    "deposit",
+    "rental",
+    "capture",
+    "calibration recording",
+    "real audio acquisition",
+    "model inference",
+    "reference scoring"
+  ]
+}
