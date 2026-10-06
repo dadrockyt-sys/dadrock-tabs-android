@@ -1,0 +1,42 @@
+{
+  "schema": "astra-guitar-fl-stage-b-precapture-result-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "PRECAPTURE_PLANNING_COMPLETE_PASS",
+  "authorization": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_PRECAPTURE_AUTHORIZATION_V1.json",
+  "hardwareQa": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_HARDWARE_QA_V1.md",
+  "validator": {
+    "path": "scripts/songsterr-fresh/guitar_fl_stage_b_precapture_validator_v1.py",
+    "gitBlob": "44381e4d669f6f8fc87eb31eee15989ca05833c0"
+  },
+  "tests": {
+    "path": "scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v1.py",
+    "gitBlob": "e5d73225b3fea81cd96d8b78e206a54db29b089a",
+    "testCount": 6
+  },
+  "workflow": {
+    "path": ".github/workflows/astra-stage-b-precapture-contract-tests.yml",
+    "gitBlob": "ed39ba6b5a95b47b64ddbe707a92a4b88f6d87ba",
+    "runId": 37451623233,
+    "conclusion": "success"
+  },
+  "rightsTemplates": [
+    "docs/astra/GUITAR_FL_STAGE_B_PERFORMER_RELEASE_TEMPLATE_V1.md",
+    "docs/astra/GUITAR_FL_STAGE_B_CONTENT_RIGHTS_TEMPLATE_V1.md"
+  ],
+  "hardwareClasses": {
+    "planeA": "clean magnetic guitar DI, 48kHz/24-bit mono",
+    "planeB": "six-string physical fret-contact matrix, >=1kHz",
+    "planeC": "six independent per-string excitation sensors",
+    "clock": "single shared authoritative hardware clock"
+  },
+  "captureAuthorized": false,
+  "procurementAuthorized": false,
+  "spendingAuthorized": false,
+  "performerContactAuthorized": false,
+  "vendorContactAuthorized": false,
+  "calibrationRecordingAuthorized": false,
+  "modelInferenceAuthorized": false,
+  "referenceScoringAuthorized": false,
+  "nextBoundary": "Requires explicit authorization for any procurement/contact/calibration/capture activity."
+}
