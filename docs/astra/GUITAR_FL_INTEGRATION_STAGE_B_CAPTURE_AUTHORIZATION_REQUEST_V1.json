@@ -1,0 +1,71 @@
+{
+  "schema": "astra-guitar-fl-stage-b-capture-authorization-request-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "REQUEST_ONLY_NOT_AUTHORIZED",
+  "readinessResult": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_PRECAPTURE_READINESS_RESULT_V2.json",
+  "purpose": "Request a fresh explicit decision before any external or real-data Stage-B activity.",
+  "requestedSequence": [
+    {
+      "phase": "A_external_preparation",
+      "requested": [
+        "performer contact for rights/availability only",
+        "vendor contact for exact hardware/driver/firmware compatibility and non-binding quote/availability only"
+      ],
+      "spendingAuthorizedByThisPhase": false,
+      "captureAuthorizedByThisPhase": false
+    },
+    {
+      "phase": "B_transaction_and_calibration",
+      "prerequisites": [
+        "exact unit/firmware/driver identity frozen",
+        "exact vendor/recipient and transaction target frozen",
+        "explicit transaction/spending approval",
+        "actual rights manifest document IDs and SHA-256 links complete"
+      ],
+      "requestedAfterPrerequisites": [
+        "procure/rent approved capture hardware",
+        "perform calibration recording on non-holdout material only",
+        "freeze calibration package and validate it fail-closed"
+      ],
+      "holdoutCaptureAuthorizedByThisPhase": false
+    },
+    {
+      "phase": "C_holdout_capture",
+      "prerequisites": [
+        "actual rights manifest passes V2",
+        "actual capture plan identities are frozen",
+        "calibration and holdout populations are disjoint",
+        "real calibration package passes",
+        "hardware/reference topology matches the frozen V2 decision",
+        "first-transport-valid-take admission semantics are enabled"
+      ],
+      "requestedAfterPrerequisites": [
+        "record the preregistered untouched Stage-B real-guitar holdout only"
+      ],
+      "modelInferenceAuthorized": false,
+      "referenceDecodingForScoringAuthorized": false,
+      "stageBScoringAuthorized": false
+    }
+  ],
+  "stillRequiresSeparateFutureAuthorization": [
+    "run Basic Pitch on holdout media",
+    "run guitar-fl.pth on holdout media",
+    "decode real holdout references for correctness scoring",
+    "score Stage B",
+    "tune thresholds or mutate predictions",
+    "change fretboard, quantization, or role logic",
+    "Production or main changes"
+  ],
+  "currentAuthority": {
+    "performerContactAuthorized": false,
+    "vendorContactAuthorized": false,
+    "spendingAuthorized": false,
+    "procurementAuthorized": false,
+    "calibrationRecordingAuthorized": false,
+    "holdoutCaptureAuthorized": false,
+    "modelInferenceAuthorized": false,
+    "referenceScoringAuthorized": false
+  },
+  "approvalNeeded": true
+}

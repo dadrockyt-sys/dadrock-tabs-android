@@ -1,0 +1,72 @@
+{
+  "schema": "astra-guitar-fl-stage-b-precapture-readiness-result-v2",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "status": "PAPER_CONTRACTS_AND_SYNTHETIC_GUARDS_PASS_CAPTURE_NOT_AUTHORIZED",
+  "parentPreregistration": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_PREREGISTRATION_V1.json",
+  "contracts": {
+    "capturePlanSchema": {
+      "path": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_CAPTURE_PLAN_SCHEMA_V2.json",
+      "gitBlob": "8939bed7f77711a38b2fbbd4b7b373a80d3d18de"
+    },
+    "rightsManifestSchema": {
+      "path": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_RIGHTS_MANIFEST_SCHEMA_V2.json",
+      "gitBlob": "df0ab41850e09b3078b3725f84b372ad918a6360"
+    },
+    "referenceArchitecture": {
+      "path": "docs/astra/GUITAR_FL_INTEGRATION_STAGE_B_REFERENCE_ARCHITECTURE_DECISION_V2.md",
+      "gitBlob": "de6714a0f0a576729f46ad7ab992fa3e70657b3e"
+    }
+  },
+  "syntheticGuard": {
+    "validatorPath": "scripts/songsterr-fresh/guitar_fl_stage_b_precapture_validator_v2.py",
+    "validatorGitBlob": "caa3576b960171d4cb7f7c8a257def013eafc277",
+    "testsPath": "scripts/songsterr-fresh/test_guitar_fl_stage_b_precapture_validator_v2.py",
+    "testsGitBlob": "534516419f8dceb8baa3c741dbc17e2d7d26321b",
+    "testCount": 12,
+    "localFocusedResult": "PASS_12_OF_12",
+    "workflowPath": ".github/workflows/astra-stage-b-precapture-contract-v2-tests.yml",
+    "workflowGitBlob": "2bd3e739de81193d0f78805aec25b4821f7b4fb5",
+    "authoritativeRunId": 37529158954,
+    "authoritativeJobId": 112493770004,
+    "authoritativeConclusion": "success",
+    "preScoreRepair": {
+      "failedRunId": 37529047488,
+      "failureClass": "INFRASTRUCTURE_SOURCE_TRANSFER_LITERAL_ONLY",
+      "failurePoint": "python_compile_before_tests",
+      "semanticContractChanged": false,
+      "repairCommit": "3329e58e75a245eed1819bd2ec4b510a178fa9ea"
+    }
+  },
+  "failClosedCoverage": [
+    "duplicate population identities",
+    "calibration/holdout leakage",
+    "multiple-view inflation",
+    "missing rights linkage",
+    "missing independent string/fret, event-birth, or clock/sync evidence",
+    "invalid role labels",
+    "later-take admission after first transport-valid take",
+    "performance and independent reference-note-birth floor violations",
+    "audio/model-derived reference timing",
+    "unauthorized authority-bit activation"
+  ],
+  "paperContractsPass": true,
+  "syntheticGuardsPass": true,
+  "operationalCaptureReady": false,
+  "operationalBlockers": [
+    "actual performer identities and signed rights documents are not populated",
+    "actual content rights documents are not populated",
+    "exact purchased/rented hardware unit, firmware, driver, and transaction target are not frozen",
+    "real calibration package has not been executed or passed",
+    "holdout capture has not been explicitly authorized"
+  ],
+  "captureAuthorized": false,
+  "performerContactAuthorized": false,
+  "vendorContactAuthorized": false,
+  "spendingAuthorized": false,
+  "procurementAuthorized": false,
+  "calibrationRecordingAuthorized": false,
+  "modelInferenceAuthorized": false,
+  "referenceScoringAuthorized": false,
+  "nextBoundary": "Review the separate Stage-B capture authorization request. No external contact, spending, procurement, calibration recording, holdout capture, inference, decoding, or scoring occurs without fresh explicit authorization and all runtime prerequisites."
+}
