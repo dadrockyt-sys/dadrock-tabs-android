@@ -1,0 +1,36 @@
+{
+  "schema": "astra-guitar-techs-v8-decoder-design-v1",
+  "date": "2026-10-05",
+  "candidateId": "astra_guitartechs_v8_v4_hysteresis_event_rank_backshift",
+  "basis": {
+    "v7DecoderDecomposition": "docs/astra/GUITARTECHS_V7_DECODER_DECOMPOSITION_RESULT_V1.json",
+    "evidence": "V7 state + frozen V4 hysteresis reached macro F1 0.2461935030, exceeding original V4 0.2435228031 without retraining."
+  },
+  "modelWeights": "Frozen V7 fold models only; no retraining.",
+  "decoder": {
+    "admission": "Frozen V4 hysteresis only.",
+    "eventRankRole": "Secondary timing support only. May backshift an already-admitted run start by at most 2 frames.",
+    "backshiftEligibility": [
+      "frame is deterministic local maximum of raw V7 event score",
+      "same admitted fret is relative active-state argmax",
+      "same fret probability exceeds silence probability"
+    ],
+    "canCreateNewRun": false,
+    "canDeleteAdmittedRun": false,
+    "eventProbabilityThreshold": null,
+    "calibrationInvariant": true
+  },
+  "evaluation": {
+    "firstGate": "Synthetic invariance/no-new-run verification.",
+    "secondGate": "Zero-optimizer exact P1/P2 evaluation on frozen V7 models.",
+    "selectionRule": "No parameter or threshold search. Evaluate this one predeclared decoder only."
+  },
+  "guards": {
+    "optimizerStepsAuthorized": 0,
+    "modelWeightMutationAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "p3Opened": false,
+    "protectedSongUseAuthorized": false,
+    "mainOrProductionMutationAuthorized": false
+  }
+}
