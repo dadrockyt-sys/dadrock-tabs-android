@@ -87,3 +87,50 @@ def symmetric_kl_consistency(logits_a: torch.Tensor, logits_b: torch.Tensor) -> 
     kl_ab = F.kl_div(log_pa, pb, reduction="batchmean")
     kl_ba = F.kl_div(log_pb, pa, reduction="batchmean")
     return 0.5 * (kl_ab + kl_ba)
+
+def make_tensor_training_view(x: torch.Tensor, seed: int, cfg: V9AugmentConfig = FROZEN_CONFIG) -> torch.Tensor:
+    if x.ndim != 5:
+        raise ValueError("expected B x T x C x F x W tensor")
+    g = torch.Generator(device="cpu")
+    g.manual_seed(int(seed) & 0x7FFFFFFFFFFFFFFF)
+    out = x.clone()
+
+    gain_u = torch.rand((), generator=g).item()
+    gain_db = -cfg.gain_db_max_abs + 2.0 * cfg.gain_db_max_abs * gain_u
+    out = out * (10.0 ** (gain_db / 20.0))
+
+    f = out.shape[-2]
+    bins = torch.linspace(-1.0, 1.0, f, dtype=out.dtype, device=out.device)
+    tilt_u = torch.rand((), generator=g).item()
+    tilt = -cfg.tilt_db_per_octave_max_abs + 2.0 * cfg.tilt_db_per_octave_max_abs * tilt_u
+    ten = torch.tensor(10.0, dtype=out.dtype, device=out.device)
+    tilt_gain = torch.pow(ten, (tilt * bins) / 20.0)
+    out = out * tilt_gain.view(1, 1, 1, f, 1)
+
+    rms = torch.sqrt(torch.mean(out.float() ** 2)).item()
+    if rms > 0.0:
+        snr_u = torch.rand((), generator=g).item()
+        snr_db = cfg.noise_snr_db_min + (cfg.noise_snr_db_max - cfg.noise_snr_db_min) * snr_u
+        noise_rms = rms / (10.0 ** (snr_db / 20.0))
+        noise = torch.randn(out.shape, generator=g, dtype=out.dtype, device="cpu").to(out.device)
+        out = out + noise * noise_rms
+
+    span_count = int(torch.randint(0, cfg.mask_span_count_max + 1, (1,), generator=g).item())
+    T = out.shape[1]
+    for _ in range(span_count):
+        width = int(torch.randint(1, cfg.mask_span_frames_max + 1, (1,), generator=g).item())
+        width = min(width, T)
+        start_max = max(1, T - width + 1)
+        start = int(torch.randint(0, start_max, (1,), generator=g).item())
+        out[:, start:start + width] = 0.0
+
+    if not torch.isfinite(out).all():
+        raise RuntimeError("tensor augmentation produced non-finite values")
+    return out
+
+
+def paired_tensor_views(x: torch.Tensor, seed: int, cfg: V9AugmentConfig = FROZEN_CONFIG):
+    return (
+        make_tensor_training_view(x, seed * 2 + 1, cfg),
+        make_tensor_training_view(x, seed * 2 + 2, cfg),
+    )

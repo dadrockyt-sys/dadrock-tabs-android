@@ -1,0 +1,57 @@
+{
+  "schema": "astra-guitar-techs-v9-real-training-authorization-v1",
+  "date": "2026-10-06",
+  "branch": "astra-work",
+  "authorization": {
+    "userText": "Green",
+    "interpretedScope": "Authorize the already-defined V9 path after successful synthetic/no-media verification; launch exactly one guarded P1/P2 performer-disjoint V9 development training execution after zero-optimizer offline verification passes."
+  },
+  "candidateId": "astra_guitartechs_v9_paired_view_consistency",
+  "scope": {
+    "developmentPopulation": "exact frozen 256-path P1/P2 population",
+    "folds": [
+      {
+        "train": "P1",
+        "validate": "P2"
+      },
+      {
+        "train": "P2",
+        "validate": "P1"
+      }
+    ],
+    "epochsPerFold": 1000,
+    "seed": 20260921,
+    "resumeBoundariesEpochs": [
+      400,
+      800,
+      1000
+    ],
+    "consistencyWeight": 0.1,
+    "decoder": "frozen V8 V4-hysteresis plus event-rank backshift",
+    "pairedViewRanges": {
+      "gainDbMaxAbs": 3,
+      "noiseSnrDb": [
+        30,
+        50
+      ],
+      "tiltDbPerOctaveMaxAbs": 1.5,
+      "maskSpanFramesMax": 4,
+      "maskSpanCountMax": 2
+    }
+  },
+  "guards": {
+    "realP1P2TrainingAuthorized": true,
+    "p3Opened": false,
+    "p3Authorized": false,
+    "protectedSongUseAuthorized": false,
+    "stageBHoldoutAuthorized": false,
+    "thresholdRetuningAuthorized": false,
+    "seedSelectionAuthorized": false,
+    "paidComputeAuthorized": false,
+    "mainOrProductionMutationAuthorized": false
+  },
+  "outcomeRule": {
+    "ifGateFails": "Freeze V9 FAIL; no rescue, seed search, threshold rescue, or automatic V10.",
+    "ifGatePasses": "Freeze V9 development PASS; do not open P3 or protected-song tuning automatically."
+  }
+}

@@ -2,7 +2,7 @@
   "schema": "astra-guitar-techs-v9-real-training-authorization-request-v1",
   "date": "2026-10-06",
   "branch": "astra-work",
-  "status": "REQUEST_ONLY_NOT_AUTHORIZED",
+  "status": "AUTHORIZED",
   "design": "docs/astra/GUITARTECHS_V9_DOMAIN_GENERALIZATION_TRAINING_DESIGN_V1.json",
   "requestedFutureScope": "After synthetic/no-media verification and frozen numeric ranges pass, run exactly one guarded P1/P2 performer-disjoint V9 development training execution using the frozen V8 decoder for evaluation.",
   "explicitlyNotRequested": [
@@ -15,5 +15,6 @@
     "paid compute",
     "Production or main mutation"
   ],
-  "approvalNeeded": true
+  "approvalNeeded": false,
+  "authorizationReceipt": "docs/astra/GUITARTECHS_V9_REAL_TRAINING_AUTHORIZATION_V1.json"
 }

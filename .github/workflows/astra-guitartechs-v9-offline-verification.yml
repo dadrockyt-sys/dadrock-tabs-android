@@ -1,0 +1,24 @@
+name: Astra Guitar-TECHS V9 Offline Zero Optimizer
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'astra_backend/guitartechs_training_v9/**'
+      - 'docs/astra/GUITARTECHS_V9_REAL_TRAINING_AUTHORIZATION_V1.json'
+      - '.github/workflows/astra-guitartechs-v9-offline-verification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check numpy torch
+      - run: python -m py_compile astra_backend/guitartechs_training_v9/paired_view.py astra_backend/guitartechs_training_v9/offline_verify_v9.py astra_backend/guitartechs_training_v9/train_v9_resumable.py
+      - working-directory: astra_backend/guitartechs_training_v9
+        run: python offline_verify_v9.py
