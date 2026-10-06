@@ -1,0 +1,44 @@
+{
+  "schema": "astra-guitar-fl-stage-b-rights-manifest-schema-v1",
+  "date": "2026-10-06",
+  "requiredCorpusFields": [
+    "corpusId",
+    "version",
+    "rightsPolicyVersion",
+    "protectedSongsExcluded",
+    "contentManifestSha256"
+  ],
+  "requiredPerformerFields": [
+    "performerId",
+    "releaseDocumentId",
+    "releaseDocumentSha256",
+    "recordingProductValidationUseGranted",
+    "referenceSensorDataUseGranted",
+    "internalRetentionGranted",
+    "effectiveDate"
+  ],
+  "requiredContentFields": [
+    "contentId",
+    "titleOrExerciseId",
+    "provenanceClass",
+    "rightsDocumentId",
+    "rightsDocumentSha256",
+    "productValidationUseGranted",
+    "protectedSong"
+  ],
+  "provenanceClasses": [
+    "original_project_composition",
+    "public_domain",
+    "commissioned_cleared",
+    "explicit_rightsholder_grant"
+  ],
+  "hardRules": {
+    "protectedSongMustBeFalse": true,
+    "productValidationUseMustBeGranted": true,
+    "allDocumentsRequireSha256": true,
+    "researchOnlyInsufficient": true,
+    "nonCommercialOnlyInsufficientForProductValidation": true
+  },
+  "captureMayBeginOnlyWhenComplete": true,
+  "currentRightsManifestComplete": false
+}
