@@ -14,12 +14,12 @@
     "conclusion": "success"
   },
   "sourceBlobs": {
-    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "d258daebf16bec864333402ef1649dad46695ca5",
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "99cae61a0a299de27a24e367afccdf7b13a7c81b",
     "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
     "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
     "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
-    ".github/workflows/guitar-techs-v9-resumable-segment.yml": "b6a665d514578738c1a559432442db7c710c8dc0",
-    ".github/workflows/guitar-techs-v9-resumable-real-training.yml": "374f1c9cbffadd5443bfb378e63a790790c7fd20",
+    ".github/workflows/guitar-techs-v9-resumable-segment.yml": "f23f31ace62e9c669b6bce160a5721a34e9e6539",
+    ".github/workflows/guitar-techs-v9-resumable-real-training.yml": "ea7edccce12d4a38992f060448c4c8dffeb7c54b",
     "docs/astra/GUITARTECHS_V9_DOMAIN_GENERALIZATION_TRAINING_DESIGN_V1.json": "723cbe66cdcf075b73d948e3f4e3ab4a04cf238a",
     "docs/astra/GUITARTECHS_V9_SYNTHETIC_NO_MEDIA_CONTRACT_V1.json": "e9e527db8728eab4c5b3fd35be1c31a2c3cfc052",
     "docs/astra/GUITARTECHS_V9_REAL_TRAINING_AUTHORIZATION_V1.json": "9ca276e258f5963687086da79bc0d53233b55576",
@@ -67,6 +67,8 @@
     "priorRun": 37539751127,
     "gateOutcomeProduced": false,
     "semanticContractChanged": false,
-    "restartFromEpoch0Required": true
+    "restartFromEpoch0Required": true,
+    "repairCommit": "bee066a7904e36acd28963b6e02267218f7239a8",
+    "repairReceipt": "docs/astra/GUITARTECHS_V9_EXECUTION_TIMEOUT_REPAIR_V1.json"
   }
 }
