@@ -87,7 +87,7 @@ jobs:
           echo "GUITAR_TECHS_P3_OPENED=false"
           echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
 
-  p1_0_400:
+  p1_0_200:
     needs: preflight
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
@@ -95,26 +95,52 @@ jobs:
       train_performer: P1
       validation_performer: P2
       start_epoch: 0
-      end_epoch: 400
+      end_epoch: 200
       resume_artifact: ''
+      output_artifact: guitar-techs-v9-p1-resume-e200
+      final_segment: false
+
+  p1_200_400:
+    needs: p1_0_200
+    uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
+    with:
+      fold: p1-train-p2-validate
+      train_performer: P1
+      validation_performer: P2
+      start_epoch: 200
+      end_epoch: 400
+      resume_artifact: guitar-techs-v9-p1-resume-e200
       output_artifact: guitar-techs-v9-p1-resume-e400
       final_segment: false
 
-  p1_400_800:
-    needs: p1_0_400
+  p1_400_600:
+    needs: p1_200_400
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
       fold: p1-train-p2-validate
       train_performer: P1
       validation_performer: P2
       start_epoch: 400
-      end_epoch: 800
+      end_epoch: 600
       resume_artifact: guitar-techs-v9-p1-resume-e400
+      output_artifact: guitar-techs-v9-p1-resume-e600
+      final_segment: false
+
+  p1_600_800:
+    needs: p1_400_600
+    uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
+    with:
+      fold: p1-train-p2-validate
+      train_performer: P1
+      validation_performer: P2
+      start_epoch: 600
+      end_epoch: 800
+      resume_artifact: guitar-techs-v9-p1-resume-e600
       output_artifact: guitar-techs-v9-p1-resume-e800
       final_segment: false
 
   p1_800_1000:
-    needs: p1_400_800
+    needs: p1_600_800
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
       fold: p1-train-p2-validate
@@ -126,7 +152,7 @@ jobs:
       output_artifact: guitar-techs-v9-p1-final-development-result
       final_segment: true
 
-  p2_0_400:
+  p2_0_200:
     needs: p1_800_1000
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
@@ -134,26 +160,52 @@ jobs:
       train_performer: P2
       validation_performer: P1
       start_epoch: 0
-      end_epoch: 400
+      end_epoch: 200
       resume_artifact: ''
+      output_artifact: guitar-techs-v9-p2-resume-e200
+      final_segment: false
+
+  p2_200_400:
+    needs: p2_0_200
+    uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
+    with:
+      fold: p2-train-p1-validate
+      train_performer: P2
+      validation_performer: P1
+      start_epoch: 200
+      end_epoch: 400
+      resume_artifact: guitar-techs-v9-p2-resume-e200
       output_artifact: guitar-techs-v9-p2-resume-e400
       final_segment: false
 
-  p2_400_800:
-    needs: p2_0_400
+  p2_400_600:
+    needs: p2_200_400
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
       fold: p2-train-p1-validate
       train_performer: P2
       validation_performer: P1
       start_epoch: 400
-      end_epoch: 800
+      end_epoch: 600
       resume_artifact: guitar-techs-v9-p2-resume-e400
+      output_artifact: guitar-techs-v9-p2-resume-e600
+      final_segment: false
+
+  p2_600_800:
+    needs: p2_400_600
+    uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
+    with:
+      fold: p2-train-p1-validate
+      train_performer: P2
+      validation_performer: P1
+      start_epoch: 600
+      end_epoch: 800
+      resume_artifact: guitar-techs-v9-p2-resume-e600
       output_artifact: guitar-techs-v9-p2-resume-e800
       final_segment: false
 
   p2_800_1000:
-    needs: p2_400_800
+    needs: p2_600_800
     uses: ./.github/workflows/guitar-techs-v9-resumable-segment.yml
     with:
       fold: p2-train-p1-validate

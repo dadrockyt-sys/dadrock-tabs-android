@@ -91,11 +91,15 @@ jobs:
           resume=os.environ['RESUME_ARTIFACT']
           final=os.environ['FINAL_SEGMENT'].lower() == 'true'
           allowed={
-            ('p1-train-p2-validate','P1','P2',0,400,False),
-            ('p1-train-p2-validate','P1','P2',400,800,False),
+            ('p1-train-p2-validate','P1','P2',0,200,False),
+            ('p1-train-p2-validate','P1','P2',200,400,False),
+            ('p1-train-p2-validate','P1','P2',400,600,False),
+            ('p1-train-p2-validate','P1','P2',600,800,False),
             ('p1-train-p2-validate','P1','P2',800,1000,True),
-            ('p2-train-p1-validate','P2','P1',0,400,False),
-            ('p2-train-p1-validate','P2','P1',400,800,False),
+            ('p2-train-p1-validate','P2','P1',0,200,False),
+            ('p2-train-p1-validate','P2','P1',200,400,False),
+            ('p2-train-p1-validate','P2','P1',400,600,False),
+            ('p2-train-p1-validate','P2','P1',600,800,False),
             ('p2-train-p1-validate','P2','P1',800,1000,True),
           }
           assert (fold,train,validate,start,end,final) in allowed

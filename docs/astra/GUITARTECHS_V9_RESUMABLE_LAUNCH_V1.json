@@ -37,7 +37,9 @@
       "p2-train-p1-validate"
     ],
     "resumeBoundariesEpochs": [
+      200,
       400,
+      600,
       800,
       1000
     ],
@@ -60,5 +62,11 @@
     "semanticContractChanged": false,
     "reason": "preflight-only stale symbol in resume self-test; no media access or optimizer steps occurred"
   },
-  "relaunchSequence": 1
+  "relaunchSequence": 2,
+  "timeoutRepair": {
+    "priorRun": 37539751127,
+    "gateOutcomeProduced": false,
+    "semanticContractChanged": false,
+    "restartFromEpoch0Required": true
+  }
 }

@@ -1,0 +1,64 @@
+{
+  "schema": "astra-guitar-techs-v9-execution-timeout-repair-v1",
+  "date": "2026-10-07",
+  "runId": 37539751127,
+  "jobId": 112529907594,
+  "classification": "HOSTED_RUNNER_TIMEOUT_INCOMPLETE_EXPERIMENT",
+  "preflightPassed": true,
+  "mediaAccessed": true,
+  "optimizerStepsObserved": 560,
+  "lastCompletedCheckpointEpoch": 280,
+  "gateOutcomeProduced": false,
+  "scientificContractChanged": false,
+  "observations": {
+    "checkpoints": [
+      20,
+      40,
+      60,
+      80,
+      100,
+      120,
+      140,
+      160,
+      180,
+      200,
+      220,
+      240,
+      260,
+      280
+    ],
+    "selectionF1AtObservedCheckpoints": 0,
+    "note": "These are incomplete-run descriptive checkpoints only; they do not constitute the frozen V9 fold or experiment gate."
+  },
+  "repair": {
+    "oldResumeBoundaries": [
+      400,
+      800,
+      1000
+    ],
+    "newResumeBoundaries": [
+      200,
+      400,
+      600,
+      800,
+      1000
+    ],
+    "reason": "V9 paired-view compute makes a 400-epoch segment exceed the GitHub-hosted job time ceiling including data preparation.",
+    "unchanged": [
+      "seed",
+      "data identities",
+      "fold order",
+      "1000 epochs/fold",
+      "optimizer",
+      "supervised objective",
+      "consistency weight",
+      "paired-view ranges",
+      "V8 decoder",
+      "thresholds",
+      "checkpoint cadence",
+      "selection rules",
+      "scientific advancement gate"
+    ]
+  },
+  "restartPolicy": "Restart P1 fold deterministically from epoch 0 because the timed-out job produced no admitted resume artifact. This is execution recovery, not a favorable-seed or parameter retry."
+}
