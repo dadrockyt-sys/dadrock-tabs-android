@@ -1,0 +1,138 @@
+{
+  "schema": "astra-guitar-techs-post-v9-fixed-output-admission-result-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "scientificStatus": "V9_FROZEN_FAIL",
+  "diagnosticStatus": "SUCCESS_OUTPUT_STATE_ADMISSION_FAILURE_CONFIRMED_AT_SELECTED_CHECKPOINTS",
+  "causalTrainingMechanismProven": false,
+  "execution": {
+    "launchCommit": "16c6a2e7f61bf36103983b32eed4a1c1b98a534e",
+    "runId": 37836761676,
+    "jobId": 113515647380,
+    "runAttempt": 1,
+    "runConclusion": "success",
+    "jobConclusion": "success",
+    "runStartUtc": "2026-10-08T20:04:54Z",
+    "runUpdatedUtc": "2026-10-08T21:44:12Z",
+    "sourceAndFixturesPassed": true,
+    "frozenModelZipAndFileHashesVerifiedInJob": true,
+    "inputArchiveHashesVerifiedInJob": true,
+    "cleanupStepSuccess": true,
+    "manifestSha256": "2b6851a5c0f1639f84df987372985e4d26ca34ad9e281d84f8c686531fdccf4c",
+    "resultArtifact": {
+      "id": 11580776876,
+      "archiveDigest": "sha256:3e7d59b40d6311c800a0a5ee85f4ef90a38a0f8d6a17351578108f292604079b",
+      "independentlyCheckedArchiveSha256": true,
+      "containedJsonName": "post-v9-admission-audit-v1.json",
+      "containedJsonSha256": "5dbc876c3b77be3dff1f42b52e33f1955a8b96356aff08452e2fa9116aab6f94",
+      "independentlyCheckedContainedJsonSha256": true
+    },
+    "guards": {
+      "optimizerStepsExecuted": 0,
+      "thresholdSweep": false,
+      "p3Opened": false,
+      "protectedSongUsed": false,
+      "stageBHoldoutUsed": false,
+      "paidCompute": false,
+      "productionOrMainChanged": false
+    }
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "validatingPerformer": "P2",
+      "captures": 120,
+      "performances": 40,
+      "frames": 901390,
+      "stringPositions": 5408340,
+      "referenceEvents": 22092,
+      "v9": {
+        "selectedEpoch": 20,
+        "predictedEvents": 0,
+        "truePositiveEvents": 0,
+        "activeRunsBeforeMerge": 0,
+        "activeRunsAfterPruning": 0,
+        "acceptedStrongStarts": 0,
+        "acceptedConfirmedStarts": 0,
+        "strongStartCandidates": 0,
+        "confirmedStartCandidates": 0,
+        "activeArgmaxPositions": 0,
+        "maxActiveProbability": 0.05293658375740051,
+        "minSilenceProbability": 0.1246638298034668,
+        "zeroPredictionCaptures": 120,
+        "performanceMacroF1": 0
+      },
+      "v8": {
+        "predictedEvents": 29026,
+        "truePositiveEvents": 8044,
+        "activeRunsBeforeMerge": 30125,
+        "activeRunsAfterPruning": 28972,
+        "acceptedStrongStarts": 13739,
+        "acceptedConfirmedStarts": 16386,
+        "activeArgmaxPositions": 1588036,
+        "performanceMacroF1": 0.29305451541821204
+      }
+    },
+    "p2-train-p1-validate": {
+      "validatingPerformer": "P1",
+      "captures": 136,
+      "performances": 41,
+      "frames": 1023415,
+      "stringPositions": 6140490,
+      "referenceEvents": 27071,
+      "v9": {
+        "selectedEpoch": 20,
+        "predictedEvents": 0,
+        "truePositiveEvents": 0,
+        "activeRunsBeforeMerge": 0,
+        "activeRunsAfterPruning": 0,
+        "acceptedStrongStarts": 0,
+        "acceptedConfirmedStarts": 0,
+        "strongStartCandidates": 0,
+        "confirmedStartCandidates": 0,
+        "activeArgmaxPositions": 0,
+        "maxActiveProbability": 0.053568027913570404,
+        "minSilenceProbability": 0.13096217811107635,
+        "zeroPredictionCaptures": 136,
+        "performanceMacroF1": 0
+      },
+      "v8": {
+        "predictedEvents": 37744,
+        "truePositiveEvents": 7201,
+        "activeRunsBeforeMerge": 39763,
+        "activeRunsAfterPruning": 37718,
+        "acceptedStrongStarts": 15158,
+        "acceptedConfirmedStarts": 24605,
+        "activeArgmaxPositions": 1425340,
+        "performanceMacroF1": 0.20055717289380845
+      }
+    }
+  },
+  "aggregate": {
+    "captures": 256,
+    "referenceEvents": 49163,
+    "v9PredictedEvents": 0,
+    "v9MatchedEvents": 0,
+    "v8PredictedEvents": 66770,
+    "v8MatchedEvents": 15245,
+    "v9MacroF1": 0,
+    "v8MacroF1": 0.24680584415601026,
+    "v9ArgmaxActivePositions": 0,
+    "v9EvaluatedStringPositions": 11548830
+  },
+  "interpretation": {
+    "verified": "V9 selected epoch-20 checkpoints fail all frozen V4 admission predicates: across both folds best active class is below silence, no active argmax frames, no V4 starts and no V8 decoded events",
+    "notVerified": [
+      "all unexamined V9 checkpoints have same raw distribution",
+      "KL reduction is the actual training cause",
+      "hidden representation is collapsed",
+      "V10 or a threshold rescue would succeed",
+      "independent or customer accuracy"
+    ],
+    "nextRecommended": "Separate synthetic/no-media exact-composite-loss and per-component gradient scale diagnostic; obtain separate authorization for any new real-data access or optimizer training",
+    "authorizedRunConsumed": true,
+    "rerunAuthorized": false,
+    "newTrainingAuthorized": false,
+    "protectedDataOpened": false,
+    "mainOrProductionMutationAuthorized": false
+  }
+}
