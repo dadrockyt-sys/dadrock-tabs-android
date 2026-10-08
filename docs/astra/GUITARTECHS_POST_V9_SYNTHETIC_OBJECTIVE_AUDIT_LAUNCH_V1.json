@@ -1,0 +1,56 @@
+{
+  "schema": "astra-guitar-techs-post-v9-synthetic-objective-audit-launch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "singleLaunch": true,
+  "authorization": {
+    "userText": "Please continue 💚",
+    "receipt": "docs/astra/GUITARTECHS_POST_V9_SYNTHETIC_OBJECTIVE_AUDIT_AUTHORIZATION_V1.json"
+  },
+  "limits": {
+    "cpuOnly": true,
+    "maxRunnerMinutes": 20,
+    "optimizerSteps": 0,
+    "realDataAccess": false,
+    "modelAccess": false,
+    "paidCompute": false
+  },
+  "syntheticFixture": {
+    "B": 1,
+    "T": 200,
+    "S": 6,
+    "C": 21,
+    "seed": 20261008,
+    "logitScales": [
+      0,
+      0.05,
+      0.25,
+      0.75
+    ]
+  },
+  "guards": {
+    "p3": false,
+    "protectedSong": false,
+    "stageBHoldout": false,
+    "training": false,
+    "thresholdTuning": false,
+    "production": false,
+    "main": false
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v9/verify_post_v9_synthetic_objective_audit_v1.py": "a35de5fe648a37a8672442698cbdcd42d48f0180",
+    ".github/workflows/guitar-techs-post-v9-synthetic-objective-audit-v1.yml": "27fdbcd2409770369b5aea292139635ea039950d",
+    "docs/astra/GUITARTECHS_POST_V9_SYNTHETIC_OBJECTIVE_AUDIT_AUTHORIZATION_V1.json": "a4cae6244c3baa509b27c9bd28b9a86e8d546b4a",
+    "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+    "astra_backend/guitartechs_training_v7/objective_decoder.py": "7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "astra_backend/guitartechs_training_v7/model.py": "cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "astra_backend/guitartechs_training_v6/model.py": "78a17dd174bd86e804af0e9c75056055d6048295",
+    "astra_backend/tabcnn_runtime/preprocessing.py": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "99cae61a0a299de27a24e367afccdf7b13a7c81b",
+    "docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json": "41a251f1a4450b3703ed2bfa81078c55cddd4109"
+  },
+  "expected": "No-media numerical illustration only: source-linked V7 supervision and V9 KL, exact T=200/S=6, no optimizer and no historical metric changes",
+  "launchMechanism": "create this single new file on astra-work to trigger exactly one dedicated workflow via push path; no dispatch or re-run after result",
+  "failurePolicy": "If the workflow fails, inspect logs and preserve precise cause. Never automatically rerun or relax scientific constraints.",
+  "decisionStop": "After artifact verification and a decision brief, stop before any new model run or real-data study."
+}
