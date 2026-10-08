@@ -1,0 +1,207 @@
+name: Guitar-TECHS H1 original versus normalized-KL 20epoch paired development pilot
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: guitar-techs-h1-paired-pilot-v1
+  cancel-in-progress: false
+
+jobs:
+  paired_pilot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 300
+    steps:
+      - name: Checkout immutable prospective pilot source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify explicit new authorization, immutable sources, and green offline gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,subprocess
+          x=json.load(open('docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json'))
+          assert x['schema']=='astra-guitartechs-h1-20epoch-paired-training-launch-v1'
+          assert x['singleUse'] is True
+          assert x['userAuthorization']=='I authorize'
+          assert x['armOrder']==['original_batchmean','per_position_normalized']
+          assert x['folds']==['p1-train-p2-validate','p2-train-p1-validate']
+          assert x['limits']=={'maxRunnerMinutes':300,'maxOptimizerSteps':160,'epochsPerArmFold':20,'cpuOnly':True,'paidCompute':False}
+          assert x['guards']=={'p3':False,'protectedSong':False,'stageBHoldout':False,'thresholdTuning':False,'checkpointOrSeedSelection':False,'main':False,'production':False,'trainedWeightsExport':False}
+          a=json.load(open(x['authorizationReceipt']))
+          assert a['schema']=='astra-guitartechs-h1-paired-loss-normalization-pilot-authorization-v1'
+          assert a['userAuthorization']['verbatim']=='I authorize'
+          assert a['budget']['maxOptimizerStepsTotal']==160
+          for path,expected in x['sourceBlobs'].items():
+              got=subprocess.check_output(['git','hash-object',path],text=True).strip()
+              assert got==expected,(path,got,expected)
+          result=json.load(open('docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json'))
+          assert result['frozenAdvancementGate']['result']=='FAIL'
+          assert result['aggregate']['macroF1']==0
+          PY
+          curl --fail --location --retry 3 -sS \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            'https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/runs/37852114708' > /tmp/h1-preflight-status.json
+          python - <<'PY'
+          import json
+          run=json.load(open('/tmp/h1-preflight-status.json'))
+          assert run['id']==37852114708
+          assert run['status']=='completed' and run['conclusion']=='success'
+          assert run['head_sha']=='6f3c1ba827d4ab4ac0c4711365a152468293a18a'
+          assert run['run_attempt']==1
+          PY
+          echo 'H1_OFFLINE_GREEN_VERIFIED_BEFORE_MEDIA=true'
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import torch
+          assert torch.__version__=='1.11.0+cpu'
+          assert not torch.cuda.is_available()
+          PY
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Acquire original pinned TabCNN source and verify blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          for path in models/common.py models/tabcnn.py tools/instrument.py tools/constants.py; do
+            curl --fail --location --retry 4 --retry-all-errors -o "$root/$path" "$base/$path"
+          done
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Reconfirm synthetic loss/gradient fixture before real development data
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py \
+            --source-root /tmp/tabcnn-source --offline-test
+          echo 'H1_OFFLINE_FIXTURE_PASS_BEFORE_MEDIA=true'
+
+      - name: Prepare and hash-verify ONLY the original 256 P1/P2 development captures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/prepared /tmp/extract
+          : > /tmp/prepared/manifest.jsonl
+          while IFS=' ' read -r file bytes md5 sha performer category; do
+            rm -rf /tmp/extract/*
+            ok=0
+            for url in "https://zenodo.org/api/records/14963133/files/$file/content" \
+                       "https://zenodo.org/records/14963133/files/$file?download=1"; do
+              for attempt in 1 2 3 4 5; do
+                rm -f "/tmp/$file.part"
+                if curl --fail --location --connect-timeout 30 --max-time 1800 \
+                    --retry 2 --retry-all-errors --retry-delay 5 \
+                    --user-agent 'Astra-H1-Bounded-Development-Pilot-V1/1.0' \
+                    -o "/tmp/$file.part" "$url"; then
+                  mv "/tmp/$file.part" "/tmp/$file"
+                  ok=1;break 2
+                fi
+                sleep "$((attempt*15))"
+              done
+            done
+            test "$ok" = 1
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            unzip -q "/tmp/$file" -d /tmp/extract
+            rm -f "/tmp/$file"
+            python astra_backend/guitartechs_real_training/real_training.py prepare-archive \
+              --root /tmp/extract --archive "$file" --performer "$performer" --category "$category" \
+              --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json \
+              --output-dir /tmp/prepared --manifest /tmp/prepared/manifest.jsonl
+            rm -rf /tmp/extract/*
+          done <<'EOF'
+          P1_chords.zip 981741162 be9ef8bbdceb1912d565254e607a6d94 de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326 P1 chords
+          P1_scales.zip 453349723 9c0b98e8fb42a522df727ea8bf545e4f 79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509 P1 scales
+          P1_singlenotes.zip 108626613 ca0c4674dde3805574685a313f7c39eb 130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4 P1 singlenotes
+          P1_techniques.zip 326280863 18634a41a6db5a8de10d07eb3122a872 1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e P1 techniques
+          P2_chords.zip 1150819056 eb6f74dd19162237189281688ad7ad2e 9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce P2 chords
+          P2_scales.zip 471254783 96664853872f51e5f8aa4447313b7cf5 d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17 P2 scales
+          P2_singlenotes.zip 116133457 40fbf03d8b04bb2cf42df20f36dc2254 d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9 P2 singlenotes
+          P2_techniques.zip 395839610 f4189251ce50be25f06a173b2c2bba00 05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816 P2 techniques
+          EOF
+          test "$(wc -l </tmp/prepared/manifest.jsonl)" = 256
+          python - <<'PY'
+          import json
+          rows=[json.loads(line) for line in open('/tmp/prepared/manifest.jsonl')]
+          assert len(rows)==256
+          assert {k:sum(r['performer']==k for r in rows) for k in ('P1','P2')}=={'P1':136,'P2':120}
+          PY
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+
+      - name: Execute exactly one H1 20-epoch two-arm two-fold study
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py \
+            --source-root /tmp/tabcnn-source \
+            --manifest /tmp/prepared/manifest.jsonl \
+            --data-dir /tmp/prepared \
+            --out /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/guitartechs-h1-20epoch-paired-pilot-v1.json'))
+          assert x['schema']=='astra-guitartechs-h1-original-vs-perposition-20epoch-pilot-v1'
+          assert x['optimizerSteps']==160
+          assert x['epochsPerArmPerFold']==20
+          for fold in x['folds'].values():
+            assert set(fold)=={'original_batchmean','per_position_normalized'}
+            assert fold['original_batchmean']['matchesFrozenOriginalEpoch20'] is True
+            assert fold['original_batchmean']['validation']['totals']['predictedEvents']==0
+          PY
+          echo "H1_PILOT_RECEIPT_SHA256=$(sha256sum /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json | awk '{print $1}')"
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+
+      - name: Upload development scalar-only fixed pilot evidence (never weights or media)
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitartechs-h1-20epoch-two-arm-two-fold-pilot-v1
+          path: /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Purge model memory, prepared development data and source
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/P1_*.zip /tmp/P2_*.zip /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+          echo 'GUITAR_TECHS_P3_OPENED=false'
+          echo 'CUSTOMER_DELIVERY_ELIGIBLE=false'
