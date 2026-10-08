@@ -54,7 +54,7 @@ def probe(model,sup,weighted):
     return out
 
 
-def train_arm(rows,fold,arm,source_root,control_sha):
+def train_arm(rows,fold,arm,source_root,control_sha,before_step=None,on_step=None):
     if arm not in ("original_batchmean","per_position_normalized"):
         raise ValueError("unregistered arm")
     v9._setup_determinism()
@@ -72,6 +72,7 @@ def train_arm(rows,fold,arm,source_root,control_sha):
         plan=v9.build_epoch_plan(rows,epoch=epoch)
         if len(plan)!=groups: raise RuntimeError("training plan group drift")
         batches=v9.batch_epoch_plan(plan,batch_size=32)
+        if len(batches)!=2: raise RuntimeError('H1_EXPECTED_TWO_BATCHES_PER_EPOCH')
         stats=defaultdict(list)
         model.train()
         for batch in batches:
@@ -93,8 +94,10 @@ def train_arm(rows,fold,arm,source_root,control_sha):
                     stats[k].append(float(t.detach()))
                 for k,p in parts.items():
                     stats["component_"+k].append(float(p.detach()))
+            if before_step is not None: before_step()
             opt.step()
             steps+=1
+            if on_step is not None: on_step(fold,arm,epoch+1,steps)
         row={"epoch":epoch+1,"steps":steps,"means":{
             k:float(np.mean(vals)) for k,vals in sorted(stats.items())}}
         if not all(math.isfinite(v) for v in row["means"].values()):
@@ -122,11 +125,22 @@ def evaluate(model,rows,expected_captures,expected_performances):
         state,event=infer_raw(model,feature)
         predicted,info=summarize_capture(state,event,ref)
         met=metric_base.capture_metrics(predicted,ref)
+        if not all(k in met and math.isfinite(float(met[k])) for k in
+                   ('precision','recall','f1','completeness','frameAccuracy','abstentionRate')):
+            raise RuntimeError('H1_NONFINITE_OR_MISSING_CAPTURE_METRICS')
+        if any(not isinstance(info.get(k),int) or info[k]<0 for k in
+               ('predictedEvents','referenceEvents','truePositiveEvents','activeRunsAfterPrune')):
+            raise RuntimeError('H1_INVALID_EVENT_COUNTER_SCHEMA')
+        if info['truePositiveEvents']>min(info['predictedEvents'],info['referenceEvents']):
+            raise RuntimeError('H1_IMPOSSIBLE_EVENT_COUNTS')
         caps.append({"_performance":row["performer"]+"|"+row["category"]+"|"+row["performanceKey"],
                      "_category":row["category"],"metrics":met,"audit":info})
     summary=aggregate(caps)
     if summary["captureCount"]!=expected_captures or summary["performanceCount"]!=expected_performances:
         raise RuntimeError("validation capture/performance count drift")
+    if not all(k in summary and math.isfinite(float(summary[k])) for k in
+               ('precision','recall','f1','completeness','frameAccuracy','abstentionRate')):
+        raise RuntimeError('H1_NONFINITE_OR_MISSING_MACRO_METRICS')
     fields=("predictedEvents","referenceEvents","truePositiveEvents","stateArgmaxActivePositions",
             "activeRunsBeforeGapMerge","activeRunsAfterPrune","strongStartCandidates",
             "confirmedStartCandidates","acceptedStrongStarts","acceptedConfirmedStarts")
