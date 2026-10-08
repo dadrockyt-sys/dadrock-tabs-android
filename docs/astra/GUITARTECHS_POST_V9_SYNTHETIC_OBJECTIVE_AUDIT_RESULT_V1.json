@@ -1,0 +1,109 @@
+{
+  "schema": "astra-guitar-techs-post-v9-synthetic-objective-audit-result-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "status": "SYNTHETIC_SOURCE_LINKED_NUMERIC_AUDIT_PASS",
+  "v9ScientificGate": "FAIL_UNCHANGED",
+  "historicalCausationEstablished": false,
+  "authorization": {
+    "userText": "Please continue 💚",
+    "receipt": "docs/astra/GUITARTECHS_POST_V9_SYNTHETIC_OBJECTIVE_AUDIT_AUTHORIZATION_V1.json",
+    "oneRunConsumed": true
+  },
+  "run": {
+    "id": 37850081250,
+    "jobId": 113560539790,
+    "attempt": 1,
+    "launchSha": "163271528484d4a022465dba6b19972f64851da6",
+    "conclusion": "success",
+    "startedAt": "2026-10-08T21:55:15Z",
+    "updatedAt": "2026-10-08T21:55:56Z",
+    "frozenCpuRuntime": true,
+    "sourceChecksPassed": true,
+    "optimizerSteps": 0,
+    "mediaUsed": false,
+    "modelsLoaded": false,
+    "artifact": {
+      "id": 11580783636,
+      "archiveDigest": "sha256:548e23e4562f1eb917128628196667364d63477f5130df1dddcb1fd07d29fe70",
+      "archiveSha256IndependentlyVerified": true,
+      "member": "post-v9-synthetic-objective-audit-v1.json",
+      "memberSha256": "dd5303f8be46a9e5dd249fe991dc1031cd41cd5beb5f911546f901c05212cd2d",
+      "memberSha256IndependentlyVerified": true
+    }
+  },
+  "fixture": {
+    "B": 1,
+    "T": 200,
+    "S": 6,
+    "C": 21,
+    "seed": 20261008,
+    "contentWeight": 1.125,
+    "consistencyWeight": 0.1,
+    "logitDifferenceScales": [
+      0,
+      0.05,
+      0.25,
+      0.75
+    ]
+  },
+  "scaling": {
+    "batchmeanToPerPosition": 1200,
+    "weightedBatchmeanToPerPosition": 120
+  },
+  "scenarios": [
+    {
+      "differenceScale": 0,
+      "supervised": 3.921322822570801,
+      "weightedKL": 0,
+      "perPositionKL": 0,
+      "klToSupervisedStateLogitGradientNorm": 0
+    },
+    {
+      "differenceScale": 0.05,
+      "supervised": 3.9216554164886475,
+      "weightedKL": 0.1425306349992752,
+      "perPositionKL": 0.001187755260616541,
+      "klToSupervisedStateLogitGradientNorm": 2.329278852838544
+    },
+    {
+      "differenceScale": 0.25,
+      "supervised": 3.9296441078186035,
+      "weightedKL": 3.560255527496338,
+      "perPositionKL": 0.029668794944882393,
+      "klToSupervisedStateLogitGradientNorm": 11.659912687846292
+    },
+    {
+      "differenceScale": 0.75,
+      "supervised": 3.995957851409912,
+      "weightedKL": 31.8092041015625,
+      "perPositionKL": 0.2650766968727112,
+      "klToSupervisedStateLogitGradientNorm": 35.32246347926745
+    }
+  ],
+  "augment": {
+    "relativeDbFeatureExample": 0.5,
+    "gainMultiplyForPlus3Db": 0.7062687723113772,
+    "illustrativeAdditiveDbCoordinate": 0.5375,
+    "tiltImpliedDbPerOctave": 0.3769633507853403,
+    "overlapWindowIndependentDifferences": 38208,
+    "deterministicAndNonmutating": true
+  },
+  "evidenceLimits": [
+    "state-logit gradients on fixed synthetic independent tensors, not shared neural-network weight gradients",
+    "no actual real-development V9 loss component telemetry",
+    "the original V9 no-event selected-checkpoint failure is separately verified but causal mechanism still uncertain",
+    "no new training or checkpoint changes"
+  ],
+  "recommendation": "Prospectively design an isolated normalization vs augmentation investigation with exact-model shared-parameter synthetic tests and budgeted telemetry before seeking permission for any new model training; stop now.",
+  "closed": {
+    "p3": true,
+    "protectedSong": true,
+    "stageBHoldout": true,
+    "newTraining": true,
+    "paidCompute": true,
+    "production": true,
+    "main": true,
+    "rerun": true
+  }
+}
