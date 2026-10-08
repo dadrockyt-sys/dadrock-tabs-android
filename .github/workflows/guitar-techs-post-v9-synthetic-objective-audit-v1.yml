@@ -1,0 +1,108 @@
+name: Guitar-TECHS post-V9 synthetic objective audit V1 (no media)
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_POST_V9_SYNTHETIC_OBJECTIVE_AUDIT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guitar-techs-post-v9-synthetic-objective-v1
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/astra-work'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout frozen authorized source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Setup pinned Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Verify single-use scope and exact source Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          x=json.load(open('docs/astra/GUITARTECHS_POST_V9_SYNTHETIC_OBJECTIVE_AUDIT_LAUNCH_V1.json'))
+          assert x['schema']=='astra-guitar-techs-post-v9-synthetic-objective-audit-launch-v1'
+          assert x['singleLaunch'] is True
+          assert x['authorization']['userText']=='Please continue 💚'
+          assert x['limits']=={'cpuOnly':True,'maxRunnerMinutes':20,'optimizerSteps':0,'realDataAccess':False,'modelAccess':False,'paidCompute':False}
+          assert x['syntheticFixture']=={'B':1,'T':200,'S':6,'C':21,'seed':20261008,'logitScales':[0.0,0.05,0.25,0.75]}
+          assert x['guards']=={'p3':False,'protectedSong':False,'stageBHoldout':False,'training':False,'thresholdTuning':False,'production':False,'main':False}
+          auth=json.load(open(x['authorization']['receipt']))
+          assert auth['schema']=='astra-post-v9-synthetic-objective-audit-authorization-v1'
+          assert auth['permitted']['realP1P2Access'] is False
+          assert auth['permitted']['checkpointDownloads'] is False
+          for path,expected in x['sourceBlobs'].items():
+              actual=subprocess.check_output(['git','hash-object',path],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          frozen=json.load(open('docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json'))
+          assert frozen['frozenAdvancementGate']['result']=='FAIL'
+          assert frozen['aggregate']['macroF1']==0.0
+          PY
+          echo "SYNTHETIC_ONLY=true"
+          echo "NO_MEDIA_OR_MODEL=true"
+
+      - name: Install minimal frozen CPU math dependencies only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu 'torch==1.11.0+cpu' 'numpy==1.21.6'
+          python - <<'PY'
+          import torch,numpy
+          assert torch.__version__=='1.11.0+cpu',torch.__version__
+          assert numpy.__version__=='1.21.6',numpy.__version__
+          assert torch.cuda.is_available() is False
+          print('MINIMAL_FROZEN_CPU_MATH_RUNTIME_PASS')
+          PY
+
+      - name: Execute exact source-linked synthetic composite audit
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v9/verify_post_v9_synthetic_objective_audit_v1.py --out /tmp/post-v9-synthetic-objective-audit-v1.json
+          test -s /tmp/post-v9-synthetic-objective-audit-v1.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/post-v9-synthetic-objective-audit-v1.json'))
+          assert x['schema']=='astra-post-v9-synthetic-objective-unit-gradient-audit-v1'
+          assert x['optimizerSteps']==0
+          assert x['mediaAccess'] is False and x['checkpointAccess'] is False
+          assert x['batchmeanToPerPositionMeanFactor']==1200
+          assert x['weightedBatchmeanToPerPositionMeanFactor']==120
+          assert len(x['scenarios'])==4
+          assert all(y['gradientAdditivityProven'] for y in x['scenarios'])
+          PY
+          echo "POST_V9_SYNTHETIC_RESULT_SHA256=$(sha256sum /tmp/post-v9-synthetic-objective-audit-v1.json | awk '{print $1}')"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+
+      - name: Upload no-media synthetic scalar result only
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-post-v9-synthetic-objective-audit-v1
+          path: /tmp/post-v9-synthetic-objective-audit-v1.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Purge synthetic intermediate output
+        if: always()
+        shell: bash
+        run: |
+          rm -f /tmp/post-v9-synthetic-objective-audit-v1.json
+          echo "NO_MEDIA_OR_MODEL=true"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
