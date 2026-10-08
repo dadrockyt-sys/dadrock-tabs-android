@@ -140,7 +140,7 @@ def main():
         if receipt["optimizerSteps"]!=160 or journal.payload["optimizerStepsConfirmed"]!=160:
             raise RuntimeError("study step cap mismatch")
         receipt["interpretation"]="Bounded H1 paired pilot, not full V10 or scientific advancement PASS. Exact original controls verified first. Both development folds exposed; no independent holdout."
-        Path(args.out).write_text(json.dumps(receipt,indent=2,sort_keys=True,allow_nan=False)+"\\n")
+        Path(args.out).write_text(json.dumps(receipt,indent=2,sort_keys=True,allow_nan=False)+"\n")
         journal.finish()
         print("H1_20EPOCH_PAIRED_PILOT_COMPLETE",flush=True)
     except Exception as error:
