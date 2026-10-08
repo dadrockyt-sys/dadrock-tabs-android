@@ -1,0 +1,79 @@
+{
+  "schema": "astra-guitar-techs-post-v9-fixed-output-admission-audit-launch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "singleLaunch": true,
+  "authorization": {
+    "userText": "I authorize",
+    "scope": "single bounded CPU-only P1/P2 real-data forward-pass audit with zero training",
+    "receipt": "docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_AUTHORIZATION_V1.json"
+  },
+  "purpose": "Fix the V9 zero-F1 interpretation: quantify original state outputs, exact V4 admission, V8 emitted events, matching counts and frozen V8-versus-V9 metric reconciliation. No tuning or weights changes.",
+  "limits": {
+    "maxRunnerMinutes": 120,
+    "maxCaptureModelPasses": 512,
+    "optimizerSteps": 0,
+    "paidCompute": false
+  },
+  "population": {
+    "P1": 136,
+    "P2": 120
+  },
+  "guards": {
+    "p3": false,
+    "protectedSong": false,
+    "stageBHoldout": false,
+    "thresholdTuning": false,
+    "production": false,
+    "main": false
+  },
+  "models": {
+    "v9": {
+      "p1": {
+        "artifactId": 11516113677,
+        "archiveDigest": "sha256:736c97506cb1bfe74838e13f50a9f97920e42b86b6fec3e0993ee44ebd3713cf",
+        "modelSha256": "a62cb31bcfaa238965e0f79934a00c430c0b8723a4d51168104ddea5e4a0f90c",
+        "epoch": 20
+      },
+      "p2": {
+        "artifactId": 11572256759,
+        "archiveDigest": "sha256:8c0f46df0804d9b29263a5de0716c0868750c65a24f5f6d2765f46bd154fea21",
+        "modelSha256": "6bb66bebb074f5b26ccaefd2ed2322eefed9381998f7cce81246f4ab5af40452",
+        "epoch": 20
+      }
+    },
+    "v8": {
+      "p1": {
+        "artifactId": 11336573510,
+        "archiveDigest": "sha256:9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6",
+        "modelSha256": "072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763",
+        "epoch": 1000
+      },
+      "p2": {
+        "artifactId": 11374640369,
+        "archiveDigest": "sha256:0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c",
+        "modelSha256": "566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596",
+        "epoch": 940
+      }
+    }
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py": "8e4cf8a6aa052d0703fc69128a387de8eb2bf6d5",
+    "astra_backend/guitartechs_training_v9/verify_post_v9_output_admission_v1.py": "81c237f9565fce54095cf496ed95fcf72cec029a",
+    ".github/workflows/guitar-techs-post-v9-fixed-output-admission-audit-v1.yml": "79b167684b9bd4816c5cdae9483542cbad7a72c1",
+    "docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_AUTHORIZATION_V1.json": "4ed0c06f7dd12ebcd916e666bb6edb32612a4df7",
+    "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
+    "astra_backend/guitartechs_training_v7/model.py": "cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "astra_backend/guitartechs_training_v4/objective_decoder.py": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
+    "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "astra_backend/tabcnn_runtime/preprocessing.py": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json": "9090d465422ebf5d4fdf170693fe0936934f3073",
+    "docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json": "41a251f1a4450b3703ed2bfa81078c55cddd4109",
+    "docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json": "65d6ca5fce078e0151a4c6c0a8636cdf08706185",
+    "astra_backend/tabcnn_runtime/requirements.lock.txt": "174a5016cfe9e6c00816d2171210aa84c66081a8"
+  },
+  "declaredRun": "one push-path-triggered Action launch on creation of this exact file; any re-run/relaunch requires new approval",
+  "success": "create only a frozen summarized P1/P2 output/admission record reproducing baseline metrics, not a scientific gate pass",
+  "stop": "on any mismatch/timeout, report blocker; never auto-retry or touch original frozen baselines"
+}
