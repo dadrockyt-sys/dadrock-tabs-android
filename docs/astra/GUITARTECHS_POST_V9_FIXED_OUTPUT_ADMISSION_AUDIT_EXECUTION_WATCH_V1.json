@@ -1,0 +1,23 @@
+{
+  "schema": "astra-guitar-techs-post-v9-fixed-output-admission-execution-watch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "launchCommit": "16c6a2e7f61bf36103983b32eed4a1c1b98a534e",
+  "workflow": "guitar-techs-post-v9-fixed-output-admission-audit-v1.yml",
+  "runId": 37836761676,
+  "url": "https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37836761676",
+  "jobId": 113515647380,
+  "observedStatus": "in_progress",
+  "atLastCheck": "Set up job succeeded; Checkout authorized exact source in progress; all later steps pending",
+  "resultKnown": false,
+  "authorization": "docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_AUTHORIZATION_V1.json",
+  "launch": "docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_LAUNCH_V1.json",
+  "limits": {
+    "singleLaunch": true,
+    "maxRunnerMinutes": 120,
+    "cpuOnly": true,
+    "optimizerSteps": 0,
+    "maxCaptureModelEvaluations": 512
+  },
+  "followup": "Observe terminal run state. On success inspect logs and result artifact digest/JSON; reconcile fixed metrics and counts, save one decision brief and handoffs. On failure record exact job step/log cause and pre-media/real-data stage; do not automatically relaunch or retune. No V10/P3/Stage-B/Production/main changes."
+}
