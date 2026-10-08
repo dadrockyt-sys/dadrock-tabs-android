@@ -1,0 +1,46 @@
+{
+  "schema": "astra-post-v9-shared-network-synthetic-gradient-authorization-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "authorization": {
+    "userText": "Launch the study",
+    "interpretation": "Approve Stage 1 only of docs/astra/GUITARTECHS_POST_V9_PROSPECTIVE_CAUSAL_STUDY_CONTRACT_V1.md: a single bounded CPU-only no-media, no-checkpoint, zero-optimizer exact frozen V9 architecture shared-parameter gradient study."
+  },
+  "limits": {
+    "oneRun": true,
+    "runner": "GitHub public-repository Ubuntu CPU non-paid runner",
+    "maxRunnerMinutes": 20,
+    "optimizerSteps": 0,
+    "B": 1,
+    "T": 200,
+    "S": 6,
+    "C": 21,
+    "initializationSeed": 20261008,
+    "viewSeed": 20261008,
+    "modeScenarios": [
+      "eval_identical_zero_kl_control",
+      "train_identical_dropout_only",
+      "train_original_paired_augmentation"
+    ]
+  },
+  "scientificBoundary": {
+    "originalV9ModelUnchanged": true,
+    "originalV9ResultsUnchanged": true,
+    "syntheticRandomInitializedV9ModelAllowed": true,
+    "syntheticFeatureAndLabelsAllowed": true,
+    "originalV7LossAndV9KLAllowed": true,
+    "counterfactualNormalizedKLScalarGradientOnly": true,
+    "noTraining": true,
+    "noRealP1P2Access": true,
+    "noHistoricalCheckpoints": true,
+    "noCustomerMedia": true,
+    "noP3": true,
+    "noProtectedSongs": true,
+    "noStageBHoldout": true,
+    "noPaidCompute": true,
+    "noProduction": true,
+    "noMain": true,
+    "noNewModelCandidate": true
+  },
+  "stopRule": "On first run result success, preserve receipts and handoffs. On failure, record exact issue without changing scientific test definitions, and stop without automatic rerun. No new optimizer steps or real-data work granted."
+}
