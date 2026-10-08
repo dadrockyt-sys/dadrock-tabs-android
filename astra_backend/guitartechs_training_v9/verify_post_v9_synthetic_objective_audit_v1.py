@@ -114,7 +114,7 @@ def audit_scenario(span, labels):
         reconstructed = CONTENT_WEIGHT * sum(
             parts[k]*weight for k, weight in COMPONENT_WEIGHTS.items()
         )
-        torch.testing.assert_close(supervised, reconstructed, rtol=2e-5, atol=2e-5)
+        assert torch.allclose(supervised, reconstructed, rtol=2e-5, atol=2e-5)
 
     supervised = 0.5 * (sup_a+sup_b)
     raw_kl = symmetric_kl_consistency(a, b)
@@ -126,7 +126,7 @@ def audit_scenario(span, labels):
     grad_kl = torch.autograd.grad(weighted_kl, (a, b), retain_graph=True)
     grad_composite = torch.autograd.grad(composite, (a, b), retain_graph=True)
     for i in range(2):
-        torch.testing.assert_close(
+        assert torch.allclose(
             grad_supervised[i]+grad_kl[i], grad_composite[i],
             rtol=2e-5, atol=2e-5)
     super_norm = paired_norm(grad_supervised)
