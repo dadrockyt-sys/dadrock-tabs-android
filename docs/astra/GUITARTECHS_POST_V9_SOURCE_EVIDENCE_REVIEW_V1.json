@@ -1,0 +1,160 @@
+{
+  "schema": "astra-guitar-techs-post-v9-source-evidence-review-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "reviewedHead": "8ec592136045bef930280a5f5e5699b34ff616f0",
+  "status": "SOURCE_AND_TEXT_LOG_RECONCILIATION_COMPLETE_CAUSE_UNRESOLVED",
+  "allowedWork": {
+    "sourceReview": true,
+    "textualLogReview": true,
+    "modelFreeArithmetic": true,
+    "newOptimizerSteps": 0,
+    "newForwardPasses": 0,
+    "weightsDeserialized": false,
+    "artifactArchivesDownloaded": false,
+    "realDataAccess": false,
+    "workflowDispatched": false,
+    "mainModified": false,
+    "productionModified": false
+  },
+  "sourceRun": {
+    "runId": 37573544151,
+    "headSha": "102d1574a74d8efd95a8c172edf724c8623e6038",
+    "preflightJob": 112637294661,
+    "preflightSuccess": true,
+    "trainingJobsAllSuccess": true
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "99cae61a0a299de27a24e367afccdf7b13a7c81b",
+    "astra_backend/guitartechs_training_v9/verify_synthetic_v9.py": "a7f164751e24fd5a498b30ea3085596f897bbf23",
+    "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
+    "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
+    "astra_backend/guitartechs_training_v4/objective_decoder.py": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "astra_backend/guitartechs_training_v7/objective_decoder.py": "7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+    "astra_backend/tabcnn_runtime/preprocessing.py": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+    "docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json": "41a251f1a4450b3703ed2bfa81078c55cddd4109",
+    "docs/astra/GUITARTECHS_V8_CLEAN_CANDIDATE_FREEZE_V1.json": "40bf73a6c57c9f697d10a60b8b3c555b3199a82a",
+    "docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json": "65d6ca5fce078e0151a4c6c0a8636cdf08706185"
+  },
+  "checkpointLogCoverage": {
+    "p1TrainP2Validate": {
+      "jobIds": [
+        112637586381,
+        112715966844,
+        112781713020,
+        112902288671,
+        112986816044
+      ],
+      "checkpointCount": 50,
+      "epochStart": 20,
+      "epochEnd": 1000,
+      "epochInterval": 20,
+      "allCheckpointF1Zero": true,
+      "allCheckpointCompletenessZero": true,
+      "allCheckpointFrameAccuracyZero": true,
+      "allUnqualified": true,
+      "selectedEpoch": 20,
+      "selectedStateSha256": "933c5faedafa4b3ddfb37e0ad87cef639294a99ff29acd6d581f622ed64a966e",
+      "fullValidationCaptures": 120,
+      "fullValidationPerformances": 40,
+      "optimizerSteps": 2000,
+      "modelFileSha256": "a62cb31bcfaa238965e0f79934a00c430c0b8723a4d51168104ddea5e4a0f90c",
+      "artifactId": 11516113677,
+      "expectedArchiveDigest": "sha256:736c97506cb1bfe74838e13f50a9f97920e42b86b6fec3e0993ee44ebd3713cf",
+      "metadataDigestMatchesReceipt": true,
+      "byteDigestIndependentlyVerified": false
+    },
+    "p2TrainP1Validate": {
+      "jobIds": [
+        113058245257,
+        113093936865,
+        113159892474,
+        113240084409,
+        113346922946
+      ],
+      "checkpointCount": 50,
+      "epochStart": 20,
+      "epochEnd": 1000,
+      "epochInterval": 20,
+      "allCheckpointF1Zero": true,
+      "allCheckpointCompletenessZero": true,
+      "allCheckpointFrameAccuracyZero": true,
+      "allUnqualified": true,
+      "selectedEpoch": 20,
+      "selectedStateSha256": "56b275d79426f5dd14641c0f3ffd802491734dd4f2ec9110a75616b861588a01",
+      "fullValidationCaptures": 136,
+      "fullValidationPerformances": 41,
+      "optimizerSteps": 2000,
+      "modelFileSha256": "6bb66bebb074f5b26ccaefd2ed2322eefed9381998f7cce81246f4ab5af40452",
+      "artifactId": 11572256759,
+      "expectedArchiveDigest": "sha256:8c0f46df0804d9b29263a5de0716c0868750c65a24f5f6d2765f46bd154fea21",
+      "metadataDigestMatchesReceipt": true,
+      "byteDigestIndependentlyVerified": false
+    }
+  },
+  "scientificGate": {
+    "status": "FAIL",
+    "v9MacroF1": 0,
+    "v8MacroF1": 0.24680584415601026,
+    "allFullValidationF1Zero": true,
+    "zeroPredictionsProven": false
+  },
+  "sourceFacts": {
+    "consistencyTensorAxes": [
+      "B",
+      "T=200",
+      "S=6",
+      "C=21"
+    ],
+    "batchmeanToPositionMeanFactor": 1200,
+    "consistencyWeight": 0.1,
+    "effectivePerPositionMeanFactor": 120,
+    "lossComponentsLogged": false,
+    "eventRankCanCreateOrDeleteV4Runs": false,
+    "eventBackshiftMaxFrames": 2,
+    "abstentionRateHardCodedZero": true,
+    "frameAccuracyIncludesJointSilence": false,
+    "epoch20TieBreakFromEarliest": true,
+    "fullValidationComputedAtAll50Checkpoints": false,
+    "augmentationAppliedInFeatureSpace": true
+  },
+  "numericFixture": {
+    "fixture": "1200 repeated positions; two classes; P=[.75,.25] Q=[.25,.75]",
+    "perPositionSymmetricKL": 0.5493061443340548,
+    "batchmeanSymmetricKL": 659.1673732008658,
+    "weightedBatchmean": 65.91673732008657,
+    "weightedPositionMean": 0.05493061443340548
+  },
+  "unresolved": [
+    "predicted/reference/truePositive event counts",
+    "state distribution and exact decoder admission counts",
+    "relative KL and supervised gradients",
+    "model/ZIP content hashes not independently downloaded",
+    "same-population comparator output distributions"
+  ],
+  "proposal": {
+    "id": "POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_V1",
+    "state": "PROPOSED_REQUIRES_FRESH_EXPLICIT_USER_AUTHORIZATION",
+    "zeroOptimizerSteps": true,
+    "cpuOnly": true,
+    "runnerMax": 1,
+    "maxWallMinutes": 120,
+    "validatedCaptureViews": 256,
+    "modelsPerFold": 2,
+    "maximumCaptureModelEvaluations": 512,
+    "thresholdSearch": false,
+    "artifactAcquisitionRequiresByteVerification": true,
+    "stopOnMismatch": true,
+    "authorizationForRealDataInference": false
+  },
+  "preserve": [
+    "frozen V9/V8 results",
+    "P3 and Stage-B holdout closed",
+    "Go My Way quantized candidate",
+    "spectral bass baseline",
+    "checkpoint lineage/product rights unresolved",
+    "main and Production unchanged"
+  ]
+}
