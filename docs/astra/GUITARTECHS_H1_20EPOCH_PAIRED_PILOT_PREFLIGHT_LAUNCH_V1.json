@@ -1,0 +1,27 @@
+{
+  "schema": "astra-guitartechs-h1-20epoch-paired-preflight-launch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "authorizedBy": "I authorize",
+  "singleRun": true,
+  "authorizationReceipt": "docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_AUTHORIZATION_V1.json",
+  "scope": {
+    "realData": false,
+    "optimizerSteps": 0,
+    "paidCompute": false
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py": "d21ae6cea23ade887f2ad8d8ac6331a20670f761",
+    "astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py": "a17367d754aaf995b2089ac51fce5231334138df",
+    ".github/workflows/guitar-techs-h1-20epoch-pilot-preflight.yml": "9f9de5cc4a26ea31acb13cb0d602391971a47257",
+    "docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_AUTHORIZATION_V1.json": "ec705b8f6978bbe1102bb337d7fc927d93fcffcc",
+    "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "99cae61a0a299de27a24e367afccdf7b13a7c81b",
+    "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
+    "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+    "astra_backend/guitartechs_training_v7/objective_decoder.py": "7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py": "8e4cf8a6aa052d0703fc69128a387de8eb2bf6d5",
+    "astra_backend/tabcnn_runtime/requirements.lock.txt": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json": "41a251f1a4450b3703ed2bfa81078c55cddd4109"
+  },
+  "purpose": "One no-media CPU-only validation of frozen original and normalized KL algebra, component reconstruction, representative gradients, source hashes and no weight mutation before any authorized real P1/P2 development training."
+}
