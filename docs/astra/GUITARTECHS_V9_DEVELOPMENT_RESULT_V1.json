@@ -1,0 +1,99 @@
+{
+  "schema": "astra-guitar-techs-v9-development-result-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "sourceRun": {
+    "runId": 37573544151,
+    "headSha": "102d1574a74d8efd95a8c172edf724c8623e6038",
+    "workflowConclusion": "success",
+    "allSerializedJobsSuccessful": true
+  },
+  "candidateId": "astra_guitartechs_v9_paired_view_consistency",
+  "frozenProtocol": {
+    "seed": 20260921,
+    "epochsPerFold": 1000,
+    "consistencyWeight": 0.1,
+    "resumeBoundariesEpochs": [
+      200,
+      400,
+      600,
+      800,
+      1000
+    ],
+    "decoder": "frozen V8 V4-hysteresis plus event-rank backshift"
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "finalArtifact": {
+        "id": 11516113677,
+        "archiveDigest": "sha256:736c97506cb1bfe74838e13f50a9f97920e42b86b6fec3e0993ee44ebd3713cf"
+      },
+      "selectedCheckpointEpoch": 20,
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8200000,
+      "modelSha256": "a62cb31bcfaa238965e0f79934a00c430c0b8723a4d51168104ddea5e4a0f90c",
+      "fullValidationMetrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "completeness": 0,
+        "frameAccuracy": 0,
+        "abstentionRate": 0
+      },
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false
+    },
+    "p2-train-p1-validate": {
+      "finalArtifact": {
+        "id": 11572256759,
+        "archiveDigest": "sha256:8c0f46df0804d9b29263a5de0716c0868750c65a24f5f6d2765f46bd154fea21"
+      },
+      "selectedCheckpointEpoch": 20,
+      "optimizerSteps": 2000,
+      "supervisedFramePositions": 8000000,
+      "modelSha256": "6bb66bebb074f5b26ccaefd2ed2322eefed9381998f7cce81246f4ab5af40452",
+      "fullValidationMetrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "completeness": 0,
+        "frameAccuracy": 0,
+        "abstentionRate": 0
+      },
+      "selectionSubsetQualified": false,
+      "fullValidationQualified": false
+    }
+  },
+  "aggregate": {
+    "macroF1": 0,
+    "macroCompleteness": 0,
+    "v8MacroF1": 0.24680584415601026,
+    "deltaVsV8": -0.24680584415601026
+  },
+  "frozenAdvancementGate": {
+    "requiredMacroF1GreaterThan": 0.24680584415601026,
+    "requiredMacroCompletenessAtLeast": 0.24405263055855808,
+    "foldRegressionLimitVsV8": 0.02,
+    "thresholdRetuning": false,
+    "protectedSongP3StageBAccess": false,
+    "result": "FAIL"
+  },
+  "interpretation": {
+    "workflowHealth": "PASS",
+    "scientificGate": "FAIL",
+    "summary": "The serialized V9 execution completed successfully, but the frozen V8 decoder produced no admitted events on either development fold at every evaluated checkpoint; both full-validation folds scored zero.",
+    "importantBoundary": "Green GitHub Actions execution is not a scientific pass."
+  },
+  "decision": {
+    "status": "FAIL",
+    "rescueRunAuthorized": false,
+    "seedSearchAuthorized": false,
+    "thresholdRescueAuthorized": false,
+    "automaticV10TrainingAuthorized": false,
+    "p3Opened": false,
+    "protectedSongUseAuthorized": false,
+    "stageBHoldoutAuthorized": false,
+    "productionOrMainMutationAuthorized": false,
+    "nextAction": "Fresh explicit decision required before any post-V9 diagnostic or new training study."
+  }
+}
