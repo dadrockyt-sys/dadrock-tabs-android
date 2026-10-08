@@ -1,0 +1,34 @@
+{
+  "schema": "astra-post-v9-shared-network-synthetic-gradient-execution-watch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "launchCommit": "64d654f4a2e3f50396290cd1f8ac32d770b903c0",
+  "workflow": ".github/workflows/guitar-techs-post-v9-synthetic-shared-network-gradient-v1.yml",
+  "runId": 37851005111,
+  "jobId": 113563597750,
+  "url": "https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37851005111",
+  "lastObserved": "in_progress during source checkout; result not known yet",
+  "authorizationReceipt": "docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_AUTHORIZATION_V1.json",
+  "launchReceipt": "docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_LAUNCH_V1.json",
+  "source": "astra_backend/guitartechs_training_v9/verify_post_v9_shared_parameter_gradient_v1.py",
+  "limits": {
+    "oneRun": true,
+    "cpuOnly": true,
+    "maximumRunnerMinutes": 20,
+    "noMedia": true,
+    "noHistoricalCheckpoints": true,
+    "optimizerSteps": 0
+  },
+  "next": "At terminal run success, examine logs and artifact for group-wise actual model-parameter gradients and controls, checksum-verify JSON, write scientific report without historical causation claims, update both handoffs. At failure, capture exact first failed step, whether model initialization/gradient computation began, do not rerun automatically or expand scope. Preserve V9 FAIL and V8 baseline.",
+  "prohibited": [
+    "automatic rerun",
+    "V10 training",
+    "real development media",
+    "historical checkpoint loads",
+    "P3",
+    "protected song",
+    "Stage-B holdout",
+    "paid compute",
+    "Production or main changes"
+  ]
+}
