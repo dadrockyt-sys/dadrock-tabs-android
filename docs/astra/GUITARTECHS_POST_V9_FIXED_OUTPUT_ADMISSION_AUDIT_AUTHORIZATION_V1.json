@@ -1,0 +1,42 @@
+{
+  "schema": "astra-guitar-techs-post-v9-fixed-output-admission-audit-authorization-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "userApproval": "I authorize",
+  "context": "Approval in direct response to the assistant's request for a single CPU-only zero-optimizer V9-versus-V8 P1/P2 development input/model forward-pass diagnostic, capped at 120 minutes with no threshold/checkpoint search.",
+  "approved": {
+    "singleBoundedStudy": true,
+    "data": "existing frozen 256 P1/P2 captures and their reference labels",
+    "exactModelArtifacts": {
+      "v9P1": 11516113677,
+      "v9P2": 11572256759,
+      "v8P1": 11336573510,
+      "v8P2": 11374640369
+    },
+    "output": "per-capture and aggregate admission/metric summaries without raw audio, refs, activations, or model redistribution",
+    "maxOptimizerSteps": 0,
+    "CPUOnly": true,
+    "nonPaidRunnerOnly": true,
+    "maxRunnerMinutes": 120,
+    "maxCaptureModelEvaluations": 512,
+    "checkpointChanges": false,
+    "thresholdChanges": false,
+    "seedSearch": false,
+    "p3": false,
+    "protectedSong": false,
+    "stageBHoldout": false,
+    "paidCompute": false,
+    "production": false,
+    "main": false
+  },
+  "executionRules": [
+    "freeze source/hashes before starting",
+    "run pinned zero-media fixtures before any media access",
+    "verify download artifact ZIP digest and model SHA-256 before loading weights",
+    "accept only exact eight checked Zenodo archive identities for P1/P2",
+    "fail closed on missing artifact, missing manifest key, counter mismatch, invalid probability or frozen metric non-reproduction",
+    "one allowed launch and no automatic rerun",
+    "record audit run/job/artifact IDs and result SHA, or explicit blocker on failure",
+    "do not train, tune or rescue V9"
+  ]
+}
