@@ -1,0 +1,88 @@
+name: Guitar-TECHS H1 paired-loss pilot offline preflight V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_PREFLIGHT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+      - name: Enforce H1 preflight authorization, scientific boundaries, pinned blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,subprocess
+          spec=json.load(open('docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_PREFLIGHT_LAUNCH_V1.json'))
+          assert spec['schema']=='astra-guitartechs-h1-20epoch-paired-preflight-launch-v1'
+          assert spec['authorizedBy']=='I authorize'
+          assert spec['singleRun'] is True
+          a=json.load(open(spec['authorizationReceipt']))
+          assert a['schema']=='astra-guitartechs-h1-paired-loss-normalization-pilot-authorization-v1'
+          assert a['budget']['maxOptimizerStepsTotal']==160
+          assert a['science']['requireOriginalControlReproduction'] is True
+          assert spec['scope']=={'realData':False,'optimizerSteps':0,'paidCompute':False}
+          for path,sha in spec['sourceBlobs'].items():
+            actual=subprocess.check_output(['git','hash-object',path],text=True).strip()
+            assert actual==sha,(path,actual,sha)
+          frozen=json.load(open('docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json'))
+          assert frozen['frozenAdvancementGate']['result']=='FAIL'
+          PY
+          echo 'H1_PILOT_AUTHORIZED_OFFLINE_ONLY=true'
+      - name: Install immutable CPU runtime for frozen TabCNN
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import torch
+          assert torch.__version__=='1.11.0+cpu'
+          assert not torch.cuda.is_available()
+          PY
+      - name: Fetch four exact upstream model sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          for path in models/common.py models/tabcnn.py tools/instrument.py tools/constants.py; do
+            curl --fail --location --retry 4 --retry-all-errors -o "$root/$path" "$base/$path"
+          done
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+      - name: Test exact prospective two-arm objective and parameter gradients without media
+        env:
+          PYTHONPATH: astra_backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py \
+            --source-root /tmp/tabcnn-source --offline-test
+          echo 'H1_REAL_DATA_ACCESSED=false'
+          echo 'H1_OPTIMIZER_STEPS_EXECUTED=0'
+      - name: Purge synthetic source
+        if: always()
+        run: |
+          rm -rf /tmp/tabcnn-source
+          echo 'H1_REAL_DATA_ACCESSED=false'
