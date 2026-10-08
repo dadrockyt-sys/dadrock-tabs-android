@@ -138,6 +138,22 @@ class ScalarProgress:
         self.payload["phase"] = "control_verified"
         self.save()
 
+    def arm_result(self, fold, arm, state_sha, f1, predicted_events, admissions):
+        if not isinstance(f1, (int, float)) or not math.isfinite(f1):
+            raise RuntimeError("H1_NONFINITE_ARM_RECEIPT")
+        if any(type(value) is not int or value < 0 for value in (predicted_events, admissions)):
+            raise RuntimeError("H1_INVALID_ARM_RECEIPT_COUNTS")
+        key = fold + "|" + arm
+        records = self.payload.setdefault("armResults", {})
+        if key in records:
+            raise RuntimeError("H1_DUPLICATE_ARM_RESULT")
+        records[key] = {
+            "stateSha256": state_sha, "macroF1": f1,
+            "predictedEvents": predicted_events, "activeRunsAfterPrune": admissions
+        }
+        self.payload["phase"] = "arm_evaluated"
+        self.save()
+
     def phase(self, name):
         self.payload["phase"] = name
         self.save()
