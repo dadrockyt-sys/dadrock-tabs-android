@@ -1,0 +1,204 @@
+name: Guitar-TECHS post-V9 fixed admission audit V1 (authorized CPU-only)
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: guitar-techs-post-v9-fixed-admission-audit-v1
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    if: github.ref == 'refs/heads/astra-work'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout authorized exact source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Fail closed on study scope, receipt and source hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          x=json.load(open('docs/astra/GUITARTECHS_POST_V9_FIXED_OUTPUT_ADMISSION_AUDIT_LAUNCH_V1.json'))
+          assert x['schema']=='astra-guitar-techs-post-v9-fixed-output-admission-audit-launch-v1'
+          assert x['authorization']['userText']=='I authorize'
+          assert x['authorization']['scope']=='single bounded CPU-only P1/P2 real-data forward-pass audit with zero training'
+          assert x['singleLaunch'] is True
+          assert x['limits']=={'maxRunnerMinutes':120,'maxCaptureModelPasses':512,'optimizerSteps':0,'paidCompute':False}
+          assert x['population']=={'P1':136,'P2':120}
+          assert x['guards']=={'p3':False,'protectedSong':False,'stageBHoldout':False,'thresholdTuning':False,'production':False,'main':False}
+          for path,expected in x['sourceBlobs'].items():
+              actual=subprocess.check_output(['git','hash-object',path],text=True).strip()
+              assert actual==expected,(path,actual,expected)
+          frozen_v9=json.load(open('docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json'))
+          frozen_v8=json.load(open('docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json'))
+          assert frozen_v9['frozenAdvancementGate']['result']=='FAIL'
+          assert frozen_v9['aggregate']['macroF1']==0.
+          assert frozen_v8['aggregate']['macroF1']==.24680584415601026
+          PY
+          echo "POST_V9_AUDIT_AUTHORIZATION=true"
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+
+      - name: Install pinned CPU-only scientific runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg unzip
+
+      - name: Fetch pinned upstream TabCNN source and verify Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          for path in models/common.py models/tabcnn.py tools/instrument.py tools/constants.py; do
+            curl --fail --location --retry 3 --retry-all-errors -o "$root/$path" "$base/$path"
+          done
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+
+      - name: Run model-free admission fixtures before any model or real media
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v9/verify_post_v9_output_admission_v1.py
+
+      - name: Download and byte-verify four exactly frozen model artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/v9-p1 /tmp/v9-p2 /tmp/v8-p1 /tmp/v8-p2
+          while IFS=$' ' read -r label id archive_sha model_sha; do
+            archive="/tmp/${label}.zip"
+            curl --fail --location --retry 3 --retry-all-errors --retry-delay 5 \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2022-11-28' \
+              -o "$archive" \
+              "https://api.github.com/repos/dadrockyt-sys/dadrock-tabs-android/actions/artifacts/$id/zip"
+            test "$(sha256sum "$archive" | awk '{print $1}')" = "$archive_sha"
+            unzip -q "$archive" -d "/tmp/$label"
+            test "$(sha256sum "/tmp/$label/model.pt" | awk '{print $1}')" = "$model_sha"
+            rm -f "$archive"
+            echo "VERIFIED_FROZEN_MODEL=${label} artifact=${id}"
+          done <<'EOF'
+          v9-p1 11516113677 736c97506cb1bfe74838e13f50a9f97920e42b86b6fec3e0993ee44ebd3713cf a62cb31bcfaa238965e0f79934a00c430c0b8723a4d51168104ddea5e4a0f90c
+          v9-p2 11572256759 8c0f46df0804d9b29263a5de0716c0868750c65a24f5f6d2765f46bd154fea21 6bb66bebb074f5b26ccaefd2ed2322eefed9381998f7cce81246f4ab5af40452
+          v8-p1 11336573510 9a896b13b91b5bdf9d9de712afd60fa7cecf3239bacc10243abd1551a288c3c6 072fb49ac8112d65df2d11a0110535d675cafc4b9c04631fd2d0a9eeafcd0763
+          v8-p2 11374640369 0d40017cd02a4f56d1346bdec69b691b4e8e8903d40c164151af2f46055d0f6c 566a4f2d7e4d97e0b93ffe1662b921d8e0e75066540a8a5f1e683f5a6498d596
+          EOF
+
+      - name: Acquire and byte-verify original P1/P2 development archives only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/prepared /tmp/extract
+          : > /tmp/prepared/manifest.jsonl
+          while IFS=$' ' read -r file bytes md5 sha performer category; do
+            rm -rf /tmp/extract/*
+            download_ok=0
+            for url in \
+              "https://zenodo.org/api/records/14963133/files/$file/content" \
+              "https://zenodo.org/records/14963133/files/$file?download=1"; do
+              for attempt in 1 2 3 4 5; do
+                rm -f "/tmp/$file.part"
+                if curl --fail --location --connect-timeout 30 --max-time 1800 \
+                  --retry 2 --retry-all-errors --retry-delay 5 \
+                  --user-agent 'Astra-Guitar-TECHS-PostV9-Fixed-Output-Audit/1.0' \
+                  -o "/tmp/$file.part" "$url"; then
+                  mv "/tmp/$file.part" "/tmp/$file"
+                  download_ok=1
+                  break 2
+                fi
+                sleep "$((attempt * 15))"
+              done
+            done
+            test "$download_ok" = '1'
+            test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
+            test "$(md5sum "/tmp/$file" | awk '{print $1}')" = "$md5"
+            test "$(sha256sum "/tmp/$file" | awk '{print $1}')" = "$sha"
+            unzip -q "/tmp/$file" -d /tmp/extract
+            rm -f "/tmp/$file"
+            python astra_backend/guitartechs_real_training/real_training.py prepare-archive \
+              --root /tmp/extract --archive "$file" --performer "$performer" --category "$category" \
+              --corrections docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json \
+              --output-dir /tmp/prepared --manifest /tmp/prepared/manifest.jsonl
+            rm -rf /tmp/extract/*
+          done <<'EOF'
+          P1_chords.zip 981741162 be9ef8bbdceb1912d565254e607a6d94 de4aa76ef4b86ce981496161b741dc39bd22dec5250da351e5e68a44da249326 P1 chords
+          P1_scales.zip 453349723 9c0b98e8fb42a522df727ea8bf545e4f 79d7e9d148820867a9095697c9521e40a4b11c198384edfce1951de7219b3509 P1 scales
+          P1_singlenotes.zip 108626613 ca0c4674dde3805574685a313f7c39eb 130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4 P1 singlenotes
+          P1_techniques.zip 326280863 18634a41a6db5a8de10d07eb3122a872 1e4b80a464182d345e129f3e1158b6c05690c60b5f9be4bde3fb26f23263236e P1 techniques
+          P2_chords.zip 1150819056 eb6f74dd19162237189281688ad7ad2e 9d4a46261cc840d6a66412ad0ebffcfba1fbce579bec0205127190b7bd7a4bce P2 chords
+          P2_scales.zip 471254783 96664853872f51e5f8aa4447313b7cf5 d5efc7134764bd8124a712fd301d020d143a6e589eb8e1f2e0ddcbf94524ff17 P2 scales
+          P2_singlenotes.zip 116133457 40fbf03d8b04bb2cf42df20f36dc2254 d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9 P2 singlenotes
+          P2_techniques.zip 395839610 f4189251ce50be25f06a173b2c2bba00 05fc065c010add9e5348095d7198fdc45b967c657e3e12ef8afdb74808371816 P2 techniques
+          EOF
+          test "$(wc -l < /tmp/prepared/manifest.jsonl)" = '256'
+          echo "GUITAR_TECHS_P3_OPENED=false"
+
+      - name: Execute one frozen CPU-only output admission audit
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py \
+            --source-root /tmp/tabcnn-source \
+            --manifest /tmp/prepared/manifest.jsonl \
+            --data-dir /tmp/prepared \
+            --v9-p1 /tmp/v9-p1/model.pt --v9-p2 /tmp/v9-p2/model.pt \
+            --v8-p1 /tmp/v8-p1/model.pt --v8-p2 /tmp/v8-p2/model.pt \
+            --alignment docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json \
+            --v8-receipt docs/astra/GUITARTECHS_V8_ZERO_OPTIMIZER_EVALUATION_RESULT_V1.json \
+            --v9-receipt docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json \
+            --out /tmp/post-v9-admission-audit-v1.json
+          test -s /tmp/post-v9-admission-audit-v1.json
+          echo "POST_V9_AUDIT_RESULT_SHA256=$(sha256sum /tmp/post-v9-admission-audit-v1.json | awk '{print $1}')"
+
+      - name: Upload frozen summarized evidence (no media, weights or raw logits)
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-post-v9-fixed-output-admission-v1
+          path: /tmp/post-v9-admission-audit-v1.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Purge prepared data, models and pinned source
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/v9-p1 /tmp/v9-p2 /tmp/v8-p1 /tmp/v8-p2 /tmp/P1_*.zip /tmp/P2_*.zip
+          echo "OPTIMIZER_STEPS_EXECUTED=0"
+          echo "GUITAR_TECHS_P3_OPENED=false"
+          echo "CUSTOMER_DELIVERY_ELIGIBLE=false"
