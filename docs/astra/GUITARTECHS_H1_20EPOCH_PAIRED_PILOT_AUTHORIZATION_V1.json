@@ -1,0 +1,60 @@
+{
+  "schema": "astra-guitartechs-h1-paired-loss-normalization-pilot-authorization-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "userAuthorization": {
+    "verbatim": "I authorize",
+    "context": "Explicit response to proposed real-data original-V9 0.10 batchmean-KL versus per-position-normalized KL objective comparison keeping augmentation and other training settings fixed; authorizes a separately preregistered bounded P1/P2 development experiment, not V10 full production training.",
+    "narrowInterpretation": "20-epoch, two-arm, two-fold development-only pilot under fixed ceiling; separately frozen no-media preflight before launch."
+  },
+  "budget": {
+    "folds": [
+      "P1 train / P2 validate",
+      "P2 train / P1 validate"
+    ],
+    "armOrder": [
+      "original_batchmean",
+      "per_position_normalized"
+    ],
+    "epochsPerArmPerFold": 20,
+    "optimizerStepsPerArmPerFold": 40,
+    "maxOptimizerStepsTotal": 160,
+    "maxTrainingRunnerMinutes": 300,
+    "runner": "GitHub hosted Ubuntu CPU public-repository runner",
+    "noPaidCompute": true,
+    "preflightRunnerMinutes": 25,
+    "oneTrainingLaunch": true,
+    "noRerun": true
+  },
+  "science": {
+    "candidateId": "astra_guitartechs_h1_perposition_kl_pilot_v1",
+    "seed": 20260921,
+    "initializationSameWithinFold": true,
+    "model": "frozen TemporalTabCNNV9 architecture",
+    "data": "exact accepted 256 capture P1/P2 development population (136 P1 and 120 P2)",
+    "originalLoss": "0.5 * supervised_a + 0.5 * supervised_b + 0.10 * symmetric_kl_batchmean",
+    "onlyTreatment": "divide original weighted KL by 200 frames * 6 strings, leaving all views, dropout, sampler, optimizer and labels unchanged",
+    "originalFrozenEpoch20StateSha256": {
+      "P1trainP2validate": "933c5faedafa4b3ddfb37e0ad87cef639294a99ff29acd6d581f622ed64a966e",
+      "P2trainP1validate": "56b275d79426f5dd14641c0f3ffd802491734dd4f2ec9110a75616b861588a01"
+    },
+    "requireOriginalControlReproduction": true,
+    "fullFoldValidationAtEpoch20": true,
+    "decoder": "V8 frozen",
+    "noCheckpointOrSeedSelection": true,
+    "noThresholdSweep": true,
+    "onlyTelemetryArtifact": true
+  },
+  "guards": {
+    "p3": false,
+    "protectedSong": false,
+    "stageBHoldout": false,
+    "paidCompute": false,
+    "thirdPartyContact": false,
+    "production": false,
+    "main": false,
+    "publishWeights": false,
+    "automaticV10Progression": false
+  },
+  "stopRule": "First offline preflight must be green before any P1/P2 data. If original baseline sha/F1/zero event does not reproduce, fail closed without scientific interpretation or rerun. At 20 epochs freeze pilot and do not infer full 1000-epoch advancement, product readiness, or V9 rescue. No second launch without fresh approval."
+}
