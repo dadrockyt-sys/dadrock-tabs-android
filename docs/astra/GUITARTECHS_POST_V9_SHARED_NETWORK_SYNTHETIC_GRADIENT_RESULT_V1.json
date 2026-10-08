@@ -1,0 +1,107 @@
+{
+  "schema": "astra-post-v9-shared-network-synthetic-gradient-result-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "status": "SYNTHETIC_SHARED_PARAMETER_GRADIENT_STUDY_PASS",
+  "v9ScientificGate": "FAIL_UNCHANGED",
+  "causalRealTrainingMechanismProven": false,
+  "run": {
+    "id": 37851005111,
+    "jobId": 113563597750,
+    "attempt": 1,
+    "launchCommit": "64d654f4a2e3f50396290cd1f8ac32d770b903c0",
+    "conclusion": "success",
+    "startedUtc": "2026-10-08T22:03:30Z",
+    "updatedUtc": "2026-10-08T22:04:42Z",
+    "allStepsPassed": true,
+    "artifact": {
+      "id": 11581379212,
+      "name": "guitar-techs-post-v9-synthetic-shared-network-gradient-v1",
+      "archiveSha256": "15d0ff596ea6d2577c47c0bb65ae87a27a6c4bfbcc2c9598ab446c813c98f9cd",
+      "archiveSha256IndependentlyVerified": true,
+      "jsonName": "post-v9-synthetic-shared-network-gradient-v1.json",
+      "jsonSha256": "d6825e128c84c1742c082774138250431c5749ebd9300713d16e7d21794e9356",
+      "jsonSha256IndependentlyVerified": true
+    }
+  },
+  "scope": {
+    "syntheticOnly": true,
+    "optimizerSteps": 0,
+    "paidCompute": false,
+    "trainedCheckpointAccess": false,
+    "realDataAccess": false,
+    "modelWeightsModified": false,
+    "modelWeightsSaved": false,
+    "p3Opened": false,
+    "protectedSongUsed": false,
+    "stageBHoldoutUsed": false,
+    "productionOrMainModified": false
+  },
+  "model": {
+    "family": "frozen TemporalTabCNNV9 randomly initialized",
+    "syntheticInitSeed": 20261008,
+    "syntheticInitSha256": "517ac913cfa6192d1421fab032d7f71985f8318ce35fdfd4eb6298f40ab88eea",
+    "B": 1,
+    "T": 200,
+    "S": 6,
+    "C": 21,
+    "contentWeight": 1.125,
+    "originalConsistencyWeight": 0.1,
+    "batchmeanToPerPositionFactor": 1200
+  },
+  "scenarios": {
+    "evalIdentical": {
+      "supervised": 4.1639580726623535,
+      "weightedKL": 0,
+      "overallKLToSupervisedParameterGradientRatio": 0,
+      "acousticRatio": 0,
+      "temporalRatio": 0
+    },
+    "trainIdenticalDropout": {
+      "supervised": 4.167218208312988,
+      "weightedKL": 0.20560279488563538,
+      "overallKLToSupervisedParameterGradientRatio": 1.3734957415357751,
+      "acousticRatio": 1.6622658028508592,
+      "temporalRatio": 1.859674500051173
+    },
+    "trainAugmentedDropout": {
+      "supervised": 4.163703441619873,
+      "weightedKL": 0.19882826507091522,
+      "perPositionKL": 0.001656902233759562,
+      "overallKLToSupervisedParameterGradientRatio": 1.3259357465019215,
+      "groupRatios": {
+        "conv": 1.4485,
+        "acoustic": 1.6113330973290725,
+        "temporal": 1.7780148242344553,
+        "routing": 1.7924,
+        "state_head": 0.2449,
+        "activity_head": 0.1522,
+        "event_head": 0.1531,
+        "onset_head": 1.4401,
+        "pitch_head": 1.3471
+      },
+      "normalizedWeightedKLCounterfactual": 0.00016569022089242934
+    }
+  },
+  "controls": {
+    "identicalEvalZeroKLAndGradients": true,
+    "modelStateUnchanged": true,
+    "supervisedComponentReconstructionPassed": true,
+    "selectedFourModelParameterGradientAdditivityPassed": true,
+    "originalTrainingModeDropoutOnlyShowsNonzeroKL": true
+  },
+  "limits": [
+    "randomly initialized untrained network",
+    "synthetic source only",
+    "different fixed dropout RNG draws between training scenarios, so augmented-minus-dropout difference is not an isolated augmentation effect",
+    "original V9 training causal mechanism unproven",
+    "normalized KL is a mathematical counterfactual, not a trained candidate"
+  ],
+  "authorization": {
+    "userText": "Launch the study",
+    "singleRunConsumed": true,
+    "rerunAuthorized": false,
+    "newTrainingAuthorized": false
+  },
+  "nextBoundary": "Prospectively design one-factor H1 original vs per-position normalized consistency training protocol with separate real-data/optimizer authorization; leave H2 augmentation changes separate"
+}
