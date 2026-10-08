@@ -1,0 +1,136 @@
+name: Guitar-TECHS post-V9 synthetic shared-network gradients V1
+
+on:
+  push:
+    branches: [astra-work]
+    paths:
+      - 'docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_LAUNCH_V1.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guitar-techs-post-v9-synthetic-shared-gradient-v1
+  cancel-in-progress: false
+
+jobs:
+  gradient_audit:
+    if: github.ref == 'refs/heads/astra-work'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exactly authorized dispatch revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Prepare frozen Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.15'
+
+      - name: Enforce one-use synthetic scope and source identity before computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          launch=json.load(open('docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_LAUNCH_V1.json'))
+          assert launch['schema']=='astra-post-v9-shared-network-synthetic-gradient-launch-v1'
+          assert launch['singleUse'] is True
+          assert launch['authorization']['userText']=='Launch the study'
+          auth=json.load(open(launch['authorization']['receipt']))
+          assert auth['schema']=='astra-post-v9-shared-network-synthetic-gradient-authorization-v1'
+          assert auth['authorization']['userText']=='Launch the study'
+          assert launch['limits']=={'runnerMinutes':20,'cpuOnly':True,'optimizerSteps':0,'realData':False,'checkpointAccess':False,'paidCompute':False}
+          assert launch['fixedFixture']=={'seed':20261008,'B':1,'T':200,'S':6,'C':21,'scenarios':['eval_identical_zero_kl_control','train_identical_dropout_only','train_original_paired_augmentation']}
+          assert launch['forbidden']=={'p3':True,'protectedSong':True,'stageBHoldout':True,'training':True,'thresholdSearch':True,'production':True,'main':True}
+          for path,expected in launch['sourceBlobs'].items():
+              actual=subprocess.check_output(['git','hash-object',path],text=True).strip()
+              assert actual==expected,(path,expected,actual)
+          frozen=json.load(open('docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json'))
+          assert frozen['frozenAdvancementGate']['result']=='FAIL'
+          assert frozen['aggregate']['macroF1']==0.0
+          PY
+          echo 'SHARED_GRADIENT_SCOPE_PASS'
+          echo 'REAL_DATA_ACCESS=false'
+          echo 'OPTIMIZER_STEPS_EXECUTED=0'
+
+      - name: Install exact frozen CPU runtime for upstream GuitarProfile
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'pip==24.0'
+          python -m pip install --disable-pip-version-check --extra-index-url https://download.pytorch.org/whl/cpu --requirement astra_backend/tabcnn_runtime/requirements.lock.txt
+          python -m pip check
+          python - <<'PY'
+          import torch, numpy, librosa
+          assert torch.__version__ == '1.11.0+cpu', torch.__version__
+          assert numpy.__version__ == '1.21.6', numpy.__version__
+          assert librosa.__version__ == '0.9.1', librosa.__version__
+          assert torch.cuda.is_available() is False
+          print('SHARED_GRADIENT_PINNED_CPU_RUNTIME_PASS')
+          PY
+
+      - name: Download and SHA-verify only four pinned upstream source files
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/post-v9-tabcnn-source/amt_tools
+          mkdir -p "$root/models" "$root/tools"
+          : > "$root/__init__.py"
+          : > "$root/models/__init__.py"
+          printf 'from .constants import *\nfrom .instrument import *\n' > "$root/tools/__init__.py"
+          base='https://raw.githubusercontent.com/robust-guitar-tabs/code/f50309ad06dc734ddae5e3a0eda756fca221e2e7/AMT-Tools/amt_tools'
+          for path in models/common.py models/tabcnn.py tools/instrument.py tools/constants.py; do
+            curl --fail --location --retry 4 --retry-all-errors -o "$root/$path" "$base/$path"
+          done
+          test "$(git hash-object "$root/models/common.py")" = '84beb4cf251b9cb9274d10cf203318314181af31'
+          test "$(git hash-object "$root/models/tabcnn.py")" = 'e09856db2fffd77642e005ab509846acc894b886'
+          test "$(git hash-object "$root/tools/instrument.py")" = 'eddc48a8b95de057035cd11ea2d1951e754ef349'
+          test "$(git hash-object "$root/tools/constants.py")" = '79666ea0c5b0214ca664da454069b8d286cc5c18'
+          echo 'SHARED_GRADIENT_FROZEN_UPSTREAM_PASS'
+
+      - name: Evaluate no-media shared-network parameter gradients once
+        shell: bash
+        env:
+          PYTHONPATH: astra_backend
+        run: |
+          set -euo pipefail
+          python astra_backend/guitartechs_training_v9/verify_post_v9_shared_parameter_gradient_v1.py \
+            --source-root /tmp/post-v9-tabcnn-source \
+            --out /tmp/post-v9-synthetic-shared-network-gradient-v1.json
+          test -s /tmp/post-v9-synthetic-shared-network-gradient-v1.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/post-v9-synthetic-shared-network-gradient-v1.json'))
+          assert r['schema']=='astra-guitar-techs-post-v9-synthetic-shared-network-gradient-audit-v1'
+          assert r['optimizerSteps']==0
+          assert r['batchmeanToPerPositionFactor']==1200
+          assert [x['name'] for x in r['scenarios']]==[
+              'eval_identical_zero_kl_control',
+              'train_identical_dropout_only',
+              'train_original_paired_augmentation']
+          assert all(x['gradientAdditivityFourSelectedParametersPassed'] for x in r['scenarios'])
+          assert not any((r['guards']['mediaAccess'],r['guards']['realLabels'],
+                          r['guards']['checkpointsOpened'],r['guards']['weightsModified'],
+                          r['guards']['weightsExported'],r['guards']['paidComputeUsed']))
+          PY
+          echo "SHARED_GRADIENT_JSON_SHA256=$(sha256sum /tmp/post-v9-synthetic-shared-network-gradient-v1.json | awk '{print $1}')"
+          echo 'OPTIMIZER_STEPS_EXECUTED=0'
+
+      - name: Upload scalar-only study evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-post-v9-synthetic-shared-network-gradient-v1
+          path: /tmp/post-v9-synthetic-shared-network-gradient-v1.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Purge synthetic output and upstream source
+        if: always()
+        shell: bash
+        run: |
+          rm -rf /tmp/post-v9-tabcnn-source /tmp/post-v9-synthetic-shared-network-gradient-v1.json
+          echo 'NO_MEDIA_OR_MODEL_CHECKPOINTS=true'
+          echo 'OPTIMIZER_STEPS_EXECUTED=0'
