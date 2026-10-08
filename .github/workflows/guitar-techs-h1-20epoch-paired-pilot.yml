@@ -34,7 +34,8 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json,subprocess
+          import json,os,subprocess
+          assert os.environ.get('GITHUB_RUN_ATTEMPT')=='1', 'reruns are not authorized'
           x=json.load(open('docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json'))
           assert x['schema']=='astra-guitartechs-h1-20epoch-paired-training-launch-v1'
           assert x['singleUse'] is True
@@ -47,6 +48,26 @@ jobs:
           assert a['schema']=='astra-guitartechs-h1-paired-loss-normalization-pilot-authorization-v1'
           assert a['userAuthorization']['verbatim']=='I authorize'
           assert a['budget']['maxOptimizerStepsTotal']==160
+          required={
+            'astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py',
+            'astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py',
+            'astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py',
+            'astra_backend/guitartechs_training_v9/train_v9_resumable.py',
+            'astra_backend/guitartechs_training_v9/paired_view.py',
+            'astra_backend/guitartechs_training_v9/model.py',
+            'astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py',
+            'astra_backend/guitartechs_training_v7/objective_decoder.py',
+            'astra_backend/guitartechs_training_v2/train_v2.py',
+            'astra_backend/guitartechs_training_v2/sampling.py',
+            'astra_backend/guitartechs_real_training/real_training.py',
+            'astra_backend/guitartechs_training_v8/decoder.py',
+            'docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json',
+            'docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_PROTOCOL_V1.md',
+            'docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_AUTHORIZATION_V1.json',
+            'astra_backend/tabcnn_runtime/requirements.lock.txt',
+            '.github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml',
+          }
+          assert set(x['sourceBlobs'])==required, 'incomplete or extra H1 source identities'
           for path,expected in x['sourceBlobs'].items():
               got=subprocess.check_output(['git','hash-object',path],text=True).strip()
               assert got==expected,(path,got,expected)
@@ -186,22 +207,27 @@ jobs:
             assert set(fold)=={'original_batchmean','per_position_normalized'}
             assert fold['original_batchmean']['matchesFrozenOriginalEpoch20'] is True
             assert fold['original_batchmean']['validation']['totals']['predictedEvents']==0
+            assert fold['original_batchmean']['validation']['totals']['activeRunsAfterPrune']==0
+            assert fold['original_batchmean']['validation']['metrics']['f1']==0
           PY
           echo "H1_PILOT_RECEIPT_SHA256=$(sha256sum /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json | awk '{print $1}')"
           echo 'GUITAR_TECHS_P3_OPENED=false'
 
-      - name: Upload development scalar-only fixed pilot evidence (never weights or media)
+      - name: Upload bounded scalar receipts including partial failure evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: guitartechs-h1-20epoch-two-arm-two-fold-pilot-v1
-          path: /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+          path: |
+            /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+            /tmp/guitartechs-h1-20epoch-paired-pilot-v1.progress.json
           retention-days: 30
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Purge model memory, prepared development data and source
         if: always()
         shell: bash
         run: |
-          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/P1_*.zip /tmp/P2_*.zip /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json
+          rm -rf /tmp/prepared /tmp/extract /tmp/tabcnn-source /tmp/P1_*.zip /tmp/P2_*.zip /tmp/P1_*.zip.part /tmp/P2_*.zip.part /tmp/guitartechs-h1-20epoch-paired-pilot-v1.json /tmp/guitartechs-h1-20epoch-paired-pilot-v1.progress.json /tmp/guitartechs-h1-20epoch-paired-pilot-v1.progress.json.tmp
           echo 'GUITAR_TECHS_P3_OPENED=false'
           echo 'CUSTOMER_DELIVERY_ELIGIBLE=false'
