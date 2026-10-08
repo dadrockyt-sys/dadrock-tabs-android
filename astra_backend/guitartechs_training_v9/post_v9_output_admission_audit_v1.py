@@ -51,11 +51,9 @@ def model_load(path, fold, version, source_root):
     expected_hash, expected_state, epoch = MODELS[fold][version]
     if sha256_file(path) != expected_hash:
         raise RuntimeError("frozen model file SHA-256 mismatch")
-    # Only exact, previously verified development checkpoints are deserialized.
-    try:
-        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
-    except TypeError as ex:
-        raise RuntimeError("weights_only torch.load required; refusing unsafe fallback") from ex
+    # torch 1.11 CPU is frozen; it predates weights_only. Only the exact
+    # allowlisted file, hash-verified *before* deserialization, is loaded.
+    checkpoint = torch.load(path, map_location="cpu")
     candidate = {
         "v8": "astra_guitartechs_tabcnn_v7_ranked_event_transition",
         "v9": "astra_guitartechs_v9_paired_view_consistency",
