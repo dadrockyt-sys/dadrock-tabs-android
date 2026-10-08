@@ -1,0 +1,67 @@
+{
+  "schema": "astra-post-v9-shared-network-synthetic-gradient-launch-v1",
+  "date": "2026-10-08",
+  "branch": "astra-work",
+  "singleUse": true,
+  "authorization": {
+    "userText": "Launch the study",
+    "receipt": "docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_AUTHORIZATION_V1.json",
+    "scope": "prospective Stage 1 exact-V9 randomly initialized shared-network synthetic parameter-gradient audit; no training"
+  },
+  "limits": {
+    "runnerMinutes": 20,
+    "cpuOnly": true,
+    "optimizerSteps": 0,
+    "realData": false,
+    "checkpointAccess": false,
+    "paidCompute": false
+  },
+  "fixedFixture": {
+    "seed": 20261008,
+    "B": 1,
+    "T": 200,
+    "S": 6,
+    "C": 21,
+    "scenarios": [
+      "eval_identical_zero_kl_control",
+      "train_identical_dropout_only",
+      "train_original_paired_augmentation"
+    ]
+  },
+  "forbidden": {
+    "p3": true,
+    "protectedSong": true,
+    "stageBHoldout": true,
+    "training": true,
+    "thresholdSearch": true,
+    "production": true,
+    "main": true
+  },
+  "sourceBlobs": {
+    "astra_backend/guitartechs_training_v9/verify_post_v9_shared_parameter_gradient_v1.py": "bb904a2bbd67139574ce41bdb78628316a208365",
+    ".github/workflows/guitar-techs-post-v9-synthetic-shared-network-gradient-v1.yml": "da40cf4fe6f59e775b82ce0c8b512dd5d84d0fb9",
+    "docs/astra/GUITARTECHS_POST_V9_SHARED_NETWORK_SYNTHETIC_GRADIENT_AUTHORIZATION_V1.json": "9a0373ecd8c5774c56b86989b0b639d7f25d6ce1",
+    "docs/astra/GUITARTECHS_POST_V9_PROSPECTIVE_CAUSAL_STUDY_CONTRACT_V1.md": "1e7c70a55ef9a52e0a2348dc6ac90e7ff5350926",
+    "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
+    "astra_backend/guitartechs_training_v7/model.py": "cdb80274494782fc42774f3dd5c6859e9beb97d3",
+    "astra_backend/guitartechs_training_v6/model.py": "78a17dd174bd86e804af0e9c75056055d6048295",
+    "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+    "astra_backend/guitartechs_training_v7/objective_decoder.py": "7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
+    "astra_backend/guitartechs_training_v9/verify_post_v9_synthetic_objective_audit_v1.py": "a35de5fe648a37a8672442698cbdcd42d48f0180",
+    "astra_backend/tabcnn_runtime/requirements.lock.txt": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json": "41a251f1a4450b3703ed2bfa81078c55cddd4109"
+  },
+  "upstream": {
+    "repository": "robust-guitar-tabs/code",
+    "revision": "f50309ad06dc734ddae5e3a0eda756fca221e2e7",
+    "approvedBlobChecks": [
+      "84beb4cf251b9cb9274d10cf203318314181af31",
+      "e09856db2fffd77642e005ab509846acc894b886",
+      "eddc48a8b95de057035cd11ea2d1951e754ef349",
+      "79666ea0c5b0214ca664da454069b8d286cc5c18"
+    ]
+  },
+  "successDefinition": "Original losses and fixed no-media gradients recorded per true V9 model parameter group, all source and no-mutation guards pass; neither V9 scientific pass nor historical causation is implied.",
+  "stopRule": "Do not rerun on failure or select a new seed. Record exact blocker and request an explicit new decision before any future experiment.",
+  "workflowPath": ".github/workflows/guitar-techs-post-v9-synthetic-shared-network-gradient-v1.yml"
+}
