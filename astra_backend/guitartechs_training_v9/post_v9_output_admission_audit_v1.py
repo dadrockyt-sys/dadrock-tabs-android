@@ -276,7 +276,7 @@ def main():
             raise RuntimeError("invalid fold count")
         result["folds"][fold] = {}
         for version in ("v9", "v8"):
-            location = getattr(args, version+"-"+("p1" if fold.startswith("p1-") else "p2"))
+            location = getattr(args, version+"_"+("p1" if fold.startswith("p1-") else "p2"))
             model = model_load(location, fold, version, args.source_root)
             captures = []
             for row in subset:
