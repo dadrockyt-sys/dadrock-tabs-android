@@ -62,6 +62,7 @@ jobs:
           required={
             'astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py',
             'astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py',
+            'astra_backend/guitartechs_training_v10/h1_prepared_array_guard_v1.py',
             'astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py',
             'astra_backend/guitartechs_training_v9/train_v9_resumable.py',
             'astra_backend/guitartechs_training_v9/paired_view.py',
