@@ -6,7 +6,7 @@
   "source": "GitHub fetch_file reported blob SHAs",
   "sourceAnchor": "docs/astra/GUITARTECHS_H1_OFFLINE_PREPARATION_PHASE2_V1.md",
   "requiredLiveWorkflowSources": {
-    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "4fb88dc9eeebb62cbd13ac160d5e4536bd855f7e",
+    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "c3d517ffe94365d94f0f162db0e62257851af675",
     "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
     "astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py": "2bf8085b6cd69214d5e2ec198d80c40b35d13875",
     "astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py": "fd6a739c095fdc3e48d5305a36edf36bb3f00255",
@@ -29,11 +29,12 @@
     "docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json": "9090d465422ebf5d4fdf170693fe0936934f3073"
   },
   "additionalOfflineTestAndBudgetSources": {
-    "astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py": "9c3ef85aec7c69b7a8a941acd39a790bb013a14b",
+    "astra_backend/guitartechs_training_v10/h1_full_model_synthetic_parity_v1.py": "dad8248a8b6c195b4708d8faa6457b2f48ae964f",
+    "astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py": "7bee3307003a092dbb2ed234af01c931fee1d773",
     "astra_backend/guitartechs_training_v10/h1_source_lock_audit_v1.py": "822214e47e5ed5bbd577fa59a152eafa7c575047",
     "astra_backend/guitartechs_training_v10/h1_static_import_closure_v1.py": "e5aa04aa395feb76254d7a383558e1bca2ac2f5c",
     "astra_backend/guitartechs_training_v10/test_h1_core_failclosed_v1.py": "aa14e55393eb51a20143a75f964bae438ed813f1",
-    "astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py": "09840b703d237de749a1e39458ad4c16f910b474",
+    "astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py": "d652cfc5318e1d2aeaf24b1ed0b9ddfb1f96d594",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py": "61258dc26a5387d3e65fecb3afda73841e5b0f27",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_readiness_v1.py": "6df5a4291a0eb0844053080f352149265838f7e7",
     "astra_backend/guitartechs_training_v10/test_h1_real_v7_objective_parity_v1.py": "8868ea56f1da130ff4a479056fe65fcaa388162c",
@@ -43,5 +44,5 @@
   },
   "externalDependencies": "Upstream pinned TabCNN four source Git blobs, Python package/environment/hardware identity must be independently audited; this lock does not cover them.",
   "limitation": "This map mirrors inspected current files and is not an independently approved immutable reference. Neither a user-supplied sourceBlobs map nor this draft alone grants launch permission. Do not create/edit training launch JSON or trigger Actions.",
-  "note": "Nonlaunch DRAFT. Dormant workflow now pins previously missing V7/V6 model, V4 decoder and CQT preprocessing imports; source count 21, offline sources 11. Four local import-closure fixture tests passed with exact local Git blob matching. Static-only; real full-checkout validation, dynamic import closure, external TabCNN/pip/hardware closure and independent review still outstanding. OpenAI safety escalation pending."
+  "note": "OFFLINE REVIEW DRAFT ONLY. Dormant workflow now has ancestry first-add guard and two URL × one request × 300 seconds bound, but force-push / concurrent duplicate dispatch risk remains. Full frozen-architecture parity CLI has NOT been executed; requires staged frozen upstream sources and pinned Torch 1.11 environment. Static closure alone remains insufficient for launch approval. Support escalation unresolved."
 }
