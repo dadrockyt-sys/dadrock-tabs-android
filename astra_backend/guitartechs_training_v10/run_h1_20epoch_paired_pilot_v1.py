@@ -13,6 +13,7 @@ from guitartechs_training_v9 import train_v9_resumable as v9
 from guitartechs_training_v9.paired_view import paired_tensor_views
 from guitartechs_training_v10 import h1_pilot_core_v1 as core
 from guitartechs_training_v10 import h1_pilot_readiness_v1 as safety
+from guitartechs_training_v10 import h1_prepared_array_guard_v1 as prepared
 
 CANDIDATE="astra_guitartechs_h1_perposition_kl_pilot_v1"
 SCHEMA="astra-guitartechs-h1-original-vs-perposition-20epoch-pilot-v1"
@@ -64,11 +65,10 @@ def main():
     provenance=safety.verify_population(
         rows,args.data_dir,
         HERE.parents[1]/"docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json")
+    # All prepared features and labels must satisfy canonical frozen semantics
+    # before the first optimizer call; bounded mmap scan, no media decoding.
     for row in rows:
-        feat=core.np.load(row["_features"],mmap_mode="r",allow_pickle=False)
-        labels=core.np.load(row["_labels"],mmap_mode="r",allow_pickle=False)
-        if feat.shape!=(192,row["frames"]) or labels.shape!=(6,row["frames"]):
-            raise RuntimeError("PREPARED_FEATURE_LABEL_SHAPE_MISMATCH")
+        prepared.verify_prepared_pair(row["_features"],row["_labels"],row["frames"])
     receipt={
         "schema":SCHEMA,"candidateId":CANDIDATE,"protocol":"20-epoch 2-arm x 2 performer folds only",
         "seed":core.SEED,"epochsPerArmPerFold":core.EPOCHS,"dataCounts":counts,
