@@ -26,11 +26,14 @@
   },
   "additionalOfflineTestAndBudgetSources": {
     "astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py": "9c3ef85aec7c69b7a8a941acd39a790bb013a14b",
+    "astra_backend/guitartechs_training_v10/h1_source_lock_audit_v1.py": "822214e47e5ed5bbd577fa59a152eafa7c575047",
     "astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py": "09840b703d237de749a1e39458ad4c16f910b474",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py": "61258dc26a5387d3e65fecb3afda73841e5b0f27",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_readiness_v1.py": "6df5a4291a0eb0844053080f352149265838f7e7",
+    "astra_backend/guitartechs_training_v10/test_h1_source_lock_audit_v1.py": "3957169567aa15367ec03e9198d7d48796602bb5",
     "astra_backend/guitartechs_training_v10/test_h1_synthetic_parity_v1.py": "9975a9b62d5b62300ae6adce7da4f7011581b75b"
   },
   "externalDependencies": "Upstream pinned TabCNN four source Git blobs, Python package/environment/hardware identity must be independently audited; this lock does not cover them.",
-  "limitation": "This map mirrors inspected current files and is not an independently approved immutable reference. Neither a user-supplied sourceBlobs map nor this draft alone grants launch permission. Do not create/edit training launch JSON or trigger Actions."
+  "limitation": "This map mirrors inspected current files and is not an independently approved immutable reference. Neither a user-supplied sourceBlobs map nor this draft alone grants launch permission. Do not create/edit training launch JSON or trigger Actions.",
+  "note": "Draft captures 17 dormant workflow inputs and 7 related offline sources. Existing source hashes verified by GitHub fetch_file. Synthetic verifier tests passed locally; not yet verified against complete mounted repository or approved immutable reference."
 }
