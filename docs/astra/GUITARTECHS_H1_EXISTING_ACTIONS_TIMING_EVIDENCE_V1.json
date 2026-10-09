@@ -1,0 +1,70 @@
+{
+  "schema": "astra-h1-existing-actions-runtime-evidence-v1",
+  "date": "2026-10-08",
+  "reviewType": "READ_ONLY_EXISTING_V9_JOB_LOGS",
+  "baselineRunId": 37573544151,
+  "notes": [
+    "Timestamps are from previously completed GitHub Actions logs, not a new run.",
+    "Preparation interval begins at the historical step boundary and ends when V9 training-step command begins.",
+    "First-20 interval ends at V9_CHECKPOINT epoch20 log emission, which may include 10-capture V9 checkpoint diagnostics.",
+    "Full-fold terminal interval starts at V9_CHECKPOINT epoch1000 and ends at following step; includes additional reporting, not isolated inference.",
+    "No H1 version has been measured; do not use these durations to claim readiness or approve launch."
+  ],
+  "jobs": [
+    {
+      "jobId": 112637586381,
+      "fold": "P1_train_P2_validate",
+      "prepareSeconds": 1551.817,
+      "epoch20FromTrainingStartSeconds": 1384.671,
+      "fullFoldEvaluationPlusReportingSeconds": null
+    },
+    {
+      "jobId": 113058245257,
+      "fold": "P2_train_P1_validate",
+      "prepareSeconds": 1554.092,
+      "epoch20FromTrainingStartSeconds": 565.653,
+      "fullFoldEvaluationPlusReportingSeconds": null
+    },
+    {
+      "jobId": 112986816044,
+      "fold": "P1_train_P2_validate",
+      "prepareSeconds": 1886.481,
+      "epoch20FromTrainingStartSeconds": null,
+      "fullFoldEvaluationPlusReportingSeconds": 647.582
+    },
+    {
+      "jobId": 113346922946,
+      "fold": "P2_train_P1_validate",
+      "prepareSeconds": 3429.715,
+      "epoch20FromTrainingStartSeconds": null,
+      "fullFoldEvaluationPlusReportingSeconds": 1198.821
+    }
+  ],
+  "combinedHistoricalIllustration": {
+    "onePreparationWorstObservedSeconds": 3429.715,
+    "trainingFourArmsUsingTwoFoldSpecificFirst20Seconds": 3900.648,
+    "fourEvaluationsUsingTwoFoldSpecificTerminalIntervalsSeconds": 3692.806,
+    "illustrativeSubtotalSeconds": 11023.169,
+    "illustrativeSubtotalMinutes": 183.71948333333333,
+    "excludedCosts": [
+      "setup/dependency install",
+      "TabCNN upstream download",
+      "distinct H1 first-batch gradient probing overhead",
+      "full V4 admission-trace overhead",
+      "artifact verification/upload/cleanup",
+      "retry backoff and failed downloads",
+      "data or model RAM/disk peaks",
+      "runtime/hardware/version skew",
+      "controls parity or failure reexecution disallowed"
+    ],
+    "authoritativeRunnerCeilingSeconds": 18000,
+    "feasibility": "UNPROVEN"
+  },
+  "barriers": [
+    "Platform launch restriction awaiting escalation review",
+    "Full original-control equivalence and exact SHA parity unverified",
+    "H1 full-fold evaluator timing unverified",
+    "Durable one-use enforcement not yet established",
+    "Complete resource/stage budget absent"
+  ]
+}
