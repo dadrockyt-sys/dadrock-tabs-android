@@ -1,0 +1,93 @@
+{
+  "schema": "astra-h1-static-capacity-review-v1",
+  "sourceDerivedConstants": {
+    "acceptedCaptures": 256,
+    "minimumFramesPerCapture": 200,
+    "featureBins": 192,
+    "featureItemBytes": 4,
+    "labelStrings": 6,
+    "labelItemBytes": 2,
+    "sampleRateHz": 22050,
+    "hopSamples": 512,
+    "preparedPayloadBytesPerFrame": 780,
+    "preparedFeatureBytesPerFrame": 768,
+    "preparedLabelBytesPerFrame": 12,
+    "npyFilesAcrossCaptures": 512,
+    "minimumPreparedPayloadBytesIfAllCapturesHaveExactly200Frames": 39936000,
+    "one200FrameMicrobatchWindowFloat32Bytes": 1382400
+  },
+  "historicMetadata": {
+    "developmentArchives": 8,
+    "compressedArchiveSumBytes": 4004045267,
+    "largestCompressedArchiveBytes": 1150819056,
+    "priorInventoryExtractedAggregateBytesAcrossSeparateRuns": 7288969715,
+    "observedSameRunnerPeakExtractionBytes": null
+  },
+  "nominalDurationSensitivity": [
+    {
+      "hypotheticalMinutesPerCapture": 1,
+      "nominalAggregateFrames": 661504,
+      "nominalPreparedPayloadBytes": 515973120,
+      "nominalPreparedPayloadGiB": "0.481",
+      "notAnObservedH1FrameCount": true
+    },
+    {
+      "hypotheticalMinutesPerCapture": 2,
+      "nominalAggregateFrames": 1323008,
+      "nominalPreparedPayloadBytes": 1031946240,
+      "nominalPreparedPayloadGiB": "0.961",
+      "notAnObservedH1FrameCount": true
+    },
+    {
+      "hypotheticalMinutesPerCapture": 5,
+      "nominalAggregateFrames": 3307520,
+      "nominalPreparedPayloadBytes": 2579865600,
+      "nominalPreparedPayloadGiB": "2.403",
+      "notAnObservedH1FrameCount": true
+    },
+    {
+      "hypotheticalMinutesPerCapture": 10,
+      "nominalAggregateFrames": 6615040,
+      "nominalPreparedPayloadBytes": 5159731200,
+      "nominalPreparedPayloadGiB": "4.805",
+      "notAnObservedH1FrameCount": true
+    },
+    {
+      "hypotheticalMinutesPerCapture": 15,
+      "nominalAggregateFrames": 9922560,
+      "nominalPreparedPayloadBytes": 7739596800,
+      "nominalPreparedPayloadGiB": "7.208",
+      "notAnObservedH1FrameCount": true
+    }
+  ],
+  "exampleEvaluatorArraysFor100000Frames": {
+    "paddedCQTFloat32Bytes": 76806144,
+    "storedStateFloat32Bytes": 50400000,
+    "storedEventFloat32Bytes": 2400000,
+    "stateToFloat64CopyBytes": 100800000,
+    "notAPeakMemoryBound": true
+  },
+  "optionalUnverifiedFrameAggregate": null,
+  "unknownForHardDiskBound": [
+    "measuredTotalAcceptedFrames",
+    "peakExtractedBytesPerArchive",
+    "effectiveRunnerFreeDiskBytes",
+    "dependencyAndPackageCacheBytes",
+    "repositoryAndPinnedSourceBytes",
+    "simultaneousDecodedAudioAndVQTIntermediates",
+    "manifestAndArtifactBytes",
+    "failureAndDiskReserveBytes"
+  ],
+  "unknownForHardRamBound": [
+    "largestAcceptedCaptureFrames",
+    "torchModelParameterAndAdadeltaStateBytes",
+    "activationAndAutogradPeaks",
+    "librosaVQTTransientArrayPeak",
+    "pythonAndSystemReserve"
+  ],
+  "verifiedDiskOrMemoryHeadroom": false,
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "launchPermission": false,
+  "realMediaRead": false,
+  "trainingExecuted": false
+}
