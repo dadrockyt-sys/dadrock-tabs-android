@@ -8,23 +8,30 @@ from guitartechs_training_v10.h1_offline_budget_v1 import (
 
 def fake_workflow():
     manifest='\n'.join(f'{name} {size} md5 sha P1 chords' for name,size in ARCHIVES.items())
-    return ('timeout-minutes: 300\nfor url in endpoint1 endpoint2;\n'
-            'for attempt in 1 2 3 4 5;\n'
-            'curl --max-time 1800 --retry 2\n'+manifest+'\n')
+    return ('timeout-minutes: 300\n'
+            '            ok=0\n'
+            '            for url in "https://zenodo.org/api/records/14963133/files/$file/content" '
+            '"https://zenodo.org/records/14963133/files/$file?download=1"; do\n'
+            '              if curl --fail --location --max-time 300 --retry 0 -o file "$url"; then\n'
+            '                ok=1;break\n'
+            '              fi\n'
+            '            done\n'
+            '            test "$ok" = 1\n'+manifest+'\n')
 
 
 class BudgetGuards(unittest.TestCase):
-    def test_current_retry_upper_bound_unfeasible(self):
+    def test_bounded_retry_upper_limit_does_not_prove_feasibility(self):
         receipt=workflow_budget_audit(fake_workflow())
         self.assertEqual(receipt['archiveCount'],8)
         self.assertEqual(receipt['compressedInputBytes'],4004045267)
-        self.assertEqual(receipt['singleArchiveRequestCeilingSeconds'],54000)
-        self.assertEqual(receipt['allArchivesRequestCeilingSeconds'],432000)
-        self.assertTrue(receipt['downloadWorstCaseExceedsRunnerLimit'])
+        self.assertEqual(receipt['singleArchiveRequestCeilingSeconds'],600)
+        self.assertEqual(receipt['allArchivesRequestCeilingSeconds'],4800)
+        self.assertFalse(receipt['downloadWorstCaseExceedsRunnerLimit'])
+        self.assertEqual(receipt['readiness'],'UNPROVEN_BLOCKED')
 
     def test_unknown_retry_or_missing_archive_fails_closed(self):
         with self.assertRaisesRegex(RuntimeError,'UNKNOWN_WORKFLOW'):
-            workflow_budget_audit(fake_workflow().replace('--retry 2','--retry 0'))
+            workflow_budget_audit(fake_workflow().replace('--retry 0','--retry 2'))
         with self.assertRaisesRegex(RuntimeError,'FROZEN_EIGHT_ARCHIVE'):
             workflow_budget_audit(fake_workflow().replace('P1_chords.zip','P9_chords.zip'))
 
