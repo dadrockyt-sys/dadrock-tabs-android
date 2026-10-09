@@ -1,0 +1,41 @@
+{
+  "schema": "astra-h1-phase13-remote-scalar-receipt-crosscheck-v1",
+  "date": "2026-10-09",
+  "branch": "astra-work",
+  "toolScope": "READ_ONLY_CONNECTED_GITHUB_ORIGINAL_JSON_INSPECTION",
+  "gitBlobAnchors": {
+    "frames": "701d4626de0e04200534ed17827db00c896a3d6b",
+    "capacity": "e8375ec0cd132eadda93456a023df77a88153eda",
+    "timings": "309bbe19d6e52083237bd8f10d0998623bea6e80",
+    "worksheet": "e84b5b357eb2c9c9c8cc55fa8239f20153758103"
+  },
+  "originalRemoteBlobChecksPassed": 4,
+  "checkedOriginalScalarFacts": {
+    "captureCount": 256,
+    "preparedFrames": 1924805,
+    "maxCaptureFrames": 23773,
+    "preparedPayloadBytes": 1501347900,
+    "largestIdentifiableHistoricalLogicalOverlapBytes": 4391923097,
+    "v9JobCount": 10,
+    "v9PrepObservedMinSeconds": 1551.28,
+    "v9PrepObservedMaxSeconds": 3416.914
+  },
+  "blankWorksheetMissingEntries": {
+    "stages": 12,
+    "runnerResources": 6,
+    "runnerEvidence": 1,
+    "total": 19
+  },
+  "remoteEvidenceReconciliation": "PASS_FOR_PRIOR_COMMITTED_SCALAR_FACTS_ONLY",
+  "originalTimingGitBlobVerifiedRemotely": true,
+  "fullThreeFileOriginalPythonCLIExecutedLocally": false,
+  "actualRunnerDiskMeasured": false,
+  "actualRunnerRamMeasured": false,
+  "completeH1UpperBoundsProven": false,
+  "independentApproval": "PENDING",
+  "writtenSupportCase16795041": "PENDING",
+  "launchPermission": false,
+  "trainingExecuted": false,
+  "mediaAccessed": false,
+  "readiness": "BLOCKED_MISSING_EVIDENCE"
+}
