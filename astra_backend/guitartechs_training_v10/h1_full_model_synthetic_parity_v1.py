@@ -34,7 +34,7 @@ T=200
 
 
 def git_blob_id(raw):
-    return hashlib.sha1(b"blob "+str(len(raw)).encode("ascii")+b"\\0"+raw).hexdigest()
+    return hashlib.sha1(b"blob "+str(len(raw)).encode("ascii")+b"\0"+raw).hexdigest()
 
 
 def verify_upstream(source_root):
