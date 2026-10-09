@@ -36,6 +36,12 @@ class RuntimePrerequisiteTests(unittest.TestCase):
         self.assertEqual(result['observed']['torch'], '1.11.0+cpu')
         self.assertNotIn('torch', result['importErrors'])
 
+    def test_str_subclass_matches_exact_frozen_pin(self):
+        class TorchVersion(str):
+            pass
+        observed = dict(EXPECTED, torch=TorchVersion('1.11.0+cpu'))
+        self.assertTrue(version_report(observed, cuda_available=False)['versionsAndCpuMatch'])
+
     def test_each_non_frozen_version_fails_closed(self):
         for key, wrong in (("python", "3.13.5"), ("torch", "2.10.0+cpu"), ("numpy", "2.3.5")):
             with self.subTest(key=key):
