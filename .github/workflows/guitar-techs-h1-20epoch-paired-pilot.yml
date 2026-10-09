@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10.15'
@@ -36,7 +37,17 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           assert os.environ.get('GITHUB_RUN_ATTEMPT')=='1', 'reruns are not authorized'
-          x=json.load(open('docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json'))
+          assert os.environ.get('GITHUB_EVENT_NAME')=='push', 'only a first push is eligible'
+          assert os.environ.get('GITHUB_REF')=='refs/heads/astra-work', 'wrong execution branch'
+          # Reject any subsequent edit to the launch JSON in the ancestry of this
+          # immutable commit. This is not cross-history durable consumption.
+          launch='docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json'
+          history=subprocess.check_output(['git','rev-list','--count','HEAD','--',launch],text=True).strip()
+          assert history=='1', 'launch JSON has prior changes in reachable history'
+          changed=subprocess.check_output(
+              ['git','diff-tree','--no-commit-id','--name-status','-r','--root','HEAD','--',launch],text=True).strip()
+          assert changed=='A\\t'+launch, 'launch JSON must be newly added in current commit'
+          x=json.load(open(launch))
           assert x['schema']=='astra-guitartechs-h1-20epoch-paired-training-launch-v1'
           assert x['singleUse'] is True
           assert x['userAuthorization']=='I authorize'
@@ -146,19 +157,18 @@ jobs:
           while IFS=' ' read -r file bytes md5 sha performer category; do
             rm -rf /tmp/extract/*
             ok=0
+            # At most one bounded transfer per URL: 2 * 300s per archive.
+            # On exhaustion, fail closed; no outer/inner retry multiplication.
             for url in "https://zenodo.org/api/records/14963133/files/$file/content" \
                        "https://zenodo.org/records/14963133/files/$file?download=1"; do
-              for attempt in 1 2 3 4 5; do
-                rm -f "/tmp/$file.part"
-                if curl --fail --location --connect-timeout 30 --max-time 1800 \
-                    --retry 2 --retry-all-errors --retry-delay 5 \
-                    --user-agent 'Astra-H1-Bounded-Development-Pilot-V1/1.0' \
-                    -o "/tmp/$file.part" "$url"; then
-                  mv "/tmp/$file.part" "/tmp/$file"
-                  ok=1;break 2
-                fi
-                sleep "$((attempt*15))"
-              done
+              rm -f "/tmp/$file.part"
+              if curl --fail --location --connect-timeout 30 --max-time 300 \
+                  --retry 0 \
+                  --user-agent 'Astra-H1-Bounded-Development-Pilot-V1/1.0' \
+                  -o "/tmp/$file.part" "$url"; then
+                mv "/tmp/$file.part" "/tmp/$file"
+                ok=1;break
+              fi
             done
             test "$ok" = 1
             test "$(stat -c '%s' "/tmp/$file")" = "$bytes"
