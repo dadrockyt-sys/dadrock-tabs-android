@@ -1,0 +1,38 @@
+{
+  "documentation": {
+    "independentSourceAndPackageReview": "PENDING",
+    "notes": "UNMEASURED; historical V9 timings are illustrative, not H1 maxima.",
+    "sharedAtomicOneUseControlReview": "PENDING",
+    "writtenSupportCase16795041": "PENDING"
+  },
+  "runnerEvidence": null,
+  "runnerResources": {
+    "availableDiskBytesAtJobStart": null,
+    "availableRamBytes": null,
+    "diskReserveBytes": null,
+    "peakAdditionalDiskBytes": null,
+    "peakResidentRamBytes": null,
+    "ramReserveBytes": null
+  },
+  "schema": "astra-h1-human-feasibility-measurement-worksheet-v1",
+  "sourceAnchors": {
+    "dormantWorkflowGitBlob": "90e8168fc1ca40738ba07291ca1001a36718f4e3",
+    "framesGitBlob": "701d4626de0e04200534ed17827db00c896a3d6b",
+    "priorV9TimingsGitBlob": "309bbe19d6e52083237bd8f10d0998623bea6e80",
+    "stageCapacityGitBlob": "e8375ec0cd132eadda93456a023df77a88153eda"
+  },
+  "stageUpperBounds": {
+    "archivesAndPreparation": null,
+    "environmentAndDependencies": null,
+    "originalFold1Evaluation": null,
+    "originalFold1Training": null,
+    "originalFold2Evaluation": null,
+    "originalFold2Training": null,
+    "sourceAcquisition": null,
+    "treatmentFold1Evaluation": null,
+    "treatmentFold1Training": null,
+    "treatmentFold2Evaluation": null,
+    "treatmentFold2Training": null,
+    "uploadCleanupReserve": null
+  }
+}
