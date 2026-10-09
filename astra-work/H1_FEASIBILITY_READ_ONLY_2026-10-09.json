@@ -1,0 +1,140 @@
+{
+  "schema": "astra-h1-offline-five-hour-feasibility-review-v1",
+  "createdDate": "2026-10-09",
+  "branch": "astra-work",
+  "caseNumber": "16795041",
+  "provenance": {
+    "historicalRunId": 37573544151,
+    "historicalJobIds": [
+      112637586381,
+      113058245257,
+      112986816044,
+      113346922946
+    ],
+    "historicalTimingBlob": "9ac43020268cc4be624c45b66343a283d8081e92",
+    "dormantWorkflowBlob": "90e8168fc1ca40738ba07291ca1001a36718f4e3",
+    "historicalDataType": "PRIOR_V9_JOB_LOGS_NOT_H1_RUNS",
+    "archiveInputType": "DORMANT_WORKFLOW_LITERAL_MANIFEST"
+  },
+  "observedHistoricalProxy": {
+    "maxSinglePreparationSeconds": "3429.715",
+    "twoFoldEarly20SegmentsRepeatedForFourArmsSeconds": "3900.648",
+    "twoFoldTerminalEvaluationSegmentsRepeatedForFourEvaluationsSeconds": "3692.806",
+    "totalIllustrationSeconds": "11023.169",
+    "unallocatedAt300MinutesSeconds": "6976.831",
+    "notAWorstCaseBound": true
+  },
+  "archiveAndRunner": {
+    "archiveCount": 8,
+    "compressedArchiveBytes": 4004045267,
+    "largestSingleArchiveBytes": 1150819056,
+    "archiveHTTPRequestCeilingSeconds": "4800.000",
+    "archiveTransferURLsPerFile": 2,
+    "curlMaxTimeSeconds": 300,
+    "curlRetries": 0,
+    "publicUbuntu2204StandardReference": {
+      "vCPU": 4,
+      "RAM_GB": 16,
+      "SSD_GB": 14,
+      "source": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+      "effectiveAvailableRAMBytes": "UNMEASURED",
+      "effectiveFreeDiskBytes": "UNMEASURED"
+    },
+    "allJobStagesCoveredByCurlBound": false
+  },
+  "sensitivityScenarios": [
+    {
+      "factor": "1",
+      "assumedPreparationSeconds": "3429.715",
+      "trainingPlusEvaluationSeconds": "7593.454",
+      "conditionalTotalSeconds": "11023.169",
+      "conditionalTotalMinutes": "183.719",
+      "unallocatedSeconds": "6976.831",
+      "unallocatedMinutes": "116.281",
+      "exceedsTimeoutBeforeUnknownStages": false,
+      "measurementStatus": "NOT_H1_OBSERVATION"
+    },
+    {
+      "factor": "1.25",
+      "assumedPreparationSeconds": "3429.715",
+      "trainingPlusEvaluationSeconds": "9491.817",
+      "conditionalTotalSeconds": "12921.532",
+      "conditionalTotalMinutes": "215.359",
+      "unallocatedSeconds": "5078.467",
+      "unallocatedMinutes": "84.641",
+      "exceedsTimeoutBeforeUnknownStages": false,
+      "measurementStatus": "NOT_H1_OBSERVATION"
+    },
+    {
+      "factor": "1.5",
+      "assumedPreparationSeconds": "3429.715",
+      "trainingPlusEvaluationSeconds": "11390.181",
+      "conditionalTotalSeconds": "14819.896",
+      "conditionalTotalMinutes": "246.998",
+      "unallocatedSeconds": "3180.104",
+      "unallocatedMinutes": "53.002",
+      "exceedsTimeoutBeforeUnknownStages": false,
+      "measurementStatus": "NOT_H1_OBSERVATION"
+    },
+    {
+      "factor": "1.75",
+      "assumedPreparationSeconds": "3429.715",
+      "trainingPlusEvaluationSeconds": "13288.544",
+      "conditionalTotalSeconds": "16718.260",
+      "conditionalTotalMinutes": "278.638",
+      "unallocatedSeconds": "1281.741",
+      "unallocatedMinutes": "21.362",
+      "exceedsTimeoutBeforeUnknownStages": false,
+      "measurementStatus": "NOT_H1_OBSERVATION"
+    },
+    {
+      "factor": "2",
+      "assumedPreparationSeconds": "3429.715",
+      "trainingPlusEvaluationSeconds": "15186.908",
+      "conditionalTotalSeconds": "18616.623",
+      "conditionalTotalMinutes": "310.277",
+      "unallocatedSeconds": "-616.623",
+      "unallocatedMinutes": "-10.277",
+      "exceedsTimeoutBeforeUnknownStages": true,
+      "measurementStatus": "NOT_H1_OBSERVATION"
+    }
+  ],
+  "alternativeNonOverlappingEnvelope": {
+    "historicalTrainingAndEvaluationProxyPlusMaxArchiveHTTPSec": "12393.454",
+    "remainingSecForAllNonHTTPStages": "5606.546",
+    "warning": "Different conditional envelope; do not add HTTP worst-case to historical V9 preparation, which already includes its own downloads."
+  },
+  "missingProvenancedH1StageDurations": [
+    "environmentAndDependencies",
+    "sourceAcquisition",
+    "archivesAndPreparation",
+    "originalFold1Training",
+    "originalFold2Training",
+    "treatmentFold1Training",
+    "treatmentFold2Training",
+    "originalFold1Evaluation",
+    "originalFold2Evaluation",
+    "treatmentFold1Evaluation",
+    "treatmentFold2Evaluation",
+    "uploadCleanupReserve"
+  ],
+  "unmeasuredResources": [
+    "full extraction peak",
+    "prepared CQT array peak",
+    "disk free bytes after runner-image setup",
+    "CPU peak and contention",
+    "RAM peak during preprocessing/evaluation",
+    "four revised H1 V4-admission full-fold evaluations",
+    "gradient probe overhead",
+    "failure and artifact upload/cleanup reserve",
+    "pinned runner-package reproducibility"
+  ],
+  "scenarioInterpretation": "Projections scale only historical V9 training+evaluation while holding one maximum historical V9 preparation fixed; no scenario is a measured H1 bound.",
+  "launchDecision": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "supportClearance": false,
+  "globalSingleUseApproval": false,
+  "independentSourceApproval": false,
+  "hasAnyRealH1StageTimings": false,
+  "trainingOrWorkflowDispatched": false,
+  "realDataAccess": false
+}
