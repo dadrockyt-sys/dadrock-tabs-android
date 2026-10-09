@@ -1,0 +1,28 @@
+# Astra Phase 14 — Feasibility integration and measurement boundary (2026-10-09)
+
+**Branch:** `astra-work`. **Decision:** `NO_GO_INSUFFICIENT_EVIDENCE`; real H1 launch and launch preflight remain BLOCKED pending written OpenAI Support case #16795041 decision and independent technical approval.
+
+## What was actually attempted and measured
+
+- Direct read-only checkout: `git ls-remote https://github.com/dadrockyt-sys/dadrock-tabs-android.git refs/heads/astra-work` failed: **`Could not resolve host: github.com`**. No complete repository checkout or frozen H1 runtime was established on this sandbox.
+- Retested `/mnt/data/astra_phase13/test_h1_phase13_original_receipts_integration_v1.py`: **3 PASS, 1 SKIP, zero errors/failures**. The missing original committed V9 timing JSON, blob `309bbe19d6e52083237bd8f10d0998623bea6e80`, is not mounted locally; the complete three-original-file CLI is still **NOT RUN** in a permitted checkout. Previously completed *connected GitHub* read-only reconciliation of all three originals is valid independent source inspection, **not** local Python whole-file integration.
+- Performed a bounded **synthetic-only sandbox observation**, using the previously established max historical capture `F=23,773`. Only constructed four `bytearray` buffers with sizes of identifiable evaluator arrays and wrote a 16-MiB synthetic file in a temporary directory; both were cleaned up. This script imported no Astra, Torch, model code, media libraries, or network client; no training, inference, Actions or real data ran.
+- **Actual repeat local observations** (environment Linux with Python **3.13.5**, **NOT** pinned Python3.10/Torch1.11, **NOT** GitHub-hosted Ubuntu22.04 runner): `ru_maxrss` change between before/after synthetic array allocations **54,788,096 bytes** (~52.25 MiB), with **54,779,136 bytes** of mock array payload; temporary file logical bytes **16,777,216**; measured local filesystem free-byte decrease while file existed **16,781,312**; approximate elapsed **0.077s**. These are sandbox-specific process high-water and temporary-file observations, **not** upper bounds on H1 preprocessing, torch activations, memory-mapped arrays, full V4 evaluation, runner RAM, installation footprint or archive extraction. Process maximum RSS differs from simultaneous true RAM peak; current sandbox filesystem capacity is **not** runner's effective free disk.
+- Existing frozen historical scalar facts continue unchanged: 256 accepted captures / 1,924,805 actual prepared frames / max F=23,773 / **1,501,347,900 bytes** prepared feature+label payload / **4,391,923,097 bytes** identifiable prior logical archive/prepared overlap. Historical V9 preparation times span **1,551.280–3,416.914s**, not H1 upper bounds.
+
+## Explicit separation from the user's requested independent feasibility measurements
+
+**None of the following has been measured on an independently approved comparable frozen H1 runner**: true free disk at start; peak physical disk while preparing eight source archives; current pinned install/cache space; H1 FFmpeg/librosa VQT transient memory and disk; full TemporalTabCNNV9 + Adadelta/activation/gradient RAM; all four H1 V4 evaluations' RSS; 12 attributable upper stage-time bounds and cleanup/failure reserve (≤18,000s). Historical V9 timing samples cannot be promoted to H1 upper bounds. **The existing blank paper worksheet still has 19 unset required evidence entries** (12 stage upper bounds, six disk/RAM measurements, one runner proof).
+
+**The nominal GitHub runner specifications (4 CPU, 16GB RAM, 14GB SSD) cannot replace independent on-runner free-space or high-water evidence.** Without both a permitted comparable environment and independently sourced measurements, don't claim readiness; don't invent timings or disk/RAM limits.
+
+## Permitted next steps
+
+1. Obtain explicit authorization for a **non-media synthetic-only CPU feasibility environment** equivalent to the pinned runtime and actual standard runner, without Actions/H1 preflight rerouting, paid compute or protected media. Require this to be truly permitted independently of the blocked launch.
+2. In a permissible complete checkout, run `python astra-work/test_h1_phase13_original_receipts_integration_v1.py` to **4/4 actual tests**, and the full paper-only reviewer CLI with the three original exact pinned JSON receipts; save stdout + source checksums. Do not run model parity or any workflow by inference from this plan.
+3. Collect independently attributable actual free SSD, transient/installed footprint, peak RSS (including FFmpeg/VQT/model/Adadelta/V4 evaluation), and reserve using allowed synthetic inputs; separately obtain stage-specific **upper bounds** for the 12 H1 time categories, or record **UNAVAILABLE**.
+4. An independent reviewer must verify the complete bound fits CPU-only 300 minutes, effective free disk and RAM with headroom, plus frozen source/dependency lock, full ten-module no-media tests and one-use atomic gate. **Written OpenAI Support case #16795041 clearance remains required before any real launch.**
+
+**HARD STOP:** No editing/creating/reconstructing blocked `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json`, no GitHub Actions or real H1 feasibility preflight/training, no Codex/Codespaces bypass, no P1/P2/P3 protected/Stage B media, optimizer/inference, paid compute, trained weights, modifications to main/Production/frozen scientific protocol, or retry of separately blocked `docs/checkpoints/CURRENT_STATE.md`.
+
+This is a **record of completed offline tests and sandbox observation plus an explicit inability to fulfill independent runner measurements**; it is not a feasibility sign-off.
