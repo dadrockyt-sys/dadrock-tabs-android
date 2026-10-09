@@ -46,7 +46,7 @@ jobs:
           assert history=='1', 'launch JSON has prior changes in reachable history'
           changed=subprocess.check_output(
               ['git','diff-tree','--no-commit-id','--name-status','-r','--root','HEAD','--',launch],text=True).strip()
-          assert changed=='A\\t'+launch, 'launch JSON must be newly added in current commit'
+          assert changed=='A\t'+launch, 'launch JSON must be newly added in current commit'
           x=json.load(open(launch))
           assert x['schema']=='astra-guitartechs-h1-20epoch-paired-training-launch-v1'
           assert x['singleUse'] is True
