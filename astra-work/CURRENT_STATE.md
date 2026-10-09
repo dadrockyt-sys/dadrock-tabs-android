@@ -1,3 +1,26 @@
+# NEXT ACTIONS — PHASE 10B FAIL-CLOSED RUNTIME PREREQUISITES (2026-10-09, GPT-6)
+
+**Branch:** `astra-work`. **Status: ONLY OFFLINE REVIEW AUTHORIZED / REAL H1 TRAINING STILL BLOCKED** pending explicit written OpenAI Support case **#16795041** outcome. The complete detailed evidence is **`astra-work/H1_OFFLINE_PHASE10B_PREREQUISITES_2026-10-09.md`**. This new leading note **augments**, not supersedes, the Phase 10/9/8 historical evidence below.
+
+### New verified Phase 10B work
+
+- Added separate **read-only, non-executing** prerequisite checker `astra-work/h1_offline_runtime_prerequisites_v1.py` (**Git blob `c14b39c6faa729f04516e22904b3682ab7989adc`**) and tests `astra-work/test_h1_offline_runtime_prerequisites_v1.py` (**Git blob `ebf5c6d93a1f637c16909f6040e1063346b16b8b`**). Committed remote file blobs were confirmed equal to exact local tested bytes. Neither file modifies the dormant workflow, pinned scientific sources, or blocked trigger.
+- Actual final local **15 synthetic fixture tests PASS; zero errors/failures**, Python3.13.5/Git2.47.3; `py_compile` PASS; test log SHA256 **`6bc43a878300d3c30bb2dc1c9b084d61cf5cc7181e8a48f2b7f95d8bedb8a41c`**. Tests cover actual-version checking, CPU-only expectation, missing/altered or symlinked upstream files and generated init modules, and fake-data-only positive controls. A bug revealed during initial local probing — PyTorch version object is a **str subclass**, not necessarily `type(...) is str` — was fixed and regression-tested **before** committing the final checker/test versions.
+- Actually invoked the checker on this environment (no model/media, no upstream staging): observed **Python 3.13.5 / torch 2.10.0+cpu / NumPy 2.3.5 / CUDA unavailable=false**. Expected frozen **Python 3.10.15 / torch 1.11.0+cpu / NumPy 1.21.6**. Result `BLOCKED_OR_UNVERIFIED`, exit code **2**, `launchPermission=false`, `fullModelParityExecuted=false`; JSON SHA256 **`bdb5052e53242c588c7a17c322a6d1ceb3a5947430b54`**. **This is the correct blocked outcome, not a parity pass.**
+- This review tool only verifies local runtime identity and optionally **already-staged** upstream Git blobs and generated init bytes. It is NOT an independent permission gate, an externally attested immutable environment or the actual full frozen model parity program. Even when all local identities match, it returns `LOCAL_IDENTITIES_ONLY_REVIEW_REQUIRED` with `independentApproval=PENDING` and `launchPermission=false`.
+
+### Exact next independent actions and STOP gates
+
+1. In a permitted complete repository checkout, run the ten-module H1 stdlib **no-media** suite including the pre-journal driver guard, Phase-9 static/dynamic closure review, and the Phase-10 source/runtime audit tools; capture actual outputs, source SHAs and execution environment. **Full-repo tests NOT RUN in this session**: direct local GitHub DNS resolution fails.
+2. Only in an explicitly permitted **pinned Python3.10.15 / Torch1.11.0+cpu / NumPy1.21.6** CPU environment with independently verified four upstream sources + three generated init bytes, consider the **synthetic-only** full `TemporalTabCNNV9` parity experiment after separate technical review. Existing parity source still lacks runtime pin enforcement and must not be taken at face value. **Actual frozen full-model parity NOT RUN.**
+3. Obtain independent immutable source/dependency lock review, trusted shared atomic globally **single-use** mechanism, and proven end-to-end **≤300-minute** CPU/RAM/disk/evaluation/archive/cleanup budget. These are still outstanding; 36/36 source Git hashes do not approve launch.
+4. Await **written Support** case #16795041 disposition (daily new-inbound Gmail watch enabled). If asked for a copy of the currently absent blocked JSON, seek a specifically permitted **non-executing** review format. Do not generate or commit the blocked launch artifact.
+5. Continue updating this **primary handoff** with genuinely executed test outcomes and independent decisions only. Preserve historical receipts; **do not** retry the separately safety-blocked `docs/checkpoints/CURRENT_STATE.md` write.
+
+**HARD STOP:** Do not create/edit the blocked `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json`, dispatch GitHub Actions/preflight/training, use Codex/Codespaces/UI to evade safeguards, obtain real P1/P2/P3/protected-song/Stage-B data, perform real inference/optimization, spend money, export weights, alter `main`/Production/frozen V8/V9 science, or declare pinned parity/Support clearance without actual evidence.
+
+---
+
 # NEXT ACTIONS — PHASE 10 FROZEN RUNTIME REVIEW (2026-10-09, GPT-6)
 
 **Branch: astra-work. Status: OFFLINE REVIEW ONLY / REAL H1 LAUNCH BLOCKED.** OpenAI Support case **#16795041** remains unresolved; an in-session read of the connected Support mailbox found the existing Support message and the already-sent reply but **no newer Support message**. Daily new-reply monitoring remains enabled. Do not infer clearance.
