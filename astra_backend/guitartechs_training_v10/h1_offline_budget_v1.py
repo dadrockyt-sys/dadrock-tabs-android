@@ -52,8 +52,8 @@ def workflow_budget_audit(workflow_text):
             or block.count('curl --fail --location') != 1
             or 'ok=1;break' not in block):
         raise RuntimeError('UNKNOWN_WORKFLOW_RETRY_OR_TIMEOUT_SEMANTICS')
-    max_times=re.findall(r'--max-time\\s+(\\d+)', block)
-    retries=re.findall(r'--retry\\s+(\\d+)', block)
+    max_times=re.findall(r'--max-time\s+(\d+)', block)
+    retries=re.findall(r'--retry\s+(\d+)', block)
     if max_times!=['300'] or retries!=['0'] or 'timeout-minutes: 300' not in workflow_text:
         raise RuntimeError('UNKNOWN_WORKFLOW_RETRY_OR_TIMEOUT_SEMANTICS')
     max_seconds=int(max_times[0])
