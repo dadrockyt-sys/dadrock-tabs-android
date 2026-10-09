@@ -135,6 +135,62 @@ class RuntimePrerequisiteTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "UPSTREAM_FILE_MISSING"):
                 inspect_upstream(root, expected_blobs=expected)
 
+    def test_unexpected_upstream_python_file_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            expected = self.make_fake_tree(root)
+            (root / "amt_tools" / "models" / "shadow.py").write_text("raise AssertionError('synthetic')\n")
+            with self.assertRaisesRegex(RuntimeError, "UPSTREAM_UNEXPECTED_PATH"):
+                inspect_upstream(root, expected_blobs=expected)
+
+    def test_unexpected_upstream_compiled_or_path_file_is_rejected(self):
+        for unexpected in ("extra.pyc", "injected.pth", "models/__pycache__/cache.pyc"):
+            with self.subTest(unexpected=unexpected), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                expected = self.make_fake_tree(root)
+                p = root / "amt_tools" / unexpected
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(b"synthetic")
+                with self.assertRaisesRegex(RuntimeError, "UPSTREAM_UNEXPECTED_PATH"):
+                    inspect_upstream(root, expected_blobs=expected)
+
+    def test_unexpected_directory_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            expected = self.make_fake_tree(root)
+            (root / "amt_tools" / "plugins").mkdir()
+            with self.assertRaisesRegex(RuntimeError, "UPSTREAM_UNEXPECTED_PATH"):
+                inspect_upstream(root, expected_blobs=expected)
+
+    def test_symlink_source_root_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            real = base / "real"
+            real.mkdir()
+            expected = self.make_fake_tree(real)
+            link = base / "linked"
+            link.symlink_to(real, target_is_directory=True)
+            with self.assertRaisesRegex(RuntimeError, "UPSTREAM_PATH_SYMLINK"):
+                inspect_upstream(link, expected_blobs=expected)
+
+    def test_symlink_amt_tools_root_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            expected = self.make_fake_tree(root)
+            (root / "amt_tools").rename(root / "real_amt_tools")
+            (root / "amt_tools").symlink_to(root / "real_amt_tools", target_is_directory=True)
+            with self.assertRaisesRegex(RuntimeError, "UPSTREAM_PATH_SYMLINK"):
+                inspect_upstream(root, expected_blobs=expected)
+
+    def test_strict_tree_positive_fixture_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            expected = self.make_fake_tree(root)
+            record = inspect_upstream(root, expected_blobs=expected)
+            self.assertEqual(record["expectedUpstreamCount"], 4)
+            self.assertTrue(record["allSourcesAndInitsMatch"])
+            self.assertEqual(record["verifiedTreeEntryCount"], 9)
+
     def test_relative_traversal_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(ValueError, "INVALID_RELATIVE_PATH"):
