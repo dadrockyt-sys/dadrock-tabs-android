@@ -36,7 +36,7 @@ def version_report(actual: dict[str, str], *, cuda_available: bool | None) -> di
     """Compare actual imported module version strings to the frozen versions."""
     if set(actual) != set(EXPECTED):
         raise ValueError("VERSION_KEYS_MISSING_OR_EXTRA")
-    exact = {key: type(actual[key]) is str and actual[key] == value for key, value in EXPECTED.items()}
+    exact = {key: isinstance(actual[key], str) and actual[key] == value for key, value in EXPECTED.items()}
     cuda_disabled = cuda_available is False
     return {
         "expected": dict(EXPECTED),
