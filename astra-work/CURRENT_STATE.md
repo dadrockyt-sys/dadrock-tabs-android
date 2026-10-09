@@ -1,3 +1,23 @@
+# NEXT ACTIONS — PHASE 8 OFFLINE RISK REVIEW (2026-10-09, GPT-6)
+
+**Branch:** `astra-work`. **Scope:** Documentation and five isolated synthetic/no-media Git tests only; real H1 launch remains **BLOCKED** pending written OpenAI Support case **#16795041** resolution and independent technical gates. **New source evidence (read first):** `astra-work/H1_OFFLINE_PHASE8_RISK_REVIEW_2026-10-09.md` (independent review note) and `astra-work/h1_one_use_synthetic_review_v1.py` (offline synthetic proof script, Git blob `8723d1e526ada7c735f602444ecfcf0880ab57d3`). The latter was actually executed locally with Python **3.13.5 / Git 2.47.3**, **5 tests PASS, 0 errors**, on disposable synthetic repositories. Exact locally tested file matched the committed Git blob. This does **not** substitute for frozen Python3.10/Torch1.11 or actual H1 program tests. No P1/P2 media, Codespaces, Actions, trained weights, paid compute or blocked launch JSON was used or created.
+
+**Verified read-only:** Remote recursive Git tree was complete (8,201 entries, not truncated); all **36/36** draft lock Git blobs match current required (22) and auxiliary (14) sources. The dormant workflow's literal 22-input set matches the draft lock. This is current identity only, **NOT** import closure or independent source approval. The present workflow's per-run first-attempt/first-add guard passed twice in a synthetic same-commit duplicate-event scenario, and passed again in a separate rewritten synthetic history. A toy atomic `UNUSED→CONSUMED` claim rejected second use in isolation, but **no trusted durable external one-use service has been built or approved**. Current workflow launch guard remains insufficient for global single-use.
+
+**Budget recalculation:** Historical V9 illustration **11,023.169 seconds (183.7195min)**, not an H1 bound, leaves a nominal **6,976.831 seconds (116.2805min)** under 18,000s. Dormant archive HTTP request ceiling is **4,800s** for eight compressed archives totaling **4,004,045,267 bytes**. Historical preparation may already include downloading, so do not double count the 80min curl bound; setup, four revised H1 evaluations, V4 admission, CPU/RAM/disk peaks, upload, failure reserve, runtime skew are unbounded. **≤300min feasibility remains UNPROVEN.**
+
+## Next exact allowed steps
+
+1. **Wait for a new written Support decision** on #16795041 (daily Gmail condition-watch already enabled). If another payload is requested, follow Support's permitted non-executing submission method; do not create/edit the previously blocked training-launch JSON.
+2. Obtain a **permitted complete checkout** and run the listed prior Phase7→8 no-media `unittest` modules against exact committed files, including the new pre-journal driver AST test. GitHub clone was unavailable in this session (`github.com` name resolution failed), so **full-repo tests remain NOT RUN**.
+3. Independently verify source closure (static + dynamic/internal/third-party/upstream AMT-Tools blobs and generated init files), keeping the 36-file lock a **DRAFT**. When a permitted frozen Python **3.10.15 / Torch 1.11.0+cpu** environment with full sources exists, run **synthetic-only full-model parity**, capture a legitimate output receipt and mark PASS/FAIL precisely; here it is still **NOT RUN**.
+4. Produce an independently reviewed external, durable, atomic **one-use** authorization design and evidenced runner CPU/RAM/disk/end-to-end ≤300min budget **before** proposing any launch. The local toy model is not a deployable gate.
+5. Update **this primary handoff** only with measured evidence, blob/commit IDs and outstanding STOP conditions. Keep prior sections unchanged. Do not touch the separately safety-blocked `docs/checkpoints/CURRENT_STATE.md` or reroute any blocked operation.
+
+**Hard STOP:** No new GitHub Actions/preflight or training run, blocked launch JSON, alternate-surface bypass, real P1/P2/P3/protected/Stage-B data use, paid compute, trained-weight export, `main`/Production, or frozen V8/V9/scientific protocol changes. Offline tests and snapshots do not authorize training.
+
+---
+
 # NEXT ACTIONS — OPENAI SUPPORT CASE 16795041 FOLLOW-UP (2026-10-09, GPT-6)
 
 **Branch / canonical handoff:** `astra-work` / `astra-work/CURRENT_STATE.md`. **Status:** OpenAI Support replied and we sent a response **in the original email thread on 2026-10-09**, confirmed by Gmail's SENT result. This documentation update is not training-launch approval or proof of tests. No launch JSON was attached because the file does not exist following the safety block. The prior Phase-7 report and all earlier handoff material below remain authoritative for the engineering evidence and STOP gates.
