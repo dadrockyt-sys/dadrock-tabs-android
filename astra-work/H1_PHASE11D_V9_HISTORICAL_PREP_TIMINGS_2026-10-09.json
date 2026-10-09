@@ -1,0 +1,757 @@
+{
+  "schema": "astra-h1-prior-v9-preparation-log-reconciliation-v1",
+  "date": "2026-10-09",
+  "sourceRunId": 37573544151,
+  "historicalRunType": "V9_SEGMENT_JOBS_NOT_H1_TRAINING",
+  "method": "Parse timestamp of emitted shell mkdir -p /tmp/prepared /tmp/extract to each of eight archive completion receipt logs; durations include download/verify/extract/prepare in these historical V9 jobs, not whole job/dependency install, H1 evaluation, cleanup or reserve. Millisecond-resolution timestamp arithmetic.",
+  "archiveOrder": [
+    "P1_chords.zip",
+    "P1_scales.zip",
+    "P1_singlenotes.zip",
+    "P1_techniques.zip",
+    "P2_chords.zip",
+    "P2_scales.zip",
+    "P2_singlenotes.zip",
+    "P2_techniques.zip"
+  ],
+  "archiveAcceptedCounts": [
+    84,
+    47,
+    3,
+    2,
+    72,
+    43,
+    3,
+    2
+  ],
+  "totalAcceptedPerJob": 256,
+  "jobs": [
+    {
+      "segment": "p1_0_200",
+      "jobId": 112637586381,
+      "prepStartUtc": "2026-10-07T04:54:55.6607262Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T05:20:46.9404507Z",
+      "prepElapsedSeconds": 1551.28,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 400.986,
+          "completedUtc": "2026-10-07T05:01:36.6464514Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 216.537,
+          "completedUtc": "2026-10-07T05:05:13.1833401Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 47.631,
+          "completedUtc": "2026-10-07T05:06:00.8140205Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 111.107,
+          "completedUtc": "2026-10-07T05:07:51.9213174Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 383.218,
+          "completedUtc": "2026-10-07T05:14:15.1397304Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 190.5,
+          "completedUtc": "2026-10-07T05:17:25.6390096Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 59.244,
+          "completedUtc": "2026-10-07T05:18:24.8836551Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 142.057,
+          "completedUtc": "2026-10-07T05:20:46.9404507Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p1_200_400",
+      "jobId": 112715966844,
+      "prepStartUtc": "2026-10-07T09:07:03.6540440Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T09:43:00.8427472Z",
+      "prepElapsedSeconds": 2157.188,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 537.939,
+          "completedUtc": "2026-10-07T09:16:01.5936609Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 228.996,
+          "completedUtc": "2026-10-07T09:19:50.5899073Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 55.16,
+          "completedUtc": "2026-10-07T09:20:45.7499934Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 145.686,
+          "completedUtc": "2026-10-07T09:23:11.4354656Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 615.241,
+          "completedUtc": "2026-10-07T09:33:26.6763103Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 301.275,
+          "completedUtc": "2026-10-07T09:38:27.9517922Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 128.153,
+          "completedUtc": "2026-10-07T09:40:36.1046216Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 144.738,
+          "completedUtc": "2026-10-07T09:43:00.8427472Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p1_400_600",
+      "jobId": 112781713020,
+      "prepStartUtc": "2026-10-07T12:04:23.8708279Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T12:38:18.5786903Z",
+      "prepElapsedSeconds": 2034.708,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 425.107,
+          "completedUtc": "2026-10-07T12:11:28.9770057Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 304.563,
+          "completedUtc": "2026-10-07T12:16:33.5402185Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 83.685,
+          "completedUtc": "2026-10-07T12:17:57.2254546Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 95.959,
+          "completedUtc": "2026-10-07T12:19:33.1843234Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 544.739,
+          "completedUtc": "2026-10-07T12:28:37.9237196Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 259.494,
+          "completedUtc": "2026-10-07T12:32:57.4173607Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 76.949,
+          "completedUtc": "2026-10-07T12:34:14.3666960Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 244.212,
+          "completedUtc": "2026-10-07T12:38:18.5786903Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p1_600_800",
+      "jobId": 112902288671,
+      "prepStartUtc": "2026-10-07T16:38:18.4849368Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T17:31:03.0961493Z",
+      "prepElapsedSeconds": 3164.612,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 546.617,
+          "completedUtc": "2026-10-07T16:47:25.1012179Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 726.009,
+          "completedUtc": "2026-10-07T16:59:31.1106847Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 74.571,
+          "completedUtc": "2026-10-07T17:00:45.6819090Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 251.17,
+          "completedUtc": "2026-10-07T17:04:56.8519548Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 736.454,
+          "completedUtc": "2026-10-07T17:17:13.3055769Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 532.542,
+          "completedUtc": "2026-10-07T17:26:05.8477694Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 156.539,
+          "completedUtc": "2026-10-07T17:28:42.3864595Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 140.71,
+          "completedUtc": "2026-10-07T17:31:03.0961493Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p1_800_1000",
+      "jobId": 112986816044,
+      "prepStartUtc": "2026-10-07T19:56:55.3562813Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T20:28:19.6734764Z",
+      "prepElapsedSeconds": 1884.317,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 470.95,
+          "completedUtc": "2026-10-07T20:04:46.3065241Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 261.101,
+          "completedUtc": "2026-10-07T20:09:07.4076726Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 36.779,
+          "completedUtc": "2026-10-07T20:09:44.1866493Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 61.76,
+          "completedUtc": "2026-10-07T20:10:45.9462058Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 551.922,
+          "completedUtc": "2026-10-07T20:19:57.8685324Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 245.144,
+          "completedUtc": "2026-10-07T20:24:03.0121904Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 72.72,
+          "completedUtc": "2026-10-07T20:25:15.7321581Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 183.941,
+          "completedUtc": "2026-10-07T20:28:19.6734764Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p2_0_200",
+      "jobId": 113058245257,
+      "prepStartUtc": "2026-10-07T22:56:28.4933558Z",
+      "eighthArchiveCompletedUtc": "2026-10-07T23:22:22.3031128Z",
+      "prepElapsedSeconds": 1553.81,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 361.73,
+          "completedUtc": "2026-10-07T23:02:30.2230835Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 195.545,
+          "completedUtc": "2026-10-07T23:05:45.7689641Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 46.475,
+          "completedUtc": "2026-10-07T23:06:32.2430719Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 121.502,
+          "completedUtc": "2026-10-07T23:08:33.7450921Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 263.831,
+          "completedUtc": "2026-10-07T23:12:57.5761511Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 203.445,
+          "completedUtc": "2026-10-07T23:16:21.0211846Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 51.752,
+          "completedUtc": "2026-10-07T23:17:12.7739535Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 309.53,
+          "completedUtc": "2026-10-07T23:22:22.3031128Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p2_200_400",
+      "jobId": 113093936865,
+      "prepStartUtc": "2026-10-08T00:55:29.2866529Z",
+      "eighthArchiveCompletedUtc": "2026-10-08T01:27:47.6448805Z",
+      "prepElapsedSeconds": 1938.358,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 404.465,
+          "completedUtc": "2026-10-08T01:02:13.7513067Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 264.668,
+          "completedUtc": "2026-10-08T01:06:38.4197972Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 52.204,
+          "completedUtc": "2026-10-08T01:07:30.6239720Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 152.945,
+          "completedUtc": "2026-10-08T01:10:03.5685882Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 572.562,
+          "completedUtc": "2026-10-08T01:19:36.1304149Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 251.547,
+          "completedUtc": "2026-10-08T01:23:47.6778330Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 75.289,
+          "completedUtc": "2026-10-08T01:25:02.9663547Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 164.678,
+          "completedUtc": "2026-10-08T01:27:47.6448805Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p2_400_600",
+      "jobId": 113159892474,
+      "prepStartUtc": "2026-10-08T05:11:29.4799125Z",
+      "eighthArchiveCompletedUtc": "2026-10-08T05:45:28.5984862Z",
+      "prepElapsedSeconds": 2039.119,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 553.407,
+          "completedUtc": "2026-10-08T05:20:42.8866117Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 233.01,
+          "completedUtc": "2026-10-08T05:24:35.8968225Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 67.931,
+          "completedUtc": "2026-10-08T05:25:43.8274400Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 145.413,
+          "completedUtc": "2026-10-08T05:28:09.2402863Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 511.792,
+          "completedUtc": "2026-10-08T05:36:41.0326626Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 254.239,
+          "completedUtc": "2026-10-08T05:40:55.2714587Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 55.984,
+          "completedUtc": "2026-10-08T05:41:51.2557098Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 217.343,
+          "completedUtc": "2026-10-08T05:45:28.5984862Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p2_600_800",
+      "jobId": 113240084409,
+      "prepStartUtc": "2026-10-08T09:20:54.1750716Z",
+      "eighthArchiveCompletedUtc": "2026-10-08T10:15:36.9733133Z",
+      "prepElapsedSeconds": 3282.798,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 790.042,
+          "completedUtc": "2026-10-08T09:34:04.2178411Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 327.897,
+          "completedUtc": "2026-10-08T09:39:32.1145748Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 87.834,
+          "completedUtc": "2026-10-08T09:40:59.9482797Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 224.448,
+          "completedUtc": "2026-10-08T09:44:44.3967925Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 751.278,
+          "completedUtc": "2026-10-08T09:57:15.6742076Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 321.954,
+          "completedUtc": "2026-10-08T10:02:37.6282077Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 326.402,
+          "completedUtc": "2026-10-08T10:08:04.0305883Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 452.943,
+          "completedUtc": "2026-10-08T10:15:36.9733133Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    },
+    {
+      "segment": "p2_800_1000",
+      "jobId": 113346922946,
+      "prepStartUtc": "2026-10-08T13:53:58.3128769Z",
+      "eighthArchiveCompletedUtc": "2026-10-08T14:50:55.2266548Z",
+      "prepElapsedSeconds": 3416.914,
+      "preparedCaptureTotal": 256,
+      "archiveIntervals": [
+        {
+          "archive": "P1_chords.zip",
+          "captures": 84,
+          "elapsedSincePreviousCompletionSeconds": 1129.974,
+          "completedUtc": "2026-10-08T14:12:48.2861088Z"
+        },
+        {
+          "archive": "P1_scales.zip",
+          "captures": 47,
+          "elapsedSincePreviousCompletionSeconds": 604.375,
+          "completedUtc": "2026-10-08T14:22:52.6611797Z"
+        },
+        {
+          "archive": "P1_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 154.462,
+          "completedUtc": "2026-10-08T14:25:27.1238751Z"
+        },
+        {
+          "archive": "P1_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 128.521,
+          "completedUtc": "2026-10-08T14:27:35.6447512Z"
+        },
+        {
+          "archive": "P2_chords.zip",
+          "captures": 72,
+          "elapsedSincePreviousCompletionSeconds": 789.762,
+          "completedUtc": "2026-10-08T14:40:45.4065721Z"
+        },
+        {
+          "archive": "P2_scales.zip",
+          "captures": 43,
+          "elapsedSincePreviousCompletionSeconds": 335.3,
+          "completedUtc": "2026-10-08T14:46:20.7066999Z"
+        },
+        {
+          "archive": "P2_singlenotes.zip",
+          "captures": 3,
+          "elapsedSincePreviousCompletionSeconds": 65.724,
+          "completedUtc": "2026-10-08T14:47:26.4308280Z"
+        },
+        {
+          "archive": "P2_techniques.zip",
+          "captures": 2,
+          "elapsedSincePreviousCompletionSeconds": 208.796,
+          "completedUtc": "2026-10-08T14:50:55.2266548Z"
+        }
+      ],
+      "observedPeakRamBytes": null,
+      "observedFreeDiskBytes": null,
+      "operationalResourceLogMatches": 0,
+      "aptInstallEstimatedAdditionalDiskMessages": [
+        "After this operation, 202 MB of additional disk space will be used"
+      ]
+    }
+  ],
+  "summary": {
+    "jobCount": 10,
+    "observedPreparationElapsedSecondsMin": 1551.28,
+    "max": 3416.914,
+    "median": 2036.9135,
+    "spreadSeconds": 1865.6340000000002,
+    "minMinutes": 25.855,
+    "maxMinutes": 56.949,
+    "maxToMinRatio": 2.203
+  },
+  "perArchiveElapsedRanges": [
+    {
+      "archive": "P1_chords.zip",
+      "minElapsedSeconds": 361.73,
+      "maxElapsedSeconds": 1129.974,
+      "maxToMinRatio": 3.124,
+      "count": 10
+    },
+    {
+      "archive": "P1_scales.zip",
+      "minElapsedSeconds": 195.545,
+      "maxElapsedSeconds": 726.009,
+      "maxToMinRatio": 3.713,
+      "count": 10
+    },
+    {
+      "archive": "P1_singlenotes.zip",
+      "minElapsedSeconds": 36.779,
+      "maxElapsedSeconds": 154.462,
+      "maxToMinRatio": 4.2,
+      "count": 10
+    },
+    {
+      "archive": "P1_techniques.zip",
+      "minElapsedSeconds": 61.76,
+      "maxElapsedSeconds": 251.17,
+      "maxToMinRatio": 4.067,
+      "count": 10
+    },
+    {
+      "archive": "P2_chords.zip",
+      "minElapsedSeconds": 263.831,
+      "maxElapsedSeconds": 789.762,
+      "maxToMinRatio": 2.993,
+      "count": 10
+    },
+    {
+      "archive": "P2_scales.zip",
+      "minElapsedSeconds": 190.5,
+      "maxElapsedSeconds": 532.542,
+      "maxToMinRatio": 2.795,
+      "count": 10
+    },
+    {
+      "archive": "P2_singlenotes.zip",
+      "minElapsedSeconds": 51.752,
+      "maxElapsedSeconds": 326.402,
+      "maxToMinRatio": 6.307,
+      "count": 10
+    },
+    {
+      "archive": "P2_techniques.zip",
+      "minElapsedSeconds": 140.71,
+      "maxElapsedSeconds": 452.943,
+      "maxToMinRatio": 3.219,
+      "count": 10
+    }
+  ],
+  "runnerObservation": {
+    "actualFreeDiskBytes": null,
+    "measuredPeakRamBytes": null,
+    "measuredDiskHighWaterBytes": null,
+    "explicitResourceInstrumentationLinesInTheseTenJobs": 0,
+    "aptInstallEstimateIsNotMeasuredDiskUse": true,
+    "nominalRunnerConfiguration": "ubuntu-22.04 public standard 4 vCPU / 16GB RAM / 14GB SSD; effective free resources not observed"
+  },
+  "limits": [
+    "Each individual next-archive interval includes that archive's transfer and preprocessing; cannot isolate these steps or extrapolate a guaranteed H1 maximum.",
+    "V9 jobs repeated preparing exactly 256 captures 10 times, but H1 source and evaluation differ; maxima are samples, not worst-case bounds.",
+    "No actual MP3-view lengths or verified 256-prepared-frame sum and maximum recovered from these logs.",
+    "Do not add 80min theoretical curl total on top of historical prep as a purported independent max; download overlap is already inside V9 prep.",
+    "Observed apt/dpkg disk messages are estimates for that package operation, not runner free disk or peak."
+  ],
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "trainingExecutedInThisReview": false,
+  "mediaAccessedInThisReview": false,
+  "launchPermission": false
+}
