@@ -1,0 +1,66 @@
+{
+  "branch": "astra-work",
+  "checkScope": "LOCAL_SCALAR_ONLY_PARTIAL_CHECKOUT_NOT_FULL_REPO",
+  "date": "2026-10-09",
+  "historicalOriginalSourceGitBlobs": {
+    "blankWorksheet": "e84b5b357eb2c9c9c8cc55fa8239f20153758103",
+    "capacity": "e8375ec0cd132eadda93456a023df77a88153eda",
+    "frames": "701d4626de0e04200534ed17827db00c896a3d6b",
+    "timings": "309bbe19d6e52083237bd8f10d0998623bea6e80"
+  },
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "results": {
+    "blankAndDefaultCliJsonIdentical": true,
+    "byteCompilationPassed": true,
+    "cliWithBlankWorksheet": "BLOCKED_MISSING_EVIDENCE",
+    "cliWithDefaultWorksheet": "BLOCKED_MISSING_EVIDENCE",
+    "fullRepositoryCheckoutObtained": false,
+    "independentDiskHighWaterMeasured": false,
+    "independentPeakRamMeasured": false,
+    "independentTwelveStageUpperBoundsMeasured": false,
+    "launchPermission": false,
+    "localPythonVersion": "3.13.5",
+    "newGitHubActionsDispatched": false,
+    "noPaidComputeOrRealDataUsed": true,
+    "originalAllThreeGitBlobChecksPassed": true,
+    "pinnedFrozenPythonTorchRuntimeExecuted": false,
+    "relativeParentSymlinkStillRejected": true,
+    "relativePathReviewerBugFixed": true,
+    "sourceFacts": {
+      "captures": 256,
+      "historicalLogicalPeakOverlapBytes": 4391923097,
+      "historicalPreparedFrames": 1924805,
+      "historicalV9PrepSecondsMax": 3416.914,
+      "historicalV9PrepSecondsMin": 1551.28,
+      "maximumFramesPerCapture": 23773,
+      "preparedPayloadBytes": 1501347900
+    },
+    "stillMissingIndependentEvidenceCount": 19,
+    "suiteTestCount": 22,
+    "testsFailed": 0,
+    "testsPassed": 22,
+    "testsSkipped": 0,
+    "threeOriginalReceiptsCLIExecutedWithRelativePaths": true
+  },
+  "schema": "astra-h1-phase15-exact-three-originals-local-paper-integration-v1",
+  "sha256Receipts": {
+    "actual22TestLog": "4dcc845dcdace0aad34bb77bdf9dc89732da3dde387ec93fd7a035521b6354fa",
+    "actualOriginalTripleCLIJson": "523bd83fd0f72999158dc39af54d4af86be8997b99f1f4d54859db980301dbd5"
+  },
+  "sourceCodeGitBlobs": {
+    "phase12BaselineTests": "51def99068e93ad8395288412c3468aa3ec0f0f5",
+    "phase13IntegrationTests": "1bec8970c55dc513e107cb26c4b1dc9c7850a255",
+    "phase15RelativePathTests": "291affb4ca49de98f2ab6188f26497900d73b65b",
+    "reviewerFixed": "3e4d498f5516f77e81ed89a44d4383ffacd88353"
+  },
+  "unresolvedGates": [
+    "Support written case #16795041",
+    "genuine complete-checkout ten-module no-media suite",
+    "Python3.10.15/Torch1.11.0+cpu/NumPy1.21.6 model synthetic-only parity",
+    "independent source and dependencies",
+    "global durable atomic one-use approval",
+    "real runner free disk and disk peak",
+    "real frozen-runner RAM peak",
+    "independently justified full twelve-stage <=18000-second bound with reserve"
+  ]
+}
