@@ -117,6 +117,10 @@ def train_arm(rows,fold,arm,source_root,control_sha,before_step=None,on_step=Non
 
 
 def evaluate(model,rows,expected_captures,expected_performances):
+    audit_fields=("predictedEvents","referenceEvents","truePositiveEvents",
+                  "stateArgmaxActivePositions","activeRunsBeforeGapMerge",
+                  "activeRunsAfterPrune","strongStartCandidates",
+                  "confirmedStartCandidates","acceptedStrongStarts","acceptedConfirmedStarts")
     caps=[]
     model.eval()
     for row in rows:
@@ -128,8 +132,7 @@ def evaluate(model,rows,expected_captures,expected_performances):
         if not all(k in met and math.isfinite(float(met[k])) for k in
                    ('precision','recall','f1','completeness','frameAccuracy','abstentionRate')):
             raise RuntimeError('H1_NONFINITE_OR_MISSING_CAPTURE_METRICS')
-        if any(not isinstance(info.get(k),int) or info[k]<0 for k in
-               ('predictedEvents','referenceEvents','truePositiveEvents','activeRunsAfterPrune')):
+        if any(type(info.get(k)) is not int or info[k]<0 for k in audit_fields):
             raise RuntimeError('H1_INVALID_EVENT_COUNTER_SCHEMA')
         if info['truePositiveEvents']>min(info['predictedEvents'],info['referenceEvents']):
             raise RuntimeError('H1_IMPOSSIBLE_EVENT_COUNTS')
@@ -141,7 +144,4 @@ def evaluate(model,rows,expected_captures,expected_performances):
     if not all(k in summary and math.isfinite(float(summary[k])) for k in
                ('precision','recall','f1','completeness','frameAccuracy','abstentionRate')):
         raise RuntimeError('H1_NONFINITE_OR_MISSING_MACRO_METRICS')
-    fields=("predictedEvents","referenceEvents","truePositiveEvents","stateArgmaxActivePositions",
-            "activeRunsBeforeGapMerge","activeRunsAfterPrune","strongStartCandidates",
-            "confirmedStartCandidates","acceptedStrongStarts","acceptedConfirmedStarts")
-    return {"metrics":summary,"totals":{k:sum(c["audit"][k] for c in caps) for k in fields}}
+    return {"metrics":summary,"totals":{k:sum(c["audit"][k] for c in caps) for k in audit_fields}}
