@@ -6,11 +6,12 @@
   "source": "GitHub fetch_file reported blob SHAs",
   "sourceAnchor": "docs/astra/GUITARTECHS_H1_OFFLINE_PREPARATION_PHASE2_V1.md",
   "requiredLiveWorkflowSources": {
-    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "c3d517ffe94365d94f0f162db0e62257851af675",
+    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "90e8168fc1ca40738ba07291ca1001a36718f4e3",
     "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
     "astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py": "2bf8085b6cd69214d5e2ec198d80c40b35d13875",
     "astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py": "fd6a739c095fdc3e48d5305a36edf36bb3f00255",
-    "astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py": "891ffe7420af2ab350a8c99f28ff8262bfb8fdd7",
+    "astra_backend/guitartechs_training_v10/h1_prepared_array_guard_v1.py": "b589b7118e2d23ec3d1557195954c65a7727a928",
+    "astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py": "ad38a33b87b85f676f6342eeaec569a031a327f2",
     "astra_backend/guitartechs_training_v2/sampling.py": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
     "astra_backend/guitartechs_training_v2/train_v2.py": "4db5add96c58a8e54868ea06dacb1da724675163",
     "astra_backend/guitartechs_training_v4/objective_decoder.py": "b9a96f6b256de52bfbb5076482a03263415213cb",
@@ -36,8 +37,9 @@
     "astra_backend/guitartechs_training_v10/test_h1_core_failclosed_v1.py": "aa14e55393eb51a20143a75f964bae438ed813f1",
     "astra_backend/guitartechs_training_v10/test_h1_launch_ancestry_guard_v1.py": "0dd7004fc3ef41ea70c28ecf22b271176a31b529",
     "astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py": "d652cfc5318e1d2aeaf24b1ed0b9ddfb1f96d594",
-    "astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py": "61258dc26a5387d3e65fecb3afda73841e5b0f27",
+    "astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py": "9520996b491569df5320423d92d4d615546ef268",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_readiness_v1.py": "6df5a4291a0eb0844053080f352149265838f7e7",
+    "astra_backend/guitartechs_training_v10/test_h1_prepared_array_guard_v1.py": "02cd76361e979a2aaf602e230441f5bd5f9191cb",
     "astra_backend/guitartechs_training_v10/test_h1_real_v7_objective_parity_v1.py": "8868ea56f1da130ff4a479056fe65fcaa388162c",
     "astra_backend/guitartechs_training_v10/test_h1_source_lock_audit_v1.py": "3957169567aa15367ec03e9198d7d48796602bb5",
     "astra_backend/guitartechs_training_v10/test_h1_static_import_closure_v1.py": "d7694a517f1cdfae6172fcb1682032f7e2965132",
@@ -45,5 +47,5 @@
   },
   "externalDependencies": "Upstream pinned TabCNN four source Git blobs, Python package/environment/hardware identity must be independently audited; this lock does not cover them.",
   "limitation": "This map mirrors inspected current files and is not an independently approved immutable reference. Neither a user-supplied sourceBlobs map nor this draft alone grants launch permission. Do not create/edit training launch JSON or trigger Actions.",
-  "note": "OFFLINE REVIEW DRAFT ONLY: 21 workflow inputs, 13 offline guards/tests. Dormant workflow pins one-use historical first addition, full ancestry checkout and at most two 300s archive HTTP requests per frozen ZIP. Full-TemporalTabCNNV9 synthetic CLI prepared but NOT executed, needs independently staged upstream source, Torch 1.11 environment and full checkout. Git-history check does not prevent rewritten history/duplicate events. No technical or platform approval."
+  "note": "NONLAUNCH review draft. H1 source whitelist now 22 live dependencies, 14 auxiliary offline sources. Pre-optimizer prepared arrays are validated for exact float32/int16, shape, finite features and {-100,-1,0..19} labels in bounded read-only chunks; four dedicated synthetic tests locally passed. Still no full repo/pinned-Torch CI parity, independent source approval or platform safety clearance. Real launch forbidden."
 }
