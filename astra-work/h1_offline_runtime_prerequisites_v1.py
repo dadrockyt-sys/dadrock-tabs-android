@@ -88,6 +88,44 @@ def read_exact_file(root: Path, relative: str) -> bytes:
     return current.read_bytes()
 
 
+def inspect_stage_tree(root: Path, expected_sources: set[str]) -> int:
+    """Require an isolated upstream Python tree, not merely seven matching files.
+
+    A matching pinned subset is insufficient when an extra importable module,
+    executable initializer, .pth file or compiled extension can also be present.
+    This read-only review rejects all unexpected staged paths, even harmless
+    extras, to match the prospective workflow's freshly constructed tree.
+    """
+    amt = root / "amt_tools"
+    if amt.is_symlink():
+        raise RuntimeError("UPSTREAM_PATH_SYMLINK:amt_tools")
+    if not amt.is_dir() or amt.resolve() != amt:
+        raise RuntimeError("UPSTREAM_FILE_MISSING:amt_tools")
+    expected = set(expected_sources) | set(GENERATED_INIT)
+    allowed_files = set(expected)
+    allowed_dirs = set()
+    for name in allowed_files:
+        folder = Path(name).parent
+        while folder != Path("."):
+            allowed_dirs.add(folder.as_posix())
+            folder = folder.parent
+    seen = 0
+    for item in amt.rglob("*"):
+        rel = item.relative_to(amt).as_posix()
+        if item.is_symlink():
+            raise RuntimeError("UPSTREAM_PATH_SYMLINK:" + rel)
+        if item.is_dir():
+            if rel not in allowed_dirs:
+                raise RuntimeError("UPSTREAM_UNEXPECTED_PATH:" + rel)
+        elif item.is_file():
+            if rel not in allowed_files:
+                raise RuntimeError("UPSTREAM_UNEXPECTED_PATH:" + rel)
+        else:
+            raise RuntimeError("UPSTREAM_UNEXPECTED_PATH:" + rel)
+        seen += 1
+    return seen
+
+
 def inspect_upstream(
     source_root: Path,
     *,
@@ -95,7 +133,12 @@ def inspect_upstream(
     init_contents: dict[str, bytes] = GENERATED_INIT,
 ) -> dict:
     """Compare on-disk upstream source IDs. Test injection is fixture-only."""
+    if source_root.is_symlink():
+        raise RuntimeError("UPSTREAM_PATH_SYMLINK:source_root")
     root = source_root.resolve(strict=True)
+    if not root.is_dir():
+        raise RuntimeError("UPSTREAM_FILE_MISSING:source_root")
+    entry_count = inspect_stage_tree(root, set(expected_blobs))
     matches = {}
     for file, expected in sorted(expected_blobs.items()):
         raw = read_exact_file(root, "amt_tools/" + file)
@@ -105,6 +148,7 @@ def inspect_upstream(
         inits[file] = read_exact_file(root, "amt_tools/" + file) == expected
     return {
         "expectedUpstreamCount": len(expected_blobs),
+        "verifiedTreeEntryCount": entry_count,
         "sourceBlobMatches": matches,
         "generatedInitMatches": inits,
         "allSourcesAndInitsMatch": all(matches.values()) and all(inits.values()),
