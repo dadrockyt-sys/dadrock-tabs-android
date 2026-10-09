@@ -1,0 +1,157 @@
+{
+  "arraySizesAtActualLargestCapture": {
+    "areIndependentAllocationsNotMeasuredConcurrentPeak": true,
+    "eventFloat32Bytes": 570552,
+    "paddedCqtFloat32Bytes": 18263808,
+    "stateFloat32Bytes": 11981592,
+    "stateFloat64CopyBytes": 23963184
+  },
+  "branch": "astra-work",
+  "completePreparedArrayPayloadBytes": 1501347900,
+  "completePreparedArrayPayloadGiB": 1.398239,
+  "date": "2026-10-09",
+  "diskCapacityBoundEstablished": false,
+  "estimatedOriginalMP3DurationsFromSource": false,
+  "exactPreparedFrames": 1924805,
+  "historicalScalarInput": {
+    "preparedFrameRecoveryGitBlob": "701d4626de0e04200534ed17827db00c896a3d6b",
+    "priorInventoryRecoveryGitBlob": "5706ac4ed1a9590fa74f7644e6be7e642ffb9db2",
+    "scalarArtifactJsonSha256": "5dbc876c3b77be3dff1f42b52e33f1955a8b96356aff08452e2fa9116aab6f94",
+    "scalarArtifactZipSha256": "3e7d59b40d6311c800a0a5ee85f4ef90a38a0f8d6a17351578108f292604079b",
+    "sourceRunId": 37836761676
+  },
+  "largestIdentifiableStage": {
+    "archive": "P2_chords.zip",
+    "gib": 4.090297,
+    "historicalLogicalPlusExactPreparedPayloadBytes": 4391923097,
+    "phase": "modeledZipPlusExtractionBytes"
+  },
+  "launchPermission": false,
+  "maximumAcceptedCaptureFrames": 23773,
+  "measuredRunnerDiskHighWaterBytes": null,
+  "measuredRunnerFreeDiskBytes": null,
+  "measuredRunnerPeakRamBytes": null,
+  "perArchiveSequentialStages": [
+    {
+      "acceptedCaptures": 84,
+      "archive": "P1_chords.zip",
+      "exactPreparedFrames": 580707,
+      "historicalVisibleExtractedLogicalBytes": 1271640503,
+      "historicalZipBytes": 981741162,
+      "modeledAfterArchiveCleanupBytes": 452951460,
+      "modeledEndOfPreparationBytes": 1724591963,
+      "modeledZipPlusExtractionBytes": 2253381665,
+      "previouslyRetainedPreparedArrayPayloadBytes": 0,
+      "thisArchivePreparedArrayPayloadBytes": 452951460
+    },
+    {
+      "acceptedCaptures": 47,
+      "archive": "P1_scales.zip",
+      "exactPreparedFrames": 323845,
+      "historicalVisibleExtractedLogicalBytes": 548096546,
+      "historicalZipBytes": 453349723,
+      "modeledAfterArchiveCleanupBytes": 705550560,
+      "modeledEndOfPreparationBytes": 1253647106,
+      "modeledZipPlusExtractionBytes": 1454397729,
+      "previouslyRetainedPreparedArrayPayloadBytes": 452951460,
+      "thisArchivePreparedArrayPayloadBytes": 252599100
+    },
+    {
+      "acceptedCaptures": 3,
+      "archive": "P1_singlenotes.zip",
+      "exactPreparedFrames": 71317,
+      "historicalVisibleExtractedLogicalBytes": 157082257,
+      "historicalZipBytes": 108626613,
+      "modeledAfterArchiveCleanupBytes": 761177820,
+      "modeledEndOfPreparationBytes": 918260077,
+      "modeledZipPlusExtractionBytes": 971259430,
+      "previouslyRetainedPreparedArrayPayloadBytes": 705550560,
+      "thisArchivePreparedArrayPayloadBytes": 55627260
+    },
+    {
+      "acceptedCaptures": 2,
+      "archive": "P1_techniques.zip",
+      "exactPreparedFrames": 47546,
+      "historicalVisibleExtractedLogicalBytes": 651845901,
+      "historicalZipBytes": 326280863,
+      "modeledAfterArchiveCleanupBytes": 798263700,
+      "modeledEndOfPreparationBytes": 1450109601,
+      "modeledZipPlusExtractionBytes": 1739304584,
+      "previouslyRetainedPreparedArrayPayloadBytes": 761177820,
+      "thisArchivePreparedArrayPayloadBytes": 37085880
+    },
+    {
+      "acceptedCaptures": 72,
+      "archive": "P2_chords.zip",
+      "exactPreparedFrames": 488811,
+      "historicalVisibleExtractedLogicalBytes": 2442840341,
+      "historicalZipBytes": 1150819056,
+      "modeledAfterArchiveCleanupBytes": 1179536280,
+      "modeledEndOfPreparationBytes": 3622376621,
+      "modeledZipPlusExtractionBytes": 4391923097,
+      "previouslyRetainedPreparedArrayPayloadBytes": 798263700,
+      "thisArchivePreparedArrayPayloadBytes": 381272580
+    },
+    {
+      "acceptedCaptures": 43,
+      "archive": "P2_scales.zip",
+      "exactPreparedFrames": 295095,
+      "historicalVisibleExtractedLogicalBytes": 996527054,
+      "historicalZipBytes": 471254783,
+      "modeledAfterArchiveCleanupBytes": 1409710380,
+      "modeledEndOfPreparationBytes": 2406237434,
+      "modeledZipPlusExtractionBytes": 2647318117,
+      "previouslyRetainedPreparedArrayPayloadBytes": 1179536280,
+      "thisArchivePreparedArrayPayloadBytes": 230174100
+    },
+    {
+      "acceptedCaptures": 3,
+      "archive": "P2_singlenotes.zip",
+      "exactPreparedFrames": 71316,
+      "historicalVisibleExtractedLogicalBytes": 286690653,
+      "historicalZipBytes": 116133457,
+      "modeledAfterArchiveCleanupBytes": 1465336860,
+      "modeledEndOfPreparationBytes": 1752027513,
+      "modeledZipPlusExtractionBytes": 1812534490,
+      "previouslyRetainedPreparedArrayPayloadBytes": 1409710380,
+      "thisArchivePreparedArrayPayloadBytes": 55626480
+    },
+    {
+      "acceptedCaptures": 2,
+      "archive": "P2_techniques.zip",
+      "exactPreparedFrames": 46168,
+      "historicalVisibleExtractedLogicalBytes": 934246460,
+      "historicalZipBytes": 395839610,
+      "modeledAfterArchiveCleanupBytes": 1501347900,
+      "modeledEndOfPreparationBytes": 2435594360,
+      "modeledZipPlusExtractionBytes": 2795422930,
+      "previouslyRetainedPreparedArrayPayloadBytes": 1465336860,
+      "thisArchivePreparedArrayPayloadBytes": 36011040
+    }
+  ],
+  "ramCapacityBoundEstablished": false,
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "realMediaRead": false,
+  "schema": "astra-h1-exact-prior-scalar-stage-capacity-review-v1",
+  "stage300MinuteBoundEstablished": false,
+  "stillExcludedFromDiskEstimate": [
+    "npyHeadersFor512Files",
+    "OSAllocatedBlockRoundup",
+    "sourceRepository",
+    "PythonTorchLibrosaDependenciesAndCaches",
+    "CurrentArchiveExtractionDifferences",
+    "AudioDecodedPCMAndVQTTransientScratch",
+    "LogsAndArtifacts",
+    "FailureReserve",
+    "ActualRunnerFreeDisk"
+  ],
+  "stillExcludedFromRamEstimate": [
+    "TorchModelAndOptimizerStates",
+    "AutogradAndInferenceHiddenActivations",
+    "LibrosaVQTTransientPeak",
+    "DecodedAudioPCM",
+    "PageCacheAndPythonRuntime",
+    "LinuxAndRunnerMemoryReserve"
+  ],
+  "trainingExecuted": false
+}
