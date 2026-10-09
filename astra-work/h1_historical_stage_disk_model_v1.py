@@ -137,7 +137,7 @@ def receipt() -> dict:
         "historicalInventoryRecoveredReceiptGitBlob": HISTORICAL_LOG_RECEIPT_GIT_BLOB,
         "dormantWorkflowGitBlob": WORKFLOW_GIT_BLOB,
         "population": {"acceptedTotal": ACCEPTED_CAPTURES, "wavHeaderDurations": ACCEPTED_WAV_HEADERS,
-                       "mp3VideoDurationsAbsent": ACCEPTED_VIDEO_MP3_NO_DURATIONS},
+                        "mp3VideoDurationsAbsent": ACCEPTED_VIDEO_MP3_NO_DURATIONS},
         "historicalLogicalCompressedSumBytes": COMPRESSED_SUM,
         "historicalLogicalExtractedSumBytes": EXTRACTED_VISIBLE_LOGICAL_SUM,
         "assumptions": [
