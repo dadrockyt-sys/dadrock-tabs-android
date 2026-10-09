@@ -1,0 +1,127 @@
+{
+  "allFramesFromPreviouslyAuthorizedScalarAudit": true,
+  "byArchive": {
+    "P1_chords.zip": {
+      "captures": 84,
+      "featureAndLabelPayloadBytes": 452951460,
+      "maxFrames": 8788,
+      "minFrames": 2066,
+      "totalFrames": 580707
+    },
+    "P1_scales.zip": {
+      "captures": 47,
+      "featureAndLabelPayloadBytes": 252599100,
+      "maxFrames": 6895,
+      "minFrames": 6889,
+      "totalFrames": 323845
+    },
+    "P1_singlenotes.zip": {
+      "captures": 3,
+      "featureAndLabelPayloadBytes": 55627260,
+      "maxFrames": 23773,
+      "minFrames": 23771,
+      "totalFrames": 71317
+    },
+    "P1_techniques.zip": {
+      "captures": 2,
+      "featureAndLabelPayloadBytes": 37085880,
+      "maxFrames": 23773,
+      "minFrames": 23773,
+      "totalFrames": 47546
+    },
+    "P2_chords.zip": {
+      "captures": 72,
+      "featureAndLabelPayloadBytes": 381272580,
+      "maxFrames": 9518,
+      "minFrames": 2195,
+      "totalFrames": 488811
+    },
+    "P2_scales.zip": {
+      "captures": 43,
+      "featureAndLabelPayloadBytes": 230174100,
+      "maxFrames": 7106,
+      "minFrames": 6069,
+      "totalFrames": 295095
+    },
+    "P2_singlenotes.zip": {
+      "captures": 3,
+      "featureAndLabelPayloadBytes": 55626480,
+      "maxFrames": 23773,
+      "minFrames": 23770,
+      "totalFrames": 71316
+    },
+    "P2_techniques.zip": {
+      "captures": 2,
+      "featureAndLabelPayloadBytes": 36011040,
+      "maxFrames": 23084,
+      "minFrames": 23084,
+      "totalFrames": 46168
+    }
+  },
+  "byView": {
+    "directinput": {
+      "captures": 80,
+      "featureAndLabelPayloadBytes": 486372120,
+      "maxFrames": 23773,
+      "minFrames": 2068,
+      "totalFrames": 623554
+    },
+    "ego": {
+      "captures": 52,
+      "featureAndLabelPayloadBytes": 288919020,
+      "maxFrames": 23771,
+      "minFrames": 2066,
+      "totalFrames": 370409
+    },
+    "exo": {
+      "captures": 46,
+      "featureAndLabelPayloadBytes": 254599800,
+      "maxFrames": 23770,
+      "minFrames": 2066,
+      "totalFrames": 326410
+    },
+    "micamp": {
+      "captures": 78,
+      "featureAndLabelPayloadBytes": 471456960,
+      "maxFrames": 23773,
+      "minFrames": 2068,
+      "totalFrames": 604432
+    }
+  },
+  "folds": {
+    "p1-train-p2-validate": {
+      "captureCount": 120,
+      "frames": 901390,
+      "maxCaptureFrames": 23773,
+      "minCaptureFrames": 2195,
+      "stringPositions": 5408340
+    },
+    "p2-train-p1-validate": {
+      "captureCount": 136,
+      "frames": 1023415,
+      "maxCaptureFrames": 23773,
+      "minCaptureFrames": 2066,
+      "stringPositions": 6140490
+    }
+  },
+  "historicalArtifactId": 11580776876,
+  "identitiesMatched": 256,
+  "launchPermission": false,
+  "medianCaptureFrames": 6889.0,
+  "originalMP3FileDurationsKnown": false,
+  "peakRuntimeRAMKnown": false,
+  "physicalRunnerDiskPeakKnown": false,
+  "population": {
+    "captures": 256,
+    "featureAndLabelPayloadBytes": 1501347900,
+    "maxFrames": 23773,
+    "minFrames": 2066,
+    "totalFrames": 1924805
+  },
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "referenceManifestSha256": "2b6851a5c0f1639f84df987372985e4d26ca34ad9e281d84f8c686531fdccf4c",
+  "scalarArtifactJsonSha256": "5dbc876c3b77be3dff1f42b52e33f1955a8b96356aff08452e2fa9116aab6f94",
+  "scalarArtifactZipSha256": "3e7d59b40d6311c800a0a5ee85f4ef90a38a0f8d6a17351578108f292604079b",
+  "schema": "astra-h1-prior-scalar-exact-prepared-frame-recovery-v1",
+  "sourceRunId": 37836761676
+}
