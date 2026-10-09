@@ -1,28 +1,19 @@
 {
-  "schema": "astra-h1-static-capacity-review-v1",
-  "sourceDerivedConstants": {
-    "acceptedCaptures": 256,
-    "minimumFramesPerCapture": 200,
-    "featureBins": 192,
-    "featureItemBytes": 4,
-    "labelStrings": 6,
-    "labelItemBytes": 2,
-    "sampleRateHz": 22050,
-    "hopSamples": 512,
-    "preparedPayloadBytesPerFrame": 780,
-    "preparedFeatureBytesPerFrame": 768,
-    "preparedLabelBytesPerFrame": 12,
-    "npyFilesAcrossCaptures": 512,
-    "minimumPreparedPayloadBytesIfAllCapturesHaveExactly200Frames": 39936000,
-    "one200FrameMicrobatchWindowFloat32Bytes": 1382400
+  "exampleEvaluatorArraysFor100000Frames": {
+    "notAPeakMemoryBound": true,
+    "paddedCQTFloat32Bytes": 76806144,
+    "stateToFloat64CopyBytes": 100800000,
+    "storedEventFloat32Bytes": 2400000,
+    "storedStateFloat32Bytes": 50400000
   },
   "historicMetadata": {
-    "developmentArchives": 8,
     "compressedArchiveSumBytes": 4004045267,
+    "developmentArchives": 8,
     "largestCompressedArchiveBytes": 1150819056,
-    "priorInventoryExtractedAggregateBytesAcrossSeparateRuns": 7288969715,
-    "observedSameRunnerPeakExtractionBytes": null
+    "observedSameRunnerPeakExtractionBytes": null,
+    "priorInventoryExtractedAggregateBytesAcrossSeparateRuns": 7288969715
   },
+  "launchPermission": false,
   "nominalDurationSensitivity": [
     {
       "hypotheticalMinutesPerCapture": 1,
@@ -60,14 +51,27 @@
       "notAnObservedH1FrameCount": true
     }
   ],
-  "exampleEvaluatorArraysFor100000Frames": {
-    "paddedCQTFloat32Bytes": 76806144,
-    "storedStateFloat32Bytes": 50400000,
-    "storedEventFloat32Bytes": 2400000,
-    "stateToFloat64CopyBytes": 100800000,
-    "notAPeakMemoryBound": true
-  },
   "optionalUnverifiedFrameAggregate": null,
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "realMediaRead": false,
+  "schema": "astra-h1-static-capacity-review-v1",
+  "sourceDerivedConstants": {
+    "acceptedCaptures": 256,
+    "featureBins": 192,
+    "featureItemBytes": 4,
+    "hopSamples": 512,
+    "labelItemBytes": 2,
+    "labelStrings": 6,
+    "minimumFramesPerCapture": 200,
+    "minimumPreparedPayloadBytesIfAllCapturesHaveExactly200Frames": 39936000,
+    "npyFilesAcrossCaptures": 512,
+    "one200FrameMicrobatchWindowFloat32Bytes": 1382400,
+    "preparedFeatureBytesPerFrame": 768,
+    "preparedLabelBytesPerFrame": 12,
+    "preparedPayloadBytesPerFrame": 780,
+    "sampleRateHz": 22050
+  },
+  "trainingExecuted": false,
   "unknownForHardDiskBound": [
     "measuredTotalAcceptedFrames",
     "peakExtractedBytesPerArchive",
@@ -85,9 +89,5 @@
     "librosaVQTTransientArrayPeak",
     "pythonAndSystemReserve"
   ],
-  "verifiedDiskOrMemoryHeadroom": false,
-  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
-  "launchPermission": false,
-  "realMediaRead": false,
-  "trainingExecuted": false
+  "verifiedDiskOrMemoryHeadroom": false
 }
