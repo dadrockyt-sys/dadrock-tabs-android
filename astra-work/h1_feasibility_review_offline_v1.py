@@ -37,7 +37,7 @@ SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 
 
 def read_json_regular(path: Path) -> dict:
-    if path.is_symlink() or not path.is_file() or path.resolve() != path:
+    if path.is_symlink() or not path.is_file() or path.resolve() != path.absolute():
         raise ValueError('INPUT_FILE_MISSING_OR_SYMLINK')
     data = json.loads(path.read_text(encoding='utf-8'))
     if not isinstance(data, dict):
@@ -46,7 +46,7 @@ def read_json_regular(path: Path) -> dict:
 
 
 def read_pinned_json_regular(path: Path, expected_blob: str) -> dict:
-    if path.is_symlink() or not path.is_file() or path.resolve() != path:
+    if path.is_symlink() or not path.is_file() or path.resolve() != path.absolute():
         raise ValueError('PINNED_INPUT_FILE_MISSING_OR_SYMLINK')
     raw = path.read_bytes()
     actual = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
