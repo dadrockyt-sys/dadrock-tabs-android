@@ -33,7 +33,7 @@ def fake_rows():
 
 
 class MockDriver(unittest.TestCase):
-    def run_case(self, failing_control=None, unexpected_steps=0):
+    def run_case(self, failing_control=None, unexpected_steps=0, fail_prepared=False):
         rows = fake_rows()
         training_calls = []
         outputs = {}
@@ -72,13 +72,19 @@ class MockDriver(unittest.TestCase):
             stub_guards = types.SimpleNamespace(
                 ScalarProgress=guards.ScalarProgress,require_zero_control=guards.require_zero_control,
                 sha256_file=guards.sha256_file,verify_population=lambda *_: {"captureCount":256})
+            prepared_checks = []
+            def verify_pair(feature, label, frames):
+                prepared_checks.append((feature, label, frames))
+                if fail_prepared:
+                    raise RuntimeError("H1_PREPARED_INVALID_LABEL_CLASS")
+            stub_prepared = types.SimpleNamespace(verify_prepared_pair=verify_pair)
             source = (HERE / "run_h1_20epoch_paired_pilot_v1.py").read_text()
             syntax = ast.parse(source)
             main = next(node for node in syntax.body if isinstance(node,ast.FunctionDef) and node.name == "main")
             env = {
                 "argparse": argparse,"json": json,"Path": Path, "platform": platform,
                 "sys":sys,"torch":stub_torch,"v9":stub_v9,"core":stub_core,
-                "safety":stub_guards,"HERE":HERE,
+                "safety":stub_guards,"prepared":stub_prepared,"HERE":HERE,
                 "CANDIDATE":"synthetic_h1_mock","SCHEMA":"synthetic_mock",
             }
             exec(compile(ast.Module(body=[main], type_ignores=[]), "driver-main-ast", "exec"),env)
@@ -91,6 +97,7 @@ class MockDriver(unittest.TestCase):
                 outputs["error"] = exc
             progress = output.with_suffix(".progress.json")
             outputs["calls"] = list(training_calls)
+            outputs["preparedChecks"] = list(prepared_checks)
             outputs["journal"] = json.loads(progress.read_text()) if progress.exists() else None
             outputs["result"] = json.loads(output.read_text()) if output.exists() else None
         return outputs
@@ -103,7 +110,16 @@ class MockDriver(unittest.TestCase):
         self.assertEqual(state["journal"]["optimizerStepsConfirmed"],160)
         self.assertEqual(state["journal"]["status"],"completed")
         self.assertEqual(len(state["journal"]["armResults"]),4)
+        self.assertEqual(len(state["preparedChecks"]), 256)
         self.assertEqual(state["result"]["optimizerSteps"],160)
+
+    def test_prepared_semantic_rejection_precedes_optimizer_or_journal(self):
+        state = self.run_case(fail_prepared=True)
+        self.assertIn("H1_PREPARED_INVALID_LABEL_CLASS", str(state["error"]))
+        self.assertEqual(state["calls"], [])
+        self.assertEqual(len(state["preparedChecks"]), 1)
+        self.assertIsNone(state["journal"])
+        self.assertIsNone(state["result"])
 
     def test_control_admission_blocks_treatment_and_writes_failure(self):
         state = self.run_case(failing_control="admission")
