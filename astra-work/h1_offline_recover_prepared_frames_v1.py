@@ -133,6 +133,5 @@ def main() -> None:
                      json.loads(x.published_json.read_text()))
     print(json.dumps(report,indent=2,sort_keys=True))
 
-
 if __name__=='__main__':
     main()
