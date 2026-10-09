@@ -6,19 +6,23 @@
   "source": "GitHub fetch_file reported blob SHAs",
   "sourceAnchor": "docs/astra/GUITARTECHS_H1_OFFLINE_PREPARATION_PHASE2_V1.md",
   "requiredLiveWorkflowSources": {
-    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "7a1383b38ca903ebbf47a1f6a1c00d770a489f5b",
+    ".github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml": "4fb88dc9eeebb62cbd13ac160d5e4536bd855f7e",
     "astra_backend/guitartechs_real_training/real_training.py": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
     "astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py": "2bf8085b6cd69214d5e2ec198d80c40b35d13875",
     "astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py": "fd6a739c095fdc3e48d5305a36edf36bb3f00255",
     "astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py": "891ffe7420af2ab350a8c99f28ff8262bfb8fdd7",
     "astra_backend/guitartechs_training_v2/sampling.py": "9eb62fde56f592646077afa1e0ff3013a5dc6560",
     "astra_backend/guitartechs_training_v2/train_v2.py": "4db5add96c58a8e54868ea06dacb1da724675163",
+    "astra_backend/guitartechs_training_v4/objective_decoder.py": "b9a96f6b256de52bfbb5076482a03263415213cb",
+    "astra_backend/guitartechs_training_v6/model.py": "78a17dd174bd86e804af0e9c75056055d6048295",
+    "astra_backend/guitartechs_training_v7/model.py": "cdb80274494782fc42774f3dd5c6859e9beb97d3",
     "astra_backend/guitartechs_training_v7/objective_decoder.py": "7e0f3a297e4ce8fa20b4bcca74842964e08aafd2",
     "astra_backend/guitartechs_training_v8/decoder.py": "0d856504983afdeeba2c18ad11b3090164876243",
     "astra_backend/guitartechs_training_v9/model.py": "b930555e6c816fd45e2e77dc292702bf46fc6d02",
     "astra_backend/guitartechs_training_v9/paired_view.py": "9b704ea9c5bf153197dfde260c1b995142d062b5",
     "astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py": "8e4cf8a6aa052d0703fc69128a387de8eb2bf6d5",
     "astra_backend/guitartechs_training_v9/train_v9_resumable.py": "99cae61a0a299de27a24e367afccdf7b13a7c81b",
+    "astra_backend/tabcnn_runtime/preprocessing.py": "e1d251a341b811b1b8e2df97d78b754d3379046b",
     "astra_backend/tabcnn_runtime/requirements.lock.txt": "174a5016cfe9e6c00816d2171210aa84c66081a8",
     "docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_AUTHORIZATION_V1.json": "ec705b8f6978bbe1102bb337d7fc927d93fcffcc",
     "docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_PROTOCOL_V1.md": "431b0e6bb783b452830afcf4dd489519a2f6568e",
@@ -27,15 +31,17 @@
   "additionalOfflineTestAndBudgetSources": {
     "astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py": "9c3ef85aec7c69b7a8a941acd39a790bb013a14b",
     "astra_backend/guitartechs_training_v10/h1_source_lock_audit_v1.py": "822214e47e5ed5bbd577fa59a152eafa7c575047",
+    "astra_backend/guitartechs_training_v10/h1_static_import_closure_v1.py": "e5aa04aa395feb76254d7a383558e1bca2ac2f5c",
     "astra_backend/guitartechs_training_v10/test_h1_core_failclosed_v1.py": "aa14e55393eb51a20143a75f964bae438ed813f1",
     "astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py": "09840b703d237de749a1e39458ad4c16f910b474",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py": "61258dc26a5387d3e65fecb3afda73841e5b0f27",
     "astra_backend/guitartechs_training_v10/test_h1_pilot_readiness_v1.py": "6df5a4291a0eb0844053080f352149265838f7e7",
     "astra_backend/guitartechs_training_v10/test_h1_real_v7_objective_parity_v1.py": "8868ea56f1da130ff4a479056fe65fcaa388162c",
     "astra_backend/guitartechs_training_v10/test_h1_source_lock_audit_v1.py": "3957169567aa15367ec03e9198d7d48796602bb5",
+    "astra_backend/guitartechs_training_v10/test_h1_static_import_closure_v1.py": "d7694a517f1cdfae6172fcb1682032f7e2965132",
     "astra_backend/guitartechs_training_v10/test_h1_synthetic_parity_v1.py": "9975a9b62d5b62300ae6adce7da4f7011581b75b"
   },
   "externalDependencies": "Upstream pinned TabCNN four source Git blobs, Python package/environment/hardware identity must be independently audited; this lock does not cover them.",
   "limitation": "This map mirrors inspected current files and is not an independently approved immutable reference. Neither a user-supplied sourceBlobs map nor this draft alone grants launch permission. Do not create/edit training launch JSON or trigger Actions.",
-  "note": "REVIEW DRAFT ONLY. Required H1 core SHA updated for fail-closed audit schema. Two new tests included. Full Torch 1.11 pinned environment, independent reviewer and platform clearance remain absent; never use as trigger."
+  "note": "Nonlaunch DRAFT. Dormant workflow now pins previously missing V7/V6 model, V4 decoder and CQT preprocessing imports; source count 21, offline sources 11. Four local import-closure fixture tests passed with exact local Git blob matching. Static-only; real full-checkout validation, dynamic import closure, external TabCNN/pip/hardware closure and independent review still outstanding. OpenAI safety escalation pending."
 }
