@@ -36,17 +36,28 @@ def workflow_budget_audit(workflow_text):
     found=dict(raw)
     if len(raw)!=8 or len(found)!=8 or found!=ARCHIVES:
         raise RuntimeError('FROZEN_EIGHT_ARCHIVE_IDENTITY_MISMATCH')
-    # These exact tokens are present in the currently frozen H1 workflow.
-    # Fail closed if future workflow versions alter the retry grammar.
-    for token in ('for url in ', 'for attempt in 1 2 3 4 5;',
-                  '--max-time 1800','--retry 2', 'timeout-minutes: 300'):
-        if token not in workflow_text:
-            raise RuntimeError('UNKNOWN_WORKFLOW_RETRY_OR_TIMEOUT_SEMANTICS')
-    urls=2
-    outer_attempts=5
-    inner_attempts=3  # curl --retry 2 means up to 3 requests
-    max_seconds=1800
-    attempts_per_archive=urls*outer_attempts*inner_attempts
+    # Isolate the *archive acquisition* loop: other workflow stages have
+    # independent curl commands whose retries are not relevant here.
+    try:
+        block = workflow_text.split('            ok=0', 1)[1].split(
+            '            test "$ok" = 1', 1)[0]
+    except IndexError as exc:
+        raise RuntimeError('UNKNOWN_WORKFLOW_ACQUISITION_BOUNDARIES') from exc
+    urls = (
+        'https://zenodo.org/api/records/14963133/files/$file/content',
+        'https://zenodo.org/records/14963133/files/$file?download=1',
+    )
+    if (block.count('for url in ') != 1 or any(block.count(url) != 1 for url in urls)
+            or 'for attempt' in block or '--retry-all-errors' in block
+            or block.count('curl --fail --location') != 1
+            or 'ok=1;break' not in block):
+        raise RuntimeError('UNKNOWN_WORKFLOW_RETRY_OR_TIMEOUT_SEMANTICS')
+    max_times=re.findall(r'--max-time\\s+(\\d+)', block)
+    retries=re.findall(r'--retry\\s+(\\d+)', block)
+    if max_times!=['300'] or retries!=['0'] or 'timeout-minutes: 300' not in workflow_text:
+        raise RuntimeError('UNKNOWN_WORKFLOW_RETRY_OR_TIMEOUT_SEMANTICS')
+    max_seconds=int(max_times[0])
+    attempts_per_archive=len(urls)*(1+int(retries[0]))
     return {
         'schema':'astra-h1-static-workflow-budget-audit-v1',
         'archiveCount':len(ARCHIVES),
@@ -57,7 +68,7 @@ def workflow_budget_audit(workflow_text):
         'allArchivesRequestCeilingSeconds':len(ARCHIVES)*attempts_per_archive*max_seconds,
         'downloadWorstCaseExceedsRunnerLimit':len(ARCHIVES)*attempts_per_archive*max_seconds>WALL_LIMIT_SECONDS,
         'readiness':'UNPROVEN_BLOCKED',
-        'warning':'Conservative bound ignores additional backoffs, installs, preparation, 160 training steps and four evaluations.',
+        'warning':'Bound covers archive HTTP requests only; excludes dependencies, feature preparation, compute, evaluation, disk peaks and upload/cleanup.',
     }
 
 
