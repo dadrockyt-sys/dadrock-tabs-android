@@ -5,7 +5,8 @@ pinned scalar JSON files copied from the previously authorized repo evidence.
 """
 from __future__ import annotations
 
-from contextlib import chdir
+from contextlib import contextmanager
+import os
 import json
 from pathlib import Path
 import subprocess
@@ -22,6 +23,17 @@ FRAMES = 'H1_PHASE11D_EXACT_PREPARED_FRAME_RECOVERY_2026-10-09.json'
 CAPACITY = 'H1_PHASE11D_EXACT_STAGE_CAPACITY_2026-10-09.json'
 TIMINGS = 'H1_PHASE11D_V9_HISTORICAL_PREP_TIMINGS_2026-10-09.json'
 WORKSHEET = 'H1_FEASIBILITY_MEASUREMENT_WORKSHEET_BLANK_2026-10-09.json'
+
+
+@contextmanager
+def chdir(destination):
+    """Python 3.10-compatible directory switch for local scalar-only fixture tests."""
+    before = Path.cwd()
+    os.chdir(destination)
+    try:
+        yield
+    finally:
+        os.chdir(before)
 
 
 class RelativeOriginalReceiptTests(unittest.TestCase):
