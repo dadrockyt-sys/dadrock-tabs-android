@@ -38,7 +38,7 @@ It flags a proposed disk peak below the **4.090 GiB** historical *model* for rev
 From an already available, permitted repository checkout at the reviewed `astra-work` commit, run **only the standalone reviewer** and its pure-scalar fixture tests:
 
 ```bash
-python -m unittest -v astra-work/test_h1_feasibility_review_offline_v1.py
+python astra-work/test_h1_feasibility_review_offline_v1.py
 python astra-work/h1_feasibility_review_offline_v1.py \
   --frames astra-work/H1_PHASE11D_EXACT_PREPARED_FRAME_RECOVERY_2026-10-09.json \
   --capacity astra-work/H1_PHASE11D_EXACT_STAGE_CAPACITY_2026-10-09.json \
