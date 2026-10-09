@@ -45,6 +45,19 @@ def verify_upstream(source_root):
             raise RuntimeError("PINNED_UPSTREAM_FILE_MISSING:"+name)
         if git_blob_id(src.read_bytes())!=want:
             raise RuntimeError("PINNED_UPSTREAM_BLOB_MISMATCH:"+name)
+    # Match the three init modules materialized by the prospective H1
+    # workflow exactly; an unpinned __init__.py could execute arbitrary code.
+    init_files = {
+        "__init__.py": b"",
+        "models/__init__.py": b"",
+        "tools/__init__.py": b"from .constants import *\nfrom .instrument import *\n",
+    }
+    for name, expected_bytes in init_files.items():
+        target=root/"amt_tools"/name
+        if target.is_symlink() or not target.is_file() or target.resolve()!=target:
+            raise RuntimeError("PINNED_UPSTREAM_INIT_MISSING:"+name)
+        if target.read_bytes()!=expected_bytes:
+            raise RuntimeError("PINNED_UPSTREAM_INIT_MISMATCH:"+name)
     return root
 
 
