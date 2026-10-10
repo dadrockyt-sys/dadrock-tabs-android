@@ -1,0 +1,71 @@
+{
+  "authoritativeH1DiskBytesMeasured": null,
+  "authoritativeH1PeakRamBytesMeasured": null,
+  "environment": {
+    "actualH1ResourceMeasurement": false,
+    "isGitHubHostedUbuntu2204Runner": false,
+    "isPinnedH1Environment": false,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "sandboxFilesystem": {
+      "bytesFreeToUnprivileged": 32028770304,
+      "filesystemTotalBytes": 33770192896
+    },
+    "sandboxMemInfoBytes": {
+      "MemAvailable": 4905631744,
+      "MemTotal": 6236880896
+    }
+  },
+  "independentFeasibilityApproval": false,
+  "launchPermission": false,
+  "paperOnlyCli": {
+    "fullOriginalThreeReceiptsUsed": true,
+    "medianElapsedSeconds": 3.592551,
+    "runs": [
+      {
+        "elapsedSeconds": 3.592551,
+        "status": "BLOCKED_MISSING_EVIDENCE"
+      },
+      {
+        "elapsedSeconds": 3.683602,
+        "status": "BLOCKED_MISSING_EVIDENCE"
+      },
+      {
+        "elapsedSeconds": 3.747005,
+        "status": "BLOCKED_MISSING_EVIDENCE"
+      },
+      {
+        "elapsedSeconds": 3.409557,
+        "status": "BLOCKED_MISSING_EVIDENCE"
+      },
+      {
+        "elapsedSeconds": 3.39406,
+        "status": "BLOCKED_MISSING_EVIDENCE"
+      }
+    ],
+    "twelveH1StageDurationsMeasured": false
+  },
+  "schema": "astra-phase16-local-sandbox-resource-instrumentation-v1",
+  "supportCase16795041WrittenClearance": false,
+  "syntheticFileObservation": {
+    "fileSizeBytes": 33554432,
+    "notH1RunnerDiskPeak": true,
+    "observedFreeSpaceDifferenceBytes": 33558528,
+    "sandboxFreeBytesAfterCleanup": 32028770304,
+    "sandboxFreeBytesBefore": 32028770304,
+    "sandboxFreeBytesDuring": 31995211776
+  },
+  "syntheticShapeMemoryObservation": {
+    "componentBytes": [
+      18263808,
+      11981592,
+      570552,
+      23963184
+    ],
+    "highWaterRSSBytes": 156762112,
+    "syntheticByteArraysBytes": 54779136,
+    "wallSeconds": 0.013783610999780649
+  },
+  "timestampUTC": "2026-10-10T00:03:03.661756+00:00",
+  "twelveH1StageUpperBoundsMeasured": null
+}
