@@ -1,0 +1,65 @@
+{
+  "acceptedCaptures": 256,
+  "completePeakDiskBoundEstablished": false,
+  "completePeakRamBoundEstablished": false,
+  "historicLargestCaptureFrames": 23773,
+  "historicPreparedTotalFrames": 1924805,
+  "launchPermission": false,
+  "localPinnedSourceFilesVerifiedByThisModel": false,
+  "maxCaptureIdentifiableArrayBytes": {
+    "frames": 23773,
+    "fullEventFloat32Bytes": 570552,
+    "fullStateFloat32Bytes": 11981592,
+    "nominalHopEquivalentMonoPcmFloat32Bytes": 48687104,
+    "nominalPcmPipePlusCopyBytes": 97374208,
+    "nonOverlapDisclaimer": "Every number is an individual allocation or conditional source-shape payload, NOT measured concurrent RSS, physical allocation or a worst-case upper bound.",
+    "oneChunkContiguousInputFloat32Bytes": 3538944,
+    "oneTrainingSequenceInputFloat32Bytes": 1382400,
+    "paddedEvaluationCqtFloat32Bytes": 18263808,
+    "preparedFloat32FeaturePayloadBytes": 18257664,
+    "preparedInt16LabelPayloadBytes": 285276,
+    "singleFullStateFloat64CopyBytes": 23963184,
+    "twoPairedTrainingSequenceInputPayloadBytes": 2764800
+  },
+  "mediaRead": false,
+  "modelImported": false,
+  "nominalPcmDerivedFromActualAudioDuration": false,
+  "preparedArrayPayloadAllCapturesBytes": 1501347900,
+  "readiness": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "runnerEffectiveAvailableRamMeasured": false,
+  "schema": "astra-h1-phase16-static-memory-shape-review-v1",
+  "sourceAnchorsFromExistingGitHubReadOnlyInspection": {
+    "audioPreparation": {
+      "gitBlob": "d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254",
+      "path": "astra_backend/guitartechs_real_training/real_training.py"
+    },
+    "augmentations": {
+      "gitBlob": "9b704ea9c5bf153197dfde260c1b995142d062b5",
+      "path": "astra_backend/guitartechs_training_v9/paired_view.py"
+    },
+    "evaluation": {
+      "gitBlob": "8e4cf8a6aa052d0703fc69128a387de8eb2bf6d5",
+      "path": "astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py"
+    },
+    "preprocessing": {
+      "gitBlob": "e1d251a341b811b1b8e2df97d78b754d3379046b",
+      "path": "astra_backend/tabcnn_runtime/preprocessing.py"
+    },
+    "sampling": {
+      "gitBlob": "4db5add96c58a8e54868ea06dacb1da724675163",
+      "path": "astra_backend/guitartechs_training_v2/train_v2.py"
+    },
+    "training": {
+      "gitBlob": "2bf8085b6cd69214d5e2ec198d80c40b35d13875",
+      "path": "astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py"
+    }
+  },
+  "sourceSemanticNotes": [
+    "infer_raw() allocates padded (192,F+8) CQT, (F,6,21) float32 state, (F,6) float32 event, and 512-frame input chunks; it uses inference_mode(), not optimizer.",
+    "summarize_capture() includes state.astype(float64), np.clip, log/multiply and entropy intermediates; the exact number and lifetimes of simultaneous buffers are not bounded by this arithmetic.",
+    "sequence_windows() builds padded full-capture NumPy data and a contiguous (200,192,9) input per sequence. H1 uses two paired_tensor_views() with clones, gain/tilt/noise intermediates and autograd.",
+    "V6/V7/V9 inherit upstream TabCNN convolutional module; upstream package model, Adadelta states, gradients, Torch activations/allocator and librosa VQT workspaces have no verified peak size here.",
+    "FFmpeg pipe:1 stdout bytes coexist with np.frombuffer(...).copy() during decode_audio(); nominal hop-equivalent PCM is only a scenario and not actual decoded sample count."
+  ],
+  "twelveStageH1TimeBoundEstablished": false
+}
