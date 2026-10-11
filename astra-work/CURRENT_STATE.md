@@ -1,3 +1,25 @@
+# NEXT ACTIONS — PHASE 17C NONLAUNCHING EVIDENCE LOG INTEGRITY (2026-10-11, GPT-6)
+
+**Current decision: `NO_GO_INSUFFICIENT_EVIDENCE`, `launchPermission=false`.** Working branch `astra-work`; canonical primary handoff `astra-work/CURRENT_STATE.md`. This entry preserves Phase17B/17A and all earlier sections. Detailed new report: **`astra-work/H1_PHASE17C_EVIDENCE_LOG_INTEGRITY_2026-10-11.md`**. No new H1 Actions, training, real media, paid compute, launch JSON or frozen-source changes.
+
+## Newly completed and actually validated
+
+- Added read-only, standard-library **log-byte integrity reviewer** `astra-work/h1_review_only_evidence_log_binding_v1.py` (exact tested Git blob `1a64fed9828f5f967a9a42ddbcae93ddd7dc261e`), synthetic-only `astra-work/test_h1_review_only_evidence_log_binding_v1.py` (exact tested Git blob `fff1b9c446f0e889b4536e93415e8a56ef469e20`), and nonauthorizing **all-null** `astra-work/H1_EVIDENCE_LOG_BINDINGS_BLANK_2026-10-11.json` (exact generated blob `4d3c23335d151aeeb5049040ddd428d20341750b`). All three blobs were committed and matched to exact locally tested bytes.
+- **Actual locally executed suite on isolated Python 3.13.5**: Phase17C **18/18**, previous Phase17B **13/13**, Phase17A **10/10**, **combined 41/41 PASS**, zero failures/errors/skips, Python byte compilation PASS. Combined output SHA256 **`c1c811de1d9e1903ae7bcd55c273cc7dfc520e7149099a212ba505df99b65812`**. These are limited offline fixture checks, **NOT** pinned full model parity or genuine ten-module H1 no-media checkout suite.
+- Reviewer checks 12 stage log bindings and runner log against **actual supplied local SHA256 bytes**, rejects changed/missing/empty/oversized (64MiB) logs, traversal/symlink paths, schema/source drift and forged approval; reports reused stage-log path. A completely blank worksheet shows **19 missing evidence fields and `logBytesMatchClaimedHashes=false`**. A fully populated **fictional synthetic** fixture only proves its own byte hashes and remains **`LOG_BYTES_MATCH_REQUIRES_INDEPENDENT_VALIDATION`**, `launchPermission=false`.
+- Rechecked exact full GitHub branch tree at commit `a91afd8400cb84f45fee7c966efcc2c019d64851`: **36/36** prior draft source-lock Git blobs matched (22 live and 14 offline); blocked `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json` remains **absent**. Neither matching same-branch hashes nor an evidence log SHA establishes independent provenance, actual H1 upper bounds or authority to run.
+
+## Precise remaining work and stop
+
+1. Obtain an independent reviewer to assess source/dependency authenticity, log origin and measurement protocol, pinned full-model parity, and globally durable atomic one-use security. No self-approval from hashes, staged fixture passes, or paper estimates.
+2. In a **separately expressly permitted synthetic-only** comparable Ubuntu22.04 CPU host (Python3.10.15/Torch1.11.0+cpu/NumPy1.21.6), obtain genuine source/test/parity and measurable 6 resource quantities plus 1 runner receipt; establish independently defensible 12 stage upper-time bounds including reserve ≤18,000s. Do not fill 19 missing fields with fake fixture data, old V9 measurements or sandbox approximations.
+3. Await actual written OpenAI Support case **#16795041** scope decision; the existing request for a controlled one-time reproduction remains **a request, not authorization**.
+4. Preserve this handoff and the detailed Phase17C report. **NO** blocked H1 launch JSON creation/edit/reconstruction, GitHub Actions preflight/training, real P1/P2/P3/protected/Stage-B media inference or optimizer, paid compute, alternate-environment safeguard bypass, global one-use self-approval, trained weight export, frozen V8/V9 science, `main`/Production, or separately blocked `docs/checkpoints/CURRENT_STATE.md` write.
+
+**Status remains `NO_GO_INSUFFICIENT_EVIDENCE`.**
+
+---
+
 # NEXT ACTIONS — PHASE 17B REVIEW-ONLY ALTERNATE ENVIRONMENT PREPARED (2026-10-11, GPT-6)
 
 **Canonical `astra-work/CURRENT_STATE.md` handoff · `NO_GO_INSUFFICIENT_EVIDENCE` · H1 launch inactive.** Report: **`astra-work/H1_PHASE17B_SYNTHETIC_ENVIRONMENT_BOUNDARY_2026-10-11.md`**. All Phase17A and prior sections below preserved.
