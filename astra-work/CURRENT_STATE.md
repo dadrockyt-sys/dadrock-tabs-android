@@ -1,3 +1,26 @@
+# NEXT ACTIONS — PHASE 16E SUPPORT SCREENSHOT REQUEST / NO RELAUNCH (2026-10-11, GPT-6)
+
+**Project:** Guitar-TECHS H1; **branch:** `astra-work`; **handoff:** `astra-work/CURRENT_STATE.md`. **Status remains `NO_GO_INSUFFICIENT_EVIDENCE`.** Documentation-only case update; no launch or new technical tests.
+
+## New verified Support evidence
+
+- **Support case #16795041, Brian's latest inbound message:** 2026-10-11 09:22:16 UTC (**05:22:16 EDT**, America/Toronto). Support stresses that an **original screenshot or screen recording** would help establish the exact error, ChatGPT interface/action and whether restriction is safety-related or merely technical. Without original error details, Support **cannot determine the precise cause or whether an approved execution route exists**.
+- **Explicit restriction preserved verbatim in meaning:** Brian directs that the restricted training-launch operation **remain inactive**, with **no bypass via another execution environment**. The email **does not grant permission to relaunch for a screenshot**, change safety-blocked launch JSON, or execute H1 Actions/preflight/training.
+- The user offered to capture screenshots of errors during a relaunch and of the previous GitHub review links. Because a relaunch would reattempt the prohibited operation, **do not initiate it**. Instead request archived screenshot/screen recording of the **original ChatGPT refusal** from the original conversation, if still visible, and read-only screenshots of existing Github documentation, workflow and historical Actions runs. A screenshot of the dormant GitHub workflow is **contextual**, not a screenshot of the original ChatGPT safety refusal; do not conflate them.
+- Read-only GitHub verification on this date found the workflow `.github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml` (blob `90e8168fc1ca40738ba07291ca1001a36718f4e3`), prospective protocol (blob `431b0e6bb783b452830afcf4dd489519a2f6568e`) and prior primary handoff available. The restricted `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json` still returned 404 and **was not created**.
+- The original blocked conversation's exact ID/link, refusal wording, selected model, screenshot and exact timestamp are **unverified**. Do not invent or manufacture incident evidence. Existing Phase16 evidence and worksheet have **no runner-equivalent RAM/disk peak or defensible 12-stage H1 duration bounds**, and technical review remains outstanding.
+
+## Next steps
+
+1. Recover and screenshot the **historical original refusal**, if still present in ChatGPT history, without rerunning any blocked steps. Where available, include date/time, selected model and original conversation URL and relevant UI context. Obscure credentials or unrelated private data.
+2. Provide Support only **read-only** screenshots/links to the H1 dormant workflow, protocol, existing handoff and previously completed/authorized diagnostic log where relevant, carefully identifying those as context and not as a blocked-run error.
+3. Seek **explicit written Support guidance** about whether any further reproduction is permitted; do not treat a request for a screenshot as execution authorization.
+4. Keep `NO_GO_INSUFFICIENT_EVIDENCE` pending independent technical authorization and runner measurements, 12-stage time bounds, full non-media source tests/frozen model parity and global atomic single-use review. Preserve Phase16D and all prior history.
+
+**STOP:** No launch JSON creation/update, workflow dispatch/push trigger, new H1 preflight/training, protected-development media access, paid compute, alternate execution-surface bypass, weights export, scientific/frozen files/main/Production edit, or separately blocked `docs/checkpoints/CURRENT_STATE.md` write.
+
+---
+
 # NEXT ACTIONS — PHASE 16D SUPPORT INTAKE AND RESPONSE (2026-10-10, GPT-6)
 
 **Repository:** `dadrockyt-sys/dadrock-tabs-android` · **branch:** `astra-work` · **canonical handoff:** `astra-work/CURRENT_STATE.md`. **Decision unchanged: `NO_GO_INSUFFICIENT_EVIDENCE` — training and real H1 feasibility execution remain BLOCKED.** This dated entry is a **non-executing documentation-only update** and preserves the complete Phase16C and earlier history below.
