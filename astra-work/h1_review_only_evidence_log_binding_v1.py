@@ -48,7 +48,7 @@ def _regular_json(path: Path) -> dict:
 
 
 def _log_digest(root: Path, relative: str) -> str:
-    if not isinstance(relative, str) or not relative or "\" in relative:
+    if not isinstance(relative, str) or not relative or "\\" in relative:
         raise ValueError("INVALID_LOG_BINDING_PATH")
     parts = relative.split("/")
     if any(p in ("", ".", "..") for p in parts):
