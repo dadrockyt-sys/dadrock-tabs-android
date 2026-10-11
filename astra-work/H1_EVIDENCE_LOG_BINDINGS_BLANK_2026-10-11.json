@@ -1,0 +1,18 @@
+{
+  "schema": "astra-h1-review-only-evidence-log-bindings-v1",
+  "runner": null,
+  "stages": {
+    "environmentAndDependencies": null,
+    "sourceAcquisition": null,
+    "archivesAndPreparation": null,
+    "originalFold1Training": null,
+    "originalFold2Training": null,
+    "treatmentFold1Training": null,
+    "treatmentFold2Training": null,
+    "originalFold1Evaluation": null,
+    "originalFold2Evaluation": null,
+    "treatmentFold1Evaluation": null,
+    "treatmentFold2Evaluation": null,
+    "uploadCleanupReserve": null
+  }
+}
