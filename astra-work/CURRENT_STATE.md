@@ -1,3 +1,27 @@
+# NEXT ACTIONS — PHASE 16F RECOVERED ORIGINAL SAFETY-ERROR TEXT (2026-10-11, GPT-6)
+
+**Canonical GitHub archive:** `astra-work/CURRENT_STATE.md` on `astra-work`. **Status unchanged: `NO_GO_INSUFFICIENT_EVIDENCE` / H1 training restricted and unlaunched.** The user reports that long ChatGPT conversations are routinely cleared from Android devices to keep the app responsive. Therefore **original conversation access, ID/share link and screenshot cannot be assumed recoverable**; use this handoff and the primary October 8 incident record as the preserved, source-verifiable event narrative. A GitHub report **does not recreate the deleted ChatGPT conversation or prove a screenshot**.
+
+## Newly recovered actual original incident details (previously missed in newer summaries)
+
+- **Verbatim recorded tool safety response:** `This tool call was blocked by OpenAI's safety checks`. This string appears in the older October 8 section of **this same handoff** and independently in committed `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_LAUNCH_BLOCKED_V1.md` (Git blob `afa173cc56c8e8402dcac120786e91ee280d11bc`). The exact *recorded response string* is recoverable, **not** the original on-screen rendering/screenshot or full tool request/response metadata.
+- **Rejected action/type:** GitHub-connected `create_file` for **`docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json`**, with intended single-use push-trigger for the dormant H1 real-data two-arm/two-fold development pilot. Subsequent read returned GitHub **404**. This was an **OpenAI tool-safety rejection before the GitHub file was created**, **not** a demonstrated GitHub 403 or failed H1 real-data Actions run.
+- **Dated documentation:** Primary original blocked-launch report and prior handoff are dated **2026-10-08**. The handoff labels the contemporaneous project handoff **GPT-6**, but it does **not** independently establish the exact ChatGPT model selector at the instant the rejected tool call occurred. Exact hour/minute/time zone of the original event, conversation ID/link and screenshot remain **UNAVAILABLE**; record no invented values.
+- **Preflight was a distinct successful no-media workflow:** GitHub Actions run **37852114708** (job **113567305044**, launch commit `6f3c1ba827d4ab4ac0c4711365a152468293a18a`) succeeded before the blocked real launch. It is **not** a screenshot of the blocked tool response and not evidence that H1 training ever ran.
+- **Current Support #16795041:** Brian's 2026-10-11 reply asks for original screenshots or recordings and explicitly orders the restricted training-launch operation to remain inactive. Report the newly recovered **verbatim error text and dated archived documentation** as textual incident evidence without attempting reproduction; Support has given **no permission to relaunch**.
+
+## Evidence links and permitted next steps
+
+1. Original incident report: `https://github.com/dadrockyt-sys/dadrock-tabs-android/blob/astra-work/docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_LAUNCH_BLOCKED_V1.md`.
+2. Historical handoff: `https://github.com/dadrockyt-sys/dadrock-tabs-android/blob/astra-work/astra-work/CURRENT_STATE.md`. Preserve complete older sections under this addendum.
+3. No-media preflight context: `https://github.com/dadrockyt-sys/dadrock-tabs-android/actions/runs/37852114708` (green, **not** the blocked operation).
+4. Share those **read-only source links, verbatim recorded error, rejected action and Oct-8 approximate date** with Support; be transparent that Android chat history was cleared and there is **no original screenshot/conversation identifier available**. Do not manufacture or reproduce an error for visual evidence.
+5. Continue only separately authorized offline technical/feasibility work. All **19 worksheet items still unfilled**, pinned full-model test/runner bounds and independent approval outstanding; **no** training/preflight/Actions trigger/blocked JSON/alternate-surface bypass or real development media access.
+
+**STRICT STOP:** The recovered message text is **better incident evidence, not execution authorization**. Leave launch JSON absent, GitHub H1 Actions untriggered, frozen science/main/Production untouched; do not edit separately safety-blocked `docs/checkpoints/CURRENT_STATE.md`.
+
+---
+
 # NEXT ACTIONS — PHASE 16E SUPPORT SCREENSHOT REQUEST / NO RELAUNCH (2026-10-11, GPT-6)
 
 **Project:** Guitar-TECHS H1; **branch:** `astra-work`; **handoff:** `astra-work/CURRENT_STATE.md`. **Status remains `NO_GO_INSUFFICIENT_EVIDENCE`.** Documentation-only case update; no launch or new technical tests.
