@@ -167,7 +167,7 @@ def audit(worksheet: dict, bindings: dict, log_root: Path) -> dict:
         "matchedBindingFields": sorted(matched),
         "missingEvidenceFields": sorted(missing),
         "reusedStageLogPaths": {k: v for k, v in reused.items() if len(v) > 1},
-        "logBytesMatchClaimedHashes": True,
+        "logBytesMatchClaimedHashes": bool(matched),
         "loggedNumericalClaimsIndependentlyValidated": False,
         "independentH1RunnerComparabilityProven": False,
         "completeTwelveStageUpperBoundsProven": False,
