@@ -1,3 +1,27 @@
+# NEXT ACTIONS — PHASE 17B REVIEW-ONLY ALTERNATE ENVIRONMENT PREPARED (2026-10-11, GPT-6)
+
+**Canonical `astra-work/CURRENT_STATE.md` handoff · `NO_GO_INSUFFICIENT_EVIDENCE` · H1 launch inactive.** Report: **`astra-work/H1_PHASE17B_SYNTHETIC_ENVIRONMENT_BOUNDARY_2026-10-11.md`**. All Phase17A and prior sections below preserved.
+
+## Executed safely, in a separate local offline environment
+
+- Created `/mnt/data/astra_phase17b/.venv` with `python -m venv --without-pip` in **Debian 13 / Python3.13.5 x86_64**. **NO** Docker/Podman, no Python3.10, no package downloads/installs, no model, media, training, Actions, GitHub workflow or blocked JSON. This is a **stdlib-only isolated reviewer**, **NOT** the comparable pinned Ubuntu22.04 runner.
+- Committed **three nonlaunch files under `astra-work/`**, then fetched remote blobs and matched exact locally tested bytes: `H1_REVIEW_ONLY_ENVIRONMENT_CONTRACT_2026-10-11.json` blob **`baae9597ef5a4e5967b7402a2c4731b9153cb26d`**; `h1_review_only_environment_contract_v1.py` blob **`96b5eb5f082a03d0735edbf432a80553f539d6e8`**; `test_h1_review_only_environment_contract_v1.py` blob **`d96f07181c44965a98511faaa3aaec985b669deb`**.
+- **Actually executed 13/13 PASS, zero errors/skips, `py_compile` PASS** in the isolated Python venv. Test log SHA256 **`9dfd3524518d0a924d889b3816d4e77cc444ad0a3594340e5507a55643bd32bf`**; local compatibility JSON SHA256 **`7efb93ed5f7268902617a5947c46ccca6e7131e01d027052f9ba3e50e1b6060c`**. Tests verify contract enforces frozen Ubuntu22.04 x86_64 / Python3.10.15 / Torch1.11.0+cpu / NumPy1.21.6 targets, source identities, no-launch/no-media/no-bypass/no-paid boundaries, all independent evidence requirements, and `launchPermission=false` even under fake matching host inputs.
+- **Actual host outcome:** Debian13/Python3.13.5, Torch and NumPy **UNAVAILABLE inside this no-pip virtualenv**, CUDA **NOT VERIFIED**, so `allLiteralPinsMatch=false`, `readiness=NO_GO_INSUFFICIENT_EVIDENCE`, `launchPermission=false`. No claim of pinned-runtime parity or independent measurement.
+- The original GitHub H1 workflow, frozen science, `main` and Production were untouched. **No target-equivalent runner was provisioned**, no paid compute spent, no full checkout ten-module H1 test suite or model parity run, no disk/RAM or H1 stage measurement produced; prior feasibility worksheet's **19 null fields remain null**.
+
+## Explicit next steps
+
+1. Await Support case **#16795041** written permission scope; **do not use an alternative environment to bypass** its instruction to keep the restricted launch inactive. If independent **synthetic-only** comparable CPU measurements are separately authorized, engage an **independent reviewer** and verify a genuine Ubuntu22.04 x86_64 image+CPU, Python3.10.15/Torch1.11.0+cpu/NumPy1.21.6, upstream AMT-Tools four exact source blobs+three generated init bytes, and full dynamic source/package closure.
+2. In a separately permitted **complete source checkout and pinned runtime**, perform **authentic ten-module no-media suite** and bounded two-step **full model synthetic parity**, recording SHA, versions, stdout/stderr, independent provenance and exact outcomes. The new 13 fixture passes are not those tests.
+3. Obtain defensible **six true runner resource measurements, twelve H1 upper-duration bounds, one runner evidence receipt**; do not treat same-host/synthetic-shape estimates as validated real workload ceilings, and do not fill the 19 fields without actual evidence.
+4. Obtain independently reviewed **globally durable atomic one-use** control beyond Phase17A local SQLite proof; no production integration or credentials authorized. Preserve all existing stop rules.
+5. Prepend any genuinely new evidence here and preserve earlier history. No blocked launch JSON creation, H1 Actions/preflight/real data/training, alternative safety bypass, spend, main/Production/frozen science changes, or separately blocked `docs/checkpoints/CURRENT_STATE.md` write.
+
+**Decision unchanged: `NO_GO_INSUFFICIENT_EVIDENCE`, launchPermission=false.**
+
+---
+
 # NEXT ACTIONS — PHASE 17A INDEPENDENT OFFLINE ONE-USE REVIEW (2026-10-11, GPT-6)
 
 **Status: `NO_GO_INSUFFICIENT_EVIDENCE` — dormant H1 training and blocked launch JSON remain untouched.** Working branch `astra-work`. Complete source-linked new report: **`astra-work/H1_PHASE17A_OFFLINE_ONE_USE_AND_READINESS_2026-10-11.md`**. This section preserves Phase16G and all prior work below. No new Actions, H1 launch, preflight, actual media, model or paid compute.
