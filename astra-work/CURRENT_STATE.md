@@ -1,3 +1,26 @@
+# NEXT ACTIONS — PHASE 16D SUPPORT INTAKE AND RESPONSE (2026-10-10, GPT-6)
+
+**Repository:** `dadrockyt-sys/dadrock-tabs-android` · **branch:** `astra-work` · **canonical handoff:** `astra-work/CURRENT_STATE.md`. **Decision unchanged: `NO_GO_INSUFFICIENT_EVIDENCE` — training and real H1 feasibility execution remain BLOCKED.** This dated entry is a **non-executing documentation-only update** and preserves the complete Phase16C and earlier history below.
+
+## Verified Support change and outbound response
+
+- **New inbound written Support reply, case #16795041:** received **2026-10-10 22:15 EDT** (2026-10-11 02:15 UTC), signed Brian, OpenAI Support. This is a **request for incident information, NOT clearance**. Support asks for approximate original restriction date/time/time zone, affected ChatGPT conversation link/ID, model selection, exact warning screenshot if available, and a **brief NON-EXECUTABLE** account of proposed JSON/workflow. They explicitly instruct keeping the training workflow inactive; no repeat of the blocked action and no re-sending prior repo/protocol details necessary.
+- **Reply sent in the existing support thread on 2026-10-10 EDT**. It supplied the bounded incident period (before first Support correspondence on October 9; exact timestamp unverified; Toronto EDT), disclosed that original ChatGPT conversation link/ID, selected model and screenshot/error text were not independently recoverable from current records, and offered a high-level **non-executable** description of the dormant CPU-only P1/P2 two-loss, two-fold 20-epoch pilot, 160-step/300-minute caps, prohibited data/actions and numerical-only output. No executable payload, credentials, launch file or media supplied. Await Support's explicit written disposition. Keep incident metadata **UNKNOWN**, not guessed.
+- **Read-only recheck on branch:** dormant pilot workflow and frozen protocol still available; safety-blocked `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json` **absent**. Blank `astra-work/H1_FEASIBILITY_MEASUREMENT_WORKSHEET_BLANK_2026-10-09.json` still has all **19** measurement/evidence fields `null` and separate technical reviews `PENDING`; no new runner/resource/12-stage evidence was obtained today.
+- **No permission/status inference:** Support's information-gathering reply, existing prior user approval for a specific scientific proposal, and historic scalar-only 32 passing tests do not collectively authorize a GitHub Actions run or substitute independent feasibility/trust review. New full-model parity, complete permitted checkout, pin-equivalent runner/resource peak measurements, 12 H1 upper-duration bounds, and independently administered durable atomic one-use review remain uncompleted.
+
+## Next allowed actions, in strict order
+
+1. **Wait for written Support review disposition** and capture only independently verified original incident metadata if legitimately recovered; do not retrigger safety block or invent conversation ID, selected model, timestamp or screenshot.
+2. **Before any actual runner measurements**, obtain independent specifically scoped permission for a **non-media synthetic-only**, comparable Ubuntu22.04 CPU measurement setting with pinned Python 3.10.15/Torch 1.11.0+cpu/NumPy 1.21.6, outside the blocked H1 workflow and without alternate-surface bypass. If no permission, leave all metrics `UNAVAILABLE`.
+3. With separately permitted comparable evidence, measure six true runner resource fields, one runner provenance receipt and twelve independently supported H1 duration upper bounds (including reserves) meeting the 18,000s ceiling; do not substitute historic V9, sandbox mock numbers or static arrays. Feed genuine reviewed evidence to the existing paper-only reviewer, which always sets `launchPermission=false`.
+4. Separately close permitted full-checkout ten-module no-media tests, independently verified source/package and synthetic frozen-model parity, and globally durable atomic one-use review; seek independent human review. Do not repeat already-completed Phase15 three-original-scalar-JSON integration without a reason.
+5. Checkpoint **only new verifiable evidence** here, preserve earlier sections, and never edit the separately blocked `docs/checkpoints/CURRENT_STATE.md`.
+
+**HARD STOP CONTINUES:** Never create/edit/reconstruct the blocked launch JSON, trigger the H1 workflow/preflight/training, access P1/P2/P3/protected-song/Stage-B media for a new run, perform real inference/optimization, export weights, use paid compute or Codex/Codespaces/alternate UI as a bypass, or alter main/Production/frozen V8/V9 science. This phase sent one Support case reply and updated this non-triggering handoff only; **no training, Actions run, new tests, measurements or approval**.
+
+---
+
 # NEXT ACTIONS — PHASE 16C EXPLICIT FEASIBILITY EVIDENCE HANDOFF (2026-10-09, GPT-6)
 
 **Repository:** `dadrockyt-sys/dadrock-tabs-android`. **Working branch:** `astra-work`. **Canonical primary handoff:** `astra-work/CURRENT_STATE.md`. **Status:** `NO_GO_INSUFFICIENT_EVIDENCE`; **no H1 real feasibility job, training launch or media-based preflight authorized**. This section records **next steps only** and does not claim new tests, measurements, platform decisions or permission. The complete Phase16B/16/15 history and evidence below are preserved unmodified.
