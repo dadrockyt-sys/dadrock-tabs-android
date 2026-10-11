@@ -66,6 +66,15 @@ class EvidenceLogBindingTest(unittest.TestCase):
         self.assertFalse(result["logBytesMatchClaimedHashes"])
         self.assertFalse(result["launchPermission"])
 
+    def test_committed_blank_binding_template_is_fail_closed(self):
+        template = Path(__file__).with_name(
+            "H1_EVIDENCE_LOG_BINDINGS_BLANK_2026-10-11.json")
+        manifest = json.loads(template.read_text(encoding="utf-8"))
+        result = audit(self.worksheet, manifest, self.root)
+        self.assertEqual(len(result["missingEvidenceFields"]), 19)
+        self.assertFalse(result["logBytesMatchClaimedHashes"])
+        self.assertFalse(result["launchPermission"])
+
     def test_complete_mock_only_proves_byte_integrity(self):
         self.full_mock()
         result = audit(self.worksheet, self.bindings, self.root)
