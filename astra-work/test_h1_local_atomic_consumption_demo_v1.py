@@ -2,6 +2,7 @@
 import concurrent.futures
 from pathlib import Path
 import sqlite3
+import subprocess
 import tempfile
 import unittest
 
@@ -79,6 +80,39 @@ class LocalOneUseDemoTests(unittest.TestCase):
         self.assertIs(s['launchPermission'], False)
         self.assertEqual(s['independentSecurityReview'], 'PENDING')
         self.assertIs(s['githubHostedRunnersShareStore'], False)
+
+
+    def test_git_first_add_in_independent_histories_is_not_global(self):
+        # Equivalent to the dormant workflow's rev-list/diff-tree rule,
+        # but uses ONLY a synthetic path in disposable local Git repositories.
+        def eligible(root):
+            def git(*args):
+                return subprocess.check_output(['git', '-C', str(root), *args],
+                                               text=True).strip()
+            git('init', '-q')
+            git('config', 'user.name', 'Synthetic Fixture')
+            git('config', 'user.email', 'synthetic@example.invalid')
+            filename = 'synthetic/receipt.txt'
+            (root / 'synthetic').mkdir()
+            (root / filename).write_text('not a real H1 launch\n')
+            git('add', filename)
+            git('commit', '-qm', 'independent synthetic first-add')
+            count = git('rev-list', '--count', 'HEAD', '--', filename)
+            changed = git('diff-tree', '--no-commit-id', '--name-status',
+                          '-r', '--root', 'HEAD', '--', filename)
+            return count == '1' and changed == 'A\t' + filename
+
+        with tempfile.TemporaryDirectory() as t:
+            base = Path(t)
+            first = base / 'history-one'
+            second = base / 'history-two'
+            first.mkdir()
+            second.mkdir()
+            self.assertTrue(eligible(first))
+            self.assertTrue(eligible(second))
+            # Each history looks like a first-add, but they cannot jointly
+            # establish globally unique consumption of an authorization.
+            self.assertFalse(review_status()['launchPermission'])
 
 
 if __name__ == '__main__':
