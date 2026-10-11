@@ -63,6 +63,7 @@ class EvidenceLogBindingTest(unittest.TestCase):
     def test_blank_remains_19_missing(self):
         result = audit(self.worksheet, self.bindings, self.root)
         self.assertEqual(len(result["missingEvidenceFields"]), 19)
+        self.assertFalse(result["logBytesMatchClaimedHashes"])
         self.assertFalse(result["launchPermission"])
 
     def test_complete_mock_only_proves_byte_integrity(self):
