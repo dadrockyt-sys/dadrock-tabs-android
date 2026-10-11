@@ -1,3 +1,23 @@
+# NEXT ACTIONS — PHASE 16G SUPPORT PERMISSION-TO-RETRY REQUEST SENT (2026-10-11, GPT-6)
+
+**Canonical branch/handoff:** `astra-work` / `astra-work/CURRENT_STATE.md`. **Status remains `NO_GO_INSUFFICIENT_EVIDENCE`; H1 launch inactive, no repeat of the blocked file creation.** Documentation-only continuation, preserving Phase16F and all earlier entries.
+
+## Verified contact
+
+- On **2026-10-11**, replied in the existing OpenAI Support case **#16795041** Gmail thread to Brian, subject **Re: New Case**. The outbound reply identifies the historic 2026-10-08 original incident report `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_LAUNCH_BLOCKED_V1.md` and this GitHub handoff, and quotes the preserved exact error string **`This tool call was blocked by OpenAI's safety checks`**.
+- Explained that the user **routinely clears long ChatGPT conversations on Android because long chats slow down work**, deliberately using the `astra-work` GitHub handoff to preserve project continuity. The original conversation link/screenshot is therefore not accessible; the committed incident report is historical textual evidence, **not** an original screenshot.
+- Reiterated that the rejected **GitHub-connected `create_file`** operation attempted to create `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json`; **file creation did not complete** (read-back 404), and the real H1 GitHub Actions training workflow **was never launched**. A separate prior synthetic/no-media preflight passed, but is not a failed real training run.
+- Asked Brian to **explicitly authorize one controlled repetition of the original operation via normal approved tools**, solely to determine if the file-creation restriction still reproduces; user offered screenshots/screen recording if the error recurs. Expressly rejected alternate-surface bypass. A successful future file creation would indicate only that the specific error is not then reproducing; it **would not** automatically establish training/technical readiness or other approval.
+- **Important:** This is a **request for permission**, not permission granted. **No retry, blocked-file creation, workflow dispatch, new H1 preflight/training, P1/P2 media access, or further technical tests were performed in this phase**. Brian's prior instruction to keep the operation inactive remains controlling unless explicitly superseded in writing.
+
+## Next steps
+
+1. Read the *next actual Support reply* and distinguish explicit authorization, conditions, requested evidence and denial/ambiguity. Do not interpret a receipt or request for screenshots alone as clearance.
+2. If Support grants a specific permissible path, **still separately verify independent H1 feasibility and source/security requirements** before any effectful launch. The blank worksheet's 19 items, runner-equivalent resource measurements, 12 stage upper-time bounds, complete permitted tests, pinned parity and durable atomic one-use guarantee remain outstanding.
+3. Keep `NO_GO_INSUFFICIENT_EVIDENCE`, dormant workflow unchanged and absent launch JSON absent. No bypass, paid compute, real-data training/inference, frozen code/protocol, `main`/Production or separately blocked `docs/checkpoints/CURRENT_STATE.md` changes.
+
+---
+
 # NEXT ACTIONS — PHASE 16F RECOVERED ORIGINAL SAFETY-ERROR TEXT (2026-10-11, GPT-6)
 
 **Canonical GitHub archive:** `astra-work/CURRENT_STATE.md` on `astra-work`. **Status unchanged: `NO_GO_INSUFFICIENT_EVIDENCE` / H1 training restricted and unlaunched.** The user reports that long ChatGPT conversations are routinely cleared from Android devices to keep the app responsive. Therefore **original conversation access, ID/share link and screenshot cannot be assumed recoverable**; use this handoff and the primary October 8 incident record as the preserved, source-verifiable event narrative. A GitHub report **does not recreate the deleted ChatGPT conversation or prove a screenshot**.
