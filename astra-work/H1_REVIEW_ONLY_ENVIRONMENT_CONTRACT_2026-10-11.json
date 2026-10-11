@@ -1,0 +1,44 @@
+{
+  "schema": "astra-h1-review-only-environment-contract-v1",
+  "state": "DESIGN_ONLY_NO_RUNNER_PROVISIONED",
+  "purpose": "Independently reviewed, synthetic-only environment compatibility assessment; never an alternative training launch",
+  "branch": "astra-work",
+  "target": {
+    "operatingSystemId": "ubuntu",
+    "operatingSystemVersion": "22.04",
+    "architecture": "x86_64",
+    "python": "3.10.15",
+    "torch": "1.11.0+cpu",
+    "numpy": "1.21.6",
+    "cpuOnly": true
+  },
+  "sourceAnchors": {
+    "requirementsLockGitBlob": "174a5016cfe9e6c00816d2171210aa84c66081a8",
+    "dormantWorkflowGitBlob": "90e8168fc1ca40738ba07291ca1001a36718f4e3",
+    "draftSourceLockGitBlob": "f778836783c831224b5467d304353b9c73f0496e"
+  },
+  "prohibitions": {
+    "createOrEditBlockedLaunchJson": true,
+    "triggerGitHubActions": true,
+    "realP1P2P3OrProtectedMedia": true,
+    "trainingOrRealInference": true,
+    "paidCompute": true,
+    "externalEnvironmentSafetyBypass": true,
+    "modelWeightExport": true,
+    "useAnySecretsOrTokens": true,
+    "alterFrozenScienceOrProduction": true
+  },
+  "requiredIndependentEvidence": [
+    "writtenSpecificPermissionForSyntheticOnlyComparableMeasurementSetting",
+    "runnerImageAndProcessorIdentityAndSourceSHA256",
+    "pinnedVersionsImportedAndCudaActuallyDisabled",
+    "immutableExternalAMTToolSourceAndInternalDependencyReview",
+    "verifiedTenModuleNoMediaSuiteInPermittedFullCheckout",
+    "twoStepFullModelSyntheticOnlyParityInPinnedEnvironment",
+    "sixActualRunnerDiskAndRamQuantitiesAndProvenance",
+    "twelveDefensibleH1StageUpperDurationsAndReserve",
+    "independentGlobalAtomicSingleUseSecurityApproval",
+    "explicitWrittenSupportDispositionBeforeRestrictedOperation"
+  ],
+  "launchPermission": false
+}
