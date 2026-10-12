@@ -1,3 +1,28 @@
+# RESUME HERE — PHASE 17E SUPPORT'S OCTOBER 12 DENIAL / MODEL PROVENANCE CLARIFICATION (2026-10-12, GPT-6)
+
+**Branch:** `astra-work` · **canonical handoff:** `astra-work/CURRENT_STATE.md` · **case:** OpenAI Support **#16795041**. **CURRENT STATUS: `NO_GO_INSUFFICIENT_EVIDENCE`; no launch JSON, no H1 real training, no authorized repetition**. This dated entry preserves the entire preceding Phase17D/17C/17B/17A and historical records below. No engineering tests, workflows or restricted file modifications were performed by this documentation update.
+
+## New observed Support communication, 2026-10-12
+
+- Latest existing-thread inbound Support message **Gmail ID `1a12e4ed1e72a5e4`**, thread `1a121c8d5ad6a717`, received **2026-10-12 04:11:18 UTC / 00:11:18 EDT Toronto**, signed **Brian**, case **#16795041**.
+- Brian **acknowledges the exact historical GitHub-recorded response** `This tool call was blocked by OpenAI's safety checks` but says those notes **do not independently establish the reason** for the platform decision.
+- Support says original request/tool-call ID, ChatGPT conversation URL/ID, selected model, approximate original execution time and screenshot/screen recording **would be valuable if still in existing records**.
+- **Crucially, Brian explicitly states that Support `cannot explicitly authorize repeating the previously blocked operation or overriding the applicable safety checks based on the available information`.** Support again instructs to **keep the restricted training-launch operation inactive** and says **`No further action is required from you if the requested artifacts are unavailable.`**
+- The original ChatGPT conversation was cleared on Android due to long-chat performance; existing GitHub dated incident report `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_LAUNCH_BLOCKED_V1.md` has the error string, the GitHub-connected rejected `create_file` action, intended absent `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json`, and the October 8 event date, but **no actual originating request/tool-call identifier, original chat URL/ID, exact instant model choice, timestamp minute or screenshot**. A targeted search through this handoff and available past context did not recover those missing metadata. **Do not manufacture them, claim they can be regenerated, or attempt forbidden reproduction.**
+- **User-reported model provenance clarification, October 12:** User says approximately **95% of the broader Astra engineering work used GPT-5.6**. This is useful contextual information, **not independent proof that the precise blocked GitHub tool call originated from GPT-5.6**. A later contemporaneous GitHub handoff labels GPT-6; it likewise does **not** prove selected model at the instant of refusal. Future Support summaries should distinguish user's broad experience from the exact missing model selection instead of asserting either model.
+- No new Support reply was sent in this phase. The prior user's request for a controlled screenshot-capturing retry **was declined, not left pending**. Do not present it as potentially approved or re-send the same request as if unaddressed.
+
+## Next explicit actions
+
+1. **Respect final latest Support instruction:** Keep the previously safety-blocked H1 launch JSON creation and GitHub Actions H1 pilot inactive, without retrial/reproduction, alternate host/surface bypass, or prompting the user to execute the same blocked action. Support said no additional artifacts are required if unavailable. A future *different* explicit written decision must be verified before changing this disposition.
+2. If a Support case clarification is useful, limit it to **non-executing** requests for an internal account/time-window log search, alternate artifact-free review procedure, or escalation path; **do not imply Support is obligated to retrieve deleted chat content or able to recover request IDs**. Do not send unsolicited emails.
+3. Continue independently *permitted* offline no-media/documentation-only engineering from Phase17D's eight-step plan, keeping all **19 H1 feasibility worksheet fields** unfilled pending authentic evidence and preserving independently reviewed 10-module/pinned model/source/runner/atomic-one-use gates. Do not attempt runner measurements, training or restricted operation as workaround.
+4. Keep detailed reports and new verifiable receipts under non-triggering `astra-work/` paths; prepend exact evidence to **this primary GitHub handoff**, not separately safety-blocked `docs/checkpoints/CURRENT_STATE.md`. Preserve all source history; never invent missing metadata.
+
+**HARD STOP:** No blocked launch JSON create/edit/reconstruct; no H1 Actions/preflight/training, no P1/P2/P3/protected-song/Stage-B new media or model inference/optimization, no alternate Codex/Codespaces/cloud/browser/shell safety bypass, no paid compute, secrets or weights exports, frozen science or `main`/Production changes. **Case #16795041 remains unresolved and repeat request was explicitly denied.**
+
+---
+
 # RESUME HERE — PHASE 17D VERIFIED HANDOFF / EXPLICIT CONTINUATION (2026-10-11, GPT-6)
 
 **Canonical location:** repository `dadrockyt-sys/dadrock-tabs-android` · branch **`astra-work`** · file **`astra-work/CURRENT_STATE.md`** (GitHub URL: `https://github.com/dadrockyt-sys/dadrock-tabs-android/blob/astra-work/astra-work/CURRENT_STATE.md`). **Read this leading section first, then Phase17C/17B/17A below, and the linked detailed reports.** The user periodically clears long ChatGPT histories on Android for performance; **GitHub is the durable project handoff, not any lost chat.** Do not request the original ChatGPT history or assume a missing chat means previous engineering is lost.
