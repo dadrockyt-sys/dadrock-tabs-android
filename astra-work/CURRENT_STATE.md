@@ -1,3 +1,27 @@
+# RESUME HERE — PHASE 17F SUPPORT NON-EXECUTING FOLLOW-UP SENT (2026-10-12, GPT-6)
+
+**Canonical file:** `astra-work/CURRENT_STATE.md` on branch `astra-work`. **Decision remains `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false` and the blocked H1 training trigger stays absent/inactive.** This is correspondence checkpointing ONLY. Preserve all previous Phase17E/17D/C/B/A and historical sections.
+
+## Verified support follow-up
+
+- Following Brian's latest **2026-10-12 04:11:18 UTC / 00:11:18 EDT** email (message ID `1a12e4ed1e72a5e4`), **sent an additional reply** to OpenAI Support case **#16795041**, Gmail message ID **`1a12e631687e854a`** in thread **`1a121c8d5ad6a717`** (`Re: New Case`). Gmail API confirmed label `SENT`.
+- Explicitly acknowledged **Support's refusal to authorize a retry**; committed to no recreation/reproduction of blocked GitHub `create_file` request or alternate-execution-surface workaround, no H1 launch/workflow activity.
+- Reiterated historic documented October 8, 2026 (America/Toronto EDT) error `This tool call was blocked by OpenAI's safety checks`, and that the intended `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_TRAINING_LAUNCH_V1.json` was not created and no real H1 training ran. Explained loss of original ChatGPT conversation details because user clears long Android chats for device responsiveness.
+- Correctly **attributed user's estimate that ~95% of wider Astra project development used GPT-5.6** without claiming which model executed the *exact blocked operation*. Later handoffs mention GPT-6 but likewise do not independently establish that incident's model selector. No original request/tool-call ID, conversation ID, timestamp minute or screenshot exists in accessible preserved GitHub records; never invent.
+- Requested **only non-executing action by Support if practical**: an internal diagnostic/tool-safety log correlation using account, approximate date, recorded error and GitHub operation, or guidance for an approved **non-executing** review/escalation pathway based on already committed dormant workflow and protocol. Explicitly accepted that records/review channels may be unavailable, and that Support has said no additional artifacts need be supplied if unavailable.
+- **This sent message is not authorization.** No new approval, engineering run, real-data measurement, code test or workflow event was produced during this communication.
+
+## Exact next steps
+
+1. If Brian/Support actually replies with new guidance, read the *entire latest message* and summarize its exact permission scope and timestamp; do not infer clearance from silence or a merely procedural acknowledgment. Only document any genuinely new verified evidence.
+2. Continue solely independently permitted, **offline non-launching** Astra reviews and synthetic/no-media checks from Phase17D plan, preserving the 41/41 recorded local suite distinction from missing full checkout/pinned parity. Original **19 feasibility evidence entries still unmeasured/unverified** (6 runner resource, 12 upper stage duration, 1 runner provenance). Never claim they were completed by local fixtures or same-branch Git blobs.
+3. Preserve H1 workflow dormant and blocked JSON absent. Do **not** repeat/create/edit blocked launch artifact, dispatch Actions H1 preflight/training, use alternate UI/provider/browser/Codex/Codespaces as a bypass, access real P1/P2/P3/protected/Stage B media, paid compute, full model infer/train or export weights, change main/Production/frozen science, or write separately blocked `docs/checkpoints/CURRENT_STATE.md`.
+4. Future session: begin by reading `astra-work/CURRENT_STATE.md` **on GitHub** because Android chat history may have been cleared, rather than asking the user to recreate previous conversations. Preserve all existing sections and prepend only measured/factually sourced updates.
+
+**Current outcome: Support follow-up SENT; original reproduction explicitly UNAUTHORIZED; real H1 training NOT launched.**
+
+---
+
 # RESUME HERE — PHASE 17E SUPPORT'S OCTOBER 12 DENIAL / MODEL PROVENANCE CLARIFICATION (2026-10-12, GPT-6)
 
 **Branch:** `astra-work` · **canonical handoff:** `astra-work/CURRENT_STATE.md` · **case:** OpenAI Support **#16795041**. **CURRENT STATUS: `NO_GO_INSUFFICIENT_EVIDENCE`; no launch JSON, no H1 real training, no authorized repetition**. This dated entry preserves the entire preceding Phase17D/17C/17B/17A and historical records below. No engineering tests, workflows or restricted file modifications were performed by this documentation update.
