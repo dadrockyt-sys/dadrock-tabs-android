@@ -1,3 +1,30 @@
+# RESUME HERE — OCTOBER 18 H2 DOCUMENTATION WRITE BLOCKED (2026-10-18)
+
+**Status: NO_GO_INSUFFICIENT_EVIDENCE; launchPermission=false.** No training run, H2 launch JSON, workflow dispatch, or new H2 document was created.
+
+## Newly observed incident
+
+- User requested a new H2 engineering/readiness milestone, distinct from the blocked H1 launch. Read-only review of this handoff and the existing H1 GitHub Actions workflow succeeded.
+- Attempted GitHub-connected `create_file` on branch `astra-work` at **`astra-work/H2_READINESS_PLAN_2026-10-18.md`**, with a **documentation-only** readiness plan. The proposed content explicitly prohibited training-launch JSON, workflow trigger, dispatch, real-media access, training, and bypass of the prior block.
+- The connected tool returned exactly: **`This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.`** No commit SHA was returned; **creation was not confirmed**. This is a newly observed block on a documentation-only write, not proof of the original October 8 block's cause or of a global GitHub write failure.
+- The attempt was made in this ChatGPT session on **2026-10-18**. Precise tool-call timestamp, request ID, screenshot and safety classification were not exposed; do not invent them.
+- OpenAI Support original case **#16795041**, follow-up case **#17599863**. Support's October 18 reply said **“Escalated to a support specialist; You can expect a response in the coming days.”** This was **not** launch authorization.
+
+## H2 proposed plan (not committed)
+
+1. Draft an H2-specific non-executing protocol and evidence matrix.
+2. Verify complete source-lock identities, synthetic/no-media checks, pinned full-model parity, runner provenance and 19 missing H1 feasibility items without claiming historic proxies as measurements.
+3. Independently review durable global atomic one-use control and H2-specific authorization.
+4. Require a separate documented go/no-go decision before any executable launch proposal.
+
+## Continuation
+
+- Keep H1 and H2 launch operations inactive. Do not rename or move the blocked launch to evade controls, and do not repeatedly probe write restrictions.
+- Preserve this exact error and proposed path for the escalated human Support review. Do not assume the attempted H2 file exists without a read confirmation.
+- Continue only permitted read-only, offline, synthetic, non-launching assessment. Reassess authorization and independent engineering readiness before any training proposal.
+
+---
+
 # RESUME HERE — PHASE 17G OCTOBER 12 BRIAN'S THREE WORKFLOW QUESTIONS ANSWERED (2026-10-12, GPT-6)
 
 **Canonical handoff:** `astra-work/CURRENT_STATE.md` on branch `astra-work`. **Project decision unchanged: `NO_GO_INSUFFICIENT_EVIDENCE`, `launchPermission=false`.** H1 training workflow remains dormant. This is **read-only record inspection and Support correspondence**, not a new engineering test or permission to perform blocked operation. Previous Phase17F/17E/17D/C/B/A and historical entries below retained.
