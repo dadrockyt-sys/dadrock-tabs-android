@@ -1,3 +1,15 @@
+# OCTOBER 19 — PERMITTED DOCUMENTATION UPDATE / OPERA TABLET BROWSER TEST
+
+**Purpose:** Non-executing update of an existing documentation file, as expressly allowed in OpenAI Support case #17599863 (linked to #16795041). **Not** a repeat of either blocked `create_file` operation and **not** a training authorization.
+
+- Support's October 19 message from Myrene permits routine documentation updates through the GitHub connector, subject to safety checks, and suggests comparison with a desktop browser. It explicitly forbids repeating the previously blocked `create_file` operation.
+- User reports accessing this ChatGPT conversation through **Opera browser in desktop mode on an Android tablet**. This is **not** a desktop computer and cannot conclusively establish desktop-platform parity.
+- This change is a routine **update of the existing** `astra-work/CURRENT_STATE.md`, documenting the environment and Support guidance. No new file, training trigger, workflow dispatch, or media/model execution is requested.
+- Project disposition unchanged: **NO_GO_INSUFFICIENT_EVIDENCE**, **launchPermission=false**. H1 and H2 training remain inactive.
+- If GitHub accepts this commit, its SHA provides an observed browser-session documentation-write result; it does not identify why earlier create_file attempts were blocked. If refused, preserve the exact error and do not bypass controls.
+
+---
+
 # RESUME HERE — OCTOBER 18 H2 DOCUMENTATION WRITE BLOCKED (2026-10-18)
 
 **Status: NO_GO_INSUFFICIENT_EVIDENCE; launchPermission=false.** No training run, H2 launch JSON, workflow dispatch, or new H2 document was created.
