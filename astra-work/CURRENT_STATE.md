@@ -1,3 +1,12 @@
+# OCTOBER 20 — SCREEN-RECORDED ROUTINE DOCUMENTATION TEST
+
+- User confirmed screen recording was started before this GitHub connector operation.
+- Scope: update the existing `astra-work/CURRENT_STATE.md` handoff only; no new files, launch JSON, workflow dispatch, training execution, or reproduction of previously blocked requests.
+- Purpose: record an ordinary permitted documentation operation for Support cases #17599863 and #16795041. The outcome of the GitHub operation is evidenced by the resulting commit or error response, not presumed in advance.
+- Project gate remains **NO_GO_INSUFFICIENT_EVIDENCE; launchPermission=false**.
+
+---
+
 # OCTOBER 19 — PERMITTED DOCUMENTATION UPDATE / OPERA TABLET BROWSER TEST
 
 **Purpose:** Non-executing update of an existing documentation file, as expressly allowed in OpenAI Support case #17599863 (linked to #16795041). **Not** a repeat of either blocked `create_file` operation and **not** a training authorization.
