@@ -1,3 +1,433 @@
+# RESUME HERE — EXPLICIT NEXT STEPS / HANDOFF-ONLY PUBLICATION (2026-10-24)
+
+**Repository:** `dadrockyt-sys/dadrock-tabs-android`. **Branch:** `astra-work`.
+**Canonical handoff:** `astra-work/CURRENT_STATE.md`.
+**Decision remains `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+## Publication scope and what actually exists where
+
+The user explicitly requested saving the next steps to this branch/file. This authorizes **publication of this existing handoff only**, not publication of the pending code, training, workflow execution or merge.
+
+This prepend and the preserved Phase20/21 documentation below are being saved as a **handoff-only commit based on remote `284761b1891d4398310a21fca2ef0b4b842ee5b2`**. Publication must be confirmed by remote ref/file read-back. Do not assume successful publication merely because this paragraph exists.
+
+- Local review code exists at `/workspace/astra-review`, including commits `3eb42d813a3ab340086ca066c0615c3b55709a37` and `77d00ab10a18e6a88daeaa9a8c2484cf9ba35e15`.
+- Those code changes remain **UNPUBLISHED / awaiting explicit user approval to push or merge**. In particular, do not assume the new dependency validator or changed auditor/evidence APIs are present on the remote branch merely because their results are documented here.
+- Local preparation-document commit `adc83699fbc7d18f02798e93ef6b17db802c99fd` is part of the preserved history below; its plan is not execution permission.
+- This top section supersedes older statements that the handoff itself awaits publication, **only for this requested documentation update**. The no-push/no-merge boundary for code remains.
+- No H1 workflow, launch artifact/path, training driver, scientific dependency manifest, model weight, real-media pipeline or authorization control is changed by this publication.
+- The handoff is the durable record. Local logs/wheels/patches cited below may not survive a future task; their existence must be rechecked. Their hashes and recorded results do not recreate an executable approval.
+
+## Exact continuation order
+
+### 1. Recover current state and review the unpublished utility diff
+
+**Action:** Read this section and Phase21/20 below; verify the latest remote `astra-work` HEAD and local working-tree status. Preserve all existing history and user work. Inspect the exact pending review-only files:
+
+- `astra-work/h1_source_review_no_media_v1.py`
+- `astra-work/test_h1_source_review_no_media_v1.py`
+- `astra-work/h1_review_only_evidence_log_binding_v1.py`
+- `astra-work/test_h1_review_only_evidence_log_binding_v1.py`
+- `astra-work/h1_dependency_review_offline_v1.py` (new locally)
+- `astra-work/test_h1_dependency_review_offline_v1.py` (new locally)
+
+**Review criteria:** Confirm stdlib-only/no-network/no-model behavior; conservative alias hints cannot lose warnings on rebinding; workflow-input coverage is explicitly limited; partial hash matches cannot be confused with complete evidence; all outputs remain nonauthorizing.
+
+**Evidence already available:** Phase21 recorded 56 passing tests (20 source,23 evidence,13 dependency), three pre-fix failing alias regressions, local log/source hashes and all36 H1 lock members unchanged. These are historical local review tests, not a full H1 suite, pinned model parity or runner measurements.
+
+**Owner/stop:** Technical review can proceed without training. This agent's self-review is not independent approval. Obtain explicit user approval before publishing code. If approved later, apply only the approved review-only code on the latest remote branch and preserve newer handoff commits; **do not push an old divergent local branch wholesale or force-push**. No code publication is authorized by this handoff request.
+
+### 2. Complete independent review of the Setuptools candidate and startup envelope
+
+**Candidate, not selected pin:** `setuptools==80.9.0`.
+Wheel: `setuptools-80.9.0-py3-none-any.whl`.
+Verified candidate wheel SHA256:
+`062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922`.
+
+**Existing evidence:** matching outer wheel hash; 511 hashed RECORD members verified; Python metadata >=3.9; required pkg_resources APIs present. **Existing concerns:** `distutils-precedence.pth` executes a startup shim after installation; pkg_resources changes sys.path and clears a sys.modules entry; actual vendored/system import origins remain unverified.
+
+**Deliverable:** An independently reviewed artifact/provenance and startup/import-envelope decision, accounting for the complete dependency closure rather than one wheel.
+
+**Stop:** No installation, pin change, .pth execution, startup-hook bypass or claim of frozen-runtime compatibility. Any such runtime verification needs its own explicitly permitted scope. Do not change original scientific dependencies just to suppress a diagnostic.
+
+### 3. Prepare source/input/security corrections for separate review, without applying them
+
+**Known defects to cover:**
+- canonical authorization receipt path/content binding;
+- V9 result gate input absent from the live lock;
+- source hashes supplied by a mutable launch payload rather than independently trusted approval;
+- action/image/system-package/artifact provenance;
+- absent globally durable atomic one-use enforcement.
+
+**Deliverable:** Non-executing correction specifications and independent acceptance criteria, using the Phase19/21 evidence below.
+
+**Stop:** Current scope does not permit edits to workflow, launch paths, training drivers or authorization controls. Do not construct a test launch receipt or replay the blocked operation to demonstrate a defect. Do not wire the local SQLite proof into execution.
+
+### 4. Obtain a separately permitted pinned-runtime verification plan before running it
+
+**Target:** Ubuntu22.04 x86_64, Python3.10.15, Torch1.11.0+cpu, NumPy1.21.6; four exact upstream AMT source blobs and three generated initializer contents; reviewed installed artifacts and actual module origins; CPU-only status and processor/image provenance.
+
+**Deliverable:** Independent approval of a fail-closed, no-media verification procedure that checks identities before accepting results.
+
+**Stop:** Existing Debian13/Python3.12.14 utility results and Python3.10 grammar checks do not meet this gate. Do not provision/use an alternative host to evade a restriction; do not import the model stack under this handoff alone.
+
+### 5. Only after that scope is granted: narrowly approved no-media tests and model parity
+
+**Future acceptance:** Authentic complete-checkout H1 regression coverage plus two-step full TemporalTabCNNV9 original/instrumented optimizer, parameter and Python/NumPy/Torch RNG parity in the verified runtime, with exact source identity, command, test counts, errors/skips and attributable logs.
+
+**Important test-side-effect gate:** The existing ancestry test creates launch-path JSON and synthetic Git commits. Do not run the ten-module suite blindly. Any approved replacement coverage must avoid restricted reproduction and receive explicit review. Full-model parity involves actual synthetic optimizer work and is not authorized merely because utility tests passed.
+
+**Stop:** No real media, historical checkpoint loading, weight exports, training workflow, automatic rerun or promotion. A synthetic parity pass would not establish real epoch20 reproduction or workload feasibility.
+
+### 6. Close the nineteen feasibility entries only with qualifying evidence
+
+The original worksheet remains missing:
+- **6** actual runner disk/RAM quantities, including justified reserves;
+- **12** defensible H1 stage upper-duration bounds, including upload/cleanup/failure reserve, summing to **<=18,000 seconds**;
+- **1** authentic comparable-runner provenance receipt.
+
+**Deliverable:** Independently validated representative-runner evidence, actual log bytes, complete receipt bindings and conservative interpretation. Available-minus-peak-minus-reserve must be nonnegative for both disk and RAM.
+
+**Stop:** Keep fields null without evidence. Do not substitute V9 timings, array payload arithmetic, generic cloud-host observations, fake complete fixtures or matching hashes. Do not run blocked H1 training or acquire prohibited media just to measure it. If no independently permitted method can establish the bounds, explicitly retain the blocker.
+
+### 7. Freeze H2's distinct scientific protocol before any executable proposal
+
+The existing prospective scientific contract makes H2 a separate augmentation-semantics question. Its protocol is not execution-ready.
+
+**Required design decisions:** one exact causal contrast; identical loss objective across its arms; feature/audio units and invariants; masks/alignment/dropout/seeds; exact development population and exclusions; separate H2 budget/no-rerun rules; admission/event metrics and negative/inconclusive stop criteria; source/runtime/provenance/security acceptance.
+
+**Stop:** H2 does not inherit H1's approval,160-step/300-minute budget or authorization identity. Do not change augmentation and KL together while claiming a one-factor comparison. Do not recreate/rename the previously blocked H2 readiness file or create a new workflow/launch artifact as an alternate route.
+
+### 8. Reconcile actual permission and technical acceptance; stop before launch
+
+Read any genuinely new, already available Support disposition for its exact scope. No Support contact was sent by these preparations. A request for information, routine documentation permission, elapsed time or an independent technical review is not clearance to reproduce a previously blocked operation.
+
+**Deliverable:** A fresh, documented non-executing go/no-go assessment after all applicable external decisions and engineering evidence exist.
+
+**Stop:** This handoff does not authorize a launch, change the helper tools' `launchPermission=false`, or replace scope-specific authorization. Do not launch automatically after any single passing check.
+
+## What can safely continue immediately
+
+Without changing protected files or performing runtime work:
+1. Review the existing local utility patch and documented limitations.
+2. Perform source/metadata-only dependency and provenance review, including the candidate startup behavior.
+3. Review the non-executing global one-use threat model and failure/replay criteria.
+4. Refine H2's prospective scientific questions and acceptance criteria in this existing canonical handoff.
+5. Record honest new documentary evidence; do not manufacture measurements or approval.
+
+Changes beyond that require their applicable separate scope. Keep H1/H2 inactive. Preserve frozen science, main/Production, P3/protected-song/Stage-B closures and all previous handoff sections.
+
+**Current final status: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+---
+
+
+# RESUME HERE — PHASE 21 LOCAL TECHNICAL REVIEW AND CANDIDATE ARTIFACT INSPECTION (2026-10-24)
+
+**Disposition unchanged: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+**Local base:** `adc83699fbc7d18f02798e93ef6b17db802c99fd`. Remote publication remains unapproved.
+
+User requested continuing with the next safe step. Performed further local technical review of Phase20 utilities and static inspection of the Setuptools80.9.0 candidate. This is this agent's follow-up review, **not independent third-party/human approval**. No training, workflow action, dependency installation, target/model import, launch artifact, authorization-control implementation, push or merge occurred.
+
+## 1. Concrete review finding and isolated correction
+
+The source auditor's new alias map retained only the last import binding for a name. Because its AST walk was not flow-sensitive, a later unrelated import could erase an earlier dynamic-call warning or possible workflow input read. This was a source-auditing defect, not a demonstrated H1 execution defect.
+
+Before changing the implementation, added three no-media regressions to the already inspected `astra-work/test_h1_source_review_no_media_v1.py`:
+- an earlier direct `importlib.import_module` call followed by an unrelated import binding;
+- multiple imports using the same alias, including importlib;
+- an earlier aliased builtin open read followed by an unrelated alias binding.
+
+**Before fix: 3 tests run, 3 FAIL, 0 errors.** The expected dynamic/read hints were missing. Fixture source was only parsed as AST; it was never imported or executed. The tests create temporary text/source fixtures only, not launch JSON or Git histories.
+
+Corrected **only** `astra-work/h1_source_review_no_media_v1.py`:
+- retain a set of possible import bindings instead of last-binding-wins;
+- preserve direct call spelling alongside alias candidates;
+- report recognized dynamic/read candidates conservatively.
+
+Scope/shadowing/control-flow and actual import origins remain **unproven**. Conservative hints can overreport and never approve code. No training workflow, driver, dependency manifest, scientific source or authorization control changed.
+
+## 2. Setuptools80.9.0: verified archive integrity, not runtime acceptance
+
+Retrieved the exact published candidate wheel for **static ZIP inspection only**, outside the repository:
+`/workspace/scratch/astra-review-candidate/setuptools-80.9.0-py3-none-any.whl`.
+
+- Wheel SHA256 **`062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922`** matched both the previously recorded candidate identity and current PyPI metadata.
+- Size **1,201,486 bytes**; **512** archive members.
+- Outer wheel RECORD accounted for every member; **511 member SHA256s and sizes matched**. The sole unhashed entry was the outer RECORD itself, as expected.
+- No duplicate archive names or absolute/traversal archive member paths were found.
+- Archive members were read in memory, **not extracted, installed or imported**.
+
+### Verified startup/import-state behavior
+
+The wheel contains `distutils-precedence.pth`, whose default-enabled startup statement imports `_distutils_hack` and invokes its shim. It also contains `pkg_resources/__init__.py`, which:
+- extends `sys.path` with Setuptools' vendored directory;
+- removes `backports` from `sys.modules`;
+- imports packaging/jaraco/platformdirs functionality whose actual origin depends on the installed environment.
+
+Versioned and wheel-contained `pkg_resources/__init__.py` source SHA256 matched:
+`bb1ad698a177971b06e2aea88c796ee2d07c8fc2b0f63ab1fd234cc8328fe6ae`.
+
+These are real initialization side effects, not proof of malicious behavior or an observed failure. They mean API presence and a matching wheel hash alone cannot justify installation into a supposedly passive/fully isolated environment. Review startup hooks, vendored/system module precedence, provenance and exact runtime behavior before accepting this candidate.
+
+**Still unverified:** actual installation/import/ABI compatibility, behavior under pinned Python3.10.15 and the complete frozen stack, security acceptance and independent approval. No dependency pin was selected or changed. The existing dependency validator correctly continues reporting `artifactHashesVerified=false` for the unchanged complete scientific manifest; inspecting one external candidate does not validate that manifest's artifact closure.
+
+### Inspection-tool failure disclosure
+
+The initial static helper selected the first filename ending in `.dist-info/RECORD`, which was a vendored distribution's RECORD and referenced paths outside that vendored archive layout. Inspection aborted with:
+`KeyError: There is no item named 'autocommand-2.2.2.dist-info/INSTALLER' in the archive`.
+
+This was **inspection-tool selection error**, not a demonstrated defective wheel. Corrected the helper to select exactly `setuptools-80.9.0.dist-info/RECORD`, then verified all outer entries as reported above. No checksum expectation was changed, no verification bypassed, and no package code was executed.
+
+## 3. Actual final verification and provenance
+
+Working directory: `/workspace/astra-review`.
+Environment: existing Debian13.6/Linux6.18.55 x86_64, **Python3.12.14**. Not the frozen target runtime.
+
+Actual command:
+```text
+python -I -S -B /workspace/scratch/astra-review-verification/run_review_checks.py
+```
+
+Final result:
+- source-review module: **20 PASS**
+- evidence-log module: **23 PASS**
+- dependency-review module: **13 PASS**
+- **56 run; 56 PASS; 0 failures/errors/skips/expected failures/unexpected successes; exit0**.
+- Final harness audit recorded **zero attempted blocked operations**. It retained restrictions against network/subprocesses, target/model imports, launch-path access and opening checkout files for writing.
+- Changed source/test files passed Python3.10 grammar parsing under Python3.12; **no Python3.10 runtime execution claimed**.
+- `git diff --check` passed.
+- All **36** draft-lock member blobs rechecked unchanged.
+- Existing actual-text checks still report the unpinned V9 gate input, unresolved receipt read sites, Setuptools pin gap, and **19 missing feasibility fields / 0 of13 matched logs**.
+- No new runner, model, resource, duration, training or independent-review evidence was produced.
+
+Logs:
+| Local artifact | SHA256 |
+| --- | --- |
+| `/workspace/scratch/astra-review-verification/alias-regressions-before-fix.log` | `4f795ce42c2fe5aa2fdd9f3282142f0e37982590c996fad0055a34e0b6b7817f` |
+| `/workspace/scratch/astra-review-verification/tests-phase21-final.log` | `91072bfa293fa9fc5103637ed09bc9f018de5630b4d4d9a6eadad67d4b38ab44` |
+| `/workspace/scratch/astra-review-candidate/setuptools-static-review.log` | `c26ff2d1d4c3c22e0ae8d9356c1121e58ecb4d0327a5e400d5f1ef04ab71415b` |
+
+Tested code SHA256:
+- `astra-work/h1_source_review_no_media_v1.py`: `d39ec2fdea98e2bb1a9ac3f86d38ab609cef9829fdd87017b50d5e741623c7a8`
+- `astra-work/test_h1_source_review_no_media_v1.py`: `663e20a808fc5a4f8051729d5d015d9209e061df3d4cda6a363810a6a084fe78`
+
+## 4. Current outcome and exact continuation
+
+Completed a substantive local review, reproduced/corrected an auditor false-negative, and strengthened the candidate evidence from metadata/source existence to verified outer archive integrity plus identified startup effects.
+
+**Next external acceptance remains necessary:** independent review of the local code and candidate startup/import envelope, and an explicitly scoped decision before any dependency installation or pinned-runtime/model verification. Existing H1/H2 engineering gates and recorded Support restrictions remain unchanged. Do not treat this agent's self-review as an independent sign-off.
+
+Only the auditor, its test module and this existing handoff are changed in this increment. All history below is preserved. No push or merge without explicit approval. No workflows, launch documents, restricted reproduction, real media, models, training or authorization controls.
+
+**`NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+---
+
+
+# RESUME HERE — H1/H2 UNBLOCKING PREPARATION PLAN, NOT EXECUTION (2026-10-24)
+
+**State: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+**Local preparation base:** `3eb42d813a3ab340086ca066c0615c3b55709a37`.
+**Last observed remote `astra-work`:** `284761b1891d4398310a21fca2ef0b4b842ee5b2`.
+
+User asked whether H1/H2 can be prepared to work unblocked. This section provides the concrete order and acceptance criteria for legitimate preparation; it does **not** clear the recorded platform block, authorize restricted reproduction, override prior protected-file restrictions, or make either study launch-ready. The previous explicit **no push/merge until approval** remains in force.
+
+Only this existing canonical handoff is changed in this increment. No new H2 readiness file, launch document, workflow, driver or authorization implementation is created. All prior history is preserved below.
+
+## Current distinction: engineering readiness versus platform permission
+
+- **H1 engineering:** existing two-arm/two-fold 20-epoch development pilot and protocol exist. The original comparator, frozen seed/augmentation/decoder and scientific stop rules must remain intact. Engineering defects and 19 missing feasibility entries still prevent acceptance.
+- **H2 engineering:** the existing `docs/astra/GUITARTECHS_POST_V9_PROSPECTIVE_CAUSAL_STUDY_CONTRACT_V1.md` defines H2 as a separate feature-augmentation-semantics question, not a ready-to-run training protocol. Source-tree path inspection found no separately named H2 implementation/protocol; the historical blocked H2 readiness write is not an implemented study.
+- **Permission:** the canonical handoff records unresolved launch/documentation incidents and no scope-specific permission to reproduce the restricted operation. Routine documentation permission, this preparation request, user intent to train, and a future green check do not supply missing platform or technical evidence. No new Support decision was independently available in this increment.
+- **Local review changes:** Phase20 utilities are locally committed and tested; publication remains unapproved. Do not describe local-only work as present on GitHub.
+
+## Safe preparation actually completed in this increment
+
+1. Rechecked the local commit, clean status and remote branch.
+2. Read the current handoff and the existing prospective H1/H2 scientific contract as source text.
+3. Prepared the dependency-ordered plan below in this existing handoff.
+4. Narrowed the dependency correction to a concrete **uninstalled candidate** using official package metadata and versioned source only:
+
+| Candidate evidence | Actual read-only observation |
+| --- | --- |
+| Distribution | `setuptools==80.9.0` is below the documented pkg_resources removal boundary at82. |
+| Python metadata | `Requires-Python: >=3.9`, which includes the target Python3.10.15. |
+| Official wheel metadata | `setuptools-80.9.0-py3-none-any.whl`, not yanked; PyPI-declared SHA256 `062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922`. |
+| Versioned source | `pypa/setuptools@v80.9.0/pkg_resources/__init__.py` exists and contains `resource_filename` and `iter_entry_points` method definitions required by the inspected dependency chain. Retrieved source SHA256 `bb1ad698a177971b06e2aea88c796ee2d07c8fc2b0f63ab1fd234cc8328fe6ae`. |
+| Limits | Wheel bytes were **not downloaded or checksum-verified**, package was **not installed/imported**, and complete compatibility/security approval is **not established**. This is a candidate for review, not a selected production/scientific pin. |
+
+Sources: `https://pypi.org/pypi/setuptools/80.9.0/json` and `https://raw.githubusercontent.com/pypa/setuptools/v80.9.0/pkg_resources/__init__.py`.
+
+No new runtime tests were needed or run for this documentation-only increment. The prior Phase20 **53 passing stdlib review tests** remain the most recent test result, not a new pinned-runtime or training result.
+
+## H1 work packages in required order
+
+| Order | Work package and concrete deliverable | Acceptance criterion | Appropriate owner / boundary |
+| --- | --- | --- | --- |
+| 1 | Independent review of local Phase20 validator changes at `3eb42d8`, including the stricter evidence-byte flag and limited parser/rule coverage. | Review confirms no target-code execution or implicit approval; all 36 H1 locked members remain unchanged; user explicitly approves any eventual push. | Can review locally now. No push/merge is authorized. |
+| 2 | Review the exact Setuptools candidate and a prospective, isolated H1 dependency specification/artifact manifest. | Compatible pkg_resources provider pinned by exact reviewed artifact; original scientific reference files preserved; full dependency/install provenance accounted for. Actual import compatibility remains a later gate. | Metadata/source review can proceed now. Manifest edits, installation and workflow integration need their own permitted implementation scope. |
+| 3 | Review a fail-closed pinned-environment verification design before accepting model imports or parity results. | Actual Ubuntu22.04 x86_64, Python3.10.15, Torch1.11.0+cpu, NumPy1.21.6, CPU-only status, four AMT blobs, three initializer byte contracts and module origins must be attested. Nonmatching hosts do not pass. | Design can be reviewed now. Do not run the model probe or provision an alternate host to evade the block. |
+| 4 | Independent source/input trust-envelope review. | Bind the canonical authorization receipt path and content; pin the V9 result gate input; independently anchor the full manifest outside self-declared launch hashes; account for action/system/image/artifact provenance. | Existing workflow/authorization defects remain documented only. No workflow, launch path or authorization-control modification is authorized in this preparation increment. |
+| 5 | Independent approval of the global durable one-use design preserved below. | Shared authoritative atomic consumption, stable approval identity, single owner/start admission, irreversible consumption and fail-closed replay/crash/rollback recovery accepted by a security reviewer. | No service implementation, provisioning, credentials or activation. Local SQLite is not a substitute. |
+| 6 | Define an expressly permitted no-media verification protocol for a real full source checkout and exact pinned runtime. | Review side effects first; record exact source/runtime identity, outcomes and logs. Do not run the existing ancestry test as-is: it writes launch-path JSON in temporary Git histories. Any replacement coverage needs separate review. | Future verification only after its own allowed scope. Never use broad test discovery or repeat a blocked operation. |
+| 7 | Separately permitted full TemporalTabCNNV9 synthetic optimizer/RNG parity. | Two-step original/instrumented equivalence for initialization, weights, optimizer and Python/NumPy/Torch RNG under the verified runtime; process-wide resource limits; no media/checkpoints/exports. | Not run or authorized by this plan. Synthetic parity is not epoch20 reproduction or actual workload feasibility. |
+| 8 | Independent representative-runner feasibility evidence package. | Six disk/RAM quantities with justified reserves, one runner provenance receipt, twelve defensible stage upper bounds totaling <=18,000s, underlying log bytes and independent numerical/provenance review. All 19 fields remain null until evidence exists. | Requires legitimate representative-runner evidence and an approved measurement method. Do not run blocked H1 training or acquire prohibited media just to obtain measurements. If no permissible method can establish the bound, retain the blocker. |
+| 9 | Reconcile actual permission scope and engineering acceptance in a fresh non-executing decision review. | A documented scope-specific platform disposition plus independent technical acceptance; no inference from silence, historical approvals, source hashes or CI success. | Human/independent decision. No launch artifact or workflow trigger follows automatically. |
+
+The configured 300-minute timeout is not a proof of successful end-to-end completion. The existing 4,800-second archive HTTP ceiling excludes most stages. The prior narrow no-media preflight is not the full readiness package. No work package above converts missing measurements into synthetic estimates.
+
+## H2 design decisions that must be frozen independently
+
+The existing prospective contract requires H2 to be a separately preregistered question about feature-augmentation semantics. It cannot silently inherit the H1 normalization contrast, approval, one-use authorization or compute allowance.
+
+Before proposing any executable H2 implementation, a reviewer must freeze:
+
+1. **One causal contrast:** name exactly which augmentation property is changed and why. Do not change gain, noise, tilt, masking and loss normalization together while claiming a single-factor result.
+2. **Fixed objective/control:** explicitly choose and justify the loss objective held identical in both H2 arms. Do not silently select a normalized objective based on unobserved H1 results; any sequential dependence on future H1 results must be disclosed and prospectively reviewed.
+3. **Units and invariants:** explain whether transformations operate on audio amplitude, relative-dB CQT, or normalized features. Peak-relative features can make naive physical-gain assumptions invalid. Freeze time alignment, labels/masks, dropout behavior and augmentation seeds.
+4. **Population and exposure:** identify exact development population and exclusions; preserve P3/protected-song/Stage-B closures and do not call exposed P1/P2 material an independent holdout.
+5. **Budget and no-rerun scope:** specify H2's own folds, arms, epochs, step ceiling, CPU/time/resource limits, one-use policy and failure behavior. H1's 160-step/300-minute authorization is not automatically an H2 budget.
+6. **Metrics and stop criteria:** prospectively specify event admission, predicted/reference/TP counts, finite-output checks, both-fold interpretation and negative/inconclusive outcomes; no seed/threshold/checkpoint rescue.
+7. **Source/runtime evidence:** exact reviewed source and dependencies, deterministic control/parity design, trustworthy provenance, security review and workload-specific feasibility coverage.
+8. **Separate acceptance:** independent protocol and authorization review before any executable launch proposal. A design checklist is not approval.
+
+No H2 treatment, budget or control choice is represented as finalized by this plan. No new H2 file is being used as an alternative route around the previously blocked readiness-document operation.
+
+## External decisions and immediate safe next action
+
+The next safe review can use this handoff and the existing local patch without new runtime work. It should decide the scope of independent source/dependency/security review and the candidate dependency correction. Existing Support correspondence can be read for any genuinely new non-executing review path; no message was sent in this increment, and no claim is made that Support must or can clear the operation.
+
+Do not request a retry just to test whether a restriction still exists. Do not rename/recreate the launch or use another host/tool/browser to bypass it. If any future permission arrives, verify its exact scope; it does not itself establish technical readiness.
+
+**Prepared outcome:** concrete H1 remediation sequence, source-backed Setuptools candidate for review, and H2 protocol decision checklist. **Not prepared:** an execution-ready/unblocked H1 or H2 training job. No launch artifacts, training or workflow actions occurred.
+
+**Final state: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`. No push or merge without explicit user approval.**
+
+---
+
+
+# RESUME HERE — PHASE 20 REVIEW-ONLY VALIDATOR IMPROVEMENTS (2026-10-24)
+
+**Branch:** `astra-work`. **Base commit:** `284761b1891d4398310a21fca2ef0b4b842ee5b2`.
+**Decision unchanged: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+The user explicitly authorized isolated non-executing improvements to source auditing, dependency validation, evidence completeness and narrowly scoped no-media review tests. The user **has not authorized a push or merge**. Keep these changes local pending explicit approval. Prior October 24 reconciliation and all older handoff bytes are preserved below.
+
+## Scope and pre-edit side-effect review
+
+Read the canonical handoff, including the October 24/Phase19 source/dependency findings, and inspected each existing candidate utility and its tests before edits. Explained intended modifications in chat before editing. No nested `astra-work/AGENTS.md` exists in the inspected base tree; root AGENTS applies subject to the user's narrower current scope.
+
+Prepared a **source-only local checkout** at `/workspace/astra-review`, branch `astra-work`, from the exact base. Materialized 45 selected text files, individually verified against their base Git blobs; unmaterialized paths stay skip-worktree. No Git lazy-fetch remote was configured for this checkout. The pre-existing web/Android checkout was left unchanged.
+
+Existing selected utility/test modules use only Python's standard library. Their allowed side effects are reads of source/text/logs and temporary fixtures/logs/symlinks, including sparse oversize-file rejection fixtures. Tests do not execute inspected source, install packages, access network, create launch JSON, operate Git histories, run models, or contact services. The H1 ancestry suite and all model/optimizer tests were excluded.
+
+## Actual changes and deliberately unimplemented defects
+
+All changed code is under `astra-work/`, outside the 36-member draft H1 lock.
+
+| Priority / finding | Implemented review-only change | Boundaries / unresolved correction |
+| --- | --- | --- |
+| Source trust: workflow reads an unpinned V9 result; dynamic receipt paths are unresolved | `h1_source_review_no_media_v1.py` now parses recognized Python heredocs as AST text and reports literal repository inputs missing from the live lock, external/unsafe literal inputs and unresolved read sites. Handles read modes, aliased builtin open, multiple blocks and malformed/unterminated recognized blocks. | Does not execute shell/Python, load an authorization receipt, change the workflow/lock, or prove full YAML/shell/data-flow coverage. Canonical authorization binding and independent source trust remain unimplemented/out of scope. |
+| Dynamic import indicators miss straightforward aliases | Same source auditor now recognizes import aliases for dynamic-import and sys.path call hints. | Explicitly heuristic: shadowing/control flow and installed execution origin remain unproven. No target modules are imported. |
+| Local `preprocessing` symbols falsely reported as an external root | Same source auditor now distinguishes names imported from a resolved mapped local preprocessing module; unresolved/missing preprocessing still appears unresolved. | Does not conceal a missing source or attest installed import origins. |
+| Pinned manifest omits Setuptools; Librosa0.9.1 needs pkg_resources removed in Setuptools82 | Added `h1_dependency_review_offline_v1.py`: stdlib-only exact-pin text validation, normalized duplicate detection, frozen NumPy/Torch drift reporting, documented Numba/Librosa/Setuptools rules and explicit unverified outcomes for candidate/provider versions. | **No dependency pin changed or installed.** No broad resolver or live registry lookup. Unsupported options/URLs/ranges/markers/wildcards are rejected, rather than silently accepted. A below-82 version is only a candidate, not a verified compatible artifact. |
+| A single matching log previously set the broad byte-match flag true | `h1_review_only_evidence_log_binding_v1.py` now distinguishes any match, all 13 required log bindings, and all 19 required evidence fields present. | Legacy `logBytesMatchClaimedHashes` now requires all 13 log bindings; consumers needing the old any-match meaning must use `anyLogBytesMatchClaimedHashes`. No numeric claim/provenance is independently validated and permission always remains false. |
+| Regression coverage / real-source checks | Extended both existing test modules and added `test_h1_dependency_review_offline_v1.py`. | Tests create only synthetic temporary fixtures; no values are copied into real measurement worksheets. |
+| Durable global one-use, environment enforcement, artifact provenance, runner feasibility | Documented as unresolved below. | No authorization control, training workflow/driver, runtime installation or restricted experiment changed. |
+
+Changed files:
+1. `astra-work/h1_source_review_no_media_v1.py`
+2. `astra-work/test_h1_source_review_no_media_v1.py`
+3. `astra-work/h1_review_only_evidence_log_binding_v1.py`
+4. `astra-work/test_h1_review_only_evidence_log_binding_v1.py`
+5. `astra-work/h1_dependency_review_offline_v1.py` (new)
+6. `astra-work/test_h1_dependency_review_offline_v1.py` (new)
+7. `astra-work/CURRENT_STATE.md` (this prepend)
+
+## Actual verification, including failure disclosure
+
+Environment actually used: **Debian GNU/Linux13.6, Linux6.18.55 x86_64, Python3.12.14**. This is **not** the frozen Ubuntu22.04/Python3.10.15/Torch1.11.0+cpu/NumPy1.21.6 runtime. No NumPy, Torch, Librosa or model package was imported by verification.
+
+### Initial harness failure: no tests ran
+
+The first verification harness exited **1 before loading tests**: `platform.platform()` attempted a subprocess for environment description, and the harness audit guard rejected `subprocess.Popen`. This was a harness/environment-description failure, **not a passing or failed product test**. Replaced only that environment-description call with `os.uname()`; did not relax the operation guard. Initial failure log:
+`/workspace/scratch/astra-review-verification/tests-initial.log`
+SHA256 `5e511e235b55b040a7bc6badc7ace8769adee7d4bf5cce94b53e806106c98081`.
+
+### Passing targeted tests
+
+Actual command, working directory `/workspace/astra-review`:
+
+```text
+python -I -S -B /workspace/scratch/astra-review-verification/run_review_checks.py
+```
+
+The local stdlib harness explicitly loads only:
+- `test_h1_source_review_no_media_v1`: **17 PASS**
+- `test_h1_review_only_evidence_log_binding_v1`: **23 PASS**
+- `test_h1_dependency_review_offline_v1`: **13 PASS**
+
+**Final total: 53 tests run; 53 PASS; 0 failures; 0 errors; 0 skips; 0 expected failures; 0 unexpected successes. Exit0.**
+A prior 52-test run passed before the additional preprocessing-classification regression was added; the affected final suite then passed with53.
+
+The final harness blocks network/socket operations, subprocess/process creation, target model-package imports, launch-path access and opening checkout files for writing. Final run recorded **zero attempted blocked operations**. Python isolation/site-disable/no-bytecode flags were enabled. Allowed temporary fixtures are not measurements or readiness evidence.
+
+Harness SHA256: `60f7d7eb5bd3e2ac263d3c372036d79df63bd01630084121f77da4c43c40ff96`.
+Final log: `/workspace/scratch/astra-review-verification/tests-final.log`.
+Final log SHA256: `136303ad3ac61aaade2afaf5fd51ef0dfcd4502045b2e1b8804d4ac6cb358f69`.
+Prior 52-test log: `tests-first-pass.log`, SHA256 `f42eaec96f673e3a3a9bcb074a247c654da22e29c71c9286bcd0d8001d41b3c9`.
+These are local artifacts; no remote artifact publication is claimed.
+
+### Actual existing-text / CLI verification
+
+The harness additionally checked the existing source-lock member bytes, existing dependency manifest, and committed blank evidence templates without importing target code. Each of these review-only CLIs was also executed once from `/workspace/astra-review`, all **exit0**:
+
+```text
+python -I -S -B astra-work/h1_source_review_no_media_v1.py --root . --lock docs/astra/GUITARTECHS_H1_REVISED_SOURCE_LOCK_REVIEW_DRAFT_V1.json
+python -I -S -B astra-work/h1_dependency_review_offline_v1.py --lock astra_backend/tabcnn_runtime/requirements.lock.txt
+python -I -S -B astra-work/h1_review_only_evidence_log_binding_v1.py --worksheet astra-work/H1_FEASIBILITY_MEASUREMENT_WORKSHEET_BLANK_2026-10-09.json --bindings astra-work/H1_EVIDENCE_LOG_BINDINGS_BLANK_2026-10-11.json --log-root /workspace/scratch/astra-review-verification
+```
+
+Exit0 here means diagnostic completion, **not** approval.
+
+Observed results:
+- All **22 live +14 auxiliary source-lock blobs matched**; these protected files remain unchanged.
+- Source report recognized **5** Python heredocs; reported exactly one literal repository input outside the live lock: `docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json`.
+- Workflow read sites at lines **50 and58** remain unresolved inputs, not accepted authorization controls.
+- Dependency report inspected the unchanged **25-pin manifest**, Git blob `174a5016cfe9e6c00816d2171210aa84c66081a8`, and returned `UNPINNED_REQUIRED_DISTRIBUTION` and `UNPINNED_PKG_RESOURCES_PROVIDER` for Setuptools.
+- Actual blank evidence templates still produce **19 missing fields**, **0/13 matched log bindings**, false completeness flags, `BLOCKED_MISSING_EVIDENCE`, `NO_GO_INSUFFICIENT_EVIDENCE`, `launchPermission=false`.
+- Six changed Python source/test files also passed `ast.parse(..., feature_version=(3,10))`. This is a grammar check under Python3.12, **not execution under Python3.10**.
+- `git diff --check` passed.
+
+CLI log SHA256s, under `/workspace/scratch/astra-review-verification/`:
+- `source-cli.log`: `39c4f515bcdb0b25c1a542ecb6d6a0de1d95eea2964e2e47f2040377f9e7b8ea`
+- `dependency-cli.log`: `3f1aac16a20d4918a0d4eeaed700ea2f973f50067ced60cbbd485984671efbdd`
+- `evidence-cli.log`: `59ed5f0fb12711b8137968222fa58e74ba0d049d7301e27bbf87238f0479d697`
+
+### Tested source identities (SHA256)
+
+| Path under astra-work/ | SHA256 |
+| --- | --- |
+| `h1_source_review_no_media_v1.py` | `b1c41d17f06a2550378f8303b0c056f180c28ed5c6d9f6b35f546770bd491fe3` |
+| `test_h1_source_review_no_media_v1.py` | `c03ed8c78011fe725a644e89766331af4d71a5fe28c8953afade7d7d5cf9a688` |
+| `h1_review_only_evidence_log_binding_v1.py` | `35bab7cd729edddd5ba73cef11be58dce41eb928c4d57f827a7095159c39beae` |
+| `test_h1_review_only_evidence_log_binding_v1.py` | `420d43ac584a489c5121d59ce05152b77acdbbcc4834a5ac0b167bd8b26ac994` |
+| `h1_dependency_review_offline_v1.py` | `c7eb6547912f5c9136f2ebb98b044b8bd02539c59a096e512c963d6468d11fd0` |
+| `test_h1_dependency_review_offline_v1.py` | `3d83bac5e8844f9ba0c39c993f9a2ccf9a041efdcf6d651e9b351a96ef2c7fad` |
+
+## Unresolved issues, priority and next steps
+
+1. **P0 out of scope:** actual canonical authorization-path binding, independently trusted source manifest, missing V9 gate-input pin, global durable atomic one-use enforcement. No implementation or restricted-operation reproduction was attempted. Keep the Phase19 non-executing design review below.
+2. **P1 out of scope:** selecting/installing a corrected Setuptools pin, changing scientific dependency declarations, immutable action/system/image/artifact provenance, enforcing the full-model probe's runtime versions. The new validator reports defects only.
+3. **P1 not proven:** dynamic import/source authenticity, real pinned environment, ten-module H1 suite and full-model optimizer/RNG parity. Do not substitute these stdlib review tests.
+4. **P2 not measured:** all six runner resource quantities, twelve H1 stage upper-duration bounds and one representative-runner receipt remain missing. No synthetic data was written into those templates.
+5. **Next safe action:** independently review this local diff, especially narrowed parser/rule coverage and the stricter byte-match field semantics. Only an explicit user approval permits pushing/merging; publication is not authorized by a green test run. Any training/workflow/authorization or pinned-runtime implementation requires its own applicable scope.
+
+**STOP:** `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`. No changes to H1 workflow, launch JSON paths, training drivers, model weights, real-media pipelines or authorization controls. No restricted operation, media/model execution, training, paid compute, secrets or production changes. No push or merge without explicit user approval.
+
+---
+
+
 # RESUME HERE — OCTOBER 24 SOURCE/DEPENDENCY RECONCILIATION AND SINGLE-USE DESIGN HANDOFF (2026-10-24)
 
 **Canonical branch:** `astra-work`. **Canonical handoff:** `astra-work/CURRENT_STATE.md`.
