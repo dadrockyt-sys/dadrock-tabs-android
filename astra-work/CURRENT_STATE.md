@@ -1,3 +1,139 @@
+# RESUME HERE — PHASE 22 SIX-FILE PUBLICATION REVIEW: REQUEST CHANGES (2026-10-24)
+
+**Decision: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+**Recommendation: REQUEST CHANGES before separately approving publication of the utility code.**
+**Review baseline:** remote `astra-work` commit `ec15c1a5d0e3e781f0fe45dda38cd6df27be8572`.
+**Inspected local HEAD:** `9c62f2cde4adad743012493c8ae6689a326aed5d`, clean working tree.
+
+This saves the complete six-file code-change review requested by the user. Publication authorization applies **only to this existing handoff file**. The six utility files remain unpublished; no push/merge of utility code, workflow trigger, launch artifact, protected-file modification, model/training operation or runtime installation is authorized.
+
+The local workspace was available and inspected directly. No unpublished source was reconstructed. Latest remote ref was independently checked and remained `ec15c1a` throughout the review. Existing remote versions of four files were read and checked against their Git blob identities; two new files are absent remotely.
+
+## 1. Exact scope compared with latest remote
+
+The complete local-versus-remote tree difference consists of exactly these six files: **508 insertions, 6 deletions**. No extra handoff difference existed at the start of review; all36 locked H1 members rechecked unchanged.
+
+| Exact repository path | Remote status | Local change |
+| --- | --- | --- |
+| `astra-work/h1_source_review_no_media_v1.py` | Existing, Git blob `879963d87197b25b9c1b4d659c846b95771d4486` | +102/-4 |
+| `astra-work/test_h1_source_review_no_media_v1.py` | Existing, Git blob `3c97e4ad9bd0a65834821a04cd0368009aa0f1e4` | +128/-1 |
+| `astra-work/h1_review_only_evidence_log_binding_v1.py` | Existing, Git blob `1a64fed9828f5f967a9a42ddbcae93ddd7dc261e` | +8/-1 |
+| `astra-work/test_h1_review_only_evidence_log_binding_v1.py` | Existing, Git blob `fff1b9c446f0e889b4536e93415e8a56ef469e20` | +53/-0 |
+| `astra-work/h1_dependency_review_offline_v1.py` | ABSENT | New,106 lines |
+| `astra-work/test_h1_dependency_review_offline_v1.py` | ABSENT | New,111 lines |
+
+## 2. Findings requiring changes or compatibility acceptance
+
+### [P2] Confirmed diagnostic false negative: preprocessing submodule imports
+
+Location: `astra-work/h1_source_review_no_media_v1.py:209-212`.
+
+The new special-root logic suppresses unresolved classification whenever the mapped `preprocessing.py` exists. It correctly handles imported symbols but also suppresses genuine unresolved submodule imports.
+
+A fresh no-media fixture contained:
+```text
+import preprocessing.missing_dependency
+```
+with an existing mapped preprocessing.py. The source auditor returned **internal=[], external=[], dynamicHints=[]**. Fixture source was parsed, not imported/executed.
+
+**Required correction:** distinguish explicit submodule imports from `from preprocessing import <symbol>`; retain unresolved module diagnostics rather than dropping them. Add targeted regression coverage. This is a regression in the new diagnostic logic, not proof of a live H1 runtime failure. Overall launchPermission remains false.
+
+### [P2] Confirmed diagnostic false negative: accepted dependency-version spellings
+
+Locations: `astra-work/h1_dependency_review_offline_v1.py:25-41,51-55`.
+
+The parser normalizes distribution names but known Numba/Librosa rules compare exact version strings.
+
+Fresh text-only probes, retaining the frozen NumPy/Torch pins:
+- `numba==0.55.2` and `librosa==0.9.1`: both Setuptools findings reported.
+- `numba==v0.55.2` and `librosa==v0.9.1`: accepted; **findings=[]**, provider **NOT_ASSESSED**.
+- `numba==0.55.2.0` and `librosa==0.9.1.0`: accepted; **findings=[]**, provider **NOT_ASSESSED**.
+- `example==not-a-version`: accepted by `parse_exact_pins`.
+
+**Required correction:** normalize supported equivalent forms or explicitly classify unreviewed/noncanonical versions of rule-sensitive packages. Do not silently suppress the documented risk. Do not describe the simple token parser as general version validation. All probes still returned the overall no-go verdict; no installation/resolution was attempted.
+
+### [P2 compatibility risk] Output semantics changed under unchanged v1 schema
+
+Location: `astra-work/h1_review_only_evidence_log_binding_v1.py:173-176`.
+
+`logBytesMatchClaimedHashes` changes from "any matching binding" to "all13 required log bindings match", while retaining the v1 result schema. This is conservative but can break consumers expecting the old contract.
+
+The handoff documents `anyLogBytesMatchClaimedHashes` for the old meaning. **Before publication:** version the result contract or explicitly confirm consumer migration/acceptance and retain the migration note. Complete downstream-consumer compatibility was not established.
+
+### Inherited hardening limitation, not a newly demonstrated exploit
+
+Path readers check filesystem properties before separately opening files. This is not race-resistant descriptor-based access against concurrently hostile files. The new manifest reader follows that existing pattern.
+
+Treat these utilities as local diagnostics for trusted, stable inputs; do not describe them as adversarial filesystem security boundaries. If stronger guarantees are required, separately review descriptor-based access. No concurrent-replacement exploit or unintended file disclosure was attempted.
+
+## 3. Complete per-file assessment
+
+| File under astra-work/ | Changes / test coverage | Safety boundaries and residual risks |
+| --- | --- | --- |
+| `h1_source_review_no_media_v1.py` | Adds conservative alias sets/direct spelling, recognized Python-heredoc input inspection, unpinned literal/dynamic-input diagnostics, preprocessing adjustment and explicit no-go reporting. | Reads/AST-parses text; no target-code execution. Preprocessing submodule regression needs correction. Recognized heredocs/open calls are not complete YAML/shell/data-flow/import analysis. Aliases remain heuristic and may overreport/miss unsupported forms. |
+| `test_h1_source_review_no_media_v1.py` | Expands from6 to20 tests: alias rebinding, input modes, missing literal pins, parser failures, unsafe paths and actual workflow text. | Temporary source fixtures; actual workflow read only. No launch JSON or Git histories. Missing-submodule test coverage is absent. These tests do not prove runtime closure. |
+| `h1_review_only_evidence_log_binding_v1.py` | Adds expected count, any/all byte-match distinctions, all19 field-presence flag and permanent no-go reporting. | Correctly separates complete log coverage from missing resources. Hashes do not authenticate numeric claims. v1 semantic migration remains a compatibility condition; inherited path races remain. |
+| `test_h1_review_only_evidence_log_binding_v1.py` | Expands from18 to23 tests, including one-stage, runner-only, missing-runner, missing-resource and complete-fixture scenarios. | Synthetic temporary logs, symlinks and oversized sparse-file fixture only. Full fixture numbers are not validated resource feasibility. No real worksheet populated. |
+| `h1_dependency_review_offline_v1.py` | New stdlib-only checker: simple exact-pin tokens, normalized duplicate names, frozen NumPy/Torch drift and narrow Numba/Librosa/Setuptools rules; bounded manifest reads. | No registry/network/install/import/manifest rewrite. Version-spelling false negative needs correction. Not a resolver or artifact/ABI validator. Rejects richer requirement syntax intentionally rather than silently interpreting it. |
+| `test_h1_dependency_review_offline_v1.py` | New13 tests: syntax, duplicates, provider versions, frozen drift, CRLF preservation, links/size rejection and unchanged actual manifest. | Temporary text only; actual manifest read only. Missing tests for alternate Numba/Librosa spellings and invalid version tokens. Does not test or claim installation success. |
+
+## 4. Fresh verification versus historical evidence
+
+The reviewer first inspected the exact six files, their imports, test fixture side effects and the existing harness. Then reran only the approved utility modules using the existing guarded harness:
+
+```text
+python -I -S -B /workspace/scratch/astra-review-verification/run_review_checks.py
+```
+
+**Fresh result:** 56 tests run in0.110s; **56 PASS**, zero failures/errors/skips/expected failures/unexpected successes; exit0.
+- Source-review module:20.
+- Evidence-log module:23.
+- Dependency-review module:13.
+- Harness reported **zero attempted blocked operations**.
+- Focused review probes independently confirmed the two diagnostic misses above. They were not added as repository tests and no source fix was made during this review.
+
+Environment: existing Debian13.6/Linux6.18.55 x86_64, Python3.12.14. All six files passed Python3.10 grammar parsing under Python3.12. No actual Python3.10/pinned scientific runtime or model was executed.
+
+`git diff --check` passed. No repository files changed during review; temporary fixtures were cleaned. No push, merge, workflow action, launch artifact, model import or training.
+
+**Provenance caveat:** the harness prints a hardcoded historical base `284761b`, not the current review commits. Actual local HEAD `9c62f2c` and remote `ec15c1a` were verified independently. Do not cite its printed base as current provenance.
+
+The scratch harness is not part of the six-file patch and may not survive a future task. Publication should document a portable exact test procedure rather than assume that local artifact exists. Do not replace it with broad test discovery or the H1 ancestry/model suites.
+
+Historical Phase21 log SHA256 `91072bfa293fa9fc5103637ed09bc9f018de5630b4d4d9a6eadad67d4b38ab44`, historical three-failing-alias-regressions log `4f795ce42c2fe5aa2fdd9f3282142f0e37982590c996fad0055a34e0b6b7817f`, and initial harness-failure log `5e511e235b55b040a7bc6badc7ace8769adee7d4bf5cce94b53e806106c98081` still matched their local bytes. These are preserved historical logs, **not new files from the fresh review rerun**; fresh review output was returned in chat/tool results.
+
+### Exact local code reviewed (SHA256)
+
+| File under astra-work/ | SHA256 |
+| --- | --- |
+| `h1_source_review_no_media_v1.py` | `d39ec2fdea98e2bb1a9ac3f86d38ab609cef9829fdd87017b50d5e741623c7a8` |
+| `test_h1_source_review_no_media_v1.py` | `663e20a808fc5a4f8051729d5d015d9209e061df3d4cda6a363810a6a084fe78` |
+| `h1_review_only_evidence_log_binding_v1.py` | `35bab7cd729edddd5ba73cef11be58dce41eb928c4d57f827a7095159c39beae` |
+| `test_h1_review_only_evidence_log_binding_v1.py` | `420d43ac584a489c5121d59ce05152b77acdbbcc4834a5ac0b167bd8b26ac994` |
+| `h1_dependency_review_offline_v1.py` | `c7eb6547912f5c9136f2ebb98b044b8bd02539c59a096e512c963d6468d11fd0` |
+| `test_h1_dependency_review_offline_v1.py` | `3d83bac5e8844f9ba0c39c993f9a2ccf9a041efdcf6d651e9b351a96ef2c7fad` |
+
+## 5. Publication recommendation and exact next safe work
+
+**Request changes before separately approving utility-code publication.** No execution-safety violation was found in the inspected patch; the two confirmed diagnostic false negatives and result-contract compatibility need resolution.
+
+Next proposed work, limited to separately permitted review-only scope:
+1. Correct unresolved preprocessing-submodule classification and add a failing-then-passing regression.
+2. Make version-rule coverage fail visibly on accepted but unreviewed spellings; add equivalent-form/invalid-token regression coverage.
+3. Resolve the evidence v1 semantic contract/migration explicitly.
+4. Document trusted/stable-input assumptions, limited parser/rule coverage and a portable narrow test procedure.
+5. Rerun only reviewed no-media utility tests; record exact current source/runtime/results. Do not run ancestry/model/optimizer suites or alter frozen files.
+6. Only after **explicit user approval**, apply approved code changes on the latest remote branch, preserving the handoff. No force-push or wholesale publication of the divergent local branch.
+
+This review and these publication conditions do **not** accept H1/H2 launch readiness. Independent approval, pinned-runtime validation, globally durable authorization controls, source/artifact trust and all19 feasibility entries remain unresolved.
+
+This saved record modifies **only `astra-work/CURRENT_STATE.md`**. Six utility files remain unpublished and unmodified by this documentation save. Preserve every earlier section below.
+
+**`NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+---
+
+
 # RESUME HERE — EXPLICIT NEXT STEPS / HANDOFF-ONLY PUBLICATION (2026-10-24)
 
 **Repository:** `dadrockyt-sys/dadrock-tabs-android`. **Branch:** `astra-work`.
