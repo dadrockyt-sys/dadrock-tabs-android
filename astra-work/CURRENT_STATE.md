@@ -1,3 +1,297 @@
+# RESUME HERE — EXPLICIT NEXT STEPS AFTER PHASE 26 (2026-10-24)
+
+**LOCAL SAVE ONLY: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+Last local engineering commit: `857e9e203d7549012c916a82dd490d3ac2996a74`.
+Last verified remote: `21910e864e474eb38d220be05739f6a9533fe057`.
+This user request authorizes saving these next steps locally, not pushing the
+expanded utility patch or this handoff. Preserve all earlier instructions below.
+
+## Ordered next actions and acceptance
+
+1. **Recover without overwriting:** verify local HEAD/status and latest remote
+   `astra-work` by read-only fetch/ref inspection; preserve any new work. Confirm
+   the ten-path utility patch and recorded source/test identities. Do not push the
+   divergent local branch wholesale. Exact expanded utility patch SHA256:
+   `20d5434b1a576f173552ebb6faed1474112e053a08da41f5431442c4c4431068`.
+2. **Independent utility/API review — first reviewable deliverable:** user/project
+   owner designates an independent reviewer and relevant consumer owners; no
+   outreach is authorized. Review all ten paths together, strict input rejection,
+   unchanged v1 any-match semantics, helper import closure, artifact/runtime claim
+   limits, Linux diagnostic guard and unresolved repository/external consumer
+   coverage. Record accept/reject, exact identities and conditions. This agent's
+   implementation/testing is not independent acceptance. Keep code unpublished.
+3. **Retain evidence without unnecessary execution:** current source snapshot has
+   96 passing tests (source24/dependency17/evidence27/identity28), no failures,
+   errors, skips or blocked operations. Final log SHA256:
+   `b176f5781a11db3ce4194e1c29e08e170f7bcbe26291753f8c374effd3c4c835`.
+   If an authorized utility edit changes this snapshot, inspect its side effects
+   and run only `python -I -S -B astra-work/run_h1_review_only_tests_v1.py`;
+   record exact results/source hashes. No broad discovery, ancestry/launch-path
+   tests, model imports or optimizer work. Unchanged code needs no rerun.
+4. **Source/provenance specifications — safe parallel work:** prepare review-only
+   corrections for canonical receipt path/content binding, independently trusted
+   source manifest, missing V9 gate-input pin, complete artifact/system/upstream
+   provenance and runtime pre-import identity enforcement. Review provider/startup/
+   native/license closure; Setuptools80.9.0 remains only a statically checked
+   candidate. Do not change protected drivers, scientific dependencies, workflow,
+   launch paths or controls. Independent security/runtime reviewers must accept
+   specifications before separately scoped implementation is considered.
+5. **Existing-evidence inventory — safe parallel work:** identify already available
+   authentic receipts for all19 feasibility claims and applicable written platform
+   decisions. Validate actual log bytes, origins, workload/runner comparability,
+   supported intervals and conservative bounds. Leave unsupported fields null.
+   Six resources + twelve stage bounds + one runner receipt remain missing;
+   require total bounds≤18,000s and nonnegative disk/RAM margins after reserves.
+   Never execute blocked H1 to produce evidence needed to authorize H1.
+6. **Platform clearance — external decision, no bypass:** authorized escalation
+   owner obtains authentic written scope-specific disposition for case16795041.
+   Prepared clarification must distinguish protected corrections, pinned-runtime
+   verification, bounded synthetic parity and representative evidence acquisition.
+   No contact is sent automatically. User intent, old preflight Green or repeating
+   the historical “I authorize” does not resolve the recorded restriction. Do not
+   reproduce blocked writes or move them to another tool/host/environment.
+7. **Durable single-use design — paper review only:** independent security/storage/
+   executor reviewers assess all14 A1–A14 scenarios, linearizable durable spending,
+   externally enforced one-process start, authenticated identity/scope, replay,
+   uncertain acknowledgement, crash/retry/revocation and backup/tombstone recovery.
+   All remain NOT RUN. No live service, simulator, database or control integration
+   is authorized; local SQLite/Git ancestry/concurrency/plugin availability is
+   insufficient. Future implementation/testing requires distinct applicable scope.
+8. **Permission packets before later execution:** freeze exact sources/artifacts,
+   identified permitted Ubuntu22.04/x86_64/CPython3.10.15/Torch1.11.0+cpu/
+   NumPy1.21.6 host, commands, CPU/memory ceilings, process-wide deadline, logs and
+   no-retry rules. Obtain independent technical acceptance and applicable user/
+   platform authorization before installation/import/verification. Current Debian13/
+   Python3.12.14 host does not qualify; do not provision a workaround environment.
+   Separately scoped full-model parity must compare2 steps/path×2 microbatches,
+   exact initial/per-step model and optimizer states plus Python/NumPy/Torch RNG,
+   with no media, manifest/checkpoint reads, weights export or workflow. It remains
+   NOT RUN and cannot substitute for real feasibility or epoch20 reproduction.
+9. **Publication is a separate optional track:** only after independent acceptance
+   and explicit user publication approval, reconcile the then-current remote and
+   publish exactly approved utility paths with their helper closure, preserving
+   the handoff and unrelated history. No force-push or wholesale local-branch push.
+   Handoff publication alone also needs explicit approval; this save is local.
+10. **Final non-executing decision:** reconcile independent security/runtime/model/
+    feasibility/scientific acceptance with actual platform permission and frozen
+    pilot scope. Any unresolved gate retains NO_GO. Only after every required gate
+    and clearance for the previously blocked operation may a launch proposal be
+    considered for separate approval. Do not generate or dispatch it automatically.
+
+**Shortest legitimate path:** independent review of the concrete expanded patch
+and source/provenance designs, in parallel with platform disposition and review
+of existing authentic evidence; then separately permitted protected corrections,
+exact-runtime verification, parity and representative evidence acquisition, followed
+by independent acceptance and final go/no-go. If no permitted method closes a
+measurement gap, stop there. Utility publication is not required to begin review.
+
+**Preserve scientific/operational boundaries:** H1 two arms/two performer-disjoint
+folds/twenty epochs, maximum160 optimizer steps/300 runner minutes, CPU-only pinned
+Ubuntu, frozen model/objectives except preregistered KL normalization/sampling/
+seeds/evaluation, one launch without retry. No P3/protected songs/Stage-B/paid/main/
+production, H2 inheritance, scientific simplification or threshold/seed/checkpoint
+rescue. Stop on missing authority/evidence, identity/parity/provenance mismatch,
+ambiguous durable admission, insufficient reserves or failed original control.
+No tests or restricted operations were executed for this handoff-only save.
+
+**`NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+---
+
+# RESUME HERE — PHASE 26 LOCAL ENGINEERING: STRICT INPUTS, ARTIFACT/RUNTIME REVIEW AND PORTABLE TESTS (2026-10-24)
+
+**LOCAL ONLY. `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+User authorized isolated non-executing utility engineering and local handoff
+preservation, not publication or protected implementation. Remote `astra-work`
+was fetched and independently verified at
+`21910e864e474eb38d220be05739f6a9533fe057`; local starting HEAD was
+`887cb486d8a5539878393d8762ef10a91542d935`, clean. Full14424-line canonical
+handoff was read and its bytes retained below. Seven original unpublished files
+were hash-checked and backed up before changes; no user changes were discarded.
+No push, merge, launch artifact, workflow, model import, optimizer, training,
+media acquisition, dependency installation or alternate environment occurred.
+
+## Concrete corrections completed, after side-effect review
+
+1. **Evidence integrity:** `astra-work/h1_review_only_evidence_log_binding_v1.py`
+   now bounds JSON input to1MiB before/during reads and rejects duplicate keys at
+   every depth, NaN/Infinity and overflowed float literals. It retains the exact
+   published v1 result meanings (legacy hash flag = ANY match), valid in-memory
+   audit API and permanent no-go. New CLI input rejections are explicit contract
+   hardening, not consumer migration. Focused regressions prove the original gap.
+2. **Source-lock input diagnostics:** `astra-work/h1_source_review_no_media_v1.py`
+   CLI now uses the bounded strict object reader, rejecting ambiguous duplicate
+   lock groups and symlink/ancestor-linked inputs before source review. Valid
+   fixture CLI still produces no-go. Static source/alias/scientific behavior is
+   unchanged. No protected lock, driver or workflow was edited.
+3. **New `astra-work/h1_review_identity_offline_v1.py`:** stdlib-only artifact and
+   supplied-runtime-claim review, no distribution import/install/network or archive
+   extraction. Compares exact-pin inventory to already-local wheel SHA256 and
+   unique top-level Name/Version metadata; reports missing/extra/version/hash/
+   metadata mismatch; bounds JSON/artifact/metadata inputs and rejects unsafe paths,
+   ambiguous identities and credential-bearing/non-HTTPS URL forms. Nested vendored
+   metadata is correctly distinguished from outer wheel identity. Reports metadata
+   requirements without resolving them. Supplied matching claims never establish
+   independent provenance, RECORD verification, dependency closure, wheel/runtime
+   compatibility, module origins, actual installed versions or runner comparability.
+   Source URLs are claims, not authenticated origin evidence. Wheels only; system
+   artifacts/upstream/source distributions still need separate review.
+4. **Runtime identity comparison:** the new helper checks supplied exact Ubuntu22.04,
+   x86_64, CPython3.10.15, Torch1.11.0+cpu, NumPy1.21.6 and boolean false CUDA claims.
+   Missing fields/mismatches are explicit; forged approval fields are rejected.
+   It does NOT observe/import the model stack or enforce a training admission gate.
+5. **Portable guarded runner:** new `astra-work/run_h1_review_only_tests_v1.py`
+   runs exactly four named stdlib utility modules, with no broad discovery. Requires
+   `python -I -S -B`, prints actual nine-Python-file SHA256 identities and runtime
+   instead of a hardcoded historical commit, denies process/network/model imports,
+   launch-path access and checkout mutations, and fails on blocked operations,
+   skipped/expected-failure tests or zero tests. Linux descriptor-relative cleanup
+   paths are correctly resolved through /proc/self/fd. This is a diagnostic guard
+   for reviewed code, not a hostile-Python sandbox or authorization control.
+6. **Tests/contract:** added `astra-work/test_h1_review_identity_offline_v1.py`,
+   extended source/evidence test modules and `astra-work/REVIEW_UTILITY_CONTRACT.md`.
+   Tests use only temporary text, synthetic wheel/log/source/symlink/sparse-size
+   fixtures; startup/package sentinels remain inert archive bytes. Pure event
+   classification tests do not attempt restricted operations. The two unchanged
+   dependency-parser files remain preserved in the unpublished patch.
+
+The source/evidence utilities now depend on the new helper, which imports the
+existing dependency text parser. Later publication MUST review/include this
+closure; do not publish changed legacy files alone. No existing consumer was
+silently modified. Duplicate/malformed/oversized input formerly accepted is now
+rejected; independent acceptance of that hardening and additive API remains pending.
+Trusted stable local input assumptions/TOCTOU and bounded ZIP-parser limitations
+are documented. No claim of complete adversarial filesystem/archive security.
+
+## Exact verification, failures and environment limitations
+
+Final narrow command (from repository root, no install/setup needed):
+
+```sh
+python -I -S -B astra-work/run_h1_review_only_tests_v1.py
+```
+
+**96 tests PASS in0.126s: source24 + dependency17 + evidence27 + identity/artifact/
+guard28. Zero failures/errors/skips/expected failures/unexpected successes, zero
+blocked operations.** Current nine tested Python-file hashes exactly match the
+source snapshot recorded by that run. Host Python3.12.14/Linux x86_64; nine files
+also parse with Python3.10 grammar, which is NOT execution in the pinned runtime.
+Historical62-test evidence is retained as history, superseded for changed utilities
+by this96-test run; it never covered the model or real workloads.
+
+Failure history, preserved honestly:
+- Initial JSON regressions:65 tests,6 failing subcases/assertions,0 errors/skips.
+- First new portable-runner invocation:91 tests,51 errors from misclassifying
+  fd-relative temporary cleanup as checkout writes. Corrected descriptor semantics
+  and added a pure classification regression; no actual protected mutation was
+  attempted. An intermediate92-test run then passed.
+- Source CLI regressions before correction:24 tests,2 failures,0 errors/skips;
+  both duplicate groups and symlink input were accepted previously. Intermediate
+  full suite after correction:95 passes.
+- Existing candidate-wheel static check exposed nested vendored METADATA being
+  misclassified as duplicate top-level identity. Focused regression before fix:
+  1 test,1 error,0 failures/skips. Fixed selector; final96 passes as above.
+  Intermediate92/95 runs were shown in tool results, not separately retained logs.
+
+Scratch logs under `/workspace/scratch/astra-review-verification/` (may disappear):
+- `phase26-json-before.log`: SHA256 `d71fd041db3db745b8b3a6f7e8daf274835205c1776b0e89761ee97bbe07c077`.
+- `phase26-runner-dirfd-failure.log`: `aaa7c20e5c579b1869ba7c59fcc1b5198f1ed6b065c670fc4df83fce50d35a45`.
+- `phase26-source-cli-before.log`: `d98bf4e02068866b6635400e8e23549fb291fd46b3c50f51ea4252cbbd30b801`.
+- `phase26-vendored-before.log`: `9e08a0c9df2a740b200c5639a80f57336c97ed5f0cc4df41173bc979138c6097`.
+- `phase26-final-tests.log`: `b176f5781a11db3ce4194e1c29e08e170f7bcbe26291753f8c374effd3c4c835`.
+- `phase26-actual-text-checks.log`: `479b02a489354bea99704e8cdc28adeb1481bea473ff5bae6716a85fb7a949a3`.
+
+Actual guarded documentary checks (not synthetic measurements):
+- Re-read all22 live+14 auxiliary locked source members:36 unchanged matching blobs.
+  Source text still reports unpinned V9 gate input and unresolved workflow reads.
+- Scientific25-pin manifest remains byte-identical and still reports missing
+  Setuptools requirement/pkg_resources provider. An empty supplied artifact
+  inventory correctly reports25 missing entries; this is not a scan proving what
+  a future runner has installed.
+- Re-fetched only official PyPI metadata for Setuptools80.9.0; advertised wheel
+  digest still matches the already-local candidate bytes:
+  `062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922`.
+  New checker independently matched outer SHA256/top-level metadata (Name=setuptools,
+  Version=80.9.0, Requires-Python=>=3.9). No new wheel download, extraction,
+  installation, startup .pth execution or distribution import. This is ONE candidate,
+  not a chosen pin, complete closure, license/security approval or runtime acceptance.
+- Stdlib-only host observations: Debian13, CPython3.12.14, x86_64. Explicit target
+  mismatches osId/osVersion/pythonVersion; Torch/NumPy/CUDA fields remain unobserved.
+  This host does NOT pass the pinned Ubuntu/Python gate. No replacement host provisioned.
+- Original blank worksheet still19 missing,0/13 matched bindings, false completeness;
+  no real quantities fabricated. All14 single-use scenarios remain design-only NOT RUN.
+- Actual-text-check guard recorded0 blocked operations. `git diff --check` passes.
+
+## Scope of unpublished changes and next review identity
+
+This phase changes8 utility/doc paths (5 modified +3 new), plus this local handoff.
+Relative to latest remote the combined utility patch is now **10 paths**: original
+seven plus identity helper, its tests and portable runner. Expanded utility patch
+SHA256 `20d5434b1a576f173552ebb6faed1474112e053a08da41f5431442c4c4431068`;
+local scratch `phase26-expanded-utility.patch` and `phase26-file-hashes.json` record
+exact contents. The Phase24 approval recommendation for the old exact patch is
+historical; **expanded patch requires fresh independent source/API acceptance**.
+No utility path or this local update has been pushed/published in this phase.
+
+## Remaining blockers, owners, evidence and exact next actions
+
+All independent reviewers/decision owners below are roles, not signed-off people;
+assign accountable names. Implementing-agent review/test results are NOT independent
+acceptance. Preserve Phase25's complete19-field,14-scenario and approval-path register.
+
+| Gate / class | Legitimately permitted immediate work | Objective acceptance / owner / required scope |
+| --- | --- | --- |
+| Utility input/artifact/portable-test gaps — locally corrected | Review exact10-path patch, input-hardening contract and96-test/source hashes. | Independent API/source reviewer plus affected consumer owners accept malformed-input rejection, new helper closure and remaining7,526-file/external consumer gap; user separately approves publication. No push now. |
+| Trusted source/receipt/workflow defects — protected/out of scope | Draft exact canonical receipt content/path, independently approved manifest and V9 input pin corrections without applying. | Independent security/source reviewer accepts trusted identities; user grants precise protected implementation scope and applicable platform clearance exists before restricted effects. Current workflow/control remains unchanged. |
+| Runtime/artifact provenance — missing actual evidence | Review complete25-pin-plus-provider/system/upstream inventory and candidate startup/native/license envelope with the new diagnostics. | Runtime/provenance/license reviewers select reviewed exact artifacts and origins. Explicit permission needed for installation/model imports on an identified permissible exact host; observed Codex host is disqualified. Candidate check is not closure. |
+| Full-model optimizer/RNG parity — NOT RUN | Review existing probe and freeze command/source/limits, pre-import version/origin enforcement and process-wide supervisor design. | Independent model/runtime reviewer plus user/execution authority accept one bounded synthetic full-V9 invocation:2 steps/path×2 microbatches; exact initial/per-step model/optimizer/Python/NumPy/Torch RNG equality. No media/checkpoints/exports/workflow/retry. No invocation now. |
+| All19 feasibility entries — missing real evidence | Inventory already accessible authentic comparable-runner logs; leave every unsupported field null. | Runner/evidence owner+independent feasibility reviewer accept6 real resource quantities,12 bounds≤18,000s and1 authentic receipt with justified nonnegative disk/RAM margins. If no already-permitted source exists, request a separate legitimate acquisition scope; do not run blocked training to justify permission. |
+| Global durable one-use — design only | Review A1–A14 and linearizable spending/external one-process start/recovery/tombstones; no service/control implementation. | Independent security/storage/executor owner validates design and later explicitly permitted service implementation/acceptance. Local demos/DB availability/Git history/runner concurrency do not pass. |
+| Platform authorization — unresolved | Read genuinely new already-available case16795041 disposition and prepare scope-specific clarification; no automatic contact. | Authorized Support/platform authority supplies authentic applicable clearance. Generic historical rejection is not overcome by a new model/tool/host or repeated user approval. No blocked operation reproduced. |
+| Scientific/final acceptance — unchanged | Reaffirm frozen pilot obligations and paper go/no-go. | Scientific/security/runtime/evidence reviewers+user+applicable execution authority accept all prerequisites and exact source/scope together. Any missing permission/evidence keeps NO_GO; only then may a launch proposal be separately considered, never auto-created/dispatched. |
+
+**Prepared requests, not sent/granted:**
+1. To user/project owner: designate independent reviewers for the exact expanded
+   utility/API patch and runtime/security/evidence work. Review artifacts/logs only;
+   no publication or execution implied.
+2. To independent API/source reviewers: accept/reject expanded patch hash above,
+   strict input rejections, unchanged v1 semantics, new helper dependency closure,
+   diagnostic guard limits and residual consumer coverage. After acceptance only,
+   seek separate user approval to publish exactly the approved utility paths on
+   the then-current remote. Do not push the divergent local branch.
+3. To authorized platform escalation owner: clarify which specific proposed source
+   corrections, pinned-runtime identity/import checks, bounded synthetic parity and
+   representative evidence acquisition scopes are permitted under case16795041;
+   provide written scope/conditions, without launch JSON or retrying a blocked action.
+4. To runtime/security/model owners: independently review exact artifact/source/
+   host identities and freeze command, hard total deadline, CPU/memory ceilings,
+   allowed logs and no-retry semantics BEFORE seeking execution scope. Missing
+   parameters must be resolved, not treated as approved defaults.
+5. To evidence owner: identify authentic existing receipts for each19-field claim;
+   for unsupported claims propose separately permissible acquisition with exact
+   sources/effects/budget and independent comparability acceptance. If only prohibited
+   work could produce it, retain the blocker rather than manufacture a measurement.
+
+**Shortest legitimate next path:** independent review of the now-reviewable expanded
+patch and complete provenance/source correction specifications, in parallel with
+legitimate platform disposition and existing-evidence inventory. Protected fixes,
+installed-runtime checks, full-model parity, real feasibility measurements and live
+single-use validation require their own applicable scope before action. Utility
+publication is a parallel approval track, not training clearance. Existing H1
+historical authorization need not be repeatedly requested; platform clearance and
+real evidence cannot be replaced by user intent or green tests.
+
+**Unchanged science/stops:** H1 only,2 arms×2 disjoint folds×20 epochs,160 optimizer
+steps maximum,300 runner minutes, CPU-only pinned Ubuntu, frozen model/loss except
+preregistered KL denominator, seeds/sampling/evaluation, one launch/no retry.
+No P3/protected songs/Stage-B/paid/main/production/threshold-seed-checkpoint rescue,
+H2 inheritance or weights export. Any source/runtime mismatch, failed parity,
+ambiguous durable admission, missing receipt/authority, insufficient reserves,
+over-budget bound or failed original control stops. No launch proposal while
+these prerequisites remain unmet. **`NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+---
+
 # RESUME HERE — PHASE 25 CONSOLIDATED H1 READINESS / DECISION REGISTER (2026-10-24)
 
 **Decision: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
