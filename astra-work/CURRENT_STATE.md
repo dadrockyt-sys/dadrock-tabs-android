@@ -1,3 +1,97 @@
+# RESUME HERE — PHASE 23 LOCAL UTILITY CORRECTIONS AND EXPLICIT NEXT STEPS (2026-10-24)
+
+**Decision: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+**Local utility commit:** `54abec772658a43eef5bddc9bc1f5346d946416b`.
+**Comparison baseline:** remote commit `4a4fac8cd4512658c2169352c3067b33e3af921d`.
+The follow-up review did not query the current remote tip. Utility code remains
+unpublished. This handoff update is authorized by the user's explicit save request;
+it does not authorize utility publication, merge, runtime validation or training.
+Earlier sections below are historical. This section supersedes their unresolved
+Phase 22 correction status and unpublished v1 semantic proposal.
+
+## Completed local work and evidence
+
+Recovered all six existing unpublished Phase 20/21 utility files, preserving the
+local history. Corrected unresolved explicit `preprocessing.*` module diagnostics
+while retaining resolved from-symbol handling. Added conservative supported-version
+recognition, equivalent plain-release comparisons and explicit unreviewed-version
+findings. No dependency manifest, training driver, workflow, model, launch path or
+authorization control was changed.
+
+Restored the published evidence-result v1 meaning: `logBytesMatchClaimedHashes`
+means **any matching log**, as does the additive explicit `anyLogBytesMatchClaimedHashes`.
+`allRequiredLogBindingsMatch` requires all 13 bindings; `allRequiredEvidenceFieldsPresent`
+checks required field presence. Neither proves authenticity, numerical correctness
+or launch readiness. No existing consumer was changed. Consumers relying on the
+unpublished all-match interpretation require explicit migration; missing new flags
+must be treated as unknown/incomplete. Full contract and narrow test procedure:
+`astra-work/REVIEW_UTILITY_CONTRACT.md`.
+
+The seven-path utility patch consists of that contract plus:
+- `astra-work/h1_source_review_no_media_v1.py`
+- `astra-work/test_h1_source_review_no_media_v1.py`
+- `astra-work/h1_dependency_review_offline_v1.py`
+- `astra-work/test_h1_dependency_review_offline_v1.py`
+- `astra-work/h1_review_only_evidence_log_binding_v1.py`
+- `astra-work/test_h1_review_only_evidence_log_binding_v1.py`
+
+Guarded no-media regression results: before correction **62 tests, 15 failing
+subcases/assertions, zero errors/skips**. An intermediate run exposed two mistakenly
+broadened blank-evidence assertions; those were restored. Final execution:
+**62 PASS (21 source, 17 dependency, 24 evidence), zero failures/errors/skips,
+zero blocked operations**. Python 3.12.14/Linux x86_64; six Python files also passed
+Python 3.10 grammar parsing, which is not pinned-runtime execution. The harness
+prevented network/process/model-import operations and checkout writes. Actual text
+checks retained all 19 missing feasibility entries and the existing manifest's
+missing-provider findings. All 36 locked source members were independently
+rechecked byte-identical. `git diff --check` passed. The subsequent read-only review
+found no new blocker in these corrections; no unnecessary test rerun occurred.
+
+Local scratch logs (may not survive environment replacement):
+- `/workspace/scratch/astra-review-verification/phase23-before.log`, SHA256
+  `9a8d747a65686df4f31cc919129c2f3486315b826941f661e0fb440c46538cb3`.
+- `/workspace/scratch/astra-review-verification/phase23-final.log`, SHA256
+  `d8c80b36fb9fc83852faeec87aa10ab8cbe1ba95e462eaecc125f6a163d7d69f`.
+- `/workspace/scratch/astra-review-verification/phase23-publication-review.md`
+  records exact seven-file hashes and follow-up conditions; it is not a tracked artifact.
+
+## Explicit next steps, in priority order
+
+1. **Read-only publication preparation:** verify local HEAD/status and preserve any
+   new changes. Query the then-current remote `astra-work` ref and compare its tree
+   with the seven reviewed paths. Review intervening changes and conflicts without
+   replacing local work. Do not assume the baseline above is still the remote tip.
+2. **Compatibility review:** inventory additional repository and external consumers
+   where available. The source-only checkout search is not complete downstream
+   compatibility evidence. Explicitly accept the documented v1 contract and identify
+   any consumer of the unpublished all-match semantics requiring migration. Do not
+   silently modify consumers.
+3. **Separate publication approval:** present the exact seven-path patch and contract
+   for explicit user approval. After approval only, apply approved files against the
+   current remote branch, preserving this handoff and unrelated work. Do not push
+   the divergent local history wholesale or force-push. This save request does not
+   approve publishing those seven paths.
+4. **If an approved reconciliation changes utility code:** inspect side effects first,
+   then run only the three named no-media utility modules; record exact counts,
+   failures, runtime and source identities. Do not broaden discovery into ancestry,
+   model, optimizer, real-media or launch-related tests. If unchanged, retain the
+   recorded evidence rather than rerunning without cause.
+5. **Keep runtime gates blocked:** prepare a review-only inventory of required real
+   evidence and representative-runner checks. Do not attempt those operations from
+   this authorization. All 19 feasibility entries, pinned-runtime/artifact validation,
+   full-model optimizer/RNG parity, provenance/source review, globally durable atomic
+   single-use authorization and independent approvals remain unresolved. Historical
+   support restrictions remain in force; do not reproduce blocked operations.
+
+Residual limitations: import inspection is heuristic; version parsing is deliberately
+narrow and not a general PEP 440 resolver; hashes establish byte identity rather
+than truth; trusted stable local inputs are required because path checks are not
+race resistant. Utility-only publication can be considered separately from every
+H1/H2 execution gate. No workflow dispatch, launch JSON, training or model operation
+has been performed. Preserve `NO_GO_INSUFFICIENT_EVIDENCE` and `launchPermission=false`.
+
+---
+
 # RESUME HERE — PHASE 22 SIX-FILE PUBLICATION REVIEW: REQUEST CHANGES (2026-10-24)
 
 **Decision: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
