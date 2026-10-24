@@ -1,3 +1,255 @@
+# RESUME HERE — OCTOBER 24 SOURCE/DEPENDENCY RECONCILIATION AND SINGLE-USE DESIGN HANDOFF (2026-10-24)
+
+**Canonical branch:** `astra-work`. **Canonical handoff:** `astra-work/CURRENT_STATE.md`.
+**Disposition: `NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`.**
+
+This section preserves the Phase 18 readiness audit and its detailed source/dependency follow-up. Read this section before historical queues below. All earlier handoff bytes are retained beneath this prepend.
+
+## Scope, authorization and evidence boundary
+
+- User requested read-only engineering audits, then explicitly requested saving all findings in a handoff commit at this existing file.
+- Audited remote branch HEAD: **`9ac3cd28df3450c37dfa53fd09230031c952ca72`**, independently rechecked after the audit.
+- Audit operations were source/metadata reads, Git blob calculations and AST inspection. No target project modules were imported; no dependency installation, test/model execution, runtime measurement, real-media acquisition, optimizer/training, launch artifact, workflow trigger, or reproduction of blocked actions occurred.
+- This save is a documentation-only update of the existing canonical handoff, not an H2 file creation, launch proposal, platform clearance or training authorization. Remote commit success must be verified after push rather than presumed.
+- **VERIFIED** below means directly established by this audit's inspected bytes, calculations or authoritative metadata. **UNVERIFIED** requires runtime/artifact/provenance/independent approval evidence. **DEFECT** denotes a concrete source-visible omission or inconsistency, not a reproduced runtime failure.
+- Historical reports of 41 Phase17 review-utility passes, 22 scalar-integration passes, earlier preflight success and scientific outcomes were not rerun here. Source integrity, historical evidence, independent review and execution permission remain separate.
+- Prior web/Android cloud onboarding, successful Git access or available compute do not establish Astra's pinned runtime, runner equivalence or permission.
+
+## 1. Exact reconciliation of all 36 draft-lock members
+
+Lock: `docs/astra/GUITARTECHS_H1_REVISED_SOURCE_LOCK_REVIEW_DRAFT_V1.json`.
+Its status remains **DRAFT_REQUIRES_INDEPENDENT_REVIEW_NOT_LAUNCH_AUTHORIZATION**.
+
+All **22 live + 14 auxiliary = 36/36** members were retrieved as text at the audited commit and their Git blob identities recalculated: no missing or mismatched listed member. This is an explicit-member check, not a complete branch-tree or installed-package attestation. The GitHub recursive-tree API request during assessment returned HTTP 403; no complete-tree API result was obtained in this audit, and no media-containing repository archive was downloaded as a substitute.
+
+| Group | Exact repository path | Recorded and recalculated Git blob | Result |
+| --- | --- | --- | --- |
+| Live | `.github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml` | `90e8168fc1ca40738ba07291ca1001a36718f4e3` | MATCH |
+| Live | `astra_backend/guitartechs_real_training/real_training.py` | `d4a3dd99c4a2c3cda16c10bde1a5dc63f6380254` | MATCH |
+| Live | `astra_backend/guitartechs_training_v10/h1_pilot_core_v1.py` | `2bf8085b6cd69214d5e2ec198d80c40b35d13875` | MATCH |
+| Live | `astra_backend/guitartechs_training_v10/h1_pilot_readiness_v1.py` | `fd6a739c095fdc3e48d5305a36edf36bb3f00255` | MATCH |
+| Live | `astra_backend/guitartechs_training_v10/h1_prepared_array_guard_v1.py` | `b589b7118e2d23ec3d1557195954c65a7727a928` | MATCH |
+| Live | `astra_backend/guitartechs_training_v10/run_h1_20epoch_paired_pilot_v1.py` | `ad38a33b87b85f676f6342eeaec569a031a327f2` | MATCH |
+| Live | `astra_backend/guitartechs_training_v2/sampling.py` | `9eb62fde56f592646077afa1e0ff3013a5dc6560` | MATCH |
+| Live | `astra_backend/guitartechs_training_v2/train_v2.py` | `4db5add96c58a8e54868ea06dacb1da724675163` | MATCH |
+| Live | `astra_backend/guitartechs_training_v4/objective_decoder.py` | `b9a96f6b256de52bfbb5076482a03263415213cb` | MATCH |
+| Live | `astra_backend/guitartechs_training_v6/model.py` | `78a17dd174bd86e804af0e9c75056055d6048295` | MATCH |
+| Live | `astra_backend/guitartechs_training_v7/model.py` | `cdb80274494782fc42774f3dd5c6859e9beb97d3` | MATCH |
+| Live | `astra_backend/guitartechs_training_v7/objective_decoder.py` | `7e0f3a297e4ce8fa20b4bcca74842964e08aafd2` | MATCH |
+| Live | `astra_backend/guitartechs_training_v8/decoder.py` | `0d856504983afdeeba2c18ad11b3090164876243` | MATCH |
+| Live | `astra_backend/guitartechs_training_v9/model.py` | `b930555e6c816fd45e2e77dc292702bf46fc6d02` | MATCH |
+| Live | `astra_backend/guitartechs_training_v9/paired_view.py` | `9b704ea9c5bf153197dfde260c1b995142d062b5` | MATCH |
+| Live | `astra_backend/guitartechs_training_v9/post_v9_output_admission_audit_v1.py` | `8e4cf8a6aa052d0703fc69128a387de8eb2bf6d5` | MATCH |
+| Live | `astra_backend/guitartechs_training_v9/train_v9_resumable.py` | `99cae61a0a299de27a24e367afccdf7b13a7c81b` | MATCH |
+| Live | `astra_backend/tabcnn_runtime/preprocessing.py` | `e1d251a341b811b1b8e2df97d78b754d3379046b` | MATCH |
+| Live | `astra_backend/tabcnn_runtime/requirements.lock.txt` | `174a5016cfe9e6c00816d2171210aa84c66081a8` | MATCH |
+| Live | `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_AUTHORIZATION_V1.json` | `ec705b8f6978bbe1102bb337d7fc927d93fcffcc` | MATCH |
+| Live | `docs/astra/GUITARTECHS_H1_20EPOCH_PAIRED_PILOT_PROTOCOL_V1.md` | `431b0e6bb783b452830afcf4dd489519a2f6568e` | MATCH |
+| Live | `docs/astra/GUITARTECHS_PRIMARY_ALIGNMENT_CORRECTIONS_V1.json` | `9090d465422ebf5d4fdf170693fe0936934f3073` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/h1_full_model_synthetic_parity_v1.py` | `3eb3638c94a2cdfd835c3d600e4b614b2f2401ca` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py` | `7bee3307003a092dbb2ed234af01c931fee1d773` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/h1_source_lock_audit_v1.py` | `822214e47e5ed5bbd577fa59a152eafa7c575047` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/h1_static_import_closure_v1.py` | `e5aa04aa395feb76254d7a383558e1bca2ac2f5c` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_core_failclosed_v1.py` | `aa14e55393eb51a20143a75f964bae438ed813f1` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_launch_ancestry_guard_v1.py` | `0dd7004fc3ef41ea70c28ecf22b271176a31b529` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_offline_budget_v1.py` | `d652cfc5318e1d2aeaf24b1ed0b9ddfb1f96d594` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_pilot_driver_mock_v1.py` | `9520996b491569df5320423d92d4d615546ef268` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_pilot_readiness_v1.py` | `6df5a4291a0eb0844053080f352149265838f7e7` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_prepared_array_guard_v1.py` | `02cd76361e979a2aaf602e230441f5bd5f9191cb` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_real_v7_objective_parity_v1.py` | `8868ea56f1da130ff4a479056fe65fcaa388162c` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_source_lock_audit_v1.py` | `3957169567aa15367ec03e9198d7d48796602bb5` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_static_import_closure_v1.py` | `d7694a517f1cdfae6172fcb1682032f7e2965132` | MATCH |
+| Auxiliary | `astra_backend/guitartechs_training_v10/test_h1_synthetic_parity_v1.py` | `9975a9b62d5b62300ae6adce7da4f7011581b75b` | MATCH |
+
+The literal local-import dependencies of the 17 live Python members resolve within the listed live sources, including `preprocessing` mapped to `astra_backend/tabcnn_runtime/preprocessing.py`. This does not prove arbitrary dynamic imports or installed package closure.
+
+Read-only requests for `astra_backend/__init__.py` and the `__init__.py` of each relevant package (`guitartechs_real_training`, `guitartechs_training_v2/v4/v6/v7/v8/v9/v10`, `tabcnn_runtime`) returned 404 at the pinned commit. Those known ancestors currently behave as namespace packages; any future executable initializer needs separate review and pinning.
+
+## 2. Findings: dependencies, source trust and workflow/environment assumptions
+
+| Priority | Category | Concrete finding / exact location | Recommended correction or required evidence |
+| --- | --- | --- | --- |
+| P0 | DEFECT | `astra_backend/tabcnn_runtime/requirements.lock.txt` does not pin **setuptools**. Published metadata for `numba==0.55.2` requires it unconditionally. Librosa 0.9.1's `librosa/util/files.py` imports `pkg_resources`; Setuptools **82.0.0 removed that module**. | Separately review an exact compatible Setuptools release retaining the API (necessarily below 82), including artifact identity. Do not rely on runner-preinstalled or unconstrained latest Setuptools. This is a verified lock hazard, not an observed failed installation. |
+| P0 | DEFECT | `.github/workflows/guitar-techs-h1-20epoch-paired-pilot.yml:58` loads the authorization-receipt path supplied by the launch document without requiring it to equal the canonical locked receipt path. | Require the canonical path and independently approved content identity before parsing; reject alternate paths, traversal and links. Do not create a launch document to test this. |
+| P0 | DEFECT | Workflow lines 86–89 compare source bytes to hashes supplied by the launch document. The separate source lock is DRAFT and is not consulted by the workflow. | Bind a complete approved manifest digest to an independent trust authority outside mutable branch/payload contents. Same-branch self-consistency is not independent source approval. |
+| P0 | DEFECT | Workflow line 90 reads `docs/astra/GUITARTECHS_V9_DEVELOPMENT_RESULT_V1.json`, outside the 22-file live lock. Current independently read Git blob: `41a251f1a4450b3703ed2bfa81078c55cddd4109`; its recorded gate is FAIL, macro F1 0. | Include the gate input in a separately approved input manifest and verify its identity; preserve frozen scientific content. Reading the document verifies its contents, not independent replication of its scores. |
+| P0 | DEFECT | Workflow first-add ancestry, `GITHUB_RUN_ATTEMPT==1`, concurrency serialization and `h1_pilot_readiness_v1.py::ScalarProgress` do not provide global persistent one-use consumption. | Independent security review of the non-executing design below; do not deploy the local SQLite demonstration or activate an alternative execution route. |
+| P1 | VERIFIED | All 36 explicit member hashes match; four upstream AMT source hashes also match. | Retain the narrow integrity claim. No independent provenance, license, runtime or approval conclusion follows from matching hashes. |
+| P1 | DEFECT | `astra_backend/guitartechs_training_v10/h1_full_model_synthetic_parity_v1.py` reports Torch's version but does not enforce frozen Python 3.10.15 / Torch 1.11.0+cpu / NumPy 1.21.6 versions. | Design an independently reviewed fail-closed runtime gate or wrapper before accepting any future parity receipt. No frozen source edit or execution was authorized by the audit. |
+| P1 | DEFECT | Workflow lines 142–149 run the driver's narrow `--offline-test`, not the ten-module H1 suite, full optimizer/RNG probe, nineteen-field feasibility review or global consumption gate. | Specify separately accepted prerequisite evidence/admission checks before any later workflow integration. Old preflight Green is not proof of current full readiness. |
+| P1 | DEFECT | Workflow actions use version tags; `ubuntu-22.04` is an evolving image; apt FFmpeg/unzip packages are unversioned; package installation supplies no distribution hashes. | Review immutable action revisions, image/processor identity, system-package provenance and exact distribution hashes. Preserve scientific pins instead of upgrading them to match a convenient host. |
+| P1 | UNVERIFIED | Import execution origins are not attested. `real_training.py`, `train_v2.py`, `train_v9_resumable.py`, H1 driver and post-V9 audit mutate `sys.path` at module import. `guitartechs_training_v6/model.py` changes it before AMT import. Existing `sys.modules` can affect resolution. | Specify isolated startup, expected module origins/search paths and checks for cached modules, user-site/startup hooks and `.pth` files. Correct bytes on disk do not prove those bytes execute. |
+| P1 | UNVERIFIED | Metadata inspection is not installation/import/ABI evidence. All 24 non-Torch pinned PyPI releases were inspected. Their Python requirements allow the proposed CPython 3.10 target; the official Torch index advertises a CPython3.10 Linux x86_64 1.11.0+cpu wheel. | Independently review exact selected artifacts and native closure, then separately authorize pinned import/ABI verification. CPU Torch wheel payload and internal metadata were not downloaded/audited. No resolver or import success was established. |
+| P2 | UNVERIFIED | All nineteen worksheet entries, authentic full-model parity, representative-host measurements and independent approvals remain unresolved. | Keep unknown entries null. No Codex-host, mocked-log, historical V9 or static-array substitution. |
+
+Authoritative external sources consulted as source/metadata only:
+
+- `https://pypi.org/pypi/numba/0.55.2/json`
+- Exact-version PyPI JSON metadata for the other non-Torch manifest entries.
+- `https://github.com/librosa/librosa/blob/0.9.1/librosa/util/files.py`
+- `https://github.com/pypa/setuptools/blob/v82.0.0/NEWS.rst`
+- `https://download.pytorch.org/whl/cpu/torch/`
+
+Among inspected default CPython3.10/no-extras PyPI requirements, **setuptools was the unlisted requirement**. Optional display/test dependencies and Python3.13-only `standard-aifc`/`standard-sunau` are not missing requirements for this target. Latest-published metadata observed Setuptools 84.2.1 supports Python >=3.10; an unconstrained dependency can therefore select a release lacking `pkg_resources`. This does not establish which version any previous runner installed.
+
+No package-version conflict with Python3.10 was established by the inspected metadata. This is not a complete artifact-level compatibility proof. Do not invent missing `mido`, `mir_eval` or display dependencies merely because the complete upstream project has broader APIs; the inspected local MIDI parser is custom and the staged AMT subset is deliberate.
+
+## 3. Static and dynamic execution closure / initialization review
+
+### Actual H1 chains
+
+- H1 core -> V9 trainer/model -> V7 model -> V6 model -> staged AMT TabCNN.
+- H1 core also imports the post-V9 output-admission helpers and real-training metrics.
+- `astra_backend/guitartechs_real_training/real_training.py` -> bare `preprocessing` -> Librosa -> NumPy/SciPy/Numba/SoundFile/resampling dependencies.
+- Source-only utilities are distinct from model-importing fixtures; importing the H1 stack is not a passive version query.
+
+### Upstream identities independently verified in this audit
+
+Upstream repository `robust-guitar-tabs/code`, commit `f50309ad06dc734ddae5e3a0eda756fca221e2e7`, root `AMT-Tools/amt_tools/`:
+
+| File | Expected and independently recalculated Git blob |
+| --- | --- |
+| `models/common.py` | `84beb4cf251b9cb9274d10cf203318314181af31` |
+| `models/tabcnn.py` | `e09856db2fffd77642e005ab509846acc894b886` |
+| `tools/instrument.py` | `eddc48a8b95de057035cd11ea2d1951e754ef349` |
+| `tools/constants.py` | `79666ea0c5b0214ca664da454069b8d286cc5c18` |
+
+The prospective workflow generates three additional initializer contents: empty `amt_tools/__init__.py`, empty `amt_tools/models/__init__.py`, and `amt_tools/tools/__init__.py` containing exactly the constants and instrument star-import lines. These bytes require independent staging verification. No actual runtime staging was performed during the audit.
+
+### Concrete behavior and limitations
+
+- **VERIFIED:** The minimal upstream `tools` namespace lacks helpers referenced by other upstream APIs: `dict_to_device`, `unpack_dict`, `query_dict`, `tensor_to_array`, `framify_activations`, `array_to_tensor`, and `threshold_activations`. They are **not demonstrated missing dependencies of the inspected H1 constructor/direct-convolution path**. Broadening the package or swapping initializers would change the closure; do not install the full AMT package as an assumed repair.
+- **VERIFIED:** Librosa0.9.1 imports its core modules, whose audio module imports Numba. Numba0.55.2 initialization performs LLVM/JIT execution checks and optional native-library configuration. Librosa also constructs cache state and reads bundled example registries. No automatic real-audio download was found in that inspected initialization chain; fetching examples requires a separate call.
+- **VERIFIED:** V6 constructs a full upstream TabCNN, then retains its convolutional stack. Discarded dense layers still participate in construction/allocation/RNG consumption. A seemingly simplifying convolution-only replacement can break historical initialization/epoch20 reproduction.
+- **VERIFIED:** Known local package ancestors had no executable initializer at the audited commit; no project import was performed.
+- **UNVERIFIED:** Installed startup hooks, `.pth`, native binaries, cache/resource behavior and extension/plugin discovery are not covered by the 36-file proof. The source review did not establish malicious initialization or actual unintended execution.
+- **UNVERIFIED:** Upstream license/commercial-use acceptance and independent package provenance were not established. Hash identity is not legal or security approval.
+- Historical checkpoint-loading functions are present in imported modules, but the inspected H1 pilot does not thereby prove those loaders execute. No checkpoints were acquired or deserialized here.
+
+## 4. Readiness and exact nineteen-field evidence contract
+
+Worksheet: `astra-work/H1_FEASIBILITY_MEASUREMENT_WORKSHEET_BLANK_2026-10-09.json`.
+
+All **19 entries remain null / unsupported**:
+
+Six `runnerResources` fields:
+1. `availableDiskBytesAtJobStart`
+2. `peakAdditionalDiskBytes`
+3. `diskReserveBytes`
+4. `availableRamBytes`
+5. `peakResidentRamBytes`
+6. `ramReserveBytes`
+
+One `runnerEvidence` receipt, with `runId`, `evidenceSha256`, `runnerImage` (schema requires `ubuntu-22.04`), plus independently reviewed image/processor/runtime comparability.
+
+Twelve `stageUpperBounds`:
+1. `environmentAndDependencies`
+2. `sourceAcquisition`
+3. `archivesAndPreparation`
+4. `originalFold1Training`
+5. `originalFold2Training`
+6. `treatmentFold1Training`
+7. `treatmentFold2Training`
+8. `originalFold1Evaluation`
+9. `originalFold2Evaluation`
+10. `treatmentFold1Evaluation`
+11. `treatmentFold2Evaluation`
+12. `uploadCleanupReserve`
+
+Each stage receipt requires a positive finite `upperBoundSeconds`, positive integer `evidenceRunId`, and SHA256 `evidenceSha256`. All twelve upper durations including reserve must total **<=18,000 seconds**. Disk and RAM availability minus respective peak and justified reserve must be nonnegative.
+
+- Workflow archive HTTP request ceilings total **4,800 seconds** (eight archives, up to two 300-second URL attempts each); this excludes setup, source acquisition, preparation, compute, evaluations and upload/cleanup.
+- Source acquisition has different retry semantics and is not bounded by that archive calculation.
+- H1 core records per-arm training `wallSeconds`; that is not all twelve stage bounds or evaluation timing.
+- Historical counts: 256 captures, 1,924,805 frames, Fmax23,773; exact individual-array arithmetic and historical logical overlap are useful source evidence, not measured concurrent RAM/physical-disk peaks.
+- Include FFmpeg subprocess PCM plus NumPy copy, VQT workspaces, paired graphs/probe, Adadelta state, full evaluation and decoder temporaries in a legitimate resource assessment. Python-only RSS can omit relevant process/system memory.
+- No training or real media may be launched just to fill these fields under the current boundary.
+
+### Exact review utilities and tests
+
+- Source lock: `astra_backend/guitartechs_training_v10/h1_source_lock_audit_v1.py`, `h1_static_import_closure_v1.py`, and corresponding `test_` modules.
+- Broader static review: `astra-work/h1_source_review_no_media_v1.py`, `test_h1_source_review_no_media_v1.py`.
+- Environment: `astra-work/H1_REVIEW_ONLY_ENVIRONMENT_CONTRACT_2026-10-11.json`, `h1_review_only_environment_contract_v1.py`, `test_h1_review_only_environment_contract_v1.py`, `h1_frozen_runtime_review_v1.py`, `test_h1_frozen_runtime_review_v1.py`, `h1_offline_runtime_prerequisites_v1.py`, `test_h1_offline_runtime_prerequisites_v1.py`.
+- Feasibility: `astra-work/h1_feasibility_review_offline_v1.py`, `test_h1_feasibility_review_offline_v1.py`, `test_h1_phase13_original_receipts_integration_v1.py`, `test_h1_phase15_relative_cli_v1.py`; `astra_backend/guitartechs_training_v10/h1_offline_budget_v1.py` and its test.
+- Scalar inputs: `astra-work/H1_PHASE11D_EXACT_PREPARED_FRAME_RECOVERY_2026-10-09.json`, `H1_PHASE11D_EXACT_STAGE_CAPACITY_2026-10-09.json`, `H1_PHASE11D_V9_HISTORICAL_PREP_TIMINGS_2026-10-09.json`.
+- Static shapes: `astra-work/h1_offline_memory_shape_review_v1.py`, `test_h1_offline_memory_shape_review_v1.py`, `H1_PHASE16_OFFLINE_MEMORY_SHAPE_REVIEW_2026-10-09.md`.
+- Log integrity: `astra-work/h1_review_only_evidence_log_binding_v1.py`, `test_h1_review_only_evidence_log_binding_v1.py`, `H1_EVIDENCE_LOG_BINDINGS_BLANK_2026-10-11.json`.
+- One-use illustrations: `astra-work/h1_local_atomic_consumption_demo_v1.py`, `test_h1_local_atomic_consumption_demo_v1.py`, `H1_PHASE17A_OFFLINE_ONE_USE_AND_READINESS_2026-10-11.md`.
+
+The paper reviewer validates supplied schemas/values/arithmetic, not actual telemetry. The log-binding verifier hashes supplied log bytes, not their truth or origin. Its `logBytesMatchClaimedHashes` is true when **any** binding matches: completeness/missing fields must also be checked. Hash matching never approves the claims.
+
+### Test scope and full-model parity
+
+The ten H1 modules are in the 36-member inventory above. None was run in these audits.
+
+- Driver mocks exercise the actual main-function AST, control ordering and failure handling, not full model/runtime equivalence.
+- Prepared-array tests use synthetic NumPy arrays; readiness tests use synthetic identities/receipts.
+- Core fail-closed tests include tiny optimizers/callback cases.
+- `test_h1_synthetic_parity_v1.py` uses a stand-in supervised loss/tiny network; `test_h1_real_v7_objective_parity_v1.py` uses real frozen loss helpers with a tiny network, not full TemporalTabCNNV9.
+- **Execution caveat:** `test_h1_launch_ancestry_guard_v1.py` creates temporary Git repositories, writes the launch-path JSON and commits synthetic histories. Do not blindly run the ten-module suite under a no-file/no-launch-JSON or no-reproduction instruction.
+- `h1_full_model_synthetic_parity_v1.py` compares original/instrumented synthetic paths over **two optimizer steps, two microbatches each**, including model state hashes, optimizer state/groups and Python/NumPy/Torch RNG equality. It must not be described as the real epoch20 control reproduction.
+- Its time check is between steps, not a process-wide hard deadline. Its missing frozen-version comparisons require separate reviewed enforcement before accepting a future result.
+- Authentic complete-checkout suite and pinned full-model parity remain **NOT RUN / NOT ACCEPTED** in the canonical readiness record.
+
+## 5. Non-executing globally durable atomic single-use design review
+
+**DESIGN ONLY. Not implemented, provisioned, approved, activated or connected to any workflow.**
+
+Goal: **at most one admitted execution per independently approved authorization**, not a promise of exactly-once computation.
+
+1. **Independent approval authority:** A branch document cannot self-create approval. Bind approval to repository identity, study/protocol, complete source/dependency manifest digest, reviewed execution identity, permitted scope, limits and expiry. H1 and H2 need separate scopes.
+2. **Authoritative shared durable ledger:** Every eligible execution surface consults one strongly consistent authority. The authorization identity must survive branch rewrites, payload copies, new commits/run IDs and independent runners.
+3. **Atomic consumption before effects:** A conditional transaction moves approved-unused to irrevocably consumed, bound to one execution owner. Failure, cancellation, timeout or lease expiry must never automatically return it to unused.
+4. **Trusted enforcement boundary:** A mutable workflow cannot be trusted merely to assert it consulted the ledger. Admission must be enforced by independently controlled execution/policy infrastructure using authenticated, narrowly bound job identity.
+5. **One durable start transition:** Duplicate scheduling/delivery must not let two workers start. Bind admission to one immutable execution owner. Status lookup must never mint another start permission.
+6. **Durable recovery:** Require durable acknowledgments, protected backups and retained consumption tombstones. Uncertain recovery or rollback freezes admission pending reconciliation.
+7. **Independent review:** Source, scope binding, storage semantics, access control and recovery need separate approval. No checker, paper review, synthetic test or this document may self-approve execution.
+
+| Failure or replay scenario | Required fail-closed behavior |
+| --- | --- |
+| Two concurrent requests | One atomic winner; all others denied. |
+| Same approval with changed payload/source | Deny; changing a digest does not create another authorization. |
+| Copied branch, fork, repository or workflow | Deny unless exact independently approved identity and scope. |
+| Rerun/new run ID/duplicate delivery | Prior consumption survives; no renewed allowance. |
+| Ledger unavailable or ambiguous response | Deny new effects; query status without assuming unused or issuing a replacement permission. |
+| Crash after consumption, before work | Authorization remains spent; sacrifice availability for at-most-once admission. |
+| Crash after partial work | Remains consumed; retain partial evidence; no automatic retry/resume. |
+| Receipt/token replay | Bound execution ownership and durable single-start admission reject reuse. |
+| Revocation races with admission | Authoritative transactional ordering; no new admission after effective revocation. Stopping already-started work is a separate control. |
+| Backup restore loses tombstones | Freeze admission and reconcile durable history; never resurrect permissions silently. |
+| Compromised workflow ignores gate | External enforcement must prevent admission; an in-workflow check alone is insufficient. |
+
+Existing local SQLite demo shows uniqueness within one shared local DB. It explicitly does not provide a global service. Git ancestry / attempt counters / concurrency / local progress journaling remain useful limited safeguards but cannot substitute for the design above.
+
+## 6. Prioritized remediation and next safe continuation
+
+**Safe source/documentary work before runtime testing:**
+
+1. Preserve this audit and reconcile a reviewable closure ledger: all 36 members, four upstream files, exact generated initializers, additional gate inputs, package artifacts/metadata, provenance and licensing. No launch material is needed.
+2. Review proposed corrections for the Setuptools gap, canonical authorization binding, unpinned V9 gate input and independent manifest trust anchor. Document required regression coverage without editing frozen source or workflow under this audit.
+3. Specify isolated import-origin, startup-hook, native-library and environment acceptance criteria. Preserve constructor/RNG behavior explicitly.
+4. Submit the single-use threat model, access-control assumptions and recovery invariants for independent security review. Do not provision or integrate a service.
+5. Review existing authentic evidence logs and identify missing claims precisely; leave unsupported worksheet fields null. Do not rerun already-passed fixture suites merely to generate activity.
+
+**Later work requiring distinct appropriate scope and acceptance:**
+
+- Code/manifest/workflow corrections require a separate implementation authorization and review; this handoff save authorizes only documentation.
+- Codex Cloud can inspect source, hashes, metadata, schemas and existing logs. It could potentially conduct selected no-media tests only after side-effect/scope review. Its host is not automatically the target environment.
+- A separately permitted exact pinned environment is necessary before imported-runtime checks and full-model synthetic optimizer/RNG parity. Synthetic parity does not fill real workload feasibility fields.
+- Representative GitHub Actions runner evidence, or an independently accepted equivalent, is required for runner-dependent measurements and duration claims. No workflow may be triggered under this handoff.
+- Independent source/security acceptance and actual scope-specific Support disposition remain separate from user approval, source checks, tests or environment availability.
+
+## 7. Hard stop / durable resume pointer
+
+Maintain **`NO_GO_INSUFFICIENT_EVIDENCE`; `launchPermission=false`**. H1 and H2 remain inactive.
+
+No creating/editing/reconstruction of the blocked launch JSON; no preflight/training/workflow trigger; no real P1/P2/P3/protected-song/Stage-B media/model inference or optimization; no paid compute, secrets, checkpoint/weight export, scientific rescue, main/Production changes, or alternate-host/tool bypass. Do not retry previously blocked actions or the separately blocked `docs/checkpoints/CURRENT_STATE.md` write.
+
+The canonical next step is **independent source/dependency and single-use design review using this preserved evidence**, not runtime testing or launch preparation. Historical permissions and older executable queues below do not override this newer boundary.
+
+---
+
+
 # OCTOBER 20 — SCREEN-RECORDED ROUTINE DOCUMENTATION TEST
 
 - User confirmed screen recording was started before this GitHub connector operation.
