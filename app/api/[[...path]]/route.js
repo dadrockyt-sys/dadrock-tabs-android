@@ -291,6 +291,13 @@ export async function POST(request, context) {
       const body = await request.json().catch(() => ({}));
       const apiKey = body.api_key || YOUTUBE_API_KEY;
       const channelId = body.channel_id || DADROCK_CHANNEL_ID;
+      // Process one YouTube playlist page per admin request for genuine progress.
+      // Legacy API callers without paginated=true retain their full sync.
+      const paginated = body.paginated === true;
+      const pageToken = paginated && typeof body.page_token === 'string' ? body.page_token : null;
+      if (pageToken && pageToken.length > 1024) {
+        return NextResponse.json({ error: 'Invalid YouTube page token' }, { status: 400 });
+      }
 
       if (!apiKey) {
         return NextResponse.json({ error: 'YouTube API key not configured' }, { status: 400 });
@@ -316,22 +323,33 @@ export async function POST(request, context) {
 
         let videosAdded = 0;
         let videosSkipped = 0;
-        let nextPageToken = null;
+        let nextPageToken = pageToken;
+        let totalResults = null;
+        let videosProcessed = 0;
         const errors = [];
 
         // Fetch all videos from uploads playlist (paginated)
         do {
-          const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`;
+          const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}${nextPageToken ? `&pageToken=${encodeURIComponent(nextPageToken)}` : ''}`;
           
           const playlistResponse = await fetch(playlistUrl);
           const playlistData = await playlistResponse.json();
 
-          if (playlistData.error) {
-            errors.push(playlistData.error.message);
-            break;
+          if (!playlistResponse.ok || playlistData.error) {
+            const message = playlistData.error?.message || 'Unable to retrieve YouTube videos';
+            return NextResponse.json({ error: `YouTube sync failed: ${message}` }, { status: 502 });
+          }
+          if (!Array.isArray(playlistData.items)) {
+            return NextResponse.json({ error: 'YouTube returned an invalid playlist response' }, { status: 502 });
           }
 
-          for (const item of playlistData.items || []) {
+          const reportedTotal = playlistData.pageInfo?.totalResults;
+          if (Number.isInteger(reportedTotal) && reportedTotal >= 0) {
+            totalResults = reportedTotal;
+          }
+          videosProcessed += playlistData.items.length;
+
+          for (const item of playlistData.items) {
             const snippet = item.snippet;
             const videoId = snippet.resourceId.videoId;
             const title = snippet.title;
@@ -366,7 +384,8 @@ export async function POST(request, context) {
             }
           }
 
-          nextPageToken = playlistData.nextPageToken;
+          nextPageToken = playlistData.nextPageToken || null;
+          if (paginated) break;
         } while (nextPageToken);
 
         return NextResponse.json({
@@ -374,7 +393,12 @@ export async function POST(request, context) {
           message: `Sync completed! ${videosAdded} videos added, ${videosSkipped} already existed.`,
           videos_added: videosAdded,
           videos_skipped: videosSkipped,
-          errors
+          errors,
+          ...(paginated ? {
+            videos_processed: videosProcessed,
+            total_results: totalResults,
+            next_page_token: nextPageToken
+          } : {})
         });
 
       } catch (e) {
