@@ -368,6 +368,7 @@ export default function App({ initialLang = 'en' }) {
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
+  const [syncProgress, setSyncProgress] = useState(null);
   const [isCleaning, setIsCleaning] = useState(false);
   const [cleanupStatus, setCleanupStatus] = useState({ type: '', message: '' });
   const [cleanupRemovedVideos, setCleanupRemovedVideos] = useState([]);
@@ -769,33 +770,97 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
-  // Sync videos from YouTube
+  // Sync one YouTube playlist page at a time. Each response contains the actual
+  // number checked, allowing the admin panel to show measured progress.
   const handleYouTubeSync = async () => {
+    if (isSyncing) return;
     setIsSyncing(true);
     setSyncStatus({ type: '', message: '' });
+    setSyncProgress({ processed: 0, total: null, added: 0, skipped: 0, failed: 0, percent: 0, pages: 0, finished: false });
+
+    let processed = 0;
+    let total = null;
+    let added = 0;
+    let skipped = 0;
+    let failed = 0;
+    let pages = 0;
+    let pageToken = null;
+    const seenTokens = new Set();
+
     try {
       const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      if (!storedPassword) throw new Error('Admin session expired. Log in again to sync.');
       const authToken = btoa(`admin:${storedPassword}`);
-      const response = await fetch('/api/admin/youtube/sync', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${authToken}`
-        },
-        body: JSON.stringify({})
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setSyncStatus({ 
-          type: 'success', 
-          message: `Synced ${data.videos_added} new videos! (${data.videos_skipped} already existed)` 
+
+      while (true) {
+        // Prevent a hung request from showing "Syncing..." indefinitely.
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        let response;
+        try {
+          response = await fetch('/api/admin/youtube/sync', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Basic ${authToken}`
+            },
+            body: JSON.stringify({ paginated: true, page_token: pageToken }),
+            signal: controller.signal
+          });
+        } finally {
+          clearTimeout(timeoutId);
+        }
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || `YouTube sync failed (HTTP ${response.status}).`);
+        }
+        if (!Number.isInteger(data.videos_processed) || data.videos_processed < 0) {
+          throw new Error('The server did not return progress details. Please refresh and try again.');
+        }
+
+        processed += data.videos_processed;
+        added += data.videos_added || 0;
+        skipped += data.videos_skipped || 0;
+        failed += Array.isArray(data.errors) ? data.errors.length : 0;
+        if (Number.isInteger(data.total_results) && data.total_results > 0) {
+          total = data.total_results;
+        }
+        pages += 1;
+
+        const nextToken = data.next_page_token || null;
+        // Never claim 100% while YouTube still has another page to fetch.
+        const percent = nextToken
+          ? (total ? Math.min(99, Math.floor((processed / total) * 100)) : 0)
+          : 100;
+
+        setSyncProgress({
+          processed, total, added, skipped, failed, percent,
+          pages, finished: !nextToken
         });
-        loadAdminData(); // Refresh stats
-      } else {
-        setSyncStatus({ type: 'error', message: data.error || 'Failed to sync videos' });
+
+        if (!nextToken) {
+          setSyncStatus({
+            type: failed > 0 ? 'error' : 'success',
+            message: failed > 0
+              ? `Finished with ${failed} errors: ${added} new videos added, ${skipped} already existed.`
+              : `Sync complete! ${added} new videos added; ${skipped} already existed.`
+          });
+          loadAdminData();
+          break;
+        }
+
+        if (seenTokens.has(nextToken) || pages >= 500) {
+          throw new Error('Sync stopped because YouTube returned repeated or excessive pages.');
+        }
+        seenTokens.add(nextToken);
+        pageToken = nextToken;
       }
     } catch (err) {
-      setSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
+      const message = err?.name === 'AbortError'
+        ? 'A batch took longer than 60 seconds. Progress completed so far is saved; retry the sync to continue.'
+        : err?.message || 'Connection error. Please try again.';
+      setSyncStatus({ type: 'error', message });
     } finally {
       setIsSyncing(false);
     }
@@ -2728,8 +2793,45 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               className="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-500 transition-colors disabled:opacity-50"
             >
               <Youtube className="w-5 h-5" />
-              {isSyncing ? 'Syncing...' : 'Sync from YouTube'}
+              {isSyncing ? 'Syncing YouTube videos...' : 'Sync from YouTube'}
             </button>
+
+            {syncProgress && (
+              <div className="mt-4 rounded-lg border border-zinc-700 bg-zinc-800/70 p-4" aria-live="polite">
+                <div className="flex items-center justify-between gap-4 text-sm">
+                  <span className="font-medium text-white">
+                    {isSyncing ? 'Checking your YouTube videos' : syncProgress.finished ? 'Sync completed' : 'Sync paused or stopped'}
+                  </span>
+                  <strong className="text-red-400 tabular-nums">
+                    {syncProgress.total || syncProgress.finished
+                      ? `${syncProgress.percent}%`
+                      : 'Counting videos...'}
+                  </strong>
+                </div>
+                <div
+                  className="mt-3 h-3 w-full overflow-hidden rounded-full bg-zinc-700"
+                  role="progressbar"
+                  aria-label="YouTube video sync progress"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={syncProgress.total || syncProgress.finished ? syncProgress.percent : undefined}
+                >
+                  <div
+                    className="h-full rounded-full bg-red-500 transition-all duration-300"
+                    style={{ width: `${syncProgress.percent}%` }}
+                  />
+                </div>
+                <p className="mt-3 text-sm text-zinc-200 tabular-nums">
+                  {syncProgress.processed.toLocaleString()} videos checked
+                  {syncProgress.total ? ` of ${syncProgress.total.toLocaleString()}` : ''}
+                  {isSyncing ? ' — in progress' : ''}
+                </p>
+                <p className="mt-1 text-xs text-zinc-400 tabular-nums">
+                  {syncProgress.added.toLocaleString()} added · {syncProgress.skipped.toLocaleString()} already existed
+                  {syncProgress.failed > 0 ? ` · ${syncProgress.failed} errors` : ''}
+                </p>
+              </div>
+            )}
 
             {/* Dead Link Cleanup */}
             <div className="mt-6 pt-6 border-t border-zinc-700">
